@@ -3,7 +3,7 @@ public class Test {
 
 	public static void main(String[] args) 
 	{
-		System.out.println("SLB O MAIOR");
+		System.out.println("SCP O MAIOR");
 	}
 
 }

@@ -3,9 +3,9 @@ public class GeographicalPosition {
 	
 	private Latitude latitude;
 	private Longitude longitude;
-	private double altitude;
+	private Altitude altitude;
 	
-	public GeographicalPosition(Latitude lat, Longitude lon, double alt)
+	public GeographicalPosition(Latitude lat, Longitude lon, Altitude alt)
 	{
 		//TODO
 	}
@@ -38,7 +38,7 @@ public class GeographicalPosition {
 		//TODO
 	}
 	
-	public void incrementPosition(Latitude lat, Longitude lon, double alt)
+	public void incrementPosition(Latitude lat, Longitude lon, Altitude alt)
 	{
 		//TODO
 	}
@@ -48,7 +48,7 @@ public class GeographicalPosition {
 		//TODO
 	}
 	
-	public void setPosition(Latitude lat, Longitude lon, double alt)
+	public void setPosition(Latitude lat, Longitude lon, Altitude alt)
 	{
 		//TODO
 	}
@@ -59,6 +59,16 @@ public class GeographicalPosition {
 	}
 	
 	public void setAltitude(double alt)
+	{
+		//TODO
+	}
+	
+	public void incrementAltitude(Altitude alt)
+	{
+		//TODO
+	}
+	
+	public void setAltitude(Altitude alt)
 	{
 		//TODO
 	}

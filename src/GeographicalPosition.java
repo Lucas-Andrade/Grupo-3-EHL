@@ -3,14 +3,14 @@ public class GeographicalPosition {
 	
 	private Latitude latitude;
 	private Longitude longitude;
-	private int altitude;
+	private double altitude;
 	
-	public GeographicalPosition(Latitude lat, Longitude lon, int alt)
+	public GeographicalPosition(Latitude lat, Longitude lon, double alt)
 	{
 		//TODO
 	}
 	
-	public GeographicalPosition(int lat, int lon, int alt)
+	public GeographicalPosition(double lat, double lon, double alt)
 	{
 		//TODO
 	}
@@ -33,37 +33,37 @@ public class GeographicalPosition {
 		return 0;
 	}
 	
-	public void incrementPosition(int lat, int lon, int alt)
+	public void incrementPosition(double lat, double lon, double alt)
 	{
 		//TODO
 	}
 	
-	public void incrementPosition(Latitude lat, Longitude lon, int alt)
+	public void incrementPosition(Latitude lat, Longitude lon, double alt)
 	{
 		//TODO
 	}
 	
-	public void setPosition(int lat, int lon, int alt)
+	public void setPosition(double lat, double lon, double alt)
 	{
 		//TODO
 	}
 	
-	public void setPosition(Latitude lat, Longitude lon, int alt)
+	public void setPosition(Latitude lat, Longitude lon, double alt)
 	{
 		//TODO
 	}
 	
-	public void incrementAltitude(int alt)
+	public void incrementAltitude(double alt)
 	{
 		//TODO
 	}
 	
-	public void setAltitude(int alt)
+	public void setAltitude(double alt)
 	{
 		//TODO
 	}
 	
-	public void incrementLatitude(int lat)
+	public void incrementLatitude(double lat)
 	{
 		//TODO
 	}
@@ -73,7 +73,7 @@ public class GeographicalPosition {
 		//TODO
 	}
 	
-	public void setLatitude(int lat)
+	public void setLatitude(double lat)
 	{
 		//TODO
 	}
@@ -83,7 +83,7 @@ public class GeographicalPosition {
 		//TODO
 	}
 	
-	public void incrementLongitude(int lon)
+	public void incrementLongitude(double lon)
 	{
 		//TODO
 	}
@@ -93,7 +93,7 @@ public class GeographicalPosition {
 		//TODO
 	}
 	
-	public void setLongitude(int lon)
+	public void setLongitude(double lon)
 	{
 		//TODO
 	}

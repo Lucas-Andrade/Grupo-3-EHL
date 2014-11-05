@@ -1,14 +1,14 @@
 
 public class Longitude {
 	
-	private int longitude;
+	private double longitude;
 	
-	public Longitude(int lon)
+	public Longitude(double lon)
 	{
 		//TODO
 	}
 	
-	public void incrementLongitude(int lon)
+	public void incrementLongitude(double lon)
 	{
 		//TODO
 	}
@@ -18,7 +18,7 @@ public class Longitude {
 		//TODO
 	}
 	
-	public void setLongitude(int lon)
+	public void setLongitude(double lon)
 	{
 		//TODO
 	}

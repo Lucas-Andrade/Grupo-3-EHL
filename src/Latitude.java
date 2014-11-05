@@ -1,14 +1,14 @@
 
 public class Latitude {
 	
-	private int latitude;
+	private double latitude;
 	
-	public Latitude(int lat)
+	public Latitude(double lat)
 	{
 		//TODO
 	}
 	
-	public void incrementLatitude(int lat)
+	public void incrementLatitude(double lat)
 	{
 		//TODO
 	}
@@ -18,7 +18,7 @@ public class Latitude {
 		//TODO
 	}
 	
-	public void setLatitude(int lat)
+	public void setLatitude(double lat)
 	{
 		//TODO
 	}

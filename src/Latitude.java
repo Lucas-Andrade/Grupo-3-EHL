@@ -5,26 +5,31 @@ public class Latitude {
 	
 	public Latitude(double lat)
 	{
-		//TODO
+		latitude = lat;
+	}
+	
+	public double getLatitudeValue()
+	{
+		return latitude;
 	}
 	
 	public void incrementLatitude(double lat)
 	{
-		//TODO
+		this.latitude += lat;
 	}
 	
 	public void incrementLatitude(Latitude lat)
 	{
-		//TODO
+		this.latitude += lat.getLatitudeValue();
 	}
 	
 	public void setLatitude(double lat)
 	{
-		//TODO
+		this.latitude = lat;
 	}
 	
 	public void setLatitude(Latitude lat)
 	{
-		//TODO
+		this.latitude = lat.getLatitudeValue();
 	}
 }

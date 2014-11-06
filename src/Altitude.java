@@ -3,28 +3,33 @@ public class Altitude {
 	
 	private double altitude;
 	
-	public Altitude(double lat)
+	public Altitude(double alt)
 	{
-		//TODO
+		altitude = alt;
+	}
+	
+	public double getAltitudeValue()
+	{
+		return altitude;
 	}
 	
 	public void incrementAltitude(double alt)
 	{
-		//TODO
+		this.altitude += alt;
 	}
 	
-	public void incrementAltitude(Latitude alt)
+	public void incrementAltitude(Altitude alt)
 	{
-		//TODO
+		this.altitude += alt.getAltitudeValue();
 	}
 	
 	public void setAltitude(double alt)
 	{
-		//TODO
+		this.altitude = alt;
 	}
 	
-	public void setAltitude(Latitude alt)
+	public void setAltitude(Altitude alt)
 	{
-		//TODO
+		this.altitude = alt.getAltitudeValue();
 	}
 }

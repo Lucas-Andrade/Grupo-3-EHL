@@ -7,109 +7,118 @@ public class GeographicalPosition {
 	
 	public GeographicalPosition(Latitude lat, Longitude lon, Altitude alt)
 	{
-		//TODO
+		latitude = lat;
+		longitude = lon;
+		altitude = alt;
 	}
 	
 	public GeographicalPosition(double lat, double lon, double alt)
 	{
-		//TODO
+		Latitude latitude = new Latitude(lat);
+		Longitude lontitude = new Longitude(lon);
+		Altitude altitude = new Altitude(alt);
 	}
 	
-	public int getLongitude()
+	public double getLongitude()
 	{
-		//TODO
-		return 0;
+		return longitude.getLongitudeValue();
 	}
 	
-	public int getLatitude()
+	public double getLatitude()
 	{
-		//TODO
-		return 0;
+		return latitude.getLatitudeValue();
 	}
 	
-	public int getAltitude()
+	public double getAltitude()
 	{
-		//TODO
-		return 0;
+		return altitude.getAltitudeValue();
 	}
 	
 	public void incrementPosition(double lat, double lon, double alt)
 	{
-		//TODO
+		latitude.incrementLatitude(lat);
+		longitude.incrementLongitude(lon);
+		altitude.incrementAltitude(alt);
 	}
 	
 	public void incrementPosition(Latitude lat, Longitude lon, Altitude alt)
 	{
-		//TODO
+		latitude.incrementLatitude(lat);
+		longitude.incrementLongitude(lon);
+		altitude.incrementAltitude(alt);
 	}
 	
 	public void setPosition(double lat, double lon, double alt)
 	{
-		//TODO
+		latitude.setLatitude(lat);
+		longitude.setLongitude(lon);
+		altitude.setAltitude(alt);
 	}
 	
 	public void setPosition(Latitude lat, Longitude lon, Altitude alt)
 	{
-		//TODO
+		latitude.setLatitude(lat);
+		longitude.setLongitude(lon);
+		altitude.setAltitude(alt);
 	}
 	
 	public void incrementAltitude(double alt)
 	{
-		//TODO
+		altitude.incrementAltitude(alt);
 	}
 	
 	public void setAltitude(double alt)
 	{
-		//TODO
+		altitude.setAltitude(alt);
 	}
 	
 	public void incrementAltitude(Altitude alt)
 	{
-		//TODO
+		altitude.incrementAltitude(alt);
 	}
 	
 	public void setAltitude(Altitude alt)
 	{
-		//TODO
+		altitude.incrementAltitude(alt);
 	}
 	
 	public void incrementLatitude(double lat)
 	{
-		//TODO
+		latitude.incrementLatitude(lat);
 	}
 	
 	public void incrementLatitude(Latitude lat)
 	{
-		//TODO
+		latitude.incrementLatitude(lat);
 	}
 	
 	public void setLatitude(double lat)
 	{
-		//TODO
+		latitude.setLatitude(lat);
 	}
 	
 	public void setLatitude(Latitude lat)
 	{
-		//TODO
+		latitude.setLatitude(lat);
 	}
 	
 	public void incrementLongitude(double lon)
 	{
-		//TODO
+		longitude.incrementLongitude(lon);
 	}
 	
 	public void incrementLongitude(Longitude lon)
 	{
-		//TODO
+		longitude.incrementLongitude(lon);
 	}
 	
 	public void setLongitude(double lon)
 	{
-		//TODO
+		longitude.setLongitude(lon);
 	}
 	
 	public void setLongitude(Longitude lon)
 	{
-		//TODO
+		longitude.setLongitude(lon);
 	}
 }

@@ -5,26 +5,31 @@ public class Longitude {
 	
 	public Longitude(double lon)
 	{
-		//TODO
+		longitude = lon;
+	}
+	
+	public double getLongitudeValue()
+	{
+		return longitude;
 	}
 	
 	public void incrementLongitude(double lon)
 	{
-		//TODO
+		this.longitude += lon;
 	}
 	
 	public void incrementLongitude(Longitude lon)
 	{
-		//TODO
+		this.longitude += lon.getLongitudeValue();
 	}
 	
 	public void setLongitude(double lon)
 	{
-		//TODO
+		this.longitude = lon;
 	}
 	
 	public void setLongitude(Longitude lon)
 	{
-		//TODO
+		this.longitude = lon.getLongitudeValue();
 	}
 }

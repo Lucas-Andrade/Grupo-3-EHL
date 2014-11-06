@@ -13,11 +13,11 @@ public abstract class Airship {
 	
 	private String flightID;
 	private LinkedList<GeographicalPosition> lastKnownGeograficalPositions;
-	private int passengersNum;
 	private FlightPlan flightPlan;
 	private int numberOfMinutesToTakeOff;
 	private int numberOfMinutesToLand;
 	private int numberOfMinutesToSwitchCorridor;
+	protected boolean flying;
 	
 	/**
 	 * constructs an airplane with an ID, a certain number of passengers, its take off coordinates and the flightPlan
@@ -26,28 +26,20 @@ public abstract class Airship {
 	 * @param statingPosition - the coordinates where the airplane will take off
 	 * @param flightPlan - the plan of the flight
 	 */
-	public Airship(String flightID, int currentPassengers, GeographicalPosition statingPosition, FlightPlan flightPlan) {
+	public Airship(String flightID, GeographicalPosition statingPosition, FlightPlan flightPlan) {
 		this.flightID = flightID;
-		this.passengersNum = currentPassengers;
 		this.lastKnownGeograficalPositions = new LinkedList<GeographicalPosition>();
 		lastKnownGeograficalPositions.add(statingPosition);
 		this.flightPlan = flightPlan;
+		flying = false;
 	}
-	
+
 	/**
 	 * @return the ID of the plane
 	 */
 	public String getFlightID()
 	{
 		return flightID;
-	}
-	
-	/**
-	 * @return the number of passengers in the airplane
-	 */
-	public int getCurrentPassengers()
-	{
-		return passengersNum;
 	}
 	
 	/**
@@ -81,7 +73,7 @@ public abstract class Airship {
 	 */
 	public void setNewArrivalHour(Calendar newArrivalHour)
 	{
-		flightPlan.setNewArrivalHour(newArrivalHour);
+		flightPlan.setNewArrivalHour(newArrivalHour, numberOfMinutesToLand);
 	}
 	
 	/**
@@ -100,6 +92,32 @@ public abstract class Airship {
 	}
 	
 	/**
+	 * sets flying to true
+	 */
+	protected void takeOff()
+	{
+		flying = true;
+	}
+	
+	/**
+	 * sets flying to false and the number of passengers to 0
+	 */
+	protected void land()
+	{
+		flying = false;
+	}
+	
+	/**
+	 * @return true if the airplane is flying
+	 * @return false if the airplane is not flying
+	 */
+	public boolean isFlying()
+	{
+		return flying;
+	}
+	
+	
+	/**
 	 * compares the altitude of the airplane with the corridor it is supposed to be in
 	 * @param corridor - the corridor where the airplane is supposed to be in
 	 * @return a string with the information of whether the airplane is cruising normally 
@@ -111,9 +129,9 @@ public abstract class Airship {
 		int altitude = lastKnownGeograficalPositions.getFirst().getAltitude();
 		
 		if (altitude <= max && altitude >= min) 
-			return "The airplane is cruising normally.";
+			return "";
 		else
-			return "The airplane is outside of the corridor.";
+			return "WARNING: The airplane is outside of the corridor.";
 	}
 
 	/**
@@ -124,7 +142,7 @@ public abstract class Airship {
 	{
 		Calendar now = new GregorianCalendar();
 		
-		int dateComparison = now.compareTo((flightPlan.getFirstEvent()).getEndingingHour());
+		int dateComparison = now.compareTo((flightPlan.getFirstEvent()).getEndingHour());
 		
 		if (dateComparison <= 0)
 			return "The air plane has took off and is gaining altitude.";

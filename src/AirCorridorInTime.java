@@ -1,34 +1,93 @@
 import java.util.Calendar;
-import java.util.Date;
 
-
+/**
+ * allows to create objects that have a property AltitudeCorridor, where the airplane is supposed to be 
+ * in the time interval defined by the starting and ending hours.
+ * @author Lucas
+ *
+ */
 public class AirCorridorInTime {
 	
-	private Date statingHour;
-	private Date eningHour;
+	private Calendar startingHour;
+	private Calendar endingHour;
 	private AltitudeCorridor corridor;
 	
-	public AirCorridorInTime(Date start, Date end, AltitudeCorridor cor)
+	/**
+	 * constructs a new AirCorridorInTime by setting up all its properties
+	 * @param start - the hour the airplane is supposed to go to the corridor
+	 * @param end - the hour the airplane is supposed to leave the corridor
+	 * @param cor - the corridor
+	 */
+	public AirCorridorInTime(Calendar start, Calendar end, AltitudeCorridor cor)
 	{
-		//TODO
+		corridor = cor; 
+		
+		if (start.compareTo(end) > 0)
+		{
+			endingHour = start;
+			startingHour = end;
+		}
+		else
+		{
+			endingHour = end;
+			startingHour = start;
+		}
 	}
 	
+	/**
+	 * @return the hour the airplane is supposed to go to the corridor
+	 */
 	public Calendar getStartingHour()
 	{
-		//TODO
-		return null;
+		return startingHour;
 	}
 	
-	public Calendar getEndingingHour()
+	/**
+	 * @return the hour the airplane is supposed to leave the corridor
+	 */
+	public Calendar getEndingHour()
 	{
-		//TODO
-		return null;
+		return endingHour;
 	}
 	
+	/**
+	 * sets a new starting hour
+	 * @param newHour - the hour the airplane is supposed to go to the corridor
+	 */
+	public boolean setStartingHour(Calendar newHour)
+	{
+		if(endingHour.compareTo(newHour) < 0)
+			return false;
+		else
+		{
+			startingHour = newHour;
+			return true;
+		}
+		
+	}
+	
+	/**
+	 * sets a new ending hour
+	 * @param newHour - the hour the airplane is supposed to leave the corridor
+	 */
+	public boolean setEndingHour(Calendar newHour)
+	{
+		if(startingHour.compareTo(newHour) > 0)
+			return false;
+		else
+		{
+			endingHour = newHour;
+			return true;
+		}
+			
+	}
+	
+	/**
+	 * @return the corridor where the airplane is supposed to be
+	 */
 	public AltitudeCorridor getCorridor()
 	{
-		//TODO
-		return null;
+		return corridor;
 	}
 	
 }

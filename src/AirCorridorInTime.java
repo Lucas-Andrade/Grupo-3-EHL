@@ -1,3 +1,4 @@
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -12,13 +13,13 @@ public class AirCorridorInTime {
 		//TODO
 	}
 	
-	public Date getStartingHour()
+	public Calendar getStartingHour()
 	{
 		//TODO
 		return null;
 	}
 	
-	public Date getEndingingHour()
+	public Calendar getEndingingHour()
 	{
 		//TODO
 		return null;

@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class Database {
 
-	private Map<String, Airplane> database;
+	private Map<String, Airship> database;
 	
 	private Database()
 	{
@@ -13,7 +13,7 @@ public class Database {
 		database = new HashMap<>();
 	}
 	
-	public boolean addAirplane(String id, Airplane airplane)
+	public boolean addAirplane(String id, Airship airplane)
 	{
 		//TODO
 		return false;
@@ -25,16 +25,16 @@ public class Database {
 		return false;
 	}
 	
-	public boolean removeAirplane(Airplane airplane)
+	public boolean removeAirplane(Airship airplane)
 	{
 		//TODO
 		return false;
 	}
 	
-	public boolean removeAirplanesWithZeroPassengers()
+	public int removeAirplanesWithZeroPassengers()
 	{
 		//TODO
-		return false;
+		return 0;
 	}
 	
 	public String[] reportAirplanesOutOfCorridor()

@@ -19,6 +19,7 @@ public abstract class Airship {
 	public int numberOfMinutesToTakeOff;
 	public int numberOfMinutesToLand;
 	public int numberOfMinutesToSwitchCorridor;
+	private boolean positionWasUpdated = false;
 	
 	/**
 	 * constructs an airplane with an ID, a certain number of passengers, its take off coordinates and the flightPlan
@@ -56,6 +57,7 @@ public abstract class Airship {
 	 */
 	public void updateGeographicPosition(GeographicalPosition newGeographicalPosition)
 	{
+		positionWasUpdated = true;
 		lastKnownGeograficalPositions.addFirst(newGeographicalPosition);
 	}
 	
@@ -126,6 +128,18 @@ public abstract class Airship {
 	}
 	
 	/**
+	 * @return returns a string with the id, position, and observations about the airplane
+	 */
+	public String positionToString()
+	{
+		positionWasUpdated = false;
+		StringBuilder builder = new StringBuilder();
+		GeographicalPosition pos = getGeographicPosition();
+		builder.append(flightID).append(" ").append(pos.getLatitude()).append(" ").append(pos.getLongitude()).append(" ").append(pos.getAltitude()).append(" ").append(getObservations());
+		return builder.toString();
+	}
+	
+	/**
 	 * compares the altitude of the airplane with the corridor it is supposed to be in
 	 * @param corridor - the corridor where the airplane is supposed to be in
 	 * @return a string with the information of whether the airplane is cruising normally 
@@ -134,12 +148,12 @@ public abstract class Airship {
 	private String verifyAltitude(AltitudeCorridor corridor) {
 		int min = corridor.getLowerLimit();
 		int max = corridor.getUpperLimit();
-		double altitude = lastKnownGeograficalPositions.getFirst().getAltitude();
+		double altitude = getGeographicPosition().getAltitude();
 		
-		if (altitude <= max && altitude >= min) 
-			return "";
-		else
+		if (altitude > max || altitude < min) 
 			return "WARNING: The airplane is outside of the corridor.";
+		else
+			return "";
 	}
 
 	/**

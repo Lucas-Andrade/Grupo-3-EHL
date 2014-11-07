@@ -13,4 +13,5 @@ public abstract class MilitaryAirplane extends Airship{
 	{
 		return carriesArmament;
 	}
+
 }

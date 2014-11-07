@@ -4,22 +4,20 @@ import static org.junit.Assert.*;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import utils.AirCorridorInTime;
 import utils.Airliner;
-import utils.Airship;
 import utils.AltitudeCorridor;
 import utils.FlightPlan;
 import utils.GeographicalPosition;
-import utils.PrivateJet;
+import utils.Transport;
 
-public class AirshipTest_UsingAirlinerInstance {
+public class AirshipTest_UsingTransportInstance {
 
-	private Airship airliner;
+	private Transport transport;
 	private static GeographicalPosition geo;
 	private int initialAtltitude = 1;
 	private int initialLatitude = 12;
@@ -29,50 +27,50 @@ public class AirshipTest_UsingAirlinerInstance {
 	public void constructTwoAirplanes()
 	{
 		geo = new GeographicalPosition(initialLatitude, initialLongitude, initialAtltitude);
-		airliner = new Airliner("rj351", geo, new FlightPlan(new GregorianCalendar() ,new GregorianCalendar()), 100);
+		transport = new Transport("rj351", geo, new FlightPlan(new GregorianCalendar() ,new GregorianCalendar()), false);
 	}
 	
 	@Test
 	public void shouldReturnTheFlightID()
 	{
-		assertEquals("rj351", airliner.getFlightID());
+		assertEquals("rj351", transport.getFlightID());
 	}
 	
 	@Test
 	public void shouldReturnTheCorrectGeographicalPosition()
 	{
-		assertEquals(geo, airliner.getGeographicPosition());
+		assertEquals(geo, transport.getGeographicPosition());
 	}
 	
 	@Test
 	public void shouldUpdateTheGeographicalPositionToANewOne()
 	{
 		GeographicalPosition newGeographicalPosition = new GeographicalPosition(18, 11, 20);
-		airliner.updateGeographicPosition(newGeographicalPosition);
+		transport.updateGeographicPosition(newGeographicalPosition);
 		
-		assertEquals(newGeographicalPosition, airliner.getGeographicPosition());
+		assertEquals(newGeographicalPosition, transport.getGeographicPosition());
 	}
 	
 	@Test
 	public void shouldGetTheCorridorNullBecauseItIsStillGainingAltitude()
 	{
-		Airliner airliner2 = makeAnAirplaneWithAPlan(-10);
-		assertEquals(airliner2.getCurrentCorridor(), null);
+		Transport transport2 = makeAnAirplaneWithAPlan(-10);
+		assertEquals(transport2.getCurrentCorridor(), null);
 	}
 	
 	@Test
 	public void shouldGetTheCorridorNullBecauseItIsLanding()
 	{
-		Airliner airliner2 = makeAnAirplaneWithAPlan(-50);
-		assertEquals(airliner2.getCurrentCorridor(), null);
+		Transport transport2 = makeAnAirplaneWithAPlan(-50);
+		assertEquals(transport2.getCurrentCorridor(), null);
 	}
 	
 	@Test
 	public void shouldGetMidFlightCorridor()
 	{
-		Airliner airliner2 = makeAnAirplaneWithAPlan(-30);
-		int maxAlt = airliner2.getCurrentCorridor().getUpperLimit();
-		int minAlt = airliner2.getCurrentCorridor().getLowerLimit();
+		Transport transport2 = makeAnAirplaneWithAPlan(-30);
+		int maxAlt = transport2.getCurrentCorridor().getUpperLimit();
+		int minAlt = transport2.getCurrentCorridor().getLowerLimit();
 		
 		assertEquals(120, maxAlt);
 		assertEquals(100, minAlt);
@@ -81,56 +79,56 @@ public class AirshipTest_UsingAirlinerInstance {
 	@Test
 	public void shoudGetTheRightObservation_TakingOff()
 	{
-		Airliner airliner2 = makeAnAirplaneWithAPlan(-10);
-		assertEquals(airliner2.getObservations(), "The air plane has took off and is gaining altitude.");
+		Transport transport2 = makeAnAirplaneWithAPlan(-10);
+		assertEquals(transport2.getObservations(), "The air plane has took off and is gaining altitude.");
 	}
 	
 	@Test
 	public void shouldGetTheRightObservation_Landing()
 	{
-		Airliner airliner2 = makeAnAirplaneWithAPlan(-50);
-		assertEquals(airliner2.getObservations(), "The airplane has started its descent in order to land.");
+		Transport transport2 = makeAnAirplaneWithAPlan(-50);
+		assertEquals(transport2.getObservations(), "The airplane has started its descent in order to land.");
 	}
 	
 	@Test
 	public void shouldGetTheRightObservation_OutsideCorridor()
 	{
-		Airliner airliner2 = makeAnAirplaneWithAPlan(-30);
-		assertEquals(airliner2.getObservations(), "WARNING: The airplane is outside of the corridor.");
+		Transport transport2 = makeAnAirplaneWithAPlan(-30);
+		assertEquals(transport2.getObservations(), "WARNING: The airplane is outside of the corridor.");
 	}
 	
 	@Test
 	public void shouldGetTheRightObservation_NoObservation()
 	{
-		Airliner airliner2 = makeAnAirplaneWithAPlan(-30);
+		Transport transport2 = makeAnAirplaneWithAPlan(-30);
 		GeographicalPosition newGeographicalPosition = new GeographicalPosition(40, 15, 110);
-		airliner2.updateGeographicPosition(newGeographicalPosition);
+		transport2.updateGeographicPosition(newGeographicalPosition);
 
-		assertEquals(airliner2.getObservations(), "");
+		assertEquals(transport2.getObservations(), "");
 	}
 	
 	@Test 
 	public void shouldCorrectlySetTheNewArrivalDate()
 	{
-		Airliner airliner2 = makeAnAirplaneWithAPlan(0);
+		Transport transport2 = makeAnAirplaneWithAPlan(0);
 		Calendar newLanding = new GregorianCalendar();
 		newLanding.add(12, 80);
-		airliner2.setNewArrivalHour(newLanding);
+		transport2.setNewArrivalHour(newLanding);
 		
-		assertEquals(airliner2.getPlan().getLastEvent().getEndingHour(), newLanding);
+		assertEquals(transport2.getPlan().getLastEvent().getEndingHour(), newLanding);
 		
 		newLanding.add(12, -20);
-		assertEquals(airliner2.getPlan().getLastEvent().getStartingHour(), newLanding);
+		assertEquals(transport2.getPlan().getLastEvent().getStartingHour(), newLanding);
 	}
 	
 	@Test
 	public void shouldReturnTheCorrectString()
 	{
-		Airliner airliner2 = makeAnAirplaneWithAPlan(-30);
-		assertEquals("id123 12.0 10.0 1.0 " + airliner2.getObservations(), airliner2.positionToString());
+		Transport transport2 = makeAnAirplaneWithAPlan(-30);
+		assertEquals("id123 12.0 10.0 1.0 " + transport2.getObservations(), transport2.positionToString());
 	}
 	
-	private static Airliner makeAnAirplaneWithAPlan(int diff)
+	private static Transport makeAnAirplaneWithAPlan(int diff)
 	{
 		Calendar hourDep = new GregorianCalendar();
 		Calendar hourLand = new GregorianCalendar();
@@ -156,6 +154,7 @@ public class AirshipTest_UsingAirlinerInstance {
 		plan.addEvent(corridor);
 		plan.addEvent(landing);
 		
-		return new Airliner("id123", geo, plan, 316);
+		return new Transport("id123", geo, plan, false);
 	}
+
 }

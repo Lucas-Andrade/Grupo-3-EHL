@@ -4,7 +4,7 @@ package app;
 /**
  * This class represents the option "Consult a flight's details." from the
  * {@code Option Menu} of this app. The {@code title} of this option is
- * "Consult a flight's details." and {@code description} is a string whose
+ * "Consult a flight's details." and the {@code description} is a string whose
  * content is the text of the next section.
  * 
  * <p style="font-size:16">

@@ -1,10 +1,11 @@
 package app;
 
+
 /**
- * This class represents the option "Add a flight manually."
- * from the {@code Option Menu} of this app. The {@code title} of this option is
- * "Add a flight manually." and {@code description} is a string
- * whose content is the text of the next section.
+ * This class represents the option "Add a flight manually." from the
+ * {@code Option Menu} of this app. The {@code title} of this option is
+ * "Add a flight manually." and {@code description} is a string whose content is
+ * the text of the next section.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
@@ -32,66 +33,89 @@ package app;
  * @author Hugo Leal
  * @author Lucas Andrade
  */
-public class AddAFlightOption implements Option
+public class AddAFlightOption extends Option
 {
 	
-	// CAMPOS DA CLASSE
+	
+	// AddAFlightOption instance = new AddAFlightOption();
+	// instance.title = "Add";
+	// instance.description = "";
+	
+	
+	// CONSTRUTOR E getInstance
+	
+	// /**
+	// * The title of this option.
+	// */
+	// private static String title = "Add a flight manually.";
+	//
+	// /**
+	// * A description of this option. It will be used by options whose purpose
+	// is
+	// * to clarify the user about this option's utility or usage.
+	// */
+	// private static String description = "d";
 	
 	/**
-	 * The title of this option.
+	 * An instance of type AddAFlightOption.
 	 */
-	private static String title="Add a flight manually.";
-	
-	/**
-	 * A description of this option. It will be used by options whose purpose is
-	 * to clarify the user about this option's utility or usage.
-	 */
-	private static String description="d";
-	
-	/**
-	 * The only instance of this class's type.
-	 */
-	public static final AddAFlightOption instance = new AddAFlightOption();
+	private static AddAFlightOption instance = new AddAFlightOption();
 	
 	
 	
-	// MÉTODO CONSTRUTOR
-	
+	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
 	
 	
 	/**
-	 * Private constructor.
+	 * Creates a new instance of type AddAFlightOption and sets up the final
+	 * values of the fields {@code title} and {@code description}.
 	 */
-	private AddAFlightOption() {};
+	public AddAFlightOption() {
+		super( "Add a flight manually.", "d" );
+	};
 	
-	
+	/**
+	 * Returns an instance of type AddAFlightOption, not necessarily a new one.
+	 * 
+	 * <p>
+	 * Note that the instances of this type have no differentiating properties:
+	 * the only instance fields are {@code title} and {@code description} and
+	 * their values are the same for all instances. This method lets you reuse
+	 * already created instances instead of always creating new ones.
+	 * </p>
+	 * 
+	 * @return A instance of type AddAFlightOption.
+	 */
+	public AddAFlightOption getInstance() {
+		return instance;
+	}
 	
 	// MÉTODOS
 	
 	
-	/**
-	 * Returns the class's title.
-	 * 
-	 * @return The class's title.
-	 */
-	public String getOptionTitle() {
-		return title;
-	}
-	
-	
-	/**
-	 * Returns the class's description.
-	 * 
-	 * @return The class's description.
-	 */
-	public String getOptionDescription() {
-		return description;
-	}
+	// /**
+	// * Returns the class's title.
+	// *
+	// * @return The class's title.
+	// */
+	// public String getOptionTitle() {
+	// return title;
+	// }
+	//
+	//
+	// /**
+	// * Returns the class's description.
+	// *
+	// * @return The class's description.
+	// */
+	// public String getOptionDescription() {
+	// return description;
+	// }
 	
 	
 	
 	public void execute() {
-		System.out.println( getOptionTitle() );
+		System.out.println( title );
 	};
 	
 }

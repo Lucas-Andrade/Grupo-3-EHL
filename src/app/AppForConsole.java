@@ -15,7 +15,7 @@ import java.util.Scanner;
  * allows the user to manage a set of flights, inserting them into the app
  * either from a file or manually, with the purpose of monitoring the geographic
  * coordinates of the airships at each moment in time and producing reports of
- * the airships transgressing the pre-established air corridors.
+ * the airships transgressing the pre-established air corridors.</p>
  * 
  * <p style="font-size:16">
  * <b>Usage</b>
@@ -76,7 +76,7 @@ import java.util.Scanner;
  * <p style="font-family:Consolas">
  * <b> 2. Add a flight manually.</b>
  * </p>
- * </ol> </p> TODO
+ * </ol> </p> ...TODO
  *
  * @author Eva Gomes
  * @author Hugo Leal

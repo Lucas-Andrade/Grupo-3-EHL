@@ -2,14 +2,25 @@ package app;
 
 
 /**
- * Class that creates the {@code Option Menu} and its string representation.
+ * Class that represents the {@code Options Menu} of this app and produces its
+ * string representation.
+ * 
+ * <p style="font-size:16">
+ * <b>Implementation notes</b>
+ * </p>
+ * <p>
+ * As this menu is a unique and final piece not to be changed by other classes,
+ * there is no need to allow creation of instances of this class nor provide
+ * setter methods. The class itself represents the menu, all fields and methods
+ * are static.
+ * </p>
  * 
  *
  * @author Eva Gomes
  * @author Hugo Leal
  * @author Lucas Andrade
  */
-public class MainMenu
+public abstract class MainMenu
 {
 	
 	public static final String menuTitle = "Option Menu";

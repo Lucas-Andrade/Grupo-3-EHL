@@ -32,9 +32,9 @@ public class GeographicalPosition {
 	 */
 	public GeographicalPosition(double lat, double lon, double alt)
 	{
-		Latitude latitude = new Latitude(lat);
-		Longitude longitude = new Longitude(lon);
-		Altitude altitude = new Altitude(alt);
+		latitude = new Latitude(lat);
+		longitude = new Longitude(lon);
+		altitude = new Altitude(alt);
 	}
 	
 	/**
@@ -149,7 +149,7 @@ public class GeographicalPosition {
 	 */
 	public void setAltitude(Altitude alt)
 	{
-		altitude.incrementAltitude(alt);
+		altitude.setAltitude(alt);
 	}
 	
 	/**
@@ -223,4 +223,5 @@ public class GeographicalPosition {
 	{
 		longitude.setLongitude(lon);
 	}
+	
 }

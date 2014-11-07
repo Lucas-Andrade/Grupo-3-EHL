@@ -32,9 +32,32 @@ public class FlightPlan {
 	 * adds a new event to the list
 	 * @param newEvent - event to add
 	 */
-	public void addEvent(AirCorridorInTime newEvent)
+	public boolean addEvent(AirCorridorInTime newEvent)
 	{
+		Calendar startOfNew = newEvent.getStartingHour();
+		Calendar endOfNew = newEvent.getEndingHour();
+		
+		if (startOfNew.compareTo(departureHour) < 0 || endOfNew.compareTo(arrivalHour) > 0)
+			return false;
+		
+		
+		int corridorsNum = corridors.size();
+		
+		if (corridorsNum != 0)
+		{
+			Calendar endOfPrevious = corridors.get(corridorsNum - 1).getEndingHour();
+			
+			if (endOfPrevious.compareTo(startOfNew) == 0)
+			{
+				corridors.add(newEvent);
+				return true;
+			}
+			else
+				return false;
+		}
+		
 		corridors.add(newEvent);
+		return true;
 	}
 	
 	/**
@@ -44,13 +67,23 @@ public class FlightPlan {
 	public AltitudeCorridor getCurrentCorridor() {
 		
 		Calendar now = new GregorianCalendar();
+		return getCorridorAtTime(now);
+	}
+	
+	/**
+	 * returns the corridor where the airplane is supposed to be at the date passed as parameter
+	 * @param time - date when we want to know the corridor
+	 * @return corridor where the airplane is supposed to be, at the date passed as parameter
+	 */
+	public AltitudeCorridor getCorridorAtTime(Calendar time) {
 		
-		if(now.compareTo(departureHour) < 0 || now.compareTo(arrivalHour) > 0)
+		if(time.compareTo(departureHour) < 0 || time.compareTo(arrivalHour) > 0)
 			return null;
 		
 		for (int i = 0; i < corridors.size(); i++)
 		{
-			if (now.compareTo(corridors.get(i).getStartingHour()) >= 0)
+			AirCorridorInTime corridor = corridors.get(i);
+			if (time.compareTo(corridor.getStartingHour()) >= 0 && time.compareTo(corridor.getEndingHour()) <= 0)
 			{
 				return corridors.get(i).getCorridor();
 			}
@@ -91,7 +124,7 @@ public class FlightPlan {
 	/**
 	 * @return the first event in the plan
 	 */
-	AirCorridorInTime getFirstEvent()
+	public AirCorridorInTime getFirstEvent()
 	{
 		return corridors.get(0);
 	}
@@ -99,7 +132,7 @@ public class FlightPlan {
 	/**
 	 * @return the last event in the plan
 	 */
-	AirCorridorInTime getLastEvent()
+	public AirCorridorInTime getLastEvent()
 	{
 		return corridors.get(corridors.size() - 1);
 	}

@@ -15,10 +15,10 @@ public abstract class Airship {
 	private String flightID;
 	private LinkedList<GeographicalPosition> lastKnownGeograficalPositions;
 	private FlightPlan flightPlan;
-	private int numberOfMinutesToTakeOff;
-	private int numberOfMinutesToLand;
-	private int numberOfMinutesToSwitchCorridor;
 	protected boolean flying;
+	public int numberOfMinutesToTakeOff;
+	public int numberOfMinutesToLand;
+	public int numberOfMinutesToSwitchCorridor;
 	
 	/**
 	 * constructs an airplane with an ID, a certain number of passengers, its take off coordinates and the flightPlan
@@ -78,6 +78,14 @@ public abstract class Airship {
 	}
 	
 	/**
+	 * @return the flight plan of the airplane
+	 */
+	public FlightPlan getPlan()
+	{
+		return flightPlan;
+	}
+	
+	/**
 	 * gets an observation on the state of the plane. A string is returned with the information whether the
 	 * airplane is just cruising normally, switching corridors, gaining altitude after take off, or even 
 	 * making its descent
@@ -116,7 +124,6 @@ public abstract class Airship {
 	{
 		return flying;
 	}
-	
 	
 	/**
 	 * compares the altitude of the airplane with the corridor it is supposed to be in

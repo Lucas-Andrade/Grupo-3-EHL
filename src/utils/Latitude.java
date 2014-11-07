@@ -7,14 +7,18 @@ package utils;
 public class Latitude {
 	
 	private double latitude;
-	
+	static final double MAX_LATITUDE = 90;
+	static final double MIN_LATITUDE = -90;
 	/**
 	 * Constructs a value of latitude
 	 * @param lat latitude value
 	 */
 	public Latitude(double lat)
 	{
+		if(latitude < MAX_LATITUDE && latitude > MIN_LATITUDE )
 		latitude = lat;
+		else
+			throw new IllegalArgumentException();
 	}
 	
 	/**

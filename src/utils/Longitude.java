@@ -8,6 +8,8 @@ package utils;
 public class Longitude {
 	
 	private double longitude;
+	static final double MAX_LONGITUDE = 180;
+	static final double MIN_LONGITUDE = -180;
 	
 	/**
 	 * Constructs a value of longitude
@@ -15,7 +17,10 @@ public class Longitude {
 	 */
 	public Longitude(double lon)
 	{
+		if(longitude < MAX_LONGITUDE && longitude > MIN_LONGITUDE )
 		longitude = lon;
+		else
+			throw new IllegalArgumentException();
 	}
 	
 	/**

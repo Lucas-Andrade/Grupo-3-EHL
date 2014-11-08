@@ -13,7 +13,7 @@ public class Latitude {
 	 * Constructs a value of latitude
 	 * @param lat latitude value
 	 */
-	public Latitude(double lat)
+	public Latitude(double lat) throws IllegalArgumentException
 	{
 		if(latitude < MAX_LATITUDE && latitude > MIN_LATITUDE )
 		latitude = lat;

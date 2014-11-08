@@ -15,7 +15,7 @@ public class Longitude {
 	 * Constructs a value of longitude
 	 * @param lon longitude value
 	 */
-	public Longitude(double lon)
+	public Longitude(double lon) throws IllegalArgumentException
 	{
 		if(longitude < MAX_LONGITUDE && longitude > MIN_LONGITUDE )
 		longitude = lon;

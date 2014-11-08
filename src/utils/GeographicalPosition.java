@@ -30,7 +30,7 @@ public class GeographicalPosition {
 	 * @param lon longitude value
 	 * @param alt altitude value
 	 */
-	public GeographicalPosition(double lat, double lon, double alt)
+	public GeographicalPosition(double lat, double lon, double alt) throws IllegalArgumentException
 	{
 		latitude = new Latitude(lat);
 		longitude = new Longitude(lon);

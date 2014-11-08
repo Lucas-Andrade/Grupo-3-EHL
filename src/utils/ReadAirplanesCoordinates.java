@@ -16,6 +16,10 @@ import java.util.StringTokenizer;
 
 public class ReadAirplanesCoordinates {
 
+	private String emptyFields;
+	private String unrecognizedFlights;
+	private String sourceOfFlights = "src/FilesToRead/newCoordinates.txt";
+
 /**
  * Reads the airplaine's id and coordinates from a file, converts the data of id in String and the coordinates in doubles
  * Updates the new coordinates in the airplane.
@@ -29,8 +33,8 @@ public class ReadAirplanesCoordinates {
 		try {
 			reader = new BufferedReader(new FileReader(sourceOfFlights));
 
-			String emptyFields = "";
-			String unrecognizedFlight = "";
+			emptyFields = "";
+			unrecognizedFlights = "";
 			String delim = " ";
 
 			Database data = new Database();
@@ -58,7 +62,7 @@ public class ReadAirplanesCoordinates {
 				}
 
 				else
-					unrecognizedFlight += "Unrecognized flight ID: " + id +"Latitude: " + lat + "Longitude: " + lon + "Altitude: " + alt + "\n";
+					unrecognizedFlights += "Unrecognized flight ID: " + id +"Latitude: " + lat + "Longitude: " + lon + "Altitude: " + alt + "\n";
 
 			}
 			else 
@@ -80,5 +84,40 @@ public class ReadAirplanesCoordinates {
 			System.out.println("Fail reading" + sourceOfFlights);
 			e.printStackTrace();
 		}
+	}
+	/**
+	 * Gets the emptyFields
+	 * @return a String with the number of the line of empty fields
+	 */
+	public String getEmptyFields()
+	{
+		return emptyFields;
+	}
+	
+	/**
+	 * Gets the unrecognized Flights information
+	 * @return a String with the unrecognized flights
+	 */
+	public String getunrecognizedFlights()
+	{
+		return unrecognizedFlights;
+	}
+	
+	/**
+	 * Sets a new path of the text file with the new geographical coordinates
+	 * @param newSource new path of text file
+	 */
+	public void setsourceOfFlights(String newSource)
+	{
+		this.sourceOfFlights = newSource;
+	}
+	
+	/**
+	 * Gets the path of the text file with the new geographical coordinates
+	 * @return path with source of flights
+	 */
+	public String getsourceOfFlights()
+	{
+		return sourceOfFlights;
 	}
 }

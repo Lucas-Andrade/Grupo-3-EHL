@@ -1,5 +1,13 @@
 package utils;
 
+/**
+ * Creates an airliner
+ * 
+ *
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
+ */
 public class PrivateJet extends Airliner{
 
 	private static int numberOfMinutesToTakeOff = 9;

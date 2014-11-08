@@ -136,4 +136,20 @@ public class FlightPlan {
 	{
 		return corridors.get(corridors.size() - 1);
 	}
+	
+	/**
+	 * @return the date and hour of when is the take off supposed to happen
+	 */
+	public Calendar getTakeOffDate()
+	{
+		return departureHour;
+	}
+	
+	/**
+	 * @return the date and hour of when the airplane is supposed to happen
+	 */
+	public Calendar getLandingDate()
+	{
+		return arrivalHour;
+	}
 }

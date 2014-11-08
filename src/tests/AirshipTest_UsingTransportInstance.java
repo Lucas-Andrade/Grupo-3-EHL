@@ -107,6 +107,20 @@ public class AirshipTest_UsingTransportInstance {
 		assertEquals(transport2.getObservations(), "");
 	}
 	
+	@Test
+	public void shouldGetTheRightObservation_HasNotTakenOff()
+	{
+		Transport transport2 = makeAnAirplaneWithAPlan(20);
+		assertEquals(transport2.getObservations(), "The airplane has not taken off yet.");
+	}
+	
+	@Test
+	public void shouldGetTheRightObservation_HasAlreadyLanded()
+	{
+		Transport transport2 = makeAnAirplaneWithAPlan(-100);
+		assertEquals(transport2.getObservations(), "The airplane has already landed.");
+	}
+	
 	@Test 
 	public void shouldCorrectlySetTheNewArrivalDate()
 	{
@@ -126,6 +140,28 @@ public class AirshipTest_UsingTransportInstance {
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(-30);
 		assertEquals("id123 12.0 10.0 1.0 " + transport2.getObservations(), transport2.positionToString());
+	}
+	
+	@Test
+	public void shouldReturnTheCorrectTakeOffDate()
+	{
+		Calendar hourTakeOff = new GregorianCalendar();
+		Calendar hourLand = new GregorianCalendar();
+		hourLand.add(12, 20);
+		
+		Airliner airliner3 = new Airliner("rj351", geo, new FlightPlan(hourTakeOff, hourLand), 100);
+		assertEquals(hourTakeOff, airliner3.getTakeOffDate());
+	}
+	
+	@Test
+	public void shouldReturnTheCorrectLandingDate()
+	{
+		Calendar hourTakeOff = new GregorianCalendar();
+		Calendar hourLand = new GregorianCalendar();
+		hourLand.add(12, 20);
+		
+		Airliner airliner3 = new Airliner("rj351", geo, new FlightPlan(hourTakeOff, hourLand), 100);
+		assertEquals(hourLand, airliner3.getLandingDate());
 	}
 	
 	private static Transport makeAnAirplaneWithAPlan(int diff)

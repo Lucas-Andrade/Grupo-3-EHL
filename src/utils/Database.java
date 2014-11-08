@@ -7,8 +7,11 @@ import java.util.Set;
 
 /**
  * Allows to create a database of airships
- * @author Lucas
+ * 
  *
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
  */
 public class Database {
 
@@ -97,35 +100,6 @@ public class Database {
 			removeAirplane(toRemove.get(i));
 		
 		return count;
-	}
-	
-	/**
-	 * @return an array of strings with the flight ID of all the airplanes outside of the corridor
-	 * they should be, at the time this method was called
-	 */
-	public String[] reportAirplanesOutOfCorridor()
-	{
-		ArrayList<String> airplanesOut = new ArrayList<>();
-		
-		Set<String> idSet = database.keySet();
-		Iterator<String> iterator = idSet.iterator();
-		
-		while (iterator.hasNext())
-		{
-			Airship airplane = database.get(iterator.next());
-			AltitudeCorridor corridor = airplane.getCurrentCorridor();
-			double altitude = airplane.getGeographicPosition().getAltitude();
-			
-			if(altitude < corridor.getLowerLimit() || altitude > corridor.getUpperLimit())
-				airplanesOut.add(airplane.getFlightID());
-		}
-		
-		int transgressorsNumber = airplanesOut.size();
-		String[] arrayOfAirplanesOut = new String[transgressorsNumber];
-		for (int i = 0; i < transgressorsNumber; i++)
-			arrayOfAirplanesOut[i] = airplanesOut.get(i);
-		
-		return arrayOfAirplanesOut;
 	}
 	
 	/**

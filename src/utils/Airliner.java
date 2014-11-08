@@ -1,5 +1,13 @@
 package utils;
 
+/**
+ * Creates an airliner
+ * 
+ *
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
+ */
 public class Airliner extends CivilAirplane{
 	
 	private static int numberOfMinutesToTakeOff = 8;
@@ -34,13 +42,11 @@ public class Airliner extends CivilAirplane{
 	}
 	
 	/**
-	 * sets flying to false and the number of passengers to 0
+	 * sets the number of passengers to 0
 	 */
-	@Override
-	protected void land()
+	protected void removePassengers()
 	{
 		passengersNum = 0;
-		flying = false;
 	}
 	
 	/**

@@ -108,8 +108,12 @@ public class DatabaseTest {
 	}
 	
 	@Test
-	public void shouldReportTheAirplanesOutsideOfTheirCorridors()
+	public void shouldReturnTheCorrespondingAirplane()
 	{
-		
+		assertEquals(transOutsideCorr, data.getAirplane("trp123"));
+		assertEquals(airlWithZeroPass , data.getAirplane("airl123"));
+		assertEquals(null, data.getAirplane("asdf"));
 	}
+	
+
 }

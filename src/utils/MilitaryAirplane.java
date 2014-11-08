@@ -1,5 +1,13 @@
 package utils;
 
+/**
+ * Abstract class of all the military airplanes
+ * 
+ *
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
+ */
 public abstract class MilitaryAirplane extends Airship{
 	
 	private boolean carriesArmament;

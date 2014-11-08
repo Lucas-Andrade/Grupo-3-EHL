@@ -15,7 +15,6 @@ public abstract class Airship {
 	private String flightID;
 	private LinkedList<GeographicalPosition> lastKnownGeograficalPositions;
 	private FlightPlan flightPlan;
-	protected boolean flying;
 	public int numberOfMinutesToTakeOff;
 	public int numberOfMinutesToLand;
 	public int numberOfMinutesToSwitchCorridor;
@@ -33,7 +32,6 @@ public abstract class Airship {
 		this.lastKnownGeograficalPositions = new LinkedList<GeographicalPosition>();
 		lastKnownGeograficalPositions.add(statingPosition);
 		this.flightPlan = flightPlan;
-		flying = false;
 	}
 
 	/**
@@ -103,28 +101,28 @@ public abstract class Airship {
 	}
 	
 	/**
-	 * sets flying to true
+	 * @return the date and hour the airplane is supposed to take off
 	 */
-	protected void takeOff()
+	public Calendar getTakeOffDate()
 	{
-		flying = true;
+		return flightPlan.getTakeOffDate();
 	}
 	
 	/**
-	 * sets flying to false and the number of passengers to 0
+	 * @return the date and hour the airplane is supposed to land
 	 */
-	protected void land()
+	public Calendar getLandingDate()
 	{
-		flying = false;
+		return flightPlan.getLandingDate();
 	}
 	
 	/**
-	 * @return true if the airplane is flying
-	 * @return false if the airplane is not flying
+	 * @return true if the position was updated since the last time positionToString() was called
+	 * @return false if it was not
 	 */
-	public boolean isFlying()
+	public boolean wasPositionUpdated()
 	{
-		return flying;
+		return positionWasUpdated;
 	}
 	
 	/**
@@ -163,6 +161,11 @@ public abstract class Airship {
 	private String verifyStatus()
 	{
 		Calendar now = new GregorianCalendar();
+		
+		if (now.compareTo(getTakeOffDate()) <= 0)
+			return "The airplane has not taken off yet.";
+		if (now.compareTo(getLandingDate()) >= 0)
+			return "The airplane has already landed.";
 		
 		int dateComparison = now.compareTo((flightPlan.getFirstEvent()).getEndingHour());
 		

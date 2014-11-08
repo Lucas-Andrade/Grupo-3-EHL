@@ -1,9 +1,12 @@
 package utils;
 
 /**
- * Creates a military transport airplane
- * @author Lucas
+ * Creates a military transport airplane. 
+ * 
  *
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
  */
 public class Transport extends MilitaryAirplane{
 	

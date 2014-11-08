@@ -25,6 +25,7 @@ public class AirshipTest_UsingAirlinerInstance {
 	private int initialLatitude = 12;
 	private int initialLongitude = 10;
 	
+	
 	@Before
 	public void constructTwoAirplanes()
 	{
@@ -109,6 +110,20 @@ public class AirshipTest_UsingAirlinerInstance {
 		assertEquals(airliner2.getObservations(), "");
 	}
 	
+	@Test
+	public void shouldGetTheRightObservation_HasNotTakenOff()
+	{
+		Airliner airliner2 = makeAnAirplaneWithAPlan(20);
+		assertEquals(airliner2.getObservations(), "The airplane has not taken off yet.");
+	}
+	
+	@Test
+	public void shouldGetTheRightObservation_HasAlreadyLanded()
+	{
+		Airliner airliner2 = makeAnAirplaneWithAPlan(-100);
+		assertEquals(airliner2.getObservations(), "The airplane has already landed.");
+	}
+	
 	@Test 
 	public void shouldCorrectlySetTheNewArrivalDate()
 	{
@@ -129,6 +144,30 @@ public class AirshipTest_UsingAirlinerInstance {
 		Airliner airliner2 = makeAnAirplaneWithAPlan(-30);
 		assertEquals("id123 12.0 10.0 1.0 " + airliner2.getObservations(), airliner2.positionToString());
 	}
+	
+	@Test
+	public void shouldReturnTheCorrectTakeOffDate()
+	{
+		Calendar hourTakeOff = new GregorianCalendar();
+		Calendar hourLand = new GregorianCalendar();
+		hourLand.add(12, 20);
+		
+		Airliner airliner3 = new Airliner("rj351", geo, new FlightPlan(hourTakeOff, hourLand), 100);
+		assertEquals(hourTakeOff, airliner3.getTakeOffDate());
+	}
+	
+	@Test
+	public void shouldReturnTheCorrectLandingDate()
+	{
+		Calendar hourTakeOff = new GregorianCalendar();
+		Calendar hourLand = new GregorianCalendar();
+		hourLand.add(12, 20);
+		
+		Airliner airliner3 = new Airliner("rj351", geo, new FlightPlan(hourTakeOff, hourLand), 100);
+		assertEquals(hourLand, airliner3.getLandingDate());
+	}
+	
+	
 	
 	private static Airliner makeAnAirplaneWithAPlan(int diff)
 	{

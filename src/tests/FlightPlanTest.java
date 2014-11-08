@@ -204,4 +204,16 @@ public class FlightPlanTest {
 		assertEquals(list.get(3).getEndingHour(), newLandHour);
 		assertEquals(list.get(3).getStartingHour(), startSecond);
 	}
+	
+	@Test
+	public void shouldGetTheCorrectTakeOffDate()
+	{
+		assertEquals(hourDep, plan.getTakeOffDate());
+	}
+	
+	@Test
+	public void shouldGetTheCorrectLandingDate()
+	{
+		assertEquals(hourLand, plan.getLandingDate());
+	}
 }

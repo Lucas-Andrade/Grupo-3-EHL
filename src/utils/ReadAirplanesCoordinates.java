@@ -4,12 +4,25 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Map;
 import java.util.StringTokenizer;
+
+/**
+ * Allows to update the Airplanes coordinates from a file
+ * 
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
+ */
 
 public class ReadAirplanesCoordinates {
 
-
+/**
+ * Reads the airplaine's id and coordinates from a file, converts the data of id in String and the coordinates in doubles
+ * Updates the new coordinates in the airplane.
+ * If this method doesn't find the id of a plane in database it will save the information in the String unrecognizedFlight
+ * If this method doesn't read the 4 parameters (id, latitude, longitude and altitude) in a line it will save the number of the line
+ * @param sourceOfFlights file that has the new airplanes coordinates
+ */
 	public void readFromFile(String sourceOfFlights){
 
 		BufferedReader reader;
@@ -17,11 +30,10 @@ public class ReadAirplanesCoordinates {
 			reader = new BufferedReader(new FileReader(sourceOfFlights));
 
 			String emptyFields = "";
-			String toReturn = "";
+			String unrecognizedFlight = "";
 			String delim = " ";
 
 			Database data = new Database();
-			Map<String, Airship> db = data.getDatabase();
 
 			String nextLine;		
 			nextLine = reader.readLine();
@@ -38,7 +50,7 @@ public class ReadAirplanesCoordinates {
 				double lon = Double.parseDouble(tokenizer.nextToken());
 				double alt = Double.parseDouble(tokenizer.nextToken());
 
-				if(db.containsKey(id))
+				if(data.contains(id))
 				{
 					Airship a = data.getAirplane(id);
 					GeographicalPosition newGeoP = new GeographicalPosition(lat, lon, alt);
@@ -46,7 +58,7 @@ public class ReadAirplanesCoordinates {
 				}
 
 				else
-					toReturn += "Unrecognized flight ID: " + id +"Latitude: " + lat + "Longitude: " + lon + "Altitude: " + alt + "\n";
+					unrecognizedFlight += "Unrecognized flight ID: " + id +"Latitude: " + lat + "Longitude: " + lon + "Altitude: " + alt + "\n";
 
 			}
 			else 

@@ -123,4 +123,14 @@ public class Database {
 		else
 			return null;
 	}
+	
+	/**
+	 * Verifies if the database contains the airplane id
+	 * @param id the airplane id
+	 * @return true if the id is on database else returns false
+	 */
+	public boolean contains (String id)
+	{
+		return database.containsKey(id);
+	}
 }

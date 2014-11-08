@@ -1,8 +1,10 @@
 package app;
 
 
+// ESTA CLASSE MORREU!
+
 /**
- * Class that represents the {@code Options Menu} of this app and produces its
+ * Class that represents a {@code Options Menu} of this app and produces its
  * string representation.
  * 
  * <p style="font-size:16">
@@ -20,41 +22,53 @@ package app;
  * @author Hugo Leal
  * @author Lucas Andrade
  */
-public abstract class MainMenu
+public abstract class MainMenuMORREU extends OptionsMenu
 {
 	
-	public static final String menuTitle = "Option Menu";
-	
-	public static final int numberOfOptions = 10;
-	
-	public static final Option[] options;
-	static
-	{
-		options = new Option[numberOfOptions];
-		
-		options[0] = AddAListOfFlightsOption.instance;
-		options[1] = AddAFlightOption.instance;
-		options[2] = MonitorAirTrafficOption.instance;
-		options[3] = PrintTransgressionsReportOption.instance;
-		options[4] = ConsultFlightDetailsOption.instance;
-		options[5] = RemoveEmptyAirshipsOption.instance;
-		options[6] = RemoveAFlightOption.instance;
-		options[7] = ConfigurationsOption.instance;
-		options[8] = HelpOption.instance;
-		options[9] = ExitOption.instance;
+	// SÓ PARA A CALAR
+	public MainMenuMORREU( String menuTitle, Option[] options ) {
+		super( menuTitle, options );
 	}
-	
-	public static String inAString() {
-		
-		StringBuilder menu = new StringBuilder( "" );
-		for( int index = 0; index < options.length; ++index )
-			menu.append( "\n" ).append( index + 1 ).append( ". " )
-					.append( options[index].getOptionTitle() );
-		return menu.toString();
-		
-	}
+	// TENTATIVA 3 passa a haver a classe OptionsMenu
 	
 	
+	
+	// TENTATIVA 2
+	
+	// public static final String menuTitle = "Option Menu";
+	//
+	// public static final int numberOfOptions = 10;
+	//
+	// public static final Option[] options;
+	// static
+	// {
+	// options = new Option[numberOfOptions];
+	//
+	// options[0] = AddAListOfFlightsOption.instance;
+	// options[1] = AddAFlightOption.instance;
+	// options[2] = MonitorAirTrafficOption.instance;
+	// options[3] = PrintTransgressionsReportOption.instance;
+	// options[4] = ConsultFlightDetailsOption.instance;
+	// options[5] = RemoveEmptyAirshipsOption.instance;
+	// options[6] = RemoveAFlightOption.instance;
+	// options[7] = ConfigurationsOption.instance;
+	// options[8] = HelpOption.instance;
+	// options[9] = ExitOption.instance;
+	// }
+	//
+	// public static String inAString() {
+	//
+	// StringBuilder menu = new StringBuilder( "" );
+	// for( int index = 0; index < options.length; ++index )
+	// menu.append( "\n" ).append( index + 1 ).append( ". " )
+	// .append( options[index].getOptionTitle() );
+	// return menu.toString();
+	//
+	// }
+	
+	
+	
+	// TENTATIVA 1
 	
 	// public static final String menuTitle = "Option Menu";
 	//

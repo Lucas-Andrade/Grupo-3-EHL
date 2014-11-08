@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 
 /**
- * Air Traffic Control app for console.
+ * EHL's AIR TRAFFIC CONTROL app for console.
  * <p style="font-size:16">
  * <b>Description</b>
  * </p>
@@ -15,7 +15,8 @@ import java.util.Scanner;
  * allows the user to manage a set of flights, inserting them into the app
  * either from a file or manually, with the purpose of monitoring the geographic
  * coordinates of the airships at each moment in time and producing reports of
- * the airships transgressing the pre-established air corridors.</p>
+ * the airships transgressing the pre-established air corridors.
+ * </p>
  * 
  * <p style="font-size:16">
  * <b>Usage</b>
@@ -25,12 +26,12 @@ import java.util.Scanner;
  * 
  * <ol style="font-family:Consolas">
  * OPTION MENU
- * <li>Add a list of flights from a text file.</li>
+ * <li>Add a list of flights from txt file.</li>
  * <li>Add a flight manually.</li>
  * <li>Monitor Air Traffic.</li>
- * <li>Print a report of transgressions to a text file.</li>
+ * <li>Report altitude transgressions.</li>
  * <li>Consult a flight's details.</li>
- * <li>Remove all Passenger-Flights with zero passengers.</li>
+ * <li>Remove zero-passenger-flights.</li>
  * <li>Remove a flight manually.</li>
  * <li>Configurations.</li>
  * <li>Help!</li>
@@ -76,11 +77,23 @@ import java.util.Scanner;
  * <p style="font-family:Consolas">
  * <b> 2. Add a flight manually.</b>
  * </p>
- * </ol> </p> ...TODO
+ * </ol> </p>
+ * <p>
+ * ...TODO
+ * </p>
  *
  * @author Eva Gomes
  * @author Hugo Leal
  * @author Lucas Andrade
+ * 
+ *         <p>
+ *         Copyright (c) 2014, EHL. All rights reserved. DO NOT ALTER OR REMOVE
+ *         COPYRIGHT NOTICES OR THIS FILE HEADER.
+ *
+ *         This code is distributed in the hope to get us good grades, but
+ *         WITHOUT ANY WARRANTY; without even the implied warranty of
+ *         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ *         </p>
  */
 public class AppForConsole
 {
@@ -90,7 +103,28 @@ public class AppForConsole
 	/**
 	 * The scanner that receives input from the console.
 	 */
-	private static Scanner in = new Scanner( System.in );
+	private static final Scanner IN = new Scanner( System.in );
+	
+	/**
+	 * This app's menu.
+	 */
+	private static final OptionsMenu MAINMENU = new OptionsMenu(
+			"Options Menu", AddAListOfFlightsOption.getInstance(),
+			AddAFlightOption.getInstance(),
+			MonitorAirTrafficOption.getInstance(),
+			ReportTransgressionsOption.getInstance(),
+			ConsultFlightDetailsOption.getInstance(),
+			RemoveEmptyAirshipsOption.getInstance(),
+			RemoveAFlightOption.getInstance(),
+			ConfigurationsOption.getInstance(), HelpOption.getInstance(),
+			ExitOption.getInstance() );
+	
+	
+	/**
+	 * The style formatting set up for this app's output.
+	 */
+	private static final ConsoleOutputFormatter STYLIZER = new ConsoleOutputFormatter(
+			'-', 45, 4 );
 	
 	
 	
@@ -98,36 +132,39 @@ public class AppForConsole
 	
 	public static void main( String[] args ) {
 		
+		// WELCOME
+		
+		STYLIZER.printSectionDelimiter();
+		System.out.print( "Welcome to the EHL's\n AIR TRAFFIC CONTROL app!" );
+		STYLIZER.printSectionDelimiter();
+		
 		boolean runApp = true;
+		
 		do
 		{
 			
-			// apresentaçao do menu
-			printSectionDelimiter();
-			printSectionTitle( MainMenu.menuTitle );
-			System.out.print( MainMenu.inAString() );
-			AppForConsole.printSectionDelimiter();
+			// APRESENTAÇAO DO MENU
+			
+			printBeginningOfSection( MAINMENU.menuTitle );
+			System.out.print( MAINMENU.inAString() );
+			STYLIZER.printSectionDelimiter();
 			int selectedOption = askTheUserForAValidOption();
-			printSectionDelimiter();
+			printEndOfSection();
 			
+			// EXECUÇAO DE UMA OPÇAO
 			
-			printSpaceBetweenSections();
-			
-			
-			// execuçao de uma opçao
-			printSectionDelimiter();
-			printSectionTitle( "aqi vem a execuçao da opçao" );// provisoria
-			runApp = executeOption( selectedOption );
-			printSectionDelimiter();
-			
-			
-			printSpaceBetweenSections();
+			printBeginningOfSection( MAINMENU.getOptionTitle( selectedOption ) );
+			runApp = !MAINMENU.executeOption( selectedOption );
+			printEndOfSection();
 			
 		}
 		while( runApp );
 		
-		// mensagem "END"
-		AppForConsole.printSectionTitle( "end" );
+		
+		// FINAL
+		
+		System.out.print( "\nCopyright (c) 2014, EHL. All rights reserved.\n" );
+		STYLIZER.printSectionTitle( "end" );
 	}
 	
 	
@@ -160,12 +197,12 @@ public class AppForConsole
 			catch( InputMismatchException e )
 			{
 				System.out.println( "INVALID OPTION!\n" );
-				in.nextLine(); // limpeza
+				IN.nextLine(); // limpeza
 			}
 			catch( InvalidOptionNumberException e )
 			{
 				System.out.println( "INVALID OPTION!\n" );
-				in.nextLine(); // limpeza
+				IN.nextLine(); // limpeza
 			}
 		return selectedOption;
 	}
@@ -191,177 +228,52 @@ public class AppForConsole
 		System.out.println( " perform and press Enter." );
 		System.out.print( "\nExecute option: " );
 		
-		int selectedOption = in.nextInt();
+		int selectedOption = IN.nextInt(); // throws InputMismatchException if
+											// non-number received
 		
-		if( selectedOption < 1 || selectedOption > MainMenu.numberOfOptions )
+		if( selectedOption < 1 || selectedOption > MAINMENU.numberOfOptions )
 			throw new InvalidOptionNumberException();
 		
-		in.nextLine(); // limpeza
+		IN.nextLine(); // limpeza
 		return selectedOption;
 		
 	}
 	
 	
+	
+	// MÉTODOS RELACIONADOS COM IMPRESSAO DE SECÇOES
+	
+	
+	
 	/**
-	 * Performs the action corresponding to the option from the
-	 * {@code Main Menu} chosen by the user.
+	 * Prints the space between sections, the section delimiter, the formatted
+	 * section title and another section delimiter, according to the
+	 * {@link #STYLIZER STYLIZER}.
 	 * 
-	 * @param option
-	 *            The option chosen by the user.
-	 * @return {@code true} if the app should return to the {@code Option Menu}
-	 *         after the execution of this option; {@code false} if the app is
-	 *         to be ended after this option executes.
+	 * @param sectionTitle
+	 *            The title of the section.
 	 */
-	private static boolean executeOption( int option ) {
+	private static void printBeginningOfSection( String sectionTitle ) {
 		
-		switch( option )
+		if( sectionTitle == null )
 		{
-			case 1:
-				break;
-			case 2:
-				break;
-			case 3:
-				break;
-			case 4:
-				break;
-			case 5:
-				break;
-			case 6:
-				break;
-			case 7:
-				break;
-			case 8:
-				break;
-			case 9:
-				break;
-			case 10:
-				System.out.print( "Thanks for using an EHL app! Bye!" );
-				return false;
+			STYLIZER.printSpaceBetweenSections();
+			STYLIZER.printSectionDelimiter();
 		}
-		return true;
-		
+		else
+		{
+			STYLIZER.printSpaceBetweenSections();
+			STYLIZER.printSectionDelimiter();
+			STYLIZER.printSectionTitle( sectionTitle );
+			STYLIZER.printSectionDelimiter();
+		}
 	}
-	
-	
-	
-	// MÉTODOS RELACIONADOS COM A APRESENTAÇÃO DO OUTPUT
-	
-	
 	
 	/**
-	 * Returns the string that will delimit the sections presented in the
-	 * output. This section delimiter consists in a new line filled with
-	 * symbols. Its presence in the output contributes to the output's
-	 * readability.
-	 * 
-	 * @return The section delimiter.
+	 * Prints a section delimiter.
 	 */
-	public static String sectionDelimiter() {
-		return "\n-----------------------------------------------------\n";
+	private static void printEndOfSection() {
+		STYLIZER.printSectionDelimiter();
 	}
-	
-	
-	/**
-	 * Prints the section delimiter to the console (see the method
-	 * {@code sectionDelimiter()}).
-	 */
-	public static void printSectionDelimiter() {
-		System.out.print( sectionDelimiter() );
-	}
-	
-	
-	/**
-	 * Formats a section title.
-	 * 
-	 * <p>
-	 * The {@code title} will be returned in a single line which is constructed
-	 * from the section delimiter of this app (see the method
-	 * {@code sectionDelimiter()}) by removing the middle symbols and inserting
-	 * {@code title} in its place; the formatted title string has the same
-	 * length as the section delimiter string. </br>For example, if the section
-	 * delimiter was "......................" and {@code title} was "My Title",
-	 * the formatted section title would be the line "...... MY TITLE ......".
-	 * <p>
-	 * In case the length of {@code title} equals or exceeds the length of the
-	 * section delimiter, the title will simply be printed in upper case. Also,
-	 * if the string {@code title} has line changing characters, the title will
-	 * simply be printed in upper case using has many lines as the string
-	 * {@code title} contains.
-	 * </p>
-	 * 
-	 * @param title
-	 *            The section title to be formatted.
-	 * @return The string containing the formatted section title.
-	 */
-	public static String formatSectionTitle( String title ) {
-		
-		// the length of the app's section delimiter, which will also be the
-		// length of the string which is the formatted version of title:
-		int theLength = sectionDelimiter().length();
-		
-		
-		// cases in which the format will be kept more simple:
-		if( title.length() + 3 >= theLength || title.contains( "\n" ) )
-			return "\n" + title.toUpperCase() + "\n";
-		
-		
-		// construction of a formatted title:
-		
-		int numOfCharsToEachSideOfTheTitle = (theLength - title.length() - 2) / 2;
-		String charsToTheLeft = sectionDelimiter().substring( 0,
-				numOfCharsToEachSideOfTheTitle );
-		String charsToTheRight = sectionDelimiter().substring(
-				theLength - numOfCharsToEachSideOfTheTitle, theLength );
-		
-		StringBuilder formattedSectionTitle = new StringBuilder( charsToTheLeft )
-				.append( " " ).append( title.toUpperCase() ).append( " " );
-		
-		// if the parity of the title length is different from the parity of
-		// theLength, an extra char is printed after the space after the title
-		if( (title.length() & 1) != (theLength & 1) )
-			formattedSectionTitle.append( sectionDelimiter().charAt(
-					theLength - numOfCharsToEachSideOfTheTitle - 1 ) );
-		
-		formattedSectionTitle.append( charsToTheRight );
-		
-		// return
-		return formattedSectionTitle.toString();
-		
-	}
-	
-	
-	/**
-	 * Prints a formatted section title to the console (see the method
-	 * {@code formatSectionTitle(String title)}).
-	 * 
-	 * @param title
-	 *            The title to be formatted and printed.
-	 */
-	public static void printSectionTitle( String title ) {
-		System.out.print( formatSectionTitle( title ) );
-	}
-	
-	
-	/**
-	 * Returns the string with the established blank lines to appear between the
-	 * sections in the output. Its presence in the output contributes to the
-	 * output's readability.
-	 * 
-	 * @return The space between sections.
-	 */
-	public static String spaceBetweenSections() {
-		return "\n\n";
-	}
-	
-	
-	/**
-	 * Prints the sapce between sections to the console (see the method
-	 * {@code spaceBetweenSections()}).
-	 * 
-	 */
-	public static void printSpaceBetweenSections() {
-		System.out.println( spaceBetweenSections() );
-	}
-	
 	
 }

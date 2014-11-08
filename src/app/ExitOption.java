@@ -2,97 +2,85 @@ package app;
 
 
 /**
- * This class represents the option "Exit app."
- * from the {@code Option Menu} of this app. The {@code title} of this option is
- * "Exit app." and {@code description} is a string
- * whose content is the text of the next section.
+ * This class represents the option with the title {@code Exit app.}.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
  * </p>
  * <p>
- * By choosing this option, //TODO
+ * The purpose of this class is to perform the action of exiting the EHL's Air Traffic
+ * Control app. For more information, read the documentation of method
+ * {@link #execute() execute}.
  * </p>
  * 
  * <p style="font-size:16">
  * <b> Implementation notes</b>
  * </p>
  * <ul>
- * <li>The only instance of this class is the static and final field
- * {@code instance}, which is accessible only with the purposes of allowing
- * other classes to store an instance of this type in data structures and
- * calling the method {@code execute()}.</br> There is no utility in having more
- * instances of this type since they would have no differentiating properties:
- * all fields of this class are static and final.</li>
- * <li>This class's method {@code execute()} is not static so that calls of the
- * method {@code execute()} using variables of type {@link Option} can be
- * resolved using dynamic binding.</li>
+ * <li>Instances of this class are immutable.</li>
+ * <li>All instances of this class share the same {@code title} and
+ * {@code description}.
  * </ul>
  *
  * @author Eva Gomes
  * @author Hugo Leal
  * @author Lucas Andrade
  */
-public class ExitOption implements Option
+public class ExitOption extends Option
 {
 	
-	// CAMPOS DA CLASSE
+	
+	// CAMPO DA CLASE
 	
 	/**
-	 * The title of this option.
+	 * An instance of type ExitOption.
 	 */
-	private static String title = "Exit app.";
+	private static ExitOption instance = new ExitOption();
+	
+	
+	
+	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	
 	
 	/**
-	 * A description of this option. It will be used by options whose purpose is
-	 * to clarify the user about this option's utility or usage.
+	 * Creates a new instance of type ExitOption and sets up the final values of
+	 * the fields {@code title} and {@code description}.
 	 */
-	private static String description = "d";
+	public ExitOption() {
+		super( "Exit app.", "d" );
+	};
 	
 	/**
-	 * The only instance of this class's type.
-	 */
-	public static final ExitOption instance = new ExitOption();
-	
-	
-	
-	// MÉTODO CONSTRUTOR
-	
-	
-	
-	/**
-	 * Private constructor.
-	 */
-	private ExitOption() {};
-	
-	
-	
-	// MÉTODOS
-	
-	
-	/**
-	 * Returns the class's title.
+	 * Returns an instance of type ExitOption, without creating a new one.
 	 * 
-	 * @return The class's title.
-	 */
-	public String getOptionTitle() {
-		return title;
-	}
-	
-	
-	/**
-	 * Returns the class's description.
+	 * <p>
+	 * Note that the instances of this type have no differentiating properties:
+	 * the only instance fields are {@code title} and {@code description} and
+	 * their values are the same for all instances. This method lets you reuse
+	 * an already created instance instead of always creating new ones with the
+	 * {@link #ExitOption() constructor}.
+	 * </p>
 	 * 
-	 * @return The class's description.
+	 * @return A instance of type ExitOption.
 	 */
-	public String getOptionDescription() {
-		return description;
+	public static ExitOption getInstance() {
+		return instance;
 	}
 	
 	
 	
+	// execute()
+	
+	/**
+	 * Exits the Air Traffic Control app.
+	 * 
+	 * <p>
+	 * DESCRIPTION TODO
+	 * </p>
+	 */
 	public void execute() {
-		System.out.println( getOptionTitle() );
+		System.out.println( "Exiting the Air Traffic Control app..." );
+		System.out.print( "Thanks for using an EHL app! Bye!" );
 	};
 	
 }

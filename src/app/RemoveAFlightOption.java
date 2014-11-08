@@ -2,97 +2,86 @@ package app;
 
 
 /**
- * This class represents the option "Remove a flight manually."
- * from the {@code Option Menu} of this app. The {@code title} of this option is
- * "Remove a flight manually." and {@code description} is a string
- * whose content is the text of the next section.
+ * This class represents the option with the title
+ * {@code Remove a flight manually.}.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
  * </p>
  * <p>
- * By choosing this option, //TODO
+ * The purpose of this class is to perform the action of removing a plane
+ * manually from the list of scheduled flights. For more information, read the
+ * documentation of method {@link #execute() execute}.
  * </p>
  * 
  * <p style="font-size:16">
  * <b> Implementation notes</b>
  * </p>
  * <ul>
- * <li>The only instance of this class is the static and final field
- * {@code instance}, which is accessible only with the purposes of allowing
- * other classes to store an instance of this type in data structures and
- * calling the method {@code execute()}.</br> There is no utility in having more
- * instances of this type since they would have no differentiating properties:
- * all fields of this class are static and final.</li>
- * <li>This class's method {@code execute()} is not static so that calls of the
- * method {@code execute()} using variables of type {@link Option} can be
- * resolved using dynamic binding.</li>
+ * <li>Instances of this class are immutable.</li>
+ * <li>All instances of this class share the same {@code title} and
+ * {@code description}.
  * </ul>
  *
  * @author Eva Gomes
  * @author Hugo Leal
  * @author Lucas Andrade
  */
-public class RemoveAFlightOption implements Option
+public class RemoveAFlightOption extends Option
 {
 	
-	// CAMPOS DA CLASSE
+	
+	// CAMPO DA CLASE
 	
 	/**
-	 * The title of this option.
+	 * An instance of type RemoveAFlightOption.
 	 */
-	private static String title= "Remove a flight manually.";
+	private static RemoveAFlightOption instance = new RemoveAFlightOption();
+	
+	
+	
+	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	
 	
 	/**
-	 * A description of this option. It will be used by options whose purpose is
-	 * to clarify the user about this option's utility or usage.
+	 * Creates a new instance of type RemoveAFlightOption and sets up the final
+	 * values of the fields {@code title} and {@code description}.
 	 */
-	private static String description = "d";
+	public RemoveAFlightOption() {
+		super( "Remove a flight manually.", "d" );
+	};
 	
 	/**
-	 * The only instance of this class's type.
-	 */
-	public static final RemoveAFlightOption instance = new RemoveAFlightOption();
-	
-	
-	
-	// MÉTODO CONSTRUTOR
-	
-	
-	
-	/**
-	 * Private constructor.
-	 */
-	private RemoveAFlightOption() {};
-	
-	
-	
-	// MÉTODOS
-	
-	
-	/**
-	 * Returns the class's title.
+	 * Returns an instance of type RemoveAFlightOption, without creating a new
+	 * one.
 	 * 
-	 * @return The class's title.
-	 */
-	public String getOptionTitle() {
-		return title;
-	}
-	
-	
-	/**
-	 * Returns the class's description.
+	 * <p>
+	 * Note that the instances of this type have no differentiating properties:
+	 * the only instance fields are {@code title} and {@code description} and
+	 * their values are the same for all instances. This method lets you reuse
+	 * an already created instance instead of always creating new ones with the
+	 * {@link #RemoveAFlightOption() constructor}.
+	 * </p>
 	 * 
-	 * @return The class's description.
+	 * @return A instance of type RemoveAFlightOption.
 	 */
-	public String getOptionDescription() {
-		return description;
+	public static RemoveAFlightOption getInstance() {
+		return instance;
 	}
 	
 	
 	
+	// execute()
+	
+	/**
+	 * Removes a plane manually from the list of scheduled flights.
+	 * 
+	 * <p>
+	 * DESCRIPTION TODO
+	 * </p>
+	 */
 	public void execute() {
-		System.out.println( getOptionTitle() );
+		System.out.println( title );
 	};
 	
 }

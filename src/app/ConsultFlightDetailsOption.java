@@ -2,97 +2,85 @@ package app;
 
 
 /**
- * This class represents the option "Consult a flight's details." from the
- * {@code Option Menu} of this app. The {@code title} of this option is
- * "Consult a flight's details." and the {@code description} is a string whose
- * content is the text of the next section.
+ * This class represents the option with the title
+ * {@code Consult a flight's details.}.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
  * </p>
  * <p>
- * By choosing this option, //TODO
+ * The purpose of this class is to perform the action of consulting the details of
+ * a specific flight from the list of scheduled flights in the console. For more information,
+ * read the documentation of method {@link #execute() execute}.
  * </p>
  * 
  * <p style="font-size:16">
  * <b> Implementation notes</b>
  * </p>
  * <ul>
- * <li>The only instance of this class is the static and final field
- * {@code instance}, which is accessible only with the purposes of allowing
- * other classes to store an instance of this type in data structures and
- * calling the method {@code execute()}.</br> There is no utility in having more
- * instances of this type since they would have no differentiating properties:
- * all fields of this class are static and final.</li>
- * <li>This class's method {@code execute()} is not static so that calls of the
- * method {@code execute()} using variables of type {@link Option} can be
- * resolved using dynamic binding.</li>
+ * <li>Instances of this class are immutable.</li>
+ * <li>All instances of this class share the same {@code title} and
+ * {@code description}.
  * </ul>
  *
  * @author Eva Gomes
  * @author Hugo Leal
  * @author Lucas Andrade
  */
-public class ConsultFlightDetailsOption implements Option
+public class ConsultFlightDetailsOption extends Option
 {
 	
-	// CAMPOS DA CLASSE
+	
+	// CAMPO DA CLASE
 	
 	/**
-	 * The title of this option.
+	 * An instance of type ConsultFlightDetailsOption.
 	 */
-	private static String title = "Consult a flight's details.";
+	private static ConsultFlightDetailsOption instance = new ConsultFlightDetailsOption();
+	
+	
+	
+	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	
 	
 	/**
-	 * A description of this option. It will be used by options whose purpose is
-	 * to clarify the user about this option's utility or usage.
+	 * Creates a new instance of type ConsultFlightDetailsOption and sets up the final
+	 * values of the fields {@code title} and {@code description}.
 	 */
-	private static String description = "d";
+	public ConsultFlightDetailsOption() {
+		super( "Consult a flight's details.", "d" );
+	};
 	
 	/**
-	 * The only instance of this class's type.
-	 */
-	public static final ConsultFlightDetailsOption instance = new ConsultFlightDetailsOption();
-	
-	
-	
-	// MÉTODO CONSTRUTOR
-	
-	
-	
-	/**
-	 * Private constructor.
-	 */
-	private ConsultFlightDetailsOption() {};
-	
-	
-	
-	// MÉTODOS
-	
-	
-	/**
-	 * Returns the class's title.
+	 * Returns an instance of type ConsultFlightDetailsOption, without creating a new one.
 	 * 
-	 * @return The class's title.
-	 */
-	public String getOptionTitle() {
-		return title;
-	}
-	
-	
-	/**
-	 * Returns the class's description.
+	 * <p>
+	 * Note that the instances of this type have no differentiating properties:
+	 * the only instance fields are {@code title} and {@code description} and
+	 * their values are the same for all instances. This method lets you reuse
+	 * an already created instance instead of always creating new ones with the
+	 * {@link #ConsultFlightDetailsOption() constructor}.
+	 * </p>
 	 * 
-	 * @return The class's description.
+	 * @return A instance of type ConsultFlightDetailsOption.
 	 */
-	public String getOptionDescription() {
-		return description;
+	public static ConsultFlightDetailsOption getInstance() {
+		return instance;
 	}
 	
 	
 	
+	// execute()
+	
+	/**
+	 * Consults the details of a specific flight.
+	 * 
+	 * <p>
+	 * DESCRIPTION TODO
+	 * </p>
+	 */
 	public void execute() {
-		System.out.println( getOptionTitle() );
+		System.out.println( title );
 	};
 	
 }

@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -163,7 +165,7 @@ public class ReadListOfFlights {
 	private Calendar getDate(String date)
 	{
 		Integer year = Integer.parseInt(date.substring(0,4));
-		Integer month = Integer.parseInt(date.substring(5,7));
+		Integer month = Integer.parseInt(date.substring(5,7)) - 1;
 		Integer day = Integer.parseInt(date.substring(8,10));
 		Integer hour = Integer.parseInt(date.substring(11,13));
 		Integer minute = Integer.parseInt(date.substring(14));
@@ -187,8 +189,9 @@ public class ReadListOfFlights {
 	{
 		FlightPlan plan = new FlightPlan(dateTakeOff, dateLanding);
 		
-		Calendar dateOld = dateTakeOff.getInstance();
-		dateOld.add(12, takeOff);
+		Calendar dateOld = defensiveCopyOfTheDate(dateTakeOff);
+
+		dateOld.add(Calendar.MINUTE, takeOff);
 		
 		AirCorridorInTime gainingAltitude = new AirCorridorInTime(dateTakeOff, dateOld, null);
 		plan.addEvent(gainingAltitude);
@@ -198,7 +201,7 @@ public class ReadListOfFlights {
 		AltitudeCorridor corr = new AltitudeCorridor(altMin, altMax);
 		Calendar dateNew;
 		
-		while (true)
+		while (tokenizer.hasMoreTokens())
 		{
 			dateNew = getDate(tokenizer.nextToken());
 			altMin = Double.parseDouble(tokenizer.nextToken());
@@ -207,22 +210,17 @@ public class ReadListOfFlights {
 			AirCorridorInTime airCorridor = new AirCorridorInTime(dateOld, dateNew, corr);
 			plan.addEvent(airCorridor);
 			
-			corr = new AltitudeCorridor(altMin, altMin);
-			dateOld = dateNew;
+			corr = new AltitudeCorridor(altMin, altMax);
+			dateOld = defensiveCopyOfTheDate(dateNew);
 			
-			if (tokenizer.hasMoreTokens())
-			{
-				Calendar dateOldBeforeSwitch = dateOld.getInstance();
-				dateOld.add(12, switchCorridor);
-				AirCorridorInTime switchCorridorEvent = new AirCorridorInTime(dateOldBeforeSwitch, dateOld, null);
-				plan.addEvent(switchCorridorEvent);
-			}
-			else
-				break;
+			Calendar dateOldBeforeSwitch = defensiveCopyOfTheDate(dateOld);
+			dateOld.add(Calendar.MINUTE, switchCorridor);
+			AirCorridorInTime switchCorridorEvent = new AirCorridorInTime(dateOldBeforeSwitch, dateOld, null);
+			plan.addEvent(switchCorridorEvent);
 		}
 		
-		Calendar dateLandingMinusLanding = dateLanding.getInstance();
-		dateLandingMinusLanding.add(12, - land);
+		Calendar dateLandingMinusLanding = defensiveCopyOfTheDate(dateLanding);
+		dateLandingMinusLanding.add(Calendar.MINUTE, - land);
 		AirCorridorInTime lastCorridor = new AirCorridorInTime(dateOld, dateLandingMinusLanding, corr);
 		AirCorridorInTime landingEvent = new AirCorridorInTime(dateLandingMinusLanding, dateLanding, null);
 		
@@ -233,5 +231,11 @@ public class ReadListOfFlights {
 	}
 	
 	
-	
+	private static Calendar defensiveCopyOfTheDate(Calendar dateToCopy)
+	{
+		Date aux = dateToCopy.getTime();
+		Calendar newDate = new GregorianCalendar();
+		newDate.setTime(aux);
+		return newDate;
+	}
 }

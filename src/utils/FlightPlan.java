@@ -1,4 +1,6 @@
 package utils;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -85,7 +87,7 @@ public class FlightPlan {
 			AirCorridorInTime corridor = corridors.get(i);
 			if (time.compareTo(corridor.getStartingHour()) >= 0 && time.compareTo(corridor.getEndingHour()) <= 0)
 			{
-				return corridors.get(i).getCorridor();
+				return corridor.getCorridor();
 			}
 		}
 		return null;

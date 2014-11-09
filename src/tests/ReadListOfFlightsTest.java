@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import utils.Airliner;
 import utils.Airship;
+import utils.AltitudeCorridor;
 import utils.Database;
 import utils.FlightPlan;
 import utils.GeographicalPosition;
@@ -57,17 +58,17 @@ public class ReadListOfFlightsTest {
 		Calendar takeOff = transport.getTakeOffDate();
 		Calendar landing = transport.getLandingDate();
 		
-		assertEquals(2014, takeOff.get(1));
-		assertEquals(11, takeOff.get(2));
-		assertEquals(6, takeOff.get(5));
-		assertEquals(9, takeOff.get(11));
-		assertEquals(22, takeOff.get(12));
+		assertEquals(2014, takeOff.get(Calendar.YEAR));
+		assertEquals(11 - 1, takeOff.get(Calendar.MONTH));
+		assertEquals(6, takeOff.get(Calendar.DAY_OF_MONTH));
+		assertEquals(9, takeOff.get(Calendar.HOUR_OF_DAY));
+		assertEquals(22, takeOff.get(Calendar.MINUTE));
 		
-		assertEquals(2014, landing.get(1));
-		assertEquals(11, landing.get(2));
-		assertEquals(6, landing.get(5));
-		assertEquals(11, landing.get(11));
-		assertEquals(12, landing.get(12));
+		assertEquals(2014, landing.get(Calendar.YEAR));
+		assertEquals(11 - 1, landing.get(Calendar.MONTH));
+		assertEquals(6, landing.get(Calendar.DAY_OF_MONTH));
+		assertEquals(11, landing.get(Calendar.HOUR_OF_DAY));
+		assertEquals(12, landing.get(Calendar.MINUTE));
 	}
 	
 	@Test
@@ -78,17 +79,17 @@ public class ReadListOfFlightsTest {
 		Calendar takeOff = airliner.getTakeOffDate();
 		Calendar landing = airliner.getLandingDate();
 		
-		assertEquals(2014, takeOff.get(1));
-		assertEquals(11, takeOff.get(2));
-		assertEquals(6, takeOff.get(5));
-		assertEquals(11, takeOff.get(11));
-		assertEquals(3, takeOff.get(12));
+		assertEquals(2014, takeOff.get(Calendar.YEAR));
+		assertEquals(11 - 1, takeOff.get(Calendar.MONTH));
+		assertEquals(6, takeOff.get(Calendar.DAY_OF_MONTH));
+		assertEquals(11, takeOff.get(Calendar.HOUR_OF_DAY));
+		assertEquals(3, takeOff.get(Calendar.MINUTE));
 		
-		assertEquals(2014, landing.get(1));
-		assertEquals(11, landing.get(2));
-		assertEquals(6, landing.get(5));
-		assertEquals(15, landing.get(11));
-		assertEquals(43, landing.get(12));
+		assertEquals(2014, landing.get(Calendar.YEAR));
+		assertEquals(11 - 1, landing.get(Calendar.MONTH));
+		assertEquals(6, landing.get(Calendar.DAY_OF_MONTH));
+		assertEquals(15, landing.get(Calendar.HOUR_OF_DAY));
+		assertEquals(43, landing.get(Calendar.MINUTE));
 	}
 	
 	@Test
@@ -99,17 +100,17 @@ public class ReadListOfFlightsTest {
 		Calendar takeOff = airliner.getTakeOffDate();
 		Calendar landing = airliner.getLandingDate();
 		
-		assertEquals(2014, takeOff.get(1));
-		assertEquals(11, takeOff.get(2));
-		assertEquals(6, takeOff.get(5));
-		assertEquals(14, takeOff.get(11));
-		assertEquals(57, takeOff.get(12));
+		assertEquals(2014, takeOff.get(Calendar.YEAR));
+		assertEquals(11 - 1, takeOff.get(Calendar.MONTH));
+		assertEquals(6, takeOff.get(Calendar.DAY_OF_MONTH));
+		assertEquals(14, takeOff.get(Calendar.HOUR_OF_DAY));
+		assertEquals(57, takeOff.get(Calendar.MINUTE));
 		
-		assertEquals(2014, landing.get(1));
-		assertEquals(11, landing.get(2));
-		assertEquals(6, landing.get(5));
-		assertEquals(19, landing.get(11));
-		assertEquals(48, landing.get(12));
+		assertEquals(2014, landing.get(Calendar.YEAR));
+		assertEquals(11 - 1, landing.get(Calendar.MONTH));
+		assertEquals(6, landing.get(Calendar.DAY_OF_MONTH));
+		assertEquals(19, landing.get(Calendar.HOUR_OF_DAY));
+		assertEquals(48, landing.get(Calendar.MINUTE));
 	}
 	
 	@Test
@@ -120,17 +121,17 @@ public class ReadListOfFlightsTest {
 		Calendar takeOff = jet.getTakeOffDate();
 		Calendar landing = jet.getLandingDate();
 		
-		assertEquals(2014, takeOff.get(1));
-		assertEquals(11, takeOff.get(2));
-		assertEquals(6, takeOff.get(5));
-		assertEquals(20, takeOff.get(11));
-		assertEquals(34, takeOff.get(12));
+		assertEquals(2014, takeOff.get(Calendar.YEAR));
+		assertEquals(11 - 1, takeOff.get(Calendar.MONTH));
+		assertEquals(6, takeOff.get(Calendar.DAY_OF_MONTH));
+		assertEquals(20, takeOff.get(Calendar.HOUR_OF_DAY));
+		assertEquals(34, takeOff.get(Calendar.MINUTE));
 		
-		assertEquals(2014, landing.get(1));
-		assertEquals(11, landing.get(2));
-		assertEquals(7, landing.get(5));
-		assertEquals(4, landing.get(11));
-		assertEquals(43, landing.get(12));
+		assertEquals(2014, landing.get(Calendar.YEAR));
+		assertEquals(11 - 1, landing.get(Calendar.MONTH));
+		assertEquals(7, landing.get(Calendar.DAY_OF_MONTH));
+		assertEquals(4, landing.get(Calendar.HOUR_OF_DAY));
+		assertEquals(43, landing.get(Calendar.MINUTE));
 	}
 	
 	@Test
@@ -141,17 +142,17 @@ public class ReadListOfFlightsTest {
 		Calendar takeOff = cargo.getTakeOffDate();
 		Calendar landing = cargo.getLandingDate();
 		
-		assertEquals(2014, takeOff.get(1));
-		assertEquals(11, takeOff.get(2));
-		assertEquals(6, takeOff.get(5));
-		assertEquals(21, takeOff.get(11));
-		assertEquals(38, takeOff.get(12));
+		assertEquals(2014, takeOff.get(Calendar.YEAR));
+		assertEquals(11 - 1, takeOff.get(Calendar.MONTH));
+		assertEquals(6, takeOff.get(Calendar.DAY_OF_MONTH));
+		assertEquals(21, takeOff.get(Calendar.HOUR_OF_DAY));
+		assertEquals(38, takeOff.get(Calendar.MINUTE));
 		
-		assertEquals(2014, landing.get(1));
-		assertEquals(11, landing.get(2));
-		assertEquals(7, landing.get(5));
-		assertEquals(4, landing.get(11));
-		assertEquals(12, landing.get(12));
+		assertEquals(2014, landing.get(Calendar.YEAR));
+		assertEquals(11 - 1, landing.get(Calendar.MONTH));
+		assertEquals(7, landing.get(Calendar.DAY_OF_MONTH));
+		assertEquals(4, landing.get(Calendar.HOUR_OF_DAY));
+		assertEquals(12, landing.get(Calendar.MINUTE));
 	}
 	
 	@Test
@@ -162,17 +163,17 @@ public class ReadListOfFlightsTest {
 		Calendar takeOff = cargo.getTakeOffDate();
 		Calendar landing = cargo.getLandingDate();
 		
-		assertEquals(2014, takeOff.get(1));
-		assertEquals(11, takeOff.get(2));
-		assertEquals(7, takeOff.get(5));
-		assertEquals(0, takeOff.get(11));
-		assertEquals(0, takeOff.get(12));
+		assertEquals(2014, takeOff.get(Calendar.YEAR));
+		assertEquals(11 - 1, takeOff.get(Calendar.MONTH));
+		assertEquals(7, takeOff.get(Calendar.DAY_OF_MONTH));
+		assertEquals(0, takeOff.get(Calendar.HOUR_OF_DAY));
+		assertEquals(0, takeOff.get(Calendar.MINUTE));
 		
-		assertEquals(2014, landing.get(1));
-		assertEquals(11, landing.get(2));
-		assertEquals(7, landing.get(5));
-		assertEquals(4, landing.get(11));
-		assertEquals(22, landing.get(12));
+		assertEquals(2014, landing.get(Calendar.YEAR));
+		assertEquals(11 - 1, landing.get(Calendar.MONTH));
+		assertEquals(7, landing.get(Calendar.DAY_OF_MONTH));
+		assertEquals(4, landing.get(Calendar.HOUR_OF_DAY));
+		assertEquals(22, landing.get(Calendar.MINUTE));
 	}
 	
 	@Test
@@ -255,14 +256,102 @@ public class ReadListOfFlightsTest {
 		assertEquals(24, ((PrivateJet)data.get("xptofligth04")).getPassengersNumber());
 	}
 	
-	@Test
-	public void shouldReturnTheRightObservationOf1()
+	@Test 
+	public void shouldReturnTheObservationThatTheAirplaneHasAlreadyLanded()
 	{
-		Airship airliner = data.get("xptofligth01");
+		assertEquals("The airplane has already landed.", data.get("xptofligth01").getObservations());
+	}
+	
+	@Test
+	public void shouldReturnTheRightCorridorFor1()
+	{
+		Airship transport = data.get("xptofligth01");
+		FlightPlan plan = transport.getPlan();
+		
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 9, 25)));
+		assertEquals(11500, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 10, 30)).getUpperLimit(), 0.01);
+		assertEquals(10500, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 10, 30)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 10, 34)));
+		assertEquals(12000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 10, 40)).getUpperLimit(), 0.01);
+		assertEquals(11000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 10, 40)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 11, 11)));
+	}
+	
+	@Test
+	public void shouldReturnTheRightCorridorFor2()
+	{
+		Airship airliner = data.get("xptofligth02");
 		FlightPlan plan = airliner.getPlan();
 		
-	//	plan.getCorridorAtTime(new GregorianCalendar());
-		assertEquals("", airliner.getObservations());
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 11, 4)));
+		assertEquals(11000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 12, 00)).getUpperLimit(), 0.01);
+		assertEquals(10500, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 12, 00)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 12, 10)));
+		assertEquals(13000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 12, 59)).getUpperLimit(), 0.01);
+		assertEquals(12000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 12, 59)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 13, 01)));
+		assertEquals(17000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 13, 40)).getUpperLimit(), 0.01);
+		assertEquals(15000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 13, 40)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 15, 42)));
+	}
+	
+	@Test
+	public void shouldReturnTheRightCorridorFor3()
+	{
+		Airship airliner = data.get("xptofligth03");
+		FlightPlan plan = airliner.getPlan();
 		
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 14, 58)));
+		assertEquals(11500, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 16, 00)).getUpperLimit(), 0.01);
+		assertEquals(10500, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 16, 00)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 12, 04)));
+		assertEquals(12000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 19, 00)).getUpperLimit(), 0.01);
+		assertEquals(11000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 19, 00)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 19, 47)));
+	}
+	
+	@Test
+	public void shouldReturnTheRightCorridorFor4()
+	{
+		Airship jet = data.get("xptofligth04");
+		FlightPlan plan = jet.getPlan();
+		
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 20, 35)));
+		assertEquals(11000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 23, 59)).getUpperLimit(), 0.01);
+		assertEquals(10500, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 23, 59)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 0, 03)));
+		assertEquals(13000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 4, 00)).getUpperLimit(), 0.01);
+		assertEquals(12000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 4, 00)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 4, 42)));
+	}
+	
+	@Test
+	public void shouldReturnTheRightCorridorFor5()
+	{
+		Airship cargo = data.get("xptofligth05");
+		FlightPlan plan = cargo.getPlan();
+		
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 21, 39)));
+		assertEquals(11500, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 23, 56)).getUpperLimit(), 0.01);
+		assertEquals(10500, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 6, 23, 56)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 0, 0)));
+		assertEquals(12000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 3, 00)).getUpperLimit(), 0.01);
+		assertEquals(11000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 3, 00)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 4, 11)));
+	}
+	
+	@Test
+	public void shouldReturnTheRightCorridorFor6()
+	{
+		Airship cargo = data.get("xptofligth06");
+		FlightPlan plan = cargo.getPlan();
+		
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 0, 1)));
+		assertEquals(11500, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 2, 0)).getUpperLimit(), 0.01);
+		assertEquals(10500, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 2, 0)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 2, 4)));
+		assertEquals(12000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 4, 00)).getUpperLimit(), 0.01);
+		assertEquals(11000, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 4, 00)).getLowerLimit(), 0.01);
+		assertEquals(null, plan.getCorridorAtTime(new GregorianCalendar(2014, 10, 7, 4, 21)));
 	}
 }

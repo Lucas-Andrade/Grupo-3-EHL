@@ -1,4 +1,6 @@
 package utils;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -162,9 +164,9 @@ public abstract class Airship {
 	{
 		Calendar now = new GregorianCalendar();
 		
-		if (now.compareTo(getTakeOffDate()) <= 0)
+		if (now.compareTo(getTakeOffDate()) < 0)
 			return "The airplane has not taken off yet.";
-		if (now.compareTo(getLandingDate()) >= 0)
+		if (now.compareTo(getLandingDate()) > 0)
 			return "The airplane has already landed.";
 		
 		int dateComparison = now.compareTo((flightPlan.getFirstEvent()).getEndingHour());

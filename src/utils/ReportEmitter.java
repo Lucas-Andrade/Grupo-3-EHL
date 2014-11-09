@@ -24,7 +24,8 @@ import java.util.Set;
 public class ReportEmitter {
 	
 	String[] latestReport;
-	String[] unrecognisedID;
+	String unrecognisedID;
+	String emptyFields;
 	
 	/**
 	 * emits a report that shows the flight ID and geographic position of all the known airplanes
@@ -34,7 +35,11 @@ public class ReportEmitter {
 	 */
 	public String[] reportAll(Map<String, Airship> database)
 	{
-		//chamar o método que o Hugo está a fazer
+		ReadAirplanesCoordinates reader = new ReadAirplanesCoordinates();
+		reader.readFromFile();
+		
+		unrecognisedID = reader.getunrecognizedFlights();
+		emptyFields = reader.getEmptyFields();
 		
 		Calendar now = new GregorianCalendar();
 		
@@ -140,7 +145,7 @@ public class ReportEmitter {
 	 * reports the airplanes that were detected and do not have a unrecognized/valid flight ID
 	 * @return an array of strings with the airplanes without a valid ID
 	 */
-	public String[] reportAirplanesWithUnknownFlightID()
+	public String reportAirplanesWithUnknownFlightID()
 	{
 		return unrecognisedID;
 	}
@@ -152,7 +157,48 @@ public class ReportEmitter {
 	 */
 	public void reportAirplanesWithUnknownFlightIDToTxt() throws IOException
 	{
-		writeToTxt(unrecognisedID, "unrecognisedIDReport");
+		String[] newString = new String[1];
+		newString[0] = unrecognisedID;
+		
+		writeToTxt(newString, "unrecognisedIDReport");
+	}
+	
+	/**
+	 * @return the last report that was created (does not make a new, updated report)
+	 */
+	public String[] getLastReport()
+	{
+		return latestReport;
+	}
+	
+	/**
+	 * writes into a text file the last report that was created (does not make a new, updated report)
+	 * @throws IOException
+	 */
+	public void lastReportToTxt() throws IOException
+	{
+		writeToTxt(latestReport, "allReport");
+	}
+	
+	/**
+	 * reports if there were misread lines
+	 * @return a string with the misreadLines
+	 */
+	public String reportemptyFields()
+	{
+		return emptyFields;
+	}
+	
+	/**
+	 * reports if there were misread lines
+	 * @throws IOException
+	 */
+	public void reportemptyFieldsToTxt() throws IOException
+	{
+		String[] newString = new String[1];
+		newString[0] = emptyFields;
+		
+		writeToTxt(newString, "emptyFields");
 	}
 	
 	/**

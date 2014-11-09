@@ -25,6 +25,17 @@ public class ReadAirplanesCoordinates {
  * Updates the new coordinates in the airplane.
  * If this method doesn't find the id of a plane in database it will save the information in the String unrecognizedFlight
  * If this method doesn't read the 4 parameters (id, latitude, longitude and altitude) in a line it will save the number of the line
+ */
+	public void readFromFile()
+	{
+		readFromFile(sourceOfFlights);
+	}
+	
+/**
+ * Reads the airplaine's id and coordinates from a file, converts the data of id in String and the coordinates in doubles
+ * Updates the new coordinates in the airplane.
+ * If this method doesn't find the id of a plane in database it will save the information in the String unrecognizedFlight
+ * If this method doesn't read the 4 parameters (id, latitude, longitude and altitude) in a line it will save the number of the line
  * @param sourceOfFlights file that has the new airplanes coordinates
  */
 	public void readFromFile(String sourceOfFlights){

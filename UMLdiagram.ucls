@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class-diagram version="1.1.7" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
-  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+<class-diagram version="1.1.7" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
+  associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" language="java" name="utils.AirCorridorInTime" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/AirCorridorInTime.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="829" y="472"/>    
@@ -39,7 +39,7 @@
   </class>  
   <class id="5" language="java" name="utils.AltitudeComparator" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/AltitudeComparator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="447" y="1975"/>    
+    <position height="-1" width="-1" x="531" y="1771"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -138,7 +138,7 @@
   </class>  
   <class id="16" language="java" name="utils.ReadAirplanesCoordinates" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/ReadAirplanesCoordinates.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="912" y="1728"/>    
+    <position height="-1" width="-1" x="530" y="1962"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -147,7 +147,7 @@
   </class>  
   <class id="17" language="java" name="utils.ReadListOfFlights" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/ReadListOfFlights.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="730" y="1728"/>    
+    <position height="-1" width="-1" x="824" y="1750"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -156,7 +156,7 @@
   </class>  
   <class id="18" language="java" name="utils.ReportEmitter" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/ReportEmitter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="473" y="1789"/>    
+    <position height="-1" width="-1" x="813" y="2021"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -172,103 +172,126 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="20" language="java" name="utils.WriteReportFile" project="AirTrafficControl" 
-    file="/AirTrafficControl/src/utils/WriteReportFile.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="721" y="1832"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <generalization id="21">    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="2"/>  
-  </generalization>  
-  <association id="22">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="23" name="altitude"/>      
-      <multiplicity id="24" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="25">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="26" name="corridors"/>      
-      <multiplicity id="27" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="28">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="29" name="lastKnownGeograficalPositions"/>      
-      <multiplicity id="30" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="31">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <generalization id="32">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="33">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="34" name="latitude"/>      
-      <multiplicity id="35" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="12" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="36">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="37" name="longitude"/>      
-      <multiplicity id="38" minimum="0" maximum="1"/>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="39">    
-    <end type="SOURCE" refId="19"/>    
-    <end type="TARGET" refId="14"/>  
-  </generalization>  
-  <generalization id="40">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <association id="41">    
+  <association id="20">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="42" name="corridor"/>      
-      <multiplicity id="43" minimum="0" maximum="1"/>    
+      <attribute id="21" name="corridor">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="22" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <association id="44">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="45" name="database"/>      
-      <multiplicity id="46" minimum="0" maximum="2147483647"/>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="47">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <association id="48">    
+  <association id="23">    
     <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="49" name="flightPlan"/>      
-      <multiplicity id="50" minimum="0" maximum="1"/>    
+      <attribute id="24" name="flightPlan">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="25" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <generalization id="26">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="27">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="28" name="longitude">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="29" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="30">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="31">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="32" name="altitude">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="33" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="4" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="34">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="35">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
+  <association id="36">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="37" name="database">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="38" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="39">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="40" name="lastKnownGeograficalPositions">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="41" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="42">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="43">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="44" name="corridors">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="45" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="46">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="47" name="latitude">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="48" minimum="0" maximum="1">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="12" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="49">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

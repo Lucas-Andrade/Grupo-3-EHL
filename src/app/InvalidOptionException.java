@@ -4,6 +4,10 @@ package app;
 /**
  * Exception thrown when it was received an instance of Option that is invalid
  * in the context of the operation being executed.
+ * 
+ * @author Eva Gomes
+ * @author Hugo Leal
+ * @author Lucas Andrade
  */
 public class InvalidOptionException extends Exception
 {

@@ -2,6 +2,7 @@ package app;
 
 
 import java.util.Scanner;
+import utils.Database;
 
 
 /**
@@ -47,6 +48,11 @@ public class RemoveAFlightOption extends Option
 	 */
 	private String flightID = null;
 	
+	/**
+	 * The database where to search for the flight.
+	 */
+	private Database flightsDB = null;
+	
 	
 	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
 	
@@ -89,22 +95,59 @@ public class RemoveAFlightOption extends Option
 	 * </p>
 	 */
 	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
-		Scanner in = new Scanner( System.in );
-		System.out.print( new StringBuilder(
+		
+		flightsDB = app.FLIGHTSDB;
+		
+		// asks the user for a flightID
+		String instruction = new StringBuilder(
 				" Type the flightID of the flight you want" )
 				.append( "\n to remove and press Enter." )
-				.append( "\n\nRemove flight with flightID: " ).toString() );
-		System.out.print();
+				.append( "\n\nRemove flight with flightID: " ).toString();
+		try
+		{
+			flightID = ConsoleInputTreatment.get_AFlightIDExistentInACertainADatabase_FromUser(
+					RunAirTrafficControlInConsole.TOOLS.FLIGHTSDB, instruction );
+		}
+		catch( DatabaseNotFoundException e )
+		{
+			System.out.println( "DATABASE NOT FOUND!" );
+		}
+		
+		
+		// either abort execution
+		if( flightID == "ABORT" )
+			System.out.print( "ABORTED OPERATION!" );
+		
+		
+		// remove the flight from database
+		else try
+		{
+			System.out.println( execute() );
+		}
+		catch( FlightNotFoundInDatabaseException e )
+		{
+			System.out.print( "FLIGHT NOT FOUND!" );
+		}
+		catch( DatabaseNotFoundException e )
+		{
+			System.out.println( "DATABASE NOT FOUND!" );
+		}
 		
 		
 	}
 	
 	@Override
-	public String execute() throws FlightNotFoundInDatabaseException {
+	public String execute() throws FlightNotFoundInDatabaseException,
+			DatabaseNotFoundException {
 		
+		if( flightsDB == null )
+			throw new DatabaseNotFoundException();
 		if( flightID == null )
 			throw new FlightNotFoundInDatabaseException();
-		return null;
+		
+		flightsDB.removeAirplane( flightID );
+		return "DONE! Flight with identifier " + flightID
+				+ " removed successfully!";
 	};
 	
 }

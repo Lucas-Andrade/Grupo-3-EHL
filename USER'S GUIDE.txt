@@ -20,7 +20,7 @@ The user must write the number of the option in the console and press Enter to p
 
 
 
-DETAILED DESCRIPTION OF THE OPTIONS: 
+---------DETAILED DESCRIPTION OF THE OPTIONS---------
 
 
 
@@ -42,3 +42,75 @@ Each flight in the list will be immediately inserted in the app's internal data 
 
 
 ...TODO 
+
+
+
+3. Monitor Air Traffic.
+
+
+
+4. Report altitude transgressions.
+
+
+
+5. Consult a flight's details.
+
+
+
+6. Remove zero-passenger-flights.
+
+
+
+7. Remove a flight manually.
+
+
+This option allows the user to remove one previously inserted flight in the flights' database of this app from that database. The user is asked to introduce in the console the flightID of the flight he wants to remove and then press Enter.
+The app will continue to ask the user to introduce another flightID as long he inserts invalid values (see FAQ "1. What is a valid flightID?" below) or the flightID is not the identifier of a flight stored in the app's flights' database.
+To return to the Options Menu without removing a flight, one must type the message "ABORT" (without the quotation marks) in the console and press Enter.
+
+
+
+8. Configurations.
+
+
+
+9. Help!
+
+
+Prints a message with the instructions to find the USER'S GUIDE txt file for the EHL's AIR TRAFFIC CONTROL app for console.
+
+
+
+10. Exit app.
+
+
+Prints a goodbye message and exists the EHL's AIR TRAFFIC CONTROL app for console.
+
+
+
+-----------------------FAQ---------------------------
+
+
+
+1. What is a valid flightID?
+
+
+A valid flightID is a sequence of alphanumeric characters that can NOT
+- be an empty string ("");
+- contain paragraph characters (\n);
+- contain characters that are not numbers nor letters (!"#$%.:,;- , the space character, etc).
+
+
+
+2.
+
+txt
+
+
+
+-----------------------------------------------------
+
+Thanks for using an EHL app! Bye!
+Copyright (c) 2014, EHL. All rights reserved.
+
+------------------------ END ------------------------

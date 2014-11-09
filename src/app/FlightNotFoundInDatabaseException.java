@@ -14,7 +14,7 @@ public class FlightNotFoundInDatabaseException extends Exception
 {
 	
 	/**
-	 * Constructs a new {@code InexistentFlightException} with {@code null} as
+	 * Constructs a new {@code FlightNotFoundInDatabaseException} with {@code null} as
 	 * its detail message.
 	 */
 	public FlightNotFoundInDatabaseException() {
@@ -22,7 +22,7 @@ public class FlightNotFoundInDatabaseException extends Exception
 	}
 	
 	/**
-	 * Constructs a new {@code InexistentFlightException} with the specified
+	 * Constructs a new {@code FlightNotFoundInDatabaseException} with the specified
 	 * detail message.
 	 * 
 	 * @param message

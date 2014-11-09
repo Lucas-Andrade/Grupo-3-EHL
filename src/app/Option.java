@@ -92,12 +92,16 @@ public abstract class Option
 	 * @throws FlightNotFoundInDatabaseException
 	 *             When the method tries to reach a flight in a flights'
 	 *             database that doesn't contain it.
+	 * @throws DatabaseNotFoundException
+	 *             When the method tries to reach a null or inexistent flights'
+	 *             database.
 	 */
 	// * @throws InvalidOptionException
 	// * If the option is invalid or unavailable.
 	// * @throws InvalidOptionNumberException
 	// * If the number of the option is invalid.
-	public abstract String execute() throws FlightNotFoundInDatabaseException; // throws
+	public abstract String execute() throws FlightNotFoundInDatabaseException,
+			DatabaseNotFoundException; // throws
 	// InvalidOptionException,InvalidOptionNumberException;
 	
 	

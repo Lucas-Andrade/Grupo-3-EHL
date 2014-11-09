@@ -1,11 +1,8 @@
 package utils;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -230,7 +227,11 @@ public class ReadListOfFlights {
 		return plan;
 	}
 	
-	
+	/**
+	 * makes a defensive copy of the calenda, so that when the copy is altered, the original is not
+	 * @param dateToCopy - the date we want to copy
+	 * @return the copied date
+	 */
 	private static Calendar defensiveCopyOfTheDate(Calendar dateToCopy)
 	{
 		Date aux = dateToCopy.getTime();

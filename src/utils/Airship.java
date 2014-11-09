@@ -1,11 +1,7 @@
 package utils;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Creates an abstract class that envelops all the airplanes. 
@@ -50,6 +46,16 @@ public abstract class Airship {
 	public GeographicalPosition getGeographicPosition()
 	{
 		return lastKnownGeograficalPositions.getFirst();
+	}
+	
+	/**
+	 * all the last known geographic positions of the aircraft
+	 * @return an array of objects of type object, where all the known geographic positions of the
+	 * aircraft are saved as GeographicalPosition objects 
+	 */
+	public Object[] getLastKnownGeographicPosition()
+	{
+		return lastKnownGeograficalPositions.toArray();
 	}
 	
 	/**
@@ -132,11 +138,19 @@ public abstract class Airship {
 	 */
 	public String positionToString()
 	{
-		positionWasUpdated = false;
 		StringBuilder builder = new StringBuilder();
 		GeographicalPosition pos = getGeographicPosition();
-		builder.append(flightID).append(" ").append(pos.getLatitude()).append(" ").append(pos.getLongitude()).append(" ").append(pos.getAltitude()).append(" ").append(getObservations());
+		builder.append(flightID).append(" ").append(pos.getLatitude()).append(" ").append(pos.getLongitude())
+		.append(" ").append(pos.getAltitude()).append(" ").append(getObservations());
 		return builder.toString();
+	}
+	
+	/**
+	 * sets positionWasUpdated to false
+	 */
+	protected void setToNotUpdated()
+	{
+		positionWasUpdated = false;
 	}
 	
 	/**

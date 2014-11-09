@@ -1,13 +1,13 @@
 package utils;
 
 import java.io.BufferedWriter;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Map;
@@ -33,15 +33,14 @@ public class ReportEmitter {
 	 * @return an array of strings with the information about the flight ID of all the known airplanes
 	 * and their position
 	 */
-	public String[] reportAll(Map<String, Airship> database)
+	public String[] reportAll(Database data, String source)
 	{
+		Map<String, Airship> database = data.getDatabase();
 		ReadAirplanesCoordinates reader = new ReadAirplanesCoordinates();
-		reader.readFromFile();
+		reader.readFromFile(source, data);
 		
 		unrecognisedID = reader.getunrecognizedFlights();
 		emptyFields = reader.getEmptyFields();
-		
-		Calendar now = new GregorianCalendar();
 		
 		Set<String> idSet = database.keySet();
 		Iterator<String> iterator = idSet.iterator();
@@ -51,13 +50,14 @@ public class ReportEmitter {
 		while (iterator.hasNext())
 		{
 			Airship airplane = database.get(iterator.next());
-			if (now.compareTo(airplane.getTakeOffDate()) > 0 && airplane.wasPositionUpdated())
+			if (airplane.wasPositionUpdated())
 			{
 				listToReturn.add(airplane.positionToString());
 			}
 		}
 		
 		int planesNumber = listToReturn.size();
+		
 		String[] arrayToReturn = new String[planesNumber];
 		for (int i = 0; i < planesNumber; i++)
 		{
@@ -73,9 +73,9 @@ public class ReportEmitter {
 	 * saves that report into a file
 	 * @param database - the database where the airplanes are saved
 	 */
-	public void reportAllToTxt(Map<String, Airship> database) throws IOException
+	public void reportAllToTxt(Database database, String source) throws IOException
 	{
-		writeToTxt(reportAll(database), "allReport");
+		writeToTxt(reportAll(database, source), "allReport");
 	}
 	
 	
@@ -85,9 +85,10 @@ public class ReportEmitter {
 	 * @return an array of strings with the flight ID of all the airplanes outside of the corridor
 	 * they should be, at the time this method was called
 	 */
-	public String[] reportAirplanesOutOfCorridor(Map<String, Airship> database)
+	public String[] reportAirplanesOutOfCorridor(Database data)
 	{
-		ArrayList<String> airplanesOut = new ArrayList<>();
+		Map<String, Airship> database = data.getDatabase();
+		ArrayList<Airship> airplanesOut = new ArrayList<>();
 		
 		Set<String> idSet = database.keySet();
 		Iterator<String> iterator = idSet.iterator();
@@ -99,13 +100,15 @@ public class ReportEmitter {
 			double altitude = airplane.getGeographicPosition().getAltitude();
 			
 			if(altitude < corridor.getLowerLimit() || altitude > corridor.getUpperLimit())
-				airplanesOut.add(airplane.getFlightID());
+				airplanesOut.add(airplane);
 		}
+		
+		Collections.sort(airplanesOut, new AltitudeComparator());
 		
 		int transgressorsNumber = airplanesOut.size();
 		String[] arrayOfAirplanesOut = new String[transgressorsNumber];
 		for (int i = 0; i < transgressorsNumber; i++)
-			arrayOfAirplanesOut[i] = airplanesOut.get(i);
+			arrayOfAirplanesOut[i] = airplanesOut.get(i).getFlightID();
 		
 		return arrayOfAirplanesOut;
 	}
@@ -116,7 +119,7 @@ public class ReportEmitter {
 	 * @param database - the database where the airplanes are saved
 	 * @throws IOException
 	 */
-	public void reportAirplanesOutOfCorridorToTxt(Map<String, Airship> database) throws IOException
+	public void reportAirplanesOutOfCorridorToTxt(Database database) throws IOException
 	{
 		writeToTxt(reportAirplanesOutOfCorridor(database), "outOfCorridorReport");
 	}

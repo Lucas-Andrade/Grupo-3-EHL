@@ -26,9 +26,9 @@ public class ReadAirplanesCoordinates {
  * If this method doesn't find the id of a plane in database it will save the information in the String unrecognizedFlight
  * If this method doesn't read the 4 parameters (id, latitude, longitude and altitude) in a line it will save the number of the line
  */
-	public void readFromFile()
+	public void readFromFile(Database data)
 	{
-		readFromFile(sourceOfFlights);
+		readFromFile(sourceOfFlights, data);
 	}
 	
 /**
@@ -38,17 +38,16 @@ public class ReadAirplanesCoordinates {
  * If this method doesn't read the 4 parameters (id, latitude, longitude and altitude) in a line it will save the number of the line
  * @param sourceOfFlights file that has the new airplanes coordinates
  */
-	public void readFromFile(String sourceOfFlights){
+	public void readFromFile(String sourceOfFlights, Database data){
 
 		BufferedReader reader;
 		try {
 			reader = new BufferedReader(new FileReader(sourceOfFlights));
-
+			
+			data.setAllAirplanesToNotUpdated();
 			emptyFields = "";
 			unrecognizedFlights = "";
 			String delim = " ";
-
-			Database data = new Database();
 
 			String nextLine;		
 			nextLine = reader.readLine();
@@ -67,13 +66,12 @@ public class ReadAirplanesCoordinates {
 
 				if(data.contains(id))
 				{
-					Airship a = data.getAirplane(id);
 					GeographicalPosition newGeoP = new GeographicalPosition(lat, lon, alt);
-					a.updateGeographicPosition(newGeoP);
+					data.getAirplane(id).updateGeographicPosition(newGeoP);
 				}
 
 				else
-					unrecognizedFlights += "Unrecognized flight ID: " + id +"Latitude: " + lat + "Longitude: " + lon + "Altitude: " + alt + "\n";
+					unrecognizedFlights += "Unrecognized flight ID: " + id +" Latitude: " + lat + " Longitude: " + lon + " Altitude: " + alt + "\n";
 
 			}
 			else 

@@ -17,7 +17,6 @@ import utils.CargoAircraft;
 import utils.Database;
 import utils.FlightPlan;
 import utils.GeographicalPosition;
-import utils.PrivateJet;
 import utils.ReportEmitter;
 import utils.Transport;
 
@@ -25,12 +24,13 @@ public class ReportEmitterTest {
 	
 	ReportEmitter rep;
 	Database data;
-	Airliner airlWithZeroPass;
-	Airliner airlWithSameID;
-	Transport transOutsideCorr;
+	Airliner airl1;
+	Airliner airl2;
+	Transport transp;
 	CargoAircraft carg;
 	FlightPlan plan;
 	Map<String, Airship> dataMap;
+	String source = "src/filesToRead/newCoordinatesTest.txt";
 	
 	@Before
 	public void constructAirplanesAndDatabase()
@@ -41,29 +41,50 @@ public class ReportEmitterTest {
 		Calendar date2 = new GregorianCalendar();
 		date2.add(12, 10);
 		
-		AltitudeCorridor corr = new AltitudeCorridor(80, 120);
+		AltitudeCorridor corr = new AltitudeCorridor(10000, 12000);
 		plan = new FlightPlan(date1, date2);
 		plan.addEvent(new AirCorridorInTime(date1, date2, corr));
 		
-		airlWithZeroPass = new Airliner("airl123", new GeographicalPosition(0,0,100), plan, 0);
-		airlWithSameID = new Airliner("airl123", new GeographicalPosition(0,0,100), plan, 200);
-		transOutsideCorr = new Transport("trp123", new GeographicalPosition(0,0,50), plan, false);
-		carg = new CargoAircraft("crg123", new GeographicalPosition(0,0,100), plan);
+		airl1 = new Airliner("mh237", new GeographicalPosition(0,0,100), plan, 0);
+		airl2 = new Airliner("fw321", new GeographicalPosition(0,0,100), plan, 200);
+		transp = new Transport("3456", new GeographicalPosition(0,0,50), plan, false);
+		carg = new CargoAircraft("2345", new GeographicalPosition(0,0,100), plan);
 		
 		data = new Database();
 		
-		data.addAirplane(airlWithZeroPass);
-		data.addAirplane(transOutsideCorr);
+		data.addAirplane(airl1);
+		data.addAirplane(airl2);
+		data.addAirplane(transp);
+		data.addAirplane(carg);
 		
 		dataMap = data.getDatabase();
 	}
 	
 	@Test
+	public void shouldReportAllRegularFlights()
+	{
+		String[] lista = rep.reportAll(data, source);
+		
+		assertEquals("mh237 60.0 120.0 9000.0 WARNING: The airplane is outside of the corridor.", lista[3]);
+		assertEquals("fw321 60.0 100.0 11000.0 ", lista[0]);
+		assertEquals("2345 70.0 20.0 19000.0 WARNING: The airplane is outside of the corridor.", lista[2]);
+		assertEquals("3456 50.0 50.0 13000.0 WARNING: The airplane is outside of the corridor.", lista[1]);
+	}
+	
+	@Test
 	public void shouldReportTheAirplanesOutsideOfTheirCorridors()
 	{
-		String[] airplanesOut = rep.reportAirplanesOutOfCorridor(dataMap);
-		assertEquals(1, airplanesOut.length);
-		assertEquals("trp123", airplanesOut[0]);
+		rep.reportAll(data, source);
+		String[] airplanesOut = rep.reportAirplanesOutOfCorridor(data);
+		
+		assertEquals("mh237", airplanesOut[0]);
+		assertEquals("3456", airplanesOut[1]);
+		assertEquals("2345", airplanesOut[2]);
 	}
 
+	
+	
+	
+	
+	
 }

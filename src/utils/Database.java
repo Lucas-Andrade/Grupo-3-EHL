@@ -133,4 +133,17 @@ public class Database {
 	{
 		return database.containsKey(id);
 	}
+	
+	/**
+	 * Sets the property positionWasUpdated off all the airplanes in the database to false
+	 */
+	protected void setAllAirplanesToNotUpdated()
+	{
+		Set<String> idSet = database.keySet();
+		Iterator<String> iterator = idSet.iterator();
+		while(iterator.hasNext())
+		{
+			database.get(iterator.next()).setToNotUpdated();
+		}
+	}
 }

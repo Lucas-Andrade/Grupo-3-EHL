@@ -1,9 +1,6 @@
 package app;
 
 
-import utils.Database;
-
-
 /**
  * EHL's AIR TRAFFIC CONTROL app for console.
  * <p style="font-size:16">
@@ -80,6 +77,7 @@ import utils.Database;
  * <p>
  * ...TODO
  * </p>
+ * 
  *
  * @author Eva Gomes
  * @author Hugo Leal
@@ -94,38 +92,20 @@ import utils.Database;
  *         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *         </p>
  */
-public class AppForConsole extends App
+public class RunAirTrafficControlInConsole
 {
 	
 	// CAMPOS DA CLASSE
 	
 	
 	/**
-	 * An instance of AppForConsole. The instance used in the entry point of
-	 * this class.
-	 */
-	public static final App appC = new AppForConsole();
-	
-	
-	/**
-	 * The style formatting set up for this app's output.
-	 */
-	public static final ConsoleOutputFormatter STYLIZER = new ConsoleOutputFormatter(
-			'-', 45, 4 );
-	
-	
-	/**
-	 * The flights data base of this app.
-	 */
-	public static final Database flightsDB = new Database();
-	
-	
-	// CONSTRUTOR
-	
-	/**
-	 * Creates an instance of AppForConsole whose {@link App#MAINMENU MAINMENU}
-	 * has {@link OptionsMenu#title title} "Options Menu" and whose
-	 * representation in a String is
+	 * An instance of {@link AirTrafficControlAppForConsoleTools}.
+	 * <p>
+	 * This instance provides:
+	 * <ul>
+	 * <li>a {@link AirTrafficControlAppTools#MAINMENU MAINMENU} with the
+	 * {@link OptionsMenu#title title} {@code Options Menu} and the following
+	 * representation in a String:
 	 * <ol style="font-family:Consolas">
 	 * OPTION MENU
 	 * <li>Add a list of flights from txt file.</li>
@@ -139,73 +119,91 @@ public class AppForConsole extends App
 	 * <li>Help!</li>
 	 * <li>Exit app.</li>
 	 * </ol>
+	 * <li>an empty {@link utils.Database flights' database} and</li>
+	 * <li>a {@link AirTrafficControlAppForConsoleTools#STYLIZER STYLIZER} with
+	 * a {@link ConsoleOutputFormatter#sectionDelimiter section delimiter} that
+	 * is a line filled with a sequence of 45 repetitions of the symbol '-' and
+	 * whose {@link ConsoleOutputFormatter#spaceBetweenSections space between
+	 * sections} is 4 blank lines</li>
+	 * </ul>
+	 * for the app.
+	 * </p>
 	 */
-	public AppForConsole() {
-		super( "Options Menu", AddAListOfFlightsOption.getInstance(),
-				AddAFlightOption.getInstance(), MonitorAirTrafficOption
-						.getInstance(), ReportTransgressionsOption
-						.getInstance(), ConsultFlightDetailsOption
-						.getInstance(),
-				RemoveEmptyAirshipsOption.getInstance(), RemoveAFlightOption
-						.getInstance(), ConfigurationsOption.getInstance(),
-				HelpOption.getInstance(), ExitOption.getInstance() );
-	}
+	public static final AirTrafficControlAppForConsoleTools TOOLS = new AirTrafficControlAppForConsoleTools(
+			"Options Menu", '-', 45, 4, AddAListOfFlightsOption.getInstance(),
+			AddAFlightOption.getInstance(),
+			MonitorAirTrafficOption.getInstance(),
+			ReportTransgressionsOption.getInstance(),
+			ConsultFlightDetailsOption.getInstance(),
+			RemoveEmptyAirshipsOption.getInstance(),
+			RemoveAFlightOption.getInstance(),
+			ConfigurationsOption.getInstance(), HelpOption.getInstance(),
+			ExitOption.getInstance() );
 	
 	
 	
 	// O MÉTODO main
 	
+	/**
+	 * THE ENTRY POINT OF THE APP.
+	 */
 	public static void main( String[] args ) {
 		
 		
 		// WELCOME
 		
-		STYLIZER.printSectionDelimiter();
+		TOOLS.STYLIZER.printSectionDelimiter();
 		System.out.print( "Welcome to the EHL's\n AIR TRAFFIC CONTROL app!" );
-		STYLIZER.printSectionDelimiter();
+		TOOLS.STYLIZER.printSectionDelimiter();
 		
-		boolean runApp = true;
+		
+		boolean runApp = true; // dictates whether the app must return to main
+								// menu after an option has been executed
+		
 		
 		do
 		{
 			
-			// APRESENTAÇAO DO MENU
+			// menu presentation
+			printBeginningOfSection( TOOLS.MAINMENU.menuTitle );
+			System.out.print( TOOLS.MAINMENU.toString() );
 			
-			printBeginningOfSection( appC.MAINMENU.menuTitle );
-			System.out.print( appC.MAINMENU.inAString() );
-			STYLIZER.printSectionDelimiter();
+			
+			// ask the user to choose an option
+			TOOLS.STYLIZER.printSectionDelimiter();
 			String instruction = new StringBuilder(
 					" Type the number of the option you want to" )
 					.append( "\n perform and press Enter." )
-					.append( "\n\nExecute option: " ).toString();
+					.append( "\n\nExecute option number: " ).toString();
 			int selectedOption = ConsoleInputTreatment.getAValidIntFromUser( 1,
-					appC.MAINMENU.numberOfOptions, instruction );
+					TOOLS.MAINMENU.numberOfOptions, instruction );
 			printEndOfSection();
 			
-			// EXECUÇAO DE UMA OPÇAO
+			
+			// option executation
 			try
 			{
-				printBeginningOfSection( appC.MAINMENU
+				printBeginningOfSection( TOOLS.MAINMENU
 						.getOptionTitle( selectedOption ) );
-				runApp = !appC.MAINMENU.executeOptionToConsole( selectedOption );
+				runApp = !TOOLS.MAINMENU.executeOptionToConsole( selectedOption,
+						TOOLS );
 			}
 			catch( InvalidOptionNumberException e )
 			{
 				System.out.println( "INVALID OPTION NUMBER!" );
 			}
-			// catch( InvalidOptionException e )
-			// {System.out.println("INVALID OPTION!");}
 			printEndOfSection();
 			
 		}
 		while( runApp );
 		
 		
-		// FINAL
+		// CREDITS & END
 		
 		System.out.print( "\nCopyright (c) 2014, EHL. All rights reserved.\n" );
-		STYLIZER.printSectionTitle( "end" );
+		TOOLS.STYLIZER.printSectionTitle( "end" );
 	}
+	
 	
 	// MÉTODOS RELACIONADOS COM IMPRESSAO DE SECÇOES
 	
@@ -223,23 +221,24 @@ public class AppForConsole extends App
 		
 		if( sectionTitle == null )
 		{
-			STYLIZER.printSpaceBetweenSections();
-			STYLIZER.printSectionDelimiter();
+			TOOLS.STYLIZER.printSpaceBetweenSections();
+			TOOLS.STYLIZER.printSectionDelimiter();
 		}
 		else
 		{
-			STYLIZER.printSpaceBetweenSections();
-			STYLIZER.printSectionDelimiter();
-			STYLIZER.printSectionTitle( sectionTitle );
-			STYLIZER.printSectionDelimiter();
+			TOOLS.STYLIZER.printSpaceBetweenSections();
+			TOOLS.STYLIZER.printSectionDelimiter();
+			TOOLS.STYLIZER.printSectionTitle( sectionTitle );
+			TOOLS.STYLIZER.printSectionDelimiter();
 		}
 	}
+	
 	
 	/**
 	 * Prints a section delimiter.
 	 */
 	private static void printEndOfSection() {
-		STYLIZER.printSectionDelimiter();
+		TOOLS.STYLIZER.printSectionDelimiter();
 	}
 	
 }

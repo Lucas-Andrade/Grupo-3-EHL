@@ -9,9 +9,10 @@ package app;
  * <b>Description</b>
  * </p>
  * <p>
- * The purpose of this class is to perform the action of consulting the details of
- * a specific flight from the list of scheduled flights in the console. For more information,
- * read the documentation of method {@link #execute() execute}.
+ * The purpose of this class is to perform the action of consulting the details
+ * of a specific flight from the list of scheduled flights in the console. For
+ * more information, read the documentation of method {@link #execute() execute}
+ * .
  * </p>
  * 
  * <p style="font-size:16">
@@ -44,15 +45,16 @@ public class ConsultFlightDetailsOption extends Option
 	
 	
 	/**
-	 * Creates a new instance of type ConsultFlightDetailsOption and sets up the final
-	 * values of the fields {@code title} and {@code description}.
+	 * Creates a new instance of type ConsultFlightDetailsOption and sets up the
+	 * final values of the fields {@code title} and {@code description}.
 	 */
 	public ConsultFlightDetailsOption() {
 		super( "Consult a flight's details.", "d" );
 	};
 	
 	/**
-	 * Returns an instance of type ConsultFlightDetailsOption, without creating a new one.
+	 * Returns an instance of type ConsultFlightDetailsOption, without creating
+	 * a new one.
 	 * 
 	 * <p>
 	 * Note that the instances of this type have no differentiating properties:
@@ -79,7 +81,7 @@ public class ConsultFlightDetailsOption extends Option
 	 * DESCRIPTION TODO
 	 * </p>
 	 */
-	public void executeToConsole() {
+	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
 		System.out.println( title );
 	};
 	

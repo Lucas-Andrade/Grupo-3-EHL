@@ -1,6 +1,9 @@
 package app;
 
 
+import java.util.Scanner;
+
+
 /**
  * This class represents the option with the title
  * {@code Remove a flight manually.} of an Air Traffic Control app.
@@ -9,9 +12,10 @@ package app;
  * <b>Description</b>
  * </p>
  * <p>
- * The purpose of this class is to perform the action of removing a plane
- * manually from the list of scheduled flights. For more information, read the
- * documentation of method {@link #execute() execute}.
+ * The purpose of this class is to perform the action of removing an airship
+ * manually from the {@link AirTrafficControlAppTools app}'s flight's internal
+ * database. For more information, read the documentation of method
+ * {@link #execute() execute} .
  * </p>
  * 
  * <p style="font-size:16">
@@ -38,6 +42,10 @@ public class RemoveAFlightOption extends Option
 	 */
 	private static RemoveAFlightOption instance = new RemoveAFlightOption();
 	
+	/**
+	 * The flightID of the flight to be removed.
+	 */
+	private String flightID = null;
 	
 	
 	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
@@ -80,8 +88,23 @@ public class RemoveAFlightOption extends Option
 	 * DESCRIPTION TODO
 	 * </p>
 	 */
-	public void executeToConsole() {
-		System.out.println( title );
+	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
+		Scanner in = new Scanner( System.in );
+		System.out.print( new StringBuilder(
+				" Type the flightID of the flight you want" )
+				.append( "\n to remove and press Enter." )
+				.append( "\n\nRemove flight with flightID: " ).toString() );
+		System.out.print();
+		
+		
+	}
+	
+	@Override
+	public String execute() throws FlightNotFoundInDatabaseException {
+		
+		if( flightID == null )
+			throw new FlightNotFoundInDatabaseException();
+		return null;
 	};
 	
 }

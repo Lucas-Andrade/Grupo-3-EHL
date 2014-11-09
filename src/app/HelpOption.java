@@ -79,7 +79,7 @@ public class HelpOption extends Option
 	/**
 	 * Prints the message with instructions to find the USER'S GUIDE txt file.
 	 */
-	public void executeToConsole() {
+	public void executeToConsole(AirTrafficControlAppForConsoleTools app) {
 		System.out.println( execute() );
 	}
 	
@@ -89,7 +89,7 @@ public class HelpOption extends Option
 	 * Produces a message with instructions to find the USER'S GUIDE txt file.
 	 */
 	public String execute() {
-		return new StringBuilder( "Enter the AirTrafficControl directory." )
+		return new StringBuilder( "Open the AirTrafficControl directory." )
 				.append( "\nThere you will find a txt file named" )
 				.append( "\n   USER'S GUIDE.txt" )
 				.append( "\nwhich provides a detailed description" )

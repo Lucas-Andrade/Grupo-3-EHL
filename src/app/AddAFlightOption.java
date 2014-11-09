@@ -84,12 +84,13 @@ public class AddAFlightOption extends Option
 	 * DESCRIPTION TODO
 	 * </p>
 	 */
-	public void executeToConsole() {
-		Scanner in=new Scanner(System.in);
-				System.out.println( "Insert the flight's details:" );
+	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
+		Scanner in = new Scanner( System.in );
+		System.out.println( "Insert the flight's details:" );
 		
 		System.out.print( "\nFlightID: " );
-		String flightID=;
+		String flightID = in.nextLine();
+		
 	}
 	
 	/**
@@ -97,7 +98,7 @@ public class AddAFlightOption extends Option
 	 * @return
 	 */
 	public String execute() {
-		//new AirShip(
+		// new AirShip(
 		return null;
 	};
 	

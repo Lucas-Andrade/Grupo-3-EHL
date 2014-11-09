@@ -30,7 +30,7 @@ public class OptionsMenuTest
 		String expectedMenu = "\n1. Help!";
 		
 		// Assert
-		assertTrue( expectedMenu.equals( menuT.inAString() ) );
+		assertTrue( expectedMenu.equals( menuT.toString() ) );
 	}
 	
 	@Test

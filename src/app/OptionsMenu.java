@@ -2,7 +2,7 @@ package app;
 
 
 /**
- * Class whose instances represent a options menu.
+ * Class whose instances represent an options menu.
  * 
  * <p>
  * The last option of an options menu represented by an instance of
@@ -11,13 +11,12 @@ package app;
  * the number of the last option of the menu, it returns {@code true} (all other
  * executions return {@code false}). Yet, in no way the action performed by this
  * option is altered.</br> An example of utility of this feature is to consider
- * an option menu with an exiting option: by making this option the last of the
- * menu, classes that use this options menu receive the information that the
- * exiting option was activated.
+ * an instance of {@link OptionsMenu} with an exiting option: by making this
+ * option the last of the menu, classes that work with this menu receive the
+ * information that the exiting option was activated.
  * </p>
  * <p>
- * The representation in a string of this instances is a numbered list; classes
- * who use an options menu
+ * The representation in a string of this instances is a numbered list.
  * </p>
  * 
  * <p style="font-size:16">
@@ -86,7 +85,7 @@ public class OptionsMenu
 	 * 
 	 * @return A string representation of this menu.
 	 */
-	public String inAString() {
+	public String toString() {
 		
 		StringBuilder menu = new StringBuilder();
 		for( int index = 0; index < options.length; ++index )
@@ -177,13 +176,14 @@ public class OptionsMenu
 	 * @throws InvalidOptionNumberException
 	 *             If {@code numberOfTheOption} is not valid.
 	 */
-	public boolean executeOptionToConsole( int numberOfTheOption )
+	public boolean executeOptionToConsole( int numberOfTheOption,
+			AirTrafficControlAppForConsoleTools app )
 			throws InvalidOptionNumberException {
 		
 		if( numberOfTheOption < 1 || numberOfTheOption > options.length )
 			throw new InvalidOptionNumberException( "INVALID NUMBER OF OPTION!" );
 		
-		options[numberOfTheOption - 1].executeToConsole();
+		options[numberOfTheOption - 1].executeToConsole( app );
 		
 		if( numberOfTheOption == options.length )
 			return true;
@@ -200,11 +200,12 @@ public class OptionsMenu
 	 * @return {@code true} if the option executed is the last of the menu;
 	 *         {@code false} otherwise.
 	 */
-	public boolean executeOptionToConsole( Option option ) {
+	public boolean executeOptionToConsole( Option option,
+			AirTrafficControlAppForConsoleTools app ) {
 		
 		// TODO the throw of InvalidOptionException
 		
-		option.executeToConsole();
+		option.executeToConsole( app );
 		
 		if( option == options[options.length] )
 			return true;

@@ -77,9 +77,11 @@ public abstract class Option
 	/**
 	 * Manages input data needed to perform the action corresponding to the
 	 * option that the class who implemented this method represents and prints
-	 * its output.
+	 * its output. Uses the flights' database and the output formatter of the
+	 * {@AppForConsole}
 	 */
-	public abstract void executeToConsole();
+	public abstract void executeToConsole(
+			AirTrafficControlAppForConsoleTools app );
 	
 	
 	/**
@@ -87,11 +89,77 @@ public abstract class Option
 	 * implemented this method represents.
 	 * 
 	 * @return A string with output from the action.
+	 * @throws FlightNotFoundInDatabaseException
+	 *             When the method tries to reach a flight in a flights'
+	 *             database that doesn't contain it.
 	 */
-//	 * @throws InvalidOptionException
-//	 *             If the option is invalid or unavailable.
-//	 * @throws InvalidOptionNumberException
-//	 *             If the number of the option is invalid.
-	public abstract String execute(); //throws InvalidOptionException,InvalidOptionNumberException;
+	// * @throws InvalidOptionException
+	// * If the option is invalid or unavailable.
+	// * @throws InvalidOptionNumberException
+	// * If the number of the option is invalid.
+	public abstract String execute() throws FlightNotFoundInDatabaseException; // throws
+	// InvalidOptionException,InvalidOptionNumberException;
+	
+	
+	
+	// OVERRIDES PARA METODOS DA CLASSE OBJECT
+	
+	
+	
+	/**
+	 * Returns a hash code value for this.
+	 * 
+	 * @return A hash code value for this.
+	 */
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((description == null) ? 0 : description.hashCode());
+		result = prime * result + ((title == null) ? 0 : title.hashCode());
+		return result;
+	}
+	
+	
+	/**
+	 * Indicates whether {@code obj} is the same as this. The Object {@code obj}
+	 * is said to be "the same as" this if it is an instance of Option with same
+	 * {@link Option#title title} and {@link Option#description description} as
+	 * this.
+	 * 
+	 * @param obj
+	 *            The reference {@link Object} with which to compare this.
+	 * @return {@code true} if this and {@code obj} are the same; {@code false}
+	 *         otherwise.
+	 */
+	@Override
+	public boolean equals( Object obj ) {
+		if( this == obj )
+			return true;
+		if( obj == null )
+			return false;
+		if( getClass() != obj.getClass() )
+			return false;
+		Option other = (Option)obj;
+		if( description == null )
+		{
+			if( other.description != null )
+				return false;
+		}
+		else
+			if( !description.equals( other.description ) )
+				return false;
+		if( title == null )
+		{
+			if( other.title != null )
+				return false;
+		}
+		else
+			if( !title.equals( other.title ) )
+				return false;
+		return true;
+	}
+	
+	
 	
 }

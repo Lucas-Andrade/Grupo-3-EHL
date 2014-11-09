@@ -2,7 +2,8 @@ package app;
 
 
 /**
- * This class represents the option with the title {@code Monitor Air Traffic.} of an Air Traffic Control app.
+ * This class represents the option with the title {@code Monitor Air Traffic.}
+ * of an Air Traffic Control app.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
@@ -80,7 +81,7 @@ public class MonitorAirTrafficOption extends Option
 	 * DESCRIPTION TODO
 	 * </p>
 	 */
-	public void executeToConsole() {
+	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
 		System.out.println( title );
 	};
 	

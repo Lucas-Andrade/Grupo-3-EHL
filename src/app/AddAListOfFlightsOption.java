@@ -3,7 +3,7 @@ package app;
 
 /**
  * This class represents the option with the title
- * {@code Add a list of flights from txt file.}.
+ * {@code Add a list of flights from txt file.} of an Air Traffic Control app.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
@@ -45,15 +45,16 @@ public class AddAListOfFlightsOption extends Option
 	
 	
 	/**
-	 * Creates a new instance of type AddAListOfFlightsOption and sets up the final
-	 * values of the fields {@code title} and {@code description}.
+	 * Creates a new instance of type AddAListOfFlightsOption and sets up the
+	 * final values of the fields {@code title} and {@code description}.
 	 */
 	public AddAListOfFlightsOption() {
 		super( "Add a list of flights from txt file.", "d" );
 	};
 	
 	/**
-	 * Returns an instance of type AddAListOfFlightsOption, without creating a new one.
+	 * Returns an instance of type AddAListOfFlightsOption, without creating a
+	 * new one.
 	 * 
 	 * <p>
 	 * Note that the instances of this type have no differentiating properties:
@@ -81,8 +82,15 @@ public class AddAListOfFlightsOption extends Option
 	 * DESCRIPTION TODO
 	 * </p>
 	 */
-	public void execute() {
+	public void executeToConsole() {
 		System.out.println( title );
+	}
+
+	@Override
+	public String execute() {
+
+
+		return null;
 	};
 	
 }

@@ -1,9 +1,13 @@
 package app;
 
 
+import java.util.Scanner;
+import utils.*;
+
+
 /**
  * This class represents the option with the title
- * {@code Add a flight manually.}.
+ * {@code Add a flight manually.} of an Air Traffic Control app.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
@@ -70,7 +74,8 @@ public class AddAFlightOption extends Option
 	
 	
 	
-	// execute()
+	// ACÇÃO
+	
 	
 	/**
 	 * Adds a plane manually to an already existent list of scheduled flights.
@@ -79,8 +84,21 @@ public class AddAFlightOption extends Option
 	 * DESCRIPTION TODO
 	 * </p>
 	 */
-	public void execute() {
-		System.out.println( title );
+	public void executeToConsole() {
+		Scanner in=new Scanner(System.in);
+				System.out.println( "Insert the flight's details:" );
+		
+		System.out.print( "\nFlightID: " );
+		String flightID=;
+	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public String execute() {
+		//new AirShip(
+		return null;
 	};
 	
 }

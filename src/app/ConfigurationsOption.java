@@ -2,7 +2,7 @@ package app;
 
 
 /**
- * This class represents the option with the title {@code Configurations.}.
+ * This class represents the option with the title {@code Configurations.} of an Air Traffic Control app.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
@@ -80,8 +80,18 @@ public class ConfigurationsOption extends Option
 	 * DESCRIPTION TODO
 	 * </p>
 	 */
-	public void execute() {
+	public void executeToConsole() {
 		System.out.println( title );
+	}
+
+	
+	/**
+	 * 
+	 */
+	@Override
+	public String execute() {
+		// TODO Auto-generated method stub
+		return null;
 	};
 	
 }

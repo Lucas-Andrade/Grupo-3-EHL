@@ -2,14 +2,15 @@ package app;
 
 
 /**
- * This class represents the option with the title {@code Exit app.}.
+ * This class represents the option with the title {@code Exit app.} of an Air
+ * Traffic Control app.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
  * </p>
  * <p>
- * The purpose of this class is to perform the action of exiting the EHL's Air Traffic
- * Control app. For more information, read the documentation of method
+ * The purpose of this class is to perform the action of exiting the EHL's Air
+ * Traffic Control app. For more information, read the documentation of method
  * {@link #execute() execute}.
  * </p>
  * 
@@ -47,7 +48,7 @@ public class ExitOption extends Option
 	 * the fields {@code title} and {@code description}.
 	 */
 	public ExitOption() {
-		super( "Exit app.", "d" );
+		super( "Exit app.", "Produces a goodbye message and exits the app." );
 	};
 	
 	/**
@@ -69,18 +70,29 @@ public class ExitOption extends Option
 	
 	
 	
-	// execute()
+	// ACÇÃO
+	
+	
 	
 	/**
-	 * Exits the Air Traffic Control app.
-	 * 
-	 * <p>
-	 * DESCRIPTION TODO
+	 * Prints a goodbye message to console.
 	 * </p>
 	 */
-	public void execute() {
-		System.out.println( "Exiting the Air Traffic Control app..." );
-		System.out.print( "Thanks for using an EHL app! Bye!" );
+	public void executeToConsole() {
+		System.out.println( execute() );
 	};
+	
+	
+	
+	/**
+	 * Produces a goodbye message.
+	 * 
+	 * @return The goodbye message.
+	 */
+	public String execute() {
+		return "Exiting the Air Traffic Control app..."
+				+ "\nThanks for using an EHL app! Bye!";
+	}
+	
 	
 }

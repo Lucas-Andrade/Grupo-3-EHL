@@ -3,7 +3,7 @@ package app;
 
 /**
  * This class represents the option with the title
- * {@code Consult a flight's details.}.
+ * {@code Consult a flight's details.} of an Air Traffic Control app.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
@@ -79,7 +79,7 @@ public class ConsultFlightDetailsOption extends Option
 	 * DESCRIPTION TODO
 	 * </p>
 	 */
-	public void execute() {
+	public void executeToConsole() {
 		System.out.println( title );
 	};
 	

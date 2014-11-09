@@ -1,8 +1,7 @@
 package app;
 
 
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import utils.Database;
 
 
 /**
@@ -95,42 +94,69 @@ import java.util.Scanner;
  *         MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *         </p>
  */
-public class AppForConsole
+public class AppForConsole extends App
 {
 	
 	// CAMPOS DA CLASSE
 	
-	/**
-	 * The scanner that receives input from the console.
-	 */
-	private static final Scanner IN = new Scanner( System.in );
 	
 	/**
-	 * This app's menu.
+	 * An instance of AppForConsole. The instance used in the entry point of
+	 * this class.
 	 */
-	private static final OptionsMenu MAINMENU = new OptionsMenu(
-			"Options Menu", AddAListOfFlightsOption.getInstance(),
-			AddAFlightOption.getInstance(),
-			MonitorAirTrafficOption.getInstance(),
-			ReportTransgressionsOption.getInstance(),
-			ConsultFlightDetailsOption.getInstance(),
-			RemoveEmptyAirshipsOption.getInstance(),
-			RemoveAFlightOption.getInstance(),
-			ConfigurationsOption.getInstance(), HelpOption.getInstance(),
-			ExitOption.getInstance() );
+	public static final App appC = new AppForConsole();
 	
 	
 	/**
 	 * The style formatting set up for this app's output.
 	 */
-	private static final ConsoleOutputFormatter STYLIZER = new ConsoleOutputFormatter(
+	public static final ConsoleOutputFormatter STYLIZER = new ConsoleOutputFormatter(
 			'-', 45, 4 );
+	
+	
+	/**
+	 * The flights data base of this app.
+	 */
+	public static final Database flightsDB = new Database();
+	
+	
+	// CONSTRUTOR
+	
+	/**
+	 * Creates an instance of AppForConsole whose {@link App#MAINMENU MAINMENU}
+	 * has {@link OptionsMenu#title title} "Options Menu" and whose
+	 * representation in a String is
+	 * <ol style="font-family:Consolas">
+	 * OPTION MENU
+	 * <li>Add a list of flights from txt file.</li>
+	 * <li>Add a flight manually.</li>
+	 * <li>Monitor Air Traffic.</li>
+	 * <li>Report altitude transgressions.</li>
+	 * <li>Consult a flight's details.</li>
+	 * <li>Remove zero-passenger-flights.</li>
+	 * <li>Remove a flight manually.</li>
+	 * <li>Configurations.</li>
+	 * <li>Help!</li>
+	 * <li>Exit app.</li>
+	 * </ol>
+	 */
+	public AppForConsole() {
+		super( "Options Menu", AddAListOfFlightsOption.getInstance(),
+				AddAFlightOption.getInstance(), MonitorAirTrafficOption
+						.getInstance(), ReportTransgressionsOption
+						.getInstance(), ConsultFlightDetailsOption
+						.getInstance(),
+				RemoveEmptyAirshipsOption.getInstance(), RemoveAFlightOption
+						.getInstance(), ConfigurationsOption.getInstance(),
+				HelpOption.getInstance(), ExitOption.getInstance() );
+	}
 	
 	
 	
 	// O MÉTODO main
 	
 	public static void main( String[] args ) {
+		
 		
 		// WELCOME
 		
@@ -145,16 +171,30 @@ public class AppForConsole
 			
 			// APRESENTAÇAO DO MENU
 			
-			printBeginningOfSection( MAINMENU.menuTitle );
-			System.out.print( MAINMENU.inAString() );
+			printBeginningOfSection( appC.MAINMENU.menuTitle );
+			System.out.print( appC.MAINMENU.inAString() );
 			STYLIZER.printSectionDelimiter();
-			int selectedOption = askTheUserForAValidOption();
+			String instruction = new StringBuilder(
+					" Type the number of the option you want to" )
+					.append( "\n perform and press Enter." )
+					.append( "\n\nExecute option: " ).toString();
+			int selectedOption = ConsoleInputTreatment.getAValidIntFromUser( 1,
+					appC.MAINMENU.numberOfOptions, instruction );
 			printEndOfSection();
 			
 			// EXECUÇAO DE UMA OPÇAO
-			
-			printBeginningOfSection( MAINMENU.getOptionTitle( selectedOption ) );
-			runApp = !MAINMENU.executeOption( selectedOption );
+			try
+			{
+				printBeginningOfSection( appC.MAINMENU
+						.getOptionTitle( selectedOption ) );
+				runApp = !appC.MAINMENU.executeOptionToConsole( selectedOption );
+			}
+			catch( InvalidOptionNumberException e )
+			{
+				System.out.println( "INVALID OPTION NUMBER!" );
+			}
+			// catch( InvalidOptionException e )
+			// {System.out.println("INVALID OPTION!");}
 			printEndOfSection();
 			
 		}
@@ -166,80 +206,6 @@ public class AppForConsole
 		System.out.print( "\nCopyright (c) 2014, EHL. All rights reserved.\n" );
 		STYLIZER.printSectionTitle( "end" );
 	}
-	
-	
-	
-	// MÉTODOS RELACIONADOS COM AS OPÇÕES
-	
-	
-	
-	/**
-	 * Returns the number of the option chosen by the user.
-	 * 
-	 * <p>
-	 * Asks the user for a number, corresponding to the action he wants to
-	 * perform from the {@code Option Menu}, until the number inserted by the
-	 * user is valid (meaning, is between 1 and the number corresponding to the
-	 * last option in the {@code Option Menu}) and returns the valid number
-	 * chosen.
-	 * </p>
-	 * 
-	 * @return The number of the option chosen by the user.
-	 */
-	private static int askTheUserForAValidOption() {
-		
-		int selectedOption = 0;
-		while( selectedOption == 0 )
-			try
-			{
-				selectedOption = askTheUserForAnOption();
-			}
-			catch( InputMismatchException e )
-			{
-				System.out.println( "INVALID OPTION!\n" );
-				IN.nextLine(); // limpeza
-			}
-			catch( InvalidOptionNumberException e )
-			{
-				System.out.println( "INVALID OPTION!\n" );
-				IN.nextLine(); // limpeza
-			}
-		return selectedOption;
-	}
-	
-	
-	/**
-	 * Asks the user once for the number of the option from the
-	 * {@code Option Menu} he wants the app to perform.
-	 * 
-	 * @return The number inserted by the user, if it is between 1 and the
-	 *         maximum number of options available in the menu; or 0, if the
-	 *         user inserted an invalid value.
-	 * @throws InputMismatchException
-	 *             If the user inserted something that is not a number in the
-	 *             console.
-	 * @throws InvalidOptionNumberException
-	 *             If the user inserted an invalid number in the console.
-	 */
-	private static int askTheUserForAnOption() throws InputMismatchException,
-			InvalidOptionNumberException {
-		
-		System.out.println( " Type the number of the option you want to" );
-		System.out.println( " perform and press Enter." );
-		System.out.print( "\nExecute option: " );
-		
-		int selectedOption = IN.nextInt(); // throws InputMismatchException if
-											// non-number received
-		
-		if( selectedOption < 1 || selectedOption > MAINMENU.numberOfOptions )
-			throw new InvalidOptionNumberException();
-		
-		IN.nextLine(); // limpeza
-		return selectedOption;
-		
-	}
-	
-	
 	
 	// MÉTODOS RELACIONADOS COM IMPRESSAO DE SECÇOES
 	

@@ -2,9 +2,10 @@ package app;
 
 
 /**
- * Exception thrown when the number introduced by the user, corresponding to the
- * action he wants to perform from the {@code Option Menu}, is not between 1 and
- * the number of the last option in the {@code Option Menu}.
+ * Exception thrown when it was received an invalid number of option (that is
+ * not between 1 and the number of the last option in an {@link OptionsMenu}) in
+ * an operation which involves only the numbers of the options available in a
+ * certain {link OptionsMenu}.
  */
 public class InvalidOptionNumberException extends Exception
 {

@@ -1,0 +1,44 @@
+USER'S GUIDE for the EHL's AIR TRAFFIC CONTROL app for console.
+
+
+
+When launching this app, the user is given access to a first menu: 
+
+OPTION MENU 
+1. Add a list of flights from txt file. 
+2. Add a flight manually. 
+3. Monitor Air Traffic. 
+4. Report altitude transgressions. 
+5. Consult a flight's details. 
+6. Remove zero-passenger-flights. 
+7. Remove a flight manually. 
+8. Configurations. 
+9. Help! 
+10. Exit app. 
+
+The user must write the number of the option in the console and press Enter to proceed. 
+
+
+
+DETAILED DESCRIPTION OF THE OPTIONS: 
+
+
+
+1. Add a list of flights from a text file. 
+
+
+To add a list of flights from a text file, the user is asked to introduce the path and filename of the text file and its expected that the list is organized in the following manner: 
+
+Each and every line has information about one flight only. There must be no empty lines and the first line is already interpreted has containing a flight's information. 
+Information on a line must be written attending to the fact that each word is interpreted as a specific information and words are separated by the character space. Words in a line should be presented in the following manner: 
+First word: the flight ID number or code (it must not contain the space character); 
+Second word: the type of airship used in this flight, it must necessarily be the word "military" or the word "civil" 
+... TODO 
+Each flight in the list will be immediately inserted in the app's internal data base of flights and every flight's detailed information is available to be consulted using the Option5 of the Option Menu until the airship's landing time. After the hour of take-off, the airship's geographic coordinates will also be available for monitoring and tracking transgressions of the established airway corridors. 
+
+
+
+2. Add a flight manually. 
+
+
+...TODO 

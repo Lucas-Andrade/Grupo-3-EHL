@@ -2,15 +2,16 @@ package app;
 
 
 /**
- * This class represents the option with the title {@code Help!}.
+ * This class represents the option with the title {@code Help!} of the EHL's
+ * AIR TRAFFIC CONTROL app for console.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
  * </p>
  * <p>
- * The purpose of this class is to perform the action of printing a detailed
- * description of the options available in the menu to the console. For more
- * information, read the documentation of method {@link #execute() execute}.
+ * The purpose of this class is to perform the action of producing a message
+ * with instructions to find the USER'S GUIDE txt file for the EHL's
+ * AIR TRAFFIC CONTROL app for console.
  * </p>
  * 
  * <p style="font-size:16">
@@ -30,7 +31,7 @@ public class HelpOption extends Option
 {
 	
 	
-	// CAMPO DA CLASE
+	// CAMPOS DA CLASE
 	
 	/**
 	 * An instance of type HelpOption.
@@ -42,12 +43,14 @@ public class HelpOption extends Option
 	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
 	
 	
+	
 	/**
 	 * Creates a new instance of type HelpOption and sets up the final values of
 	 * the fields {@code title} and {@code description}.
 	 */
 	public HelpOption() {
-		super( "Help!", "d" );
+		super( "Help!",
+				"Produces a message with instructions to find the USER'S GUIDE txt file." );
 	};
 	
 	/**
@@ -69,18 +72,29 @@ public class HelpOption extends Option
 	
 	
 	
-	// execute()
+	// ACÇÃO
+	
+	
 	
 	/**
-	 * Prints a detailed description of the options available in the menu to the
-	 * console.
-	 * 
-	 * <p>
-	 * DESCRIPTION TODO
-	 * </p>
+	 * Prints the message with instructions to find the USER'S GUIDE txt file.
 	 */
-	public void execute() {
-		System.out.println( title );
+	public void executeToConsole() {
+		System.out.println( execute() );
+	}
+	
+	
+	
+	/**
+	 * Produces a message with instructions to find the USER'S GUIDE txt file.
+	 */
+	public String execute() {
+		return new StringBuilder( "Enter the AirTrafficControl directory." )
+				.append( "\nThere you will find a txt file named" )
+				.append( "\n   USER'S GUIDE.txt" )
+				.append( "\nwhich provides a detailed description" )
+				.append( "\nabout each option in the menu." ).toString();
 	};
+	
 	
 }

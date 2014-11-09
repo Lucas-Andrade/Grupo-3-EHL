@@ -55,9 +55,11 @@ public class ConsoleOutputFormatter
 	 * {@code lengthOfTheDelimiter} times the symbol {@code symbol} and space
 	 * between sections is {@code numberOfBlankLines} blank lines.
 	 * 
-	 * <p>If a non-positive number is introduced either in
+	 * <p>
+	 * If a non-positive number is introduced either in
 	 * {@code lengthOfTheDelimiter} or in {@code numberOfBlankLines}, this
-	 * constructor acts as the constructor with no parameters.</p>
+	 * constructor acts as the constructor with no parameters.
+	 * </p>
 	 * 
 	 * @param symbol
 	 *            The symbol repeated in the delimiter.
@@ -88,6 +90,8 @@ public class ConsoleOutputFormatter
 		}
 		
 	}
+	
+	
 	
 	// MÉTODOS RELACIONADOS COM A APRESENTAÇÃO DO OUTPUT
 	
@@ -125,6 +129,9 @@ public class ConsoleOutputFormatter
 	 * @return The string containing the formatted section title.
 	 */
 	public String formatSectionTitle( String title ) {
+		
+		if( title == null )
+			return "";
 		
 		// the length of the app's section delimiter, which will also be the
 		// length of the string which is the formatted version of title:
@@ -181,4 +188,29 @@ public class ConsoleOutputFormatter
 		System.out.print( "\n" + spaceBetweenSections );
 	}
 	
+	
+//	/**
+//	 * Formats a text.
+//	 * 
+//	 * <p>
+//	 * The {@code text} will be returned a
+//	 * @param text
+//	 * @return
+//	 */
+//	public String formatText(String text){
+//		
+//		if(text==null) return "";
+//		
+//		// the length of the app's section delimiter, which will also be the
+//		// length of the lines of the formatted text
+//		int linesLength = sectionDelimiter.length();
+//		int nrOfWrittenChars = text.length();
+//		
+//		StringBuilder newText = new StringBuilder("");
+//		int lastLineWrittenInNewText = 0;
+//		if(text.contains("\n")) ;//TODO
+//		while(nrOfWrittenChars>0) newText
+//		
+//		
+//	}
 }

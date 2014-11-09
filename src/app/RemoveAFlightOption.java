@@ -3,7 +3,7 @@ package app;
 
 /**
  * This class represents the option with the title
- * {@code Remove a flight manually.}.
+ * {@code Remove a flight manually.} of an Air Traffic Control app.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
@@ -80,7 +80,7 @@ public class RemoveAFlightOption extends Option
 	 * DESCRIPTION TODO
 	 * </p>
 	 */
-	public void execute() {
+	public void executeToConsole() {
 		System.out.println( title );
 	};
 	

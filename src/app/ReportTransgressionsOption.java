@@ -3,7 +3,7 @@ package app;
 
 /**
  * This class represents the option with the title
- * {@code Report altitude transgressions.}.
+ * {@code Report altitude transgressions.} of an Air Traffic Control app.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
@@ -82,7 +82,7 @@ public class ReportTransgressionsOption extends Option
 	 * DESCRIPTION TODO
 	 * </p>
 	 */
-	public void execute() {
+	public void executeToConsole() {
 		System.out.println( title );
 	};
 	

@@ -9,7 +9,8 @@ package app;
  * properties and methods of all options from the {@code Options Menu}: all
  * options must have a final field {@link #title} and a final field
  * {@link #description}, both accessible for reading, and must have an
- * {@link #execute() execute} method.
+ * {@link #execute() execute} and an {@link #executeToConsole()
+ * executeToConsole} methods.
  * </p>
  * 
  * <p style="font-size:16">
@@ -36,13 +37,12 @@ package app;
 public abstract class Option
 {
 	
-	
+	// CAMPOS
 	
 	/**
 	 * The title of the option. It is immutable.
 	 */
 	public final String title;
-	
 	
 	/**
 	 * A description of the option. It is immutable. Describes the action
@@ -69,26 +69,29 @@ public abstract class Option
 	}
 	
 	
-	// /**
-	// * Returns the class's title.
-	// *
-	// * @return The class's title.
-	// */
-	// public abstract String getOptionTitle();
-	//
-	//
-	// /**
-	// * Returns the class's description.
-	// *
-	// * @return The class's description.
-	// */
-	// public abstract String getOptionDescription();
+	
+	// EXECUTORES
+	
+	
+	
+	/**
+	 * Manages input data needed to perform the action corresponding to the
+	 * option that the class who implemented this method represents and prints
+	 * its output.
+	 */
+	public abstract void executeToConsole();
 	
 	
 	/**
 	 * Performs the action corresponding to the option that the class who
 	 * implemented this method represents.
+	 * 
+	 * @return A string with output from the action.
 	 */
-	public abstract void execute();
+//	 * @throws InvalidOptionException
+//	 *             If the option is invalid or unavailable.
+//	 * @throws InvalidOptionNumberException
+//	 *             If the number of the option is invalid.
+	public abstract String execute(); //throws InvalidOptionException,InvalidOptionNumberException;
 	
 }

@@ -144,8 +144,8 @@ public abstract class Airship {
 	 * (inside the corridor), or if the plane is outside of the corridor
 	 */
 	private String verifyAltitude(AltitudeCorridor corridor) {
-		int min = corridor.getLowerLimit();
-		int max = corridor.getUpperLimit();
+		double min = corridor.getLowerLimit();
+		double max = corridor.getUpperLimit();
 		double altitude = getGeographicPosition().getAltitude();
 		
 		if (altitude > max || altitude < min) 

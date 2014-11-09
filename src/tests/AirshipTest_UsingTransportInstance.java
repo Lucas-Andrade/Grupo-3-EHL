@@ -69,11 +69,11 @@ public class AirshipTest_UsingTransportInstance {
 	public void shouldGetMidFlightCorridor()
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(-30);
-		int maxAlt = transport2.getCurrentCorridor().getUpperLimit();
-		int minAlt = transport2.getCurrentCorridor().getLowerLimit();
+		double maxAlt = transport2.getCurrentCorridor().getUpperLimit();
+		double minAlt = transport2.getCurrentCorridor().getLowerLimit();
 		
-		assertEquals(120, maxAlt);
-		assertEquals(100, minAlt);
+		assertEquals(120, (int)maxAlt);
+		assertEquals(100, (int)minAlt);
 	}
 	
 	@Test

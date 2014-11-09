@@ -10,8 +10,22 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
+/**
+ * allows to read a list of flights and make a database
+ * 
+ *
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
+ */
 public class ReadListOfFlights {
 	
+	/**
+	 * reads a text file and makes a database with the flights
+	 * @param name - name of the file to read
+	 * @return database with all the read information
+	 * @throws IOException
+	 */
 	public Database readFlights(String name) throws IOException
 	{
 		Database database = new Database();
@@ -35,8 +49,8 @@ public class ReadListOfFlights {
 			String typeOfAirship = tokenizer.nextToken();
 			Integer passengers;
 			Calendar dateTakeOff;
-			Integer latitude;
-			Integer longitude;
+			Double latitude;
+			Double longitude;
 			GeographicalPosition pos;
 			Calendar dateLanding;
 			FlightPlan plan;
@@ -48,8 +62,8 @@ public class ReadListOfFlights {
 				tokenizer.nextToken();
 				dateTakeOff = getDate(tokenizer.nextToken());
 				
-				latitude = Integer.parseInt(tokenizer.nextToken());
-				longitude = Integer.parseInt(tokenizer.nextToken());
+				latitude = Double.parseDouble(tokenizer.nextToken());
+				longitude = Double.parseDouble(tokenizer.nextToken());
 				
 				pos = new GeographicalPosition(latitude, longitude, 0);
 				
@@ -70,8 +84,8 @@ public class ReadListOfFlights {
 				tokenizer.nextToken();
 				dateTakeOff = getDate(tokenizer.nextToken());
 				
-				latitude = Integer.parseInt(tokenizer.nextToken());
-				longitude = Integer.parseInt(tokenizer.nextToken());
+				latitude = Double.parseDouble(tokenizer.nextToken());
+				longitude = Double.parseDouble(tokenizer.nextToken());
 				
 				pos = new GeographicalPosition(latitude, longitude, 0);
 				
@@ -92,8 +106,8 @@ public class ReadListOfFlights {
 				tokenizer.nextToken();
 				dateTakeOff = getDate(tokenizer.nextToken());
 				
-				latitude = Integer.parseInt(tokenizer.nextToken());
-				longitude = Integer.parseInt(tokenizer.nextToken());
+				latitude = Double.parseDouble(tokenizer.nextToken());
+				longitude = Double.parseDouble(tokenizer.nextToken());
 				
 				pos = new GeographicalPosition(latitude, longitude, 0);
 				
@@ -114,8 +128,8 @@ public class ReadListOfFlights {
 				Integer armament = Integer.parseInt(tokenizer.nextToken());
 				dateTakeOff = getDate(tokenizer.nextToken());
 				
-				latitude = Integer.parseInt(tokenizer.nextToken());
-				longitude = Integer.parseInt(tokenizer.nextToken());
+				latitude = Double.parseDouble(tokenizer.nextToken());
+				longitude = Double.parseDouble(tokenizer.nextToken());
 				
 				pos = new GeographicalPosition(latitude, longitude, 0);
 				
@@ -141,6 +155,11 @@ public class ReadListOfFlights {
 		
 	}
 	
+	/**
+	 * builds a Calendar object with the date read from the string
+	 * @param date - the string to transform into a calendar
+	 * @return the date as a GregorianCalendar object
+	 */
 	private Calendar getDate(String date)
 	{
 		Integer year = Integer.parseInt(date.substring(0,4));
@@ -153,6 +172,16 @@ public class ReadListOfFlights {
 		return calendarDate;
 	}
 
+	/**
+	 * builds a flight plan from the data read from the file
+	 * @param dateTakeOff - take off date of the flight
+	 * @param dateLanding - landing date of the flight
+	 * @param tokenizer - tokenizer with the information read from the flight
+	 * @param takeOff - number of minutes this type of aircraft needs to take off and get into the first corridor
+	 * @param land - number of minutes this type of aircraft needs to get off the corridor and land
+	 * @param switchCorridor - number of minutes this type of aircraft needs to go from a corridor to another
+	 * @return the plan of the flight
+	 */
 	private FlightPlan getFlightPlan(Calendar dateTakeOff, Calendar dateLanding, StringTokenizer tokenizer, 
 			int takeOff, int land, int switchCorridor)
 	{
@@ -164,16 +193,16 @@ public class ReadListOfFlights {
 		AirCorridorInTime gainingAltitude = new AirCorridorInTime(dateTakeOff, dateOld, null);
 		plan.addEvent(gainingAltitude);
 		
-		Integer altMin = Integer.parseInt(tokenizer.nextToken());
-		Integer altMax = Integer.parseInt(tokenizer.nextToken());
+		Double altMin = Double.parseDouble(tokenizer.nextToken());
+		Double altMax = Double.parseDouble(tokenizer.nextToken());
 		AltitudeCorridor corr = new AltitudeCorridor(altMin, altMax);
 		Calendar dateNew;
 		
 		while (true)
 		{
-			altMin = Integer.parseInt(tokenizer.nextToken());
-			altMax = Integer.parseInt(tokenizer.nextToken());
 			dateNew = getDate(tokenizer.nextToken());
+			altMin = Double.parseDouble(tokenizer.nextToken());
+			altMax = Double.parseDouble(tokenizer.nextToken());
 			
 			AirCorridorInTime airCorridor = new AirCorridorInTime(dateOld, dateNew, corr);
 			plan.addEvent(airCorridor);

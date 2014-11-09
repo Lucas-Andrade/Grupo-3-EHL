@@ -72,11 +72,11 @@ public class AirshipTest_UsingAirlinerInstance {
 	public void shouldGetMidFlightCorridor()
 	{
 		Airliner airliner2 = makeAnAirplaneWithAPlan(-30);
-		int maxAlt = airliner2.getCurrentCorridor().getUpperLimit();
-		int minAlt = airliner2.getCurrentCorridor().getLowerLimit();
+		double maxAlt = airliner2.getCurrentCorridor().getUpperLimit();
+		double minAlt = airliner2.getCurrentCorridor().getLowerLimit();
 		
-		assertEquals(120, maxAlt);
-		assertEquals(100, minAlt);
+		assertEquals(120, (int)maxAlt);
+		assertEquals(100, (int)minAlt);
 	}
 	
 	@Test
@@ -113,14 +113,14 @@ public class AirshipTest_UsingAirlinerInstance {
 	@Test
 	public void shouldGetTheRightObservation_HasNotTakenOff()
 	{
-		Airliner airliner2 = makeAnAirplaneWithAPlan(20);
+		Airliner airliner2 = makeAnAirplaneWithAPlan(10);
 		assertEquals(airliner2.getObservations(), "The airplane has not taken off yet.");
 	}
 	
 	@Test
 	public void shouldGetTheRightObservation_HasAlreadyLanded()
 	{
-		Airliner airliner2 = makeAnAirplaneWithAPlan(-100);
+		Airliner airliner2 = makeAnAirplaneWithAPlan(-70);
 		assertEquals(airliner2.getObservations(), "The airplane has already landed.");
 	}
 	

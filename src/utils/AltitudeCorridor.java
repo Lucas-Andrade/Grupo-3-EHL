@@ -6,8 +6,8 @@ package utils;
  */
 public class AltitudeCorridor {
 	
-	private int upperLimit;
-	private int lowerLimit;
+	private double upperLimit;
+	private double lowerLimit;
 	
 	/**
 	 * constructs a new AltitudeCorridor by setting up all its parameters. if the
@@ -16,7 +16,7 @@ public class AltitudeCorridor {
 	 * @param up
 	 * @param lo
 	 */
-	public AltitudeCorridor(int up, int lo)
+	public AltitudeCorridor(double up, double lo)
 	{
 		if (up > lo)
 		{
@@ -29,11 +29,11 @@ public class AltitudeCorridor {
 			lowerLimit = up;
 		}
 	}
-	
+
 	/**
 	 * @return the upper limit
 	 */
-	public int getUpperLimit()
+	public double getUpperLimit()
 	{
 		return upperLimit;
 	}
@@ -41,7 +41,7 @@ public class AltitudeCorridor {
 	/**
 	 * @return the lower limit 
 	 */
-	public int getLowerLimit()
+	public double getLowerLimit()
 	{
 		return lowerLimit;
 	}

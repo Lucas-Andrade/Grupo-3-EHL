@@ -1,4 +1,7 @@
 package utils;
+
+import app.InvalidArgumentException;
+
 /**
  * This class represents GeographicalPosition defined by Latitude, Longitude and Altitude
  * @author Hugo
@@ -30,7 +33,7 @@ public class GeographicalPosition {
 	 * @param lon longitude value
 	 * @param alt altitude value
 	 */
-	public GeographicalPosition(double lat, double lon, double alt) throws IllegalArgumentException
+	public GeographicalPosition(double lat, double lon, double alt) throws InvalidArgumentException
 	{
 		latitude = new Latitude(lat);
 		longitude = new Longitude(lon);

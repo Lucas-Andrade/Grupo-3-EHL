@@ -12,6 +12,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
+import app.InvalidArgumentException;
+import app.InvalidFlightIDException;
+
 /**
  * allows to read a list of flights and make a database
  * 
@@ -28,7 +31,7 @@ public class ReadListOfFlights {
 	 * @return database with all the read information
 	 * @throws IOException
 	 */
-	public Database readFlights(String name) throws IOException
+	public Database readFlights(String name) throws IOException, InvalidFlightIDException, InvalidArgumentException
 	{
 		Database database = new Database();
 		

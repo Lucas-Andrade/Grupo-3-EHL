@@ -1,4 +1,7 @@
 package utils;
+
+import app.InvalidArgumentException;
+
 /**
  * This class represents a Latitude value.
  * @author Hugo
@@ -13,12 +16,12 @@ public class Latitude {
 	 * Constructs a value of latitude
 	 * @param lat latitude value
 	 */
-	public Latitude(double lat) throws IllegalArgumentException
+	public Latitude(double lat) throws InvalidArgumentException
 	{
 		if(latitude < MAX_LATITUDE && latitude > MIN_LATITUDE )
 		latitude = lat;
 		else
-			throw new IllegalArgumentException();
+			throw new InvalidArgumentException();
 	}
 	
 	/**

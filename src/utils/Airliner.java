@@ -55,7 +55,7 @@ public class Airliner extends CivilAirplane{
 	 * and all that will be constructed in the future
 	 * @param newTime - the new number of minutes this class of airplane needs to take off
 	 */
-	public static void setNumberOfMinutesToTakeOff(int newTime)
+	public void setNumberOfMinutesToTakeOff(int newTime)
 	{
 		numberOfMinutesToTakeOff = newTime;
 		newnumberOfMinutesToTakeOff = newTime;
@@ -68,7 +68,7 @@ public class Airliner extends CivilAirplane{
 	 * and all that will be constructed in the future
 	 * @param newTime - the new number of minutes this class of airplane needs to land
 	 */
-	public static void setNumberOfMinutesToLand(int newTime)
+	public void setNumberOfMinutesToLand(int newTime)
 	{
 		numberOfMinutesToLand = newTime;
 		newnumberOfMinutesToLand = newTime;
@@ -81,7 +81,7 @@ public class Airliner extends CivilAirplane{
 	 * and all that will be constructed in the future
 	 * @param newTime - the new number of minutes this class of airplane needs to switch lanes
 	 */
-	public static void setNumberOfMinutesToSwitchCorridor(int newTime)
+	public void setNumberOfMinutesToSwitchCorridor(int newTime)
 	{
 		numberOfMinutesToSwitchCorridor = newTime;
 		newnumberOfMinutesToSwitchCorridor = newTime;
@@ -91,7 +91,7 @@ public class Airliner extends CivilAirplane{
 	/**
 	 * @return the number of minutes the airplanes of this class need to take off
 	 */
-	public static int getNumberOfMinutesToTakeOff()
+	public int getNumberOfMinutesToTakeOff()
 	{
 		return numberOfMinutesToTakeOff;
 	}
@@ -99,7 +99,7 @@ public class Airliner extends CivilAirplane{
 	/**
 	 * @return - the number of minutes the airplanes of this class need to land
 	 */
-	public static int getNumberOfMinutesToLand()
+	public int getNumberOfMinutesToLand()
 	{
 		return numberOfMinutesToLand;
 	}
@@ -107,7 +107,7 @@ public class Airliner extends CivilAirplane{
 	/**
 	 * @return - the number of minutes the airplanes of this class need to switch lanes
 	 */
-	public static int getNumberOfMinutesToSwitchCorridor()
+	public int getNumberOfMinutesToSwitchCorridor()
 	{
 		return numberOfMinutesToSwitchCorridor;
 	}

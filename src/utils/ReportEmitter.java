@@ -13,6 +13,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import app.InvalidArgumentException;
+import app.InvalidFlightIDException;
+
 /**
  * Allows to emit various types of reports. These reports can be returned 
  * as an array of strings, or written out to files
@@ -33,7 +36,7 @@ public class ReportEmitter {
 	 * @return an array of strings with the information about the flight ID of all the known airplanes
 	 * and their position
 	 */
-	public String[] reportAll(Map<String, Airship> database)
+	public String[] reportAll(Map<String, Airship> database)throws InvalidFlightIDException, InvalidArgumentException
 	{
 		ReadAirplanesCoordinates reader = new ReadAirplanesCoordinates();
 		reader.readFromFile();
@@ -73,7 +76,7 @@ public class ReportEmitter {
 	 * saves that report into a file
 	 * @param database - the database where the airplanes are saved
 	 */
-	public void reportAllToTxt(Map<String, Airship> database) throws IOException
+	public void reportAllToTxt(Map<String, Airship> database) throws IOException, InvalidFlightIDException, InvalidArgumentException
 	{
 		writeToTxt(reportAll(database), "allReport");
 	}

@@ -181,14 +181,44 @@ public abstract class Airship {
 			return "The airplane is switching corridors.";
 	}
 	
+	/**
+	 * sets a new number of minutes for the take off of this class' airplanes.
+	 * this will affect all the airplanes of this type, that were already constructed
+	 * and all that will be constructed in the future
+	 * @param newTime - the new number of minutes this class of airplane needs to take off
+	 */
+	public abstract void setNumberOfMinutesToTakeOff(int newTime);
 	
+	/**
+	 * sets a new number of minutes for the land of this class' airplanes.
+	 * this will affect all the airplanes of this type, that were already constructed
+	 * and all that will be constructed in the future
+	 * @param newTime - the new number of minutes this class of airplane needs to land
+	 */
+	public abstract void setNumberOfMinutesToLand(int newTime);
 	
+	/**
+	 * sets a new number of minutes for switching lanes of this class' airplanes.
+	 * this will affect all the airplanes of this type, that were already constructed
+	 * and all that will be constructed in the future
+	 * @param newTime - the new number of minutes this class of airplane needs to switch lanes
+	 */
+	public abstract void setNumberOfMinutesToSwitchCorridor(int newTime);
 	
+	/**
+	 * @return the number of minutes the airplanes of this class need to take off
+	 */
+	public abstract int getNumberOfMinutesToTakeOff();
 	
+	/**
+	 * @return - the number of minutes the airplanes of this class need to land
+	 */
+	public abstract int getNumberOfMinutesToLand();
 	
-	
-	
-	
-	
-	
+	/**
+	 * @return - the number of minutes the airplanes of this class need to switch lanes
+	 */
+	public abstract int getNumberOfMinutesToSwitchCorridor();
 }
+
+

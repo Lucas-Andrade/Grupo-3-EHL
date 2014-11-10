@@ -1,4 +1,7 @@
 package utils;
+
+import app.InvalidArgumentException;
+
 /**
  * This class represents a Longitude value.
  * @author Hugo
@@ -15,12 +18,12 @@ public class Longitude {
 	 * Constructs a value of longitude
 	 * @param lon longitude value
 	 */
-	public Longitude(double lon) throws IllegalArgumentException
+	public Longitude(double lon) throws InvalidArgumentException
 	{
 		if(longitude < MAX_LONGITUDE && longitude > MIN_LONGITUDE )
 		longitude = lon;
 		else
-			throw new IllegalArgumentException();
+			throw new InvalidArgumentException();
 	}
 	
 	/**

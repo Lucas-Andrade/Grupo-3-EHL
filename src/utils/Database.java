@@ -91,6 +91,7 @@ public class Database {
 		String id = airplane.getFlightID();
 			if(id == null) 
 				throw new InvalidFlightIDException();
+			
 		return removeAirplane(id);
 	}
 	

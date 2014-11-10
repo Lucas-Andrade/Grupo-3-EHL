@@ -43,6 +43,8 @@ public class ReadAirplanesCoordinates {
  */
 	public void readFromFile(String sourceOfFlights) throws InvalidFlightIDException, InvalidArgumentException
 	{
+		if(sourceOfFlights==null )
+			throw new InvalidArgumentException();
 
 		BufferedReader reader;
 		try {
@@ -121,9 +123,13 @@ public class ReadAirplanesCoordinates {
 	/**
 	 * Sets a new path of the text file with the new geographical coordinates
 	 * @param newSource new path of text file
+	 * @throws InvalidArgumentException 
 	 */
-	public void setsourceOfFlights(String newSource)
+	public void setsourceOfFlights(String newSource) throws InvalidArgumentException
 	{
+		if(sourceOfFlights==null )
+			throw new InvalidArgumentException();
+	
 		this.sourceOfFlights = newSource;
 	}
 	

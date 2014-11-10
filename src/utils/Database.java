@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import app.InvalidArgumentException;
 import app.InvalidFlightIDException;
 
 /**
@@ -33,9 +34,13 @@ public class Database {
 	 * @param airplane - airplane to add
 	 * @return true if the airplane was successfully added
 	 * @return false if the airplane was not added
+	 * @throws InvalidArgumentException 
 	 */
-	public boolean addAirplane(Airship airplane) throws InvalidFlightIDException
+	public boolean addAirplane(Airship airplane) throws InvalidFlightIDException, InvalidArgumentException
 	{
+		if(airplane == null)
+			throw new InvalidArgumentException();
+		
 		String id = airplane.getFlightID();
 		if (id == null)
 			throw new InvalidFlightIDException();
@@ -61,6 +66,7 @@ public class Database {
 	{
 		if(id ==null)
 			throw new InvalidFlightIDException();
+			
 		if(database.containsKey(id))
 		{
 			database.remove(id);
@@ -75,9 +81,13 @@ public class Database {
 	 * @param airplane - airplane to remove
 	 * @return true if the airplane was successfully removed
 	 * @return false if the airplane was not found in the database
+	 * @throws InvalidArgumentException 
 	 */
-	public boolean removeAirplane(Airship airplane) throws InvalidFlightIDException
+	public boolean removeAirplane(Airship airplane) throws InvalidFlightIDException, InvalidArgumentException
 	{
+		if(airplane == null)
+			throw new InvalidArgumentException();
+		
 		String id = airplane.getFlightID();
 			if(id == null) 
 				throw new InvalidFlightIDException();

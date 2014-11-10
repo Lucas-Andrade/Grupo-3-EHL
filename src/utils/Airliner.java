@@ -1,5 +1,7 @@
 package utils;
 
+import app.InvalidArgumentException;
+
 /**
  * Creates an airliner
  * 
@@ -21,7 +23,7 @@ public class Airliner extends CivilAirplane{
 	private static boolean newSwitch = false;
 	private int passengersNum;
 	
-	public Airliner(String flightID, GeographicalPosition statingPosition, FlightPlan flightPlan, int passengers) {
+	public Airliner(String flightID, GeographicalPosition statingPosition, FlightPlan flightPlan, int passengers) throws InvalidArgumentException {
 		super(flightID, statingPosition, flightPlan);
 		passengersNum = passengers;
 		
@@ -31,6 +33,9 @@ public class Airliner extends CivilAirplane{
 			numberOfMinutesToLand = newnumberOfMinutesToLand;
 		if (newSwitch)
 			numberOfMinutesToSwitchCorridor = newnumberOfMinutesToSwitchCorridor;
+		
+		if(flightID==null || statingPosition == null || flightPlan == null)
+			throw new InvalidArgumentException();
 	}
 
 	/**
@@ -55,11 +60,14 @@ public class Airliner extends CivilAirplane{
 	 * and all that will be constructed in the future
 	 * @param newTime - the new number of minutes this class of airplane needs to take off
 	 */
-	public void setNumberOfMinutesToTakeOff(int newTime)
-	{
+	public void setNumberOfMinutesToTakeOff(int newTime) throws InvalidArgumentException
+	{			
 		numberOfMinutesToTakeOff = newTime;
 		newnumberOfMinutesToTakeOff = newTime;
 		newTakeOff = true;
+		if (newTime == 0)
+			throw new InvalidArgumentException();
+		
 	}
 	
 	/**
@@ -68,11 +76,13 @@ public class Airliner extends CivilAirplane{
 	 * and all that will be constructed in the future
 	 * @param newTime - the new number of minutes this class of airplane needs to land
 	 */
-	public void setNumberOfMinutesToLand(int newTime)
+	public void setNumberOfMinutesToLand(int newTime) throws InvalidArgumentException
 	{
 		numberOfMinutesToLand = newTime;
 		newnumberOfMinutesToLand = newTime;
 		newLand = true;
+		if (newTime == 0)
+			throw new InvalidArgumentException();
 	}
 	
 	/**
@@ -81,11 +91,13 @@ public class Airliner extends CivilAirplane{
 	 * and all that will be constructed in the future
 	 * @param newTime - the new number of minutes this class of airplane needs to switch lanes
 	 */
-	public void setNumberOfMinutesToSwitchCorridor(int newTime)
+	public void setNumberOfMinutesToSwitchCorridor(int newTime) throws InvalidArgumentException
 	{
 		numberOfMinutesToSwitchCorridor = newTime;
 		newnumberOfMinutesToSwitchCorridor = newTime;
 		newSwitch = true;
+		if (newTime == 0)
+			throw new InvalidArgumentException();
 	}
 	
 	/**

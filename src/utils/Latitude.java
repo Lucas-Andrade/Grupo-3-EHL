@@ -55,9 +55,13 @@ public class Latitude {
 	 * Sets a new latitude value
 	 * @param lat new latitude value
 	 */
-	public void setLatitude(double lat)
+	public void setLatitude(double lat)throws InvalidArgumentException
 	{
-		this.latitude = lat;
+		if(latitude < MAX_LATITUDE && latitude > MIN_LATITUDE )
+			this.latitude = lat;
+			else
+				throw new InvalidArgumentException();
+		
 	}
 	
 	/**

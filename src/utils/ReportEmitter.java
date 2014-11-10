@@ -38,6 +38,9 @@ public class ReportEmitter {
 	 */
 	public String[] reportAll(Map<String, Airship> database)throws InvalidFlightIDException, InvalidArgumentException
 	{
+		if(database==null)
+			throw new InvalidArgumentException();
+
 		ReadAirplanesCoordinates reader = new ReadAirplanesCoordinates();
 		reader.readFromFile();
 		
@@ -78,6 +81,9 @@ public class ReportEmitter {
 	 */
 	public void reportAllToTxt(Map<String, Airship> database) throws IOException, InvalidFlightIDException, InvalidArgumentException
 	{
+		if(database==null )
+			throw new InvalidArgumentException();
+
 		writeToTxt(reportAll(database), "allReport");
 	}
 	
@@ -87,9 +93,13 @@ public class ReportEmitter {
 	 * @param database - the database where the airplanes are saved
 	 * @return an array of strings with the flight ID of all the airplanes outside of the corridor
 	 * they should be, at the time this method was called
+	 * @throws InvalidArgumentException 
 	 */
-	public String[] reportAirplanesOutOfCorridor(Map<String, Airship> database)
+	public String[] reportAirplanesOutOfCorridor(Map<String, Airship> database) throws InvalidArgumentException
 	{
+		if(database ==null )
+			throw new InvalidArgumentException();
+
 		ArrayList<String> airplanesOut = new ArrayList<>();
 		
 		Set<String> idSet = database.keySet();
@@ -118,9 +128,13 @@ public class ReportEmitter {
 	 * and saves it into a text file
 	 * @param database - the database where the airplanes are saved
 	 * @throws IOException
+	 * @throws InvalidArgumentException 
 	 */
-	public void reportAirplanesOutOfCorridorToTxt(Map<String, Airship> database) throws IOException
+	public void reportAirplanesOutOfCorridorToTxt(Map<String, Airship> database) throws IOException, InvalidArgumentException
 	{
+		if(database==null )
+			throw new InvalidArgumentException();
+
 		writeToTxt(reportAirplanesOutOfCorridor(database), "outOfCorridorReport");
 	}
 	
@@ -128,9 +142,13 @@ public class ReportEmitter {
 	 * reports the information about a specific airplane
 	 * @param airplane - the airplane to present information about
 	 * @return an array of strings with the information about the airplane
+	 * @throws InvalidArgumentException 
 	 */
-	public String[] reportFlightInformation(Airship airplane)
+	public String[] reportFlightInformation(Airship airplane) throws InvalidArgumentException
 	{
+		if(airplane==null )
+			throw new InvalidArgumentException();
+		
 		return null;
 	}
 	
@@ -138,9 +156,13 @@ public class ReportEmitter {
 	 * reports the information about a specific airplane, and writes it into a text file
 	 * @param airplane - the airplane to present information about
 	 * @throws IOException
+	 * @throws InvalidArgumentException 
 	 */
-	public void reportFlightInformationToTxt(Airship airplane) throws IOException
+	public void reportFlightInformationToTxt(Airship airplane) throws IOException, InvalidArgumentException
 	{
+		if(airplane==null )
+			throw new InvalidArgumentException();
+		
 		writeToTxt(reportFlightInformation(airplane), "informationOn_" + airplane.getFlightID());
 	}
 	
@@ -157,8 +179,9 @@ public class ReportEmitter {
 	 * reports the airplanes that were detected and do not have a unrecognized/valid flight ID,
 	 * and writes it into a text file
 	 * @throws IOException
+	 * @throws InvalidArgumentException 
 	 */
-	public void reportAirplanesWithUnknownFlightIDToTxt() throws IOException
+	public void reportAirplanesWithUnknownFlightIDToTxt() throws IOException, InvalidArgumentException
 	{
 		String[] newString = new String[1];
 		newString[0] = unrecognisedID;
@@ -177,8 +200,9 @@ public class ReportEmitter {
 	/**
 	 * writes into a text file the last report that was created (does not make a new, updated report)
 	 * @throws IOException
+	 * @throws InvalidArgumentException 
 	 */
-	public void lastReportToTxt() throws IOException
+	public void lastReportToTxt() throws IOException, InvalidArgumentException
 	{
 		writeToTxt(latestReport, "allReport");
 	}
@@ -195,8 +219,9 @@ public class ReportEmitter {
 	/**
 	 * reports if there were misread lines
 	 * @throws IOException
+	 * @throws InvalidArgumentException 
 	 */
-	public void reportemptyFieldsToTxt() throws IOException
+	public void reportemptyFieldsToTxt() throws IOException, InvalidArgumentException
 	{
 		String[] newString = new String[1];
 		newString[0] = emptyFields;
@@ -209,9 +234,13 @@ public class ReportEmitter {
 	 * @param toWrite - array of strings to write
 	 * @param name - the name of the file
 	 * @throws IOException
+	 * @throws InvalidArgumentException 
 	 */
-	private void writeToTxt(String[] toWrite, String name) throws IOException
+	private void writeToTxt(String[] toWrite, String name) throws IOException, InvalidArgumentException
 	{		
+		if(toWrite==null || name == null)
+			throw new InvalidArgumentException();
+		
 		Calendar now = new GregorianCalendar();
 		DateFormat format = new SimpleDateFormat( "hh:mm_dd/MM/yyyy" );
 		

@@ -57,9 +57,12 @@ public class Longitude {
 	 *  Sets a new longitude value
 	 * @param lon new longitude value
 	 */
-	public void setLongitude(double lon)
+	public void setLongitude(double lon) throws InvalidArgumentException
 	{
-		this.longitude = lon;
+		if(longitude < MAX_LONGITUDE && longitude > MIN_LONGITUDE )
+			this.longitude = lon;
+			else
+				throw new InvalidArgumentException();
 	}
 	
 	/**

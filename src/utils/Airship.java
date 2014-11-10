@@ -7,6 +7,8 @@ import java.util.GregorianCalendar;
 import java.util.LinkedList;
 import java.util.List;
 
+import app.InvalidArgumentException;
+
 /**
  * Creates an abstract class that envelops all the airplanes. 
  * @author Lucas Andrade
@@ -28,12 +30,16 @@ public abstract class Airship {
 	 * @param currentPassengers - the number of passengers
 	 * @param statingPosition - the coordinates where the airplane will take off
 	 * @param flightPlan - the plan of the flight
+	 * @throws InvalidArgumentException 
 	 */
-	public Airship(String flightID, GeographicalPosition statingPosition, FlightPlan flightPlan) {
+	public Airship(String flightID, GeographicalPosition statingPosition, FlightPlan flightPlan) throws InvalidArgumentException {
 		this.flightID = flightID;
 		this.lastKnownGeograficalPositions = new LinkedList<GeographicalPosition>();
 		lastKnownGeograficalPositions.add(statingPosition);
 		this.flightPlan = flightPlan;
+		
+		if(flightID==null || statingPosition == null || flightPlan == null)
+			throw new InvalidArgumentException();
 	}
 
 	/**
@@ -54,18 +60,23 @@ public abstract class Airship {
 	
 	/**
 	 * @param newGeographicalPosition - updates the geographical position to a new one
+	 * @throws InvalidArgumentException 
 	 */
-	public void updateGeographicPosition(GeographicalPosition newGeographicalPosition)
+	public void updateGeographicPosition(GeographicalPosition newGeographicalPosition) throws InvalidArgumentException
 	{
 		positionWasUpdated = true;
 		lastKnownGeograficalPositions.addFirst(newGeographicalPosition);
+		
+		if(newGeographicalPosition==null)
+			throw new InvalidArgumentException();
 	}
 	
 	/**
 	 * @return gets the corridor the airplane is planned to be in, at the time the method 
 	 * was called
+	 * @throws InvalidArgumentException 
 	 */
-	public AltitudeCorridor getCurrentCorridor()
+	public AltitudeCorridor getCurrentCorridor() throws InvalidArgumentException
 	{
 		return flightPlan.getCurrentCorridor();
 	}
@@ -73,10 +84,13 @@ public abstract class Airship {
 	/**
 	 * allows to set a new arrival time in case the airplane is running late
 	 * @param newArrivalHour - the new planned hour for the arrival of the airplane in its destination
+	 * @throws InvalidArgumentException 
 	 */
-	public void setNewArrivalHour(Calendar newArrivalHour)
+	public void setNewArrivalHour(Calendar newArrivalHour) throws InvalidArgumentException
 	{
 		flightPlan.setNewArrivalHour(newArrivalHour, numberOfMinutesToLand);
+		if(newArrivalHour==null)
+			throw new InvalidArgumentException();
 	}
 	
 	/**
@@ -92,8 +106,9 @@ public abstract class Airship {
 	 * airplane is just cruising normally, switching corridors, gaining altitude after take off, or even 
 	 * making its descent
 	 * @return a string with information on the status of the airplane
+	 * @throws InvalidArgumentException 
 	 */
-	public String getObservations()
+	public String getObservations() throws InvalidArgumentException
 	{
 		AltitudeCorridor corridor = this.getCurrentCorridor();
 		if (corridor == null)
@@ -129,8 +144,9 @@ public abstract class Airship {
 	
 	/**
 	 * @return returns a string with the id, position, and observations about the airplane
+	 * @throws InvalidArgumentException 
 	 */
-	public String positionToString()
+	public String positionToString() throws InvalidArgumentException
 	{
 		positionWasUpdated = false;
 		StringBuilder builder = new StringBuilder();
@@ -144,8 +160,9 @@ public abstract class Airship {
 	 * @param corridor - the corridor where the airplane is supposed to be in
 	 * @return a string with the information of whether the airplane is cruising normally 
 	 * (inside the corridor), or if the plane is outside of the corridor
+	 * @throws InvalidArgumentException 
 	 */
-	private String verifyAltitude(AltitudeCorridor corridor) {
+	private String verifyAltitude(AltitudeCorridor corridor) throws InvalidArgumentException {
 		double min = corridor.getLowerLimit();
 		double max = corridor.getUpperLimit();
 		double altitude = getGeographicPosition().getAltitude();
@@ -186,24 +203,27 @@ public abstract class Airship {
 	 * this will affect all the airplanes of this type, that were already constructed
 	 * and all that will be constructed in the future
 	 * @param newTime - the new number of minutes this class of airplane needs to take off
+	 * @throws InvalidArgumentException 
 	 */
-	public abstract void setNumberOfMinutesToTakeOff(int newTime);
+	public abstract void setNumberOfMinutesToTakeOff(int newTime) throws InvalidArgumentException;
 	
 	/**
 	 * sets a new number of minutes for the land of this class' airplanes.
 	 * this will affect all the airplanes of this type, that were already constructed
 	 * and all that will be constructed in the future
 	 * @param newTime - the new number of minutes this class of airplane needs to land
+	 * @throws InvalidArgumentException 
 	 */
-	public abstract void setNumberOfMinutesToLand(int newTime);
+	public abstract void setNumberOfMinutesToLand(int newTime) throws InvalidArgumentException;
 	
 	/**
 	 * sets a new number of minutes for switching lanes of this class' airplanes.
 	 * this will affect all the airplanes of this type, that were already constructed
 	 * and all that will be constructed in the future
 	 * @param newTime - the new number of minutes this class of airplane needs to switch lanes
+	 * @throws InvalidArgumentException 
 	 */
-	public abstract void setNumberOfMinutesToSwitchCorridor(int newTime);
+	public abstract void setNumberOfMinutesToSwitchCorridor(int newTime) throws InvalidArgumentException;
 	
 	/**
 	 * @return the number of minutes the airplanes of this class need to take off

@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
+import app.InvalidArgumentException;
+import app.InvalidFlightIDException;
+
 /**
  * Allows to update the Airplanes coordinates from a file
  * 
@@ -26,9 +29,11 @@ public class ReadAirplanesCoordinates {
  * If this method doesn't find the id of a plane in database it will save the information in the String unrecognizedFlight
  * If this method doesn't read the 4 parameters (id, latitude, longitude and altitude) in a line it will save the number of the line
  */
-	public void readFromFile(Database data)
+
+	public void readFromFile(Database data)throws InvalidFlightIDException, InvalidArgumentException
+
 	{
-		readFromFile(sourceOfFlights, data);
+		readFromFile(data);
 	}
 	
 /**
@@ -38,7 +43,11 @@ public class ReadAirplanesCoordinates {
  * If this method doesn't read the 4 parameters (id, latitude, longitude and altitude) in a line it will save the number of the line
  * @param sourceOfFlights file that has the new airplanes coordinates
  */
-	public void readFromFile(String sourceOfFlights, Database data){
+
+	public void readFromFile(String sourceOfFlights, Database data) throws InvalidFlightIDException, InvalidArgumentException
+	{
+		if(sourceOfFlights==null || data == null )
+			throw new InvalidArgumentException();
 
 		BufferedReader reader;
 		try {
@@ -115,9 +124,13 @@ public class ReadAirplanesCoordinates {
 	/**
 	 * Sets a new path of the text file with the new geographical coordinates
 	 * @param newSource new path of text file
+	 * @throws InvalidArgumentException 
 	 */
-	public void setsourceOfFlights(String newSource)
+	public void setsourceOfFlights(String newSource) throws InvalidArgumentException
 	{
+		if(sourceOfFlights==null )
+			throw new InvalidArgumentException();
+	
 		this.sourceOfFlights = newSource;
 	}
 	

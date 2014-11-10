@@ -1,6 +1,8 @@
 package utils;
 import java.util.Calendar;
 
+import app.InvalidArgumentException;
+
 /**
  * allows to create objects that have a property AltitudeCorridor, where the airplane is supposed to be 
  * in the time interval defined by the starting and ending hours.
@@ -21,7 +23,7 @@ public class AirCorridorInTime {
 	 * @param end - the hour the airplane is supposed to leave the corridor
 	 * @param cor - the corridor
 	 */
-	public AirCorridorInTime(Calendar start, Calendar end, AltitudeCorridor cor)
+	public AirCorridorInTime(Calendar start, Calendar end, AltitudeCorridor cor) throws InvalidArgumentException
 	{
 		corridor = cor; 
 		
@@ -35,6 +37,7 @@ public class AirCorridorInTime {
 			endingHour = end;
 			startingHour = start;
 		}
+		if(start==null || end==null || cor==null) throw new InvalidArgumentException();
 	}
 	
 	/**
@@ -57,8 +60,11 @@ public class AirCorridorInTime {
 	 * sets a new starting hour
 	 * @param newHour - the hour the airplane is supposed to go to the corridor
 	 */
-	public boolean setStartingHour(Calendar newHour)
+	public boolean setStartingHour(Calendar newHour)throws InvalidArgumentException
 	{
+		if(newHour==null)
+			throw new InvalidArgumentException();
+		
 		if(endingHour.compareTo(newHour) < 0)
 			return false;
 		else
@@ -67,14 +73,18 @@ public class AirCorridorInTime {
 			return true;
 		}
 		
+		
 	}
 	
 	/**
 	 * sets a new ending hour
 	 * @param newHour - the hour the airplane is supposed to leave the corridor
 	 */
-	public boolean setEndingHour(Calendar newHour)
+	public boolean setEndingHour(Calendar newHour)throws InvalidArgumentException
 	{
+		if(newHour==null)
+			throw new InvalidArgumentException();
+		
 		if(startingHour.compareTo(newHour) > 0)
 			return false;
 		else
@@ -82,7 +92,6 @@ public class AirCorridorInTime {
 			endingHour = newHour;
 			return true;
 		}
-			
 	}
 	
 	/**

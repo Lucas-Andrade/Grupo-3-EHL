@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
+import app.InvalidArgumentException;
+import app.InvalidFlightIDException;
+
 /**
  * allows to read a list of flights and make a database
  * 
@@ -17,7 +20,25 @@ import java.util.StringTokenizer;
  *@author Hugo Leal
  *@author Lucas Andrade
  */
-public class ReadListOfFlights {
+public class ReadListOfFlights 
+{
+	private static Airship airplane1;
+	private static Airship airplane2;
+	private static Airship airplane3;
+	private static Airship airplane4;
+	
+	static{
+	try{
+	airplane1 = new Airliner ("xpto01", new GeographicalPosition(20, 130, 0), new FlightPlan(new GregorianCalendar(2014, 11, 10, 00, 15), new GregorianCalendar(2014, 11, 10, 04, 15)), 50);
+	airplane2 = new PrivateJet("xpto02",new GeographicalPosition(30, 30, 0), new FlightPlan(new GregorianCalendar(2014, 11, 11, 00, 15), new GregorianCalendar(2014, 11, 11, 04, 15)), 10);
+	airplane3 = new CargoAircraft("xpto03",new GeographicalPosition(40, 30, 0), new FlightPlan(new GregorianCalendar(2014, 11, 12, 00, 15), new GregorianCalendar(2014, 11, 12, 04, 15)));
+	airplane4 = new Transport("xpto04",new GeographicalPosition(20.00, 130.00, 0.00), new FlightPlan(new GregorianCalendar(2014, 11, 13, 00, 15), new GregorianCalendar(2014, 11, 13, 04, 15)), false);
+	}
+	 catch(InvalidArgumentException e) {
+		  airplane1=airplane2=airplane3=airplane4=null;
+		 }
+		}
+	
 	
 	/**
 	 * reads a text file and makes a database with the flights
@@ -25,8 +46,12 @@ public class ReadListOfFlights {
 	 * @return database with all the read information
 	 * @throws IOException
 	 */
-	public Database readFlights(String name) throws IOException
+	public Database readFlights(String name) throws IOException, InvalidFlightIDException, InvalidArgumentException
+	
 	{
+		if(name==null )
+		throw new InvalidArgumentException();
+		
 		Database database = new Database();
 		
 		BufferedReader reader = new BufferedReader(new FileReader("src/filesToRead/" + name));
@@ -71,8 +96,8 @@ public class ReadListOfFlights {
 				tokenizer.nextToken();
 				tokenizer.nextToken();
 				
-				plan = getFlightPlan(dateTakeOff, dateLanding, tokenizer, Airliner.getNumberOfMinutesToTakeOff(),
-						Airliner.getNumberOfMinutesToLand(), Airliner.getNumberOfMinutesToSwitchCorridor());
+				plan = getFlightPlan(dateTakeOff, dateLanding, tokenizer, airplane1.getNumberOfMinutesToTakeOff(),
+						airplane1.getNumberOfMinutesToLand(), airplane1.getNumberOfMinutesToSwitchCorridor());
 				
 				Airliner airliner = new Airliner(flightID, pos, plan, passengers);
 				database.addAirplane(airliner);
@@ -93,8 +118,8 @@ public class ReadListOfFlights {
 				tokenizer.nextToken();
 				tokenizer.nextToken();
 				
-				plan = getFlightPlan(dateTakeOff, dateLanding, tokenizer, PrivateJet.getNumberOfMinutesToTakeOff(),
-						PrivateJet.getNumberOfMinutesToLand(), PrivateJet.getNumberOfMinutesToSwitchCorridor());
+				plan = getFlightPlan(dateTakeOff, dateLanding, tokenizer, airplane2.getNumberOfMinutesToTakeOff(),
+						airplane2.getNumberOfMinutesToLand(), airplane2.getNumberOfMinutesToSwitchCorridor());
 				
 				PrivateJet jet = new PrivateJet(flightID, pos, plan, passengers);
 				database.addAirplane(jet);
@@ -115,8 +140,8 @@ public class ReadListOfFlights {
 				tokenizer.nextToken();
 				tokenizer.nextToken();
 				
-				plan = getFlightPlan(dateTakeOff, dateLanding, tokenizer, CargoAircraft.getNumberOfMinutesToTakeOff(),
-						CargoAircraft.getNumberOfMinutesToLand(), CargoAircraft.getNumberOfMinutesToSwitchCorridor());
+				plan = getFlightPlan(dateTakeOff, dateLanding, tokenizer, airplane3.getNumberOfMinutesToTakeOff(),
+						airplane3.getNumberOfMinutesToLand(), airplane3.getNumberOfMinutesToSwitchCorridor());
 				
 				CargoAircraft cargo = new CargoAircraft(flightID, pos, plan);
 				database.addAirplane(cargo);
@@ -137,8 +162,8 @@ public class ReadListOfFlights {
 				tokenizer.nextToken();
 				tokenizer.nextToken();
 				
-				plan = getFlightPlan(dateTakeOff, dateLanding, tokenizer, Transport.getNumberOfMinutesToTakeOff(),
-						Transport.getNumberOfMinutesToLand(), Transport.getNumberOfMinutesToSwitchCorridor());
+				plan = getFlightPlan(dateTakeOff, dateLanding, tokenizer, airplane4.getNumberOfMinutesToTakeOff(),
+						airplane4.getNumberOfMinutesToLand(), airplane4.getNumberOfMinutesToSwitchCorridor());
 				
 				Transport t = new Transport(flightID, pos, plan, (armament == 0) ? false : true);
 				database.addAirplane(t);
@@ -180,10 +205,14 @@ public class ReadListOfFlights {
 	 * @param land - number of minutes this type of aircraft needs to get off the corridor and land
 	 * @param switchCorridor - number of minutes this type of aircraft needs to go from a corridor to another
 	 * @return the plan of the flight
+	 * @throws InvalidArgumentException 
 	 */
 	private FlightPlan getFlightPlan(Calendar dateTakeOff, Calendar dateLanding, StringTokenizer tokenizer, 
-			int takeOff, int land, int switchCorridor)
+			int takeOff, int land, int switchCorridor) throws InvalidArgumentException
 	{
+		if(dateTakeOff==null || dateLanding == null || tokenizer == null )
+			throw new InvalidArgumentException();
+
 		FlightPlan plan = new FlightPlan(dateTakeOff, dateLanding);
 		
 		Calendar dateOld = defensiveCopyOfTheDate(dateTakeOff);
@@ -227,13 +256,18 @@ public class ReadListOfFlights {
 		return plan;
 	}
 	
+
 	/**
 	 * makes a defensive copy of the calenda, so that when the copy is altered, the original is not
 	 * @param dateToCopy - the date we want to copy
 	 * @return the copied date
 	 */
-	private static Calendar defensiveCopyOfTheDate(Calendar dateToCopy)
+	
+	private static Calendar defensiveCopyOfTheDate(Calendar dateToCopy) throws InvalidArgumentException
 	{
+		if(dateToCopy==null )
+			throw new InvalidArgumentException();
+
 		Date aux = dateToCopy.getTime();
 		Calendar newDate = new GregorianCalendar();
 		newDate.setTime(aux);

@@ -29,19 +29,43 @@ public abstract class AirTrafficControlAppTools
 	/**
 	 * A flights' data base of the app.
 	 */
-	public final Database flightsDB;
+	private Database flightsDB;
 	
 	
+	
+	public Database getFlightsDB() {
+		return flightsDB;
+	}
+
+
 	/**
 	 * A app's report generator.
 	 */
-	public final ReportGenerator reporter;
+	private ReportGenerator reporter;
 	
 	
 	// CONSTRUTOR
 	
 	
 	
+	
+	public ReportGenerator getReporter() {
+		return reporter;
+	}
+
+
+	
+	public void setReporter( ReportGenerator reporter ) {
+		this.reporter = reporter;
+	}
+
+
+	
+	public void setFlightsDB( Database flightsDB ) {
+		this.flightsDB = flightsDB;
+	}
+
+
 	/**
 	 * Creates a new instance of type {@link AirTrafficControlAppTools}.
 	 * <p>

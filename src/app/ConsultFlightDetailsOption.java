@@ -1,9 +1,11 @@
 package app;
 
 
+import utils.Airliner;
 import utils.Airship;
 import utils.Database;
 import utils.ReportGenerator;
+import utils.Transport;
 
 
 /**
@@ -91,7 +93,7 @@ public class ConsultFlightDetailsOption extends Option
 	
 	
 	/**
-	 * Consulting the details of a specific flight from the app's flight's
+	 * Consults the details of a specific flight from the app's flight's
 	 * internal database and prints them in the console. Asks the user to choose
 	 * the flight from the flights' database of this app which he wants to read
 	 * about.
@@ -105,7 +107,7 @@ public class ConsultFlightDetailsOption extends Option
 	 */
 	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
 		
-		flightsDB = app.flightsDB;
+		flightsDB = app.getFlightsDB();
 		
 		// asks the user for a flightID
 		String instruction = new StringBuilder(
@@ -152,8 +154,8 @@ public class ConsultFlightDetailsOption extends Option
 	
 	
 	/**
-	 * Removes a flight from a flights' database and returns a message on the
-	 * operation being successfully concluded.
+	 * Consults the details of a specific flight from the app's flight's
+	 * internal database and prints them in the console.
 	 * 
 	 * @return A message on the operation being successfully concluded.
 	 * @throws DatabaseNotFoundException
@@ -167,13 +169,29 @@ public class ConsultFlightDetailsOption extends Option
 		if( flightID == null )
 			throw new FlightNotFoundInDatabaseException();
 		
-		Airship airship = flightsDB.getAirplane( flightID );
-		// new ReportGenerator().
-		String[] info = airship.toStringArray();
+		String details;
+		try
+		{
+			Airship airship = flightsDB.getAirplane( flightID );
+			String[] info = airship.toStringArray();
+			
+			StringBuilder builder = new StringBuilder(
+					"\n\n   FLIGHT DETAILS\n\n" ).append( info[0] ).append(
+					info[1] );
+			if( airship instanceof Airliner )
+				builder.append( ((Airliner)airship).getPassengersNumber() );
+			if( airship instanceof Transport )
+				builder.append( ((Transport)airship).hasArmament() );
+			details = builder.append( info[2] ).toString();
+		}
+		catch( NullPointerException e )
+		{
+			details = "INFORMATION NOT FOUND";
+		}
 		
-		return new StringBuilder( "\n\n   FLIGHT DETAILS\n\n" )
-				.append( info[0] ).append( info[1] ).append( info[2] )
-				.toString();
+		
+		return flightID;
+		
 	};
 	
 }

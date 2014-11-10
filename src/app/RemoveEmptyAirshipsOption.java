@@ -108,17 +108,17 @@ public class RemoveEmptyAirshipsOption extends Option
 		if( in.nextLine().equals( "YES" ) )
 			try
 			{
-				if( app.getFlightsDatabase() == null )
+				if( app.flightsDB == null )
 					throw new DatabaseNotFoundException();
 				
-				app.getFlightsDatabase().removeAirplanesWithZeroPassengers();
+				app.flightsDB.removeAirplanesWithZeroPassengers();
 				
 				System.out
 						.print( "DONE! Passenger-flights with zero passengers removed successfully!" );
 			}
 			catch( DatabaseNotFoundException e )
 			{
-				System.out.println( "DATABASE NOT FOUND!" );
+				System.out.print( "DATABASE NOT FOUND!" );
 			}
 		else System.out.println( "ABORTED OPERATION!" );
 		

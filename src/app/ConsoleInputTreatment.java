@@ -140,8 +140,18 @@ public class ConsoleInputTreatment
 		if( flightsDB == null )
 			throw new DatabaseNotFoundException();
 		
+		boolean containedInDatabase;
+		
 		String flightID = null;
-		while( flightID == null || !flightsDB.contains( flightID ) )
+		try
+		{
+			containedInDatabase = flightsDB.contains( flightID );
+		}
+		catch( InvalidFlightIDException e )
+		{
+			containedInDatabase = false;
+		}
+		while( flightID == null || !containedInDatabase )
 		{
 			try
 			{
@@ -161,7 +171,6 @@ public class ConsoleInputTreatment
 		
 		return flightID;
 	}
-	
 	
 	/**
 	 * Returns a {@link String} chosen by the user, guaranteed to be a valid

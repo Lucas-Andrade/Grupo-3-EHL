@@ -12,6 +12,7 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import app.InvalidArgumentException;
 
 /**
  * Allows to emit various types of reports. These reports can be returned 
@@ -53,7 +54,11 @@ public class ReportGenerator {
 			Airship airplane = database.get(iterator.next());
 			if (airplane.wasPositionUpdated())
 			{
-				listToReturn.add(airplane.positionToString());
+				try
+				{
+					listToReturn.add(airplane.positionToString());
+				}
+				catch( InvalidArgumentException e )	{}
 			}
 		}
 		

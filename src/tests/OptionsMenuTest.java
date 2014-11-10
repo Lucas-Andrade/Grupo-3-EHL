@@ -4,7 +4,7 @@ package tests;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import app.AddAFlightOption;
+import deprecated.AddAFlightOption;
 import app.HelpOption;
 import app.InvalidOptionNumberException;
 import app.OptionsMenu;

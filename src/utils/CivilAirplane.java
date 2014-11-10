@@ -1,5 +1,5 @@
 package utils;
-
+import app.InvalidArgumentException;
 /**
  * 
  * super class of all the civilian airplanes
@@ -17,9 +17,9 @@ public abstract class CivilAirplane extends Airship{
  * @param statingPosition - the coordinates of where the airplane will take off
  * @param flightPlan - the plan of the flight
  */
-	public CivilAirplane(String flightID, GeographicalPosition statingPosition, FlightPlan flightPlan) {
+	public CivilAirplane(String flightID, GeographicalPosition statingPosition, FlightPlan flightPlan)throws InvalidArgumentException {
 		super(flightID, statingPosition, flightPlan);
-	}
 
+	}
 	
 }

@@ -1,5 +1,7 @@
 package utils;
 
+import app.InvalidArgumentException;
+
 /**
  * Abstract class of all the military airplanes
  * 
@@ -12,9 +14,12 @@ public abstract class MilitaryAirplane extends Airship{
 	
 	private boolean carriesArmament;
 	
-	public MilitaryAirplane(String flightID, GeographicalPosition statingPosition, FlightPlan flightPlan, boolean armament) {
+	public MilitaryAirplane(String flightID, GeographicalPosition statingPosition, FlightPlan flightPlan, boolean armament) throws InvalidArgumentException {
 		super(flightID, statingPosition, flightPlan);
 		carriesArmament = armament;
+		
+		if(flightID==null || statingPosition == null || flightPlan == null)
+			throw new InvalidArgumentException();
 	}
 	
 	public boolean hasArmament()

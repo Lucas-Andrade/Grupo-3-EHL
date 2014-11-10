@@ -103,7 +103,7 @@ public class RemoveAFlightOption extends Option
 	 */
 	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
 		
-		flightsDB = app.getFlightsDatabase();
+		flightsDB = app.getFlightsDB();
 		
 		// asks the user for a flightID
 		String instruction = new StringBuilder(
@@ -164,7 +164,14 @@ public class RemoveAFlightOption extends Option
 		if( flightID == null )
 			throw new FlightNotFoundInDatabaseException();
 		
-		flightsDB.removeAirplane( flightID );
+		try
+		{
+			flightsDB.removeAirplane( flightID );
+		}
+		catch( InvalidFlightIDException e )
+		{
+			System.out.println("INVALID FlightID!");
+		}
 		return "DONE! Flight with identifier " + flightID
 				+ " removed successfully!";
 	};

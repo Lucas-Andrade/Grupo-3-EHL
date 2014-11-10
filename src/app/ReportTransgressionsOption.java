@@ -1,6 +1,9 @@
 package app;
 
 
+import java.io.IOException;
+
+
 /**
  * This class represents the option with the title
  * {@code Report altitude transgressions.} of an Air Traffic Control app.
@@ -82,8 +85,22 @@ public class ReportTransgressionsOption extends Option
 	 * DESCRIPTION TODO
 	 * </p>
 	 */
-	public void executeToConsole(AirTrafficControlAppForConsoleTools app) {
-		System.out.println( title );
+	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
+		try
+		{
+			String[] s = app.getReporter().reportAirplanesOutOfCorridor( app.getFlightsDB() );
+			for(String line:s) System.out.println(line);
+			app.getReporter().reportAirplanesOutOfCorridorToTxt( app.getFlightsDB() );
+		}
+		catch( IOException e )
+		{}
+	}
+	
+	@Override
+	public String execute() throws FlightNotFoundInDatabaseException,
+			DatabaseNotFoundException {
+		// TODO Auto-generated method stub
+		return null;
 	};
 	
 }

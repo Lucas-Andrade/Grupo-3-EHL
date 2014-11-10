@@ -5,6 +5,9 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import app.InvalidArgumentException;
+import app.InvalidFlightIDException;
+
 /**
  * Allows to create a database of airships
  * 
@@ -31,9 +34,17 @@ public class Database {
 	 * @param airplane - airplane to add
 	 * @return true if the airplane was successfully added
 	 * @return false if the airplane was not added
+	 * @throws InvalidArgumentException 
 	 */
-	public boolean addAirplane(Airship airplane)
+	public boolean addAirplane(Airship airplane) throws InvalidFlightIDException, InvalidArgumentException
 	{
+		if(airplane == null)
+			throw new InvalidArgumentException();
+		
+		String id = airplane.getFlightID();
+		if (id == null)
+			throw new InvalidFlightIDException();
+		
 		if(database.containsKey(airplane.getFlightID()))
 		{
 			return false;
@@ -51,8 +62,11 @@ public class Database {
 	 * @return true if the airplane was successfully removed
 	 * @return false if the specified ID was not found in the database
 	 */
-	public boolean removeAirplane(String id)
+	public boolean removeAirplane(String id) throws InvalidFlightIDException
 	{
+		if(id ==null)
+			throw new InvalidFlightIDException();
+			
 		if(database.containsKey(id))
 		{
 			database.remove(id);
@@ -67,10 +81,17 @@ public class Database {
 	 * @param airplane - airplane to remove
 	 * @return true if the airplane was successfully removed
 	 * @return false if the airplane was not found in the database
+	 * @throws InvalidArgumentException 
 	 */
-	public boolean removeAirplane(Airship airplane)
+	public boolean removeAirplane(Airship airplane) throws InvalidFlightIDException, InvalidArgumentException
 	{
+		if(airplane == null)
+			throw new InvalidArgumentException();
+		
 		String id = airplane.getFlightID();
+			if(id == null) 
+				throw new InvalidFlightIDException();
+			
 		return removeAirplane(id);
 	}
 	
@@ -91,13 +112,22 @@ public class Database {
 			Airship airplane = database.get(iterator.next());
 			if((airplane instanceof utils.Airliner) && ((Airliner) airplane).getPassengersNumber() == 0)
 			{
+				String id = airplane.getFlightID();
 				toRemove.add(airplane.getFlightID());
 				count++;
+				
 			}
 		}
 		
 		for (int i = 0; i < toRemove.size(); i++)
-			removeAirplane(toRemove.get(i));
+			try
+			{
+				removeAirplane(toRemove.get(i));
+			}
+			catch( InvalidFlightIDException e )
+			{
+				System.out.println("isto nunca vai acontecer");
+			}
 		
 		return count;
 	}
@@ -129,8 +159,10 @@ public class Database {
 	 * @param id the airplane id
 	 * @return true if the id is on database else returns false
 	 */
-	public boolean contains (String id)
+	public boolean contains (String id) throws InvalidFlightIDException
 	{
+		if(id == null) 
+			throw new InvalidFlightIDException();
 		return database.containsKey(id);
 	}
 	
@@ -145,5 +177,32 @@ public class Database {
 		{
 			database.get(iterator.next()).setToNotUpdated();
 		}
+	}
+	
+	public String addDatabase(Database newData)
+	{
+		Map<String, Airship> newDatabase = newData.getDatabase();
+		Set<String> idSet = newDatabase.keySet();
+		Iterator<String> iterator = idSet.iterator();
+		String toReturn = "";
+		
+		while(iterator.hasNext())
+		{
+			String id = iterator.next();
+			if (! database.containsKey(id))
+			{
+				database.put(id, newDatabase.get(id));
+			}
+			else
+			{
+				toReturn += "FlightID " + id + " already exists in database. Airplane NOT added.\n";
+			}
+		}
+		
+		if (toReturn.length() > 0)
+			return toReturn;
+		else
+			return "All airplanes were added successfully.";
+		
 	}
 }

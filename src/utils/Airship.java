@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
+import app.InvalidArgumentException;
 
 
 /**
@@ -39,13 +40,17 @@ public abstract class Airship
 	 *            - the coordinates where the airplane will take off
 	 * @param flightPlan
 	 *            - the plan of the flight
+	 * @throws InvalidArgumentException
 	 */
 	public Airship( String flightID, GeographicalPosition statingPosition,
-			FlightPlan flightPlan ) {
+			FlightPlan flightPlan ) throws InvalidArgumentException {
 		this.flightID = flightID;
 		this.lastKnownGeograficalPositions = new LinkedList< GeographicalPosition >();
 		lastKnownGeograficalPositions.add( statingPosition );
 		this.flightPlan = flightPlan;
+		
+		if( flightID == null || statingPosition == null || flightPlan == null )
+			throw new InvalidArgumentException();
 	}
 	
 	/**
@@ -76,16 +81,22 @@ public abstract class Airship
 	/**
 	 * @param newGeographicalPosition
 	 *            - updates the geographical position to a new one
+	 * @throws InvalidArgumentException
 	 */
 	public void updateGeographicPosition(
-			GeographicalPosition newGeographicalPosition ) {
+			GeographicalPosition newGeographicalPosition )
+			throws InvalidArgumentException {
 		positionWasUpdated = true;
 		lastKnownGeograficalPositions.addFirst( newGeographicalPosition );
+		
+		if( newGeographicalPosition == null )
+			throw new InvalidArgumentException();
 	}
 	
 	/**
 	 * @return gets the corridor the airplane is planned to be in, at the time
 	 *         the method was called
+	 * @throws InvalidArgumentException
 	 */
 	public AltitudeCorridor getCurrentCorridor() {
 		return flightPlan.getCurrentCorridor();
@@ -97,9 +108,13 @@ public abstract class Airship
 	 * @param newArrivalHour
 	 *            - the new planned hour for the arrival of the airplane in its
 	 *            destination
+	 * @throws InvalidArgumentException
 	 */
-	public void setNewArrivalHour( Calendar newArrivalHour ) {
+	public void setNewArrivalHour( Calendar newArrivalHour )
+			throws InvalidArgumentException {
 		flightPlan.setNewArrivalHour( newArrivalHour, numberOfMinutesToLand );
+		if( newArrivalHour == null )
+			throw new InvalidArgumentException();
 	}
 	
 	/**
@@ -115,6 +130,7 @@ public abstract class Airship
 	 * corridors, gaining altitude after take off, or even making its descent
 	 * 
 	 * @return a string with information on the status of the airplane
+	 * @throws InvalidArgumentException
 	 */
 	public String getObservations() {
 		AltitudeCorridor corridor = this.getCurrentCorridor();
@@ -149,8 +165,9 @@ public abstract class Airship
 	/**
 	 * @return returns a string with the id, position, and observations about
 	 *         the airplane
+	 * @throws InvalidArgumentException
 	 */
-	public String positionToString() {
+	public String positionToString() throws InvalidArgumentException {
 		StringBuilder builder = new StringBuilder();
 		GeographicalPosition pos = getGeographicPosition();
 		builder.append( flightID ).append( " " ).append( pos.getLatitude() )
@@ -176,6 +193,7 @@ public abstract class Airship
 	 * @return a string with the information of whether the airplane is cruising
 	 *         normally (inside the corridor), or if the plane is outside of the
 	 *         corridor
+	 * @throws InvalidArgumentException
 	 */
 	private String verifyAltitude( AltitudeCorridor corridor ) {
 		double min = corridor.getLowerLimit();
@@ -214,13 +232,71 @@ public abstract class Airship
 	}
 	
 	/**
+	 * sets a new number of minutes for the take off of this class' airplanes.
+	 * this will affect all the airplanes of this type, that were already
+	 * constructed and all that will be constructed in the future
+	 * 
+	 * @param newTime
+	 *            - the new number of minutes this class of airplane needs to
+	 *            take off
+	 * @throws InvalidArgumentException
+	 */
+	public abstract void setNumberOfMinutesToTakeOff( int newTime )
+			throws InvalidArgumentException;
+	
+	/**
+	 * sets a new number of minutes for the land of this class' airplanes. this
+	 * will affect all the airplanes of this type, that were already constructed
+	 * and all that will be constructed in the future
+	 * 
+	 * @param newTime
+	 *            - the new number of minutes this class of airplane needs to
+	 *            land
+	 * @throws InvalidArgumentException
+	 */
+	public abstract void setNumberOfMinutesToLand( int newTime )
+			throws InvalidArgumentException;
+	
+	/**
+	 * sets a new number of minutes for switching lanes of this class'
+	 * airplanes. this will affect all the airplanes of this type, that were
+	 * already constructed and all that will be constructed in the future
+	 * 
+	 * @param newTime
+	 *            - the new number of minutes this class of airplane needs to
+	 *            switch lanes
+	 * @throws InvalidArgumentException
+	 */
+	public abstract void setNumberOfMinutesToSwitchCorridor( int newTime )
+			throws InvalidArgumentException;
+	
+	/**
+	 * @return the number of minutes the airplanes of this class need to take
+	 *         off
+	 */
+	public abstract int getNumberOfMinutesToTakeOff();
+	
+	/**
+	 * @return - the number of minutes the airplanes of this class need to land
+	 */
+	public abstract int getNumberOfMinutesToLand();
+	
+	/**
+	 * @return - the number of minutes the airplanes of this class need to
+	 *         switch lanes
+	 */
+	public abstract int getNumberOfMinutesToSwitchCorridor();
+	
+	/**
 	 * Creates a list of the details of this airship in a string array.
+	 * 
+	 * @throws InvalidArgumentException
 	 */
 	public String[] toStringArray() {
 		
 		GeographicalPosition pos = getGeographicPosition();
 		DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd,hh:mm" );
-		String[] details =new String[3];
+		String[] details = new String[3];
 		details[0] = new StringBuilder( "FlightID: " ).append( flightID )
 				.append( "\n\nTake-Off date: " )
 				.append( dateFormat.format( getTakeOffDate().getTime() ) )
@@ -234,10 +310,23 @@ public abstract class Airship
 				.append( "º\nAltitude: " )
 				.append( (new Double( pos.getAltitude() )).toString() )
 				.append( "meters" ).toString();
-		details[2] = "\n\nObservations: "+getObservations();
+		details[2] = "\n\nObservations: " + getObservations();
 		return details;
 		
 	}
 	
-	
+	/**
+	 * adds an event in the middle of the flight
+	 * 
+	 * @param newEvent
+	 *            - the new event to be added
+	 * @return - true if the event was successfully added
+	 * @throws InvalidArgumentException
+	 */
+	// public boolean addMidFlightPlan(AirCorridorInTime newEvent) throws
+	// InvalidArgumentException
+	// {
+	// return flightPlan.addMidFlightPlan(newEvent,
+	// numberOfMinutesToSwitchCorridor);
+	// }
 }

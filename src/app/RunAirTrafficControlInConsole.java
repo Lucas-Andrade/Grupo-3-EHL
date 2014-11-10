@@ -1,6 +1,10 @@
 package app;
 
 
+import deprecated.AddAFlightOption;
+import deprecated.ConfigurationsOption;
+
+
 /**
  * EHL's AIR TRAFFIC CONTROL app for console.
  * <p style="font-size:16">
@@ -130,14 +134,13 @@ public class RunAirTrafficControlInConsole
 	 * </p>
 	 */
 	public static final AirTrafficControlAppForConsoleTools TOOLS = new AirTrafficControlAppForConsoleTools(
-			"Options Menu", '-', 45, 4, ActualizeDatabaseOption.getInstance(),
-			AddAFlightOption.getInstance(),
+			"Options Menu", '-', 45, 3, AddAListOfFlightsOption.getInstance(),
+			UpdateDatabaseOption.getInstance(),
 			MonitorAirTrafficOption.getInstance(),
 			ReportTransgressionsOption.getInstance(),
 			ConsultFlightDetailsOption.getInstance(),
 			RemoveEmptyAirshipsOption.getInstance(),
-			RemoveAFlightOption.getInstance(),
-			ConfigurationsOption.getInstance(), HelpOption.getInstance(),
+			RemoveAFlightOption.getInstance(), HelpOption.getInstance(),
 			ExitOption.getInstance() );
 	
 	
@@ -185,8 +188,8 @@ public class RunAirTrafficControlInConsole
 			{
 				printBeginningOfSection( TOOLS.mainMenu
 						.getOptionTitle( selectedOption ) );
-				runApp = !TOOLS.mainMenu.executeOptionToConsole( selectedOption,
-						TOOLS );
+				runApp = !TOOLS.mainMenu.executeOptionToConsole(
+						selectedOption, TOOLS );
 			}
 			catch( InvalidOptionNumberException e )
 			{

@@ -94,15 +94,24 @@ public class AddAListOfFlightsOption extends Option
 	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
 		try
 		{
-			app.flightsDB.addDatabase( new ReadListOfFlights()
+			String msg = app.getFlightsDB().addDatabase( new ReadListOfFlights()
 					.readFlights( "ListOfFlights.txt" ) );
+			System.out
+					.println( "DONE! New internal database of flights \ncreated from ListOfFlights.txt" );
+			System.out.print(msg);
 		}
 		catch( IOException e )
 		{
-			System.out.println( "src/ListOfFlights.txt FILE NOT FOUND!" );
+			System.out.print( "src/ListOfFlights.txt FILE NOT FOUND!1" );
 		}
-		System.out
-				.println( "DONE! New internal database of flights \ncreated from ListOfFlights.txt" );
+		catch( InvalidFlightIDException e )
+		{
+			System.out.print( "INVALID FlightID!" );
+		}
+		catch( InvalidArgumentException e )
+		{
+			System.out.print( "src/ListOfFlights.txt FILE NOT FOUND!2" );
+		}
 	}
 	
 	

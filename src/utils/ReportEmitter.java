@@ -30,6 +30,7 @@ public class ReportEmitter {
 	/**
 	 * emits a report that shows the flight ID and geographic position of all the known airplanes
 	 * @param database - the database where the airplanes are saved
+	 * @param source - the file that will be read
 	 * @return an array of strings with the information about the flight ID of all the known airplanes
 	 * and their position
 	 */
@@ -72,6 +73,7 @@ public class ReportEmitter {
 	 * emits a report that shows the flight ID and geographic position of all the known airplanes, and 
 	 * saves that report into a file
 	 * @param database - the database where the airplanes are saved
+	 * @param source - the file that will be read
 	 */
 	public void reportAllToTxt(Database database, String source) throws IOException
 	{
@@ -122,26 +124,6 @@ public class ReportEmitter {
 	public void reportAirplanesOutOfCorridorToTxt(Database database) throws IOException
 	{
 		writeToTxt(reportAirplanesOutOfCorridor(database), "outOfCorridorReport");
-	}
-	
-	/**
-	 * reports the information about a specific airplane
-	 * @param airplane - the airplane to present information about
-	 * @return an array of strings with the information about the airplane
-	 */
-	public String[] reportFlightInformation(Airship airplane)
-	{
-		return null;
-	}
-	
-	/**
-	 * reports the information about a specific airplane, and writes it into a text file
-	 * @param airplane - the airplane to present information about
-	 * @throws IOException
-	 */
-	public void reportFlightInformationToTxt(Airship airplane) throws IOException
-	{
-		writeToTxt(reportFlightInformation(airplane), "informationOn_" + airplane.getFlightID());
 	}
 	
 	/**
@@ -213,10 +195,12 @@ public class ReportEmitter {
 	private void writeToTxt(String[] toWrite, String name) throws IOException
 	{		
 		Calendar now = new GregorianCalendar();
-		DateFormat format = new SimpleDateFormat( "hh:mm_dd/MM/yyyy" );
+		DateFormat format = new SimpleDateFormat( "hh.mm_dd-MM-yyyy" );
 		
-		
-		String destFile = "src/filesToWrite/" + name + "_" + format.format(now.getTime()) +".txt";
+		StringBuilder builder = new StringBuilder();
+		builder.append("src/filesToWrite/").append(name).append("_")
+		.append(format.format(now.getTime())).append(".txt");
+		String destFile = builder.toString();
 		
 		BufferedWriter writer = new BufferedWriter(new PrintWriter(destFile));
 		for (int i = 0; i < toWrite.length; i++)

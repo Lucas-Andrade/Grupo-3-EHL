@@ -43,8 +43,8 @@ public class AirCorridorInTimeTest {
 	public void shouldReturnTheCorridor()
 	{
 		assertTrue(corridor.equals(corridorInTime.getCorridor()));
-		assertEquals(corridor.getLowerLimit(), corridorInTime.getCorridor().getLowerLimit());
-		assertEquals(corridor.getUpperLimit(), corridorInTime.getCorridor().getUpperLimit());
+		assertEquals(corridor.getLowerLimit(), corridorInTime.getCorridor().getLowerLimit(), 0.01);
+		assertEquals(corridor.getUpperLimit(), corridorInTime.getCorridor().getUpperLimit(), 0.01);
 	}
 	
 	@Test

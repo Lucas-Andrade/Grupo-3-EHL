@@ -1,5 +1,13 @@
 package utils;
 
+/**
+ * 
+ * class of civil aircraft used to transport cargo
+ *
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
+ */
 public class CargoAircraft extends CivilAirplane{
 
 	private static int numberOfMinutesToTakeOff = 13;
@@ -12,6 +20,13 @@ public class CargoAircraft extends CivilAirplane{
 	private static boolean newLand = false;
 	private static boolean newSwitch = false;
 	
+	/**
+	 * creates a new cargo airplane with all its properties
+	 * 
+	 * @param flightID - the ID of the flight
+	 * @param statingPosition - the coordinates of where the airplane will take off
+	 * @param flightPlan - the plan of the flight
+	 */
 	public CargoAircraft(String flightID, GeographicalPosition statingPosition,
 			FlightPlan flightPlan) {
 		super(flightID, statingPosition, flightPlan);

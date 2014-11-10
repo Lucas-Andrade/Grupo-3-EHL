@@ -4,7 +4,9 @@ import java.util.Calendar;
 /**
  * allows to create objects that have a property AltitudeCorridor, where the airplane is supposed to be 
  * in the time interval defined by the starting and ending hours.
- * @author Lucas
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
  *
  */
 public class AirCorridorInTime {

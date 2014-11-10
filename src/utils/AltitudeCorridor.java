@@ -1,7 +1,9 @@
 package utils;
 /**
  * defines an altitude corridor, with a maximum and minimum altitudes
- * @author Lucas
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
  *
  */
 public class AltitudeCorridor {

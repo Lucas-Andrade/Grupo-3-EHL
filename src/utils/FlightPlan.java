@@ -6,7 +6,9 @@ import java.util.List;
 
 /**
  * allows to build the plan of the flight
- * @author Lucas
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
  *
  */
 public class FlightPlan {

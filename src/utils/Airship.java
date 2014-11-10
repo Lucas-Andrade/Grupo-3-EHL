@@ -5,7 +5,9 @@ import java.util.LinkedList;
 
 /**
  * Creates an abstract class that envelops all the airplanes. 
- * @author Lucas Andrade
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
  *
  */
 public abstract class Airship {

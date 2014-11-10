@@ -1,4 +1,7 @@
 package utils;
+
+import app.InvalidArgumentException;
+
 /**
  * This class represents GeographicalPosition defined by Latitude, Longitude and Altitude
  * @author Hugo
@@ -30,7 +33,7 @@ public class GeographicalPosition {
 	 * @param lon longitude value
 	 * @param alt altitude value
 	 */
-	public GeographicalPosition(double lat, double lon, double alt) throws IllegalArgumentException
+	public GeographicalPosition(double lat, double lon, double alt) throws InvalidArgumentException
 	{
 		latitude = new Latitude(lat);
 		longitude = new Longitude(lon);
@@ -96,7 +99,7 @@ public class GeographicalPosition {
 	 * @param lon new longitude value
 	 * @param alt new altitude value
 	 */
-	public void setPosition(double lat, double lon, double alt)
+	public void setPosition(double lat, double lon, double alt)throws InvalidArgumentException
 	{
 		latitude.setLatitude(lat);
 		longitude.setLongitude(lon);
@@ -109,7 +112,7 @@ public class GeographicalPosition {
 	 * @param lon object with the new longitude value
 	 * @param alt object with the new altitude value
 	 */
-	public void setPosition(Latitude lat, Longitude lon, Altitude alt)
+	public void setPosition(Latitude lat, Longitude lon, Altitude alt)throws InvalidArgumentException
 	{
 		latitude.setLatitude(lat);
 		longitude.setLongitude(lon);
@@ -129,7 +132,7 @@ public class GeographicalPosition {
 	 * Sets a new value for altitude
 	 * @param alt new value of altitude
 	 */
-	public void setAltitude(double alt)
+	public void setAltitude(double alt)throws InvalidArgumentException
 	{
 		altitude.setAltitude(alt);
 	}
@@ -147,7 +150,7 @@ public class GeographicalPosition {
 	 * Sets a new value for altitude
 	 * @param alt object that contains the new altitude value
 	 */
-	public void setAltitude(Altitude alt)
+	public void setAltitude(Altitude alt)throws InvalidArgumentException
 	{
 		altitude.setAltitude(alt);
 	}
@@ -174,7 +177,7 @@ public class GeographicalPosition {
 	 * Sets a new value for latitude
 	 * @param lat new value of latitude
 	 */
-	public void setLatitude(double lat)
+	public void setLatitude(double lat)throws InvalidArgumentException
 	{
 		latitude.setLatitude(lat);
 	}
@@ -210,7 +213,7 @@ public class GeographicalPosition {
 	 * Sets a new value for longitude
 	 * @param lon new value of longitude
 	 */
-	public void setLongitude(double lon)
+	public void setLongitude(double lon)throws InvalidArgumentException
 	{
 		longitude.setLongitude(lon);
 	}

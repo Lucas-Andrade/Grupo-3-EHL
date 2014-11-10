@@ -1,4 +1,7 @@
 package utils;
+
+import app.InvalidArgumentException;
+
 /**
  * This class represents an Altitude value.
  * @author Hugo
@@ -12,9 +15,11 @@ public class Altitude {
 	 * Constructs a value of altitude
 	 * @param alt altitude value
 	 */
-	public Altitude(double alt)
+	public Altitude(double alt)throws InvalidArgumentException
 	{
 		altitude = alt;
+		if(alt < 0 )
+			throw new InvalidArgumentException();
 	}
 	
 	/**
@@ -47,16 +52,18 @@ public class Altitude {
 	 * Sets a new altitude value
 	 * @param alt new altitude value
 	 */
-	public void setAltitude(double alt)
+	public void setAltitude(double alt) throws InvalidArgumentException
 	{
 		this.altitude = alt;
+		if(alt < 0 )
+			throw new InvalidArgumentException();
 	}
 	
 	/**
 	 * Sets a new altitude value
 	 * @param alt object that contains the new altitude value
 	 */
-	public void setAltitude(Altitude alt)
+	public void setAltitude(Altitude alt)throws InvalidArgumentException
 	{
 		this.altitude = alt.getAltitudeValue();
 	}

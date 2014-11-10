@@ -37,7 +37,7 @@ public class AirCorridorInTime {
 			endingHour = end;
 			startingHour = start;
 		}
-		if(start==null || end==null || cor==null) throw new InvalidArgumentException();
+		if(start==null || end==null) throw new InvalidArgumentException();
 	}
 	
 	/**

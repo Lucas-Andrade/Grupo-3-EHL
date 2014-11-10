@@ -24,7 +24,7 @@ import app.InvalidFlightIDException;
  *@author Hugo Leal
  *@author Lucas Andrade
  */
-public class ReportEmitter {
+public class ReportGenerator {
 	
 	String[] latestReport;
 	String unrecognisedID;
@@ -146,34 +146,6 @@ public class ReportEmitter {
 			throw new InvalidArgumentException();
 
 		writeToTxt(reportAirplanesOutOfCorridor(database), "outOfCorridorReport");
-	}
-	
-	/**
-	 * reports the information about a specific airplane
-	 * @param airplane - the airplane to present information about
-	 * @return an array of strings with the information about the airplane
-	 * @throws InvalidArgumentException 
-	 */
-	public String[] reportFlightInformation(Airship airplane) throws InvalidArgumentException
-	{
-		if(airplane==null )
-			throw new InvalidArgumentException();
-		
-		return null;
-	}
-	
-	/**
-	 * reports the information about a specific airplane, and writes it into a text file
-	 * @param airplane - the airplane to present information about
-	 * @throws IOException
-	 * @throws InvalidArgumentException 
-	 */
-	public void reportFlightInformationToTxt(Airship airplane) throws IOException, InvalidArgumentException
-	{
-		if(airplane==null )
-			throw new InvalidArgumentException();
-		
-		writeToTxt(reportFlightInformation(airplane), "informationOn_" + airplane.getFlightID());
 	}
 	
 	/**

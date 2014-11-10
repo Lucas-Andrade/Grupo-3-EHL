@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import app.InvalidArgumentException;
 import utils.Altitude;
 
 public class AltitudeTest {
@@ -12,7 +13,7 @@ public class AltitudeTest {
 	Altitude _alt;
 
 	@Before
-	public void newAltitudeValue() 
+	public void newAltitudeValue() throws InvalidArgumentException 
 	{
 		_alt = new Altitude(60.00);
 	}
@@ -38,7 +39,7 @@ public class AltitudeTest {
 	}
 	
 	@Test 
-	public void shouldIncrementAltitudeWithAnAltitudeObject()
+	public void shouldIncrementAltitudeWithAnAltitudeObject() throws InvalidArgumentException
 	{
 		//Arrange
 		Altitude alt = new Altitude(10.00);
@@ -51,7 +52,7 @@ public class AltitudeTest {
 	}
 	
 	@Test 
-	public void shouldSetAltitudeValueWithADoubleValue()
+	public void shouldSetAltitudeValueWithADoubleValue() throws InvalidArgumentException
 	{
 		//Arrange
 		double alt = 10.00;
@@ -64,7 +65,7 @@ public class AltitudeTest {
 	}
 	
 	@Test 
-	public void shouldSetAltitudeWithAnAltitudeObject()
+	public void shouldSetAltitudeWithAnAltitudeObject() throws InvalidArgumentException
 	{
 		//Arrange
 		Altitude alt = new Altitude(10.00);

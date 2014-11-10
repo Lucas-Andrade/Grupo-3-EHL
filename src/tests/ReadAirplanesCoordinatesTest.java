@@ -8,6 +8,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import app.InvalidArgumentException;
+import app.InvalidFlightIDException;
 import utils.AirCorridorInTime;
 import utils.Airliner;
 import utils.Airship;
@@ -17,13 +19,13 @@ import utils.Database;
 import utils.FlightPlan;
 import utils.GeographicalPosition;
 import utils.ReadAirplanesCoordinates;
-import utils.ReportEmitter;
+import utils.ReportGenerator;
 import utils.Transport;
 
 public class ReadAirplanesCoordinatesTest {
 
 	ReadAirplanesCoordinates read;
-	ReportEmitter rep;
+	ReportGenerator rep;
 	Database data;
 	Airliner airlWithZeroPass;
 	Airliner airlWithSameID;
@@ -34,9 +36,9 @@ public class ReadAirplanesCoordinatesTest {
 	String source = "src/filesToRead/newCoordinatesTest.txt";
 	
 	@Before
-	public void constructAirplanesAndDatabase()
+	public void constructAirplanesAndDatabase() throws InvalidArgumentException, InvalidFlightIDException
 	{
-		rep = new ReportEmitter();
+		rep = new ReportGenerator();
 		
 		Calendar date1 = new GregorianCalendar();
 		Calendar date2 = new GregorianCalendar();
@@ -61,7 +63,7 @@ public class ReadAirplanesCoordinatesTest {
 	
 	
 	@Test
-	public void shouldGetEmptyFieldsFromFile()
+	public void shouldGetEmptyFieldsFromFile() throws InvalidFlightIDException, InvalidArgumentException
 	{
 		// Arrange
 		String sourceOfFlights = "src/FilesToRead/newCoordinatesTest.txt";

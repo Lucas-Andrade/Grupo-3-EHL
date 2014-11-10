@@ -255,6 +255,17 @@ public abstract class Airship {
 	 * @return - the number of minutes the airplanes of this class need to switch lanes
 	 */
 	public abstract int getNumberOfMinutesToSwitchCorridor();
+	
+//	/**
+//	 * adds an event in the middle of the flight
+//	 * @param newEvent - the new event to be added
+//	 * @return - true if the event was successfully added
+//	 * @throws InvalidArgumentException
+//	 */
+//	public boolean addMidFlightPlan(AirCorridorInTime newEvent) throws InvalidArgumentException
+//	{
+//		return flightPlan.addMidFlightPlan(newEvent, numberOfMinutesToSwitchCorridor);
+//	}
 }
 
 

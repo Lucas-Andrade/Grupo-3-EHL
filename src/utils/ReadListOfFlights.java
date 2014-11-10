@@ -49,10 +49,10 @@ public class ReadListOfFlights
 	public Database readFlights(String name) throws IOException, InvalidFlightIDException, InvalidArgumentException
 	
 	{
-		if(name==null )
-		throw new InvalidArgumentException();
-		
 		Database database = new Database();
+		
+		if(name==null )
+			throw new InvalidArgumentException();
 		
 		BufferedReader reader = new BufferedReader(new FileReader("src/filesToRead/" + name));
 		
@@ -262,8 +262,7 @@ public class ReadListOfFlights
 	 * @param dateToCopy - the date we want to copy
 	 * @return the copied date
 	 */
-	
-	private static Calendar defensiveCopyOfTheDate(Calendar dateToCopy) throws InvalidArgumentException
+	static Calendar defensiveCopyOfTheDate(Calendar dateToCopy) throws InvalidArgumentException
 	{
 		if(dateToCopy==null )
 			throw new InvalidArgumentException();

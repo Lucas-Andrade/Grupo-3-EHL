@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
 
+import app.InvalidArgumentException;
 import utils.AirCorridorInTime;
 import utils.Airliner;
 import utils.AltitudeCorridor;
@@ -24,7 +25,7 @@ public class AirshipTest_UsingTransportInstance {
 	private int initialLongitude = 10;
 	
 	@Before
-	public void constructTwoAirplanes()
+	public void constructTwoAirplanes() throws InvalidArgumentException
 	{
 		geo = new GeographicalPosition(initialLatitude, initialLongitude, initialAtltitude);
 		transport = new Transport("rj351", geo, new FlightPlan(new GregorianCalendar() ,new GregorianCalendar()), false);
@@ -43,7 +44,7 @@ public class AirshipTest_UsingTransportInstance {
 	}
 	
 	@Test
-	public void shouldUpdateTheGeographicalPositionToANewOne()
+	public void shouldUpdateTheGeographicalPositionToANewOne() throws InvalidArgumentException
 	{
 		GeographicalPosition newGeographicalPosition = new GeographicalPosition(18, 11, 20);
 		transport.updateGeographicPosition(newGeographicalPosition);
@@ -52,21 +53,21 @@ public class AirshipTest_UsingTransportInstance {
 	}
 	
 	@Test
-	public void shouldGetTheCorridorNullBecauseItIsStillGainingAltitude()
+	public void shouldGetTheCorridorNullBecauseItIsStillGainingAltitude() throws InvalidArgumentException
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(-10);
 		assertEquals(transport2.getCurrentCorridor(), null);
 	}
 	
 	@Test
-	public void shouldGetTheCorridorNullBecauseItIsLanding()
+	public void shouldGetTheCorridorNullBecauseItIsLanding() throws InvalidArgumentException
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(-50);
 		assertEquals(transport2.getCurrentCorridor(), null);
 	}
 	
 	@Test
-	public void shouldGetMidFlightCorridor()
+	public void shouldGetMidFlightCorridor() throws InvalidArgumentException
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(-30);
 		double maxAlt = transport2.getCurrentCorridor().getUpperLimit();
@@ -77,28 +78,28 @@ public class AirshipTest_UsingTransportInstance {
 	}
 	
 	@Test
-	public void shoudGetTheRightObservation_TakingOff()
+	public void shoudGetTheRightObservation_TakingOff() throws InvalidArgumentException
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(-10);
 		assertEquals(transport2.getObservations(), "The air plane has took off and is gaining altitude.");
 	}
 	
 	@Test
-	public void shouldGetTheRightObservation_Landing()
+	public void shouldGetTheRightObservation_Landing() throws InvalidArgumentException
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(-50);
 		assertEquals(transport2.getObservations(), "The airplane has started its descent in order to land.");
 	}
 	
 	@Test
-	public void shouldGetTheRightObservation_OutsideCorridor()
+	public void shouldGetTheRightObservation_OutsideCorridor() throws InvalidArgumentException
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(-30);
 		assertEquals(transport2.getObservations(), "WARNING: The airplane is outside of the corridor.");
 	}
 	
 	@Test
-	public void shouldGetTheRightObservation_NoObservation()
+	public void shouldGetTheRightObservation_NoObservation() throws InvalidArgumentException
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(-30);
 		GeographicalPosition newGeographicalPosition = new GeographicalPosition(40, 15, 110);
@@ -108,21 +109,21 @@ public class AirshipTest_UsingTransportInstance {
 	}
 	
 	@Test
-	public void shouldGetTheRightObservation_HasNotTakenOff()
+	public void shouldGetTheRightObservation_HasNotTakenOff() throws InvalidArgumentException
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(20);
 		assertEquals(transport2.getObservations(), "The airplane has not taken off yet.");
 	}
 	
 	@Test
-	public void shouldGetTheRightObservation_HasAlreadyLanded()
+	public void shouldGetTheRightObservation_HasAlreadyLanded() throws InvalidArgumentException
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(-100);
 		assertEquals(transport2.getObservations(), "The airplane has already landed.");
 	}
 	
 	@Test 
-	public void shouldCorrectlySetTheNewArrivalDate()
+	public void shouldCorrectlySetTheNewArrivalDate() throws InvalidArgumentException
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(0);
 		Calendar newLanding = new GregorianCalendar();
@@ -136,14 +137,14 @@ public class AirshipTest_UsingTransportInstance {
 	}
 	
 	@Test
-	public void shouldReturnTheCorrectString()
+	public void shouldReturnTheCorrectString() throws InvalidArgumentException
 	{
 		Transport transport2 = makeAnAirplaneWithAPlan(-30);
 		assertEquals("id123 12.0 10.0 1.0 " + transport2.getObservations(), transport2.positionToString());
 	}
 	
 	@Test
-	public void shouldReturnTheCorrectTakeOffDate()
+	public void shouldReturnTheCorrectTakeOffDate() throws InvalidArgumentException
 	{
 		Calendar hourTakeOff = new GregorianCalendar();
 		Calendar hourLand = new GregorianCalendar();
@@ -154,7 +155,7 @@ public class AirshipTest_UsingTransportInstance {
 	}
 	
 	@Test
-	public void shouldReturnTheCorrectLandingDate()
+	public void shouldReturnTheCorrectLandingDate() throws InvalidArgumentException
 	{
 		Calendar hourTakeOff = new GregorianCalendar();
 		Calendar hourLand = new GregorianCalendar();
@@ -164,7 +165,7 @@ public class AirshipTest_UsingTransportInstance {
 		assertEquals(hourLand, airliner3.getLandingDate());
 	}
 	
-	private static Transport makeAnAirplaneWithAPlan(int diff)
+	private static Transport makeAnAirplaneWithAPlan(int diff) throws InvalidArgumentException
 	{
 		Calendar hourDep = new GregorianCalendar();
 		Calendar hourLand = new GregorianCalendar();

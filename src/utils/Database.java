@@ -173,4 +173,31 @@ public class Database {
 			database.get(iterator.next()).setToNotUpdated();
 		}
 	}
+	
+	public String addDatabase(Database newData)
+	{
+		Map<String, Airship> newDatabase = newData.getDatabase();
+		Set<String> idSet = newDatabase.keySet();
+		Iterator<String> iterator = idSet.iterator();
+		String toReturn = "";
+		
+		while(iterator.hasNext())
+		{
+			String id = iterator.next();
+			if (! database.containsKey(id))
+			{
+				database.put(id, newDatabase.get(id));
+			}
+			else
+			{
+				toReturn += "Flight ID " + id + " already exists in database. Airplane NOT added.\n";
+			}
+		}
+		
+		if (toReturn.length() > 0)
+			return toReturn;
+		else
+			return "All airplanes were added successfully.";
+		
+	}
 }

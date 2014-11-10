@@ -174,6 +174,76 @@ public class FlightPlan {
 		return arrivalHour;
 	}
 	
-	
-	
+//	/**
+//	 * adds an event in the middle of the flight
+//	 * @param newEvent - the new event to be added
+//	 * @return - true if the event was successfully added
+//	 * @throws InvalidArgumentException
+//	 */
+//	public boolean addMidFlightPlan(AirCorridorInTime newEvent, int timeToSwitchCorridor) throws InvalidArgumentException
+//	{
+//		Calendar startOfNewEvent = newEvent.getStartingHour();
+//		Calendar endOfNewEvent = newEvent.getEndingHour();
+//		
+//		if ((startOfNewEvent).compareTo(departureHour) < 0 || 
+//				(endOfNewEvent).compareTo(arrivalHour) > 0)
+//			return false; //the new event cannot be after landing or before take off
+//		
+//		if (startOfNewEvent.compareTo(getFirstEvent().getEndingHour()) < 0)//the new event cannot interrupt take off
+//		{
+//			startOfNewEvent = getFirstEvent().getEndingHour();
+//			newEvent.setStartingHour(startOfNewEvent);
+//		}
+//			
+//		if (endOfNewEvent.compareTo(getLastEvent().getStartingHour()) > 0)//the new event cannot interrupt landing
+//		{
+//			endOfNewEvent = getLastEvent().getStartingHour();
+//			newEvent.setEndingHour(endOfNewEvent);
+//		}
+//		
+//		for (int i = 0; i < corridors.size(); i++)
+//		{
+//			if (corridors.get(i).getEndingHour().compareTo(startOfNewEvent) > 0) // Accommodate the new event
+//			{
+//				Calendar endOfSwitchingCorridor = ReadListOfFlights.defensiveCopyOfTheDate(startOfNewEvent);
+//				endOfSwitchingCorridor.add(Calendar.MINUTE, timeToSwitchCorridor);
+//				
+//				corridors.get(i).setEndingHour(startOfNewEvent);
+//				corridors.add(i + 1, new AirCorridorInTime(startOfNewEvent, endOfSwitchingCorridor, null));
+//				corridors.add(i + 2, new AirCorridorInTime(endOfSwitchingCorridor, endOfNewEvent, newEvent.getCorridor()));
+//			}
+//				
+//			if (corridors.get(i).getEndingHour().compareTo(endOfNewEvent) < 0)
+//			{
+//				corridors.remove(i); // remove events that should occur during the new event
+//			}
+//			
+//			if (corridors.get(i).getStartingHour().compareTo(endOfNewEvent) < 0 && corridors.get(i).getEndingHour().compareTo(endOfNewEvent) > 0)
+//			{
+//				if (corridors.get(i).getCorridor() == null) //if the airplane was to be switching corridors at this time, the event is pushed a bit forward in time.
+//				{
+//					Calendar switchingCorridor = ReadListOfFlights.defensiveCopyOfTheDate(endOfNewEvent);
+//					corridors.get(i).setStartingHour(switchingCorridor);
+//					
+//					switchingCorridor.add(Calendar.MINUTE, timeToSwitchCorridor);
+//					corridors.get(i).setEndingHour(switchingCorridor);
+//					
+//					corridors.get(i + 1).setStartingHour(switchingCorridor);
+//				}
+//				else // if the airplane was supposed to be in another corridor at this time, it should be given time to get there
+//				{
+//					Calendar switchingCorridor = ReadListOfFlights.defensiveCopyOfTheDate(endOfNewEvent);
+//					switchingCorridor.add(Calendar.MINUTE, timeToSwitchCorridor);
+//					
+//					corridors.add(i, new AirCorridorInTime(endOfNewEvent, switchingCorridor, null));
+//					
+//					corridors.get(i + 1).setStartingHour(switchingCorridor);
+//				}
+//			}
+//		}
+//		
+//		
+//		return true;
+//	}
+
 }

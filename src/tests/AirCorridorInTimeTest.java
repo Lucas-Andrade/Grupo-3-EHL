@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
 
+import app.InvalidArgumentException;
 import utils.AirCorridorInTime;
 import utils.AltitudeCorridor;
 
@@ -20,7 +21,7 @@ public class AirCorridorInTimeTest {
 	Calendar date2;
 	
 	@Before
-	public void instanciateCorridors()
+	public void instanciateCorridors() throws InvalidArgumentException
 	{
 		corridor = new AltitudeCorridor(5,10);
 		date1 = new GregorianCalendar();
@@ -48,7 +49,7 @@ public class AirCorridorInTimeTest {
 	}
 	
 	@Test
-	public void shouldReturnTrueAndSetTheStartingHour()
+	public void shouldReturnTrueAndSetTheStartingHour() throws InvalidArgumentException
 	{
 		Calendar date3 = new GregorianCalendar();
 		date3.add(12, -20);
@@ -56,7 +57,7 @@ public class AirCorridorInTimeTest {
 	}
 	
 	@Test
-	public void shouldReturnFalseAndNotSetTheStartingHour()
+	public void shouldReturnFalseAndNotSetTheStartingHour() throws InvalidArgumentException
 	{
 		Calendar date3 = new GregorianCalendar();
 		date3.add(12, 50);
@@ -64,7 +65,7 @@ public class AirCorridorInTimeTest {
 	}
 	
 	@Test
-	public void shouldSetTheStartingHour()
+	public void shouldSetTheStartingHour() throws InvalidArgumentException
 	{
 		Calendar date3 = new GregorianCalendar();
 		date3.add(12, -20);
@@ -73,7 +74,7 @@ public class AirCorridorInTimeTest {
 	}
 	
 	@Test
-	public void shouldReturnTrueAndSetTheEndingHour()
+	public void shouldReturnTrueAndSetTheEndingHour() throws InvalidArgumentException
 	{
 		Calendar date3 = new GregorianCalendar();
 		date3.add(12, 50);
@@ -81,7 +82,7 @@ public class AirCorridorInTimeTest {
 	}
 	
 	@Test
-	public void shouldReturnFalseAndNotSetTheEndingHour()
+	public void shouldReturnFalseAndNotSetTheEndingHour() throws InvalidArgumentException
 	{
 		Calendar date3 = new GregorianCalendar();
 		date3.add(12, - 50);
@@ -89,7 +90,7 @@ public class AirCorridorInTimeTest {
 	}
 	
 	@Test
-	public void shouldSetTheEndingHour()
+	public void shouldSetTheEndingHour() throws InvalidArgumentException
 	{
 		Calendar date3 = new GregorianCalendar();
 		date3.add(12, 50);
@@ -98,7 +99,7 @@ public class AirCorridorInTimeTest {
 	}
 	
 	@Test
-	public void shouldSwitchTheDatesWhenTheyAreIntroducedInTheWrongOrder()
+	public void shouldSwitchTheDatesWhenTheyAreIntroducedInTheWrongOrder() throws InvalidArgumentException
 	{
 		AirCorridorInTime newAirCorridor = new AirCorridorInTime(date2, date1, corridor);
 		

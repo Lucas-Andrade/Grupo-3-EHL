@@ -7,6 +7,7 @@ import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
 
+import app.InvalidArgumentException;
 import utils.CargoAircraft;
 import utils.FlightPlan;
 import utils.GeographicalPosition;
@@ -19,7 +20,7 @@ public class CargoAircraftTest {
 	CargoAircraft crg4;
 	
 	@Before
-	public void constructTwoAirplanes()
+	public void constructTwoAirplanes() throws InvalidArgumentException
 	{
 		crg = new CargoAircraft("mgrf", new GeographicalPosition(0,0,0), 
 				new FlightPlan(new GregorianCalendar() ,new GregorianCalendar()));
@@ -28,16 +29,16 @@ public class CargoAircraftTest {
 	}
 	
 	@Test
-	public void shouldAlterTheNumberOfMinutesToTakeOffOfAllThePreviouslyConstructedAircraftAndAllThatWillBeConstructedInTheFuture() {
+	public void shouldAlterTheNumberOfMinutesToTakeOffOfAllThePreviouslyConstructedAircraftAndAllThatWillBeConstructedInTheFuture() throws InvalidArgumentException {
 		assertEquals(13, crg.getNumberOfMinutesToTakeOff());
 		assertEquals(13, crg2.getNumberOfMinutesToTakeOff());
-		assertEquals(13, CargoAircraft.getNumberOfMinutesToTakeOff());
+		assertEquals(13, crg.getNumberOfMinutesToTakeOff());
 		
-		CargoAircraft.setNumberOfMinutesToTakeOff(17);
+		crg.setNumberOfMinutesToTakeOff(17);
 		
 		assertEquals(17, crg.getNumberOfMinutesToTakeOff());
 		assertEquals(17, crg2.getNumberOfMinutesToTakeOff());
-		assertEquals(17, CargoAircraft.getNumberOfMinutesToTakeOff());
+		assertEquals(17, crg.getNumberOfMinutesToTakeOff());
 
 		crg3 = new CargoAircraft("mgrf", new GeographicalPosition(0,0,0), 
 				new FlightPlan(new GregorianCalendar() ,new GregorianCalendar()));
@@ -46,20 +47,20 @@ public class CargoAircraftTest {
 		
 		assertEquals(17, crg3.getNumberOfMinutesToTakeOff());
 		assertEquals(17, crg4.getNumberOfMinutesToTakeOff());
-		assertEquals(17, CargoAircraft.getNumberOfMinutesToTakeOff());
+		assertEquals(17, crg.getNumberOfMinutesToTakeOff());
 	}
 	
 	@Test
-	public void shouldAlterTheNumberOfMinutesToLandOfAllThePreviouslyConstructedAircraftAndAllThatWillBeConstructedInTheFuture() {
+	public void shouldAlterTheNumberOfMinutesToLandOfAllThePreviouslyConstructedAircraftAndAllThatWillBeConstructedInTheFuture() throws InvalidArgumentException {
 		assertEquals(15, crg.getNumberOfMinutesToLand());
 		assertEquals(15, crg2.getNumberOfMinutesToLand());
-		assertEquals(15, CargoAircraft.getNumberOfMinutesToLand());
+		assertEquals(15, crg.getNumberOfMinutesToLand());
 		
-		CargoAircraft.setNumberOfMinutesToLand(20);
+		crg.setNumberOfMinutesToLand(20);
 		
 		assertEquals(20, crg.getNumberOfMinutesToLand());
 		assertEquals(20, crg2.getNumberOfMinutesToLand());
-		assertEquals(20, CargoAircraft.getNumberOfMinutesToLand());
+		assertEquals(20, crg.getNumberOfMinutesToLand());
 
 		crg3 = new CargoAircraft("mgrf", new GeographicalPosition(0,0,0), 
 				new FlightPlan(new GregorianCalendar() ,new GregorianCalendar()));
@@ -68,21 +69,21 @@ public class CargoAircraftTest {
 		
 		assertEquals(20, crg3.getNumberOfMinutesToLand());
 		assertEquals(20, crg4.getNumberOfMinutesToLand());
-		assertEquals(20, CargoAircraft.getNumberOfMinutesToLand());
+		assertEquals(20, crg.getNumberOfMinutesToLand());
 	}
 	
 	@Test
-	public void shouldAlterTheNumberOfMinutesToSwitchCorridorOfAllThePreviouslyConstructedAircraftAndAllThatWillBeConstructedInTheFuture() {
+	public void shouldAlterTheNumberOfMinutesToSwitchCorridorOfAllThePreviouslyConstructedAircraftAndAllThatWillBeConstructedInTheFuture() throws InvalidArgumentException {
 		
 		assertEquals(7, crg.getNumberOfMinutesToSwitchCorridor());
 		assertEquals(7, crg2.getNumberOfMinutesToSwitchCorridor());
-		assertEquals(7, CargoAircraft.getNumberOfMinutesToSwitchCorridor());
+		assertEquals(7, crg.getNumberOfMinutesToSwitchCorridor());
 		
-		CargoAircraft.setNumberOfMinutesToSwitchCorridor(1);
+		crg.setNumberOfMinutesToSwitchCorridor(1);
 		
 		assertEquals(1, crg.getNumberOfMinutesToSwitchCorridor());
 		assertEquals(1, crg2.getNumberOfMinutesToSwitchCorridor());
-		assertEquals(1, CargoAircraft.getNumberOfMinutesToSwitchCorridor());
+		assertEquals(1, crg.getNumberOfMinutesToSwitchCorridor());
 
 		crg3 = new CargoAircraft("mgrf", new GeographicalPosition(0,0,0), 
 				new FlightPlan(new GregorianCalendar() ,new GregorianCalendar()));
@@ -91,7 +92,7 @@ public class CargoAircraftTest {
 		
 		assertEquals(1, crg3.getNumberOfMinutesToSwitchCorridor());
 		assertEquals(1, crg4.getNumberOfMinutesToSwitchCorridor());
-		assertEquals(1, CargoAircraft.getNumberOfMinutesToSwitchCorridor());
+		assertEquals(1, crg.getNumberOfMinutesToSwitchCorridor());
 	}
 
 }

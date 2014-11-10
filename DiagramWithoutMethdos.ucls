@@ -3,293 +3,293 @@
   associations="true" dependencies="false" nesting-relationships="true">  
   <class id="1" language="java" name="utils.AirCorridorInTime" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/AirCorridorInTime.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="769" y="428"/>    
+    <position height="-1" width="-1" x="407" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="2" language="java" name="utils.Airliner" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/Airliner.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="170" y="1050"/>    
+    <position height="-1" width="-1" x="86" y="407"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="3" language="java" name="utils.Airship" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/Airship.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="484" y="836"/>    
+    <position height="-1" width="-1" x="232" y="221"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="4" language="java" name="utils.Altitude" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/Altitude.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="760" y="164"/>    
+    <position height="-1" width="-1" x="52" y="34"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="5" language="java" name="utils.AltitudeComparator" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/AltitudeComparator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1111" y="1241"/>    
+    <position height="-1" width="-1" x="578" y="215"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="6" language="java" name="utils.AltitudeCorridor" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/AltitudeCorridor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1032" y="404"/>    
+    <position height="-1" width="-1" x="589" y="120"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="7" language="java" name="utils.CargoAircraft" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/CargoAircraft.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="480" y="1430"/>    
+    <position height="-1" width="-1" x="207" y="407"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="8" language="java" name="utils.CivilAirplane" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/CivilAirplane.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="477" y="1190"/>    
+    <position height="-1" width="-1" x="162" y="316"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="9" language="java" name="utils.Database" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/Database.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="168" y="704"/>    
+    <position height="-1" width="-1" x="62" y="222"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="10" language="java" name="utils.FlightPlan" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/FlightPlan.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="815" y="717"/>    
+    <position height="-1" width="-1" x="408" y="220"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="11" language="java" name="utils.GeographicalPosition" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/GeographicalPosition.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="472" y="296"/>    
+    <position height="-1" width="-1" x="230" y="121"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="12" language="java" name="utils.Latitude" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/Latitude.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="160" y="184"/>    
+    <position height="-1" width="-1" x="236" y="34"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="13" language="java" name="utils.Longitude" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/Longitude.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="164" y="440"/>    
+    <position height="-1" width="-1" x="48" y="119"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="14" language="java" name="utils.MilitaryAirplane" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/MilitaryAirplane.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="829" y="1008"/>    
+    <position height="-1" width="-1" x="324" y="318"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="15" language="java" name="utils.PrivateJet" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/PrivateJet.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="176" y="1458"/>    
+    <position height="-1" width="-1" x="87" y="484"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="16" language="java" name="utils.ReadAirplanesCoordinates" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/ReadAirplanesCoordinates.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1126" y="1052"/>    
+    <position height="-1" width="-1" x="562" y="349"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="17" language="java" name="utils.ReadListOfFlights" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/ReadListOfFlights.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1056" y="180"/>    
+    <position height="-1" width="-1" x="587" y="284"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="18" language="java" name="utils.ReportGenerator" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/ReportGenerator.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1095" y="725"/>    
+    <position height="-1" width="-1" x="592" y="412"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <class id="19" language="java" name="utils.Transport" project="AirTrafficControl" 
     file="/AirTrafficControl/src/utils/Transport.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="820" y="1262"/>    
+    <position height="-1" width="-1" x="324" y="408"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
   <association id="20">    
-    <end type="SOURCE" refId="10" navigable="false">      
-      <attribute id="21" name="corridors">        
-        <position height="0" width="0" x="-60" y="-44"/>      
-      </attribute>      
-      <multiplicity id="22" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="-60" y="-44"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="1" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="23">    
-    <end type="SOURCE" refId="2"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="24">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="25" name="lastKnownGeograficalPositions">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="26" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="11" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="27">    
-    <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="28" name="longitude">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </attribute>      
-      <multiplicity id="29" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="13" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="30">    
-    <end type="SOURCE" refId="19"/>    
-    <end type="TARGET" refId="14"/>  
-  </generalization>  
-  <association id="31">    
-    <end type="SOURCE" refId="9" navigable="false">      
-      <attribute id="32" name="database">        
-        <position height="0" width="0" x="0" y="24"/>      
-      </attribute>      
-      <multiplicity id="33" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="24"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="3" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <generalization id="34">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="8"/>  
-  </generalization>  
-  <association id="35">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="36" name="corridor">        
-        <position height="0" width="0" x="-94" y="-66"/>      
+      <attribute id="21" name="corridor">        
+        <position height="0" width="0" x="-537" y="-350"/>      
       </attribute>      
-      <multiplicity id="37" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-94" y="-66"/>      
+      <multiplicity id="22" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-537" y="-350"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="6" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
+  <generalization id="23">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="24">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="25" name="lastKnownGeograficalPositions">        
+        <position height="0" width="0" x="-242" y="-175"/>      
+      </attribute>      
+      <multiplicity id="26" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-242" y="-175"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="11" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="27">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <association id="28">    
+    <end type="SOURCE" refId="3" navigable="false">      
+      <attribute id="29" name="flightPlan">        
+        <position height="0" width="0" x="-424" y="-602"/>      
+      </attribute>      
+      <multiplicity id="30" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-424" y="-602"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="10" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="31">    
+    <end type="SOURCE" refId="10" navigable="false">      
+      <attribute id="32" name="corridors">        
+        <position height="0" width="0" x="-416" y="-350"/>      
+      </attribute>      
+      <multiplicity id="33" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-416" y="-350"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="1" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <generalization id="34">    
+    <end type="SOURCE" refId="19"/>    
+    <end type="TARGET" refId="14"/>  
+  </generalization>  
+  <association id="35">    
+    <end type="SOURCE" refId="9" navigable="false">      
+      <attribute id="36" name="database">        
+        <position height="0" width="0" x="-252" y="-591"/>      
+      </attribute>      
+      <multiplicity id="37" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-252" y="-591"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="3" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
   <generalization id="38">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <generalization id="39">    
     <end type="SOURCE" refId="15"/>    
     <end type="TARGET" refId="2"/>  
   </generalization>  
-  <association id="39">    
+  <generalization id="40">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="8"/>  
+  </generalization>  
+  <association id="41">    
     <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="40" name="latitude">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <attribute id="42" name="longitude">        
+        <position height="0" width="0" x="-116" y="-321"/>      
       </attribute>      
-      <multiplicity id="41" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="43" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-116" y="-321"/>      
+      </multiplicity>    
+    </end>    
+    <end type="TARGET" refId="13" navigable="true"/>    
+    <display labels="true" multiplicity="true"/>  
+  </association>  
+  <association id="44">    
+    <end type="SOURCE" refId="11" navigable="false">      
+      <attribute id="45" name="latitude">        
+        <position height="0" width="0" x="76" y="-150"/>      
+      </attribute>      
+      <multiplicity id="46" minimum="0" maximum="1">        
+        <position height="0" width="0" x="76" y="-150"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="12" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <generalization id="42">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <generalization id="43">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="3"/>  
-  </generalization>  
-  <association id="44">    
+  <association id="47">    
     <end type="SOURCE" refId="11" navigable="false">      
-      <attribute id="45" name="altitude">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <attribute id="48" name="altitude">        
+        <position height="0" width="0" x="-708" y="-130"/>      
       </attribute>      
-      <multiplicity id="46" minimum="0" maximum="1">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="49" minimum="0" maximum="1">        
+        <position height="0" width="0" x="-708" y="-130"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
-    <display labels="true" multiplicity="true"/>  
-  </association>  
-  <association id="47">    
-    <end type="SOURCE" refId="3" navigable="false">      
-      <attribute id="48" name="flightPlan">        
-        <position height="0" width="0" x="-17" y="-105"/>      
-      </attribute>      
-      <multiplicity id="49" minimum="0" maximum="1">        
-        <position height="0" width="0" x="-17" y="-105"/>      
-      </multiplicity>    
-    </end>    
-    <end type="TARGET" refId="10" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

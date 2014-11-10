@@ -10,6 +10,8 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
+import app.InvalidArgumentException;
+import app.InvalidFlightIDException;
 import utils.AirCorridorInTime;
 import utils.Airliner;
 import utils.Airship;
@@ -18,12 +20,12 @@ import utils.CargoAircraft;
 import utils.Database;
 import utils.FlightPlan;
 import utils.GeographicalPosition;
-import utils.ReportEmitter;
+import utils.ReportGenerator;
 import utils.Transport;
 
 public class ReportEmitterTest {
 	
-	ReportEmitter rep;
+	ReportGenerator rep;
 	Database data;
 	Airliner airl1;
 	Airliner airl2;
@@ -34,9 +36,9 @@ public class ReportEmitterTest {
 	String source = "src/filesToRead/newCoordinatesTest.txt";
 	
 	@Before
-	public void constructAirplanesAndDatabase()
+	public void constructAirplanesAndDatabase() throws InvalidArgumentException, InvalidFlightIDException
 	{
-		rep = new ReportEmitter();
+		rep = new ReportGenerator();
 		
 		Calendar date1 = new GregorianCalendar();
 		Calendar date2 = new GregorianCalendar();
@@ -62,7 +64,7 @@ public class ReportEmitterTest {
 	}
 	
 	@Test
-	public void shouldReportAllRegularFlights() throws IOException
+	public void shouldReportAllRegularFlights() throws IOException, InvalidFlightIDException, InvalidArgumentException
 	{
 		String[] lista = rep.reportAll(data, source);
 		
@@ -75,7 +77,7 @@ public class ReportEmitterTest {
 	}
 	
 	@Test
-	public void shouldReportTheAirplanesOutsideOfTheirCorridors() throws IOException
+	public void shouldReportTheAirplanesOutsideOfTheirCorridors() throws IOException, InvalidFlightIDException, InvalidArgumentException
 	{
 		rep.reportAll(data, source);
 		String[] airplanesOut = rep.reportAirplanesOutOfCorridor(data);
@@ -88,7 +90,7 @@ public class ReportEmitterTest {
 	}
 
 	@Test
-	public void shouldReportAllTheFlightsWithUnknownFlightID() throws IOException
+	public void shouldReportAllTheFlightsWithUnknownFlightID() throws IOException, InvalidFlightIDException, InvalidArgumentException
 	{
 		rep.reportAll(data, source);
 		assertEquals("Unrecognized flight ID: sdfb Latitude: 50.0 Longitude: 50.0 Altitude: 13000.0\n", rep.reportAirplanesWithUnknownFlightID());
@@ -96,7 +98,7 @@ public class ReportEmitterTest {
 	}
 	
 	@Test
-	public void shouldReportAllTheFlightsWithErrors() throws IOException
+	public void shouldReportAllTheFlightsWithErrors() throws IOException, InvalidFlightIDException, InvalidArgumentException
 	{
 		rep.reportAll(data, source);
 		assertEquals("Empty Fields at Line: 5\n", rep.reportemptyFields());

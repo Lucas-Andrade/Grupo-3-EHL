@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import app.InvalidArgumentException;
 import utils.Latitude;
 
 public class LatitudeTest {
@@ -12,7 +13,7 @@ public class LatitudeTest {
 	Latitude _lat;
 
 	@Before
-	public void newLatitudeValue() 
+	public void newLatitudeValue() throws InvalidArgumentException 
 	{
 		_lat = new Latitude(60.00);
 	}
@@ -38,7 +39,7 @@ public class LatitudeTest {
 	}
 	
 	@Test 
-	public void shouldIncrementLatitudeWithAnLatitudeObject()
+	public void shouldIncrementLatitudeWithAnLatitudeObject() throws InvalidArgumentException
 	{
 		//Arrange
 		Latitude lat = new Latitude(10.00);
@@ -51,7 +52,7 @@ public class LatitudeTest {
 	}
 	
 	@Test 
-	public void shouldSetLatitudeValueWithADoubleValue()
+	public void shouldSetLatitudeValueWithADoubleValue() throws InvalidArgumentException
 	{
 		//Arrange
 		double lat = 10.00;
@@ -64,7 +65,7 @@ public class LatitudeTest {
 	}
 	
 	@Test 
-	public void shouldSetLatitudeWithAnLatitudeObject()
+	public void shouldSetLatitudeWithAnLatitudeObject() throws InvalidArgumentException
 	{
 		//Arrange
 		Latitude lat = new Latitude(10.00);

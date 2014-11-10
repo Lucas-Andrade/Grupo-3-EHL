@@ -10,6 +10,7 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import app.InvalidArgumentException;
 import utils.AirCorridorInTime;
 import utils.AltitudeCorridor;
 import utils.FlightPlan;
@@ -40,7 +41,7 @@ public class FlightPlanTest {
 	int minAltSecond;
 	
 	@Before
-	public void constructThePlan()
+	public void constructThePlan() throws InvalidArgumentException
 	{
 		maxAltFirst = 100;
 		minAltFirst = 120;
@@ -78,12 +79,12 @@ public class FlightPlanTest {
 	}
 	
 	@Test
-	public void shouldAddNewEvent() {
+	public void shouldAddNewEvent() throws InvalidArgumentException {
 		assertTrue(plan.addEvent(landing));
 	}
 	
 	@Test
-	public void shouldNotAddEventBeforeAirplaneTakesOff() {
+	public void shouldNotAddEventBeforeAirplaneTakesOff() throws InvalidArgumentException {
 		Calendar start = new GregorianCalendar();
 		start.add(12, -20);
 		
@@ -92,7 +93,7 @@ public class FlightPlanTest {
 	}
 	
 	@Test
-	public void shouldNotAddEventAfterLanding()
+	public void shouldNotAddEventAfterLanding() throws InvalidArgumentException
 	{
 		Calendar end = new GregorianCalendar();
 		end.add(12, 90);
@@ -102,7 +103,7 @@ public class FlightPlanTest {
 	}
 	
 	@Test
-	public void shouldNotAddOverlayingEvents()
+	public void shouldNotAddOverlayingEvents() throws InvalidArgumentException
 	{
 		Calendar start = new GregorianCalendar();
 		start.add(12, 60);
@@ -112,7 +113,7 @@ public class FlightPlanTest {
 	}
 	
 	@Test
-	public void shouldNotAllowGaps()
+	public void shouldNotAllowGaps() throws InvalidArgumentException
 	{
 		Calendar start = new GregorianCalendar();
 		start.add(12, 80);
@@ -122,13 +123,13 @@ public class FlightPlanTest {
 	}
 	
 	@Test
-	public void shouldReturnTheCurrentCorridorWhichIsNull()
+	public void shouldReturnTheCurrentCorridorWhichIsNull() throws InvalidArgumentException
 	{
 		assertNull(plan.getCurrentCorridor());
 	}
 	
 	@Test
-	public void shouldReturnTheFirstCorridor()
+	public void shouldReturnTheFirstCorridor() throws InvalidArgumentException
 	{
 		Calendar time = new GregorianCalendar();
 		time.add(12, 30);
@@ -137,7 +138,7 @@ public class FlightPlanTest {
 	}
 	
 	@Test
-	public void shouldReturnTheSecondCorridor()
+	public void shouldReturnTheSecondCorridor() throws InvalidArgumentException
 	{
 		Calendar time = new GregorianCalendar();
 		time.add(12, 60);
@@ -146,7 +147,7 @@ public class FlightPlanTest {
 	}
 	
 	@Test
-	public void shouldReturnNullForATestBeforeFlightStarts()
+	public void shouldReturnNullForATestBeforeFlightStarts() throws InvalidArgumentException
 	{
 		Calendar time = new GregorianCalendar();
 		time.add(12, -10);
@@ -155,7 +156,7 @@ public class FlightPlanTest {
 	}
 	
 	@Test
-	public void shouldReturnNullForATestAfterFlightEnds()
+	public void shouldReturnNullForATestAfterFlightEnds() throws InvalidArgumentException
 	{
 		Calendar time = new GregorianCalendar();
 		time.add(12, 150);
@@ -187,7 +188,7 @@ public class FlightPlanTest {
 	}
 	
 	@Test
-	public void shouldCorrectlySetTheNewLandingHour()
+	public void shouldCorrectlySetTheNewLandingHour() throws InvalidArgumentException
 	{
 		Calendar newLandHour = new GregorianCalendar();
 		newLandHour.add(12, 80);
@@ -216,4 +217,30 @@ public class FlightPlanTest {
 	{
 		assertEquals(hourLand, plan.getLandingDate());
 	}
+	
+//	@Test
+//	public void shouldNotAddNewEvent() throws InvalidArgumentException
+//	{
+//		Calendar start = new GregorianCalendar();
+//		Calendar end = new GregorianCalendar();
+//		
+//		start.add(12, -100);
+//		end.add(12, -90);
+//		
+//		assertFalse(plan.addMidFlightPlan(new AirCorridorInTime(start, end, null), 10));
+//	}
+//	
+//	@Test
+//	public void shouldAddNewEventInPlan() throws InvalidArgumentException
+//	{
+//		Calendar start = new GregorianCalendar();
+//		Calendar end = new GregorianCalendar();
+//		
+//		start.add(12, 30);
+//		end.add(12, 60);
+//		
+//		assertTrue(plan.addMidFlightPlan(new AirCorridorInTime(start, end, null), 10));
+//	}
+	
+	
 }

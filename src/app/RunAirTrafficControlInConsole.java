@@ -103,7 +103,7 @@ public class RunAirTrafficControlInConsole
 	 * <p>
 	 * This instance provides:
 	 * <ul>
-	 * <li>a {@link AirTrafficControlAppTools#MAINMENU MAINMENU} with the
+	 * <li>a {@link AirTrafficControlAppTools#mainMenu MAINMENU} with the
 	 * {@link OptionsMenu#title title} {@code Options Menu} and the following
 	 * representation in a String:
 	 * <ol style="font-family:Consolas">
@@ -130,7 +130,7 @@ public class RunAirTrafficControlInConsole
 	 * </p>
 	 */
 	public static final AirTrafficControlAppForConsoleTools TOOLS = new AirTrafficControlAppForConsoleTools(
-			"Options Menu", '-', 45, 4, AddAListOfFlightsOption.getInstance(),
+			"Options Menu", '-', 45, 4, ActualizeDatabaseOption.getInstance(),
 			AddAFlightOption.getInstance(),
 			MonitorAirTrafficOption.getInstance(),
 			ReportTransgressionsOption.getInstance(),
@@ -165,8 +165,8 @@ public class RunAirTrafficControlInConsole
 		{
 			
 			// menu presentation
-			printBeginningOfSection( TOOLS.MAINMENU.menuTitle );
-			System.out.print( TOOLS.MAINMENU.toString() );
+			printBeginningOfSection( TOOLS.mainMenu.menuTitle );
+			System.out.print( TOOLS.mainMenu.toString() );
 			
 			
 			// ask the user to choose an option
@@ -176,16 +176,16 @@ public class RunAirTrafficControlInConsole
 					.append( "\n perform and press Enter." )
 					.append( "\n\nExecute option number: " ).toString();
 			int selectedOption = ConsoleInputTreatment.getAValidIntFromUser( 1,
-					TOOLS.MAINMENU.numberOfOptions, instruction );
+					TOOLS.mainMenu.numberOfOptions, instruction );
 			printEndOfSection();
 			
 			
 			// option executation
 			try
 			{
-				printBeginningOfSection( TOOLS.MAINMENU
+				printBeginningOfSection( TOOLS.mainMenu
 						.getOptionTitle( selectedOption ) );
-				runApp = !TOOLS.MAINMENU.executeOptionToConsole( selectedOption,
+				runApp = !TOOLS.mainMenu.executeOptionToConsole( selectedOption,
 						TOOLS );
 			}
 			catch( InvalidOptionNumberException e )

@@ -18,12 +18,12 @@ import utils.CargoAircraft;
 import utils.Database;
 import utils.FlightPlan;
 import utils.GeographicalPosition;
-import utils.ReportEmitter;
+import utils.ReportGenerator;
 import utils.Transport;
 
 public class ReportEmitterTest {
 	
-	ReportEmitter rep;
+	ReportGenerator rep;
 	Database data;
 	Airliner airl1;
 	Airliner airl2;
@@ -36,7 +36,7 @@ public class ReportEmitterTest {
 	@Before
 	public void constructAirplanesAndDatabase()
 	{
-		rep = new ReportEmitter();
+		rep = new ReportGenerator();
 		
 		Calendar date1 = new GregorianCalendar();
 		Calendar date2 = new GregorianCalendar();

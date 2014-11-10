@@ -21,7 +21,7 @@ import java.util.Set;
  *@author Hugo Leal
  *@author Lucas Andrade
  */
-public class ReportEmitter {
+public class ReportGenerator {
 	
 	String[] latestReport;
 	String unrecognisedID;

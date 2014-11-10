@@ -7,8 +7,8 @@ import utils.Database;
 /**
  * Class whose subclasses's instances provide tools for apps of air traffic
  * control with user-app interaction established through a console. Instances of
- * {@link AirTrafficControlAppForConsoleTools} inherit a public final field of
- * type {@link OptionsMenu} and a public final field of type {@link Database}
+ * {@link AirTrafficControlAppForConsoleTools} inherit three public final field
+ * of types {@link OptionsMenu}, {@link Database} and {@link ReportGenerator}
  * from class {@link AirTrafficControlAppTools}, and they also must have a
  * public final field of type {@link ConsoleOutputFormatter}.
  *
@@ -37,7 +37,7 @@ public class AirTrafficControlAppForConsoleTools extends
 	 * <p>
 	 * This instance provides:
 	 * <ul>
-	 * <li>a {@link AirTrafficControlAppTools#MAINMENU MAINMENU} with the
+	 * <li>a {@link AirTrafficControlAppTools#mainMenu MAINMENU} with the
 	 * {@link OptionsMenu#title title} {@code menuTitle} and the options
 	 * {@code options};</li>
 	 * <li>an empty {@link utils.Database flights' database} and</li>

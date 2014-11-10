@@ -71,7 +71,8 @@ public class MonitorAirTrafficOption extends Option
 	
 	
 	
-	// execute()
+	// ACÇÕES
+	
 	
 	/**
 	 * Monitors the flights in the list of scheduled flights that already
@@ -83,6 +84,18 @@ public class MonitorAirTrafficOption extends Option
 	 */
 	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
 		System.out.println( title );
+	};
+	
+	
+	
+	/**
+	 * Performs no action.
+	 * 
+	 * @return {@code null}
+	 */
+	public String execute() throws DatabaseNotFoundException {
+		
+		return null;
 	};
 	
 }

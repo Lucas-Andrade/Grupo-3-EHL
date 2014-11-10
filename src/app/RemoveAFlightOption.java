@@ -1,7 +1,6 @@
 package app;
 
 
-import java.util.Scanner;
 import utils.Database;
 
 
@@ -14,9 +13,8 @@ import utils.Database;
  * </p>
  * <p>
  * The purpose of this class is to perform the action of removing an airship
- * manually from the {@link AirTrafficControlAppTools app}'s flight's internal
- * database. For more information, read the documentation of method
- * {@link #execute() execute} .
+ * manually from the app's internal database of flights. For more information,
+ * read the documentation of method {@link #execute() execute} .
  * </p>
  * 
  * <p style="font-size:16">
@@ -62,7 +60,9 @@ public class RemoveAFlightOption extends Option
 	 * values of the fields {@code title} and {@code description}.
 	 */
 	public RemoveAFlightOption() {
-		super( "Remove a flight manually.", "d" );
+		super(
+				"Remove a flight manually.",
+				"Asks the user to choose the flight from the flights' database of this app which he wants to remove from the database." );
 	};
 	
 	/**
@@ -85,18 +85,25 @@ public class RemoveAFlightOption extends Option
 	
 	
 	
-	// execute()
+	// ACÇÃO
+	
+	
 	
 	/**
-	 * Removes a plane manually from the list of scheduled flights.
-	 * 
+	 * Removes a plane manually from the app's internal database of flights.
+	 * Asks the user to choose the flight from the flights' database of this app
+	 * which he wants to remove from the database.
 	 * <p>
-	 * DESCRIPTION TODO
+	 * Uses the {@link app.AirTrafficControlAppTools#flightsDB FLIGHTSDB} of
+	 * {@code app}, the app's {@link AirTrafficControlAppForConsoleTools} field.
 	 * </p>
+	 * 
+	 * @param app
+	 *            The app's {@link AirTrafficControlAppForConsoleTools} field.
 	 */
 	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
 		
-		flightsDB = app.FLIGHTSDB;
+		flightsDB = app.getFlightsDatabase();
 		
 		// asks the user for a flightID
 		String instruction = new StringBuilder(
@@ -105,8 +112,9 @@ public class RemoveAFlightOption extends Option
 				.append( "\n\nRemove flight with flightID: " ).toString();
 		try
 		{
-			flightID = ConsoleInputTreatment.get_AFlightIDExistentInACertainADatabase_FromUser(
-					RunAirTrafficControlInConsole.TOOLS.FLIGHTSDB, instruction );
+			flightID = ConsoleInputTreatment
+					.get_AFlightIDExistentInACertainDatabase_FromUser(flightsDB,
+							instruction );
 		}
 		catch( DatabaseNotFoundException e )
 		{
@@ -115,28 +123,39 @@ public class RemoveAFlightOption extends Option
 		
 		
 		// either abort execution
-		if( flightID == "ABORT" )
+		if( flightID.equals( "ABORT" ) )
 			System.out.print( "ABORTED OPERATION!" );
 		
 		
 		// remove the flight from database
-		else try
+		else
 		{
-			System.out.println( execute() );
-		}
-		catch( FlightNotFoundInDatabaseException e )
-		{
-			System.out.print( "FLIGHT NOT FOUND!" );
-		}
-		catch( DatabaseNotFoundException e )
-		{
-			System.out.println( "DATABASE NOT FOUND!" );
+			try
+			{
+				System.out.println( execute() );
+			}
+			catch( FlightNotFoundInDatabaseException e )
+			{
+				System.out.print( "FLIGHT NOT FOUND!" );
+			}
+			catch( DatabaseNotFoundException e )
+			{
+				System.out.println( "DATABASE NOT FOUND!" );
+			}
 		}
 		
 		
 	}
 	
-	@Override
+	
+	/**
+	 * Removes a flight from a flights' database and returns a message on the
+	 * operation being successfully concluded.
+	 * 
+	 * @return A message on the operation being successfully concluded.
+	 * @throws DatabaseNotFoundException
+	 * @throws FlightNotFoundInDatabaseException
+	 */
 	public String execute() throws FlightNotFoundInDatabaseException,
 			DatabaseNotFoundException {
 		

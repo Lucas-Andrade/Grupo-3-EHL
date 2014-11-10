@@ -17,13 +17,13 @@ import utils.Database;
 import utils.FlightPlan;
 import utils.GeographicalPosition;
 import utils.ReadAirplanesCoordinates;
-import utils.ReportEmitter;
+import utils.ReportGenerator;
 import utils.Transport;
 
 public class ReadAirplanesCoordinatesTest {
 
 	ReadAirplanesCoordinates read;
-	ReportEmitter rep;
+	ReportGenerator rep;
 	Database data;
 	Airliner airlWithZeroPass;
 	Airliner airlWithSameID;
@@ -36,7 +36,7 @@ public class ReadAirplanesCoordinatesTest {
 	@Before
 	public void constructAirplanesAndDatabase()
 	{
-		rep = new ReportEmitter();
+		rep = new ReportGenerator();
 		
 		Calendar date1 = new GregorianCalendar();
 		Calendar date2 = new GregorianCalendar();

@@ -109,6 +109,7 @@ public class ConsoleInputTreatment
 	// MÉTODOS RELACIONADOS COM INPUT DE String'S
 	
 	
+	
 	/**
 	 * Returns a {@link String} chosen by the user, guaranteed to be the
 	 * {@link Airship#flightID flightID} of a flight stored in the
@@ -132,7 +133,7 @@ public class ConsoleInputTreatment
 	 *             When this method tries to reach a null or inexistent flights'
 	 *             database.
 	 */
-	public static String get_AFlightIDExistentInACertainADatabase_FromUser(
+	public static String get_AFlightIDExistentInACertainDatabase_FromUser(
 			Database flightsDB, String instruction )
 			throws DatabaseNotFoundException {
 		
@@ -140,22 +141,27 @@ public class ConsoleInputTreatment
 			throw new DatabaseNotFoundException();
 		
 		String flightID = null;
-		while( flightID == null )
-			// the same as "while the selectedOption is invalid"
+		while( flightID == null || !flightsDB.contains( flightID ) )
+		{
 			try
 			{
-				flightID = askTheUserForAFlightID( flightsDB, instruction );
+				flightID = askTheUserForAFlightID( instruction );
+				
+				if( flightID.equals( "ABORT" ) )
+					break;
+				
+				if( !flightsDB.contains( flightID ) )
+					System.out.println( "FLIGHT NOT FOUND!\n" );
 			}
 			catch( InvalidFlightIDException e )
 			{
 				System.out.println( "INVALID FlightID!\n" );
 			}
-			catch( FlightNotFoundInDatabaseException e )
-			{
-				System.out.println( "FLIGHT NOT FOUND!\n" );
-			};
+		}
+		
 		return flightID;
 	}
+	
 	
 	/**
 	 * Returns a {@link String} chosen by the user, guaranteed to be a valid
@@ -175,27 +181,22 @@ public class ConsoleInputTreatment
 	 *            chooses a {@link Airship#flightID flightID}.
 	 * @return The flightID chosen by the user.
 	 */
-	public static String getAValidFlightIDFromUser( String instruction )
-			throws DatabaseNotFoundException {
-		
+	public static String getAValidFlightIDFromUser( String instruction ) {
 		
 		String flightID = null;
 		while( flightID == null )
 			// the same as "while the selectedOption is invalid"
 			try
 			{
-				flightID = askTheUserForAFlightID( flightsDB, instruction );
+				flightID = askTheUserForAFlightID( instruction );
 			}
 			catch( InvalidFlightIDException e )
 			{
 				System.out.println( "INVALID FlightID!\n" );
 			}
-			catch( FlightNotFoundInDatabaseException e )
-			{
-				System.out.println( "FLIGHT NOT FOUND!\n" );
-			};
 		return flightID;
 	}
+	
 	
 	/**
 	 * Asks the user a for a {@code String} that is a {@link Airship#flightID
@@ -217,9 +218,8 @@ public class ConsoleInputTreatment
 	 *             paragraph characters ("{@code \n}") or space characters(
 	 *             {@code " "}).
 	 */
-	private static String askTheUserForAFlightID( Database flightsDB,
-			String instruction ) throws InvalidFlightIDException,
-			FlightNotFoundInDatabaseException {
+	private static String askTheUserForAFlightID( String instruction )
+			throws InvalidFlightIDException {
 		
 		System.out.print( instruction );
 		
@@ -228,9 +228,6 @@ public class ConsoleInputTreatment
 		
 		if( isNotAnAlphanumericString( flightID ) )
 			throw new InvalidFlightIDException( "INVALID FlightID!\n" );
-		
-		if( !flightsDB.contains( flightID ) )
-			throw new FlightNotFoundInDatabaseException( "FLIGHT NOT FOUND!\n" );
 		
 		return flightID;
 		
@@ -249,9 +246,9 @@ public class ConsoleInputTreatment
 	 *         letter nor a number; {@code false} if {@code str} has only
 	 *         numbers and letters.
 	 */
-	static boolean isNotAnAlphanumericString( String str ) {
+	private static boolean isNotAnAlphanumericString( String str ) {
 		
-		if( str == null || str == "" || str.contains( "\n" ) )
+		if( str == null || str.equals( "" ) || str.contains( "\n" ) )
 			return true;
 		
 		for( int index = 0; index < str.length(); ++index )

@@ -18,7 +18,34 @@ public class ClassToTestSmallThingsThatWillBeRemoved
 	
 	private static Database flightsDatabase = new Database();
 	
-	public static void main( String[] args ) {
-		flightsDatabase.addAirplane( new Airship("", new GeographicalPosition(0,0,0), new FlightPlan(new Calendar(), new Calendar()) ));
+	private static ClassToTestSmallThingsThatWillBeRemoved c;
+	
+	static
+	{
+		try
+		{
+			c = new ClassToTestSmallThingsThatWillBeRemoved( 3 );
+		}
+		catch( InvalidOptionNumberException e )
+		{
+			c = null;
+		}
 	}
+	
+	public void set( Database db ) {
+		flightsDatabase = db;
+	}
+	
+	public static void main( String[] args ) {
+		Database antes = flightsDatabase;
+		new ClassToTestSmallThingsThatWillBeRemoved( 3 ).set( new Database() );
+		System.out.println( antes == flightsDatabase );
+	}
+	
+	public ClassToTestSmallThingsThatWillBeRemoved( int i )
+			throws InvalidOptionNumberException {
+		if( i < 0 )
+			throw new InvalidOptionNumberException();
+	}
+	
 }

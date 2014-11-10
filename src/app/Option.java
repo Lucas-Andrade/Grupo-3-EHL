@@ -77,8 +77,14 @@ public abstract class Option
 	/**
 	 * Manages input data needed to perform the action corresponding to the
 	 * option that the class who implemented this method represents and prints
-	 * its output. Uses the flights' database and the output formatter of the
-	 * {@AppForConsole}
+	 * its output. Uses the {@link app.AirTrafficControlAppTools#flightsDB
+	 * FLIGHTSDB} and the
+	 * {@link app.AirTrafficControlAppForConsoleTools#STYLIZER STYLIZER} of
+	 * {@code app}, the app's {@link AirTrafficControlAppForConsoleTools} field.
+	 * 
+	 * @param app
+	 *            The app's {@link AirTrafficControlAppForConsoleTools}
+	 *            field.
 	 */
 	public abstract void executeToConsole(
 			AirTrafficControlAppForConsoleTools app );

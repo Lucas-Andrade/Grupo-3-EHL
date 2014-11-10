@@ -9,11 +9,11 @@ package app;
  * <b>Description</b>
  * </p>
  * <p>
- * The purpose of this class is to perform the action of exiting the
- * {@link AirTrafficControlAppForConsoleTools app}; as so it must be the last of
- * instance of type Option to be inserted in the parameters of the constructor
- * of the instance of {@link OptionsMenu} that the app uses. For more
- * information, read the documentation of method {@link #execute() execute}.
+ * The purpose of this class is to perform the action of exiting the app whose
+ * {@link OptionsMenu} contains this option; as so it must be the last of instance of
+ * type Option to be inserted in the parameters of the constructor of the
+ * instance of {@link OptionsMenu} that the app uses. For more information, read
+ * the documentation of method {@link #execute() execute}.
  * </p>
  * 
  * <p style="font-size:16">
@@ -78,6 +78,13 @@ public class ExitOption extends Option
 	
 	/**
 	 * Prints a goodbye message to console.
+	 * 
+	 * <p>
+	 * This method doesn't use the argument {@code app}.
+	 * </p>
+	 * 
+	 * @param app
+	 *            An {@link AirTrafficControlAppForConsoleTools} instance.
 	 */
 	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
 		System.out.println( execute() );

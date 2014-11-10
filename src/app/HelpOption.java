@@ -10,8 +10,9 @@ package app;
  * </p>
  * <p>
  * The purpose of this class is to perform the action of producing a message
- * with instructions to find the USER'S GUIDE txt file for the EHL's
- * AIR TRAFFIC CONTROL app for console.
+ * with instructions to find the USER'S GUIDE txt file for the
+ * {@link RunAirTrafficControlInConsole EHL's AIR TRAFFIC CONTROL app for
+ * console}.
  * </p>
  * 
  * <p style="font-size:16">
@@ -78,9 +79,16 @@ public class HelpOption extends Option
 	
 	/**
 	 * Prints the message with instructions to find the USER'S GUIDE txt file.
+	 * 
+	 * <p>
+	 * This method doesn't use the argument {@code app}.
+	 * </p>
+	 * 
+	 * @param app
+	 *            An {@link AirTrafficControlAppForConsoleTools} instance.
 	 */
-	public void executeToConsole(AirTrafficControlAppForConsoleTools app) {
-		System.out.println( execute() );
+	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
+		System.out.print( execute() );
 	}
 	
 	

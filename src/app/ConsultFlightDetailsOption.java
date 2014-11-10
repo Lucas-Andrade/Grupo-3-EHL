@@ -1,6 +1,11 @@
 package app;
 
 
+import utils.Airship;
+import utils.Database;
+import utils.ReportGenerator;
+
+
 /**
  * This class represents the option with the title
  * {@code Consult a flight's details.} of an Air Traffic Control app.
@@ -10,9 +15,9 @@ package app;
  * </p>
  * <p>
  * The purpose of this class is to perform the action of consulting the details
- * of a specific flight from the list of scheduled flights in the console. For
- * more information, read the documentation of method {@link #execute() execute}
- * .
+ * of a specific flight from the app's flight's internal database and printing
+ * them in the console. For more information, read the documentation of method
+ * {@link #execute() execute} .
  * </p>
  * 
  * <p style="font-size:16">
@@ -39,6 +44,15 @@ public class ConsultFlightDetailsOption extends Option
 	 */
 	private static ConsultFlightDetailsOption instance = new ConsultFlightDetailsOption();
 	
+	/**
+	 * The flightID of the flight to be consulted.
+	 */
+	private String flightID = null;
+	
+	/**
+	 * The database where to search for the flight.
+	 */
+	private Database flightsDB = null;
 	
 	
 	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
@@ -72,17 +86,94 @@ public class ConsultFlightDetailsOption extends Option
 	
 	
 	
-	// execute()
+	// ACÇÃO
+	
+	
 	
 	/**
-	 * Consults the details of a specific flight.
-	 * 
+	 * Consulting the details of a specific flight from the app's flight's
+	 * internal database and prints them in the console. Asks the user to choose
+	 * the flight from the flights' database of this app which he wants to read
+	 * about.
 	 * <p>
-	 * DESCRIPTION TODO
+	 * Uses the {@link app.AirTrafficControlAppTools#flightsDB FLIGHTSDB} of
+	 * {@code app}, the app's {@link AirTrafficControlAppForConsoleTools} field.
 	 * </p>
+	 * 
+	 * @param app
+	 *            The app's {@link AirTrafficControlAppForConsoleTools} field.
 	 */
 	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
-		System.out.println( title );
+		
+		flightsDB = app.flightsDB;
+		
+		// asks the user for a flightID
+		String instruction = new StringBuilder(
+				" Type the flightID of the flight whose details you" )
+				.append( "\n want to consult and press Enter." )
+				.append( "\n\nConsult details of flight with flightID: " )
+				.toString();
+		try
+		{
+			flightID = ConsoleInputTreatment
+					.get_AFlightIDExistentInACertainDatabase_FromUser(
+							flightsDB, instruction );
+		}
+		catch( DatabaseNotFoundException e )
+		{
+			System.out.println( "DATABASE NOT FOUND!" );
+		}
+		
+		
+		// either abort execution
+		if( flightID.equals( "ABORT" ) )
+			System.out.print( "ABORTED OPERATION!" );
+		
+		
+		// consult the flight's details from database
+		else
+		{
+			try
+			{
+				System.out.println( execute() );
+			}
+			catch( FlightNotFoundInDatabaseException e )
+			{
+				System.out.print( "FLIGHT NOT FOUND!" );
+			}
+			catch( DatabaseNotFoundException e )
+			{
+				System.out.println( "DATABASE NOT FOUND!" );
+			}
+		}
+		
+		
+	}
+	
+	
+	/**
+	 * Removes a flight from a flights' database and returns a message on the
+	 * operation being successfully concluded.
+	 * 
+	 * @return A message on the operation being successfully concluded.
+	 * @throws DatabaseNotFoundException
+	 * @throws FlightNotFoundInDatabaseException
+	 */
+	public String execute() throws FlightNotFoundInDatabaseException,
+			DatabaseNotFoundException {
+		
+		if( flightsDB == null )
+			throw new DatabaseNotFoundException();
+		if( flightID == null )
+			throw new FlightNotFoundInDatabaseException();
+		
+		Airship airship = flightsDB.getAirplane( flightID );
+		// new ReportGenerator().
+		String[] info = airship.toStringArray();
+		
+		return new StringBuilder( "\n\n   FLIGHT DETAILS\n\n" )
+				.append( info[0] ).append( info[1] ).append( info[2] )
+				.toString();
 	};
 	
 }

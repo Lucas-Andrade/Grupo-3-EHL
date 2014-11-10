@@ -56,8 +56,16 @@ Each flight in the list will be immediately inserted in the app's internal data 
 5. Consult a flight's details.
 
 
+This option allows the user to consult the details of one of the flights in the flights' database of this app. The user is asked to introduce in the console the flightID of the flight whose information he wants to consult and then press Enter.
+The app will continue to ask the user to introduce another flightID as long he inserts invalid values (see FAQ "1. What is a valid flightID?" below) or the flightID is not the identifier of a flight stored in the app's flights' database.
+To return to the Options Menu without consulting a flight's details, one must type the message "ABORT" (without the quotation marks) in the console and press Enter.
+
+
 
 6. Remove zero-passenger-flights.
+
+
+This option allows the user to remove all the passenger-flights previously inserted flight in the flights' database of this app that have zero passengers from that database. The user is asked to confirm (by typing "YES" without the quotation marks and pressing Enter) or to abort (by typing something else and pressing Enter) this operation.
 
 
 

@@ -7,8 +7,8 @@ import utils.ReadListOfFlights;
 
 /**
  * This class represents the option with the title
- * {@code Add a list of flights from txt file.} of an Air Traffic Control app
- * for console.
+ * {@code Update the database's flights' coordinates.} of an Air Traffic Control
+ * app for console.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
@@ -33,16 +33,16 @@ import utils.ReadListOfFlights;
  * @author Hugo Leal
  * @author Lucas Andrade
  */
-public class AddAListOfFlightsOption extends Option
+public class ActualizeDatabaseOption extends Option
 {
 	
 	
 	// CAMPO DA CLASE
 	
 	/**
-	 * An instance of type AddAListOfFlightsOption.
+	 * An instance of type ActualizeDatabaseOption.
 	 */
-	private static AddAListOfFlightsOption instance = new AddAListOfFlightsOption();
+	private static ActualizeDatabaseOption instance = new ActualizeDatabaseOption();
 	
 	
 	
@@ -50,18 +50,18 @@ public class AddAListOfFlightsOption extends Option
 	
 	
 	/**
-	 * Creates a new instance of type AddAListOfFlightsOption and sets up the
+	 * Creates a new instance of type ActualizeDatabaseOption and sets up the
 	 * final values of the fields {@code title} and {@code description}.
 	 */
-	public AddAListOfFlightsOption() {
+	public ActualizeDatabaseOption() {
 		super(
-				"Add a list of flights from txt file.",
+				"Update the database's flights' coordinates.",
 				"Creates an internal database of flights for the app from the flights listed in the «src\\ListOfFlights.txt»" );
 	};
 	
 	
 	/**
-	 * Returns an instance of type AddAListOfFlightsOption, without creating a
+	 * Returns an instance of type ActualizeDatabaseOption, without creating a
 	 * new one.
 	 * 
 	 * <p>
@@ -69,12 +69,12 @@ public class AddAListOfFlightsOption extends Option
 	 * the only instance fields are {@code title} and {@code description} and
 	 * their values are the same for all instances. This method lets you reuse
 	 * an already created instance instead of always creating new ones with the
-	 * {@link #AddAListOfFlightsOption() constructor}.
+	 * {@link #ActualizeDatabaseOption() constructor}.
 	 * </p>
 	 * 
-	 * @return A instance of type AddAListOfFlightsOption.
+	 * @return A instance of type ActualizeDatabaseOption.
 	 */
-	public static AddAListOfFlightsOption getInstance() {
+	public static ActualizeDatabaseOption getInstance() {
 		return instance;
 	}
 	
@@ -94,7 +94,7 @@ public class AddAListOfFlightsOption extends Option
 	public void executeToConsole( AirTrafficControlAppForConsoleTools app ) {
 		try
 		{
-			app.flightsDB.addDatabase( new ReadListOfFlights()
+			app.flightsDB.addDataBase( new ReadListOfFlights()
 					.readFlights( "ListOfFlights.txt" ) );
 		}
 		catch( IOException e )

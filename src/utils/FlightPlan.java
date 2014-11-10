@@ -154,4 +154,7 @@ public class FlightPlan {
 	{
 		return arrivalHour;
 	}
+	
+	
+	
 }

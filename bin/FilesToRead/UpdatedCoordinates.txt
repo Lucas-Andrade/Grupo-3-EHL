@@ -1,6 +1,0 @@
-xptoflight02 60 120 9000
-xptoflight07 60 100 11000
-xptoflight01 70 20 19000
-xptoflight03 50 50 13000
-xptoflight06 06 30 11000
-xptoflight04 50 50 13000

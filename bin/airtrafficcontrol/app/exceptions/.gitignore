@@ -1,0 +1,6 @@
+/DatabaseNotFoundException.class
+/FlightNotFoundInDatabaseException.class
+/InvalidArgumentException.class
+/InvalidFlightIDException.class
+/InvalidOptionException.class
+/InvalidOptionNumberException.class

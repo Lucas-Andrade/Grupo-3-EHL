@@ -1,6 +1,8 @@
 package airtrafficcontrol.app;
 
-import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
+
+import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.exceptions.InvalidOptionNumberException;
 import airtrafficcontrol.app.menuoptions.Option;
 
@@ -68,8 +70,16 @@ public class OptionsMenu
 	 *            The title of this menu.
 	 * @param options
 	 *            The list of options of this menu.
+	 * @throws InvalidArgumentException
 	 */
-	public OptionsMenu( String menuTitle, Option... options ) {
+	public OptionsMenu( String menuTitle, Option... options )
+			throws InvalidArgumentException {
+		
+		if( menuTitle == null || menuTitle.equals( "" ) )
+			throw new InvalidArgumentException();
+		for( Option option : options )
+			if( option == null )
+				throw new InvalidArgumentException();
 		
 		this.menuTitle = menuTitle;
 		this.numberOfOptions = options.length;
@@ -79,13 +89,13 @@ public class OptionsMenu
 	
 	
 	
-	// MÉTODOS
+	// METODOS
 	
 	
 	
 	/**
 	 * Returns a string representation of this menu. The string is a numbered
-	 * list of the options.
+	 * list of the options where each line corresponds to a line.
 	 * 
 	 * @return A string representation of this menu.
 	 */
@@ -124,12 +134,17 @@ public class OptionsMenu
 	 * @param option
 	 *            The option whose title is to be consulted.
 	 * @return The {@link Option#title title} of {@code option}.
+	 * @throws InvalidArgumentException
 	 */
-	public String getOptionTitle( Option option ) {
+	public String getOptionTitle( Option option )
+			throws InvalidArgumentException {
 		
-		// TODO the throw of InvalidOptionException
+		for( Option opt : options )
+			if( option.equals( opt ) )
+				return opt.title;
 		
-		return option.title;
+		// if option is not in this menu
+		throw new InvalidArgumentException( "INVALID OPTION!" );
 	}
 	
 	
@@ -161,11 +176,15 @@ public class OptionsMenu
 	 *            The option whose description is to be consulted.
 	 * @return The {@link Option#description description} of {@code option}.
 	 */
-	public String getOptionDescription( Option option ) {
+	public String getOptionDescription( Option option )
+			throws InvalidArgumentException {
 		
-		// TODO the throw of InvalidOptionException
+		for( Option opt : options )
+			if( option.equals( opt ) )
+				return opt.description;
 		
-		return option.description;
+		// if option is not in this menu
+		throw new InvalidArgumentException( "INVALID OPTION!" );
 	}
 	
 	
@@ -181,11 +200,13 @@ public class OptionsMenu
 	 *             If {@code numberOfTheOption} is not valid.
 	 */
 	public boolean executeOptionToConsole( int numberOfTheOption,
-			ConsoleDataToolbox app )
-			throws InvalidOptionNumberException {
+			AirTrafficControlAppForConsole app )
+			throws InvalidArgumentException, InvalidOptionNumberException {
 		
 		if( numberOfTheOption < 1 || numberOfTheOption > options.length )
 			throw new InvalidOptionNumberException( "INVALID NUMBER OF OPTION!" );
+		if( app == null )
+			throw new InvalidArgumentException( "INVALID APP FOR CONSOLE!" );
 		
 		options[numberOfTheOption - 1].executeToConsole( app );
 		
@@ -203,17 +224,29 @@ public class OptionsMenu
 	 *            The option to execute.
 	 * @return {@code true} if the option executed is the last of the menu;
 	 *         {@code false} otherwise.
+	 * @throws InvalidArgumentException
 	 */
 	public boolean executeOptionToConsole( Option option,
-			ConsoleDataToolbox app ) {
+			AirTrafficControlAppForConsole app )
+			throws InvalidArgumentException {
 		
-		// TODO the throw of InvalidOptionException
+		if( app == null )
+			throw new InvalidArgumentException( "INVALID APP FOR CONSOLE!" );
 		
-		option.executeToConsole( app );
+		// execute if option is in the menu
+		for( Option opt : options )
+			if( option.equals( opt ) )
+			{
+				option.executeToConsole( app );
+				
+				// return true if option is the last in the menu
+				if( option == options[options.length] )
+					return true;
+				return false;
+			}
 		
-		if( option == options[options.length] )
-			return true;
-		return false;
+		// if not in the menu, invalid option
+		throw new InvalidArgumentException( "INVALID OPTION!" );
 		
 	}
 	

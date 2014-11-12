@@ -62,12 +62,14 @@ public abstract class Option
 	
 	/**
 	 * Sets up the final values of the fields {@link #title} and
-	 * {@link #description}.
+	 * {@link #description}. If the arguments introduced are null, the option's
+	 * title and description are saved as "TITLE NOT AVAILABLE!" and
+	 * "DESCRIPTION NOT AVAILABLE!".
 	 * 
 	 * @param optionTitle
 	 *            The title of the option.
 	 * @param optionDescription
-	 *            A description of the action performed
+	 *            A description of the action performed.
 	 */
 	public Option( String optionTitle, String optionDescription ) {
 		
@@ -148,7 +150,7 @@ public abstract class Option
 			return true;
 		
 		// if obj is null or is not of type Option, false
-		if( obj == null || getClass() != obj.getClass())
+		if( obj == null || getClass() != obj.getClass() )
 			return false;
 		
 		// if obj is instance of Option, cast and compare fields

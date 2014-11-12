@@ -1,20 +1,9 @@
 package airtrafficcontrol;
 
 
-import airtrafficcontrol.app.AirTrafficControlApp;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
-import airtrafficcontrol.app.appforconsole.ConsoleOutputFormatter;
-import airtrafficcontrol.app.appforconsole.ConsoleInputHandler;
-import airtrafficcontrol.app.menuoptions.UpdateDatabaseOption;
-import airtrafficcontrol.app.menuoptions.AddAListOfFlightsOption;
-import airtrafficcontrol.app.menuoptions.ConfigurationsOption;
-import airtrafficcontrol.app.menuoptions.ConsultFlightDetailsOption;
-import airtrafficcontrol.app.menuoptions.ExitOption_for_EHLsATCAppForConsole;
-import airtrafficcontrol.app.menuoptions.HelpOption_for_EHLsATCAppForConsole;
-import airtrafficcontrol.app.menuoptions.MonitorAirTrafficOption;
-import airtrafficcontrol.app.menuoptions.RemoveAFlightOption;
-import airtrafficcontrol.app.menuoptions.RemoveEmptyAirshipsOption;
-import airtrafficcontrol.app.menuoptions.ReportTransgressionsOption;
+import airtrafficcontrol.app.exceptions.*;
+import airtrafficcontrol.app.menuoptions.*;
 
 
 /**
@@ -112,13 +101,11 @@ public class RunEHLsATCAppForConsole
 {
 	
 	/**
-	 * An instance of {@link AirTrafficControlAppForConsole}.
-	 * 
-	 * <p>
-	 * Features:
+	 * Runs an instance of {@link AirTrafficControlAppForConsole} that has:
 	 * <ul>
 	 * <li>the {@link AirTrafficControlAppForConsole#title title}
-	 * "EHL's AIR TRAFFIC CONTROL app for console" ;
+	 * "AIR TRAFFIC CONTROL app for console" ;
+	 * <li>EHL as the developer;
 	 * <li>a {@link airtrafficcontrol.app.OptionsMenu menu} with the
 	 * {@link airtrafficcontrol.app.OptionsMenu#title title}
 	 * {@code Options Menu} and the following representation in a String: //TODO
@@ -149,27 +136,20 @@ public class RunEHLsATCAppForConsole
 	 * </ul>
 	 * </p>
 	 */
-	public static final AirTrafficControlApp app = new AirTrafficControlAppForConsole(
-			"EHL's AIR TRAFFIC CONTROL app for console", "Options Menu", '-',
-			45, 3, AddAListOfFlightsOption.getInstance(),
-			UpdateDatabaseOption.getInstance(),
-			MonitorAirTrafficOption.getInstance(),
-			ReportTransgressionsOption.getInstance(),
-			ConsultFlightDetailsOption.getInstance(),
-			RemoveEmptyAirshipsOption.getInstance(),
-			RemoveAFlightOption.getInstance(),
-			ConfigurationsOption.getInstance(),
-			HelpOption_for_EHLsATCAppForConsole.getInstance(),
-			ExitOption_for_EHLsATCAppForConsole.getInstance() );
-	
-	
-	/**
-	 * Runs.
-	 * 
-	 * @param args
-	 */
-	public static void main( String[] args ) {
-		app.run();
+	public static void main( String[] args ) throws InvalidArgumentException {
+		
+		new AirTrafficControlAppForConsole(
+				"AIR TRAFFIC CONTROL app for console", "EHL", "Options Menu",
+				'-', 45, 3, AddAListOfFlightsOption.getInstance(),
+				UpdateDatabaseOption.getInstance(),
+				MonitorAirTrafficOption.getInstance(),
+				ReportTransgressionsOption.getInstance(),
+				ConsultFlightDetailsOption.getInstance(),
+				RemoveEmptyAirshipsOption.getInstance(),
+				RemoveAFlightOption.getInstance(),
+				ConfigurationsOption.getInstance(),
+				HelpOption_for_EHLsATCAppForConsole.getInstance(),
+				ExitOption_for_EHLsATCAppForConsole.getInstance() ).run();
 	}
 	
 }

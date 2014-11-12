@@ -2,7 +2,6 @@ package airtrafficcontrol.app.menuoptions;
 
 
 import airtrafficcontrol.app.OptionsMenu;
-import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 
 
@@ -28,6 +27,8 @@ import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
  * <li>Instances of this class are immutable.</li>
  * <li>All instances of this class share the same {@code title} and
  * {@code description}.
+ * <li>This subclass of Option was strictly created for the EHL's AIR TRAFFIC
+ * CONTROL app for console.</li>
  * </ul>
  *
  * @author Eva Gomes
@@ -83,13 +84,16 @@ public class ExitOption_for_EHLsATCAppForConsole extends Option
 	
 	/**
 	 * Prints a goodbye message to console.
-	 * 
 	 * <p>
-	 * This method doesn't use the argument {@code app}.
+	 * This implementation of the method
+	 * {@link Option#executeToConsole(AirTrafficControlAppForConsole)
+	 * executeToConsole()} does not use the argument {@code app} because this
+	 * subclass of Option was strictly created for the EHL's AIR TRAFFIC CONTROL
+	 * app for console.
 	 * </p>
 	 * 
 	 * @param app
-	 *            An {@link ConsoleDataToolbox} instance.
+	 *            An instance of {@link AirTrafficControlAppForConsole}.
 	 */
 	public void executeToConsole( AirTrafficControlAppForConsole app ) {
 		System.out.println( execute() );

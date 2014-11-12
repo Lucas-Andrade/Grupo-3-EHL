@@ -2,6 +2,7 @@ package airtrafficcontrol.app.appforconsole;
 
 
 import airtrafficcontrol.app.AirTrafficControlApp;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.exceptions.InvalidOptionNumberException;
 import airtrafficcontrol.app.menuoptions.Option;
 
@@ -64,12 +65,17 @@ public class AirTrafficControlAppForConsole extends AirTrafficControlApp
 	 * @param options
 	 *            This app's menu's options.
 	 */
-	public AirTrafficControlAppForConsole( String appTitle, String menuTitle,
+	public AirTrafficControlAppForConsole( String appTitle,
+			String appDeveloper, String menuTitle,
 			char symbolOfSectionDelimiter, int lengthOfSectionDelimiter,
-			int numberOfBlankLinesBetweenSections, Option... options ) {
+			int numberOfBlankLinesBetweenSections, Option... options )
+			throws InvalidArgumentException {
 		
-		super( appTitle, menuTitle, options );
+		super( appTitle, appDeveloper, menuTitle, options );
 		
+		if( lengthOfSectionDelimiter < 1
+				|| numberOfBlankLinesBetweenSections < 1 )
+			throw new InvalidArgumentException();
 		this.dataTools = new ConsoleDataToolbox( symbolOfSectionDelimiter,
 				lengthOfSectionDelimiter, numberOfBlankLinesBetweenSections );
 	}
@@ -79,18 +85,17 @@ public class AirTrafficControlAppForConsole extends AirTrafficControlApp
 	/**
 	 * Runs the app.
 	 * <p>
-	 * Presents the welcoming message, followed by the options menu, allows the
+	 * Presents the welcoming message followed by the options menu, allows the
 	 * user to select the option from the menu to be executed, executes the
 	 * option, returns to the menu, allows the user to select another option,
 	 * ... . After the exiting option is selected, presents a goodbye message
-	 * and the final credits.
+	 * and the final credits, and exits.
 	 * </p>
 	 */
 	public void run() {
 		
 		
 		// WELCOME
-		
 		dataTools.outputStylizer.printSectionDelimiter();
 		System.out.print( "Welcome to the \n" + appTitle + "!" );
 		dataTools.outputStylizer.printSectionDelimiter();
@@ -105,34 +110,42 @@ public class AirTrafficControlAppForConsole extends AirTrafficControlApp
 		{
 			
 			// menu presentation
+			
 			printBeginningOfSection( mainMenu.menuTitle );
 			System.out.print( mainMenu.toString() );
+			dataTools.outputStylizer.printSectionDelimiter();
+			
 			
 			
 			// ask the user to choose an option
-			dataTools.outputStylizer.printSectionDelimiter();
-			String instruction = new StringBuilder(
+			
+			String instructionToGetOptionNumber = new StringBuilder(
 					" Type the number of the option you want to" )
 					.append( "\n perform and press Enter." )
 					.append( "\n\nExecute option number: " ).toString();
+			
 			int selectedOption = ConsoleInputHandler.getAValidIntFromUser( 1,
-					mainMenu.numberOfOptions, instruction );
+					mainMenu.numberOfOptions, instructionToGetOptionNumber );
+			
 			printEndOfSection();
 			
 			
-			// option executation
+			
+			// option execution
+			
 			try
 			{
 				printBeginningOfSection( mainMenu
 						.getOptionTitle( selectedOption ) );
-				runApp = !mainMenu.executeOptionToConsole( selectedOption,
-						dataTools );
+				runApp = !mainMenu
+						.executeOptionToConsole( selectedOption, this );
 			}
-			catch( InvalidOptionNumberException e )
+			catch( InvalidOptionNumberException | InvalidArgumentException e )
 			{
-				System.out.println( "INVALID OPTION NUMBER!" );
+				System.out.println( e.getMessage() );
 			}
 			printEndOfSection();
+			
 			
 		}
 		while( runApp );
@@ -140,13 +153,14 @@ public class AirTrafficControlAppForConsole extends AirTrafficControlApp
 		
 		// CREDITS & END
 		
-		System.out.print( "\nCopyright (c) 2014, EHL. All rights reserved.\n" );
+		System.out.print( "\nCopyright (c) 2014, " + appDeveloper
+				+ ". All rights reserved.\n" );
 		dataTools.outputStylizer.printSectionTitle( "end" );
 	}
 	
 	
 	
-	// MÉTODOS RELACIONADOS COM IMPRESSAO DE SECÇOES
+	// METODOS RELACIONADOS COM IMPRESSAO DE SECCOES
 	
 	
 	
@@ -163,6 +177,7 @@ public class AirTrafficControlAppForConsole extends AirTrafficControlApp
 		if( sectionTitle == null )
 		{
 			dataTools.outputStylizer.printSpaceBetweenSections();
+			dataTools.outputStylizer.printSectionDelimiter();
 			dataTools.outputStylizer.printSectionDelimiter();
 		}
 		else

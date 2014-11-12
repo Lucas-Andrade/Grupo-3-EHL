@@ -1,7 +1,7 @@
 package airtrafficcontrol.app.utils;
 import java.util.Calendar;
 
-import app.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 /**
  * allows to create objects that have a property AltitudeCorridor, where the airplane is supposed to be 
@@ -25,6 +25,8 @@ public class AirCorridorInTime {
 	 */
 	public AirCorridorInTime(Calendar start, Calendar end, AltitudeCorridor cor) throws InvalidArgumentException
 	{
+		if(start==null || end==null) throw new InvalidArgumentException();
+		
 		corridor = cor; 
 		
 		if (start.compareTo(end) > 0)
@@ -37,7 +39,6 @@ public class AirCorridorInTime {
 			endingHour = end;
 			startingHour = start;
 		}
-		if(start==null || end==null) throw new InvalidArgumentException();
 	}
 	
 	/**

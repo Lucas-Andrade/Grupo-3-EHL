@@ -1,6 +1,6 @@
 package utils;
 
-import app.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 /**
  * This class represents a Latitude value.

@@ -1,5 +1,5 @@
 package airtrafficcontrol.app.utils;
-import app.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 /**
  * 
@@ -39,9 +39,6 @@ public class CargoAircraft extends CivilAirplane{
 			numberOfMinutesToLand = newnumberOfMinutesToLand;
 		if (newSwitch)
 			numberOfMinutesToSwitchCorridor = newnumberOfMinutesToSwitchCorridor;
-		
-		if(flightID==null || statingPosition == null || flightPlan == null)
-			throw new InvalidArgumentException();
 	}
 
 	/**

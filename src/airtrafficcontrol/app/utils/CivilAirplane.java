@@ -1,5 +1,5 @@
 package airtrafficcontrol.app.utils;
-import app.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 /**
  * 
  * super class of all the civilian airplanes

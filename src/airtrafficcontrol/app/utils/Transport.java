@@ -1,6 +1,6 @@
 package airtrafficcontrol.app.utils;
 
-import app.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.*;
 
 /**
  * Creates a military transport airplane. 
@@ -32,6 +32,10 @@ public class Transport extends MilitaryAirplane{
 	 */
 	public Transport(String flightID, GeographicalPosition statingPosition, FlightPlan flightPlan, boolean armament) throws InvalidArgumentException {
 		super(flightID, statingPosition, flightPlan, armament);
+		
+		if(flightID==null || statingPosition == null || flightPlan == null)
+			throw new InvalidArgumentException();
+		
 		if (newTakeOff)
 			numberOfMinutesToTakeOff = newnumberOfMinutesToTakeOff;
 		if (newLand)
@@ -39,8 +43,7 @@ public class Transport extends MilitaryAirplane{
 		if (newSwitch)
 			numberOfMinutesToSwitchCorridor = newnumberOfMinutesToSwitchCorridor;
 		
-		if(flightID==null || statingPosition == null || flightPlan == null)
-			throw new InvalidArgumentException();
+	
 	}
 	
 	/**
@@ -51,11 +54,11 @@ public class Transport extends MilitaryAirplane{
 	 */
 	public void setNumberOfMinutesToTakeOff(int newTime)throws InvalidArgumentException
 	{
+		if (newTime == 0)
+			throw new InvalidArgumentException();
 		numberOfMinutesToTakeOff = newTime;
 		newnumberOfMinutesToTakeOff = newTime;
 		newTakeOff = true;
-		if (newTime == 0)
-			throw new InvalidArgumentException();
 	}
 	
 	/**
@@ -66,11 +69,11 @@ public class Transport extends MilitaryAirplane{
 	 */
 	public void setNumberOfMinutesToLand(int newTime)throws InvalidArgumentException
 	{
+		if (newTime == 0)
+			throw new InvalidArgumentException();
 		numberOfMinutesToLand = newTime;
 		newnumberOfMinutesToLand = newTime;
 		newLand = true;
-		if (newTime == 0)
-			throw new InvalidArgumentException();
 	}
 	
 	/**
@@ -81,11 +84,12 @@ public class Transport extends MilitaryAirplane{
 	 */
 	public void setNumberOfMinutesToSwitchCorridor(int newTime)throws InvalidArgumentException
 	{
+		if (newTime == 0)
+			throw new InvalidArgumentException();
 		numberOfMinutesToSwitchCorridor = newTime;
 		newnumberOfMinutesToSwitchCorridor = newTime;
 		newSwitch = true;
-		if (newTime == 0)
-			throw new InvalidArgumentException();
+		
 	}
 	
 	/**

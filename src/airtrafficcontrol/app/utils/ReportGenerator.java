@@ -13,8 +13,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import app.InvalidArgumentException;
-import app.InvalidFlightIDException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
 
 /**
  * Allows to emit various types of reports. These reports can be returned 
@@ -40,11 +40,11 @@ public class ReportGenerator {
 
 	public String[] reportAll(Database data, String source)throws InvalidFlightIDException, InvalidArgumentException
 	{
-		Map<String, Airship> database = data.getDatabase();
-
 		if(data==null || source == null)
 			throw new InvalidArgumentException();
-
+		
+		Map<String, Airship> database = data.getDatabase();
+		
 		ReadAirplanesCoordinates reader = new ReadAirplanesCoordinates();
 		reader.readFromFile(source, data);
 		
@@ -86,10 +86,10 @@ public class ReportGenerator {
 
 	public void reportAllToTxt(Database database, String source) throws IOException, InvalidFlightIDException, InvalidArgumentException
 	{
-		writeToTxt(reportAll(database, source), "allReport");
-
 		if(database==null )
 			throw new InvalidArgumentException();
+		
+		writeToTxt(reportAll(database, source), "allReport");
 	}
 	
 	

@@ -1,10 +1,12 @@
 package airtrafficcontrol.app.utils;
 
-import app.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 /**
  * This class represents a Longitude value.
- * @author Hugo
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
  *
  */
 

@@ -1,6 +1,6 @@
 package airtrafficcontrol.app.utils;
 
-import app.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 /**
  * Abstract class of all the military airplanes

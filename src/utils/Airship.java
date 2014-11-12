@@ -256,6 +256,21 @@ public abstract class Airship {
 	 */
 	public abstract int getNumberOfMinutesToSwitchCorridor();
 	
+	/**
+	 * returns if the airship is flying
+	 * @param airship
+	 * @return true if airship is flying else returns false
+	 */
+	public boolean isFlying(Airship airship)
+	{
+		double currentAltitude = airship.getGeographicPosition().getAltitude();
+		if (currentAltitude != 0)
+			return true;
+		else
+			return false;
+	}
+	
+	
 //	/**
 //	 * adds an event in the middle of the flight
 //	 * @param newEvent - the new event to be added

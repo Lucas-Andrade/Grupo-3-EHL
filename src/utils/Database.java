@@ -200,4 +200,14 @@ public class Database {
 			return "All airplanes were added successfully.";
 		
 	}
+	
+	/**
+	 * Counts the number of airships in the database
+	 * @return the number of airships in the database
+	 */
+	public int countAirships()
+	{
+		return database.size();
+	}
+
 }

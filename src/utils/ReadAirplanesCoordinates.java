@@ -89,6 +89,7 @@ public class ReadAirplanesCoordinates {
 
 			nextLine = reader.readLine();
 			}
+			reader.close();
 		}
 
 		catch (FileNotFoundException e)

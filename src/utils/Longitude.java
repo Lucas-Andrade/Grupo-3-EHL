@@ -20,7 +20,7 @@ public class Longitude {
 	 */
 	public Longitude(double lon) throws InvalidArgumentException
 	{
-		if(longitude < MAX_LONGITUDE && longitude > MIN_LONGITUDE )
+		if(longitude <= MAX_LONGITUDE && longitude >= MIN_LONGITUDE )
 		longitude = lon;
 		else
 			throw new InvalidArgumentException();

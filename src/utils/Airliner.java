@@ -123,4 +123,17 @@ public class Airliner extends CivilAirplane{
 	{
 		return numberOfMinutesToSwitchCorridor;
 	}
+	
+	/**
+	 * Verifies if the airliner is with 0 passengers
+	 * @param airliner
+	 * @return true if the airliner has 0 passengers else returns false
+	 */
+	public boolean isEmpty(Airliner airliner)
+	{
+		if(airliner.getPassengersNumber() == 0)
+			return true;
+		else 
+			return false;
+	}
 }

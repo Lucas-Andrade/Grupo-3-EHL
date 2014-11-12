@@ -18,7 +18,7 @@ public class Latitude {
 	 */
 	public Latitude(double lat) throws InvalidArgumentException
 	{
-		if(latitude < MAX_LATITUDE && latitude > MIN_LATITUDE )
+		if(latitude <= MAX_LATITUDE && latitude >= MIN_LATITUDE )
 		latitude = lat;
 		else
 			throw new InvalidArgumentException();

@@ -19,7 +19,7 @@ public class GeographicalPosition {
 	 * @param lon longitude
 	 * @param alt altitude
 	 */
-	public GeographicalPosition(Latitude lat, Longitude lon, Altitude alt)
+	public GeographicalPosition(Latitude lat, Longitude lon, Altitude alt)throws  InvalidArgumentException
 	{
 		latitude = lat;
 		longitude = lon;

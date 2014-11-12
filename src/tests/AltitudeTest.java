@@ -2,11 +2,21 @@ package tests;
 
 import static org.junit.Assert.*;
 
+import java.util.GregorianCalendar;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import app.InvalidArgumentException;
+import utils.Airliner;
+import utils.Airship;
 import utils.Altitude;
+import utils.CargoAircraft;
+import utils.Database;
+import utils.FlightPlan;
+import utils.GeographicalPosition;
+import utils.PrivateJet;
+import utils.Transport;
 
 public class AltitudeTest {
 	
@@ -76,5 +86,7 @@ public class AltitudeTest {
 		//Assert
 		assertTrue(10.00 == _alt.getAltitudeValue());
 	}
+	
+
 	
 }

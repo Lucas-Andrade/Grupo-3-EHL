@@ -12,6 +12,7 @@ import app.InvalidArgumentException;
 import app.InvalidFlightIDException;
 import utils.AirCorridorInTime;
 import utils.Airliner;
+import utils.Airship;
 import utils.AltitudeCorridor;
 import utils.CargoAircraft;
 import utils.Database;
@@ -158,4 +159,26 @@ public class DatabaseTest {
 		assertTrue(data.contains("airl123"));
 		assertTrue(data.contains("trp123"));
 	}
+	@Test 
+	public void shouldGetTheNumberOfAirshipsInTheDatabase()throws InvalidArgumentException, InvalidFlightIDException
+	{
+		
+	Airship	airplane1 = new Airliner ("xpto01", new GeographicalPosition(20, 130, 0), new FlightPlan(new GregorianCalendar(2014, 11, 10, 00, 15), new GregorianCalendar(2014, 11, 10, 04, 15)), 50);
+	Airship	airplane2 = new PrivateJet("xpto02",new GeographicalPosition(30, 30, 0), new FlightPlan(new GregorianCalendar(2014, 11, 11, 00, 15), new GregorianCalendar(2014, 11, 11, 04, 15)), 10);
+	Airship	airplane3 = new CargoAircraft("xpto03",new GeographicalPosition(40, 30, 0), new FlightPlan(new GregorianCalendar(2014, 11, 12, 00, 15), new GregorianCalendar(2014, 11, 12, 04, 15)));
+	Airship	airplane4 = new Transport("xpto04",new GeographicalPosition(20.00, 130.00, 0.00), new FlightPlan(new GregorianCalendar(2014, 11, 13, 00, 15), new GregorianCalendar(2014, 11, 13, 04, 15)), false);
+	
+	Database newData = new Database();
+	
+	newData.addAirplane(airplane1);
+	newData.addAirplane(airplane2);
+	newData.addAirplane(airplane3);
+	newData.addAirplane(airplane4);
+	
+	int numberOfAirships;
+	numberOfAirships = newData.countAirships();
+	
+	assertTrue( 4 == numberOfAirships);
+	}
+	
 }

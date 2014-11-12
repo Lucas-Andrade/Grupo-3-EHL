@@ -1,12 +1,14 @@
 package airtrafficcontrol.app.utils;
 
-import app.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 /**
  * This class represents an Altitude value.
- * @author Hugo
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
  *
- */
+ * */
 public class Altitude {
 	
 	private double altitude;

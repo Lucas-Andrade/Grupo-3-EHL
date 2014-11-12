@@ -9,8 +9,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.StringTokenizer;
 
-import app.InvalidArgumentException;
-import app.InvalidFlightIDException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
 
 /**
  * allows to read a list of flights and make a database
@@ -49,10 +49,10 @@ public class ReadListOfFlights
 	public Database readFlights(String name) throws IOException, InvalidFlightIDException, InvalidArgumentException
 	
 	{
-		Database database = new Database();
-		
 		if(name==null )
 			throw new InvalidArgumentException();
+		
+		Database database = new Database();
 		
 		BufferedReader reader = new BufferedReader(new FileReader("src/filesToRead/" + name));
 		

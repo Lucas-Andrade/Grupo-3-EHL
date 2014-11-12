@@ -6,8 +6,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import app.InvalidArgumentException;
-import app.InvalidFlightIDException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
 
 /**
  * Allows to update the Airplanes coordinates from a file

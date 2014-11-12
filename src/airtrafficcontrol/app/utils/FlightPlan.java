@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import app.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 /**
  * allows to build the plan of the flight
@@ -28,12 +28,12 @@ public class FlightPlan {
 	 */
 	public FlightPlan(Calendar departureHour, Calendar arrivalHour) throws InvalidArgumentException
 	{
+		if(departureHour==null || arrivalHour == null)
+			throw new InvalidArgumentException();
+		
 		corridors = new ArrayList<>();
 		this.departureHour = departureHour;
 		this.arrivalHour = arrivalHour;
-		
-		if(departureHour==null || arrivalHour == null)
-			throw new InvalidArgumentException();
 	}
 	
 	/**

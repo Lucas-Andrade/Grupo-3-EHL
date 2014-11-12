@@ -8,7 +8,9 @@ import airtrafficcontrol.app.exceptions.InvalidArgumentException;
  * This class represents GeographicalPosition defined by Latitude, Longitude and
  * Altitude
  * 
- * @author Hugo
+ *@author Eva Gomes
+ *@author Hugo Leal
+ *@author Lucas Andrade
  *
  */
 public class GeographicalPosition

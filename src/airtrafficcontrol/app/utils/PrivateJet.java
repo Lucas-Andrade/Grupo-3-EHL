@@ -1,6 +1,6 @@
 package airtrafficcontrol.app.utils;
 
-import app.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 /**
  * Creates an airliner
@@ -26,8 +26,6 @@ public class PrivateJet extends Airliner{
 			FlightPlan flightPlan, int passengers) throws InvalidArgumentException {
 		super(flightID, statingPosition, flightPlan, passengers);
 		
-		if(flightID==null || statingPosition == null || flightPlan == null)
-			throw new InvalidArgumentException();
 	}
 	
 	/**
@@ -38,11 +36,12 @@ public class PrivateJet extends Airliner{
 	 */
 	public void setNumberOfMinutesToTakeOff(int newTime) throws InvalidArgumentException
 	{
+		if (newTime == 0)
+			throw new InvalidArgumentException();
+		
 		numberOfMinutesToTakeOff = newTime;
 		newnumberOfMinutesToTakeOff = newTime;
 		newTakeOff = true;
-		if (newTime == 0)
-			throw new InvalidArgumentException();
 	}
 	
 	/**
@@ -53,11 +52,12 @@ public class PrivateJet extends Airliner{
 	 */
 	public void setNumberOfMinutesToLand(int newTime) throws InvalidArgumentException
 	{
+		if (newTime == 0)
+			throw new InvalidArgumentException();
+		
 		numberOfMinutesToLand = newTime;
 		newnumberOfMinutesToLand = newTime;
 		newLand = true;
-		if (newTime == 0)
-			throw new InvalidArgumentException();
 	}
 	
 	/**
@@ -68,11 +68,12 @@ public class PrivateJet extends Airliner{
 	 */
 	public void setNumberOfMinutesToSwitchCorridor(int newTime) throws InvalidArgumentException
 	{
+		if (newTime == 0)
+			throw new InvalidArgumentException();
+		
 		numberOfMinutesToSwitchCorridor = newTime;
 		newnumberOfMinutesToSwitchCorridor = newTime;
 		newSwitch = true;
-		if (newTime == 0)
-			throw new InvalidArgumentException();
 	}
 	
 	/**

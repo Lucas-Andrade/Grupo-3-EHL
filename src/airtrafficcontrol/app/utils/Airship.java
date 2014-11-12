@@ -3,7 +3,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.LinkedList;
 
-import app.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 /**
  * Creates an abstract class that envelops all the airplanes. 
@@ -31,13 +31,13 @@ public abstract class Airship {
 	 * @throws InvalidArgumentException 
 	 */
 	public Airship(String flightID, GeographicalPosition statingPosition, FlightPlan flightPlan) throws InvalidArgumentException {
+		if(flightID==null || statingPosition == null || flightPlan == null)
+			throw new InvalidArgumentException();
+		
 		this.flightID = flightID;
 		this.lastKnownGeograficalPositions = new LinkedList<GeographicalPosition>();
 		lastKnownGeograficalPositions.add(statingPosition);
 		this.flightPlan = flightPlan;
-		
-		if(flightID==null || statingPosition == null || flightPlan == null)
-			throw new InvalidArgumentException();
 	}
 
 	/**
@@ -72,11 +72,11 @@ public abstract class Airship {
 	 */
 	public void updateGeographicPosition(GeographicalPosition newGeographicalPosition) throws InvalidArgumentException
 	{
-		positionWasUpdated = true;
-		lastKnownGeograficalPositions.addFirst(newGeographicalPosition);
-		
 		if(newGeographicalPosition==null)
 			throw new InvalidArgumentException();
+		
+		positionWasUpdated = true;
+		lastKnownGeograficalPositions.addFirst(newGeographicalPosition);
 	}
 	
 	/**
@@ -96,9 +96,11 @@ public abstract class Airship {
 	 */
 	public void setNewArrivalHour(Calendar newArrivalHour) throws InvalidArgumentException
 	{
-		flightPlan.setNewArrivalHour(newArrivalHour, numberOfMinutesToLand);
 		if(newArrivalHour==null)
 			throw new InvalidArgumentException();
+		
+		flightPlan.setNewArrivalHour(newArrivalHour, numberOfMinutesToLand);
+		
 	}
 	
 	/**

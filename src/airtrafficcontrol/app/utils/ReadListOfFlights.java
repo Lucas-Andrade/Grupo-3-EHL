@@ -371,7 +371,7 @@ public class ReadListOfFlights
 	 *            The date we want to copy.
 	 * @return The copied date.
 	 */
-	static Calendar createDefensiveCopyOfTheDate( Calendar dateToCopy )
+	public static Calendar createDefensiveCopyOfTheDate( Calendar dateToCopy )
 			throws InvalidArgumentException {
 		
 		if( dateToCopy == null )

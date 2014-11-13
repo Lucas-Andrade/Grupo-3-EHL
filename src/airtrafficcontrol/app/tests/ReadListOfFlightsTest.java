@@ -1,12 +1,17 @@
 package airtrafficcontrol.app.tests;
 
 import static org.junit.Assert.*;
+
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
 import airtrafficcontrol.app.utils.Airliner;
 import airtrafficcontrol.app.utils.Airship;
 import airtrafficcontrol.app.utils.AltitudeCorridor;
@@ -24,7 +29,7 @@ public class ReadListOfFlightsTest {
 	Map<String, Airship> data;
 	
 	@Before
-	public void buildTheDatabase() throws IOException {
+	public void buildTheDatabase() throws IOException, InvalidFlightIDException, InvalidArgumentException {
 		reader  = new ReadListOfFlights();
 		database = reader.readFlights("listOfFlightsTest.txt");
 		data = database.getDatabase();
@@ -254,13 +259,13 @@ public class ReadListOfFlightsTest {
 	}
 	
 	@Test 
-	public void shouldReturnTheObservationThatTheAirplaneHasAlreadyLanded()
+	public void shouldReturnTheObservationThatTheAirplaneHasAlreadyLanded() throws InvalidArgumentException
 	{
 		assertEquals("The airplane has already landed.", data.get("xptofligth01").getObservations());
 	}
 	
 	@Test
-	public void shouldReturnTheRightCorridorFor1()
+	public void shouldReturnTheRightCorridorFor1() throws InvalidArgumentException
 	{
 		Airship transport = data.get("xptofligth01");
 		FlightPlan plan = transport.getPlan();
@@ -275,7 +280,7 @@ public class ReadListOfFlightsTest {
 	}
 	
 	@Test
-	public void shouldReturnTheRightCorridorFor2()
+	public void shouldReturnTheRightCorridorFor2() throws InvalidArgumentException
 	{
 		Airship airliner = data.get("xptofligth02");
 		FlightPlan plan = airliner.getPlan();
@@ -293,7 +298,7 @@ public class ReadListOfFlightsTest {
 	}
 	
 	@Test
-	public void shouldReturnTheRightCorridorFor3()
+	public void shouldReturnTheRightCorridorFor3() throws InvalidArgumentException
 	{
 		Airship airliner = data.get("xptofligth03");
 		FlightPlan plan = airliner.getPlan();
@@ -308,7 +313,7 @@ public class ReadListOfFlightsTest {
 	}
 	
 	@Test
-	public void shouldReturnTheRightCorridorFor4()
+	public void shouldReturnTheRightCorridorFor4() throws InvalidArgumentException
 	{
 		Airship jet = data.get("xptofligth04");
 		FlightPlan plan = jet.getPlan();
@@ -323,7 +328,7 @@ public class ReadListOfFlightsTest {
 	}
 	
 	@Test
-	public void shouldReturnTheRightCorridorFor5()
+	public void shouldReturnTheRightCorridorFor5() throws InvalidArgumentException
 	{
 		Airship cargo = data.get("xptofligth05");
 		FlightPlan plan = cargo.getPlan();
@@ -338,7 +343,7 @@ public class ReadListOfFlightsTest {
 	}
 	
 	@Test
-	public void shouldReturnTheRightCorridorFor6()
+	public void shouldReturnTheRightCorridorFor6() throws InvalidArgumentException
 	{
 		Airship cargo = data.get("xptofligth06");
 		FlightPlan plan = cargo.getPlan();

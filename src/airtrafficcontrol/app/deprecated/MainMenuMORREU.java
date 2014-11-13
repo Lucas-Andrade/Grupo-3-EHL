@@ -1,6 +1,7 @@
 package airtrafficcontrol.app.deprecated;
 
 import airtrafficcontrol.app.OptionsMenu;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.menuoptions.Option;
 
 
@@ -29,7 +30,7 @@ public abstract class MainMenuMORREU extends OptionsMenu
 {
 	
 	// SÓ PARA A CALAR
-	public MainMenuMORREU( String menuTitle, Option[] options ) {
+	public MainMenuMORREU( String menuTitle, Option[] options ) throws InvalidArgumentException {
 		super( menuTitle, options );
 	}
 	// TENTATIVA 3 passa a haver a classe OptionsMenu

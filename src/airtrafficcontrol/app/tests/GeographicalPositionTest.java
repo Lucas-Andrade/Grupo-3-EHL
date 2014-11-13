@@ -1,8 +1,11 @@
 package airtrafficcontrol.app.tests;
 
 import static org.junit.Assert.*;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.utils.Altitude;
 import airtrafficcontrol.app.utils.GeographicalPosition;
 import airtrafficcontrol.app.utils.Latitude;
@@ -19,7 +22,7 @@ public class GeographicalPositionTest {
 	
 	
 	@Before
-	public void newGepgraphicalPosition() 
+	public void newGepgraphicalPosition() throws InvalidArgumentException 
 	{
 		_lat = new Latitude(60.00);
 		_lon = new Longitude(160.00);
@@ -49,7 +52,7 @@ public class GeographicalPositionTest {
 	}
 	
 	@Test
-	public void shouldIncrementGeographicalPositionWithLatitudeLongitudeAndAltitudeObjects()
+	public void shouldIncrementGeographicalPositionWithLatitudeLongitudeAndAltitudeObjects() throws InvalidArgumentException
 	{
 		//Arrange
 		Latitude lat = new Latitude(10.00);
@@ -66,7 +69,7 @@ public class GeographicalPositionTest {
 	}
 	
 	@Test
-	public void shouldIncrementGeographicalPositionWithLatitudeLongitudeAndAltitudeValues()
+	public void shouldIncrementGeographicalPositionWithLatitudeLongitudeAndAltitudeValues() throws InvalidArgumentException
 	{
 		//Act
 		_geoPosObj.incrementPosition(10, 10, 100);
@@ -79,7 +82,7 @@ public class GeographicalPositionTest {
 	
 
 	@Test
-	public void shouldSetsALatitudeInAGeographicalPositionWithAValue()
+	public void shouldSetsALatitudeInAGeographicalPositionWithAValue() throws InvalidArgumentException
 	{
 		//Act
 		_geoPosObj.setLatitude(70);
@@ -89,7 +92,7 @@ public class GeographicalPositionTest {
 	}
 	
 	@Test
-	public void shouldSetsALatitudeInAGeographicalPositionWithAnObject()
+	public void shouldSetsALatitudeInAGeographicalPositionWithAnObject() throws InvalidArgumentException
 	{
 		//Arrange
 		Latitude lat = new Latitude(70);
@@ -102,7 +105,7 @@ public class GeographicalPositionTest {
 	}
 	
 	@Test
-	public void shouldSetsALongitudeInAGeographicalPositionWithAValue()
+	public void shouldSetsALongitudeInAGeographicalPositionWithAValue() throws InvalidArgumentException
 	{
 		//Act
 		_geoPosObj.setLongitude(70);
@@ -112,7 +115,7 @@ public class GeographicalPositionTest {
 	}
 	
 	@Test
-	public void shouldSetsALongitudeInAGeographicalPositionWithAnObject()
+	public void shouldSetsALongitudeInAGeographicalPositionWithAnObject() throws InvalidArgumentException
 	{
 		//Arrange
 		Longitude lon = new Longitude(70);
@@ -125,7 +128,7 @@ public class GeographicalPositionTest {
 	}
 	
 	@Test
-	public void shouldSetsAnAltitudeInAGeographicalPositionWithAValue()
+	public void shouldSetsAnAltitudeInAGeographicalPositionWithAValue() throws InvalidArgumentException
 	{
 		//Act
 		_geoPosObj.setAltitude(11000.00);
@@ -135,7 +138,7 @@ public class GeographicalPositionTest {
 	}
 	
 	@Test
-	public void shouldSetsAnAltitudeInAGeographicalPositionWithAnObject()
+	public void shouldSetsAnAltitudeInAGeographicalPositionWithAnObject() throws InvalidArgumentException
 	{
 		//Arrange
 		Altitude alt = new Altitude(11000.00);
@@ -148,7 +151,7 @@ public class GeographicalPositionTest {
 	}
 	
 	@Test
-	public void shouldIncrementsALatitudeInAGeographicalPositionWithAValue()
+	public void shouldIncrementsALatitudeInAGeographicalPositionWithAValue() throws InvalidArgumentException
 	{
 		//Act
 		_geoPosObj.incrementLatitude(10);;
@@ -158,7 +161,7 @@ public class GeographicalPositionTest {
 	}
 	
 	@Test
-	public void shouldIncrementsALatitudeInAGeographicalPositionWithAnObject()
+	public void shouldIncrementsALatitudeInAGeographicalPositionWithAnObject() throws InvalidArgumentException
 	{
 		//Arrange
 		Latitude lat = new Latitude(10);
@@ -181,7 +184,7 @@ public class GeographicalPositionTest {
 	}
 	
 	@Test
-	public void shouldIncrementsALongitudeInAGeographicalPositionWithAnObject()
+	public void shouldIncrementsALongitudeInAGeographicalPositionWithAnObject() throws InvalidArgumentException
 	{
 		//Arrange
 		Longitude lon = new Longitude(10);
@@ -204,7 +207,7 @@ public class GeographicalPositionTest {
 	}
 	
 	@Test
-	public void shouldIncrementsAnAltitudeInAGeographicalPositionWithAnObject()
+	public void shouldIncrementsAnAltitudeInAGeographicalPositionWithAnObject() throws InvalidArgumentException
 	{
 		//Arrange
 		Altitude alt = new Altitude(1000.00);

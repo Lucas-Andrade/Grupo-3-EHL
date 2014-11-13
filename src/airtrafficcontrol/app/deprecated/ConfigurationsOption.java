@@ -1,6 +1,8 @@
 package airtrafficcontrol.app.deprecated;
 
+import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.menuoptions.Option;
 
 
@@ -95,6 +97,13 @@ public class ConfigurationsOption extends Option
 	public String execute() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void executeToConsole(AirTrafficControlAppForConsole app)
+			throws InvalidArgumentException {
+		// TODO Auto-generated method stub
+		
 	};
 	
 }

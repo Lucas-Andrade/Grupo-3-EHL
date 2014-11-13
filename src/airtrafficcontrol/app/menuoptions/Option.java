@@ -1,6 +1,7 @@
 package airtrafficcontrol.app.menuoptions;
 
 
+import java.io.IOException;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
 import airtrafficcontrol.app.OptionsMenu;
@@ -113,9 +114,10 @@ public abstract class Option
 	 * @throws DatabaseNotFoundException
 	 * @throws InvalidFlightIDException
 	 * @throws InvalidArgumentException 
+	 * @throws IOException 
 	 */
 	public abstract String execute() throws FlightNotFoundInDatabaseException,
-			DatabaseNotFoundException, InvalidFlightIDException, InvalidArgumentException; // throws
+			DatabaseNotFoundException, InvalidFlightIDException, InvalidArgumentException, IOException; // throws
 	
 	
 	

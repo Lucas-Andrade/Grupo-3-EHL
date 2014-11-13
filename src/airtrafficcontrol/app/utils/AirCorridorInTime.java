@@ -148,47 +148,51 @@ public class AirCorridorInTime
 		
 	}
 	
-	/**
-	 * Sets an approximate hour the airplane is supposed to enter the corridor.
-	 * 
-	 * @param newHour
-	 *            The approximate hour the airplane is supposed to enter the
-	 *            corridor.
-	 */
-	public boolean setStartingHour( Calendar newHour )
-			throws InvalidArgumentException {
-		if( newHour == null )
-			throw new InvalidArgumentException();
-		
-		if( endingHour.compareTo( newHour ) < 0 )
-			return false;
-		else
-		{
-			startingHour = newHour;
-			return true;
-		}
-		
-		
-	}
 	
-	/**
-	 * sets a new ending hour
-	 * 
-	 * @param newHour
-	 *            - the hour the airplane is supposed to leave the corridor
-	 */
-	public boolean setEndingHour( Calendar newHour )
-			throws InvalidArgumentException {
-		if( newHour == null )
-			throw new InvalidArgumentException();
-		
-		if( startingHour.compareTo( newHour ) > 0 )
-			return false;
-		else
-		{
-			endingHour = newHour;
-			return true;
-		}
-	}
+	
+	//DEPRECATED
+	
+//	/**
+//	 * Sets an approximate hour the airplane is supposed to enter the corridor.
+//	 * 
+//	 * @param newHour
+//	 *            The approximate hour the airplane is supposed to enter the
+//	 *            corridor.
+//	 */
+//	public boolean setStartingHour( Calendar newHour )
+//			throws InvalidArgumentException {
+//		if( newHour == null )
+//			throw new InvalidArgumentException();
+//		
+//		if( endingHour.compareTo( newHour ) < 0 )
+//			return false;
+//		else
+//		{
+//			startingHour = newHour;
+//			return true;
+//		}
+//		
+//		
+//	}
+//	
+//	/**
+//	 * sets a new ending hour
+//	 * 
+//	 * @param newHour
+//	 *            - the hour the airplane is supposed to leave the corridor
+//	 */
+//	public boolean setEndingHour( Calendar newHour )
+//			throws InvalidArgumentException {
+//		if( newHour == null )
+//			throw new InvalidArgumentException();
+//		
+//		if( startingHour.compareTo( newHour ) > 0 )
+//			return false;
+//		else
+//		{
+//			endingHour = newHour;
+//			return true;
+//		}
+//	}
 	
 }

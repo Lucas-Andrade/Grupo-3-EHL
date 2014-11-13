@@ -1,6 +1,13 @@
 package airtrafficcontrol.app.menuoptions;
 
-import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
+
+import java.io.IOException;
+import java.util.Scanner;
+import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
+import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.utils.Database;
+import airtrafficcontrol.app.utils.ReportGenerator;
 
 
 /**
@@ -41,9 +48,19 @@ public class ReportTransgressionsOption extends Option
 	 */
 	private static ReportTransgressionsOption instance = new ReportTransgressionsOption();
 	
+	/**
+	 * The database where to search for the transgressing flights.
+	 */
+	private Database flightsDB = null;
 	
+	/**
+	 * It is true if the execute() method must generate a report in .txt about
+	 * the transgressing airships; and it is false if the report is only to be
+	 * returned as a string.
+	 */
+	private boolean printToTxt = false;
 	
-	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	// METODO CONSTRUTOR e METODO getInstance()
 	
 	
 	/**
@@ -79,13 +96,80 @@ public class ReportTransgressionsOption extends Option
 	/**
 	 * Prints a list of the flights whose airships are currently transgressing
 	 * the established air corridors.
-	 * 
-	 * <p>
-	 * DESCRIPTION TODO
-	 * </p>
 	 */
-	public void executeToConsole(ConsoleDataToolbox app) {
-		System.out.println( title );
+	public void executeToConsole( AirTrafficControlAppForConsole app )
+			throws InvalidArgumentException {
+		
+		if( app == null )
+			throw new InvalidArgumentException( "INVALID NULL APP!" );
+		
+		// save app's database as a field so execute can access it
+		flightsDB = app.tools.flightsDB;
+		
+		
+		// ask for confirmation
+		System.out.print( new StringBuffer(
+				" Do you want to get the trangressions report" )
+				.append( "\n on a .txt file as well?" )
+				.append( "\n\n Type YES if so or type any other" )
+				.append( "\n key otherwhise and press Enter." )
+				.append( "\n\n Print to .txt?" ).toString() );
+		
+		@SuppressWarnings( "resource" )
+		Scanner in = new Scanner( System.in );
+		String answerFromUser = in.nextLine();
+		
+		// if user confirms remove all
+		if( answerFromUser.equals( "ABORT" ) )
+		{}
+		else
+		{
+			// save answer as a field so execute can access it
+			if( answerFromUser.equals( "YES" ) )
+				printToTxt = true;
+			else printToTxt = false;
+			
+			try
+			{
+				System.out.print( execute() );
+			}
+			catch( DatabaseNotFoundException e )
+			{
+				System.out.print( e.getMessage() );
+				// this catch block will never happen as
+				// get_AFlightIDExistentInACertainDatabase_FromUser obtained a
+				// valid flightID that certainly is in flightsDB, which is also
+				// not null by the app's construction
+			}
+			catch( IOException e )
+			{
+				e.printStackTrace();
+			}
+			
+		}
+		
+		// didn't close scanner on purpose
+	}
+	
+	@Override
+	public String execute() throws IOException, InvalidArgumentException,
+			DatabaseNotFoundException {
+		
+		if( flightsDB == null )
+			throw new DatabaseNotFoundException( "DATABASE NOT FOUND!" );
+		
+		ReportGenerator reporter = new ReportGenerator();
+		
+		if( printToTxt )
+			reporter.reportAirplanesOutOfCorridorToTxt( flightsDB );
+		
+		String[] transgressingAirships = reporter
+				.reportAirplanesOutOfCorridor( flightsDB );
+		StringBuilder reportToReturn = new StringBuilder( "" );
+		for( String airshipID : transgressingAirships )
+			reportToReturn.append( "\n" ).append( airshipID );
+		
+		return reportToReturn.toString();
 	};
 	
 }

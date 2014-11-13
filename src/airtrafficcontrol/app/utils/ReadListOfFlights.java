@@ -100,7 +100,7 @@ public class ReadListOfFlights
 		for( int i = 0; i < listOfFlights.size(); i++ )
 		{
 			StringTokenizer tokenizer = new StringTokenizer(
-					listOfFlights.get( i ), " " );
+					listOfFlights.get( i ), " \t" );
 			
 			String flightID = tokenizer.nextToken();
 			String typeOfAirship = tokenizer.nextToken();
@@ -215,7 +215,7 @@ public class ReadListOfFlights
 					break;
 				
 				default:
-					throw new IllegalArgumentException(
+					throw new InvalidArgumentException(
 							"Unrecognised airship type" );
 			}
 			

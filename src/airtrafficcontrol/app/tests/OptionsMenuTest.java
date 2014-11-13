@@ -6,9 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 import airtrafficcontrol.app.OptionsMenu;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
+import airtrafficcontrol.app.deprecated.AddAFlightOption;
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.exceptions.InvalidOptionNumberException;
-import airtrafficcontrol.app.menuoptions.AddAFlightOption;
 import airtrafficcontrol.app.menuoptions.HelpOption_for_EHLsATCAppForConsole;
 import airtrafficcontrol.app.menuoptions.ExitOption;
 

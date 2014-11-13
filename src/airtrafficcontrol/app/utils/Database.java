@@ -282,6 +282,12 @@ public class Database
 		return removedCount;
 		
 		
+		
+		// TENTATIVA 1
+		// abandonámos porque o Google nos mostrou q muita gente que é má
+		// prática aceder às entradas de um Map iterando o keySet
+		
+		//
 		// Set< String > idSet = database.keySet();
 		// Iterator< String > iterator = idSet.iterator();
 		// int count = 0;

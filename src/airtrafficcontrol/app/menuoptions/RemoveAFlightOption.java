@@ -59,7 +59,7 @@ public class RemoveAFlightOption extends Option
 	private Database flightsDB = null;
 	
 	
-	// M�TODO CONSTRUTOR e M�TODO getInstance()
+	// METODO CONSTRUTOR e METODO getInstance()
 	
 	
 	/**
@@ -147,7 +147,7 @@ public class RemoveAFlightOption extends Option
 			System.out.print( "ABORTED OPERATION!" );
 		
 		
-		// remove the flight from database
+		// or remove the flight from database
 		else
 		{
 			try

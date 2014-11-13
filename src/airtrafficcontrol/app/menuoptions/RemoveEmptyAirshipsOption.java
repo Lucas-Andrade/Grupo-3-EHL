@@ -6,6 +6,8 @@ import airtrafficcontrol.app.AirTrafficControlAppToolbox;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
 import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.utils.Database;
 
 
 /**
@@ -48,8 +50,14 @@ public class RemoveEmptyAirshipsOption extends Option
 	 */
 	private static RemoveEmptyAirshipsOption instance = new RemoveEmptyAirshipsOption();
 	
+	/**
+	 * The database where to search for the flight.
+	 */
+	private Database flightsDB = null;
 	
-	// M�TODO CONSTRUTOR e M�TODO getInstance()
+	
+	
+	// METODO CONSTRUTOR e METODO getInstance()
 	
 	
 	/**
@@ -99,48 +107,69 @@ public class RemoveEmptyAirshipsOption extends Option
 	 * 
 	 * @param app
 	 *            The app's {@link ConsoleDataToolbox} field.
+	 * @throws InvalidArgumentException
+	 *             If {@code app} is{@code null}.
 	 */
-	public void executeToConsole( AirTrafficControlAppForConsole app ) {
+	public void executeToConsole( AirTrafficControlAppForConsole app )
+			throws InvalidArgumentException {
 		
-		System.out
-				.print( " Are you sure you want to remove\n all passenger-flights with zero passengers?" );
-		System.out
-				.print( "\n Type YES if so or type any other\n key otherwhise and press Enter." );
-		System.out.print( "\n\nRemove? " );
+		if( app == null )
+			throw new InvalidArgumentException( "INVALID NULL APP!" );
 		
+		// save app's database as a field so execute can access it
+		flightsDB = app.tools.flightsDB;
+		
+		
+		// ask for confirmation
+		System.out.print( new StringBuffer(
+				" Are you sure you want to remove all" )
+				.append( "\n passenger-flights with zero passengers?" )
+				.append( "\n\n Type YES if so or type any other" )
+				.append( "\n key otherwhise and press Enter." )
+				.append( "\n\nRemove? " ).toString() );
+		
+		@SuppressWarnings( "resource" )
 		Scanner in = new Scanner( System.in );
+		
+		
+		// if user confirms remove all
 		if( in.nextLine().equals( "YES" ) )
 			try
 			{
-				if( app.tools.flightsDB == null )
-					throw new DatabaseNotFoundException();
-				
-				int numFlightsRemoved = app.tools.flightsDB
-						.removeAirplanesWithZeroPassengers();
-				
-				System.out.print( new StringBuffer( "DONE!" )
-						.append( numFlightsRemoved )
-						.append( " passenger-flights with zero passengers" )
-						.append( "\n successfully removed!" )
-						.toString() );
+				System.out.print( execute() );
 			}
 			catch( DatabaseNotFoundException e )
 			{
-				System.out.println( "DATABASE NOT FOUND!" );
+				System.out.print( e.getMessage() );
+				// this catch block will never happen as
+				// get_AFlightIDExistentInACertainDatabase_FromUser obtained a
+				// valid flightID that certainly is in flightsDB, which is also
+				// not null by the app's construction
 			}
-		else System.out.println( "ABORTED OPERATION!" );
-		in.close();
 		
+		// if user writes other than "YES" in console
+		else System.out.println( "OPERATION ABORTED!" );
+		
+		// didn't close scanner on purpose
 	}
 	
 	/**
-	 * Performs no action.
+	 * Removes all the passenger-flights that have zero passengers from
+	 * {@code flightsDB}.
 	 * 
-	 * @return {@code null}
+	 * @return A message on the operation being successfully concluded.
+	 * @throws DatabaseNotFoundException
 	 */
 	public String execute() throws DatabaseNotFoundException {
 		
-		return null;
+		if( flightsDB == null )
+			throw new DatabaseNotFoundException( "DATABASE NOT FOUND!" );
+		
+		int numFlightsRemoved = flightsDB.removeAirplanesWithZeroPassengers();
+		
+		return new StringBuffer( "DONE! " ).append( numFlightsRemoved )
+				.append( " passenger-flights with zero passengers" )
+				.append( "\nsuccessfully removed!" ).toString();
 	};
 	
 }

@@ -2,8 +2,13 @@ package airtrafficcontrol.app.menuoptions;
 
 
 import java.io.IOException;
+import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
-import airtrafficcontrol.app.utils.ReadListOfFlights;
+import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
+import airtrafficcontrol.app.utils.Database;
+import airtrafficcontrol.app.utils.ReadAirplanesCoordinates;
 
 
 /**
@@ -45,9 +50,18 @@ public class UpdateDatabaseOption extends Option
 	 */
 	private static UpdateDatabaseOption instance = new UpdateDatabaseOption();
 	
+	/**
+	 * The database whose flights are to be updated.
+	 */
+	private Database flightsDB = null;
+	
+	/**
+	 * The text file name where to read the coordinates from.
+	 */
+	private String fileName = null;
 	
 	
-	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	// Mï¿½TODO CONSTRUTOR e Mï¿½TODO getInstance()
 	
 	
 	/**
@@ -57,7 +71,7 @@ public class UpdateDatabaseOption extends Option
 	public UpdateDatabaseOption() {
 		super(
 				"Update the database's flights' coordinates.",
-				"Creates an internal database of flights for the app from the flights listed in the «src\\ListOfFlights.txt»" );
+				"Creates an internal database of flights for the app from the flights listed in the ï¿½src\\ListOfFlights.txtï¿½" );
 	};
 	
 	
@@ -81,7 +95,7 @@ public class UpdateDatabaseOption extends Option
 	
 	
 	
-	// ACÇÃO
+	// EXECUCAO
 	
 	
 	
@@ -91,29 +105,54 @@ public class UpdateDatabaseOption extends Option
 	 * 
 	 * @param app
 	 *            The app's {@link ConsoleDataToolbox} field.
+	 * @throws InvalidArgumentException
+	 *             If {@code app} is {@code null}.
 	 */
-	public void executeToConsole( ConsoleDataToolbox app ) {
+	public void executeToConsole( AirTrafficControlAppForConsole app )
+			throws InvalidArgumentException {
+		
+		if( app == null )
+			throw new InvalidArgumentException( "INVALID NULL APP!" );
+		
+		// save app's database as a field so execute can access it
+		flightsDB = app.tools.flightsDB;
+		// set the file where to look for the information
+		fileName = "ActualizedCoordinates.txt";
+		
 		try
 		{
-			app.flightsDB.addDataBase( new ReadListOfFlights()
-					.readFlights( "ListOfFlights.txt" ) );
+			System.out.println( execute() );
 		}
 		catch( IOException e )
 		{
-			System.out.println( "src/ListOfFlights.txt FILE NOT FOUND!" );
+			System.out.println( fileName + " FILE NOT FOUND!" );
 		}
-		System.out
-				.println( "DONE! New internal database of flights \ncreated from ListOfFlights.txt" );
+		catch( InvalidFlightIDException | DatabaseNotFoundException e )
+		{
+			System.out.println( e.getMessage() );
+		}
 	}
 	
-	
 	/**
-	 * Performs no action.
+	 * Creates a database of flights from the flights listed in the the file
+	 * {@code fileName}.
 	 * 
-	 * @return {@code null}
+	 * @return A message on the operation being successfully concluded.
+	 * @throws DatabaseNotFoundException
+	 * @throws IOException
+	 * @throws InvalidArgumentException
+	 * @throws InvalidFlightIDException
 	 */
-	public String execute() {
-		return null;
+	public String execute() throws DatabaseNotFoundException,
+			InvalidFlightIDException, InvalidArgumentException, IOException {
+		
+		if( flightsDB == null )
+			throw new DatabaseNotFoundException( "INVALID NULL DATABASE!" );
+		
+		new ReadAirplanesCoordinates().readFromFile(
+				"ActualizedCoordinates.txt", flightsDB );
+		return "DONE! New coordinates updated from \n" + fileName
+				+ " successfully.";
 	};
 	
 }

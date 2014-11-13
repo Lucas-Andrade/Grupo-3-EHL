@@ -4,15 +4,17 @@ package airtrafficcontrol.app.menuoptions;
 import java.io.IOException;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
+import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
+import airtrafficcontrol.app.utils.Database;
 import airtrafficcontrol.app.utils.ReadListOfFlights;
 
 
 /**
  * This class represents the option with the title
- * {@code Add a list of flights from txt file.} of an Air Traffic Control app
- * for console.
+ * {@code Add flights from the ListOfFlights.txt file.} of an Air Traffic
+ * Control app for console.
  * 
  * <p style="font-size:16">
  * <b>Description</b>
@@ -48,9 +50,18 @@ public class AddAListOfFlightsOption extends Option
 	 */
 	private static AddAListOfFlightsOption instance = new AddAListOfFlightsOption();
 	
+	/**
+	 * The database whose flights are to be updated.
+	 */
+	private Database flightsDB = null;
+	
+	/**
+	 * The text file name where to read the coordinates from.
+	 */
+	private String fileName = null;
 	
 	
-	// M�TODO CONSTRUTOR e M�TODO getInstance()
+	// METODO CONSTRUTOR e METODO getInstance()
 	
 	
 	/**
@@ -59,8 +70,8 @@ public class AddAListOfFlightsOption extends Option
 	 */
 	public AddAListOfFlightsOption() {
 		super(
-				"Add a list of flights from txt file.",
-				"Creates an internal database of flights for the app from the flights listed in the �src\\ListOfFlights.txt�" );
+				"Add flights from the ListOfFlights.txt file.",
+				"Creates an internal database of flights for the app from the flights listed in the «src\\ListOfFlights.txt»" );
 	};
 	
 	
@@ -94,37 +105,57 @@ public class AddAListOfFlightsOption extends Option
 	 * 
 	 * @param app
 	 *            The app's {@link ConsoleDataToolbox} field.
+	 * @throws InvalidArgumentException
+	 *             If {@code app} is {@code null}.
 	 */
-	public void executeToConsole( AirTrafficControlAppForConsole app ) {
+	public void executeToConsole( AirTrafficControlAppForConsole app )
+			throws InvalidArgumentException {
+		
+		if( app == null )
+			throw new InvalidArgumentException( "INVALID NULL APP!" );
+		
+		// save app's database as a field so execute can access it
+		flightsDB = app.tools.flightsDB;
+		// set the file where to look for the information
+		fileName = "ListOfFlights.txt";
+		
 		try
 		{
-			System.out.print(app.tools.flightsDB.addDatabase( new ReadListOfFlights()
-					.readFlights( "ListOfFlights.txt" ) ));
+			System.out.print( execute() );
 		}
 		catch( IOException e )
 		{
-			System.out.println( "ListOfFlights.txt FILE NOT FOUND!" );
+			System.out.println( fileName + " FILE NOT FOUND!" );
 		}
-		catch( InvalidFlightIDException e )
+		catch( InvalidFlightIDException | InvalidArgumentException
+				| DatabaseNotFoundException e )
 		{
-			System.out.println(e.getMessage());
-		}
-		catch( InvalidArgumentException e )
-		{
-			System.out.println(e.getMessage());
+			System.out.println( e.getMessage() );
 		}
 		System.out
-				.println( "DONE! New internal database of flights \ncreated from ListOfFlights.txt" );
+				.println( "\nDONE! New internal database of flights\ncreated from "
+						+ fileName );
 	}
 	
-	
 	/**
-	 * Performs no action.
+	 * Creates a database of flights from the flights listed in the the file
+	 * {@code fileName}.
 	 * 
-	 * @return {@code null}
+	 * @return A message on the operation being successfully concluded.
+	 * @throws IOException
+	 * @throws InvalidArgumentException
+	 * @throws InvalidFlightIDException
+	 * @throws DatabaseNotFoundException
 	 */
-	public String execute() {
-		return null;
+	public String execute() throws InvalidFlightIDException,
+			InvalidArgumentException, IOException, DatabaseNotFoundException {
+		
+		if( flightsDB == null )
+			throw new DatabaseNotFoundException( "INVALID NULL DATABASE!" );
+		
+		return flightsDB.addDatabase( new ReadListOfFlights()
+				.readFlights( fileName ) );
+		
 	};
 	
 }

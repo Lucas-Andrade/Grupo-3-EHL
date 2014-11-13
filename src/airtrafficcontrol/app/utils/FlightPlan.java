@@ -182,15 +182,15 @@ public class FlightPlan
 		
 		int lengthOfList = corridors.size();
 		AirCorridorInTime lastEvent = corridors.get( lengthOfList - 1 );
-		lastEvent.setEndingHour( newArrivalHour );
+		lastEvent.setHours(lastEvent.getStartingHour(), newArrivalHour );
 		
 		newArrivalHour.add( 12, -numberOfMinutesToLand );
-		lastEvent.setStartingHour( newArrivalHour );
+		lastEvent.setHours( newArrivalHour, lastEvent.getEndingHour() );
 		
 		corridors.set( lengthOfList - 1, lastEvent );
 		
 		AirCorridorInTime secondToLastEvent = corridors.get( lengthOfList - 2 );
-		secondToLastEvent.setEndingHour( newArrivalHour );
+		secondToLastEvent.setHours(secondToLastEvent.getStartingHour(), newArrivalHour );
 		corridors.set( lengthOfList - 2, secondToLastEvent );
 	}
 	

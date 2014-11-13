@@ -1,6 +1,7 @@
-package airtrafficcontrol.app.menuoptions;
+package airtrafficcontrol.app.deprecated;
 
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
+import airtrafficcontrol.app.menuoptions.Option;
 
 
 /**
@@ -41,7 +42,7 @@ public class ConfigurationsOption extends Option
 	
 	
 	
-	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	// Mï¿½TODO CONSTRUTOR e Mï¿½TODO getInstance()
 	
 	
 	/**

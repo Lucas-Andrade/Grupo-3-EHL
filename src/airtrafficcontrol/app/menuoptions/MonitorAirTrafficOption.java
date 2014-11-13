@@ -190,7 +190,7 @@ public class MonitorAirTrafficOption extends Option
 			reporter.reportAirplanesWithUnknownFlightIDToTxt();
 		
 		
-		String[] all = reporter.reportAll( flightsDB, "ActualizedCoordinates" );
+		String[] all = reporter.reportAll( flightsDB, "ActualizedCoordinates.txt" );
 		String[] transgressions = reporter
 				.reportAirplanesOutOfCorridor( flightsDB );
 		String unread = reporter.reportemptyFields();

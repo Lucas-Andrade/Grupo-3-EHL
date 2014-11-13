@@ -134,8 +134,10 @@ public class ReportGenerator
 			AltitudeCorridor corridor = airplane.getCurrentCorridor();
 			double altitude = airplane.getGeographicPosition().getAltitude();
 			
-			if( altitude < corridor.getLowerLimit()
-					|| altitude > corridor.getUpperLimit() )
+			
+			System.out.println(corridor);
+			if(corridor != null && ( altitude < corridor.getLowerLimit()
+					|| altitude > corridor.getUpperLimit() ) )
 				airplanesOut.add( airplane );
 		}
 		

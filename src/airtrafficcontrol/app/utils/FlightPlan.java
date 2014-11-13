@@ -114,11 +114,19 @@ public class FlightPlan
 	 *         when the method was called
 	 * @throws InvalidArgumentException
 	 */
-	public AltitudeCorridor getCurrentCorridor()
-			throws InvalidArgumentException {
+	public AltitudeCorridor getCurrentCorridor() {
 		
 		Calendar now = new GregorianCalendar();
-		return getCorridorAtTime( now );
+		try
+		{
+			return getCorridorAtTime( now );
+		}
+		catch( InvalidArgumentException e )
+		{
+			return null;
+			// this catch will never happen as «new GregorianCalendar()» always
+			// produces a non-null instance of Calendar
+		}
 	}
 	
 	/**
@@ -148,7 +156,11 @@ public class FlightPlan
 					&& time.compareTo( corridor.getEndingHour() ) <= 0 ) { return corridor
 					.getCorridor(); }
 		}
+		
 		return null;
+		
+		// TODO
+		// throw new AirCorridorNotFoundException();
 	}
 	
 	/**

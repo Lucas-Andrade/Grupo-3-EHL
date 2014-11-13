@@ -3,6 +3,7 @@ package airtrafficcontrol.app.menuoptions;
 
 import java.util.Scanner;
 import airtrafficcontrol.app.AirTrafficControlAppToolbox;
+import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
 import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
 
@@ -18,9 +19,9 @@ import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
  * <p>
  * The purpose of this class is to perform the action of removing all the
  * passenger-flights that have zero passengers from the
- * {@link AirTrafficControlAppToolbox app}'s flight's internal database. For more
- * information, read the documentation of method {@link #executeToConsole()
- * executeToConsole}.
+ * {@link AirTrafficControlAppToolbox app}'s flight's internal database. For
+ * more information, read the documentation of method
+ * {@link #executeToConsole() executeToConsole}.
  * </p>
  * 
  * <p style="font-size:16">
@@ -48,7 +49,7 @@ public class RemoveEmptyAirshipsOption extends Option
 	private static RemoveEmptyAirshipsOption instance = new RemoveEmptyAirshipsOption();
 	
 	
-	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	// Mï¿½TODO CONSTRUTOR e Mï¿½TODO getInstance()
 	
 	
 	/**
@@ -81,7 +82,7 @@ public class RemoveEmptyAirshipsOption extends Option
 	
 	
 	
-	// ACÇÃO
+	// ACï¿½ï¿½O
 	
 	
 	
@@ -91,15 +92,15 @@ public class RemoveEmptyAirshipsOption extends Option
 	 * he really wants to remove the flights or if he wants to abort this
 	 * operation.
 	 * <p>
-	 * Uses the {@link airtrafficcontrol.app.AirTrafficControlAppToolbox#flightsDB FLIGHTSDB} of
-	 * {@code app} (the app's {@link ConsoleDataToolbox}
-	 * field).
+	 * Uses the
+	 * {@link airtrafficcontrol.app.AirTrafficControlAppToolbox#flightsDB
+	 * FLIGHTSDB} of {@code app} (the app's {@link ConsoleDataToolbox} field).
 	 * </p>
 	 * 
 	 * @param app
 	 *            The app's {@link ConsoleDataToolbox} field.
 	 */
-	public void executeToConsole( ConsoleDataToolbox app ) {
+	public void executeToConsole( AirTrafficControlAppForConsole app ) {
 		
 		System.out
 				.print( " Are you sure you want to remove\n all passenger-flights with zero passengers?" );
@@ -111,23 +112,26 @@ public class RemoveEmptyAirshipsOption extends Option
 		if( in.nextLine().equals( "YES" ) )
 			try
 			{
-				if( app.getFlightsDatabase() == null )
+				if( app.tools.flightsDB == null )
 					throw new DatabaseNotFoundException();
 				
-				app.getFlightsDatabase().removeAirplanesWithZeroPassengers();
+				int numFlightsRemoved = app.tools.flightsDB
+						.removeAirplanesWithZeroPassengers();
 				
-				System.out
-						.print( "DONE! Passenger-flights with zero passengers removed successfully!" );
+				System.out.print( new StringBuffer( "DONE!" )
+						.append( numFlightsRemoved )
+						.append( " passenger-flights with zero passengers" )
+						.append( "\n successfully removed!" )
+						.toString() );
 			}
 			catch( DatabaseNotFoundException e )
 			{
 				System.out.println( "DATABASE NOT FOUND!" );
 			}
 		else System.out.println( "ABORTED OPERATION!" );
+		in.close();
 		
 	}
-	
-	
 	
 	/**
 	 * Performs no action.

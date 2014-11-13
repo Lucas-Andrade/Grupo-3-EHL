@@ -28,7 +28,7 @@ public class DatabaseTest {
 	FlightPlan plan;
 	
 	@Before
-	public void constructAirplanesAndDatabase() throws InvalidArgumentException
+	public void constructAirplanesAndDatabase() throws InvalidArgumentException, InvalidFlightIDException
 	{
 		Calendar date1 = new GregorianCalendar();
 		Calendar date2 = new GregorianCalendar();
@@ -50,18 +50,23 @@ public class DatabaseTest {
 	}
 	
 	@Test
-	public void shouldAddTheNewAirplane() {
+	public void shouldAddTheNewAirplane() throws InvalidFlightIDException, InvalidArgumentException {
 		assertTrue(data.addAirplane(carg));
 	}
 	
 	@Test
-	public void shouldNotAddAnAirplaneWithARepeatedID()
+	public void shouldNotAddAnAirplaneWithARepeatedID() throws InvalidFlightIDException, InvalidArgumentException
 	{
 		assertFalse(data.addAirplane(airlWithSameID));
 	}
 	
 	@Test
-	public void shouldRemoveAnAirplane()
+	public void shouldNotThrowExceptionForUpdatingAnEmptyDatabase() {
+		new Database().setAllAirplanesToNotUpdated();
+	}
+	
+	@Test
+	public void shouldRemoveAnAirplane() throws InvalidFlightIDException
 	{
 		assertEquals(data.getDatabase().size(), 2);
 		assertTrue(data.removeAirplane("trp123"));
@@ -69,13 +74,13 @@ public class DatabaseTest {
 	}
 	
 	@Test
-	public void shouldNotRemoveAnAirplaneThatDoesNotExist()
+	public void shouldNotRemoveAnAirplaneThatDoesNotExist() throws InvalidFlightIDException
 	{
 		assertFalse(data.removeAirplane("asdfg"));
 	}
 	
 	@Test
-	public void shouldRemoveAnAirplane2()
+	public void shouldRemoveAnAirplane2() throws InvalidFlightIDException, InvalidArgumentException
 	{
 		assertEquals(data.getDatabase().size(), 2);
 		assertTrue(data.removeAirplane(transOutsideCorr));
@@ -83,13 +88,13 @@ public class DatabaseTest {
 	}
 	
 	@Test
-	public void shouldNotRemoveAnAirplaneThatDoesNotExist2()
+	public void shouldNotRemoveAnAirplaneThatDoesNotExist2() throws InvalidFlightIDException, InvalidArgumentException
 	{
 		assertFalse(data.removeAirplane(new Airliner("air", new GeographicalPosition(0,0,0), plan, 0)));
 	}
 	
 	@Test
-	public void shouldRemoveAirplanesWithZeroPassengers()
+	public void shouldRemoveAirplanesWithZeroPassengers() throws InvalidFlightIDException
 	{
 		assertEquals(data.getDatabase().size(), 2);
 		assertEquals(1, data.removeAirplanesWithZeroPassengers());
@@ -97,7 +102,7 @@ public class DatabaseTest {
 	}
 	
 	@Test
-	public void shouldRemoveTwoAirplanesWithZeroPassengers()
+	public void shouldRemoveTwoAirplanesWithZeroPassengers() throws InvalidArgumentException, InvalidFlightIDException
 	{
 		PrivateJet priv = new PrivateJet("priv123", new GeographicalPosition(0,0,100), plan, 0);
 		data.addAirplane(priv);
@@ -115,7 +120,6 @@ public class DatabaseTest {
 		assertEquals(null, data.getAirplane("asdf"));
 	}
 	
-
 	@Test 
 	public void shouldGetTheNumberOfAirshipsInTheDatabase()throws InvalidArgumentException, InvalidFlightIDException
 	{

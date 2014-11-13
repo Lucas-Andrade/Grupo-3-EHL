@@ -28,31 +28,63 @@ public abstract class Airship
 	private String flightID;
 	
 	/**
-	 * This airship's //TODO
+	 * This airship's last know geographical positions.
 	 */
 	private LinkedList< GeographicalPosition > lastKnownGeograficalPositions;
-	private FlightPlan flightPlan;
-	public int numberOfMinutesToTakeOff;
-	public int numberOfMinutesToLand;
-	public int numberOfMinutesToSwitchCorridor;
-	private boolean positionWasUpdated = false;
 	
 	/**
-	 * constructs an airplane with an ID, a certain number of passengers, its
-	 * take off coordinates and the flightPlan
+	 * The flight plan for this airship (take-off hour, air corridors and
+	 * landing hour).
+	 */
+	private FlightPlan flightPlan;
+	
+	/**
+	 * The number of minutes the airship has to take-off and reach the first air
+	 * corridor.
+	 */
+	public int numberOfMinutesToTakeOff;
+	
+	/**
+	 * The number of minutes the airship has to land so that when he abandons
+	 * the current established air corridor, this occurrence will not be reported
+	 * as an error.
+	 */
+	public int numberOfMinutesToLand;
+	
+	/**
+	 * The number of minutes the airship has to switch from an established
+	 * altitude corridor to next one established.
+	 */
+	public int numberOfMinutesToSwitchCorridor;
+	
+	/**
+	 * 
+	 */
+	private boolean positionWasUpdated = false;
+	
+	
+	
+	// CONSTRUCTOR
+	
+	/**
+	 * Constructs an airplane with the ID {@code flightID}, the take off
+	 * coordinates {@code statingPostition} and the flight plan
+	 * {@code flightPlan}. Also creates a structure to save the airship's last
+	 * known geographical positions.
 	 * 
 	 * @param flightID
-	 *            - the ID of the plane
-	 * @param currentPassengers
-	 *            - the number of passengers
+	 *            The flight's ID.
 	 * @param statingPosition
-	 *            - the coordinates where the airplane will take off
+	 *            The coordinates where the airship will take-off.
 	 * @param flightPlan
-	 *            - the plan of the flight
+	 *            The plan of the flight.
 	 * @throws InvalidArgumentException
+	 *             If {@code flightID}, {@code statingPosition} or
+	 *             {@code flightPlan} are null.
 	 */
 	public Airship( String flightID, GeographicalPosition statingPosition,
 			FlightPlan flightPlan ) throws InvalidArgumentException {
+		
 		if( flightID == null || statingPosition == null || flightPlan == null )
 			throw new InvalidArgumentException();
 		
@@ -61,6 +93,11 @@ public abstract class Airship
 		lastKnownGeograficalPositions.add( statingPosition );
 		this.flightPlan = flightPlan;
 	}
+	
+	
+	
+	// METODOS
+	
 	
 	/**
 	 * @return the ID of the plane
@@ -107,8 +144,7 @@ public abstract class Airship
 	 *         the method was called
 	 * @throws InvalidArgumentException
 	 */
-	public AltitudeCorridor getCurrentCorridor()
-			throws InvalidArgumentException {
+	public AltitudeCorridor getCurrentCorridor() {
 		return flightPlan.getCurrentCorridor();
 	}
 	
@@ -209,10 +245,11 @@ public abstract class Airship
 	 * @throws InvalidArgumentException
 	 */
 	private String verifyAltitude( AltitudeCorridor corridor ) {
-
+		
 		double altitude = getGeographicPosition().getAltitude();
 		
-		if( altitude > corridor.getUpperLimit() || altitude < corridor.getLowerLimit() )
+		if( altitude > corridor.getUpperLimit()
+				|| altitude < corridor.getLowerLimit() )
 			return "WARNING: The airplane is outside of the corridor.";
 		else return "";
 	}
@@ -318,29 +355,33 @@ public abstract class Airship
 	 * @throws InvalidArgumentException
 	 */
 	public String[] toStringArray() {
-
+		
 		GeographicalPosition pos = getGeographicPosition();
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd,hh:mm");
+		DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd,hh:mm" );
 		String[] details = new String[3];
-		details[0] = new StringBuilder("FlightID: ")
-				.append(flightID)
-				.append("\n\nTake-Off date: ")
-				.append(dateFormat.format(getPlan().getTakeOffDate().getTime()))
-				.append("\nLanding date: ")
-				.append(dateFormat.format(getPlan().getLandingDate().getTime()))
+		details[0] = new StringBuilder( "FlightID: " )
+				.append( flightID )
+				.append( "\n\nTake-Off date: " )
+				.append(
+						dateFormat
+								.format( getPlan().getTakeOffDate().getTime() ) )
+				.append( "\nLanding date: " )
+				.append(
+						dateFormat
+								.format( getPlan().getLandingDate().getTime() ) )
 				.toString();
-		details[1] = new StringBuilder("\n\nGeographic Position\nLatitude: ")
-				.append((new Double(pos.getLatitude())).toString())
-				.append("º\nLongitude: ")
-				.append((new Double(pos.getLongitude())).toString())
-				.append("º\nAltitude: ")
-				.append((new Double(pos.getAltitude())).toString())
-				.append("meters").toString();
+		details[1] = new StringBuilder( "\n\nGeographic Position\nLatitude: " )
+				.append( (new Double( pos.getLatitude() )).toString() )
+				.append( "º\nLongitude: " )
+				.append( (new Double( pos.getLongitude() )).toString() )
+				.append( "º\nAltitude: " )
+				.append( (new Double( pos.getAltitude() )).toString() )
+				.append( "meters" ).toString();
 		details[2] = "\n\nObservations: " + getObservations();
 		return details;
-
+		
 	}
-
+	
 	
 	// /**
 	// * adds an event in the middle of the flight

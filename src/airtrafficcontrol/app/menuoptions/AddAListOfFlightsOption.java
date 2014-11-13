@@ -4,6 +4,8 @@ package airtrafficcontrol.app.menuoptions;
 import java.io.IOException;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
 import airtrafficcontrol.app.utils.ReadListOfFlights;
 
 
@@ -48,7 +50,7 @@ public class AddAListOfFlightsOption extends Option
 	
 	
 	
-	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	// Mï¿½TODO CONSTRUTOR e Mï¿½TODO getInstance()
 	
 	
 	/**
@@ -58,7 +60,7 @@ public class AddAListOfFlightsOption extends Option
 	public AddAListOfFlightsOption() {
 		super(
 				"Add a list of flights from txt file.",
-				"Creates an internal database of flights for the app from the flights listed in the «src\\ListOfFlights.txt»" );
+				"Creates an internal database of flights for the app from the flights listed in the ï¿½src\\ListOfFlights.txtï¿½" );
 	};
 	
 	
@@ -82,13 +84,13 @@ public class AddAListOfFlightsOption extends Option
 	
 	
 	
-	// ACÇÃO
+	// EXECUCAO
 	
 	
 	
 	/**
 	 * Creates the internal database of flights of the app from the flights
-	 * listed in the "src\ListOfFlights.txt".
+	 * listed in the "src/airtrafficcontrol/filestoread/ListOfFlights.txt".
 	 * 
 	 * @param app
 	 *            The app's {@link ConsoleDataToolbox} field.
@@ -96,12 +98,20 @@ public class AddAListOfFlightsOption extends Option
 	public void executeToConsole( AirTrafficControlAppForConsole app ) {
 		try
 		{
-			app.tools.flightsDB.addDatabase( new ReadListOfFlights()
-					.readFlights( "ListOfFlights.txt" ) );
+			System.out.print(app.tools.flightsDB.addDatabase( new ReadListOfFlights()
+					.readFlights( "ListOfFlights.txt" ) ));
 		}
 		catch( IOException e )
 		{
-			System.out.println( "src/ListOfFlights.txt FILE NOT FOUND!" );
+			System.out.println( "ListOfFlights.txt FILE NOT FOUND!" );
+		}
+		catch( InvalidFlightIDException e )
+		{
+			System.out.println(e.getMessage());
+		}
+		catch( InvalidArgumentException e )
+		{
+			System.out.println(e.getMessage());
 		}
 		System.out
 				.println( "DONE! New internal database of flights \ncreated from ListOfFlights.txt" );

@@ -6,6 +6,8 @@ import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
 import airtrafficcontrol.app.OptionsMenu;
 import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
 import airtrafficcontrol.app.exceptions.FlightNotFoundInDatabaseException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
 
 
 /**
@@ -95,8 +97,11 @@ public abstract class Option
 	 * 
 	 * @param app
 	 *            The app whose input-output settings might be used.
+	 * @throws InvalidArgumentException
+	 *             If the {@code app} is {@code null}.
 	 */
-	public abstract void executeToConsole( AirTrafficControlAppForConsole app );
+	public abstract void executeToConsole( AirTrafficControlAppForConsole app )
+			throws InvalidArgumentException;
 	
 	
 	/**
@@ -106,9 +111,11 @@ public abstract class Option
 	 * @return A string with output from the action.
 	 * @throws FlightNotFoundInDatabaseException
 	 * @throws DatabaseNotFoundException
+	 * @throws InvalidFlightIDException
+	 * @throws InvalidArgumentException 
 	 */
 	public abstract String execute() throws FlightNotFoundInDatabaseException,
-			DatabaseNotFoundException; // throws
+			DatabaseNotFoundException, InvalidFlightIDException, InvalidArgumentException; // throws
 	
 	
 	

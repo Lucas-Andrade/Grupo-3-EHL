@@ -98,8 +98,9 @@ public class Database
 			}
 			else
 			{
-				toReturn += "FlightID " + id
-						+ " already exists in database. Airship NOT added.";
+				toReturn += "FlightID "
+						+ id
+						+ " already exists in database.\n  Airship NOT added.\n";
 			}
 		}
 		
@@ -159,6 +160,7 @@ public class Database
 		return database.containsKey( id );
 	}
 	
+	
 	/**
 	 * tries to get an airplane with the identification id
 	 * 
@@ -173,18 +175,21 @@ public class Database
 		else return null;
 	}
 	
+	
 	/**
-	 * Sets the property positionWasUpdated off all the airplanes in the
-	 * database to false
+	 * Sets the property positionWasUpdated of all the airplanes in the database
+	 * to false.
 	 */
-	protected void setAllAirplanesToNotUpdated() {
-		Set< String > idSet = database.keySet();
-		Iterator< String > iterator = idSet.iterator();
-		while( iterator.hasNext() )
+	public void setAllAirplanesToNotUpdated() {
+		
+		Set< Map.Entry< String, Airship >> entries = database.entrySet();
+		for( Map.Entry< String, Airship > entry : entries )
 		{
-			database.get( iterator.next() ).setToNotUpdated();
+			entry.getValue().setToNotUpdated();
 		}
+		
 	}
+	
 	
 	/**
 	 * Counts the number of airships in the database
@@ -197,14 +202,16 @@ public class Database
 	
 	
 	/**
-	 * removes the airplane with the specified ID from the database
+	 * Removes the airplane with the specified ID from this instance of
+	 * {@link Database}.
 	 * 
 	 * @param id
-	 *            - the flight ID of the plane to remove
-	 * @return true if the airplane was successfully removed
-	 * @return false if the specified ID was not found in the database
+	 *            The flightID of the plane we want to remove from this.
+	 * @return {@code true} if the airplane was successfully removed;
+	 *         {@code false} if the specified ID was not found in the database.
 	 */
 	public boolean removeAirplane( String id ) throws InvalidFlightIDException {
+		
 		if( id == null )
 			throw new InvalidFlightIDException();
 		
@@ -215,6 +222,7 @@ public class Database
 		}
 		else return false;
 	}
+	
 	
 	/**
 	 * removes the specified airplane from the database
@@ -227,48 +235,77 @@ public class Database
 	 */
 	public boolean removeAirplane( Airship airplane )
 			throws InvalidFlightIDException, InvalidArgumentException {
+		
 		if( airplane == null )
 			throw new InvalidArgumentException();
 		
-		String id = airplane.getFlightID();
-		if( id == null )
-			throw new InvalidFlightIDException();
-		
-		return removeAirplane( id );
+		return removeAirplane( airplane.getFlightID() );
 	}
 	
+	
 	/**
-	 * removes from the database the airplanes of the class airliner (or any of
-	 * its subclasses) that happens to have 0 passengers
+	 * Removes from this database the airplanes of the class airliner (or any of
+	 * its subclasses) that happen to have 0 passengers.
 	 * 
-	 * @return the number of airplanes that were removed from the database
+	 * @return The number of airplanes that were removed from the database.
 	 */
-	public int removeAirplanesWithZeroPassengers()
-			throws InvalidFlightIDException {
-		Set< String > idSet = database.keySet();
-		Iterator< String > iterator = idSet.iterator();
-		int count = 0;
+	public int removeAirplanesWithZeroPassengers() {
+		
+		int removedCount = 0;
 		ArrayList< String > toRemove = new ArrayList<>();
 		
-		while( iterator.hasNext() )
+		Set< Map.Entry< String, Airship >> entries = database.entrySet();
+		for( Map.Entry< String, Airship > entry : entries )
 		{
-			Airship airplane = database.get( iterator.next() );
+			Airship airplane = entry.getValue();
 			if( (airplane instanceof Airliner)
 					&& ((Airliner)airplane).getPassengersNumber() == 0 )
 			{
-				String id = airplane.getFlightID();
-				if( id == null )
-					throw new InvalidFlightIDException();
 				toRemove.add( airplane.getFlightID() );
-				count++ ;
-				
+				removedCount++ ;
 			}
 		}
 		
 		for( int i = 0; i < toRemove.size(); i++ )
-			removeAirplane( toRemove.get( i ) );
+			try
+			{
+				removeAirplane( toRemove.get( i ) );
+			}
+			catch( InvalidFlightIDException e )
+			{
+				e.printStackTrace();
+				// this catch block will never happen cause the id introduced in
+				// removeAirplane(id) is certainly valid as it came from an
+				// existing airship
+			}
 		
-		return count;
+		return removedCount;
+		
+		
+		// Set< String > idSet = database.keySet();
+		// Iterator< String > iterator = idSet.iterator();
+		// int count = 0;
+		// ArrayList< String > toRemove = new ArrayList<>();
+		//
+		// while( iterator.hasNext() )
+		// {
+		// Airship airplane = database.get( iterator.next() );
+		// if( (airplane instanceof Airliner)
+		// && ((Airliner)airplane).getPassengersNumber() == 0 )
+		// {
+		// String id = airplane.getFlightID();
+		// if( id == null )
+		// throw new InvalidFlightIDException();
+		// toRemove.add( airplane.getFlightID() );
+		// count++ ;
+		//
+		// }
+		// }
+		//
+		// for( int i = 0; i < toRemove.size(); i++ )
+		// removeAirplane( toRemove.get( i ) );
+		//
+		// return count;
 	}
 	
 }

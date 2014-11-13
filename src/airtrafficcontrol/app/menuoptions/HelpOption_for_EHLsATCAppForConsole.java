@@ -1,5 +1,6 @@
 package airtrafficcontrol.app.menuoptions;
 
+
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
 
@@ -76,7 +77,7 @@ public class HelpOption_for_EHLsATCAppForConsole extends Option
 	
 	
 	
-	// AC��O
+	// EXECUCAO
 	
 	
 	
@@ -100,7 +101,7 @@ public class HelpOption_for_EHLsATCAppForConsole extends Option
 	 * Produces a message with instructions to find the USER'S GUIDE txt file.
 	 */
 	public String execute() {
-		return new StringBuilder( "Open the AirTrafficControl directory." )
+		return new StringBuilder( "Open the airtrafficcontrol directory." )
 				.append( "\nThere you will find a txt file named" )
 				.append( "\n   USER'S GUIDE.txt" )
 				.append( "\nwhich provides a detailed description" )

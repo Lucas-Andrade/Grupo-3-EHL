@@ -1,15 +1,12 @@
 package airtrafficcontrol.app.menuoptions;
 
 
-import airtrafficcontrol.app.AirTrafficControlAppToolbox;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
-import airtrafficcontrol.app.appforconsole.ConsoleInputHandler;
 import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
 import airtrafficcontrol.app.exceptions.FlightNotFoundInDatabaseException;
 import airtrafficcontrol.app.utils.Airship;
 import airtrafficcontrol.app.utils.Database;
-import airtrafficcontrol.app.utils.ReportGenerator;
 
 
 /**
@@ -61,7 +58,8 @@ public class ConsultFlightDetailsOption extends Option
 	private Database flightsDB = null;
 	
 	
-	// M�TODO CONSTRUTOR e M�TODO getInstance()
+	
+	// METODO CONSTRUTOR e METODO getInstance()
 	
 	
 	/**

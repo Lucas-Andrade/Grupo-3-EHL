@@ -1,11 +1,13 @@
 package airtrafficcontrol.app.menuoptions;
 
 
-import airtrafficcontrol.app.AirTrafficControlAppToolbox;
+import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
 import airtrafficcontrol.app.appforconsole.ConsoleInputHandler;
 import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
 import airtrafficcontrol.app.exceptions.FlightNotFoundInDatabaseException;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
 import airtrafficcontrol.app.utils.Database;
 
 
@@ -57,7 +59,7 @@ public class RemoveAFlightOption extends Option
 	private Database flightsDB = null;
 	
 	
-	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	// Mï¿½TODO CONSTRUTOR e Mï¿½TODO getInstance()
 	
 	
 	/**
@@ -90,7 +92,7 @@ public class RemoveAFlightOption extends Option
 	
 	
 	
-	// ACÇÃO
+	// ACï¿½ï¿½O
 	
 	
 	
@@ -99,18 +101,28 @@ public class RemoveAFlightOption extends Option
 	 * Asks the user to choose the flight from the flights' database of this app
 	 * which he wants to remove from the database.
 	 * <p>
-	 * Uses the {@link airtrafficcontrol.app.AirTrafficControlAppToolbox#flightsDB FLIGHTSDB} of
-	 * {@code app}, the app's {@link ConsoleDataToolbox} field.
+	 * Uses the
+	 * {@link airtrafficcontrol.app.AirTrafficControlAppToolbox#flightsDB
+	 * FLIGHTSDB} of {@code app}, the app's {@link ConsoleDataToolbox} field.
 	 * </p>
 	 * 
 	 * @param app
 	 *            The app's {@link ConsoleDataToolbox} field.
+	 * @throws InvalidArgumentException
+	 *             If the {@code app} is {@code null}.
 	 */
-	public void executeToConsole( ConsoleDataToolbox app ) {
+	public void executeToConsole( AirTrafficControlAppForConsole app )
+			throws InvalidArgumentException {
 		
-		flightsDB = app.getFlightsDatabase();
+		if( app == null )
+			throw new InvalidArgumentException( "INVALID APP FOR CONSOLE!" );
 		
-		// asks the user for a flightID
+		// save app's database as a field so execute can access it
+		flightsDB = app.tools.flightsDB;
+		
+		
+		
+		// ask the user for a flightID
 		String instruction = new StringBuilder(
 				" Type the flightID of the flight you want" )
 				.append( "\n to remove and press Enter." )
@@ -118,12 +130,15 @@ public class RemoveAFlightOption extends Option
 		try
 		{
 			flightID = ConsoleInputHandler
-					.get_AFlightIDExistentInACertainDatabase_FromUser(flightsDB,
-							instruction );
+					.get_AFlightIDExistentInACertainDatabase_FromUser(
+							flightsDB, instruction );
 		}
 		catch( DatabaseNotFoundException e )
 		{
-			System.out.println( "DATABASE NOT FOUND!" );
+			flightsDB = null;
+			// this catch block will never run as, by ensuring app!=null, we
+			// assured flightsDB was assigned with a app's for console database
+			// which is always null by construction
 		}
 		
 		
@@ -139,19 +154,19 @@ public class RemoveAFlightOption extends Option
 			{
 				System.out.println( execute() );
 			}
-			catch( FlightNotFoundInDatabaseException e )
+			catch( FlightNotFoundInDatabaseException
+					| DatabaseNotFoundException | InvalidFlightIDException e )
 			{
-				System.out.print( "FLIGHT NOT FOUND!" );
-			}
-			catch( DatabaseNotFoundException e )
-			{
-				System.out.println( "DATABASE NOT FOUND!" );
+				System.out.print( e.getMessage() );
+				// this catch block will never happen as
+				// get_AFlightIDExistentInACertainDatabase_FromUser obtained a
+				// valid flightID that certainly is in flightsDB, which is also
+				// not null by the app's construction
 			}
 		}
 		
 		
 	}
-	
 	
 	/**
 	 * Removes a flight from a flights' database and returns a message on the
@@ -159,19 +174,31 @@ public class RemoveAFlightOption extends Option
 	 * 
 	 * @return A message on the operation being successfully concluded.
 	 * @throws DatabaseNotFoundException
+	 *             If {@link RemoveAFlightOption#flightsDB flightsDB} is
+	 *             {@code null}.
 	 * @throws FlightNotFoundInDatabaseException
+	 *             If {@link RemoveAFlightOption#flightID flightID} does not
+	 *             correspond to any flight stored in
+	 *             {@link RemoveAFlightOption#flightsDB flightsDB}.
+	 * @throws InvalidFlightIDException
+	 *             If {@link RemoveAFlightOption#flightID flightID} is
+	 *             {@code null}.
 	 */
 	public String execute() throws FlightNotFoundInDatabaseException,
-			DatabaseNotFoundException {
+			DatabaseNotFoundException, InvalidFlightIDException {
 		
 		if( flightsDB == null )
-			throw new DatabaseNotFoundException();
+			throw new DatabaseNotFoundException( "INVALID NULL DATABASE!" );
 		if( flightID == null )
-			throw new FlightNotFoundInDatabaseException();
+			throw new FlightNotFoundInDatabaseException(
+					"INVALID NULL FlightID!" );
 		
-		flightsDB.removeAirplane( flightID );
-		return "DONE! Flight with identifier " + flightID
-				+ " removed successfully!";
+		
+		if( flightsDB.removeAirplane( flightID ) )
+			return "DONE! Flight with identifier " + flightID
+					+ "\nremoved successfully!";
+		else throw new FlightNotFoundInDatabaseException(
+				"FLIGHT NOT FOUND IN DATABASE!" );
 	};
 	
 }

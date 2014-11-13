@@ -3,6 +3,7 @@ package airtrafficcontrol.app.menuoptions;
 
 import airtrafficcontrol.app.OptionsMenu;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 
 /**
@@ -57,7 +58,7 @@ public class ExitOption extends Option
 	private String appDeveloper = null;
 	
 	
-	// M�TODO CONSTRUTOR e M�TODO getInstance()
+	// METODO CONSTRUTOR e METODO getInstance()
 	
 	
 	/**
@@ -103,11 +104,28 @@ public class ExitOption extends Option
 	 * 
 	 * @param app
 	 *            An instance of {@link AirTrafficControlAppForConsole}.
+	 * @throws InvalidArgumentException
+	 *             If {@code app} is {@code null}.
 	 */
-	public void executeToConsole( AirTrafficControlAppForConsole app ) {
+	public void executeToConsole( AirTrafficControlAppForConsole app )
+			throws InvalidArgumentException {
+		
+		if( app == null )
+			throw new InvalidArgumentException( "INVALID NULL APP!" );
+		
+		
 		appTitle = app.appTitle;
 		appDeveloper = app.appDeveloper;
-		System.out.println( execute() );
+		try
+		{
+			System.out.println( execute() );
+		}
+		catch( InvalidArgumentException e )
+		{
+			e.printStackTrace();
+			// this will never happen as the execute() is working with the
+			// appTitle and appDeveloper of the (ensured to be non-null) app
+		}
 	};
 	
 	
@@ -116,8 +134,15 @@ public class ExitOption extends Option
 	 * Produces a goodbye message.
 	 * 
 	 * @return The goodbye message.
+	 * @throws InvalidArgumentException
+	 *             If the {@code appTitle} or {@code appDeveloper} are
+	 *             {@code null}.
 	 */
-	public String execute() {
+	public String execute() throws InvalidArgumentException {
+		
+		if( appTitle == null || appDeveloper == null )
+			throw new InvalidArgumentException( "INVALID APP DETAILS!" );
+		
 		return "Exiting the " + appTitle + "...\nThanks for using an "
 				+ appDeveloper + "'s app! Bye!";
 	}

@@ -1,17 +1,21 @@
 package airtrafficcontrol.app.appforconsole;
 
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
-import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
-import airtrafficcontrol.app.exceptions.InvalidOptionNumberException;
+import airtrafficcontrol.app.exceptions.*;
 import airtrafficcontrol.app.utils.Database;
 
 
 /**
  * The instances of this class treat data received from console.
  * 
+ * <p style="font-size:14">
+ * <b>Implementation notes</b>
+ * </p>
+ * <ul>
+ * <li>Methods are static so that one can use them without having to create an
+ * instance of type {@link ConsoleInputHandler}.</li>
+ * </ul>
  *
  * @author Eva Gomes
  * @author Hugo Leal
@@ -29,7 +33,7 @@ public class ConsoleInputHandler
 	
 	
 	
-	// MÉTODOS RELACIONADOS COM INPUT DE int'S
+	// METODOS RELACIONADOS COM INPUT DE int'S
 	
 	
 	
@@ -51,8 +55,16 @@ public class ConsoleInputHandler
 	 *            The instructions to be printed to console before the user
 	 *            chooses a number.
 	 * @return The number chosen by the user.
+	 * @throws InvalidArgumentException
+	 *             If {@code min>max}.
 	 */
-	public static int getAValidIntFromUser( int min, int max, String instruction ) {
+	public static int getAValidIntFromUser( int min, int max, String instruction )
+			throws InvalidArgumentException {
+		
+		if( instruction == null )
+			instruction = "";
+		if( min > max )
+			throw new InvalidArgumentException( "INVALID MIN, MAX VALUES!" );
 		
 		int inputNumber = max + 1;
 		while( inputNumber == max + 1 )
@@ -61,20 +73,18 @@ public class ConsoleInputHandler
 			{
 				inputNumber = askTheUserForAnInt( min, max, instruction );
 			}
-			catch( InputMismatchException e )
+			catch( NumberFormatException e )
 			{
 				System.out.println( "INVALID SYMBOL!\n" );
-				IN.nextLine(); // limpeza
 			}
-			catch( InvalidOptionNumberException e )
+			catch( InvalidArgumentException e )
 			{
-				System.out.println( "INVALID NUMBER!\n" );
-				IN.nextLine(); // limpeza
+				System.out.println( e.getMessage() );
 			}
 		return inputNumber;
 	}
 	
-	
+	// to be used by getAValidIntFromUser
 	/**
 	 * Asks the user a for a {@code int} between {@code min} and {@code max}.
 	 * 
@@ -82,36 +92,37 @@ public class ConsoleInputHandler
 	 *            The minimum value allowed.
 	 * @param max
 	 *            The maximum value allowed.
-	 * @param repetitionInstruction
+	 * @param instruction
 	 *            The instructions to be printed to console before the user
 	 *            chooses a number.
 	 * @return The number inserted by the user, if it is between {@code min} and
 	 *         {@code max}; or 0, if the user inserted an invalid value.
-	 * @throws InputMismatchException
+	 * @throws NumberFormatException
 	 *             If the user inserted something that is not a number in the
 	 *             console.
-	 * @throws InvalidOptionNumberException
+	 * @throws InvalidArgumentException
 	 *             If the user inserted an invalid number in the console.
 	 */
-	private static int askTheUserForAnInt( int min, int max, String instruction )
-			throws InputMismatchException, InvalidOptionNumberException {
+	public static int askTheUserForAnInt( int min, int max, String instruction )
+			throws NumberFormatException, InvalidArgumentException {
 		
 		System.out.print( instruction );
 		
-		int inputNumber = IN.nextInt(); // throws InputMismatchException if
-										// receives a non-number
+		int inputNumber = Integer.parseInt( IN.nextLine() );
+		// -throws NumberFormatException if receives a non-number
+		// -used nextLine to avoid rest of the line from pending
 		
 		if( inputNumber < min || inputNumber > max )
-			throw new InvalidOptionNumberException();
+			throw new InvalidArgumentException( "INVALID NUMBER, NOT BETWEEN "
+					+ min + " AND " + max + "!" );
 		
-		IN.nextLine(); // limpeza
 		return inputNumber;
 		
 	}
 	
 	
 	
-	// MÉTODOS RELACIONADOS COM INPUT DE String'S
+	// METODOS RELACIONADOS COM INPUT DE String'S
 	
 	
 	
@@ -144,6 +155,8 @@ public class ConsoleInputHandler
 		
 		if( flightsDB == null )
 			throw new DatabaseNotFoundException();
+		if( instruction == null )
+			instruction = "";
 		
 		String flightID = null;
 		while( flightID == null || !flightsDB.contains( flightID ) )
@@ -188,6 +201,9 @@ public class ConsoleInputHandler
 	 */
 	public static String getAValidFlightIDFromUser( String instruction ) {
 		
+		if( instruction == null )
+			instruction = "";
+		
 		String flightID = null;
 		while( flightID == null )
 			// the same as "while the selectedOption is invalid"
@@ -197,12 +213,13 @@ public class ConsoleInputHandler
 			}
 			catch( InvalidFlightIDException e )
 			{
-				System.out.println( "INVALID FlightID!\n" );
+				System.out.println( e.getMessage() );
 			}
 		return flightID;
 	}
 	
 	
+	// to be used by the getFlightIDs methods above
 	/**
 	 * Asks the user a for a {@code String} that is a {@link Airship#flightID
 	 * flightID} of a flight in {@code flightsDB}.
@@ -223,13 +240,15 @@ public class ConsoleInputHandler
 	 *             paragraph characters ("{@code \n}") or space characters(
 	 *             {@code " "}).
 	 */
-	private static String askTheUserForAFlightID( String instruction )
+	public static String askTheUserForAFlightID( String instruction )
 			throws InvalidFlightIDException {
+		
+		if( instruction == null )
+			instruction = "";
 		
 		System.out.print( instruction );
 		
-		String flightID = IN.nextLine(); // throws InputMismatchException if
-											// receives a non-number
+		String flightID = IN.nextLine();
 		
 		if( isNotAnAlphanumericString( flightID ) )
 			throw new InvalidFlightIDException( "INVALID FlightID!\n" );
@@ -239,6 +258,7 @@ public class ConsoleInputHandler
 	}
 	
 	
+	// to be used by the three methods above
 	/**
 	 * Checks whether a string is not null, nor empty, nor contains the
 	 * paragraph character ("{@code \n}") and is only constituted by
@@ -251,18 +271,22 @@ public class ConsoleInputHandler
 	 *         letter nor a number; {@code false} if {@code str} has only
 	 *         numbers and letters.
 	 */
-	private static boolean isNotAnAlphanumericString( String str ) {
+	public static boolean isNotAnAlphanumericString( String str ) {
 		
 		if( str == null || str.equals( "" ) || str.contains( "\n" ) )
 			return true;
 		
 		for( int index = 0; index < str.length(); ++index )
 		{
-			char c = str.charAt( index );
-			if( c < 48 || (c > 57 && c < 'A') || (c > 'Z' && c < 'a')
-					|| c > 'z' )
+			if( !Character
+					.isLetterOrDigit( new Character( str.charAt( index ) ) ) )
 				return true;
+			// if( c < '1' || ('9' < c < 'A') || 'Z' < c < 'a') || 'z' < c )
+			// then str is not alphanumeric
 		}
 		return false;
 	}
+
+	
+
 }

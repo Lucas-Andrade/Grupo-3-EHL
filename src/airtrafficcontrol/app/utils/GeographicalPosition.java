@@ -5,23 +5,40 @@ import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 
 /**
- * This class represents GeographicalPosition defined by Latitude, Longitude and
- * Altitude
+ * Class whose instances represent geographical positions defined by a value of latitude, a value of longitude and
+ * a value of altitude.
  * 
- *@author Eva Gomes
- *@author Hugo Leal
- *@author Lucas Andrade
- *
+ * @author Eva Gomes
+ * @author Hugo Leal
+ * @author Lucas Andrade
  */
 public class GeographicalPosition
 {
 	
-	private Latitude latitude;
-	private Longitude longitude;
-	private Altitude altitude;
+	//CAMPOS 
 	
 	/**
-	 * Constructs a GeographicalPosition with latitude, longitude and altitude
+	 * This geographical position's latitude.
+	 */
+	private Latitude latitude;
+	
+	/**
+	 * This geographical position's longitude.
+	 */
+	private Longitude longitude;
+	
+	/**
+	 * This geographical position's altitude.
+	 */
+	private Altitude altitude;
+	
+	
+	
+	//CONSTRUTOR
+	
+	
+	/**
+	 * Constructs an instance of {@link GeographicalPosition} with latitude {@code lat}, longitude {@code lon} and altitude {@code alt}.
 	 * 
 	 * @param lat
 	 *            latitude
@@ -35,6 +52,8 @@ public class GeographicalPosition
 		longitude = lon;
 		altitude = alt;
 	}
+	
+	
 	
 	/**
 	 * Constructs a GeographicalPosition with latitude, longitude and altitude
@@ -53,6 +72,8 @@ public class GeographicalPosition
 		longitude = new Longitude( lon );
 		altitude = new Altitude( alt );
 	}
+	
+	
 	
 	/**
 	 * Gets the longitude value
@@ -82,34 +103,48 @@ public class GeographicalPosition
 	}
 	
 	/**
-	 * Increments the value of the current GeographicalPosition with lat, lon
-	 * and alt
+	 * Increments the value of the current {@link GeographicalPosition} with
+	 * {@code lat}, {@code lon} and {@code alt}.
 	 * 
 	 * @param lat
-	 *            latitude incrementation value
+	 *            The value to increment to the current latitude.
 	 * @param lon
-	 *            longitude incrementation value
+	 *            The value to increment to the current longitude.
 	 * @param alt
-	 *            altitude incrementation value
+	 *            The value to increment to the current altitude.
+	 * @throws InvalidArgumentException
+	 *             If the values with which to increment the current ones cause
+	 *             the sum to exceed the maximum values of latitude and
+	 *             longitude or to go below the minimum values possible for
+	 *             latitude, longitude and altitude.
 	 */
-	public void incrementPosition( double lat, double lon, double alt ) {
+	public void incrementPosition( double lat, double lon, double alt )
+			throws InvalidArgumentException {
+		
 		latitude.incrementLatitude( lat );
 		longitude.incrementLongitude( lon );
 		altitude.incrementAltitude( alt );
 	}
 	
 	/**
-	 * Increments the value of the current GeographicalPosition with lat, lon
-	 * and alt
+	 * Increments the value of the current {@link GeographicalPosition} with the
+	 * values represented by the instances {@code lat}, {@code lon} and
+	 * {@code alt}.
 	 * 
 	 * @param lat
-	 *            object that increments latitude value
+	 *            The {@link Latitude} to increment to the current latitude.
 	 * @param lon
-	 *            object that increments longitude value
+	 *            The {@link Longitude} to increment to the current longitude.
 	 * @param alt
-	 *            object that increments altitude value
+	 *            The {@link Altitude} to increment to the current altitude.
+	 * @throws InvalidArgumentException
+	 *             If the values with which to increment the current ones cause
+	 *             the sum to exceed the maximum values of latitude and
+	 *             longitude or to go below the minimum values possible for
+	 *             latitude, longitude and altitude.
 	 */
-	public void incrementPosition( Latitude lat, Longitude lon, Altitude alt ) {
+	public void incrementPosition( Latitude lat, Longitude lon, Altitude alt )
+			throws InvalidArgumentException {
 		latitude.incrementLatitude( lat );
 		longitude.incrementLongitude( lon );
 		altitude.incrementAltitude( alt );
@@ -190,30 +225,47 @@ public class GeographicalPosition
 	}
 	
 	/**
-	 * Increments the value of the current latitude
+	 * Increments the value of the latitude of the current
+	 * {@link GeographicalPosition} by {@code lat}.
 	 * 
 	 * @param lat
-	 *            value of altitude incrementation
+	 *            The value to increment to the current latitude.
+	 * @throws InvalidArgumentException
+	 *             If the value with which to increment the current ones cause
+	 *             the sum to exceed the {@link Latitude#MAX_LATITUDE maximum
+	 *             latitude} possible or to go below the
+	 *             {@link Latitude#MIN_LATITUDE minimum latitude} possible.
 	 */
-	public void incrementLatitude( double lat ) {
+	public void incrementLatitude( double lat ) throws InvalidArgumentException {
 		latitude.incrementLatitude( lat );
 	}
 	
 	/**
-	 * Increments the value of the current latitude
+	 * Increments the value of the latitude of the current
+	 * {@link GeographicalPosition} with the value represented by {@code lat}.
 	 * 
 	 * @param lat
-	 *            object that increments the value of latitude
+	 *            The {@link Latitude} to increment to the current latitude.
+	 * @throws InvalidArgumentException
+	 *             If the value with which to increment the current ones cause
+	 *             the sum to exceed the {@link Latitude#MAX_LATITUDE maximum
+	 *             latitude} possible or to go below the
+	 *             {@link Latitude#MIN_LATITUDE minimum latitude} possible.
 	 */
-	public void incrementLatitude( Latitude lat ) {
+	public void incrementLatitude( Latitude lat )
+			throws InvalidArgumentException {
 		latitude.incrementLatitude( lat );
 	}
 	
 	/**
-	 * Sets a new value for latitude
+	 * Sets a new value for the latitude of this {@link GeographicalPosition}.
 	 * 
 	 * @param lat
-	 *            new value of latitude
+	 *            The new value of latitude.
+	 * @throws InvalidArgumentException
+	 *             If {@code lat<}{@link {@link Latitude#MIN_LATITUDE
+	 *             MIN_LATITUDE} or if {@code lat>}{@link
+	 *             {@link Latitude#MAX_LATITUDE MAX_LATITUDE}.
 	 */
 	public void setLatitude( double lat ) throws InvalidArgumentException {
 		latitude.setLatitude( lat );
@@ -224,8 +276,9 @@ public class GeographicalPosition
 	 * 
 	 * @param lat
 	 *            object that contains the new latitude value
+	 * @throws InvalidArgumentException
 	 */
-	public void setLatitude( Latitude lat ) {
+	public void setLatitude( Latitude lat ) throws InvalidArgumentException {
 		latitude.setLatitude( lat );
 	}
 	

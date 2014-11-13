@@ -19,10 +19,12 @@ import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
  * <p>
  * <ul>
  * <li>
- * We privileged the action of accessing an airship, using its flightID, from
- * the database, and the feature of not allowing storage of airships with the
- * same flightID; as so, the data structure used is the HashMap. When needed, an
- * iterator is created to iterate over the airplanes stored.</li>
+ * We privileged the action of accessing an airship from the database, using its
+ * flightID, and the feature of not allowing storage of airships with the same
+ * flightID; as so, the data structure used is a Map.</li>
+ * <li>As no order between the planes is privileged, its used a HashMap to 
+ * <li>When needed, an iterator is created to iterate over the HashMap's entries.
+ * </li>
  * </ul>
  * </p>
  *

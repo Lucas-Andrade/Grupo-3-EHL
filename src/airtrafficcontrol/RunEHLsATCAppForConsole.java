@@ -127,7 +127,7 @@ public class RunEHLsATCAppForConsole
 	 * <li>a {@link airtrafficcontrol.app.utils.ReportGenerator reports
 	 * generator};</li>
 	 * <li>a {@link ConsoleOutputFormatter console output formatter} that draws
-	 * a line filled with a sequence of {@code 45} repetitions of the symbol '
+	 * a line filled with a sequence of {@code 50} repetitions of the symbol '
 	 * {@code -}' as a {@link ConsoleOutputFormatter#sectionDelimiter section
 	 * delimiter} and prints {@code 3} blank lines of
 	 * {@link ConsoleOutputFormatter#spaceBetweenSections space between
@@ -140,7 +140,7 @@ public class RunEHLsATCAppForConsole
 		
 		new AirTrafficControlAppForConsole(
 				"AIR TRAFFIC CONTROL app for console", "EHL", "Options Menu",
-				'-', 45, 3, AddAListOfFlightsOption.getInstance(),
+				'-', 50, 3, AddAListOfFlightsOption.getInstance(),
 				UpdateDatabaseOption.getInstance(),
 				MonitorAirTrafficOption.getInstance(),
 				ReportTransgressionsOption.getInstance(),
@@ -149,7 +149,7 @@ public class RunEHLsATCAppForConsole
 				RemoveAFlightOption.getInstance(),
 				ConfigurationsOption.getInstance(),
 				HelpOption_for_EHLsATCAppForConsole.getInstance(),
-				ExitOption_for_EHLsATCAppForConsole.getInstance() ).run();
+				ExitOption.getInstance() ).run();
 	}
 	
 }

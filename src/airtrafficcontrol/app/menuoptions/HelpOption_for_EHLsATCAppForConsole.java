@@ -44,7 +44,7 @@ public class HelpOption_for_EHLsATCAppForConsole extends Option
 	
 	
 	
-	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	// Mï¿½TODO CONSTRUTOR e Mï¿½TODO getInstance()
 	
 	
 	
@@ -76,7 +76,7 @@ public class HelpOption_for_EHLsATCAppForConsole extends Option
 	
 	
 	
-	// ACÇÃO
+	// ACï¿½ï¿½O
 	
 	
 	
@@ -90,7 +90,7 @@ public class HelpOption_for_EHLsATCAppForConsole extends Option
 	 * @param app
 	 *            An {@link ConsoleDataToolbox} instance.
 	 */
-	public void executeToConsole( ConsoleDataToolbox app ) {
+	public void executeToConsole( AirTrafficControlAppForConsole app ) {
 		System.out.print( execute() );
 	}
 	

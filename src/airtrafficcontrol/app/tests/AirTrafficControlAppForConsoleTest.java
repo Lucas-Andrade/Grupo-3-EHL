@@ -1,11 +1,19 @@
-package airtrafficcontrol.app.appforconsole;
+package airtrafficcontrol.app.tests;
 
 
 import org.junit.Test;
+import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.exceptions.*;
 import airtrafficcontrol.app.menuoptions.HelpOption_for_EHLsATCAppForConsole;
 
 
+/**
+ * Test class that targets the class {@link AirTrafficControlAppForConsole}.
+ *
+ * @author Eva Gomes
+ * @author Hugo Leal
+ * @author Lucas Andrade
+ */
 public class AirTrafficControlAppForConsoleTest
 {
 	

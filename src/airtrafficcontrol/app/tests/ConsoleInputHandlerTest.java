@@ -1,9 +1,10 @@
-package airtrafficcontrol.app.appforconsole;
+package airtrafficcontrol.app.tests;
 
 
 import static org.junit.Assert.*;
 import java.util.GregorianCalendar;
 import org.junit.Test;
+import airtrafficcontrol.app.appforconsole.ConsoleInputHandler;
 import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
@@ -52,9 +53,9 @@ public class ConsoleInputHandlerTest
 	}
 	
 	@Test( expected = InvalidArgumentException.class )
-	public void shouldThrowExceptionIfNotBetweenMinAndMax_askUser()
+	public void shouldThrowExceptionIfNotBetweenMinAndMax_getValid()
 			throws InvalidArgumentException {
-		in.askTheUserForAnInt( 1, 2, "insert 3 in console: " );
+		in.getAValidIntFromUser( 1, 2, "insert 3 in console: " );
 	}
 	
 	@Test
@@ -152,7 +153,7 @@ public class ConsoleInputHandlerTest
 				in.getAValidFlightIDFromUser( "insert «goodID1234»: " ) );
 	}
 	
-	@Test( expected = InvalidArgumentException.class )
+	@Test( expected = DatabaseNotFoundException.class )
 	public void shouldThrowExceptionIfInsertedNullDatabase()
 			throws InvalidArgumentException, DatabaseNotFoundException,
 			InvalidFlightIDException {
@@ -164,7 +165,7 @@ public class ConsoleInputHandlerTest
 			throws InvalidArgumentException, DatabaseNotFoundException,
 			InvalidFlightIDException {
 		
-		//assert
+		// assert
 		Airship airplane1 = new Airliner( "xpto01", new GeographicalPosition(
 				20, 130, 0 ), new FlightPlan( new GregorianCalendar( 2014, 11,
 				10, 00, 15 ), new GregorianCalendar( 2014, 11, 10, 04, 15 ) ),
@@ -172,8 +173,8 @@ public class ConsoleInputHandlerTest
 		Database db = new Database();
 		db.addAirplane( airplane1 );
 		
-		//act & assert
-		assertEquals( "xpto1",
+		// act & assert
+		assertEquals( "xpto01",
 				in.get_AFlightIDExistentInACertainDatabase_FromUser( db,
 						"write «xpto01»: " ) );
 	}
@@ -188,10 +189,26 @@ public class ConsoleInputHandlerTest
 				50 );
 		Database db = new Database();
 		db.addAirplane( airplane1 );
+		
 		assertEquals(
-				"xpto1",
+				"xpto01",
 				in.get_AFlightIDExistentInACertainDatabase_FromUser( db,
 						"write something (to see if he keeps \n asking until you put «xpto01»): " ) );
+	}
+	
+	@Test
+	public void shouldReturnABORT() throws InvalidArgumentException,
+			DatabaseNotFoundException, InvalidFlightIDException {
+		Airship airplane1 = new Airliner( "xpto01", new GeographicalPosition(
+				20, 130, 0 ), new FlightPlan( new GregorianCalendar( 2014, 11,
+				10, 00, 15 ), new GregorianCalendar( 2014, 11, 10, 04, 15 ) ),
+				50 );
+		Database db = new Database();
+		db.addAirplane( airplane1 );
+		
+		assertEquals( "ABORT",
+				in.get_AFlightIDExistentInACertainDatabase_FromUser( db,
+						"type «ABORT» and press enter: " ) );
 	}
 	
 }

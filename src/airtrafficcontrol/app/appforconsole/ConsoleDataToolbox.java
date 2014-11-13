@@ -1,6 +1,9 @@
 package airtrafficcontrol.app.appforconsole;
 
 
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+
+
 
 /**
  * Class whose instances agregate tools for apps of air traffic control with
@@ -61,15 +64,22 @@ public class ConsoleDataToolbox
 	 *            The length of the sections' delimiters.
 	 * @param numberOfBlankLinesBetweenSections
 	 *            The number of blank lines that must appear between sections.
+	 * @throws InvalidArgumentException
+	 *             If {@code lengthOfSectionDelimiter} or
+	 *             {@code numberOfBlankLinesBetweenSections} are {@code <1}.
 	 */
 	public ConsoleDataToolbox( char symbolOfSectionDelimiter,
-			int lengthOfSectionDelimiter, int numberOfBlankLinesBetweenSections ) {
+			int lengthOfSectionDelimiter, int numberOfBlankLinesBetweenSections )
+			throws InvalidArgumentException {
+		
+		if( lengthOfSectionDelimiter < 1
+				|| numberOfBlankLinesBetweenSections < 1 )
+			throw new InvalidArgumentException( "INVALID TOOLBOX ARGUMENTS!" );
 		
 		outputStylizer = new ConsoleOutputFormatter( symbolOfSectionDelimiter,
 				lengthOfSectionDelimiter, numberOfBlankLinesBetweenSections );
 		inputHandler = new ConsoleInputHandler();
 	}
-	
 	
 	
 }

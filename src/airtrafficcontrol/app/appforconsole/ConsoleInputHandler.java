@@ -137,6 +137,9 @@ public class ConsoleInputHandler
 	 * flightID} of a flight existent in the {@code flightsDB}) and returns the
 	 * valid {@link Airship#flightID flightID} chosen.
 	 * </p>
+	 * <p>
+	 * If the user writes "ABORT" in the console, the message will be returned.
+	 * </p>
 	 * 
 	 * @param flightsDB
 	 *            The {@link Database database} in which the flight with the
@@ -144,7 +147,9 @@ public class ConsoleInputHandler
 	 * @param instruction
 	 *            The instructions to be printed to console before the user
 	 *            chooses a {@link Airship#flightID flightID}.
-	 * @return The flightID chosen by the user.
+	 * @return The valid flightID of an airship stored in {@code flightsDB}
+	 *         chosen by the user; or "ABORT" if the user writes so in the
+	 *         console.
 	 * @throws DatabaseNotFoundException
 	 *             When this method tries to reach a null or inexistent flights'
 	 *             database.
@@ -161,20 +166,13 @@ public class ConsoleInputHandler
 		String flightID = null;
 		while( flightID == null || !flightsDB.contains( flightID ) )
 		{
-			try
-			{
-				flightID = askTheUserForAFlightID( instruction );
-				
-				if( flightID.equals( "ABORT" ) )
-					break;
-				
-				if( !flightsDB.contains( flightID ) )
-					System.out.println( "FLIGHT NOT FOUND!\n" );
-			}
-			catch( InvalidFlightIDException e )
-			{
-				System.out.println( "INVALID FlightID!\n" );
-			}
+			flightID = getAValidFlightIDFromUser( instruction );
+			
+			if( flightID.equals( "ABORT" ) )
+				break;
+			
+			if( !flightsDB.contains( flightID ) )
+				System.out.println( "FLIGHT NOT FOUND IN DATABASE!\n" );
 		}
 		
 		return flightID;
@@ -286,7 +284,7 @@ public class ConsoleInputHandler
 		}
 		return false;
 	}
-
 	
-
+	
+	
 }

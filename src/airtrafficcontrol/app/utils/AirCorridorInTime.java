@@ -1,35 +1,69 @@
 package airtrafficcontrol.app.utils;
-import java.util.Calendar;
 
+
+import java.util.Calendar;
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
+
 /**
- * allows to create objects that have a property AltitudeCorridor, where the airplane is supposed to be 
- * in the time interval defined by the starting and ending hours.
- *@author Eva Gomes
- *@author Hugo Leal
- *@author Lucas Andrade
+ * Class whose instances represent an air corridor where it is expected that a
+ * certain airship flies during a certain period of time. These class's
+ * instances are supposed to always be properties of instances of
+ * {@link Airship}'s subclasses.
+ * 
+ * @author Eva Gomes
+ * @author Hugo Leal
+ * @author Lucas Andrade
  *
  */
-public class AirCorridorInTime {
+public class AirCorridorInTime
+{
 	
-	private Calendar startingHour;
-	private Calendar endingHour;
-	private AltitudeCorridor corridor;
+	// CAMPOS
 	
 	/**
-	 * constructs a new AirCorridorInTime by setting up all its properties
-	 * @param start - the hour the airplane is supposed to go to the corridor
-	 * @param end - the hour the airplane is supposed to leave the corridor
-	 * @param cor - the corridor
+	 * The hour from which the airship should be in this altitude corridor.
 	 */
-	public AirCorridorInTime(Calendar start, Calendar end, AltitudeCorridor cor) throws InvalidArgumentException
-	{
-		if(start==null || end==null) throw new InvalidArgumentException();
+	private Calendar startingHour;
+	
+	/**
+	 * The hour until which the airship should be in this altitude corridor.
+	 */
+	private Calendar endingHour;
+	
+	/**
+	 * The altitude corridor in question.
+	 */
+	private AltitudeCorridor corridor;
+	
+	
+	
+	// CONSTRUCTOR
+	
+	/**
+	 * Constructs a new instance of {@link AirCorridorInTime} by setting up all
+	 * its properties. If {@code start} is a date before {@code end}, the dates
+	 * are automatically swapped.
+	 * 
+	 * @param start
+	 *            The approximate hour the airplane is supposed to enter the
+	 *            corridor.
+	 * @param end
+	 *            The approximate hour the airplane is supposed to leave the
+	 *            corridor.
+	 * @param altCorridor
+	 *            The altitude corridor.
+	 */
+	public AirCorridorInTime( Calendar start, Calendar end,
+			AltitudeCorridor altCorridor ) throws InvalidArgumentException {
 		
-		corridor = cor; 
+		if( start == null || end == null )
+			throw new InvalidArgumentException(
+					"INVALID NULL DATES FOR CORRIDOR!" );
 		
-		if (start.compareTo(end) > 0)
+		corridor = altCorridor;
+		
+		if( start.compareTo( end ) > 0 )
 		{
 			endingHour = start;
 			startingHour = end;
@@ -41,32 +75,92 @@ public class AirCorridorInTime {
 		}
 	}
 	
+	
+	
+	// GETTER's
+	
+	
 	/**
-	 * @return the hour the airplane is supposed to go to the corridor
+	 * Returns the approximate hour the airplane is supposed to enter the
+	 * corridor.
+	 * 
+	 * @return The approximate hour the airplane is supposed to enter the
+	 *         corridor.
 	 */
-	public Calendar getStartingHour()
-	{
+	public Calendar getStartingHour() {
 		return startingHour;
 	}
 	
+	
 	/**
-	 * @return the hour the airplane is supposed to leave the corridor
+	 * Returns the approximate hour the airplane is supposed to leave the
+	 * corridor.
+	 * 
+	 * @return The approximate hour the airplane is supposed to leave the
+	 *         corridor.
 	 */
-	public Calendar getEndingHour()
-	{
+	public Calendar getEndingHour() {
 		return endingHour;
 	}
 	
+	
 	/**
-	 * sets a new starting hour
-	 * @param newHour - the hour the airplane is supposed to go to the corridor
+	 * Returns the altitude air corridor where the airship is supposed to be.
+	 * 
+	 * @return The altitude air corridor where the airship is supposed to be.
 	 */
-	public boolean setStartingHour(Calendar newHour)throws InvalidArgumentException
-	{
-		if(newHour==null)
+	public AltitudeCorridor getCorridor() {
+		return corridor;
+	}
+	
+	
+	
+	// SETTER's
+	
+	
+	/**
+	 * Sets the approximate hours the airplane is supposed to enter and to leave
+	 * the altitude corridor.
+	 * 
+	 * @param newStartingHour
+	 *            The approximate hour the airplane is supposed to enter the
+	 *            corridor.
+	 * @param newEndingHour
+	 *            The approximate hour the airplane is supposed to leave the
+	 *            corridor.
+	 */
+	public boolean setHours( Calendar newStartingHour, Calendar newEndingHour )
+			throws InvalidArgumentException {
+		
+		if( newStartingHour == null || newEndingHour == null )
+			throw new InvalidArgumentException(
+					"INVALID NULL DATES FOR CORRIDOR!" );
+		
+		if( newEndingHour.compareTo( newStartingHour ) < 0 )
+			return false;
+		else
+		{
+			startingHour = newStartingHour;
+			endingHour = newEndingHour;
+			return true;
+		}
+		
+		
+	}
+	
+	/**
+	 * Sets an approximate hour the airplane is supposed to enter the corridor.
+	 * 
+	 * @param newHour
+	 *            The approximate hour the airplane is supposed to enter the
+	 *            corridor.
+	 */
+	public boolean setStartingHour( Calendar newHour )
+			throws InvalidArgumentException {
+		if( newHour == null )
 			throw new InvalidArgumentException();
 		
-		if(endingHour.compareTo(newHour) < 0)
+		if( endingHour.compareTo( newHour ) < 0 )
 			return false;
 		else
 		{
@@ -79,28 +173,22 @@ public class AirCorridorInTime {
 	
 	/**
 	 * sets a new ending hour
-	 * @param newHour - the hour the airplane is supposed to leave the corridor
+	 * 
+	 * @param newHour
+	 *            - the hour the airplane is supposed to leave the corridor
 	 */
-	public boolean setEndingHour(Calendar newHour)throws InvalidArgumentException
-	{
-		if(newHour==null)
+	public boolean setEndingHour( Calendar newHour )
+			throws InvalidArgumentException {
+		if( newHour == null )
 			throw new InvalidArgumentException();
 		
-		if(startingHour.compareTo(newHour) > 0)
+		if( startingHour.compareTo( newHour ) > 0 )
 			return false;
 		else
 		{
 			endingHour = newHour;
 			return true;
 		}
-	}
-	
-	/**
-	 * @return the corridor where the airplane is supposed to be
-	 */
-	public AltitudeCorridor getCorridor()
-	{
-		return corridor;
 	}
 	
 }

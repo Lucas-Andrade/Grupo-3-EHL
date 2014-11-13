@@ -35,7 +35,7 @@ import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
  * @author Hugo Leal
  * @author Lucas Andrade
  */
-public class ExitOption_for_EHLsATCAppForConsole extends Option
+public class ExitOption extends Option
 {
 	
 	
@@ -44,18 +44,27 @@ public class ExitOption_for_EHLsATCAppForConsole extends Option
 	/**
 	 * An instance of type ExitOption.
 	 */
-	private static ExitOption_for_EHLsATCAppForConsole instance = new ExitOption_for_EHLsATCAppForConsole();
+	private static ExitOption instance = new ExitOption();
+	
+	/**
+	 * The title of the app being exited.
+	 */
+	private String appTitle = null;
+	
+	/**
+	 * The developer of the app being exited.
+	 */
+	private String appDeveloper = null;
 	
 	
-	
-	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	// Mï¿½TODO CONSTRUTOR e Mï¿½TODO getInstance()
 	
 	
 	/**
 	 * Creates a new instance of type ExitOption and sets up the final values of
 	 * the fields {@code title} and {@code description}.
 	 */
-	public ExitOption_for_EHLsATCAppForConsole() {
+	public ExitOption() {
 		super( "Exit app.", "Produces a goodbye message and exits the app." );
 	};
 	
@@ -72,13 +81,13 @@ public class ExitOption_for_EHLsATCAppForConsole extends Option
 	 * 
 	 * @return A instance of type ExitOption.
 	 */
-	public static ExitOption_for_EHLsATCAppForConsole getInstance() {
+	public static ExitOption getInstance() {
 		return instance;
 	}
 	
 	
 	
-	// ACÇÃO
+	// EXECUCAO
 	
 	
 	
@@ -96,6 +105,8 @@ public class ExitOption_for_EHLsATCAppForConsole extends Option
 	 *            An instance of {@link AirTrafficControlAppForConsole}.
 	 */
 	public void executeToConsole( AirTrafficControlAppForConsole app ) {
+		appTitle = app.appTitle;
+		appDeveloper = app.appDeveloper;
 		System.out.println( execute() );
 	};
 	
@@ -107,8 +118,8 @@ public class ExitOption_for_EHLsATCAppForConsole extends Option
 	 * @return The goodbye message.
 	 */
 	public String execute() {
-		return "Exiting the Air Traffic Control app..."
-				+ "\nThanks for using an EHL app! Bye!";
+		return "Exiting the " + appTitle + "...\nThanks for using an "
+				+ appDeveloper + "'s app! Bye!";
 	}
 	
 	

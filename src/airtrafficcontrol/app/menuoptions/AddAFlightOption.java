@@ -2,8 +2,11 @@ package airtrafficcontrol.app.menuoptions;
 
 
 import java.util.Scanner;
-import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
-import airtrafficcontrol.app.utils.*;
+import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
+import airtrafficcontrol.app.utils.Airliner;
+import airtrafficcontrol.app.utils.Airship;
+import airtrafficcontrol.app.utils.Database;
+import airtrafficcontrol.app.utils.GeographicalPosition;
 
 
 /**
@@ -43,9 +46,18 @@ public class AddAFlightOption extends Option
 	 */
 	private static AddAFlightOption instance = new AddAFlightOption();
 	
+	/**
+	 * The airship to be added to the {@code flightsDB}.
+	 */
+	private Airship airshipToBeAdded = null;
+	
+	/**
+	 * The database where to add the airship.
+	 */
+	private Database flightsDB = null;
 	
 	
-	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	// METODO CONSTRUTOR e METODO getInstance()
 	
 	
 	/**
@@ -75,22 +87,32 @@ public class AddAFlightOption extends Option
 	
 	
 	
-	// ACÇÃO
+	// EXECUCAO
 	
 	
 	/**
-	 * Adds a plane manually to an already existent list of scheduled flights.
+	 * Adds an airship with the details given by the user to the {@code app}'s
+	 * internal database.
 	 * 
-	 * <p>
-	 * DESCRIPTION TODO
-	 * </p>
+	 * @param app
+	 *            The app whose database is to receive the new airship.
 	 */
-	public void executeToConsole( ConsoleDataToolbox app ) {
+	public void executeToConsole( AirTrafficControlAppForConsole app ) {
+		
+		
+		
 		Scanner in = new Scanner( System.in );
 		System.out.println( "Insert the flight's details:" );
 		
-		System.out.print( "\nFlightID: " );
-		String flightID = in.nextLine();
+		String flightID = app.dataTools.inputHandler
+				.getAValidFlightIDFromUser( "\n\nFlightID: " );
+		
+		GeographicalPosition takeOff =
+		String 
+		
+		
+		airshipToBeAdded = new Airliner(flightID,);
+		flightsDB = app.tools.flightsDB;
 		
 	}
 	

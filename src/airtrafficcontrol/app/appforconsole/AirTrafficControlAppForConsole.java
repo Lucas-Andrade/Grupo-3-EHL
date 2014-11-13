@@ -64,6 +64,11 @@ public class AirTrafficControlAppForConsole extends AirTrafficControlApp
 	 *            sections.
 	 * @param options
 	 *            This app's menu's options.
+	 * @throws InvalidArgumentException
+	 *             If {@code null} arguments are inserted; or if appTitle,
+	 *             appDeveloper or menuTitle are given the empty string; or if
+	 *             {@code lengthOfSectionDelimiter} or
+	 *             {@code numberOfBlankLinesBetweenSections} are {@code <1}.
 	 */
 	public AirTrafficControlAppForConsole( String appTitle,
 			String appDeveloper, String menuTitle,
@@ -73,9 +78,6 @@ public class AirTrafficControlAppForConsole extends AirTrafficControlApp
 		
 		super( appTitle, appDeveloper, menuTitle, options );
 		
-		if( lengthOfSectionDelimiter < 1
-				|| numberOfBlankLinesBetweenSections < 1 )
-			throw new InvalidArgumentException();
 		this.dataTools = new ConsoleDataToolbox( symbolOfSectionDelimiter,
 				lengthOfSectionDelimiter, numberOfBlankLinesBetweenSections );
 	}
@@ -124,8 +126,19 @@ public class AirTrafficControlAppForConsole extends AirTrafficControlApp
 					.append( "\n perform and press Enter." )
 					.append( "\n\nExecute option number: " ).toString();
 			
-			int selectedOption = ConsoleInputHandler.getAValidIntFromUser( 1,
-					mainMenu.numberOfOptions, instructionToGetOptionNumber );
+			int selectedOption;
+			try
+			{
+				selectedOption = ConsoleInputHandler.getAValidIntFromUser( 1,
+						mainMenu.numberOfOptions, instructionToGetOptionNumber );
+			}
+			catch( InvalidArgumentException e )
+			{
+				selectedOption = 0;
+				// this catch never happens cause all OptionsMenu have at least
+				// 1 option; so mainMenu.numberOfOption is never <1, which is
+				// the only condition which could throw this exception
+			}
 			
 			printEndOfSection();
 			

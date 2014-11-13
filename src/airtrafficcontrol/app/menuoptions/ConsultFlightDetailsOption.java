@@ -2,6 +2,7 @@ package airtrafficcontrol.app.menuoptions;
 
 
 import airtrafficcontrol.app.AirTrafficControlAppToolbox;
+import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
 import airtrafficcontrol.app.appforconsole.ConsoleInputHandler;
 import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
@@ -60,7 +61,7 @@ public class ConsultFlightDetailsOption extends Option
 	private Database flightsDB = null;
 	
 	
-	// MÉTODO CONSTRUTOR e MÉTODO getInstance()
+	// Mï¿½TODO CONSTRUTOR e Mï¿½TODO getInstance()
 	
 	
 	/**
@@ -91,7 +92,7 @@ public class ConsultFlightDetailsOption extends Option
 	
 	
 	
-	// ACÇÃO
+	// EXECUCAO
 	
 	
 	
@@ -101,16 +102,18 @@ public class ConsultFlightDetailsOption extends Option
 	 * the flight from the flights' database of this app which he wants to read
 	 * about.
 	 * <p>
-	 * Uses the {@link airtrafficcontrol.app.AirTrafficControlAppToolbox#flightsDB FLIGHTSDB} of
-	 * {@code app}, the app's {@link ConsoleDataToolbox} field.
+	 * Uses the
+	 * {@link airtrafficcontrol.app.AirTrafficControlAppToolbox#flightsDB
+	 * FLIGHTSDB} of {@code app}, the app's {@link ConsoleDataToolbox} field.
 	 * </p>
 	 * 
 	 * @param app
 	 *            The app's {@link ConsoleDataToolbox} field.
 	 */
-	public void executeToConsole( ConsoleDataToolbox app ) {
+	@SuppressWarnings( "static-access" )
+	public void executeToConsole( AirTrafficControlAppForConsole app ) {
 		
-		flightsDB = app.flightsDB;
+		flightsDB = app.tools.flightsDB;
 		
 		// asks the user for a flightID
 		String instruction = new StringBuilder(
@@ -120,7 +123,7 @@ public class ConsultFlightDetailsOption extends Option
 				.toString();
 		try
 		{
-			flightID = ConsoleInputHandler
+			flightID = app.dataTools.inputHandler
 					.get_AFlightIDExistentInACertainDatabase_FromUser(
 							flightsDB, instruction );
 		}
@@ -132,10 +135,10 @@ public class ConsultFlightDetailsOption extends Option
 		
 		// either abort execution
 		if( flightID.equals( "ABORT" ) )
-			System.out.print( "ABORTED OPERATION!" );
+			System.out.print( "OPERATION ABORTED!" );
 		
 		
-		// consult the flight's details from database
+		// or consult the flight's details from database
 		else
 		{
 			try

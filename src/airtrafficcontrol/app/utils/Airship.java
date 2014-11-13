@@ -144,7 +144,7 @@ public abstract class Airship
 	 * @return a string with information on the status of the airplane
 	 * @throws InvalidArgumentException
 	 */
-	public String getObservations() {
+	public String getObservations() throws InvalidArgumentException {
 		
 		AltitudeCorridor corridor = this.getCurrentCorridor();
 		if( corridor == null )
@@ -317,7 +317,7 @@ public abstract class Airship
 	 * 
 	 * @throws InvalidArgumentException
 	 */
-	public String[] toStringArray() {
+	public String[] toStringArray() throws InvalidArgumentException {
 
 		GeographicalPosition pos = getGeographicPosition();
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd,hh:mm");

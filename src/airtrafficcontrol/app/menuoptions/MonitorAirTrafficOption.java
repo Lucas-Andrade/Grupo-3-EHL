@@ -143,7 +143,7 @@ public class MonitorAirTrafficOption extends Option
 				.append( "\n report on a .txt file as well?" )
 				.append( "\n\n Type YES if so or type any other" )
 				.append( "\n key otherwhise and press Enter." )
-				.append( "\n\n Print unknown airships to .txt?" ).toString() );
+				.append( "\n\n Print unknown airships to .txt? " ).toString() );
 		String OVNIsToTxt = in.nextLine();
 		if( OVNIsToTxt.equals( "ABORT" ) )
 		{
@@ -169,9 +169,10 @@ public class MonitorAirTrafficOption extends Option
 	
 	
 	/**
-	 * Performs no action.
+	 * Monitors the flights in the list of scheduled flights that already
+	 * took-off, printing the informations in the console.
 	 * 
-	 * @return {@code null}
+	 * @return A message on the operation being successfully concluded.
 	 * @throws InvalidArgumentException
 	 * @throws IOException
 	 * @throws InvalidFlightIDException

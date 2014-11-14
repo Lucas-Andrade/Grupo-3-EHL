@@ -5,18 +5,18 @@ USER'S GUIDE for the EHL's AIR TRAFFIC CONTROL app for console.
 When launching this app, the user is given access to a first menu: 
 
 OPTION MENU 
-1. Add a list of flights from txt file. 
-2. Add a flight manually. 
-3. Monitor Air Traffic. 
-4. Report altitude transgressions. 
-5. Consult a flight's details. 
-6. Remove zero-passenger-flights. 
-7. Remove a flight manually. 
-8. Configurations. 
-9. Help! 
-10. Exit app. 
+1. Add flights from the ListOfFlights.txt file.
+2. Update the database's flights' coordinates.
+3. Monitor Air Traffic.
+4. Report altitude transgressions.
+5. Consult a flight's details.
+6. Remove all zero-passenger-flights.
+7. Remove a flight manually.
+8. Help!
+9. Exit app.
 
 The user must write the number of the option in the console and press Enter to proceed. 
+During the execution of options 3, After the ex
 
 
 
@@ -24,7 +24,7 @@ The user must write the number of the option in the console and press Enter to p
 
 
 
-1. Add a list of flights from a text file. 
+1. Add flights from the ListOfFlights.txt file.
 
 
 To add a list of flights from a text file, the user is asked to introduce the path and filename of the text file and its expected that the list is organized in the following manner: 
@@ -38,7 +38,7 @@ Each flight in the list will be immediately inserted in the app's internal data 
 
 
 
-2. Add a flight manually. 
+2. Update the database's flights' coordinates. 
 
 
 ...TODO 
@@ -49,8 +49,14 @@ Each flight in the list will be immediately inserted in the app's internal data 
 
 
 
+To return to the Options Menu without removing a flight, one must type the message "ABORT" (without the quotation marks) in the console and press Enter.
+
+
+
 4. Report altitude transgressions.
 
+
+To return to the Options Menu without reporting the flights transgressing the air corridors, one must type the message "ABORT" (without the quotation marks) in the console and press Enter.
 
 
 5. Consult a flight's details.
@@ -62,10 +68,10 @@ To return to the Options Menu without consulting a flight's details, one must ty
 
 
 
-6. Remove zero-passenger-flights.
+6. Remove all zero-passenger-flights.
 
 
-This option allows the user to remove all the passenger-flights previously inserted flight in the flights' database of this app that have zero passengers from that database. The user is asked to confirm (by typing "YES" without the quotation marks and pressing Enter) or to abort (by typing something else and pressing Enter) this operation.
+This option allows the user to remove all the passenger-flights previously inserted in the internal database of this app that have zero passengers from that database. The user is asked to confirm (by typing "YES" without the quotation marks and pressing Enter) or to abort (by typing something else and pressing Enter) this operation.
 
 
 
@@ -78,21 +84,17 @@ To return to the Options Menu without removing a flight, one must type the messa
 
 
 
-8. Configurations.
-
-
-
-9. Help!
+8. Help!
 
 
 Prints a message with the instructions to find the USER'S GUIDE txt file for the EHL's AIR TRAFFIC CONTROL app for console.
 
 
 
-10. Exit app.
+9. Exit app.
 
 
-Prints a goodbye message and exists the EHL's AIR TRAFFIC CONTROL app for console.
+Prints a goodbye message and exits the EHL's AIR TRAFFIC CONTROL app for console.
 
 
 
@@ -110,9 +112,10 @@ A valid flightID is a sequence of alphanumeric characters that can NOT
 
 
 
-2.
+2. Which files interact with this app for console?
 
-txt
+
+This app receives a list of scheduled flights from the file "src/airtrafficcontrol/filestotread/LisOfFligths.txt" and creates an internal database of flights when option1 from the menu is selected. To update the flights' option 2 must be selected and the internal database will update the coordinates which are indicated in the file "src/airtrafficcontrol/filestotread/ActualizeCoordinates.txt".
 
 
 

@@ -1,6 +1,7 @@
 package airtrafficcontrol.app.appforconsole;
 
 
+import java.util.Scanner;
 import airtrafficcontrol.app.AirTrafficControlApp;
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.exceptions.InvalidOptionNumberException;
@@ -108,6 +109,8 @@ public class AirTrafficControlAppForConsole extends AirTrafficControlApp
 								// the do-while cycle
 		
 		
+		@SuppressWarnings( "resource" )
+		Scanner in = new Scanner(System.in);
 		do
 		{
 			
@@ -159,6 +162,13 @@ public class AirTrafficControlAppForConsole extends AirTrafficControlApp
 			}
 			printEndOfSection();
 			
+			// continue to the menu
+			if( runApp )
+			{
+				System.out.println( "(press Enter to continue)" );
+				in.nextLine();
+			}
+			
 			
 		}
 		while( runApp );
@@ -170,7 +180,6 @@ public class AirTrafficControlAppForConsole extends AirTrafficControlApp
 				+ ". All rights reserved.\n" );
 		dataTools.outputStylizer.printSectionTitle( "end" );
 	}
-	
 	
 	
 	// METODOS RELACIONADOS COM IMPRESSAO DE SECCOES

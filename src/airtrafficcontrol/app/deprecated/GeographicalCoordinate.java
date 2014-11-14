@@ -1,4 +1,4 @@
-package airtrafficcontrol.app.utils.newStuff;
+package airtrafficcontrol.app.deprecated;
 
 
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;

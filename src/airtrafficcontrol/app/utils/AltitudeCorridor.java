@@ -49,8 +49,6 @@ public class AltitudeCorridor
 	public AltitudeCorridor( double upperLimit, double lowerLimit )
 			throws InvalidArgumentException {
 		
-		// TODO throw if lower than 0
-		
 		if( upperLimit > lowerLimit )
 		{
 			this.upperLimit = upperLimit;
@@ -61,6 +59,9 @@ public class AltitudeCorridor
 			this.upperLimit = lowerLimit;
 			this.lowerLimit = upperLimit;
 		}
+		
+		if(this.lowerLimit < 0)
+			throw new InvalidArgumentException();
 	}
 	
 	

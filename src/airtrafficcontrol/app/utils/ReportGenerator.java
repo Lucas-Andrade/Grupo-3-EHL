@@ -134,8 +134,10 @@ public class ReportGenerator
 			AltitudeCorridor corridor = airplane.getCurrentCorridor();
 			double altitude = airplane.getGeographicPosition().getAltitude();
 			
-			if( altitude < corridor.getLowerLimit()
-					|| altitude > corridor.getUpperLimit() )
+			
+			System.out.println(corridor);
+			if(corridor != null && ( altitude < corridor.getLowerLimit()
+					|| altitude > corridor.getUpperLimit() ) )
 				airplanesOut.add( airplane );
 		}
 		
@@ -255,7 +257,7 @@ public class ReportGenerator
 		DateFormat format = new SimpleDateFormat( "hh.mm_dd-MM-yyyy" );
 		
 		StringBuilder builder = new StringBuilder();
-		builder.append( "src/filestowrite/" ).append( name ).append( "_" )
+		builder.append( "src/airtrafficcontrol/filestowrite/" ).append( name ).append( "_" )
 				.append( format.format( now.getTime() ) ).append( ".txt" );
 		String destFile = builder.toString();
 		

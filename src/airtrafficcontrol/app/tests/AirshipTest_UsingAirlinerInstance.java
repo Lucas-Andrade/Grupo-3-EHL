@@ -1,11 +1,15 @@
 package airtrafficcontrol.app.tests;
 
 import static org.junit.Assert.*;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
+
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.utils.AirCorridorInTime;
 import airtrafficcontrol.app.utils.Airliner;
 import airtrafficcontrol.app.utils.Airship;
@@ -13,6 +17,7 @@ import airtrafficcontrol.app.utils.AltitudeCorridor;
 import airtrafficcontrol.app.utils.FlightPlan;
 import airtrafficcontrol.app.utils.GeographicalPosition;
 import airtrafficcontrol.app.utils.PrivateJet;
+import airtrafficcontrol.app.utils.ReadListOfFlights;
 
 public class AirshipTest_UsingAirlinerInstance {
 
@@ -21,13 +26,18 @@ public class AirshipTest_UsingAirlinerInstance {
 	private int initialAtltitude = 1;
 	private int initialLatitude = 12;
 	private int initialLongitude = 10;
-	
+	Calendar date1;
+	Calendar date2;
 	
 	@Before
-	public void constructTwoAirplanes()
+	public void constructTwoAirplanes() throws InvalidArgumentException
 	{
+		date1 = new GregorianCalendar();
+		date2 = ReadListOfFlights.createDefensiveCopyOfTheDate(date1);
+		date2.add(Calendar.MINUTE, 20);
+		
 		geo = new GeographicalPosition(initialLatitude, initialLongitude, initialAtltitude);
-		airliner = new Airliner("rj351", geo, new FlightPlan(new GregorianCalendar() ,new GregorianCalendar()), 100);
+		airliner = new Airliner("rj351", geo, new FlightPlan(date1, date2), 100);
 	}
 	
 	@Test
@@ -43,7 +53,7 @@ public class AirshipTest_UsingAirlinerInstance {
 	}
 	
 	@Test
-	public void shouldUpdateTheGeographicalPositionToANewOne()
+	public void shouldUpdateTheGeographicalPositionToANewOne() throws InvalidArgumentException
 	{
 		GeographicalPosition newGeographicalPosition = new GeographicalPosition(18, 11, 20);
 		airliner.updateGeographicPosition(newGeographicalPosition);
@@ -52,21 +62,21 @@ public class AirshipTest_UsingAirlinerInstance {
 	}
 	
 	@Test
-	public void shouldGetTheCorridorNullBecauseItIsStillGainingAltitude()
+	public void shouldGetTheCorridorNullBecauseItIsStillGainingAltitude() throws InvalidArgumentException
 	{
 		Airliner airliner2 = makeAnAirplaneWithAPlan(-10);
 		assertEquals(airliner2.getCurrentCorridor(), null);
 	}
 	
 	@Test
-	public void shouldGetTheCorridorNullBecauseItIsLanding()
+	public void shouldGetTheCorridorNullBecauseItIsLanding() throws InvalidArgumentException
 	{
 		Airliner airliner2 = makeAnAirplaneWithAPlan(-50);
 		assertEquals(airliner2.getCurrentCorridor(), null);
 	}
 	
 	@Test
-	public void shouldGetMidFlightCorridor()
+	public void shouldGetMidFlightCorridor() throws InvalidArgumentException
 	{
 		Airliner airliner2 = makeAnAirplaneWithAPlan(-30);
 		double maxAlt = airliner2.getCurrentCorridor().getUpperLimit();
@@ -77,28 +87,28 @@ public class AirshipTest_UsingAirlinerInstance {
 	}
 	
 	@Test
-	public void shoudGetTheRightObservation_TakingOff()
+	public void shoudGetTheRightObservation_TakingOff() throws InvalidArgumentException
 	{
 		Airliner airliner2 = makeAnAirplaneWithAPlan(-10);
 		assertEquals(airliner2.getObservations(), "The air plane has took off and is gaining altitude.");
 	}
 	
 	@Test
-	public void shouldGetTheRightObservation_Landing()
+	public void shouldGetTheRightObservation_Landing() throws InvalidArgumentException
 	{
 		Airliner airliner2 = makeAnAirplaneWithAPlan(-50);
 		assertEquals(airliner2.getObservations(), "The airplane has started its descent in order to land.");
 	}
 	
 	@Test
-	public void shouldGetTheRightObservation_OutsideCorridor()
+	public void shouldGetTheRightObservation_OutsideCorridor() throws InvalidArgumentException
 	{
 		Airliner airliner2 = makeAnAirplaneWithAPlan(-30);
 		assertEquals(airliner2.getObservations(), "WARNING: The airplane is outside of the corridor.");
 	}
 	
 	@Test
-	public void shouldGetTheRightObservation_NoObservation()
+	public void shouldGetTheRightObservation_NoObservation() throws InvalidArgumentException
 	{
 		Airliner airliner2 = makeAnAirplaneWithAPlan(-30);
 		GeographicalPosition newGeographicalPosition = new GeographicalPosition(40, 15, 110);
@@ -108,21 +118,21 @@ public class AirshipTest_UsingAirlinerInstance {
 	}
 	
 	@Test
-	public void shouldGetTheRightObservation_HasNotTakenOff()
+	public void shouldGetTheRightObservation_HasNotTakenOff() throws InvalidArgumentException
 	{
 		Airliner airliner2 = makeAnAirplaneWithAPlan(10);
 		assertEquals(airliner2.getObservations(), "The airplane has not taken off yet.");
 	}
 	
 	@Test
-	public void shouldGetTheRightObservation_HasAlreadyLanded()
+	public void shouldGetTheRightObservation_HasAlreadyLanded() throws InvalidArgumentException
 	{
 		Airliner airliner2 = makeAnAirplaneWithAPlan(-70);
 		assertEquals(airliner2.getObservations(), "The airplane has already landed.");
 	}
 	
 	@Test 
-	public void shouldCorrectlySetTheNewArrivalDate()
+	public void shouldCorrectlySetTheNewArrivalDate() throws InvalidArgumentException
 	{
 		Airliner airliner2 = makeAnAirplaneWithAPlan(0);
 		Calendar newLanding = new GregorianCalendar();
@@ -136,14 +146,14 @@ public class AirshipTest_UsingAirlinerInstance {
 	}
 	
 	@Test
-	public void shouldReturnTheCorrectString()
+	public void shouldReturnTheCorrectString() throws InvalidArgumentException
 	{
 		Airliner airliner2 = makeAnAirplaneWithAPlan(-30);
 		assertEquals("id123 12.0 10.0 1.0 " + airliner2.getObservations(), airliner2.positionToString());
 	}
 	
 	@Test
-	public void shouldReturnTheCorrectTakeOffDate()
+	public void shouldReturnTheCorrectTakeOffDate() throws InvalidArgumentException
 	{
 		Calendar hourTakeOff = new GregorianCalendar();
 		Calendar hourLand = new GregorianCalendar();
@@ -154,7 +164,7 @@ public class AirshipTest_UsingAirlinerInstance {
 	}
 	
 	@Test
-	public void shouldReturnTheCorrectLandingDate()
+	public void shouldReturnTheCorrectLandingDate() throws InvalidArgumentException
 	{
 		Calendar hourTakeOff = new GregorianCalendar();
 		Calendar hourLand = new GregorianCalendar();
@@ -166,7 +176,7 @@ public class AirshipTest_UsingAirlinerInstance {
 	
 	
 	
-	private static Airliner makeAnAirplaneWithAPlan(int diff)
+	private static Airliner makeAnAirplaneWithAPlan(int diff) throws InvalidArgumentException
 	{
 		Calendar hourDep = new GregorianCalendar();
 		Calendar hourLand = new GregorianCalendar();

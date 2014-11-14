@@ -1,11 +1,16 @@
 package airtrafficcontrol.app.tests;
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Map;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
 import airtrafficcontrol.app.utils.AirCorridorInTime;
 import airtrafficcontrol.app.utils.Airliner;
 import airtrafficcontrol.app.utils.Airship;
@@ -29,10 +34,10 @@ public class ReadAirplanesCoordinatesTest {
 	CargoAircraft carg;
 	FlightPlan plan;
 	Map<String, Airship> dataMap;
-	String source = "src/filesToRead/newCoordinatesTest.txt";
+	String source = "newCoordinatesTest.txt";
 	
 	@Before
-	public void constructAirplanesAndDatabase()
+	public void constructAirplanesAndDatabase() throws InvalidArgumentException, InvalidFlightIDException
 	{
 		rep = new ReportGenerator();
 		
@@ -59,10 +64,10 @@ public class ReadAirplanesCoordinatesTest {
 	
 	
 	@Test
-	public void shouldGetEmptyFieldsFromFile()
+	public void shouldGetEmptyFieldsFromFile() throws InvalidFlightIDException, InvalidArgumentException, IOException
 	{
 		// Arrange
-		String sourceOfFlights = "src/FilesToRead/newCoordinatesTest.txt";
+		String sourceOfFlights = "newCoordinatesTest.txt";
 		read = new ReadAirplanesCoordinates();
 		String emptyFieldsExpected = "Empty Fields at Line: 5" + "\n";
 		

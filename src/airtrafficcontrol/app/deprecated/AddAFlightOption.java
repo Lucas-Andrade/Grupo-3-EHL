@@ -108,12 +108,12 @@ public class AddAFlightOption extends Option
 		String flightID = app.dataTools.inputHandler
 				.getAValidFlightIDFromUser( "\n\nFlightID: " );
 		
-		GeographicalPosition takeOff =
-		String 
+	//	GeographicalPosition takeOff =
 		
 		
-		airshipToBeAdded = new Airliner(flightID,);
-		flightsDB = app.tools.flightsDB;
+		
+	//	airshipToBeAdded = new Airliner(flightID,);
+	//	flightsDB = app.tools.flightsDB;
 		
 	}
 	

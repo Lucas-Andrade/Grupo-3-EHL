@@ -37,7 +37,7 @@ public class ClassToTestSmallThingsThatWillBeRemoved
 		flightsDatabase = db;
 	}
 	
-	public static void main( String[] args ) {
+	public static void main( String[] args ) throws InvalidOptionNumberException {
 		Database antes = flightsDatabase;
 		new ClassToTestSmallThingsThatWillBeRemoved( 3 ).set( new Database() );
 		System.out.println( antes == flightsDatabase );

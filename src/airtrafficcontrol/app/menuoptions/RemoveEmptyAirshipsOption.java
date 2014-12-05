@@ -7,7 +7,7 @@ import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
 import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.utils.Database;
+import airtrafficcontrol.app.utils.towerControl.Database;
 
 
 /**

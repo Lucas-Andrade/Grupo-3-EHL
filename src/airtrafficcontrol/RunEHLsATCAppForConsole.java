@@ -2,8 +2,18 @@ package airtrafficcontrol;
 
 
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
-import airtrafficcontrol.app.exceptions.*;
-import airtrafficcontrol.app.menuoptions.*;
+import airtrafficcontrol.app.appforconsole.ConsoleInputHandler;
+import airtrafficcontrol.app.appforconsole.ConsoleOutputFormatter;
+import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.menuoptions.AddAListOfFlightsOption;
+import airtrafficcontrol.app.menuoptions.ConsultFlightDetailsOption;
+import airtrafficcontrol.app.menuoptions.ExitOption;
+import airtrafficcontrol.app.menuoptions.HelpOption_for_EHLsATCAppForConsole;
+import airtrafficcontrol.app.menuoptions.MonitorAirTrafficOption;
+import airtrafficcontrol.app.menuoptions.RemoveAFlightOption;
+import airtrafficcontrol.app.menuoptions.RemoveEmptyAirshipsOption;
+import airtrafficcontrol.app.menuoptions.ReportTransgressionsOption;
+import airtrafficcontrol.app.menuoptions.UpdateDatabaseOption;
 
 
 /**
@@ -63,9 +73,9 @@ public class RunEHLsATCAppForConsole
 	 * <li>Help!</li>
 	 * <li>Exit app.</li>
 	 * </ol>
-	 * <li>an initially empty {@link airtrafficcontrol.app.utils.Database
+	 * <li>an initially empty {@link airtrafficcontrol.app.utils.towerControl.Database
 	 * flights' database};</li>
-	 * <li>a {@link airtrafficcontrol.app.utils.ReportGenerator reports
+	 * <li>a {@link airtrafficcontrol.app.utils.towerControl.ReportGenerator reports
 	 * generator};</li>
 	 * <li>a {@link ConsoleOutputFormatter console output formatter} that draws
 	 * a line filled with a sequence of {@code 50} repetitions of the symbol '

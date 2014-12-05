@@ -4,10 +4,8 @@ package airtrafficcontrol.app.deprecated;
 import java.util.Scanner;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.menuoptions.Option;
-import airtrafficcontrol.app.utils.Airliner;
 import airtrafficcontrol.app.utils.Airship;
-import airtrafficcontrol.app.utils.Database;
-import airtrafficcontrol.app.utils.GeographicalPosition;
+import airtrafficcontrol.app.utils.towerControl.Database;
 
 
 /**

@@ -3,7 +3,7 @@ package airtrafficcontrol.app.appforconsole;
 
 import java.util.Scanner;
 import airtrafficcontrol.app.exceptions.*;
-import airtrafficcontrol.app.utils.Database;
+import airtrafficcontrol.app.utils.towerControl.Database;
 
 
 /**

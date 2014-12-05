@@ -6,8 +6,8 @@ import java.util.Scanner;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.utils.Database;
-import airtrafficcontrol.app.utils.ReportGenerator;
+import airtrafficcontrol.app.utils.towerControl.Database;
+import airtrafficcontrol.app.utils.towerControl.ReportGenerator;
 
 
 /**

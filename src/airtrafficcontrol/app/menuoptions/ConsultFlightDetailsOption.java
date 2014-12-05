@@ -5,8 +5,8 @@ import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleDataToolbox;
 import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
 import airtrafficcontrol.app.exceptions.FlightNotFoundInDatabaseException;
-import airtrafficcontrol.app.utils.Airship;
-import airtrafficcontrol.app.utils.Database;
+import airtrafficcontrol.app.utils.hangar.Airship;
+import airtrafficcontrol.app.utils.towerControl.Database;
 
 
 /**

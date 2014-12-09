@@ -6,10 +6,10 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.utils.airshipplan.AirCorridorInTime;
-import airtrafficcontrol.app.utils.airshipplan.AltitudeCorridor;
-import airtrafficcontrol.app.utils.airshipplan.FlightPlan;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.utils.airshipplan.AirCorridorInTime;
+import airtrafficcontrol.app.appforconsole.utils.airshipplan.AltitudeCorridor;
+import airtrafficcontrol.app.appforconsole.utils.airshipplan.FlightPlan;
 
 /**
  * @author Eva Gomes, Hugo Leal, Lucas Andrade

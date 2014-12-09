@@ -2,10 +2,10 @@ package airtrafficcontrol.app.appforconsole.menuoptions;
 
 
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
-import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
-import airtrafficcontrol.app.exceptions.FlightNotFoundInDatabaseException;
-import airtrafficcontrol.app.utils.hangar.AirCraft;
-import airtrafficcontrol.app.utils.towerControl.Database;
+import airtrafficcontrol.app.appforconsole.exceptions.DatabaseNotFoundException;
+import airtrafficcontrol.app.appforconsole.exceptions.FlightNotFoundInDatabaseException;
+import airtrafficcontrol.app.appforconsole.utils.hangar.AirCraft;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.Database;
 import airtrafficcontrol.deprecated.ConsoleDataToolbox;
 
 

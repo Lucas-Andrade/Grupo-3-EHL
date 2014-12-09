@@ -3,8 +3,8 @@ package airtrafficcontrol.tests;
 
 import org.junit.Test;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
+import airtrafficcontrol.app.appforconsole.exceptions.*;
 import airtrafficcontrol.app.appforconsole.menuoptions.HelpOption_for_EHLsATCAppForConsole;
-import airtrafficcontrol.app.exceptions.*;
 
 
 /**

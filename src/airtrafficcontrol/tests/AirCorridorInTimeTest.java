@@ -2,16 +2,13 @@ package airtrafficcontrol.tests;
 
 
 import static org.junit.Assert.*;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.utils.AirCorridorInTime;
-import airtrafficcontrol.app.utils.AltitudeCorridor;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.utils.AirCorridorInTime;
+import airtrafficcontrol.app.appforconsole.utils.AltitudeCorridor;
 
 public class AirCorridorInTimeTest {
 

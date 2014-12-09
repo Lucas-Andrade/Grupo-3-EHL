@@ -1,15 +1,13 @@
 package airtrafficcontrol.tests;
 
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.utils.Altitude;
-import airtrafficcontrol.app.utils.GeographicalPosition;
-import airtrafficcontrol.app.utils.Latitude;
-import airtrafficcontrol.app.utils.Longitude;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.utils.Altitude;
+import airtrafficcontrol.app.appforconsole.utils.GeographicalPosition;
+import airtrafficcontrol.app.appforconsole.utils.Latitude;
+import airtrafficcontrol.app.appforconsole.utils.Longitude;
 
 public class GeographicalPositionTest {
 

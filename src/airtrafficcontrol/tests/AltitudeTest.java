@@ -1,12 +1,10 @@
 package airtrafficcontrol.tests;
 
 import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.utils.Altitude;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.utils.Altitude;
 
 public class AltitudeTest {
 	

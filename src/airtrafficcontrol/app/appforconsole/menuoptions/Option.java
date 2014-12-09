@@ -3,7 +3,7 @@ package airtrafficcontrol.app.appforconsole.menuoptions;
 
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.OptionsMenu;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
 
 
 /**

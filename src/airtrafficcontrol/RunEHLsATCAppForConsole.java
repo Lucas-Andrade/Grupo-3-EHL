@@ -2,6 +2,7 @@ package airtrafficcontrol;
 
 
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.appforconsole.menuoptions.AddAListOfFlightsOption;
 import airtrafficcontrol.app.appforconsole.menuoptions.ConsultFlightDetailsOption;
 import airtrafficcontrol.app.appforconsole.menuoptions.ExitOption;
@@ -11,7 +12,6 @@ import airtrafficcontrol.app.appforconsole.menuoptions.RemoveAFlightOption;
 import airtrafficcontrol.app.appforconsole.menuoptions.RemoveEmptyAirshipsOption;
 import airtrafficcontrol.app.appforconsole.menuoptions.ReportTransgressionsOption;
 import airtrafficcontrol.app.appforconsole.menuoptions.UpdateDatabaseOption;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 
 /**
@@ -62,9 +62,9 @@ public class RunEHLsATCAppForConsole
 	 * {@code AIR TRAFFIC CONTROL app for console};</li>
 	 * <li>the {@link airtrafficcontrol.app.AirTrafficControlApp#appDeveloper
 	 * developer} {@code EHL};</li>
-	 * <li>a {@link airtrafficcontrol.app.utils.towerControl.Database flights
+	 * <li>a {@link airtrafficcontrol.app.appforconsole.utils.towerControl.Database flights
 	 * database},</li>
-	 * <li>a {@link airtrafficcontrol.app.utils.towerControl.ReportGenerator
+	 * <li>a {@link airtrafficcontrol.app.appforconsole.utils.towerControl.ReportGenerator
 	 * reports generator},</li>
 	 * <li>the
 	 * {@link airtrafficcontrol.app.appforconsole.ConsoleOutputFormatter console

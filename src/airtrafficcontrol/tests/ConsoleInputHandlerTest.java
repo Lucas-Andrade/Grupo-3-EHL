@@ -7,14 +7,14 @@ import static org.junit.Assert.assertTrue;
 import java.util.GregorianCalendar;
 import org.junit.Test;
 import airtrafficcontrol.app.appforconsole.ConsoleInputHandler;
-import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
-import airtrafficcontrol.app.utils.aircraftcoordinates.GeographicalPosition;
-import airtrafficcontrol.app.utils.airshipplan.FlightPlan;
-import airtrafficcontrol.app.utils.hangar.Airship;
-import airtrafficcontrol.app.utils.hangar.CivilAirPlane;
-import airtrafficcontrol.app.utils.towerControl.Database;
+import airtrafficcontrol.app.appforconsole.exceptions.DatabaseNotFoundException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidFlightIDException;
+import airtrafficcontrol.app.appforconsole.utils.aircraftcoordinates.GeographicalPosition;
+import airtrafficcontrol.app.appforconsole.utils.airshipplan.FlightPlan;
+import airtrafficcontrol.app.appforconsole.utils.hangar.Airship;
+import airtrafficcontrol.app.appforconsole.utils.hangar.CivilAirPlane;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.Database;
 
 
 

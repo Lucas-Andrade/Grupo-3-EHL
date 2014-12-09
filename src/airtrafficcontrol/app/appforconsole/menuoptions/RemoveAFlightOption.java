@@ -3,11 +3,11 @@ package airtrafficcontrol.app.appforconsole.menuoptions;
 
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.ConsoleInputHandler;
-import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
-import airtrafficcontrol.app.exceptions.FlightNotFoundInDatabaseException;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
-import airtrafficcontrol.app.utils.towerControl.Database;
+import airtrafficcontrol.app.appforconsole.exceptions.DatabaseNotFoundException;
+import airtrafficcontrol.app.appforconsole.exceptions.FlightNotFoundInDatabaseException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidFlightIDException;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.Database;
 import airtrafficcontrol.deprecated.ConsoleDataToolbox;
 
 

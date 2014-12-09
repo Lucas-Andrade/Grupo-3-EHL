@@ -3,11 +3,11 @@ package airtrafficcontrol.app.appforconsole;
 
 import java.util.Scanner;
 import airtrafficcontrol.app.AirTrafficControlApp;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidOptionNumberException;
 import airtrafficcontrol.app.appforconsole.menuoptions.Option;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.exceptions.InvalidOptionNumberException;
-import airtrafficcontrol.app.utils.towerControl.Database;
-import airtrafficcontrol.app.utils.towerControl.ReportGenerator;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.Database;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.ReportGenerator;
 
 
 /**

@@ -3,7 +3,7 @@ package airtrafficcontrol.deprecated;
 
 import airtrafficcontrol.app.appforconsole.ConsoleInputHandler;
 import airtrafficcontrol.app.appforconsole.ConsoleOutputFormatter;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
 
 
 

@@ -5,11 +5,11 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.utils.FlightPlan;
-import airtrafficcontrol.app.utils.GeographicalPosition;
-import airtrafficcontrol.app.utils.hangar.Airliner;
-import airtrafficcontrol.app.utils.towerControl.ReadListOfFlights;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.utils.FlightPlan;
+import airtrafficcontrol.app.appforconsole.utils.GeographicalPosition;
+import airtrafficcontrol.app.appforconsole.utils.hangar.Airliner;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.ReadListOfFlights;
 
 public class AirlinerTest {
 	

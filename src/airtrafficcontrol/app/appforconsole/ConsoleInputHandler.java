@@ -2,8 +2,8 @@ package airtrafficcontrol.app.appforconsole;
 
 
 import java.util.Scanner;
-import airtrafficcontrol.app.exceptions.*;
-import airtrafficcontrol.app.utils.towerControl.Database;
+import airtrafficcontrol.app.appforconsole.exceptions.*;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.Database;
 
 
 /**

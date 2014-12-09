@@ -1,9 +1,9 @@
 package airtrafficcontrol.app;
 
 
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.utils.towerControl.Database;
-import airtrafficcontrol.app.utils.towerControl.ReportGenerator;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.Database;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.ReportGenerator;
 
 
 /**
@@ -50,7 +50,7 @@ public abstract class AirTrafficControlApp implements Runnable
 	
 	/**
 	 * The app's reports generator. This reporter emits reports about the
-	 * {@link airtrafficcontrol.app.utils.hangar.Airship airships} in the
+	 * {@link airtrafficcontrol.app.appforconsole.utils.hangar.Airship airships} in the
 	 * database {@link AirTrafficControlApp#flightsDB flightsDB}.
 	 */
 	public final ReportGenerator reporter;

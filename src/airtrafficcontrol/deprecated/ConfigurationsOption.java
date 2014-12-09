@@ -2,8 +2,8 @@ package airtrafficcontrol.deprecated;
 
 
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.appforconsole.menuoptions.Option;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 
 
 /**

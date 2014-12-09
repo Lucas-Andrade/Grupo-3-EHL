@@ -3,11 +3,11 @@ package airtrafficcontrol.app.appforconsole.menuoptions;
 
 import java.io.IOException;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
-import airtrafficcontrol.app.exceptions.DatabaseNotFoundException;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
-import airtrafficcontrol.app.utils.towerControl.Database;
-import airtrafficcontrol.app.utils.towerControl.ReadListOfFlights;
+import airtrafficcontrol.app.appforconsole.exceptions.DatabaseNotFoundException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidFlightIDException;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.Database;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.ReadListOfFlights;
 import airtrafficcontrol.deprecated.ConsoleDataToolbox;
 
 

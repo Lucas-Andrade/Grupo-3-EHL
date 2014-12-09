@@ -7,11 +7,11 @@ import org.junit.Before;
 import org.junit.Test;
 import airtrafficcontrol.app.appforconsole.AirTrafficControlAppForConsole;
 import airtrafficcontrol.app.appforconsole.OptionsMenu;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidOptionNumberException;
 import airtrafficcontrol.app.appforconsole.menuoptions.ExitOption;
 import airtrafficcontrol.app.appforconsole.menuoptions.HelpOption_for_EHLsATCAppForConsole;
 import airtrafficcontrol.app.appforconsole.menuoptions.Option;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.exceptions.InvalidOptionNumberException;
 
 
 /**

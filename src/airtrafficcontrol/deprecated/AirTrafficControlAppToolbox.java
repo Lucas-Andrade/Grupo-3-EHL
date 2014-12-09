@@ -2,8 +2,8 @@ package airtrafficcontrol.deprecated;
 
 
 import airtrafficcontrol.app.AirTrafficControlApp;
-import airtrafficcontrol.app.utils.towerControl.Database;
-import airtrafficcontrol.app.utils.towerControl.ReportGenerator;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.Database;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.ReportGenerator;
 
 
 /**
@@ -47,9 +47,9 @@ public class AirTrafficControlAppToolbox
 	 * <p>
 	 * This instance provides:
 	 * <ul>
-	 * <li>an empty {@link airtrafficcontrol.app.utils.towerControl.Database
+	 * <li>an empty {@link airtrafficcontrol.app.appforconsole.utils.towerControl.Database
 	 * flights' database}</li>
-	 * <li>a {@link airtrafficcontrol.app.utils.towerControl.ReportGenerator
+	 * <li>a {@link airtrafficcontrol.app.appforconsole.utils.towerControl.ReportGenerator
 	 * reports generator}.
 	 * </ul>
 	 * for the app.

@@ -5,17 +5,17 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
-import airtrafficcontrol.app.utils.aircraftcoordinates.GeographicalPosition;
-import airtrafficcontrol.app.utils.airshipplan.AirCorridorInTime;
-import airtrafficcontrol.app.utils.airshipplan.AltitudeCorridor;
-import airtrafficcontrol.app.utils.airshipplan.FlightPlan;
-import airtrafficcontrol.app.utils.hangar.Airship;
-import airtrafficcontrol.app.utils.hangar.CivilAirPlane;
-import airtrafficcontrol.app.utils.hangar.CivilHelicopter;
-import airtrafficcontrol.app.utils.hangar.MilitaryHelicopter;
-import airtrafficcontrol.app.utils.towerControl.Database;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidFlightIDException;
+import airtrafficcontrol.app.appforconsole.utils.aircraftcoordinates.GeographicalPosition;
+import airtrafficcontrol.app.appforconsole.utils.airshipplan.AirCorridorInTime;
+import airtrafficcontrol.app.appforconsole.utils.airshipplan.AltitudeCorridor;
+import airtrafficcontrol.app.appforconsole.utils.airshipplan.FlightPlan;
+import airtrafficcontrol.app.appforconsole.utils.hangar.Airship;
+import airtrafficcontrol.app.appforconsole.utils.hangar.CivilAirPlane;
+import airtrafficcontrol.app.appforconsole.utils.hangar.CivilHelicopter;
+import airtrafficcontrol.app.appforconsole.utils.hangar.MilitaryHelicopter;
+import airtrafficcontrol.app.appforconsole.utils.towerControl.Database;
 
 
 

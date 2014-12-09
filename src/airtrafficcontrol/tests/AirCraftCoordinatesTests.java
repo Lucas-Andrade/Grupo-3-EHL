@@ -4,11 +4,11 @@ package airtrafficcontrol.tests;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.utils.aircraftcoordinates.Altitude;
-import airtrafficcontrol.app.utils.aircraftcoordinates.GeographicalPosition;
-import airtrafficcontrol.app.utils.aircraftcoordinates.Latitude;
-import airtrafficcontrol.app.utils.aircraftcoordinates.Longitude;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.utils.aircraftcoordinates.Altitude;
+import airtrafficcontrol.app.appforconsole.utils.aircraftcoordinates.GeographicalPosition;
+import airtrafficcontrol.app.appforconsole.utils.aircraftcoordinates.Latitude;
+import airtrafficcontrol.app.appforconsole.utils.aircraftcoordinates.Longitude;
 
 public class AirCraftCoordinatesTests
 {

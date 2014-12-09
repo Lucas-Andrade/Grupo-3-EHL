@@ -68,9 +68,9 @@ public class RunDEGPsATCAppForCommandLine
 	 * <li>Exit app.</li>
 	 * </ol>
 	 * <li>an initially empty
-	 * {@link airtrafficcontrol.app.utils.towerControl.Database flights'
+	 * {@link airtrafficcontrol.app.appforconsole.utils.towerControl.Database flights'
 	 * database};</li>
-	 * <li>a {@link airtrafficcontrol.app.utils.towerControl.ReportGenerator
+	 * <li>a {@link airtrafficcontrol.app.appforconsole.utils.towerControl.ReportGenerator
 	 * reports generator};</li>
 	 * <li>a {@link ConsoleOutputFormatter console output formatter} that draws
 	 * a line filled with a sequence of {@code 50} repetitions of the symbol '

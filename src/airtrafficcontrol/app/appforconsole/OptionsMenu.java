@@ -1,10 +1,10 @@
 package airtrafficcontrol.app.appforconsole;
 
 
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidOptionException;
+import airtrafficcontrol.app.appforconsole.exceptions.InvalidOptionNumberException;
 import airtrafficcontrol.app.appforconsole.menuoptions.Option;
-import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.exceptions.InvalidOptionException;
-import airtrafficcontrol.app.exceptions.InvalidOptionNumberException;
 
 
 /**

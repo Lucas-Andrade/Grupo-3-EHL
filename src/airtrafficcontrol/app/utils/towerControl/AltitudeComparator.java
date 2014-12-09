@@ -1,7 +1,6 @@
 package airtrafficcontrol.app.utils.towerControl;
 import java.util.Comparator;
 import airtrafficcontrol.app.utils.hangar.AirCraft;
-import airtrafficcontrol.app.utils.hangar.Airship;
 
 /**
  * compares Airships and sorts them out by altitude

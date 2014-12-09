@@ -8,6 +8,7 @@ package airtrafficcontrol.app.exceptions;
  * @author Hugo Leal
  * @author Lucas Andrade
  */
+@SuppressWarnings( "serial" )
 public class DatabaseNotFoundException extends Exception
 {
 	

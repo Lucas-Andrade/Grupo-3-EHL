@@ -1,27 +1,37 @@
 package airtrafficcontrol.app;
 
 
-import airtrafficcontrol.app.menuoptions.Option;
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.OptionsMenu;
+import airtrafficcontrol.app.utils.towerControl.Database;
+import airtrafficcontrol.app.utils.towerControl.ReportGenerator;
 
 
 /**
- * Class whose subclasses' instances represent Air Traffic Control apps.
+ * Class whose subclasses' instances represent apps that perform actions of air
+ * traffic control.
  * <p>
- * Air Traffic Control apps have a name, have a developer, have a
- * {@link OptionsMenu options menu} , have a {@link AirTrafficControlAppToolbox
- * a database and a reports generator} and they run.
- * 
+ * {@link AirTrafficControlApp Air Traffic Control apps} have a
+ * {@link #appTitle name} and a
+ * {@link #appDeveloper developer}. They also are associated
+ * with a {@link Database flights database} and a {@link ReportGenerator reports
+ * generator}.
+ * </p>
+ * <p style="font-size:16">
+ * <b>Implementation notes</b>
+ * </p>
+ * <ul>
+ * <li>{@link AirTrafficControlApp} instances are immutable.</li>
+ * <li>Fields are final and public.</li>
+ * </ul>
  *
- * @author Eva Gomes
- * @author Hugo Leal
- * @author Lucas Andrade
+ * @author (original) Eva Gomes, Hugo Leal, Lucas Andrade
+ * @author (2nd version) Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro
+ *         Antunes
  */
 public abstract class AirTrafficControlApp implements Runnable
 {
 	
-	// CAMPO DA CLASSE
+	// INSTANCE FIELDS
 	
 	/**
 	 * The app's title.
@@ -34,61 +44,51 @@ public abstract class AirTrafficControlApp implements Runnable
 	public final String appDeveloper;
 	
 	/**
-	 * A menu for the app.
+	 * The app's flights database.
 	 */
-	public final OptionsMenu mainMenu;
+	public final Database flightsDB;
 	
 	/**
-	 * The app's tools (creates the app's flights database and its reports
-	 * generator).
+	 * The app's reports generator. This reporter emits reports about the
+	 * {@link airtrafficcontrol.app.utils.hangar.Airship airships} in the
+	 * database {@link AirTrafficControlApp#flightsDB flightsDB}.
 	 */
-	public final AirTrafficControlAppToolbox tools;
+	public final ReportGenerator reporter;
 	
 	
 	
-	// CONSTRUTOR
+	// CONSTRUCTOR
 	
 	/**
 	 * Creates a new Air Traffic Control app with
 	 * <ul>
-	 * <li>the name {@code appTitle},</li>
-	 * <li>the developer {@code appDeveloper},</li>
-	 * <li>an {@link airtrafficcontrolapp.app.OptionsMenu options menu} with the
-	 * title {@code menuTitle} and the options {@code options},</li>
-	 * <li>a flights' database and</li>
-	 * <li>a reports generator.</li>
+	 * <li>the {@link #appTitle name} {@code appTitle},</li>
+	 * <li>the {@link #appDeveloper developer}
+	 * {@code appDeveloper},</li>
+	 * <li>a {@link Database flights database} and</li>
+	 * <li>a {@link ReportGenerator reports generator}.</li>
 	 * </ul>
 	 * 
 	 * @param appTitle
 	 *            This app's name.
 	 * @param appDeveloper
 	 *            This app's developer.
-	 * @param menuTitle
-	 *            This app's options menu title.
-	 * @param options
-	 *            This app's menu's options.
 	 * @throws InvalidArgumentException
-	 *             If {@code null} arguments are inserted or if appTitle,
-	 *             appDeveloper or menuTitle are given the empty string ("").
+	 *             If either {@code appTitle} or {@code appDeveloper} are
+	 *             {@code null} or the empty {@link String} ({@code ""}).
 	 */
-	public AirTrafficControlApp( String appTitle, String appDeveloper,
-			String menuTitle, Option... options )
+	public AirTrafficControlApp( String appTitle, String appDeveloper )
 			throws InvalidArgumentException {
 		
-		if( appTitle == null || appTitle.equals( "" ) || appDeveloper == null
-				|| appDeveloper.equals( "" ) || menuTitle == null
-				|| menuTitle.equals( "" ) )
-			throw new InvalidArgumentException();
-		for( Option option : options )
-			if( option == null )
-				throw new InvalidArgumentException();
+		if( appTitle == null || appTitle.equals( "" ) )
+			throw new InvalidArgumentException( "INVALID APP TITLE!" );
+		if( appDeveloper == null || appDeveloper.equals( "" ) )
+			throw new InvalidArgumentException( "INVALID APP DEVELOPER!" );
 		
 		this.appTitle = appTitle;
 		this.appDeveloper = appDeveloper;
-		
-		mainMenu = new OptionsMenu( menuTitle, options );
-		
-		tools = new AirTrafficControlAppToolbox();
+		flightsDB = new Database();
+		reporter = new ReportGenerator();
 	}
 	
 	

@@ -37,6 +37,7 @@ public class ReadListOfFlights
 	private static Airship airship2;
 	private static Airship airship3;
 	private static Airship airship4;
+	@SuppressWarnings( "unused" )
 	private static AirCraft airCraft1;
 	
 	static
@@ -222,31 +223,31 @@ public class ReadListOfFlights
 					break;
 					
 					
-				case "ufo":                 //Unknown flight object
-					tokenizer.nextToken();
-					
-					latitude = Double.parseDouble( tokenizer.nextToken() );
-					longitude = Double.parseDouble( tokenizer.nextToken() );
-					
-					pos = new GeographicalPosition( latitude, longitude, 0 );
-					
-					dateLanding = getDate( tokenizer.nextToken() );
-					
-					tokenizer.nextToken();
-					tokenizer.nextToken();
-					
-					OVNI ovni = new OVNI(  pos );
-//							(armament == 0) ? false : true );
-					
-//					plan = getFlightPlan( dateTakeOff, dateLanding, tokenizer,
-//							airCraft1.getPlan().getNumberOfMinutesToTakeOff(),
-//							airCraft1.getPlan().getNumberOfMinutesToLand(),
-//							airCraft1.getPlan().getNumberOfMinutesToSwitchCorridor() );
+//				case "ufo":                 //Unknown flight object
+//					tokenizer.nextToken();
 //					
-//					Transport t = new Transport( flightID, pos, plan,
-//							(armament == 0) ? false : true );
-					database.addAirship( ovni );
-					break;
+//					latitude = Double.parseDouble( tokenizer.nextToken() );
+//					longitude = Double.parseDouble( tokenizer.nextToken() );
+//					
+//					pos = new GeographicalPosition( latitude, longitude, 0 );
+//					
+//					dateLanding = getDate( tokenizer.nextToken() );
+//					
+//					tokenizer.nextToken();
+//					tokenizer.nextToken();
+//					
+//					OVNI ovni = new OVNI(  pos );
+////							(armament == 0) ? false : true );
+//					
+////					plan = getFlightPlan( dateTakeOff, dateLanding, tokenizer,
+////							airCraft1.getPlan().getNumberOfMinutesToTakeOff(),
+////							airCraft1.getPlan().getNumberOfMinutesToLand(),
+////							airCraft1.getPlan().getNumberOfMinutesToSwitchCorridor() );
+////					
+////					Transport t = new Transport( flightID, pos, plan,
+////							(armament == 0) ? false : true );
+//					database.addAirship( ovni );
+//					break;
 				
 				default:
 					throw new InvalidArgumentException(

@@ -11,7 +11,7 @@ import org.junit.Test;
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.utils.FlightPlan;
 import airtrafficcontrol.app.utils.GeographicalPosition;
-import airtrafficcontrol.app.utils.PrivateJet;
+import airtrafficcontrol.app.utils.hangar.PrivateJet;
 import airtrafficcontrol.app.utils.towerControl.ReadListOfFlights;
 
 public class PrivateJetTest {

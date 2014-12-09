@@ -13,7 +13,7 @@ import airtrafficcontrol.app.utils.aircraftcoordinates.GeographicalPosition;
 import airtrafficcontrol.app.utils.airshipplan.AirCorridorInTime;
 import airtrafficcontrol.app.utils.airshipplan.AltitudeCorridor;
 import airtrafficcontrol.app.utils.airshipplan.FlightPlan;
-import airtrafficcontrol.app.utils.hangar.AirCraft;
+import airtrafficcontrol.app.utils.hangar.Airship;
 import airtrafficcontrol.app.utils.hangar.AirPlane;
 import airtrafficcontrol.app.utils.hangar.CivilAirPlane;
 import airtrafficcontrol.app.utils.hangar.MilitaryAirPlane;
@@ -30,7 +30,7 @@ public class ReportEmitterTest {
 	MilitaryHelicopter transp;
 	MilitaryAirPlane carg;
 	FlightPlan plan;
-	Map<String, AirCraft> dataMap;
+	Map<String, Airship> dataMap;
 	String source = "newCoordinatesTest.txt";
 	
 	@Before

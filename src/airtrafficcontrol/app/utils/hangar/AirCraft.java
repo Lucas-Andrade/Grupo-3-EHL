@@ -134,4 +134,5 @@ public abstract class AirCraft
 		return builder.toString();
 	}
 	
+	public abstract String[] toStringArray();
 }

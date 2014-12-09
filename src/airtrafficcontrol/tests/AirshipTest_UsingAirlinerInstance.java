@@ -1,19 +1,17 @@
 package airtrafficcontrol.tests;
 
 import static org.junit.Assert.*;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
-
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.utils.AirCorridorInTime;
-import airtrafficcontrol.app.utils.Airliner;
 import airtrafficcontrol.app.utils.Airship;
 import airtrafficcontrol.app.utils.AltitudeCorridor;
 import airtrafficcontrol.app.utils.FlightPlan;
 import airtrafficcontrol.app.utils.GeographicalPosition;
+import airtrafficcontrol.app.utils.hangar.Airliner;
 import airtrafficcontrol.app.utils.towerControl.ReadListOfFlights;
 
 public class AirshipTest_UsingAirlinerInstance {

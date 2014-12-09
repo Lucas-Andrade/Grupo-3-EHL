@@ -2,31 +2,42 @@ package airtrafficcontrol.app.appforconsole;
 
 
 /**
- * The instances of this class provide tools for formatting console output.
- * 
+ * Class whose instances provide tools for formatting console output.
  * <p>
- * The instances of this class provide a customized section delimiter
- * established in the constructor whose presence in the output contributes to
- * the output's readability (the {@code sectionDelimiter}); provide a string
- * with a fixed number of blank lines established in the constructor intended
- * for separating sections (the {@code spaceBetweenSections}) and have a method
- * that formats a section title to match the style of the section delimiter.
+ * Instances of this class provide a customized
+ * {@link ConsoleOutputFormatter#sectionDelimiter section delimiter} established
+ * in the constructor whose presence in the output contributes to the output's
+ * readability; they also provide a string with a fixed number of blank lines
+ * established in the constructor intended for separating sections (the
+ * {@link ConsoleOutputFormatter#spaceBetweenSections space between sections}).
+ * Instances may also invoke a method that formats a section title to match the
+ * style of the section delimiter.
+ * </p>
+ * <p style="font-size:16">
+ * <b> Implementation notes</b>
+ * </p>
+ * <p>
+ * <ul>
+ * <li>{@link ConsoleOutputFormatter} instances are immutable.</li>
+ * <li>Fields {@link ConsoleOutputFormatter#sectionDelimiter section delimiter}
+ * and {@link ConsoleOutputFormatter#spaceBetweenSections space between
+ * sections} are final and public.</li>
+ * </ul>
  * </p>
  *
- * @author Eva Gomes
- * @author Hugo Leal
- * @author Lucas Andrade
+ * @author (original) Eva Gomes, Hugo Leal, Lucas Andrade
+ * @author (2nd version) Daniel Gomes, Eva Gomes, Gon√ßalo Carvalho, Pedro
+ *         Antunes
  */
 public class ConsoleOutputFormatter
 {
 	
-	// CAMPOS
-	
+	// INSTANCE FIELDS
 	
 	/**
 	 * The section delimiter. The section delimiter is a long sequence of the
-	 * same symbol that occupies a line. Intended for visually separating output
-	 * sections.
+	 * same symbol that occupies a line. It's intended to establish a visual
+	 * separation of the output sections.
 	 */
 	public final String sectionDelimiter;
 	
@@ -35,27 +46,32 @@ public class ConsoleOutputFormatter
 	 */
 	public final String spaceBetweenSections;
 	
+	/**
+	 * The symbol repeated in the delimiter.
+	 */
+	private final char symbol;
 	
 	
-	// CONSTRUTORES
 	
-	
+	// CONSTRUCTORS
 	
 	/**
-	 * Creates a new ConsoleOutputFormatter. By omission, its section delimiter
-	 * is "--------------------------------------------------" (50x the symbol
-	 * '-') and the space between sections is 2 blank lines.
+	 * Creates a new instance of {@link ConsoleOutputFormatter}. By omission,
+	 * its section delimiter is
+	 * "--------------------------------------------------" (50x the symbol '-')
+	 * and the space between sections is 2 blank lines.
 	 */
 	public ConsoleOutputFormatter() {
-		sectionDelimiter = "--------------------------------------------------";
-		spaceBetweenSections = "\n\n";
+		this( '-', 0, 0 ); // enters the exceptional case of the constructor
+							// which takes less resources in computation
 	}
 	
 	/**
-	 * Creates a new ConsoleOutputFormatter whose section delimiter is
-	 * {@code lengthOfTheDelimiter} times the symbol {@code symbol} and space
-	 * between sections is {@code numberOfBlankLines} blank lines.
-	 * 
+	 * Creates a new instance of {@link ConsoleOutputFormatter} whose
+	 * {@link ConsoleOutputFormatter#sectionDelimiter section delimiter} is
+	 * {@code lengthOfTheDelimiter} times the symbol {@code symbol} and
+	 * {@link ConsoleOutputFormatter#spaceBetweenSections space between
+	 * sections} is {@code numberOfBlankLines} blank lines.
 	 * <p>
 	 * If a non-positive number is introduced either in
 	 * {@code lengthOfTheDelimiter} or in {@code numberOfBlankLines}, this
@@ -63,11 +79,17 @@ public class ConsoleOutputFormatter
 	 * </p>
 	 * 
 	 * @param symbol
-	 *            The symbol repeated in the delimiter.
+	 *            The symbol to be repeated in the
+	 *            {@link ConsoleOutputFormatter#sectionDelimiter section
+	 *            delimiter}.
 	 * @param lengthOfTheDelimiter
-	 *            The number of repetitions of {@code symbol}.
+	 *            The number of repetitions of {@code symbol} in the
+	 *            {@link ConsoleOutputFormatter#sectionDelimiter section
+	 *            delimiter}.
 	 * @param numberOfBlankLines
-	 *            The number of blank lines in the space between sections.
+	 *            The number of blank lines in the
+	 *            {@link ConsoleOutputFormatter#spaceBetweenSections space
+	 *            between sections}.
 	 */
 	public ConsoleOutputFormatter( char symbol, int lengthOfTheDelimiter,
 			int numberOfBlankLines ) {
@@ -75,48 +97,48 @@ public class ConsoleOutputFormatter
 		if( lengthOfTheDelimiter < 1 || numberOfBlankLines < 1 )
 		{
 			sectionDelimiter = "--------------------------------------------------";
+			this.symbol = '-';
 			spaceBetweenSections = "\n\n";
 		}
 		else
 		{
-			StringBuilder delimiter = new StringBuilder();
-			for( int time = 0; time < lengthOfTheDelimiter; ++time )
-				delimiter.append( symbol );
-			sectionDelimiter = delimiter.toString();
-			
-			StringBuilder space = new StringBuilder( "" );
-			for( int line = 0; line < numberOfBlankLines; ++line )
-				space.append( "\n" );
-			spaceBetweenSections = space.toString();
+			sectionDelimiter = repeatThisSymbolNTimes( symbol,
+					lengthOfTheDelimiter );
+			this.symbol = symbol;
+			spaceBetweenSections = repeatThisSymbolNTimes( '\n',
+					numberOfBlankLines );
 		}
 		
 	}
 	
 	
 	
-	// M…TODOS RELACIONADOS COM A APRESENTA«√O DO OUTPUT
-	
+	// OUTPUT FORMATTING METHODS
 	
 	/**
-	 * Prints the section delimiter to the console. After printing the section
-	 * delimiter, the prompt is left in a new line.
+	 * Prints the {@link ConsoleOutputFormatter#sectionDelimiter section
+	 * delimiter} to a new line in the console. After printing the
+	 * {@link ConsoleOutputFormatter#sectionDelimiter section delimiter}, the
+	 * prompt is left in a new line.
 	 */
 	public void printSectionDelimiter() {
 		System.out.println( "\n" + sectionDelimiter );
 	}
 	
-	
 	/**
 	 * Formats a section title.
 	 * 
 	 * <p>
-	 * The {@code title} will be returned in a single line which is constructed
-	 * from the section delimiter of this app (see the method
-	 * {@code sectionDelimiter()}) by removing the middle symbols and inserting
-	 * {@code title} in its place; the formatted title string has the same
-	 * length as the section delimiter string. </br>For example, if the section
-	 * delimiter was "......................" and {@code title} was "My Title",
-	 * the formatted section title would be the line "...... MY TITLE ......".
+	 * This method returns a {@link String} which is obtained by removing the
+	 * middle symbols of the {@link ConsoleOutputFormatter#sectionDelimiter
+	 * section delimiter} and inserting {@code title} to the upper case in its
+	 * place; the formatted title {@link String} returned has the same length as
+	 * the {@link ConsoleOutputFormatter#sectionDelimiter section delimiter}.
+	 * </p>
+	 * <p>
+	 * E.g. if the section delimiter was "{@code ......................}" and
+	 * {@code title} was "My Title", the formatted section title would be the
+	 * line "{@code ...... MY TITLE ......}".
 	 * <p>
 	 * In case the length of {@code title} equals or exceeds the length of the
 	 * section delimiter, the title will simply be printed in upper case. Also,
@@ -124,6 +146,9 @@ public class ConsoleOutputFormatter
 	 * simply be printed in upper case using has many lines as the string
 	 * {@code title} contains.
 	 * </p>
+	 * <p>
+	 * If {@code title} is {@code null}, it will be returned the empty
+	 * {@link String} "".
 	 * 
 	 * @param title
 	 *            The section title to be formatted.
@@ -131,47 +156,44 @@ public class ConsoleOutputFormatter
 	 */
 	public String formatSectionTitle( String title ) {
 		
-		if( title == null )
-			return "";
 		
-		// the length of the app's section delimiter, which will also be the
-		// length of the string which is the formatted version of title:
+		// exceptional cases: when title is null, or title's length exceeds the
+		// delimiter's length, or title occupies more than one line.
+		
+		if( title == null )
+			title = "";
+		
 		int theLength = sectionDelimiter.length();
 		
-		
-		// cases in which the format will be kept more simple:
 		if( title.length() + 3 >= theLength || title.contains( "\n" ) )
 			return title.toUpperCase();
 		
 		
-		// construction of a formatted title:
+		// construction of a formatted title: the formatted title will be a line
+		// with the same length as the section delimiter, obtained from the
+		// delimiter by replacing the middle symbols of the delimiter by the
+		// title surrounded by two spaces (if the parity of the title length is
+		// different from the parity of theLength, an extra symbol is printed
+		// after the space after the title)
 		
-		int numOfCharsToEachSideOfTheTitle = (theLength - title.length() - 2) / 2;
-		String charsToTheLeft = sectionDelimiter.substring( 0,
-				numOfCharsToEachSideOfTheTitle );
-		String charsToTheRight = sectionDelimiter.substring( theLength
-				- numOfCharsToEachSideOfTheTitle, theLength );
+		int nrOfSymbolsToEachSideOfTitle = (theLength - title.length() - 2) / 2;
+		String symbols = repeatThisSymbolNTimes( symbol,
+				nrOfSymbolsToEachSideOfTitle );
 		
-		StringBuilder formattedSectionTitle = new StringBuilder( charsToTheLeft )
-				.append( " " ).append( title.toUpperCase() ).append( " " );
-		
-		// if the parity of the title length is different from the parity of
-		// theLength, an extra char is printed after the space after the title
-		if( (title.length() & 1) != (theLength & 1) )
-			formattedSectionTitle.append( sectionDelimiter.charAt( theLength
-					- numOfCharsToEachSideOfTheTitle - 1 ) );
-		
-		formattedSectionTitle.append( charsToTheRight );
-		
-		// return
-		return formattedSectionTitle.toString();
+		return new StringBuilder( symbols )
+				.append( " " )
+				.append( title.toUpperCase() )
+				.append( " " )
+				.append(
+						((title.length() & 1) != (theLength & 1)) ? symbol : "" )
+				.append( symbols ).toString();
 		
 	}
 	
-	
 	/**
-	 * Prints a formatted section title to the console (see the method
-	 * {@code formatSectionTitle(String title)}).
+	 * Prints a formatted section title to a new line in the console (see the
+	 * method {@code formatSectionTitle(String title)}). After printing the
+	 * formatted section title, the prompt is left in a new line.
 	 * 
 	 * @param title
 	 *            The title to be formatted and printed.
@@ -180,38 +202,33 @@ public class ConsoleOutputFormatter
 		System.out.println( "\n" + formatSectionTitle( title ) );
 	}
 	
-	
 	/**
 	 * Prints the space between sections to the console. After printing the
 	 * established number of blank lines, the prompt is left in a new line.
 	 */
 	public void printSpaceBetweenSections() {
-		System.out.print( "\n" + spaceBetweenSections );
+		System.out.println( spaceBetweenSections );
 	}
 	
 	
-//	/**
-//	 * Formats a text.
-//	 * 
-//	 * <p>
-//	 * The {@code text} will be returned a
-//	 * @param text
-//	 * @return
-//	 */
-//	public String formatText(String text){
-//		
-//		if(text==null) return "";
-//		
-//		// the length of the app's section delimiter, which will also be the
-//		// length of the lines of the formatted text
-//		int linesLength = sectionDelimiter.length();
-//		int nrOfWrittenChars = text.length();
-//		
-//		StringBuilder newText = new StringBuilder("");
-//		int lastLineWrittenInNewText = 0;
-//		if(text.contains("\n")) ;//TODO
-//		while(nrOfWrittenChars>0) newText
-//		
-//		
-//	}
+	
+	// PRIVATE AUXILIAR METHODS
+	
+	/**
+	 * Returns a {@link String} obtained by repeating {@code numberOfTimes}
+	 * times the {@link ConsoleOutputFormatter#symbol symbol}.
+	 * 
+	 * @param numberOfTimes
+	 *            The number of repetitions.
+	 * @return A {@link String} obtained by repeating {@code numberOfTimes}
+	 *         times the char {@code symbol}.
+	 */
+	private String repeatThisSymbolNTimes( char symbol, int numberOfTimes ) {
+		
+		StringBuilder result = new StringBuilder();
+		for( int time = 0; time < numberOfTimes; ++time )
+			result.append( symbol );
+		return result.toString();
+	}
+	
 }

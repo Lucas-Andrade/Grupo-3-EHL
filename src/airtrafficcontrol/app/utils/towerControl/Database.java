@@ -5,12 +5,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.Set;
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;
 import airtrafficcontrol.app.exceptions.InvalidFlightIDException;
 import airtrafficcontrol.app.utils.hangar.AirCraft;
-import airtrafficcontrol.app.utils.hangar.AirPlane;
 import airtrafficcontrol.app.utils.hangar.Airship;
 import airtrafficcontrol.app.utils.hangar.ICivil;
 
@@ -44,7 +42,7 @@ public class Database
 	/**
 	 * The container of {@link Airship airships}.
 	 */
-	private Map< String, AirCraft > database;
+	private Map< String, Airship > database;
 	
 	
 	// CONSTRUCTOR
@@ -66,7 +64,7 @@ public class Database
 	 * 
 	 * @return The whole data structure.
 	 */
-	public Map< String, AirCraft > getDatabase() {
+	public Map< String, Airship > getDatabase() {
 		return database;
 	}
 	
@@ -82,7 +80,7 @@ public class Database
 	 */
 	public String addDatabase( Database newData ) {
 		
-		Map<String, AirCraft> newDatabase = newData.getDatabase();
+		Map<String, Airship> newDatabase = newData.getDatabase();
 		
 		Set< String > idSet = newDatabase.keySet();
 		Iterator< String > iterator = idSet.iterator();
@@ -123,30 +121,30 @@ public class Database
 	 * Adds an airplane to the database, if this does not contain
 	 * {@code airplane} yet.
 	 * 
-	 * @param aircraft
+	 * @param airship
 	 *            The airplane to be added to this.
 	 * @return {@code true} if the airplane was successfully added;
 	 *         {@code false} if the airplane was not added.
 	 * @throws InvalidArgumentException
 	 * @throws InvalidFlightIDException
 	 */
-	public boolean addAirship( AirCraft aircraft )
+	public boolean addAirship( Airship airship )
 			throws InvalidFlightIDException, InvalidArgumentException {
 		
-		if( aircraft == null )
+		if( airship == null )
 			throw new InvalidArgumentException();
 		
-		String id = aircraft.getFlightID();
+		String id = airship.getFlightID();
 		if( id == null )
 			throw new InvalidFlightIDException();
 		
-		if( database.containsKey( aircraft.getFlightID() ) )
+		if( database.containsKey( airship.getFlightID() ) )
 		{
 			return false;
 		}
 		else
 		{
-			database.put( aircraft.getFlightID(), aircraft );
+			database.put( airship.getFlightID(), airship );
 			return true;
 		}
 	}
@@ -174,7 +172,7 @@ public class Database
 	 * @return the airplane with the ID passed as parameter
 	 * @return null if the airplane was not found
 	 */
-	public AirCraft getAirplane( String id ) {
+	public Airship getAirplane( String id ) {
 		if( database.containsKey( id ) )
 			return database.get( id );
 		else return null;
@@ -187,8 +185,8 @@ public class Database
 	 */
 	public void setAllAirplanesToNotUpdated() {
 		
-		Set< Map.Entry< String, AirCraft >> entries = database.entrySet();
-		for( Map.Entry< String, AirCraft > entry : entries )
+		Set< Map.Entry< String, Airship >> entries = database.entrySet();
+		for( Map.Entry< String, Airship > entry : entries )
 		{
 			entry.getValue().setToNotUpdated();
 		}
@@ -259,8 +257,8 @@ public class Database
 		int removedCount = 0;
 		ArrayList< String > toRemove = new ArrayList<>();
 		
-		Set< Map.Entry< String, AirCraft >> entries = database.entrySet();
-		for( Map.Entry< String, AirCraft > entry : entries )
+		Set< Map.Entry< String, Airship >> entries = database.entrySet();
+		for( Map.Entry< String, Airship > entry : entries )
 		{
 			AirCraft airplane = entry.getValue();
 			if( (airplane instanceof ICivil)

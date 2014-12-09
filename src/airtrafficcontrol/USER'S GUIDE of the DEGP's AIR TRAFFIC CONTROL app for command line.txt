@@ -1,0 +1,127 @@
+USER'S GUIDE of the DEGP's AIR TRAFFIC CONTROL app for command line.
+
+
+
+When launching this app, the user is given access to a first menu: 
+
+OPTION MENU 
+1. Add flights from the ListOfFlights.txt file.
+2. Update the database's flights' coordinates.
+3. Monitor Air Traffic.
+4. Report altitude transgressions.
+5. Consult a flight's details.
+6. Remove all zero-passenger-flights.
+7. Remove a flight manually.
+8. Help!
+9. Exit app.
+
+The user must write the number of the option in the console and press Enter to proceed. 
+During the execution of options 3, After the ex
+
+
+
+---------DETAILED DESCRIPTION OF THE OPTIONS---------
+
+
+
+1. Add flights from the ListOfFlights.txt file.
+
+
+To add a list of flights from a text file, the user is asked to introduce the path and filename of the text file and its expected that the list is organized in the following manner: 
+
+Each and every line has information about one flight only. There must be no empty lines and the first line is already interpreted has containing a flight's information. 
+Information on a line must be written attending to the fact that each word is interpreted as a specific information and words are separated by the character space. Words in a line should be presented in the following manner: 
+First word: the flight ID number or code (it must not contain the space character); 
+Second word: the type of airship used in this flight, it must necessarily be the word "military" or the word "civil" 
+... TODO 
+Each flight in the list will be immediately inserted in the app's internal data base of flights and every flight's detailed information is available to be consulted using the Option5 of the Option Menu until the airship's landing time. After the hour of take-off, the airship's geographic coordinates will also be available for monitoring and tracking transgressions of the established airway corridors. 
+
+
+
+2. Update the database's flights' coordinates. 
+
+
+...TODO 
+
+
+
+3. Monitor Air Traffic.
+
+
+
+To return to the Options Menu without removing a flight, one must type the message "ABORT" (without the quotation marks) in the console and press Enter.
+
+
+
+4. Report altitude transgressions.
+
+
+To return to the Options Menu without reporting the flights transgressing the air corridors, one must type the message "ABORT" (without the quotation marks) in the console and press Enter.
+
+
+5. Consult a flight's details.
+
+
+This option allows the user to consult the details of one of the flights in the flights' database of this app. The user is asked to introduce in the console the flightID of the flight whose information he wants to consult and then press Enter.
+The app will continue to ask the user to introduce another flightID as long he inserts invalid values (see FAQ "1. What is a valid flightID?" below) or the flightID is not the identifier of a flight stored in the app's flights' database.
+To return to the Options Menu without consulting a flight's details, one must type the message "ABORT" (without the quotation marks) in the console and press Enter.
+
+
+
+6. Remove all zero-passenger-flights.
+
+
+This option allows the user to remove all the passenger-flights previously inserted in the internal database of this app that have zero passengers from that database. The user is asked to confirm (by typing "YES" without the quotation marks and pressing Enter) or to abort (by typing something else and pressing Enter) this operation.
+
+
+
+7. Remove a flight manually.
+
+
+This option allows the user to remove one previously inserted flight in the flights' database of this app from that database. The user is asked to introduce in the console the flightID of the flight he wants to remove and then press Enter.
+The app will continue to ask the user to introduce another flightID as long he inserts invalid values (see FAQ "1. What is a valid flightID?" below) or the flightID is not the identifier of a flight stored in the app's flights' database.
+To return to the Options Menu without removing a flight, one must type the message "ABORT" (without the quotation marks) in the console and press Enter.
+
+
+
+8. Help!
+
+
+Prints a message with the instructions to find the USER'S GUIDE txt file for the EHL's AIR TRAFFIC CONTROL app for console.
+
+
+
+9. Exit app.
+
+
+Prints a goodbye message and exits the EHL's AIR TRAFFIC CONTROL app for console.
+
+
+
+-----------------------FAQ---------------------------
+
+
+
+1. What is a valid flightID?
+
+
+A valid flightID is a sequence of alphanumeric characters that can NOT
+- be an empty string ("");
+- contain paragraph characters (\n);
+- contain characters that are not numbers nor letters (!"#$%.:,;- , the space character, etc).
+
+
+
+2. Which files interact with this app for console?
+
+
+This app receives a list of scheduled flights from the file "src/airtrafficcontrol/filestotread/LisOfFligths.txt" and creates an internal database of flights when option1 from the menu is selected. To update the flights' option 2 must be selected and the internal database will update the coordinates which are indicated in the file "src/airtrafficcontrol/filestotread/ActualizeCoordinates.txt".
+
+
+
+-----------------------------------------------------
+
+Thanks for using an EHL app! Bye!
+Copyright (c) 2014, EHL. All rights reserved.
+
+------------------------ END ------------------------

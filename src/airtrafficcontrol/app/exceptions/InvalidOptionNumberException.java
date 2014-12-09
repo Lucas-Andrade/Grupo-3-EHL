@@ -1,6 +1,6 @@
 package airtrafficcontrol.app.exceptions;
 
-import airtrafficcontrol.app.OptionsMenu;
+import airtrafficcontrol.app.appforconsole.OptionsMenu;
 
 
 /**
@@ -9,6 +9,7 @@ import airtrafficcontrol.app.OptionsMenu;
  * an operation which involves only the numbers of the options available in a
  * certain {@link OptionsMenu}.
  */
+@SuppressWarnings( "serial" )
 public class InvalidOptionNumberException extends Exception
 {
 	

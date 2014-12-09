@@ -1,6 +1,8 @@
 package airtrafficcontrol.app.utils.hangar;
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import airtrafficcontrol.app.exceptions.InvalidArgumentException;
@@ -18,10 +20,12 @@ import airtrafficcontrol.app.utils.airshipplan.FlightPlan;
  * Extends {@link AirCraft}
  *
  * @author Eva Gomes, Hugo Leal, Lucas Andrade
- * @author (Revisão) Filipa Estiveira, Filipa Gonçalves, Gonçalo Carvalho, José Oliveira
+ * @author (Revisão) Filipa Estiveira, Filipa Gonçalves, Gonçalo Carvalho, José
+ *         Oliveira
  */
 public abstract class Airship extends AirCraft
 {
+	
 	/**
 	 * The flight plan for this airship (take-off hour, air corridors and
 	 * landing hour).
@@ -30,9 +34,6 @@ public abstract class Airship extends AirCraft
 	
 	
 	
-	
-	
-		
 	// CONSTRUCTOR
 	
 	/**
@@ -49,8 +50,7 @@ public abstract class Airship extends AirCraft
 	 *             {@code flightPlan} are null.
 	 */
 	public Airship( String flightID, GeographicalPosition statingPosition,
-			FlightPlan flightPlan ) throws InvalidArgumentException
-	{
+			FlightPlan flightPlan ) throws InvalidArgumentException {
 		super( flightID, statingPosition );
 		if( flightPlan == null )
 			throw new InvalidArgumentException();
@@ -62,8 +62,7 @@ public abstract class Airship extends AirCraft
 	 *         the method was called
 	 * @throws InvalidArgumentException
 	 */
-	public AltitudeCorridor getCurrentCorridor()
-	{
+	public AltitudeCorridor getCurrentCorridor() {
 		return flightPlan.getCurrentCorridor();
 	}
 	
@@ -76,8 +75,7 @@ public abstract class Airship extends AirCraft
 	 * @throws InvalidArgumentException
 	 */
 	public void setNewArrivalHour( Calendar newArrivalHour )
-			throws InvalidArgumentException
-	{
+			throws InvalidArgumentException {
 		if( newArrivalHour == null )
 			throw new InvalidArgumentException();
 		
@@ -87,8 +85,7 @@ public abstract class Airship extends AirCraft
 	/**
 	 * @return the flight plan of the airplane
 	 */
-	public FlightPlan getPlan()
-	{
+	public FlightPlan getPlan() {
 		return flightPlan;
 	}
 	
@@ -100,8 +97,7 @@ public abstract class Airship extends AirCraft
 	 * @return a string with information on the status of the airplane
 	 * @throws InvalidArgumentException
 	 */
-	public String getObservations() throws InvalidArgumentException
-	{
+	public String getObservations() throws InvalidArgumentException {
 		AltitudeCorridor corridor = this.getCurrentCorridor();
 		if( corridor == null )
 			return verifyStatus();
@@ -111,16 +107,14 @@ public abstract class Airship extends AirCraft
 	/**
 	 * @return the date and hour the airplane is supposed to take off
 	 */
-	public Calendar getTakeOffDate()
-	{
+	public Calendar getTakeOffDate() {
 		return flightPlan.getTakeOffDate();
 	}
 	
 	/**
 	 * @return the date and hour the airplane is supposed to land
 	 */
-	public Calendar getLandingDate()
-	{
+	public Calendar getLandingDate() {
 		return flightPlan.getLandingDate();
 	}
 	
@@ -135,8 +129,7 @@ public abstract class Airship extends AirCraft
 	 *         corridor
 	 * @throws InvalidArgumentException
 	 */
-	private String verifyAltitude( AltitudeCorridor corridor )
-	{
+	private String verifyAltitude( AltitudeCorridor corridor ) {
 		double altitude = getGeographicPosition().getAltitude();
 		
 		if( altitude > corridor.getUpperLimit()
@@ -150,8 +143,7 @@ public abstract class Airship extends AirCraft
 	 * 
 	 * @return a string with information on the status of the plane
 	 */
-	private String verifyStatus()
-	{
+	private String verifyStatus() {
 		Calendar now = new GregorianCalendar();
 		
 		if( now.compareTo( getTakeOffDate() ) < 0 )
@@ -173,51 +165,47 @@ public abstract class Airship extends AirCraft
 	}
 	
 	
-
-
-
-//	TODO
-//	ver depois
 	
-//	/**
-//	 * Creates a list of the details of this airship in a string array.
-//	 * 
-//	 * @throws InvalidArgumentException
-//	 */
-//	public String[] toStringArray()
-//	{
-//
-//		GeographicalPosition pos = getGeographicPosition();
-//		DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd,hh:mm" );
-//		String[] details = new String[3];
-//		details[0] = new StringBuilder( "FlightID: " )
-//				.append( flightID )
-//				.append( "\n\nTake-Off date: " )
-//				.append(
-//						dateFormat
-//								.format( getPlan().getTakeOffDate().getTime() ) )
-//				.append( "\nLanding date: " )
-//				.append(
-//						dateFormat
-//								.format( getPlan().getLandingDate().getTime() ) )
-//				.toString();
-//		details[1] = new StringBuilder( "\n\nGeographic Position\nLatitude: " )
-//				.append( (new Double( pos.getLatitude() )).toString() )
-//				.append( "º\nLongitude: " )
-//				.append( (new Double( pos.getLongitude() )).toString() )
-//				.append( "º\nAltitude: " )
-//				.append( (new Double( pos.getAltitude() )).toString() )
-//				.append( "meters" ).toString();
-//		try
-//		{
-//			details[2] = "\n\nObservations: " + getObservations();
-//		}
-//		catch( InvalidArgumentException e )
-//		{
-//			details[2] = "\n\nObservations: ERROR getting observations about the flight.";
-//		}
-//		return details;
-//		
-//	}
+	// TODO: ver depois
+	
+	/**
+	 * Creates a list of the details of this airship in a string array.
+	 * 
+	 * @throws InvalidArgumentException
+	 */
+	public String[] toStringArray() {
+		
+		GeographicalPosition pos = getGeographicPosition();
+		DateFormat dateFormat = new SimpleDateFormat( "yyyy-MM-dd,hh:mm" );
+		String[] details = new String[3];
+		details[0] = new StringBuilder( "FlightID: " )
+				.append( getFlightID() )
+				.append( "\n\nTake-Off date: " )
+				.append(
+						dateFormat
+								.format( getPlan().getTakeOffDate().getTime() ) )
+				.append( "\nLanding date: " )
+				.append(
+						dateFormat
+								.format( getPlan().getLandingDate().getTime() ) )
+				.toString();
+		details[1] = new StringBuilder( "\n\nGeographic Position\nLatitude: " )
+				.append( (new Double( pos.getLatitude() )).toString() )
+				.append( "º\nLongitude: " )
+				.append( (new Double( pos.getLongitude() )).toString() )
+				.append( "º\nAltitude: " )
+				.append( (new Double( pos.getAltitude() )).toString() )
+				.append( "meters" ).toString();
+		try
+		{
+			details[2] = "\n\nObservations: " + getObservations();
+		}
+		catch( InvalidArgumentException e )
+		{
+			details[2] = "\n\nObservations: ERROR getting observations about the flight.";
+		}
+		return details;
+		
+	}
 	
 }

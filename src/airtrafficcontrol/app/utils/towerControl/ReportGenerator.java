@@ -1,4 +1,6 @@
 package airtrafficcontrol.app.utils.towerControl;
+
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -22,8 +24,9 @@ import airtrafficcontrol.app.utils.hangar.Airship;
  * Allows to emit various types of reports. These reports can be returned as an
  * array of strings, or written out to files
  *
-* @author Eva Gomes, Hugo Leal, Lucas Andrade
- * @author (Revisão) Filipa Estiveira, Filipa Gonçalves, Gonçalo Carvalho, José Oliveira
+ * @author Eva Gomes, Hugo Leal, Lucas Andrade
+ * @author (Revisão) Filipa Estiveira, Filipa Gonçalves, Gonçalo Carvalho, José
+ *         Oliveira
  */
 public class ReportGenerator
 {
@@ -51,7 +54,7 @@ public class ReportGenerator
 		if( data == null || source == null )
 			throw new InvalidArgumentException();
 		
-		Map< String, AirCraft > database = data.getDatabase();
+		Map< String, Airship > database = data.getDatabase();
 		
 		ReadAirplanesCoordinates reader = new ReadAirplanesCoordinates();
 		reader.readFromFile( source, data );
@@ -122,7 +125,7 @@ public class ReportGenerator
 		if( data == null )
 			throw new InvalidArgumentException();
 		
-		Map< String, AirCraft > database = data.getDatabase();
+		Map< String, Airship > database = data.getDatabase();
 		ArrayList< Airship > airplanesOut = new ArrayList<>();
 		
 		Set< String > idSet = database.keySet();
@@ -133,19 +136,21 @@ public class ReportGenerator
 			
 			AltitudeCorridor corridor = null;
 			AirCraft airplane = database.get( iterator.next() );
-			if (airplane instanceof Airship) {
-				corridor = ((Airship) airplane).getCurrentCorridor();
-			 }
-			 double altitude = airplane.getGeographicPosition().getAltitude();
+			if( airplane instanceof Airship )
+			{
+				corridor = ((Airship)airplane).getCurrentCorridor();
+			}
+			double altitude = airplane.getGeographicPosition().getAltitude();
 			
 			
-			System.out.println(corridor);
-			if(corridor != null && ( altitude < corridor.getLowerLimit()
-					|| altitude > corridor.getUpperLimit() ) )
+			System.out.println( corridor );
+			if( corridor != null
+					&& (altitude < corridor.getLowerLimit() || altitude > corridor
+							.getUpperLimit()) )
 				airplanesOut.add( (Airship)airplane );
 		}
 		
-		Collections.sort(airplanesOut, new AltitudeComparator());
+		Collections.sort( airplanesOut, new AltitudeComparator() );
 		
 		int transgressorsNumber = airplanesOut.size();
 		String[] arrayOfAirplanesOut = new String[transgressorsNumber];
@@ -261,8 +266,9 @@ public class ReportGenerator
 		DateFormat format = new SimpleDateFormat( "hh.mm_dd-MM-yyyy" );
 		
 		StringBuilder builder = new StringBuilder();
-		builder.append( "src/airtrafficcontrol/filestowrite/" ).append( name ).append( "_" )
-				.append( format.format( now.getTime() ) ).append( ".txt" );
+		builder.append( "src/airtrafficcontrol/filestowrite/" ).append( name )
+				.append( "_" ).append( format.format( now.getTime() ) )
+				.append( ".txt" );
 		String destFile = builder.toString();
 		
 		BufferedWriter writer = new BufferedWriter( new PrintWriter( destFile ) );

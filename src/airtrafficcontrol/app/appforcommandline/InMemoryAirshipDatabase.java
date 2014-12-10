@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.function.Predicate;
 
 
@@ -66,18 +65,18 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase< Airship >
 	/**
 	 * Returns a list with the {@link Airship#flightId flightId}s of
 	 * {@link Airship airships} stored in this database that are out of their
-	 * pre-established {@link AltitudeCorridor altitude corridor}.
+	 * pre-established {@link AirCorridor altitude corridor}.
 	 * 
 	 * @return A list with the {@link Airship#flightId flightId}s of
 	 *         {@link Airship airships} stored in this database that are out of
-	 *         the pre-established {@link AltitudeCorridor altitude corridor}s.
+	 *         the pre-established {@link AirCorridor altitude corridor}s.
 	 */
 	public List< String > reportTransgressions() {
 		
 		List< String > transgressingAirships = new ArrayList<>();
 		for( Map.Entry< String, Airship > entry : getAll().entrySet() )
 		{
-			if( entry.isTrangressing() )
+			if( entry.getValue().isTransgressing() )
 				transgressingAirships.add( entry.getKey() );
 		}
 		return transgressingAirships;
@@ -86,17 +85,17 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase< Airship >
 	/**
 	 * Checks whether the {@link Airship airship} with {@link Airship#flightId
 	 * flightId} {@code flightId} is out of its pre-established
-	 * {@link AltitudeCorridor altitude corridor}.
+	 * {@link AirCorridor altitude corridor}.
 	 * 
 	 * @param flightId
 	 *            The {@link Airship#flightId flightId} of the {@link Airship
 	 *            airship} to be evaluated.
 	 * @return {@code true} if the {@link Airship airship} with
 	 *         {@link Airship#flightId flightId} {@code flightId} is in the
-	 *         correct {@link AltitudeCorridor altitude corridor}; </br>
+	 *         correct {@link AirCorridor altitude corridor}; </br>
 	 *         {@code false} if the {@link Airship airship} with
 	 *         {@link Airship#flightId flightId} {@code flightId} is out of its
-	 *         pre-established {@link AltitudeCorridor altitude corridor} or is
+	 *         pre-established {@link AirCorridor altitude corridor} or is
 	 *         not in this database.
 	 */
 	public boolean checkIfThisAirshipIsInCorridor( String flightId ) {
@@ -109,15 +108,34 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase< Airship >
 		return false;
 	}
 	
+	
+	/**
+	 * Stores the {@link Airship airship} {@code airship} in this database,
+	 * added by the {@link User user} {@code userWhoIsAddingThisAirship}.
+	 * 
+	 * @param element
+	 *            The element to be added to this database.
+	 * @param userWhoIsAddingThisAirship
+	 *            The user who added this element to the database.
+	 * @return {@code true} if the element was successfully added;</br>
+	 *         {@code false} otherwise.
+	 */
 	@Override
 	public boolean add( Airship airship, User user ) {
-		if( super.add( airship ) )
+		if( super.add( airship, user ) )
 		{
 			if( flightsByUserRegister.containsKey( user.getUsername() ) )
 				flightsByUserRegister.get( user.getUsername() ).add(
-						airship.getFlightId() );
-			else flightsByUserRegister.put( user.getUsername(),
-					new ArrayList<>().add( airship.getFlightId() ) );
+						airship.getIdentification() );
+			else
+			{
+				List< String > newListForNewUser = new ArrayList<>();
+				newListForNewUser.add( airship.getIdentification() );
+				flightsByUserRegister.put( user.getUsername(),
+						newListForNewUser );
+			}
+			return true;
 		}
+		return false;
 	}
 }

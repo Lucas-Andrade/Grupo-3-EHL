@@ -4,8 +4,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.FixMethodOrder;
-
 /**
  * Abstract class that represent the {@code AirTrafficControl} databases: <li>
  * {@link UserDatabse} <li> {@link airShipDatabase}
@@ -15,7 +13,7 @@ import org.junit.FixMethodOrder;
  * @param <T>
  */
 public abstract class InMemoryDatabase<T extends Element> implements
-		Database<Element>
+		Database<T>
 {
 	/**
 	 * {@code database Map} where key is the element identification and the
@@ -35,12 +33,12 @@ public abstract class InMemoryDatabase<T extends Element> implements
 	 * @return true if the element is added, false otherwise
 	 */
 	@Override
-	public boolean add( Element element )
+	public boolean add( T element )
 	{
 //		if( element == null )
 //		// TODO
 
-		if( database.containsKey( element.getIdentification ) )
+		if( database.containsKey( element.getIdentification() ) )
 			return false;
 		database.put( element.getIdentification(), element );
 		return true;
@@ -61,7 +59,7 @@ public abstract class InMemoryDatabase<T extends Element> implements
 	 * @return the {@Code database Map}
 	 */
 	@Override
-	public Map<String, Element> getAll()
+	public Map<String, T> getAll()
 	{
 		return Collections.unmodifiableMap( database );
 	}

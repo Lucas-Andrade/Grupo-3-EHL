@@ -109,7 +109,6 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase< Airship >
 		return false;
 	}
 	
-	
 	@Override
 	public boolean add( Airship airship, User user ) {
 		if( super.add( airship ) )

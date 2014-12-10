@@ -34,4 +34,5 @@ public interface Database<T extends Element>
 	 * @return the {@Code database Map} 
 	 */
 	public Map<String, T> getAll();
+
 }

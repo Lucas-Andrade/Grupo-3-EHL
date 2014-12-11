@@ -37,7 +37,7 @@ public interface Database< T extends Element >
 	public Element get( String identification );
 	
 	/**
-	 * Returns a map whose values are the elements stored in this database and
+	 * @return A map whose values are the elements stored in this database and
 	 * whose keys are the corresponding identifications.
 	 */
 	public Map< String, T > getAll();

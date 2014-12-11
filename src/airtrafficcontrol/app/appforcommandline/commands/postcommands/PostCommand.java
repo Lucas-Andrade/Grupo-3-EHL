@@ -2,11 +2,12 @@ package airtrafficcontrol.app.appforcommandline.commands.postcommands;
 
 
 import java.util.Map;
-import airtrafficcontrol.app.appforcommandline.Database;
-import airtrafficcontrol.app.appforcommandline.InMemoryUserDatabase;
+
 import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
 import airtrafficcontrol.app.appforcommandline.commands.exceptions.CommandException;
 import airtrafficcontrol.app.appforcommandline.commands.exceptions.DemandingParameterNotPresentException;
+import airtrafficcontrol.app.appforcommandline.model.Database;
+import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
 
 
 public abstract class PostCommand extends AbstractCommand

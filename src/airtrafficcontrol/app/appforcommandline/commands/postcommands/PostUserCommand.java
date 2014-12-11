@@ -1,8 +1,9 @@
 package airtrafficcontrol.app.appforcommandline.commands.postcommands;
 
 import java.util.Map;
-import airtrafficcontrol.app.appforcommandline.InMemoryUserDatabase;
+
 import airtrafficcontrol.app.appforcommandline.commands.exceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
 
 
 public class PostUserCommand extends PostCommand

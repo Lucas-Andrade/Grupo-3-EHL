@@ -1,4 +1,4 @@
-package airtrafficcontrol.app.appforcommandline;
+package airtrafficcontrol.app.appforcommandline.model.airships;
 
 /**
  * Class whose instances will represent a civil airship. This type of airships is distinguished from

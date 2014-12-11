@@ -1,4 +1,6 @@
-package airtrafficcontrol.app.appforcommandline;
+package airtrafficcontrol.app.appforcommandline.model.users;
+
+import airtrafficcontrol.app.appforcommandline.model.InMemoryDatabase;
 
 
 

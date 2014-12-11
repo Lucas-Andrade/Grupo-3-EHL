@@ -6,6 +6,11 @@ import org.junit.Before;
 import org.junit.Test;
 
 import airtrafficcontrol.app.appforcommandline.*;
+import airtrafficcontrol.app.appforcommandline.model.Database;
+import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
+import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
+import airtrafficcontrol.app.appforcommandline.model.airships.MilitaryAirship;
+import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 public class InMemoryAirshipDatabaseTests
 {

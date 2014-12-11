@@ -1,4 +1,6 @@
-package airtrafficcontrol.app.appforcommandline;
+package airtrafficcontrol.app.appforcommandline.model.airships;
+
+import airtrafficcontrol.app.appforcommandline.model.Element;
 
 /**
  * Abstract class whose instances will represent an Airship performing a specific flight.

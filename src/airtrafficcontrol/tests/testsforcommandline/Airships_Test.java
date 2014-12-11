@@ -4,9 +4,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import airtrafficcontrol.app.appforcommandline.Airship;
-import airtrafficcontrol.app.appforcommandline.CivilAirship;
-import airtrafficcontrol.app.appforcommandline.MilitaryAirship;
+import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
+import airtrafficcontrol.app.appforcommandline.model.airships.CivilAirship;
+import airtrafficcontrol.app.appforcommandline.model.airships.MilitaryAirship;
 
 public class Airships_Test {
 

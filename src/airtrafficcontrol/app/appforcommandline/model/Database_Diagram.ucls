@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.7" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="airtrafficcontrol.app.appforcommandline.User" project="AirTrafficControl" 
-    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/User.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="airtrafficcontrol.app.appforcommandline.model.users.User" 
+    project="AirTrafficControl" 
+    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/model/users/User.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="1052" y="325"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -10,8 +12,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="2" language="java" name="airtrafficcontrol.app.appforcommandline.Database" project="AirTrafficControl" 
-    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/Database.java" binary="false" 
+  <interface id="2" language="java" name="airtrafficcontrol.app.appforcommandline.model.Database" 
+    project="AirTrafficControl" 
+    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/model/Database.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="299" y="99"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -20,10 +23,10 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="3" language="java" name="airtrafficcontrol.app.appforcommandline.InMemoryAirshipDatabase" 
+  <class id="3" language="java" name="airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase" 
     project="AirTrafficControl" 
-    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/InMemoryAirshipDatabase.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/model/airships/InMemoryAirshipDatabase.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="175" y="497"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -31,9 +34,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="4" language="java" name="airtrafficcontrol.app.appforcommandline.Element" project="AirTrafficControl" 
-    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/Element.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+  <interface id="4" language="java" name="airtrafficcontrol.app.appforcommandline.model.Element" 
+    project="AirTrafficControl" file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/model/Element.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="937" y="79"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -41,9 +44,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="5" language="java" name="airtrafficcontrol.app.appforcommandline.InMemoryDatabase" 
+  <class id="5" language="java" name="airtrafficcontrol.app.appforcommandline.model.InMemoryDatabase" 
     project="AirTrafficControl" 
-    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/InMemoryDatabase.java" binary="false" 
+    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/model/InMemoryDatabase.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="299" y="277"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -52,10 +55,10 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="airtrafficcontrol.app.appforcommandline.InMemoryUserDatabase" 
+  <class id="6" language="java" name="airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase" 
     project="AirTrafficControl" 
-    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/InMemoryUserDatabase.java" binary="false" 
-    corner="BOTTOM_RIGHT">    
+    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/model/users/InMemoryUserDatabase.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="434" y="443"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -63,8 +66,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="airtrafficcontrol.app.appforcommandline.Airship" project="AirTrafficControl" 
-    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/Airship.java" binary="false" 
+  <class id="7" language="java" name="airtrafficcontrol.app.appforcommandline.model.airships.Airship" 
+    project="AirTrafficControl" 
+    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/model/airships/Airship.java" binary="false" 
     corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="798" y="342"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
@@ -77,30 +81,34 @@
     <end type="SOURCE" refId="5"/>    
     <end type="TARGET" refId="2"/>  
   </realization>  
-  <realization id="9">    
+  <generalization id="9">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <generalization id="10">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="5"/>  
+  </generalization>  
+  <realization id="11">    
     <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="4"/>  
   </realization>  
-  <association id="10">    
+  <association id="12">    
     <end type="SOURCE" refId="5" navigable="false">      
-      <attribute id="11" name="database"/>      
-      <multiplicity id="12" minimum="0" maximum="2147483647"/>    
+      <attribute id="13" name="database">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </attribute>      
+      <multiplicity id="14" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="0" y="0"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="4" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="13">    
+  <realization id="15">    
     <end type="SOURCE" refId="1"/>    
     <end type="TARGET" refId="4"/>  
   </realization>  
-  <generalization id="14">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
-  <generalization id="15">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="5"/>  
-  </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

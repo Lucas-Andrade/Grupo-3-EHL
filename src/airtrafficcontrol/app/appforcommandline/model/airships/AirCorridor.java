@@ -1,4 +1,4 @@
-package airtrafficcontrol.app.appforcommandline;
+package airtrafficcontrol.app.appforcommandline.model.airships;
 
 /**
  * Class whose instances will represent the correct flight path an {@code Airship} is allowed to

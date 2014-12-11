@@ -1,9 +1,11 @@
-package airtrafficcontrol.app.appforcommandline;
+package airtrafficcontrol.app.appforcommandline.model;
 
 
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 
 /**

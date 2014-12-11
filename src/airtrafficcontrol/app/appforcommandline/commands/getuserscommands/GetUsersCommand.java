@@ -2,9 +2,10 @@ package airtrafficcontrol.app.appforcommandline.commands.getuserscommands;
 
 
 import java.util.Map;
-import airtrafficcontrol.app.appforcommandline.InMemoryUserDatabase;
+
 import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
 import airtrafficcontrol.app.appforcommandline.commands.exceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
 
 
 public abstract class GetUsersCommand extends AbstractCommand

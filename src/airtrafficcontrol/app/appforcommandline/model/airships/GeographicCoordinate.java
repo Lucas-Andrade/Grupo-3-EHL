@@ -1,4 +1,4 @@
-package airtrafficcontrol.app.appforcommandline;
+package airtrafficcontrol.app.appforcommandline.model.airships;
 
 public class GeographicCoordinate {
 

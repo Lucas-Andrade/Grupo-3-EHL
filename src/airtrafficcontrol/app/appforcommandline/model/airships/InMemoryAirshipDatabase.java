@@ -1,4 +1,4 @@
-package airtrafficcontrol.app.appforcommandline;
+package airtrafficcontrol.app.appforcommandline.model.airships;
 
 
 import java.util.ArrayList;
@@ -6,6 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+
+import airtrafficcontrol.app.appforcommandline.model.InMemoryDatabase;
+import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 
 public class InMemoryAirshipDatabase extends InMemoryDatabase< Airship >

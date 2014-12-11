@@ -9,10 +9,14 @@ package airtrafficcontrol.app.appforcommandline;
  */
 public class CivilAirship extends Airship {
 
+	// Instance Fields
+
 	/**
 	 * {@code passengers} - int variable that represents the number of passengers the airship has.
 	 */
 	private final int passengers;
+
+	// Constructor
 
 	public CivilAirship(double latitude, double longitude, double altitude, double maxAltitude,
 			double minAltitude, int passengers) {
@@ -24,6 +28,8 @@ public class CivilAirship extends Airship {
 
 		this.passengers = passengers;
 	}
+
+	// Get Methods
 
 	public int getPassengers() {
 

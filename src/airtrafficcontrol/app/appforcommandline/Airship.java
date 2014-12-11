@@ -5,6 +5,8 @@ package airtrafficcontrol.app.appforcommandline;
  */
 public abstract class Airship implements Element {
 
+	// Instance Fields
+
 	/**
 	 * {@code ID} - long static variable that will contain the numeric value of the last atributed
 	 * ID. This variable will be updated every time a new {@code Airship} is created.
@@ -32,6 +34,8 @@ public abstract class Airship implements Element {
 	 */
 	private final boolean isTransgressing;
 
+	// Constructor
+
 	/**
 	 * Class constructor that will be used by the {@code Airship} subclasses in orden to instatiate
 	 * the fields that are common to all the airships. It will receive the geographic coordinates of
@@ -57,7 +61,7 @@ public abstract class Airship implements Element {
 	 */
 	public Airship(double latitude, double longitude, double altitude, double maxAltitude,
 			double minAltitude) {
-		
+
 		coordinates = new GeographicPosition(latitude, longitude, altitude);
 		airCorridor = new AirCorridor(maxAltitude, minAltitude);
 		flightId = flightIDGenerator();
@@ -67,6 +71,8 @@ public abstract class Airship implements Element {
 		else
 			isTransgressing = false;
 	}
+
+	// Private Methods
 
 	/**
 	 * Method that will be used by the class constructor to allocate a different ID to all the
@@ -79,6 +85,8 @@ public abstract class Airship implements Element {
 		return Long.toString(++ID);
 	}
 
+	// Overrides
+
 	/**
 	 * Override of the {@code toString()} method from {@code Object}.
 	 */
@@ -89,6 +97,8 @@ public abstract class Airship implements Element {
 				.append(airCorridor).append("\nIs Outside The Given Corridor: ")
 				.append(isTransgressing).toString();
 	}
+
+	// Get Methods
 
 	/**
 	 * @return returns the {@code flightId}.

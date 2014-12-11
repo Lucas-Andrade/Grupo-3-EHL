@@ -6,6 +6,8 @@ package airtrafficcontrol.app.appforcommandline;
  */
 public class AirCorridor {
 
+	// Instance Fields
+
 	/**
 	 * {@code maxAltitude} - the maximum altitude an {@code Airship} is allowed to fly.
 	 */
@@ -15,6 +17,8 @@ public class AirCorridor {
 	 * {@code minAltitude} - the minimum altitude an {@code Airship} is allowed to fly.
 	 */
 	private final double minAltitude;
+
+	// Constructor
 
 	/**
 	 * AirCorridor constructor that will receive as parameters altitude limits an {@code Airship}
@@ -35,21 +39,7 @@ public class AirCorridor {
 		this.minAltitude = minAltitude;
 	}
 
-	/** 
-	 * @return returns the {@code maxAltitude}.
-	 */
-	public double getMaxAltitude() {
-
-		return maxAltitude;
-	}
-
-	/** 
-	 * @return returns the {@code minAltitude}.
-	 */
-	public double getMinAltitude() {
-
-		return minAltitude;
-	}
+	// Overrides
 
 	/**
 	 * Override of the {@code toString()} method from {@code Object}.
@@ -59,5 +49,23 @@ public class AirCorridor {
 
 		return new StringBuilder("\nMaximum Altitude Permited: ").append(maxAltitude)
 				.append("Minimum Altitude Permited: ").append(maxAltitude).toString();
+	}
+
+	// Get Methods
+
+	/**
+	 * @return returns the {@code maxAltitude}.
+	 */
+	public double getMaxAltitude() {
+
+		return maxAltitude;
+	}
+
+	/**
+	 * @return returns the {@code minAltitude}.
+	 */
+	public double getMinAltitude() {
+
+		return minAltitude;
 	}
 }

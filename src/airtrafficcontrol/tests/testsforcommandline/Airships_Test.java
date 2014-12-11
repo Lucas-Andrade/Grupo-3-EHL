@@ -1,8 +1,12 @@
-package airtrafficcontrol.app.appforcommandline;
+package airtrafficcontrol.tests.testsforcommandline;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import airtrafficcontrol.app.appforcommandline.Airship;
+import airtrafficcontrol.app.appforcommandline.CivilAirship;
+import airtrafficcontrol.app.appforcommandline.MilitaryAirship;
 
 public class Airships_Test {
 

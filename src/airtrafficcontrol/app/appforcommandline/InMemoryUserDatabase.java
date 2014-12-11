@@ -8,7 +8,7 @@ package airtrafficcontrol.app.appforcommandline;
  * 
  */
 
-public class UserInMemoryDataBase extends InMemoryDatabase< User >
+public class InMemoryUserDatabase extends InMemoryDatabase< User >
 {	
 	
 	

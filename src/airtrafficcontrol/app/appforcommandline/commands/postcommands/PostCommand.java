@@ -1,9 +1,10 @@
-package airtrafficcontrol.app.appforcommandline.commands;
+package airtrafficcontrol.app.appforcommandline.commands.postcommands;
 
 
 import java.util.Map;
 import airtrafficcontrol.app.appforcommandline.Database;
 import airtrafficcontrol.app.appforcommandline.InMemoryUserDatabase;
+import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
 import airtrafficcontrol.app.appforcommandline.commands.exceptions.CommandException;
 import airtrafficcontrol.app.appforcommandline.commands.exceptions.DemandingParameterNotPresentException;
 
@@ -31,7 +32,7 @@ public abstract class PostCommand extends AbstractCommand
 	 * {@code database}.
 	 * 
 	 * @param usersDatabase
-	 *            The users' database that stores the user who's posting.
+	 *            The users' database that stores the user who is posting.
 	 * @param database
 	 *            The database where to store the posted element.
 	 * @param parameters

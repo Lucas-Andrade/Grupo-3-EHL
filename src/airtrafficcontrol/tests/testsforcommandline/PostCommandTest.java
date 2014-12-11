@@ -4,7 +4,7 @@ package airtrafficcontrol.tests.testsforcommandline;
 import java.util.HashMap;
 import org.junit.Test;
 import airtrafficcontrol.app.appforcommandline.InMemoryUserDatabase;
-import airtrafficcontrol.app.appforcommandline.commands.PostUserCommand;
+import airtrafficcontrol.app.appforcommandline.commands.postcommands.PostUserCommand;
 
 
 public class PostCommandTest

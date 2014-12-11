@@ -1,4 +1,4 @@
-package airtrafficcontrol.app.appforcommandline.commands;
+package airtrafficcontrol.app.appforcommandline.commands.postcommands;
 
 import java.util.Map;
 import airtrafficcontrol.app.appforcommandline.InMemoryAirshipDatabase;

@@ -1,4 +1,5 @@
 package airtrafficcontrol.app.appforcommandline;
+
 public class GeographicPosition {
 
 	private final GeographicCoordinate latitude;

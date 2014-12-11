@@ -1,6 +1,5 @@
 package airtrafficcontrol.app.appforcommandline;
 
-
 public class MilitaryAirship extends Airship {
 
 	private final boolean hasWeapons;

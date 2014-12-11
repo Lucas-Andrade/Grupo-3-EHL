@@ -1,4 +1,4 @@
-package airtrafficcontrol.tests;
+package airtrafficcontrol.tests.testsforconsole;
 
 import static org.junit.Assert.*;
 import java.io.IOException;

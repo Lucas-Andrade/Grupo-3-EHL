@@ -1,4 +1,4 @@
-package airtrafficcontrol.tests;
+package airtrafficcontrol.tests.testsforconsole;
 
 
 import org.junit.Test;

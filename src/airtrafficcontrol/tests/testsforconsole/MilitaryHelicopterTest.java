@@ -1,4 +1,4 @@
-package airtrafficcontrol.tests;
+package airtrafficcontrol.tests.testsforconsole;
 
 import static org.junit.Assert.*;
 import java.util.Calendar;
@@ -10,26 +10,21 @@ import airtrafficcontrol.app.appforconsole.utils.aircraftcoordinates.Geographica
 import airtrafficcontrol.app.appforconsole.utils.airshipplan.AirCorridorInTime;
 import airtrafficcontrol.app.appforconsole.utils.airshipplan.AltitudeCorridor;
 import airtrafficcontrol.app.appforconsole.utils.airshipplan.FlightPlan;
-import airtrafficcontrol.app.appforconsole.utils.hangar.CivilHelicopter;
-import airtrafficcontrol.app.appforconsole.utils.hangar.Helicopter;
+import airtrafficcontrol.app.appforconsole.utils.hangar.MilitaryHelicopter;
 import airtrafficcontrol.app.appforconsole.utils.towerControl.ReadListOfFlights;
 
-
-/**
- * @author (Revisão) Filipa Estiveira, Filipa Gonçalves, Gonçalo Carvalho, José Oliveira
- */
-public class CivilHelicopterTest {
+public class MilitaryHelicopterTest {
 
 	private static GeographicalPosition geo;
 	private int initialAtltitude = 1;
 	private int initialLatitude = 12;
 	private int initialLongitude = 10;
 	
-	CivilHelicopter cheli1;
-	CivilHelicopter cheli2;
+	MilitaryHelicopter mheli1;
+	MilitaryHelicopter mheli2;
 	Calendar date1;
 	Calendar date2;
-	
+
 	@Before
 	public void constructTwoAirplanes() throws InvalidArgumentException
 	{
@@ -38,31 +33,33 @@ public class CivilHelicopterTest {
 		date2.add(Calendar.MINUTE, 20);
 		
 		geo = new GeographicalPosition(initialLatitude, initialLongitude, initialAtltitude);
-		cheli1 = new CivilHelicopter("mgrf", geo, new FlightPlan(date1, date2, 9 ,9, 6), 10);
-		cheli2 = new CivilHelicopter("mgrf1", geo, new FlightPlan(date1, date2, 9 ,9, 6), 12);
+		
+		mheli1 = new MilitaryHelicopter("mgrf", geo, new FlightPlan(date1, date2, 9 ,9, 6), true);
+		mheli2 = new MilitaryHelicopter("mgrf1", geo,	new FlightPlan(date1, date2, 9 ,9, 6), false);
 	}
 	
+	
 	@Test
-	public void shouldReturnTheCorrectNumberOfPassengers()
+	public void shouldReturnIfThisHelicopterHasArmament()
 	{
-		assertEquals(10, cheli1.getPassengersNumber());
-		assertEquals(12, cheli2.getPassengersNumber());
+		assertTrue(mheli1.hasArmament());
+		assertFalse(mheli2.hasArmament());
 	}
 
 	
 	@Test
 	public void shouldReturnTheFlightID()
 	{
-		assertEquals("mgrf", cheli1.getFlightID());
-		assertEquals("mgrf1", cheli2.getFlightID());
+		assertEquals("mgrf", mheli1.getFlightID());
+		assertEquals("mgrf1", mheli2.getFlightID());
 	}
 	
 	
 	@Test
 	public void shouldReturnTheCorrectGeographicalPosition()
 	{
-		assertEquals(geo, cheli1.getGeographicPosition());
-		assertEquals(geo, cheli2.getGeographicPosition());
+		assertEquals(geo, mheli1.getGeographicPosition());
+		assertEquals(geo, mheli2.getGeographicPosition());
 	}
 	
 	
@@ -70,34 +67,34 @@ public class CivilHelicopterTest {
 	public void shouldUpdateTheGeographicalPositionToANewOne() throws InvalidArgumentException
 	{
 		GeographicalPosition newGeographicalPosition = new GeographicalPosition(18, 11, 20);
-		cheli1.updateGeographicPosition(newGeographicalPosition);
+		mheli1.updateGeographicPosition(newGeographicalPosition);
 		
-		assertEquals(newGeographicalPosition, cheli1.getGeographicPosition());
+		assertEquals(newGeographicalPosition, mheli1.getGeographicPosition());
 	}
 	
 	
 	@Test
 	public void shouldGetTheCorridorNullBecauseItIsStillGainingAltitude() throws InvalidArgumentException
 	{
-		Helicopter cheli3 = makeAnAirplaneWithAPlan(-10);
-		assertEquals(cheli3.getCurrentCorridor(), null);
+		MilitaryHelicopter mheli3 = makeAnAirplaneWithAPlan(-10);
+		assertEquals(mheli3.getCurrentCorridor(), null);
 	}
 	
 	
 	@Test
 	public void shouldGetTheCorridorNullBecauseItIsLanding() throws InvalidArgumentException
 	{
-		Helicopter cheli3 = makeAnAirplaneWithAPlan(-50);
-		assertEquals(cheli3.getCurrentCorridor(), null);
+		MilitaryHelicopter mheli3 = makeAnAirplaneWithAPlan(-50);
+		assertEquals(mheli3.getCurrentCorridor(), null);
 	}
 	
 	
 	@Test
 	public void shouldGetMidFlightCorridor() throws InvalidArgumentException
 	{
-		Helicopter cheli3 = makeAnAirplaneWithAPlan(-30);
-		double maxAlt = cheli3.getCurrentCorridor().getUpperLimit();
-		double minAlt = cheli3.getCurrentCorridor().getLowerLimit();
+		MilitaryHelicopter mheli3 = makeAnAirplaneWithAPlan(-30);
+		double maxAlt = mheli3.getCurrentCorridor().getUpperLimit();
+		double minAlt = mheli3.getCurrentCorridor().getLowerLimit();
 		
 		assertEquals(120, (int)maxAlt);
 		assertEquals(100, (int)minAlt);
@@ -107,66 +104,66 @@ public class CivilHelicopterTest {
 	@Test
 	public void shoudGetTheRightObservation_TakingOff() throws InvalidArgumentException
 	{
-		Helicopter cheli3 = makeAnAirplaneWithAPlan(-10);
-		assertEquals(cheli3.getObservations(), "The air plane has took off and is gaining altitude.");
+		MilitaryHelicopter mheli3 = makeAnAirplaneWithAPlan(-10);
+		assertEquals(mheli3.getObservations(), "The air plane has took off and is gaining altitude.");
 	}
 	
 	
 	@Test
 	public void shouldGetTheRightObservation_Landing() throws InvalidArgumentException
 	{
-		Helicopter cheli3 = makeAnAirplaneWithAPlan(-50);
-		assertEquals(cheli3.getObservations(), "The airplane has started its descent in order to land.");
+		MilitaryHelicopter mheli3 = makeAnAirplaneWithAPlan(-50);
+		assertEquals(mheli3.getObservations(), "The airplane has started its descent in order to land.");
 	}
 	
 	
 	@Test
 	public void shouldGetTheRightObservation_OutsideCorridor() throws InvalidArgumentException
 	{
-		Helicopter cheli3 = makeAnAirplaneWithAPlan(-30);
-		assertEquals(cheli3.getObservations(), "WARNING: The airplane is outside of the corridor.");
+		MilitaryHelicopter mheli3 = makeAnAirplaneWithAPlan(-30);
+		assertEquals(mheli3.getObservations(), "WARNING: The airplane is outside of the corridor.");
 	}
 	
 	
 	@Test
 	public void shouldGetTheRightObservation_NoObservation() throws InvalidArgumentException
 	{
-		Helicopter cheli3 = makeAnAirplaneWithAPlan(-30);
+		MilitaryHelicopter mheli3 = makeAnAirplaneWithAPlan(-30);
 		GeographicalPosition newGeographicalPosition = new GeographicalPosition(40, 15, 110);
-		cheli3.updateGeographicPosition(newGeographicalPosition);
+		mheli3.updateGeographicPosition(newGeographicalPosition);
 
-		assertEquals(cheli3.getObservations(), "");
+		assertEquals(mheli3.getObservations(), "");
 	}
 	
 	
 	@Test
 	public void shouldGetTheRightObservation_HasNotTakenOff() throws InvalidArgumentException
 	{
-		Helicopter cheli3 = makeAnAirplaneWithAPlan(10);
-		assertEquals(cheli3.getObservations(), "The airplane has not taken off yet.");
+		MilitaryHelicopter mheli3 = makeAnAirplaneWithAPlan(10);
+		assertEquals(mheli3.getObservations(), "The airplane has not taken off yet.");
 	}
 	
 	
 	@Test
 	public void shouldGetTheRightObservation_HasAlreadyLanded() throws InvalidArgumentException
 	{
-		Helicopter cheli3 = makeAnAirplaneWithAPlan(-70);
-		assertEquals(cheli3.getObservations(), "The airplane has already landed.");
+		MilitaryHelicopter mheli3 = makeAnAirplaneWithAPlan(-70);
+		assertEquals(mheli3.getObservations(), "The airplane has already landed.");
 	}
 	
 	
 	@Test 
 	public void shouldCorrectlySetTheNewArrivalDate() throws InvalidArgumentException
 	{
-		Helicopter cheli3 = makeAnAirplaneWithAPlan(0);
+		MilitaryHelicopter mheli3 = makeAnAirplaneWithAPlan(0);
 		Calendar newLanding = new GregorianCalendar();
 		newLanding.add(12, 80);
-		cheli3.setNewArrivalHour(newLanding);
+		mheli3.setNewArrivalHour(newLanding);
 		
-		assertEquals(cheli3.getPlan().getLastEvent().getEndingHour(), newLanding);
+		assertEquals(mheli3.getPlan().getLastEvent().getEndingHour(), newLanding);
 		
 		newLanding.add(12, -20);
-		assertEquals(cheli3.getPlan().getLastEvent().getStartingHour(), newLanding);
+		assertEquals(mheli3.getPlan().getLastEvent().getStartingHour(), newLanding);
 	}
 	
 	
@@ -177,8 +174,8 @@ public class CivilHelicopterTest {
 		Calendar hourLand = new GregorianCalendar();
 		hourLand.add(12, 20);
 		
-		CivilHelicopter cheli4 = new CivilHelicopter("rj351", geo, new FlightPlan(hourTakeOff, hourLand, 4,7,2), 15);
-		assertEquals(hourTakeOff, cheli4.getTakeOffDate());
+		MilitaryHelicopter mheli4 = new MilitaryHelicopter("rj351", geo, new FlightPlan(hourTakeOff, hourLand, 4,7,2), true);
+		assertEquals(hourTakeOff, mheli4.getTakeOffDate());
 	}
 	
 	
@@ -189,8 +186,8 @@ public class CivilHelicopterTest {
 		Calendar hourLand = new GregorianCalendar();
 		hourLand.add(12, 20);
 		
-		CivilHelicopter cheli3 = new CivilHelicopter("rj351", geo, new FlightPlan(hourTakeOff, hourLand, 10, 12, 5), 10);
-		assertEquals(hourLand, cheli3.getLandingDate());
+		MilitaryHelicopter mheli3 = new MilitaryHelicopter("rj351", geo, new FlightPlan(hourTakeOff, hourLand, 10, 12, 5), false);
+		assertEquals(hourLand, mheli3.getLandingDate());
 	}
 	
 	
@@ -204,7 +201,7 @@ public class CivilHelicopterTest {
 
 
 	
-	private static CivilHelicopter makeAnAirplaneWithAPlan(int diff) throws InvalidArgumentException
+	private static MilitaryHelicopter makeAnAirplaneWithAPlan(int diff) throws InvalidArgumentException
 	{
 		Calendar hourDep = new GregorianCalendar();
 		Calendar hourLand = new GregorianCalendar();
@@ -230,7 +227,7 @@ public class CivilHelicopterTest {
 		plan.addEvent(corridor);
 		plan.addEvent(landing);
 		
-		return new CivilHelicopter("id123", geo, plan, 10);
+		return new MilitaryHelicopter("id123", geo, plan, false);
 	}
 
 }

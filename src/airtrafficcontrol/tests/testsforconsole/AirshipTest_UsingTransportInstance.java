@@ -1,29 +1,22 @@
-package airtrafficcontrol.tests;
+package airtrafficcontrol.tests.testsforconsole;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
 import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.appforconsole.utils.aircraftcoordinates.GeographicalPosition;
-import airtrafficcontrol.app.appforconsole.utils.airshipplan.AirCorridorInTime;
-import airtrafficcontrol.app.appforconsole.utils.airshipplan.AltitudeCorridor;
-import airtrafficcontrol.app.appforconsole.utils.airshipplan.FlightPlan;
-import airtrafficcontrol.app.appforconsole.utils.hangar.AirPlane;
-import airtrafficcontrol.app.appforconsole.utils.hangar.Airship;
-import airtrafficcontrol.app.appforconsole.utils.hangar.MilitaryAirPlane;
+import airtrafficcontrol.app.appforconsole.utils.AirCorridorInTime;
+import airtrafficcontrol.app.appforconsole.utils.AltitudeCorridor;
+import airtrafficcontrol.app.appforconsole.utils.FlightPlan;
+import airtrafficcontrol.app.appforconsole.utils.GeographicalPosition;
+import airtrafficcontrol.app.appforconsole.utils.hangar.Airliner;
+import airtrafficcontrol.app.appforconsole.utils.hangar.Transport;
 import airtrafficcontrol.app.appforconsole.utils.towerControl.ReadListOfFlights;
 
+public class AirshipTest_UsingTransportInstance {
 
-/**
- * @author Eva Gomes, Hugo Leal, Lucas Andrade
- * @author (Revisão) Filipa Estiveira, Filipa Gonçalves, Gonçalo Carvalho, José Oliveira
- */
-
-public class AirplaneTest_UsingMilitaryAirplaneInstance {
-
-	private Airship airplane;
+	private Transport transport;
 	private static GeographicalPosition geo;
 	private int initialAtltitude = 1;
 	private int initialLatitude = 12;
@@ -38,134 +31,121 @@ public class AirplaneTest_UsingMilitaryAirplaneInstance {
 		date2 = ReadListOfFlights.createDefensiveCopyOfTheDate(date1);
 		date2.add(Calendar.MINUTE, 20);
 		
-		
-		int MinutesToTakeOff = 10 ;
-		int MinutesToLand = 10;
-		int MinutesToSwitchCorridor = 10;
-		
 		geo = new GeographicalPosition(initialLatitude, initialLongitude, initialAtltitude);
-		airplane = new MilitaryAirPlane("rj351", geo, new FlightPlan(date1, date2,
-				MinutesToTakeOff, MinutesToLand,MinutesToSwitchCorridor), true);
+		transport = new Transport("rj351", geo, new FlightPlan(date1, date2), false);
 	}
-	
 	
 	@Test
 	public void shouldReturnTheFlightID()
 	{
-		assertEquals("rj351", airplane.getFlightID());
+		assertEquals("rj351", transport.getFlightID());
 	}
-	
 	
 	@Test
 	public void shouldReturnTheCorrectGeographicalPosition()
 	{
-		assertEquals(geo, airplane.getGeographicPosition());
+		assertEquals(geo, transport.getGeographicPosition());
 	}
-	
 	
 	@Test
 	public void shouldUpdateTheGeographicalPositionToANewOne() throws InvalidArgumentException
 	{
 		GeographicalPosition newGeographicalPosition = new GeographicalPosition(18, 11, 20);
-		airplane.updateGeographicPosition(newGeographicalPosition);
+		transport.updateGeographicPosition(newGeographicalPosition);
 		
-		assertEquals(newGeographicalPosition, airplane.getGeographicPosition());
+		assertEquals(newGeographicalPosition, transport.getGeographicPosition());
 	}
-	
 	
 	@Test
 	public void shouldGetTheCorridorNullBecauseItIsStillGainingAltitude() throws InvalidArgumentException
 	{
-		AirPlane airliner2 = makeAnAirplaneWithAPlan(-10);
-		assertEquals(airliner2.getCurrentCorridor(), null);
+		Transport transport2 = makeAnAirplaneWithAPlan(-10);
+		assertEquals(transport2.getCurrentCorridor(), null);
 	}
-	
 	
 	@Test
 	public void shouldGetTheCorridorNullBecauseItIsLanding() throws InvalidArgumentException
 	{
-		AirPlane airliner2 = makeAnAirplaneWithAPlan(-50);
-		assertEquals(airliner2.getCurrentCorridor(), null);
+		Transport transport2 = makeAnAirplaneWithAPlan(-50);
+		assertEquals(transport2.getCurrentCorridor(), null);
 	}
-	
 	
 	@Test
 	public void shouldGetMidFlightCorridor() throws InvalidArgumentException
 	{
-		AirPlane airliner2 = makeAnAirplaneWithAPlan(-30);
-		double maxAlt = airliner2.getCurrentCorridor().getUpperLimit();
-		double minAlt = airliner2.getCurrentCorridor().getLowerLimit();
+		Transport transport2 = makeAnAirplaneWithAPlan(-30);
+		double maxAlt = transport2.getCurrentCorridor().getUpperLimit();
+		double minAlt = transport2.getCurrentCorridor().getLowerLimit();
 		
 		assertEquals(120, (int)maxAlt);
 		assertEquals(100, (int)minAlt);
 	}
 	
-	
 	@Test
 	public void shoudGetTheRightObservation_TakingOff() throws InvalidArgumentException
 	{
-		AirPlane airliner2 = makeAnAirplaneWithAPlan(-10);
-		assertEquals(airliner2.getObservations(), "The air plane has took off and is gaining altitude.");
+		Transport transport2 = makeAnAirplaneWithAPlan(-10);
+		assertEquals(transport2.getObservations(), "The air plane has took off and is gaining altitude.");
 	}
-	
 	
 	@Test
 	public void shouldGetTheRightObservation_Landing() throws InvalidArgumentException
 	{
-		AirPlane airliner2 = makeAnAirplaneWithAPlan(-50);
-		assertEquals(airliner2.getObservations(), "The airplane has started its descent in order to land.");
+		Transport transport2 = makeAnAirplaneWithAPlan(-50);
+		assertEquals(transport2.getObservations(), "The airplane has started its descent in order to land.");
 	}
-	
 	
 	@Test
 	public void shouldGetTheRightObservation_OutsideCorridor() throws InvalidArgumentException
 	{
-		AirPlane airliner2 = makeAnAirplaneWithAPlan(-30);
-		assertEquals(airliner2.getObservations(), "WARNING: The airplane is outside of the corridor.");
+		Transport transport2 = makeAnAirplaneWithAPlan(-30);
+		assertEquals(transport2.getObservations(), "WARNING: The airplane is outside of the corridor.");
 	}
-	
 	
 	@Test
 	public void shouldGetTheRightObservation_NoObservation() throws InvalidArgumentException
 	{
-		AirPlane airliner2 = makeAnAirplaneWithAPlan(-30);
+		Transport transport2 = makeAnAirplaneWithAPlan(-30);
 		GeographicalPosition newGeographicalPosition = new GeographicalPosition(40, 15, 110);
-		airliner2.updateGeographicPosition(newGeographicalPosition);
+		transport2.updateGeographicPosition(newGeographicalPosition);
 
-		assertEquals(airliner2.getObservations(), "");
+		assertEquals(transport2.getObservations(), "");
 	}
-	
 	
 	@Test
 	public void shouldGetTheRightObservation_HasNotTakenOff() throws InvalidArgumentException
 	{
-		AirPlane airliner2 = makeAnAirplaneWithAPlan(10);
-		assertEquals(airliner2.getObservations(), "The airplane has not taken off yet.");
+		Transport transport2 = makeAnAirplaneWithAPlan(20);
+		assertEquals(transport2.getObservations(), "The airplane has not taken off yet.");
 	}
-	
 	
 	@Test
 	public void shouldGetTheRightObservation_HasAlreadyLanded() throws InvalidArgumentException
 	{
-		AirPlane airliner2 = makeAnAirplaneWithAPlan(-70);
-		assertEquals(airliner2.getObservations(), "The airplane has already landed.");
+		Transport transport2 = makeAnAirplaneWithAPlan(-100);
+		assertEquals(transport2.getObservations(), "The airplane has already landed.");
 	}
-	
 	
 	@Test 
 	public void shouldCorrectlySetTheNewArrivalDate() throws InvalidArgumentException
 	{
-		AirPlane airliner2 = makeAnAirplaneWithAPlan(0);
+		Transport transport2 = makeAnAirplaneWithAPlan(0);
 		Calendar newLanding = new GregorianCalendar();
 		newLanding.add(12, 80);
-		airliner2.setNewArrivalHour(newLanding);
+		transport2.setNewArrivalHour(newLanding);
 		
-		assertEquals(airliner2.getPlan().getLastEvent().getEndingHour(), newLanding);
+		assertEquals(transport2.getPlan().getLastEvent().getEndingHour(), newLanding);
 		
 		newLanding.add(12, -20);
-		assertEquals(airliner2.getPlan().getLastEvent().getStartingHour(), newLanding);
+		assertEquals(transport2.getPlan().getLastEvent().getStartingHour(), newLanding);
 	}
 	
+	@Test
+	public void shouldReturnTheCorrectString() throws InvalidArgumentException
+	{
+		Transport transport2 = makeAnAirplaneWithAPlan(-30);
+		assertEquals("id123 12.0 10.0 1.0 " + transport2.getObservations(), transport2.positionToString());
+	}
 	
 	@Test
 	public void shouldReturnTheCorrectTakeOffDate() throws InvalidArgumentException
@@ -174,10 +154,9 @@ public class AirplaneTest_UsingMilitaryAirplaneInstance {
 		Calendar hourLand = new GregorianCalendar();
 		hourLand.add(12, 20);
 		
-		AirPlane airliner3 = new MilitaryAirPlane("rj351", geo, new FlightPlan(hourTakeOff, hourLand, 4,7,2), true);
+		Airliner airliner3 = new Airliner("rj351", geo, new FlightPlan(hourTakeOff, hourLand), 100);
 		assertEquals(hourTakeOff, airliner3.getTakeOffDate());
 	}
-	
 	
 	@Test
 	public void shouldReturnTheCorrectLandingDate() throws InvalidArgumentException
@@ -186,22 +165,11 @@ public class AirplaneTest_UsingMilitaryAirplaneInstance {
 		Calendar hourLand = new GregorianCalendar();
 		hourLand.add(12, 20);
 		
-		AirPlane airliner4 = new MilitaryAirPlane("rj351", geo, new FlightPlan(hourTakeOff, hourLand, 10, 12, 5), false);
-		assertEquals(hourLand, airliner4.getLandingDate());
+		Airliner airliner3 = new Airliner("rj351", geo, new FlightPlan(hourTakeOff, hourLand), 100);
+		assertEquals(hourLand, airliner3.getLandingDate());
 	}
 	
-	
-//	@Test
-//	public void shouldReturnTheCorrectString() throws InvalidArgumentException
-//	{
-//		AirPlane airliner2 = makeAnAirplaneWithAPlan(-30);
-//		assertEquals("id123 12.0 10.0 1.0 " + airliner2.getObservations(), airliner2.positionToString());
-//	}
-//	
-
-
-	
-	private static MilitaryAirPlane makeAnAirplaneWithAPlan(int diff) throws InvalidArgumentException
+	private static Transport makeAnAirplaneWithAPlan(int diff) throws InvalidArgumentException
 	{
 		Calendar hourDep = new GregorianCalendar();
 		Calendar hourLand = new GregorianCalendar();
@@ -221,13 +189,13 @@ public class AirplaneTest_UsingMilitaryAirplaneInstance {
 		AirCorridorInTime corridor = new AirCorridorInTime(startCorr, endCorr, corr);
 		AirCorridorInTime landing = new AirCorridorInTime(endCorr, hourLand, null);
 		
-		FlightPlan plan = new FlightPlan(hourDep, hourLand, 9, 9, 6);
+		FlightPlan plan = new FlightPlan(hourDep, hourLand);
 		
 		plan.addEvent(gainingAltitude);
 		plan.addEvent(corridor);
 		plan.addEvent(landing);
 		
-		return new MilitaryAirPlane("id123", geo, plan, false);
+		return new Transport("id123", geo, plan, false);
 	}
 
 }

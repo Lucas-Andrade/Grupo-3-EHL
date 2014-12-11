@@ -1,4 +1,4 @@
-package airtrafficcontrol.tests;
+package airtrafficcontrol.tests.testsforconsole;
 
 import static org.junit.Assert.*;
 import java.util.Calendar;
@@ -6,25 +6,28 @@ import java.util.GregorianCalendar;
 import org.junit.Before;
 import org.junit.Test;
 import airtrafficcontrol.app.appforconsole.exceptions.InvalidArgumentException;
-import airtrafficcontrol.app.appforconsole.utils.aircraftcoordinates.*;
+import airtrafficcontrol.app.appforconsole.utils.aircraftcoordinates.GeographicalPosition;
 import airtrafficcontrol.app.appforconsole.utils.airshipplan.AirCorridorInTime;
 import airtrafficcontrol.app.appforconsole.utils.airshipplan.AltitudeCorridor;
 import airtrafficcontrol.app.appforconsole.utils.airshipplan.FlightPlan;
 import airtrafficcontrol.app.appforconsole.utils.hangar.AirPlane;
 import airtrafficcontrol.app.appforconsole.utils.hangar.Airship;
-import airtrafficcontrol.app.appforconsole.utils.hangar.CivilAirPlane;
+import airtrafficcontrol.app.appforconsole.utils.hangar.MilitaryAirPlane;
 import airtrafficcontrol.app.appforconsole.utils.towerControl.ReadListOfFlights;
+
 
 /**
  * @author Eva Gomes, Hugo Leal, Lucas Andrade
  * @author (Revisão) Filipa Estiveira, Filipa Gonçalves, Gonçalo Carvalho, José Oliveira
  */
 
-public class AirplaneTest_UsingCivilAirplaneInstance {
+public class AirplaneTest_UsingMilitaryAirplaneInstance {
 
-	private Airship airliner;
+	private Airship airplane;
 	private static GeographicalPosition geo;
-	
+	private int initialAtltitude = 1;
+	private int initialLatitude = 12;
+	private int initialLongitude = 10;
 	Calendar date1;
 	Calendar date2;
 	
@@ -35,31 +38,38 @@ public class AirplaneTest_UsingCivilAirplaneInstance {
 		date2 = ReadListOfFlights.createDefensiveCopyOfTheDate(date1);
 		date2.add(Calendar.MINUTE, 20);
 		
-		geo = new GeographicalPosition(new Latitude(1), new Longitude(12), new Altitude(10));
-		airliner = new CivilAirPlane("rj351", geo, new FlightPlan(date1, date2, 9,9,6), 100);
+		
+		int MinutesToTakeOff = 10 ;
+		int MinutesToLand = 10;
+		int MinutesToSwitchCorridor = 10;
+		
+		geo = new GeographicalPosition(initialLatitude, initialLongitude, initialAtltitude);
+		airplane = new MilitaryAirPlane("rj351", geo, new FlightPlan(date1, date2,
+				MinutesToTakeOff, MinutesToLand,MinutesToSwitchCorridor), true);
 	}
 	
 	
 	@Test
 	public void shouldReturnTheFlightID()
 	{
-		assertEquals("rj351", airliner.getFlightID());
+		assertEquals("rj351", airplane.getFlightID());
 	}
 	
 	
 	@Test
 	public void shouldReturnTheCorrectGeographicalPosition()
 	{
-		assertEquals(geo, airliner.getGeographicPosition());
+		assertEquals(geo, airplane.getGeographicPosition());
 	}
+	
 	
 	@Test
 	public void shouldUpdateTheGeographicalPositionToANewOne() throws InvalidArgumentException
 	{
-		GeographicalPosition newGeographicalPosition = new GeographicalPosition(new Latitude(18), new Longitude(11), new Altitude(20));
-		airliner.updateGeographicPosition(newGeographicalPosition);
+		GeographicalPosition newGeographicalPosition = new GeographicalPosition(18, 11, 20);
+		airplane.updateGeographicPosition(newGeographicalPosition);
 		
-		assertEquals(newGeographicalPosition, airliner.getGeographicPosition());
+		assertEquals(newGeographicalPosition, airplane.getGeographicPosition());
 	}
 	
 	
@@ -164,7 +174,7 @@ public class AirplaneTest_UsingCivilAirplaneInstance {
 		Calendar hourLand = new GregorianCalendar();
 		hourLand.add(12, 20);
 		
-		AirPlane airliner3 = new CivilAirPlane("rj351", geo, new FlightPlan(hourTakeOff, hourLand, 4,7,2), 100);
+		AirPlane airliner3 = new MilitaryAirPlane("rj351", geo, new FlightPlan(hourTakeOff, hourLand, 4,7,2), true);
 		assertEquals(hourTakeOff, airliner3.getTakeOffDate());
 	}
 	
@@ -176,8 +186,8 @@ public class AirplaneTest_UsingCivilAirplaneInstance {
 		Calendar hourLand = new GregorianCalendar();
 		hourLand.add(12, 20);
 		
-		AirPlane airliner3 = new CivilAirPlane("rj351", geo, new FlightPlan(hourTakeOff, hourLand, 10, 12, 5), 100);
-		assertEquals(hourLand, airliner3.getLandingDate());
+		AirPlane airliner4 = new MilitaryAirPlane("rj351", geo, new FlightPlan(hourTakeOff, hourLand, 10, 12, 5), false);
+		assertEquals(hourLand, airliner4.getLandingDate());
 	}
 	
 	
@@ -187,9 +197,11 @@ public class AirplaneTest_UsingCivilAirplaneInstance {
 //		AirPlane airliner2 = makeAnAirplaneWithAPlan(-30);
 //		assertEquals("id123 12.0 10.0 1.0 " + airliner2.getObservations(), airliner2.positionToString());
 //	}
+//	
+
+
 	
-	
-	private static AirPlane makeAnAirplaneWithAPlan(int diff) throws InvalidArgumentException
+	private static MilitaryAirPlane makeAnAirplaneWithAPlan(int diff) throws InvalidArgumentException
 	{
 		Calendar hourDep = new GregorianCalendar();
 		Calendar hourLand = new GregorianCalendar();
@@ -209,12 +221,13 @@ public class AirplaneTest_UsingCivilAirplaneInstance {
 		AirCorridorInTime corridor = new AirCorridorInTime(startCorr, endCorr, corr);
 		AirCorridorInTime landing = new AirCorridorInTime(endCorr, hourLand, null);
 		
-		FlightPlan plan = new FlightPlan(hourDep, hourLand, 20, 20, 10);
+		FlightPlan plan = new FlightPlan(hourDep, hourLand, 9, 9, 6);
 		
 		plan.addEvent(gainingAltitude);
 		plan.addEvent(corridor);
 		plan.addEvent(landing);
 		
-		return new CivilAirPlane("id123", geo, plan, 316);
+		return new MilitaryAirPlane("id123", geo, plan, false);
 	}
+
 }

@@ -10,7 +10,7 @@ public class GeographicPosition {
 
 		this.latitude = new GeographicCoordinate(latitude, -90, 90);
 		this.longitude = new GeographicCoordinate(longitude, 0, 360);
-		this.altitude = new GeographicCoordinate(altitude, 0, 15000);
+		this.altitude = new GeographicCoordinate(altitude, 0, 20000);
 	}
 
 	@Override

@@ -57,7 +57,7 @@ public abstract class Airship implements Element {
 	 */
 	public Airship(double latitude, double longitude, double altitude, double maxAltitude,
 			double minAltitude) {
-
+		
 		coordinates = new GeographicPosition(latitude, longitude, altitude);
 		airCorridor = new AirCorridor(maxAltitude, minAltitude);
 		flightId = flightIDGenerator();

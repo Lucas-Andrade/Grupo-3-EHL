@@ -1,4 +1,5 @@
 package airtrafficcontrol.app.appforcommandline;
+
 /**
  * Class whose instances will represent a civil airship. This type of airships is distinguished from
  * the other because they have an extra field that represents the number of passengers the airship
@@ -17,6 +18,9 @@ public class CivilAirship extends Airship {
 			double minAltitude, int passengers) {
 
 		super(latitude, longitude, altitude, maxAltitude, minAltitude);
+
+		if (passengers < 0)
+			throw new IllegalArgumentException("The number of passengers cannot be less than 0");
 
 		this.passengers = passengers;
 	}

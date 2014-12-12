@@ -1,4 +1,4 @@
-package airtrafficcontrol.app.appforcommandline.exceptions.commands;
+package airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions;
 
 
 import java.text.MessageFormat;

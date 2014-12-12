@@ -3,7 +3,7 @@ package airtrafficcontrol.tests.testsforcommandline;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
-import airtrafficcontrol.app.appforcommandline.exceptions.commands.InvalidParameterValueException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.InvalidParameterValueException;
 
 
 public class InvalidParameterValueExceptionTest

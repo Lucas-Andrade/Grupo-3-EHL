@@ -1,4 +1,4 @@
-package airtrafficcontrol.app.appforcommandline.exceptions.database;
+package airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions;
 
 
 

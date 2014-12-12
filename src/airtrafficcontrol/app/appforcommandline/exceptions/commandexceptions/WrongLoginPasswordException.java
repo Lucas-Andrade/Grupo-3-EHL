@@ -1,12 +1,11 @@
-package airtrafficcontrol.app.appforcommandline.commands.postcommands;
+package airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions;
 
 
 import java.text.MessageFormat;
-import airtrafficcontrol.app.appforcommandline.exceptions.database.DatabaseException;
 
 
 @SuppressWarnings( "serial" )
-public class WrongLoginPasswordException extends DatabaseException
+public class WrongLoginPasswordException extends CommandException
 {
 	
 	public WrongLoginPasswordException( String loginName, String loginPassword ) {

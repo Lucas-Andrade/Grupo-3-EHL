@@ -1,4 +1,4 @@
-package airtrafficcontrol.app.appforcommandline.exceptions.commandparser;
+package airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions;
 
 
 @SuppressWarnings( "serial" )

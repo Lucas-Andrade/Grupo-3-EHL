@@ -1,9 +1,9 @@
 package airtrafficcontrol.app.appforcommandline.commands;
 
 
-import airtrafficcontrol.app.appforcommandline.commands.postcommands.WrongLoginPasswordException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commands.CommandException;
-import airtrafficcontrol.app.appforcommandline.exceptions.database.NoSuchElementInDatabaseException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
+import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
 /**

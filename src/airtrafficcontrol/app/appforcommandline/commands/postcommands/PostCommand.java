@@ -4,9 +4,10 @@ package airtrafficcontrol.app.appforcommandline.commands.postcommands;
 import java.text.MessageFormat;
 import java.util.Map;
 import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
-import airtrafficcontrol.app.appforcommandline.exceptions.commands.CommandException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commands.InvalidParameterValueException;
-import airtrafficcontrol.app.appforcommandline.exceptions.database.NoSuchElementInDatabaseException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.InvalidParameterValueException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
+import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 import airtrafficcontrol.app.appforcommandline.model.Database;
 import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
 import airtrafficcontrol.app.appforcommandline.model.users.User;
@@ -25,7 +26,7 @@ public abstract class PostCommand extends AbstractCommand
 	/**
 	 * The database where to store the posted element.
 	 */
-	protected Database database;
+	protected Database<?> database;
 	
 	
 	
@@ -41,7 +42,7 @@ public abstract class PostCommand extends AbstractCommand
 	 * @param parameters
 	 *            The container of the parameters name-value pairs.
 	 */
-	public PostCommand( InMemoryUserDatabase usersDatabase, Database database,
+	public PostCommand( InMemoryUserDatabase usersDatabase, Database<?> database,
 			Map< String, String > parameters ) {
 		
 		super( parameters );

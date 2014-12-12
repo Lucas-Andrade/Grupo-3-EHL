@@ -1,9 +1,8 @@
 package airtrafficcontrol.app.appforcommandline.commands.getairshipscommands;
 
 import java.util.Map;
-
 import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
-import airtrafficcontrol.app.appforcommandline.commands.exceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
 import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
 
 public abstract class GetAirshipsCommand extends AbstractCommand {

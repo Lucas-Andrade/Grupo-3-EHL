@@ -1,6 +1,9 @@
 package airtrafficcontrol.app.appforcommandline.commands;
 
-import airtrafficcontrol.app.appforcommandline.commands.exceptions.CommandException;
+
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
+import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
 /**
@@ -12,5 +15,6 @@ import airtrafficcontrol.app.appforcommandline.commands.exceptions.CommandExcept
 public interface Command
 {
 	
-	public void execute() throws CommandException;
+	public void execute() throws CommandException,
+			NoSuchElementInDatabaseException, WrongLoginPasswordException;
 }

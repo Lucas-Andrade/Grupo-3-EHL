@@ -1,13 +1,16 @@
 package airtrafficcontrol.app.appforcommandline.commands.postcommands;
 
 
+import java.text.MessageFormat;
 import java.util.Map;
-
 import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
-import airtrafficcontrol.app.appforcommandline.commands.exceptions.CommandException;
-import airtrafficcontrol.app.appforcommandline.commands.exceptions.DemandingParameterNotPresentException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.InvalidParameterValueException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
+import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 import airtrafficcontrol.app.appforcommandline.model.Database;
 import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
+import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 
 public abstract class PostCommand extends AbstractCommand
@@ -23,7 +26,7 @@ public abstract class PostCommand extends AbstractCommand
 	/**
 	 * The database where to store the posted element.
 	 */
-	protected Database database;
+	protected Database<?> database;
 	
 	
 	
@@ -39,7 +42,7 @@ public abstract class PostCommand extends AbstractCommand
 	 * @param parameters
 	 *            The container of the parameters name-value pairs.
 	 */
-	public PostCommand( InMemoryUserDatabase usersDatabase, Database database,
+	public PostCommand( InMemoryUserDatabase usersDatabase, Database<?> database,
 			Map< String, String > parameters ) {
 		
 		super( parameters );
@@ -49,15 +52,44 @@ public abstract class PostCommand extends AbstractCommand
 	
 	
 	
-	// EXECUTE METHOD
+	// IMPLEMENTATION OF INHERITED METHODS
+	
 	/**
 	 * Performs the specific action associated with this command, inclusively
 	 * authenticates the user who is posting.
+	 * 
+	 * @throws CommandException
+	 * @throws NoSuchElementInDatabaseException
+	 * @throws WrongLoginPasswordException
 	 */
-	protected void internalExecute() throws CommandException {
+	protected final void internalExecute() throws CommandException,
+			NoSuchElementInDatabaseException, WrongLoginPasswordException {
 		authenticateUser();
 		internalPostExecute();
 	};
+	
+	/**
+	 * Returns an array of {@link String strings} that has the names of the
+	 * parameters without whom the command cannot execute and also has the
+	 * {@link String strings} "{@code loginName}" and "{@code loginPassword}".
+	 * <p>
+	 * All {@link PostCommand "POST commands"} must receive as parameters a
+	 * login name and a login password referent to the {@link User user} who is
+	 * trying to post. This {@link User user} will be authenticated before the
+	 * actual posting operation.
+	 * </p>
+	 * 
+	 * @return An array of {@link String strings} that has the names of the
+	 *         parameters without whom the command cannot execute.
+	 */
+	protected final String[] getRequiredParameters() {
+		
+		String[] requiredParams = copyToNewArrayWith2MorePositions( getSpecificRequiredParameters() );
+		requiredParams[requiredParams.length - 2] = "loginName";
+		requiredParams[requiredParams.length - 1] = "loginPassword";
+		return requiredParams;
+	}
+	
 	
 	
 	// UNIMPLEMENTED METHODS
@@ -74,7 +106,7 @@ public abstract class PostCommand extends AbstractCommand
 	 * @return An array of {@link String strings} that has the names of the
 	 *         parameters without whom the command cannot execute.
 	 */
-	protected abstract String[] getRequiredParameters();
+	protected abstract String[] getSpecificRequiredParameters();
 	
 	
 	
@@ -84,11 +116,58 @@ public abstract class PostCommand extends AbstractCommand
 	 * Checks whether the required parameters (obtained using the method
 	 * {@link #getRequiredParameters()}) were received.
 	 * 
-	 * @param requiredParameters
+	 * @throws InvalidParameterValueException
+	 *             If the value in {@link AbstractCommand#parameters parameters}
+	 *             corresponding to "{@code loginName}" or to "
+	 *             {@code loginPassword}" is {@code null}.
+	 * @throws NoSuchElementInDatabaseException
+	 *             If the value corresponding to "{@code loginName}" in
+	 *             {@link AbstractCommand#parameters parameters} is not in the
+	 *             {@link #usersDatabase users database}.
+	 * @throws WrongLoginPasswordException
+	 *             If the value corresponding to "{@code loginPassword}" is not
+	 *             the password for the value corresponding to "{@code loginName}
+	 *             ".
 	 */
-	private void authenticateUser( String... parameterNames )
-			throws DemandingParameterNotPresentException {
-		// TODO: confirm password
+	private void authenticateUser() throws InvalidParameterValueException,
+			NoSuchElementInDatabaseException, WrongLoginPasswordException {
+		
+		String theLoginName = parameters.get( "loginName" );
+		if( theLoginName == null )
+			throw new InvalidParameterValueException( "loginName", null );
+		String theLoginPassword = parameters.get( "loginPassword" );
+		if( theLoginPassword == null )
+			throw new InvalidParameterValueException( "loginPassword", null );
+		
+		User theUser = usersDatabase.getElementByIdentification( parameters
+				.get( "loginName" ) );
+		if( theUser == null )
+			throw new NoSuchElementInDatabaseException( MessageFormat.format(
+					"{0} not in the users database.", theLoginName ) );
+		
+		if( !theUser.authenticatePassword( theLoginPassword ) )
+			throw new WrongLoginPasswordException( theLoginName,
+					theLoginPassword );
+		
+	}
+	
+	/**
+	 * Copies (in the original order) the {@link String strings} stored in
+	 * {@code array} to the first positions of a new array of {@link String
+	 * strings} whose length is 2 units larger than {@code array}.
+	 * 
+	 * @param array
+	 *            The array to be copied.
+	 * @return A new array of {@link String strings} whose length is 2 units
+	 *         larger than {@code array} and whose first positions store the
+	 *         entries of {@code array}.
+	 */
+	private String[] copyToNewArrayWith2MorePositions( String[] array ) {
+		
+		String[] result = new String[array.length + 2];
+		for( int index = 0; index < array.length; ++index )
+			result[index] = array[index];
+		return result;
 	}
 	
 }

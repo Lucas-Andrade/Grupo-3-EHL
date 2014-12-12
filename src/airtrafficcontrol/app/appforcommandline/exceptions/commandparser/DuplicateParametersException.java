@@ -1,4 +1,4 @@
-package airtrafficcontrol.app.appforcommandline.commandparser;
+package airtrafficcontrol.app.appforcommandline.exceptions.commandparser;
 
 /**
  * Class whose instances represent parser errors that result from finding 

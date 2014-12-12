@@ -4,10 +4,9 @@ import java.util.Map;
 
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
-import airtrafficcontrol.app.appforcommandline.commands.exceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commands.CommandException;
 import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
 import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
-import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 public class GetAllAirshipsCommand extends GetAirshipsCommand {
 

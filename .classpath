@@ -3,5 +3,6 @@
 	<classpathentry excluding="airtrafficcontrol/app/tests/" kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="src" path="/Project_TravelAgency"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

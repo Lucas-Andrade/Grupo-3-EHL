@@ -17,4 +17,6 @@ public interface Command
 	
 	public void execute() throws CommandException,
 			NoSuchElementInDatabaseException, WrongLoginPasswordException;
+
+	public String getResult();
 }

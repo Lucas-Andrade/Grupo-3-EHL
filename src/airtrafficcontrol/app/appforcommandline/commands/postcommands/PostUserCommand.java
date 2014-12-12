@@ -1,14 +1,10 @@
 package airtrafficcontrol.app.appforcommandline.commands.postcommands;
 
 import java.util.Map;
-
-import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
-
-
 import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
-import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsCommand;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
 import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
 import airtrafficcontrol.app.appforcommandline.model.users.User;
 
@@ -20,7 +16,7 @@ import airtrafficcontrol.app.appforcommandline.model.users.User;
 	 */
 
 
-public class PostUserCommand extends PostCommand
+public class PostUserCommand extends PostCommand<User>
 {
 	
 	private static final String USERNAME = "username"; 

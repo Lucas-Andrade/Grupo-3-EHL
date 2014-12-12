@@ -9,11 +9,12 @@ import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.Inva
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
 import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 import airtrafficcontrol.app.appforcommandline.model.Database;
+import airtrafficcontrol.app.appforcommandline.model.Element;
 import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
 import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 
-public abstract class PostCommand extends AbstractCommand
+public abstract class PostCommand<T extends Element> extends AbstractCommand
 {
 	
 	// INSTANCE FIELDS
@@ -26,7 +27,7 @@ public abstract class PostCommand extends AbstractCommand
 	/**
 	 * The database where to store the posted element.
 	 */
-	protected Database<?> database;
+	protected Database<T> database;
 	
 	
 	
@@ -42,7 +43,7 @@ public abstract class PostCommand extends AbstractCommand
 	 * @param parameters
 	 *            The container of the parameters name-value pairs.
 	 */
-	public PostCommand( InMemoryUserDatabase usersDatabase, Database<?> database,
+	public PostCommand( InMemoryUserDatabase usersDatabase, Database<T> database,
 			Map< String, String > parameters ) {
 		
 		super( parameters );

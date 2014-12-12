@@ -89,7 +89,6 @@ public class User implements Element
 	 * 
 	 * @return a string with an username.
 	 */
-	
 	@Override
 	public String getIdentification() {
 		

@@ -126,5 +126,4 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 		}
 		return false;
 	}
-
 }

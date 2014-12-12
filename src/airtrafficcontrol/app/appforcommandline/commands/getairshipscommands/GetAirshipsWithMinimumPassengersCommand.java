@@ -22,7 +22,7 @@ import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDat
  */
 public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand
 {
-	public static final String NUMBERBELLOWPASSENGERS = "nbp";
+	private static final String NUMBERBELLOWPASSENGERS = "nbp";
 
 	/**
 	 * Create a {@code GetAirshipsWithMinimumPassengersCommand} that will call

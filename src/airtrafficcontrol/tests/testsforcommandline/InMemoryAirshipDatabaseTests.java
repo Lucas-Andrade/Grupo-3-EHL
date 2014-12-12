@@ -23,7 +23,7 @@ public class InMemoryAirshipDatabaseTests {
 		// Arrange
 		airShipDatabase = new InMemoryAirshipDatabase();
 		airship = new MilitaryAirship(0, 0, 0, 10, 0, false);
-		user = new User("", "", "", "");
+		user = new User("X", "P", "T@", "O");
 	}
 
 	@Test

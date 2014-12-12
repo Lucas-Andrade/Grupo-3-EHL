@@ -5,10 +5,19 @@ import java.util.Map;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
 
 
+import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
+import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsCommand;
 import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
 import airtrafficcontrol.app.appforcommandline.model.users.User;
+
+	/** 
+	 * Class that extends {@link PostCommand} to add a new user   
+	 * into an User Database.
+	 *
+	 * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+	 */
 
 
 public class PostUserCommand extends PostCommand
@@ -24,6 +33,12 @@ public class PostUserCommand extends PostCommand
 	
 	private static final String[] REQUIREDPARAMETERS = {USERNAME,PASSWORD,EMAIL};
 	
+	/**
+	 * 
+	 * Class that implements the {@link CommandFactory} factory
+	 *
+	 * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+	 */
 	
 	public static class Factory implements CommandFactory {
 		
@@ -47,7 +62,16 @@ public class PostUserCommand extends PostCommand
 		}
 		
 	}
-			
+	
+	/**
+	 * Constructor 
+	 * 
+	 * store the container parameters
+	 * 
+	 * @param postingUsersDatabase - Users Data who contains the user responsible to add the new user. 
+	 * @param postedUsersDatabase - User Data who will contain the new user.
+	 * @param parameters - Container with parameters needed to proceed the search.
+	 */
 	
 	public PostUserCommand( InMemoryUserDatabase postingUsersDatabase,
 			InMemoryUserDatabase postedUsersDatabase, Map< String, String > parameters ) {
@@ -57,7 +81,14 @@ public class PostUserCommand extends PostCommand
 
 	
 	}
-
+	
+	/**
+	 * Override of {@link AbstractCommand} 
+	 * 
+	 * execute the main action associated to this command
+	 * 
+	 */
+	
 	
 	@Override
 	protected void internalPostExecute() throws CommandException {
@@ -71,11 +102,23 @@ public class PostUserCommand extends PostCommand
 		User user = (fullName !=null ) ? new User(username,password,email,fullName)	: new User(username,password,email);
 		
 
-		User postingUser =usersDatabase.getElementByIdentification(parameters.get("loginName"));
-		database.add(user, postingUser);
+		User postingUser =usersDatabase.getElementByIdentification(parameters.get("loginName"));	
+		
+		
+		result = database.add(user, postingUser) ? "User was successfull added": "User was not successfull added";
+		
+		 
+	
+	
 	}
 	
-	//@Override 
+	/**
+	 * Override of {@link AbstractCommand} 
+	 * 
+	 * Method responsible to get the Obligation parameters associated to this Command
+	 * 
+	 */
+	@Override 
 
 	protected String[] getSpecificRequiredParameters() {
 		return REQUIREDPARAMETERS;

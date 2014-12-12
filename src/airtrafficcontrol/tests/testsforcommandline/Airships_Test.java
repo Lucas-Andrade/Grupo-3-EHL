@@ -10,10 +10,7 @@ import airtrafficcontrol.app.appforcommandline.model.airships.MilitaryAirship;
 
 public class Airships_Test {
 
-	private Airship airship1;
-	private Airship airship2;
-	private Airship airship3;
-	private Airship airship4;
+	private Airship airship1, airship2, airship3, airship4;
 
 	@Before
 	public void createAirships() {

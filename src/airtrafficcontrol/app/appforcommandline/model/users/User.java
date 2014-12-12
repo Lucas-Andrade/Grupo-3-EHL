@@ -15,7 +15,7 @@ public class User implements Element {
 	private final String password;
 	private final String email;
 	private final String fullName;
- 
+
 	/**
 	 * Create a new {@code User} giving all the info.
 	 * 
@@ -28,29 +28,28 @@ public class User implements Element {
 	 * @param fullName
 	 *            - the user full name. (optional info)
 	 */
- 
+
 	public User(String username, String password, String email, String fullName) {
 
-		if( username == null || username.equals( "" ) )
+		if (username == null || username.equals(""))
 			throw new IllegalArgumentException();
-		else 
+		else
 			this.username = username;
-		
-		
-		if( password == null || password.equals( "" ) )
+
+		if (password == null || password.equals(""))
 			throw new IllegalArgumentException();
-		else 
+		else
 			this.password = password;
-		
+
 		if (email == null || email.equals("") || !hasOneAT(email))
 			throw new IllegalArgumentException();
-		else this.email = email;
-			
+		else
+			this.email = email;
+
 		if (fullName == null)
 			throw new IllegalArgumentException();
 		this.fullName = fullName;
-		
-		
+
 	}
 
 	/**
@@ -79,11 +78,11 @@ public class User implements Element {
 	public String toString() {
 
 		StringBuilder result = new StringBuilder("username: ");
-		result.append(username).append(", password: ").append(password)
-				.append(", email: ").append(email);
+		result.append(username).append(", password: ").append(password).append(", email: ")
+				.append(email);
 
-		return fullName.equals("") ? result.toString() : result
-				.append(", fullName: ").append(fullName).toString();
+		return fullName.equals("") ? result.toString() : result.append(", fullName: ")
+				.append(fullName).toString();
 	}
 
 	/**
@@ -101,36 +100,38 @@ public class User implements Element {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) 
+
+		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
-			return false; 
+			return false;
 		if (email == null) {
-			if (((User)obj).email != null)
+			if (((User) obj).email != null)
 				return false;
-		} else if (!email.equals(((User)obj).email))
+		} else if (!email.equals(((User) obj).email))
 			return false;
 		if (username == null) {
-			if (((User)obj).username != null)
+			if (((User) obj).username != null)
 				return false;
-		} else if (!username.equals(((User)obj).username))
+		} else if (!username.equals(((User) obj).username))
 			return false;
 		return true;
-	} 
+	}
 
-	/** 
+	/**
 	 * 
-	 * Method responsible for check if email has one 
-	 * and only one @
-	 *  
-	 * @param String - email
-	 * @return boolean with 
+	 * Method responsible for check if email has one and only one @
+	 * 
+	 * @param String
+	 *            - email
+	 * @return boolean with
 	 */
-	
+
 	private boolean hasOneAT(String email) {
-		int hasAt = email.indexOf("@"); 
+
+		int hasAt = email.indexOf("@");
 		return hasAt != -1 && hasAt == email.lastIndexOf("@") ? true : false;
 
 	}
@@ -141,9 +142,9 @@ public class User implements Element {
 	 * @return The user's username.
 	 */
 	public String getUsername() {
-		
+
 		return username;
-	
+
 	}
 
 }

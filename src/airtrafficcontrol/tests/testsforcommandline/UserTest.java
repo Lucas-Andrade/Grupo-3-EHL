@@ -14,7 +14,6 @@ import airtrafficcontrol.app.appforcommandline.model.users.User;
  */
 
 public class UserTest {
-
 	
 	User user1, user2;
 

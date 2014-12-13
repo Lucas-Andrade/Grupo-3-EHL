@@ -4,22 +4,17 @@ import java.util.Scanner;
 
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipByIdCommand;
-import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsByOwnerCommand;
 import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAllAirshipsCommand;
 import airtrafficcontrol.app.appforcommandline.commands.getuserscommands.GetAllUsersCommand;
 import airtrafficcontrol.app.appforcommandline.commands.getuserscommands.GetUserByUsernameCommand;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.DuplicateParametersException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.InvalidCommandParametersException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.InvalidRegisterException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.UnknownCommandException;
 import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
-import airtrafficcontrol.app.appforcommandline.model.InMemoryDatabase;
-import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
 import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
 import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
-import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 public class App {
 
@@ -31,50 +26,60 @@ public class App {
 	private static final InMemoryUserDatabase userDatabase = new InMemoryUserDatabase();
 	private static final InMemoryAirshipDatabase airshipDatabase = new InMemoryAirshipDatabase();
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 
-		App app = new App();
-		app.registerCommands();
+		registerCommands();
 
-		command = parser.getCommand(args);
-		command.execute();
-		System.out.println(command.getResult());
+		execute(args);
 
 		input = scanner.nextLine();
 
 		while (!input.equals("EXIT")) {
 
-			app.execute();
+			execute(input.split(" "));
 
 			input = scanner.nextLine();
 		}
-
-		app.execute();
 	}
 
-	private void registerCommands() throws InvalidRegisterException {
+	private static void registerCommands() {
 
-		// Register Get Users
-		parser.registerCommand("GET", "/users", new GetAllUsersCommand.Factory(userDatabase));
-		parser.registerCommand("GET", "/users/{username}", new GetUserByUsernameCommand.Factory(
-				userDatabase));
+		try {
 
-		// Register Get Airships
-		parser.registerCommand("GET", "/airships", new GetAllAirshipsCommand.Factory(
-				airshipDatabase));
-		parser.registerCommand("GET", "/airships/{flightId}", new GetAirshipByIdCommand.Factory(
-				airshipDatabase));
+			// Register Get Users
+			parser.registerCommand("GET", "/users", new GetAllUsersCommand.Factory(userDatabase));
+			parser.registerCommand("GET", "/users/{username}",
+					new GetUserByUsernameCommand.Factory(userDatabase));
 
-		// Register Posts For Users
+			// Register Get Airships
+			parser.registerCommand("GET", "/airships", new GetAllAirshipsCommand.Factory(
+					airshipDatabase));
+			parser.registerCommand("GET", "/airships/{flightId}",
+					new GetAirshipByIdCommand.Factory(airshipDatabase));
 
-		// Register Posts For Airships
+			// Register Posts For Users
 
+			// Register Posts For Airships
+
+		} catch (InvalidRegisterException e) {
+
+			System.out.println(e.getMessage());
+		}
 	}
 
-	private void execute() throws Exception {
+	private static void execute(String[] args) {
 
-		command = parser.getCommand(input.split(" "));
-		command.execute();
-		System.out.println(command.getResult());
+		try {
+
+			command = parser.getCommand(args);
+			command.execute();
+			System.out.println(command.getResult());
+
+		} catch (UnknownCommandException | DuplicateParametersException
+				| InvalidCommandParametersException | NoSuchElementInDatabaseException
+				| CommandException e) {
+
+			System.out.println(e.getMessage());
+		}
 	}
 }

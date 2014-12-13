@@ -283,7 +283,7 @@ public class CommandParser
 	 */
 	public Command getCommand( String... args ) throws UnknownCommandException,
 			DuplicateParametersException, InvalidCommandParametersException {
-		if( args.length < 2 || args.length > 3 ) { throw new IllegalArgumentException(
+		if( args.length < 2 || args.length > 3 ) { throw new UnknownCommandException(
 				"args must have 2 or three elements" ); }
 		
 		String cmd = args[0] + args[1];

@@ -69,7 +69,7 @@ public class GetAirshipsByOwnerCommand extends GetAirshipsCommand
 		String axiliarUsername = parameters.get( USERNAME );
 
 		result = listToString( airshipsDatabase.getAirshipsOfUser( axiliarUsername ), MessageFormat.format(
-				"The User {0} still didn't create Airships",
+				"The User {0} still did not create Airships",
 				axiliarUsername ) );
 	}
 

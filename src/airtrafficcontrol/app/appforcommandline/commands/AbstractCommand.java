@@ -187,8 +187,10 @@ public abstract class AbstractCommand implements Command {
 	protected String listToString( List<String> stringList, String message )
 	{
 		StringBuilder sb = new StringBuilder();
+		if( stringList == null)
+			return message;
 		for( String s : stringList )
 			sb.append( s ).append( "\n" );
-		return sb.equals( "" )? message : sb.toString();
+		return sb.toString();
 	}
 }

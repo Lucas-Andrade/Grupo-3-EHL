@@ -24,7 +24,7 @@ public abstract class AbstractCommand implements Command {
 	protected final Map<String, String> parameters;
 
 	protected String result;
-	
+
 	// CONSTRUCTOR
 	/**
 	 * Stores the container {@code parameters}.
@@ -37,8 +37,6 @@ public abstract class AbstractCommand implements Command {
 		this.parameters = parameters;
 	}
 
-	
-	
 	// EXECUTE METHOD
 	/**
 	 * Performs the action associated with this command, inclusively checks the validity of the
@@ -48,15 +46,13 @@ public abstract class AbstractCommand implements Command {
 	 *             If the received parameters are not valid (missing parameters, invalid values,
 	 *             ...).
 	 * @throws NoSuchElementInDatabaseException
-	 *             If an element, expected to be in a certain database, was not
-	 *             found.
+	 *             If an element, expected to be in a certain database, was not found.
 	 * @throws WrongLoginPasswordException
-	 *             If the command needs a login name and a login password and
-	 *             the received password is not the right password for the
-	 *             received login name.
+	 *             If the command needs a login name and a login password and the received password
+	 *             is not the right password for the received login name.
 	 */
-	public final void execute() throws CommandException,
-			NoSuchElementInDatabaseException, WrongLoginPasswordException {
+	public final void execute() throws CommandException, NoSuchElementInDatabaseException,
+			WrongLoginPasswordException {
 
 		validateDemandingParameters(getRequiredParameters());
 		// TODO: other validations may be required.
@@ -95,46 +91,40 @@ public abstract class AbstractCommand implements Command {
 	 */
 	private void validateDemandingParameters(String... parameterNames)
 			throws RequiredParameterNotPresentException {
-		
 
-		for( String name : parameterNames )
-			if( !parameters.containsKey( name ) )
-				throw new RequiredParameterNotPresentException( name );
-		
+		if (parameterNames == null)
+			return;
+
+		for (String name : parameterNames)
+			if (!parameters.containsKey(name))
+				throw new RequiredParameterNotPresentException(name);
+
 	}
 
 	public String getResult() {
-		
+
 		return result;
 	}
 
-	
-//protected method - by G.
+	// protected method - by G.
 	// Do you approve? (y/n)
-	
+
 	/**
 	 * Convert and return a {@code String} parameter to {@code double}.
 	 * 
 	 * @param name
 	 * @return the converted String parameter
 	 * @throws InvalidParameterValueException
-	 *         If the String can not be converted
+	 *             If the String can not be converted
 	 */
-	protected double getParameterAsDouble( String name )
-			throws InvalidParameterValueException
-	{
-		try
-		{
-			return Double.parseDouble( parameters.get( name ) );
-		}
-		catch( NullPointerException npe )
-		{
+	protected double getParameterAsDouble(String name) throws InvalidParameterValueException {
+
+		try {
+			return Double.parseDouble(parameters.get(name));
+		} catch (NullPointerException npe) {
 			throw new NullPointerException();
-		}
-		catch( NumberFormatException nfe )
-		{
-			throw new InvalidParameterValueException( name,
-					parameters.get( name ) );
+		} catch (NumberFormatException nfe) {
+			throw new InvalidParameterValueException(name, parameters.get(name));
 		}
 	}
 
@@ -144,10 +134,9 @@ public abstract class AbstractCommand implements Command {
 	 * @param name
 	 * @return the parameter
 	 */
-	protected String getParameterAsString( String name )
-			throws InvalidParameterValueException
-	{
-		return parameters.get( name );
+	protected String getParameterAsString(String name) throws InvalidParameterValueException {
+
+		return parameters.get(name);
 	}
 
 	/**
@@ -156,23 +145,16 @@ public abstract class AbstractCommand implements Command {
 	 * @param name
 	 * @return the converted String parameter
 	 * @throws InvalidParameterValueException
-	 *         If the String can not be converted
+	 *             If the String can not be converted
 	 */
-	protected int getParameterAsInt( String name )
-			throws InvalidParameterValueException
-	{
-		try
-		{
-			return Integer.parseInt( parameters.get( name ) );
-		}
-		catch( NullPointerException npe )
-		{
+	protected int getParameterAsInt(String name) throws InvalidParameterValueException {
+
+		try {
+			return Integer.parseInt(parameters.get(name));
+		} catch (NullPointerException npe) {
 			throw new NullPointerException();
-		}
-		catch( NumberFormatException nfe )
-		{
-			throw new InvalidParameterValueException( name,
-					parameters.get( name ) );
+		} catch (NumberFormatException nfe) {
+			throw new InvalidParameterValueException(name, parameters.get(name));
 		}
 	}
 
@@ -182,31 +164,24 @@ public abstract class AbstractCommand implements Command {
 	 * @param name
 	 * @return the converted String parameter
 	 * @throws InvalidParameterValueException
-	 *         If the String can not be converted
+	 *             If the String can not be converted
 	 */
-	protected boolean getParameterAsBoolean( String name )
-			throws InvalidParameterValueException
-	{
-		try
-		{
-			return Boolean.parseBoolean( parameters.get( name ) );
-		}
-		catch( NullPointerException npe )
-		{
+	protected boolean getParameterAsBoolean(String name) throws InvalidParameterValueException {
+
+		try {
+			return Boolean.parseBoolean(parameters.get(name));
+		} catch (NullPointerException npe) {
 			throw new NullPointerException();
-		}
-		catch( NumberFormatException nfe )
-		{
-			throw new InvalidParameterValueException( name,
-					parameters.get( name ) );
+		} catch (NumberFormatException nfe) {
+			throw new InvalidParameterValueException(name, parameters.get(name));
 		}
 	}
-
 
 	/**
 	 * Convert a given {@code String List} to a String
 	 * 
-	 * @param stringList parameter
+	 * @param stringList
+	 *            parameter
 	 * @return a string of the given list
 	 */
 	protected String listToString( List<String> stringList, String message )

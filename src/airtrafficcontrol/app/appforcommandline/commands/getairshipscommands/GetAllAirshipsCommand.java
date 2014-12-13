@@ -8,7 +8,6 @@ import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
 import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
 import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
-import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 public class GetAllAirshipsCommand extends GetAirshipsCommand {
 

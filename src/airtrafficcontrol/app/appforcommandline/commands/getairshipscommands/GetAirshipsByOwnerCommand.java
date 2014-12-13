@@ -5,7 +5,7 @@ import java.util.Map;
 
 import airtrafficcontrol.app.appforcommandline.commands.*;
 import airtrafficcontrol.app.appforcommandline.model.airships.*;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.RequiredParameterNotPresentException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.MissingRequiredParameterException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
 import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
@@ -63,7 +63,7 @@ public class GetAirshipsByOwnerCommand extends GetAirshipsCommand
 	 */
 	@Override
 	protected void internalExecute()
-			throws RequiredParameterNotPresentException,
+			throws MissingRequiredParameterException,
 			NoSuchElementInDatabaseException
 	{
 		String axiliarUsername = parameters.get( USERNAME );

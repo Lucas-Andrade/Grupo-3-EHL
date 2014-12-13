@@ -1,12 +1,10 @@
 package airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions;
 
+@SuppressWarnings ("serial")
+public class UnknownCommandException extends CommandParserException {
 
-@SuppressWarnings( "serial" )
-public class UnknownCommandException extends CommandParserException
-{
+	public UnknownCommandException(String message) {
 
-	public UnknownCommandException( String msg ) {
-		// TODO Auto-generated constructor stub
-	}	
-	
+		super(message);
+	}
 }

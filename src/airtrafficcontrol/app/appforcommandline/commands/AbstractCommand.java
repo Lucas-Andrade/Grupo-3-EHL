@@ -5,7 +5,7 @@ import java.util.Map;
 
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.InvalidParameterValueException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.RequiredParameterNotPresentException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.MissingRequiredParameterException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
 import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
@@ -90,14 +90,14 @@ public abstract class AbstractCommand implements Command {
 	 * @param requiredParameters
 	 */
 	private void validateDemandingParameters(String... parameterNames)
-			throws RequiredParameterNotPresentException {
+			throws MissingRequiredParameterException {
 
 		if (parameterNames == null)
 			return;
 
 		for (String name : parameterNames)
 			if (!parameters.containsKey(name))
-				throw new RequiredParameterNotPresentException(name);
+				throw new MissingRequiredParameterException(name);
 
 	}
 

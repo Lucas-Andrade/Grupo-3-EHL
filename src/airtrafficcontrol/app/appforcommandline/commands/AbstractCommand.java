@@ -184,11 +184,11 @@ public abstract class AbstractCommand implements Command {
 	 *            parameter
 	 * @return a string of the given list
 	 */
-	protected String listToString(List<String> stringList) {
-
+	protected String listToString( List<String> stringList, String message )
+	{
 		StringBuilder sb = new StringBuilder();
-		for (String s : stringList)
-			sb.append(s).append("\n");
-		return sb.toString();
+		for( String s : stringList )
+			sb.append( s ).append( "\n" );
+		return sb.equals( "" )? message : sb.toString();
 	}
 }

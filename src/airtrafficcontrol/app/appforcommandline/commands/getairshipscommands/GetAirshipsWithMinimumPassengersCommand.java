@@ -1,5 +1,6 @@
 package airtrafficcontrol.app.appforcommandline.commands.getairshipscommands;
 
+import java.text.MessageFormat;
 import java.util.Map;
 
 import airtrafficcontrol.app.appforcommandline.commands.*;
@@ -19,18 +20,18 @@ public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand
 	private static final String NUMBERBELLOWPASSENGERS = "nbp";
 
 	/**
-	 * Class that implements the {@link CommandFactory} factory, according to the
-	 * AbstratFactory design pattern.
+	 * Class that implements the {@link CommandFactory} factory, according to
+	 * the AbstratFactory design pattern.
 	 */
 	public static class Factory implements CommandFactory
 	{
 		private final InMemoryAirshipDatabase dataBase;
-		
+
 		public Factory( InMemoryAirshipDatabase dataBase )
 		{
 			this.dataBase = dataBase;
 		}
-		
+
 		@Override
 		public Command newInstance( Map<String, String> parameters )
 		{
@@ -38,7 +39,7 @@ public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand
 					parameters );
 		}
 	}
-	
+
 	/**
 	 * Create a {@code GetAirshipsWithMinimumPassengersCommand} that will call
 	 * {@link GetAirshipsCommand} with the parameters {@code airshipsDatabase}
@@ -55,18 +56,22 @@ public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand
 	}
 
 	/**
-	 * Internal execute that will search in the {@code airshipDatabase} for airships with 
-	 * less passengers than the given {@code minimum passengers number}.
-	 * The method {@code getAirshipsThat} from {@link InMemoryAirshipDatabase} will call
-	 * the {@link AirshipPredicates#IsBelowPassagerNumber} method. 
-	 * The {code airship} info is inserted in the {@code result} variable from {@link GetAirshipsCommand}
+	 * Internal execute that will search in the {@code airshipDatabase} for
+	 * airships with less passengers than the given
+	 * {@code minimum passengers number}. The method {@code getAirshipsThat}
+	 * from {@link InMemoryAirshipDatabase} will call the
+	 * {@link AirshipPredicates#IsBelowPassagerNumber} method. The {code
+	 * airship} info is inserted in the {@code result} variable from
+	 * {@link GetAirshipsCommand}
 	 */
 	@Override
 	protected void internalExecute() throws CommandException
 	{
-		result = listToString( airshipsDatabase
-				.getAirshipsThat( new AirshipPredicates.IsBelowPassagerNumber(
-						Long.parseLong( parameters.get( NUMBERBELLOWPASSENGERS ) ) ) ) );
+		Long auxLongParameter = Long.parseLong( parameters.get( NUMBERBELLOWPASSENGERS ) );
+		result = listToString( airshipsDatabase.getAirshipsThat(
+				new AirshipPredicates.IsBelowPassagerNumber( auxLongParameter ) ),
+				MessageFormat.format( "There are no Airships with less passengers then {0}",
+				auxLongParameter ) );
 	}
 
 	/**
@@ -80,7 +85,7 @@ public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand
 	@Override
 	protected String[] getRequiredParameters()
 	{
-		return new String[] {NUMBERBELLOWPASSENGERS};
+		return new String[]{NUMBERBELLOWPASSENGERS};
 	}
 
 

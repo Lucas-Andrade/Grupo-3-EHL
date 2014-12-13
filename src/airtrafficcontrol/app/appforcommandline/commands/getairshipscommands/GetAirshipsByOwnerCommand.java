@@ -67,11 +67,10 @@ public class GetAirshipsByOwnerCommand extends GetAirshipsCommand
 			NoSuchElementInDatabaseException
 	{
 		String axiliarUsername = parameters.get( USERNAME );
-		if( airshipsDatabase.getAirshipsOfUser( axiliarUsername ) == null )
-			throw new NoSuchElementInDatabaseException( MessageFormat.format(
-					"The User {0} still didn't create Airships",
-					axiliarUsername ) );
-		result = listToString( airshipsDatabase.getAirshipsOfUser( axiliarUsername ) );
+
+		result = listToString( airshipsDatabase.getAirshipsOfUser( axiliarUsername ), MessageFormat.format(
+				"The User {0} still didn't create Airships",
+				axiliarUsername ) );
 	}
 
 	/**

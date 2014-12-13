@@ -7,7 +7,7 @@ import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetA
 import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsByOwnerCommand;
 import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAllAirshipsCommand;
 import airtrafficcontrol.app.appforcommandline.commands.getuserscommands.GetAllUsersCommand;
-import airtrafficcontrol.app.appforcommandline.commands.getuserscommands.GetUserByIdCommand;
+import airtrafficcontrol.app.appforcommandline.commands.getuserscommands.GetUserByUsernameCommand;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.DuplicateParametersException;
@@ -56,7 +56,7 @@ public class App {
 
 		// Register Get Users
 		parser.registerCommand("GET", "/users", new GetAllUsersCommand.Factory(userDatabase));
-		parser.registerCommand("GET", "/users/{username}", new GetUserByIdCommand.Factory(
+		parser.registerCommand("GET", "/users/{username}", new GetUserByUsernameCommand.Factory(
 				userDatabase));
 
 		// Register Get Airships

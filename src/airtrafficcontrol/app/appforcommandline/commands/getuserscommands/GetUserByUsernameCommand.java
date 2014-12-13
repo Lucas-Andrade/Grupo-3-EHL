@@ -1,6 +1,5 @@
 package airtrafficcontrol.app.appforcommandline.commands.getuserscommands;
 
-import java.util.Collection;
 import java.util.Map;
 
 import airtrafficcontrol.app.appforcommandline.commands.Command;
@@ -9,7 +8,7 @@ import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.Comm
 import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
 import airtrafficcontrol.app.appforcommandline.model.users.User;
 
-public class GetUserByIdCommand extends GetUsersCommand {
+public class GetUserByUsernameCommand extends GetUsersCommand {
 
 	public static class Factory implements CommandFactory {
 
@@ -23,30 +22,29 @@ public class GetUserByIdCommand extends GetUsersCommand {
 		@Override
 		public Command newInstance(Map<String, String> parameters) {
 
-			return new GetUserByIdCommand(userDatabase, parameters);
+			return new GetUserByUsernameCommand(userDatabase, parameters);
 		}
 	}
 
-	public GetUserByIdCommand(InMemoryUserDatabase usersDatabaseWhereToSearch,
+	public GetUserByUsernameCommand(InMemoryUserDatabase usersDatabase,
 			Map<String, String> parameters) {
 
-		super(usersDatabaseWhereToSearch, parameters);
+		super(usersDatabase, parameters);
 	}
 
 	@Override
 	protected void internalExecute() throws CommandException {
 
-		Collection<User> users = usersDatabase.getAll().values();
+		User user = usersDatabase.getElementByIdentification(this.parameters
+				.get("username"));
 
-		for (User user : users)
+		if (user == null) {
+			
+			this.result = "User Not Found";
+			return;
+		}
 
-			if (user.getIdentification().equals(this.parameters.get("username"))) {
-
-				this.result = user.toString();
-				return;
-			}
-
-		this.result = "User Not Found";
+		this.result = user.toString();
 	}
 
 	@Override

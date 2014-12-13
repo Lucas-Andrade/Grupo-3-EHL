@@ -1,6 +1,5 @@
 package airtrafficcontrol.app.appforcommandline.commands.getairshipscommands;
 
-import java.util.Collection;
 import java.util.Map;
 
 import airtrafficcontrol.app.appforcommandline.commands.Command;
@@ -27,25 +26,25 @@ public class GetAirshipByIdCommand extends GetAirshipsCommand {
 		}
 	}
 
-	public GetAirshipByIdCommand(InMemoryAirshipDatabase airshipsDatabaseWhereToSearch,
+	public GetAirshipByIdCommand(InMemoryAirshipDatabase airshipsDatabase,
 			Map<String, String> parameters) {
 
-		super(airshipsDatabaseWhereToSearch, parameters);
+		super(airshipsDatabase, parameters);
 	}
 
 	@Override
 	protected void internalExecute() throws CommandException {
 
-		Collection<Airship> airships = airshipsDatabase.getAll().values();
+		Airship airship = airshipsDatabase.getElementByIdentification(this.parameters
+				.get("flightId"));
 
-		for (Airship airship : airships)
-			if (airship.getIdentification().equals(this.parameters.get("flightId"))) {
+		if (airship == null) {
+			
+			this.result = "Airship Not Found";
+			return;
+		}
 
-				this.result = airship.toString();
-				return;
-			}
-
-		this.result = "Airship Not Found";
+		this.result = airship.toString();
 	}
 
 	@Override

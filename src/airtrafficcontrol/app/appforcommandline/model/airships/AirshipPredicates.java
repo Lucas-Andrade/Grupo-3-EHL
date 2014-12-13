@@ -26,10 +26,10 @@ public class AirshipPredicates {
 		}
 
 		@Override
-		public boolean test(Airship airship) {
-
-			if (airship instanceof CivilAirship)
-				return ((CivilAirship) airship).getPassengers() > passengerNumber;
+		public boolean test( Airship airship )
+		{
+			if( airship instanceof CivilAirship)
+				return ((CivilAirship)airship).getPassengers() < passengerNumber;
 			else
 				return false;
 		}

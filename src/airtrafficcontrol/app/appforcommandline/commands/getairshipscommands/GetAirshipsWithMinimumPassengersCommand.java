@@ -17,7 +17,7 @@ import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.Comm
  */
 public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand
 {
-	private static final String NUMBERBELLOWPASSENGERS = "nbp";
+	private static final String NUMBERBELLOWPASSENGERS = "nbP";
 
 	/**
 	 * Class that implements the {@link CommandFactory} factory, according to

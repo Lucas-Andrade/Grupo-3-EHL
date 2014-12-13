@@ -12,7 +12,7 @@ public abstract class GetUsersCommand extends AbstractCommand {
 	/**
 	 * The users database where to perform the 'get' operation.
 	 */
-	protected InMemoryUserDatabase usersDatabaseWhereToSearch;
+	protected InMemoryUserDatabase usersDatabase;
 
 	// CONSTRUCTOR
 	/**
@@ -27,6 +27,6 @@ public abstract class GetUsersCommand extends AbstractCommand {
 			Map<String, String> parameters) {
 
 		super(parameters);
-		this.usersDatabaseWhereToSearch = usersDatabaseWhereToSearch;
+		this.usersDatabase = usersDatabaseWhereToSearch;
 	}
 }

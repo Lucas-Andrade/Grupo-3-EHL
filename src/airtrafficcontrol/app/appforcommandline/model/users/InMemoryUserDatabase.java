@@ -1,7 +1,5 @@
 package airtrafficcontrol.app.appforcommandline.model.users;
 
-
-
 import airtrafficcontrol.app.appforcommandline.model.InMemoryDatabase;
 
 /**
@@ -10,11 +8,11 @@ import airtrafficcontrol.app.appforcommandline.model.InMemoryDatabase;
  * 
  */
 public class InMemoryUserDatabase extends InMemoryDatabase<User> {
-	
+
 	public InMemoryUserDatabase() {
-		
+
 		User master = new User("Daniel", "DanyGs", "danielacgomes1992@gmail.com", "Daniel Gomes");
 
 		this.add(master, master);
-		}
 	}
+}

@@ -1,6 +1,8 @@
 package airtrafficcontrol.app.appforcommandline.commands.getuserscommands;
 
+import java.util.Collection;
 import java.util.Map;
+
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
@@ -34,21 +36,22 @@ public class GetUserByIdCommand extends GetUsersCommand {
 	@Override
 	protected void internalExecute() throws CommandException {
 
-		Map<String, User> users = usersDatabaseWhereToSearch.getAll();
+		Collection<User> users = usersDatabase.getAll().values();
 
-		
-		
-		for (User user : users.values())
+		for (User user : users)
+
 			if (user.getIdentification().equals(this.parameters.get("username"))) {
-				
+
 				this.result = user.toString();
-				break;
+				return;
 			}
+
+		this.result = "User Not Found";
 	}
 
 	@Override
 	protected String[] getRequiredParameters() {
-		
-		return new String [] {"username"};
+
+		return new String[] {"username"};
 	}
 }

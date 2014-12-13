@@ -13,7 +13,7 @@ public abstract class GetAirshipsCommand extends AbstractCommand {
 	/**
 	 * The airships database where to perform the 'get' operation.
 	 */
-	protected InMemoryAirshipDatabase airshipsDatabaseWhereToSearch;
+	protected InMemoryAirshipDatabase airshipsDatabase;
 
 	// CONSTRUCTOR
 	/**
@@ -24,11 +24,11 @@ public abstract class GetAirshipsCommand extends AbstractCommand {
 	 * @param parameters
 	 *            The container of the parameters name-value pairs.
 	 */
-	public GetAirshipsCommand(InMemoryAirshipDatabase airshipsDatabaseWhereToSearch,
+	public GetAirshipsCommand(InMemoryAirshipDatabase airshipsDatabase,
 			Map<String, String> parameters) {
 
 		super(parameters);
-		this.airshipsDatabaseWhereToSearch = airshipsDatabaseWhereToSearch;
+		this.airshipsDatabase = airshipsDatabase;
 	}
 
 	// UNIMPLEMENTED METHODS

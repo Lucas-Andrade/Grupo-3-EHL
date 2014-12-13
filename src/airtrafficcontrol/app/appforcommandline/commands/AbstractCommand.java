@@ -15,8 +15,7 @@ import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoS
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public abstract class AbstractCommand implements Command
-{
+public abstract class AbstractCommand implements Command {
 
 	// INSTANCE FIELDS
 	/**
@@ -25,43 +24,41 @@ public abstract class AbstractCommand implements Command
 	protected final Map<String, String> parameters;
 
 	protected String result;
-
+	
 	// CONSTRUCTOR
 	/**
 	 * Stores the container {@code parameters}.
 	 * 
 	 * @param parameters
-	 *        The container of the parameters name-value pairs.
+	 *            The container of the parameters name-value pairs.
 	 */
-	public AbstractCommand( Map<String, String> parameters )
-	{
+	public AbstractCommand(Map<String, String> parameters) {
 
 		this.parameters = parameters;
 	}
 
-
-
+	
+	
 	// EXECUTE METHOD
 	/**
-	 * Performs the action associated with this command, inclusively checks the
-	 * validity of the received parameters.
+	 * Performs the action associated with this command, inclusively checks the validity of the
+	 * received parameters.
 	 * 
 	 * @throws CommandException
-	 *         If the received parameters are not valid (missing parameters,
-	 *         invalid values, ...).
+	 *             If the received parameters are not valid (missing parameters, invalid values,
+	 *             ...).
 	 * @throws NoSuchElementInDatabaseException
-	 *         If an element, expected to be in a certain database, was not
-	 *         found.
+	 *             If an element, expected to be in a certain database, was not
+	 *             found.
 	 * @throws WrongLoginPasswordException
-	 *         If the command needs a login name and a login password and the
-	 *         received password is not the right password for the received
-	 *         login name.
+	 *             If the command needs a login name and a login password and
+	 *             the received password is not the right password for the
+	 *             received login name.
 	 */
 	public final void execute() throws CommandException,
-			NoSuchElementInDatabaseException, WrongLoginPasswordException
-	{
+			NoSuchElementInDatabaseException, WrongLoginPasswordException {
 
-		validateDemandingParameters( getRequiredParameters() );
+		validateDemandingParameters(getRequiredParameters());
 		// TODO: other validations may be required.
 
 		internalExecute();
@@ -80,11 +77,11 @@ public abstract class AbstractCommand implements Command
 			NoSuchElementInDatabaseException, WrongLoginPasswordException;
 
 	/**
-	 * Returns an array of {@link String strings} that has the names of the
-	 * parameters without whom the command cannot execute.
+	 * Returns an array of {@link String strings} that has the names of the parameters without whom
+	 * the command cannot execute.
 	 * 
-	 * @return An array of {@link String strings} that has the names of the
-	 *         parameters without whom the command cannot execute.
+	 * @return An array of {@link String strings} that has the names of the parameters without whom
+	 *         the command cannot execute.
 	 */
 	protected abstract String[] getRequiredParameters();
 
@@ -96,25 +93,22 @@ public abstract class AbstractCommand implements Command
 	 * 
 	 * @param requiredParameters
 	 */
-	private void validateDemandingParameters( String... parameterNames )
-			throws RequiredParameterNotPresentException
-	{
-
+	private void validateDemandingParameters(String... parameterNames)
+			throws RequiredParameterNotPresentException {
+		
 
 		for( String name : parameterNames )
-			if( ! parameters.containsKey( name ) )
+			if( !parameters.containsKey( name ) )
 				throw new RequiredParameterNotPresentException( name );
-
+		
 	}
 
-	public String getResult()
-	{
-
+	public String getResult() {
+		
 		return result;
 	}
 
-
-
+	
 //protected method - by G.
 	// Do you approve? (y/n)
 	

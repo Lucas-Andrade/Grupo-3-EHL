@@ -6,6 +6,7 @@ import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
 
 /**
@@ -68,11 +69,12 @@ public class GetTransgressingAirshipsCommand extends GetAirshipsCommand {
 	 * Override of {@link AbstractCommand}
 	 * 
 	 * execute the main action associated to this command
+	 * @throws NoSuchElementInDatabaseException 
 	 * 
 	 */
 
 	@Override
-	protected void internalExecute() throws CommandException {
+	protected void internalExecute() throws CommandException, NoSuchElementInDatabaseException {
 
 		String flightdID = parameters.get(FLIGHTID);
 

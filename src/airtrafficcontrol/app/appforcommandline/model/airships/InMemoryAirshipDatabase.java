@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 import airtrafficcontrol.app.appforcommandline.model.InMemoryDatabase;
 import airtrafficcontrol.app.appforcommandline.model.users.User;
 
@@ -24,7 +25,6 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	 */
 	public InMemoryAirshipDatabase() {
 
-		super();
 		flightsByUserRegister = new HashMap<String, List<Airship>>();
 	}
 
@@ -50,12 +50,13 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	 * @param criteria
 	 * @return
 	 */
-	public List<String> getAirshipsThat(Predicate<Airship> criteria) {
+	public List<Airship> getAirshipsThat(Predicate<Airship> criteria) {
 
-		ArrayList<String> selectedAirships = new ArrayList<>();
-		for (Map.Entry<String, Airship> entry : getAll().entrySet())
-			if (criteria.test(entry.getValue()))
-				selectedAirships.add(entry.getKey());
+		List<Airship> selectedAirships = new ArrayList<>();
+
+		for (Airship airship : getAll().values())
+			if (criteria.test(airship))
+				selectedAirships.add(airship);
 
 		return selectedAirships;
 	}
@@ -68,13 +69,15 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	 *         in this database that are out of the pre-established {@link AirCorridor altitude
 	 *         corridor}s.
 	 */
-	public List<String> reportTransgressions() {
+	public List<Airship> reportTransgressions() {
 
-		List<String> transgressingAirships = new ArrayList<>();
-		for (Map.Entry<String, Airship> entry : getAll().entrySet()) {
-			if (entry.getValue().isTransgressing())
-				transgressingAirships.add(entry.getKey());
+		List<Airship> transgressingAirships = new ArrayList<>();
+
+		for (Airship airship : getAll().values()) {
+			if (airship.isTransgressing())
+				transgressingAirships.add(airship);
 		}
+		
 		return transgressingAirships;
 	}
 
@@ -90,14 +93,18 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	 *         {@code false} if the {@link Airship airship} with {@link Airship#flightId flightId}
 	 *         {@code flightId} is out of its pre-established {@link AirCorridor altitude corridor}
 	 *         or is not in this database.
+	 * @throws NoSuchElementInDatabaseException 
 	 */
-	public boolean checkIfThisAirshipIsInCorridor(String flightId) {
+	public boolean checkIfThisAirshipIsInCorridor(String flightId) throws NoSuchElementInDatabaseException {
 
 		Airship theAirship = getElementByIdentification(flightId);
+		
 		if (theAirship == null)
-			return false;
+			throw new NoSuchElementInDatabaseException("The Airship with the given ID doesn't exist in the database");
+		
 		if (theAirship.isTransgressing())
 			return true;
+		
 		return false;
 	}
 
@@ -115,15 +122,20 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	public boolean add(Airship airship, User user) {
 
 		if (super.add(airship, user)) {
+
 			if (flightsByUserRegister.containsKey(user.getUsername()))
 				flightsByUserRegister.get(user.getUsername()).add(airship);
+
 			else {
+
 				List<Airship> newListForNewUser = new ArrayList<>();
 				newListForNewUser.add(airship);
 				flightsByUserRegister.put(user.getUsername(), newListForNewUser);
 			}
+
 			return true;
 		}
+
 		return false;
 	}
 }

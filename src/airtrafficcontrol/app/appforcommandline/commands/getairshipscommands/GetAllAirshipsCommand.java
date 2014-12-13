@@ -54,7 +54,7 @@ public class GetAllAirshipsCommand extends GetAirshipsCommand {
 
 	@Override
 	protected String[] getRequiredParameters() {
-		
+
 		return null;
 	}
 }

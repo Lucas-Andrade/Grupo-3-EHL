@@ -10,7 +10,6 @@ public class CommandParserException extends Exception {
 		super(message);
 	}
 
-
 	public CommandParserException(String message, Throwable cause) {
 		super(message, cause);
 	}

@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import airtrafficcontrol.app.appforcommandline.CommandParser;
 import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAllAirshipsCommand;
+import airtrafficcontrol.app.appforcommandline.commands.getuserscommands.GetAllUsersCommand;
 import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
 import airtrafficcontrol.app.appforcommandline.model.airships.CivilAirship;
 import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
@@ -13,7 +14,7 @@ import airtrafficcontrol.app.appforcommandline.model.airships.MilitaryAirship;
 import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
 import airtrafficcontrol.app.appforcommandline.model.users.User;
 
-public class GetAllAirshipsCommand_Tests {
+public class GetAllUsersCommand_Tests {
 
 	private CommandParser parser = new CommandParser();
 
@@ -27,14 +28,14 @@ public class GetAllAirshipsCommand_Tests {
 	public void createUserAndAirshipDatabaseAndAddElements() {
 
 		user1 = new User("daniel", "pass1", "daniel@gmail.com");
-		user2 = new User("eva", "pass2", "eva@gmail.com");
-		user3 = new User("goncalo", "pass3", "goncalo@gmail.com");
+		// user2 = new User("eva", "pass2", "eva@gmail.com");
+		// user3 = new User("goncalo", "pass3", "goncalo@gmail.com");
 
 		userDatabase = new InMemoryUserDatabase();
 
 		userDatabase.add(user1, user1);
-		userDatabase.add(user2, user1);
-		userDatabase.add(user3, user1);
+		// userDatabase.add(user2, user1);
+		// userDatabase.add(user3, user1);
 
 		airship1 = new MilitaryAirship(10, 10, 1000, 2000, 200, false);
 		airship2 = new CivilAirship(10, 10, 3000, 2000, 200, 100);
@@ -48,26 +49,20 @@ public class GetAllAirshipsCommand_Tests {
 	}
 
 	@Test
-	public void shouldSuccessfullyGetAllAirships() throws Exception {
+	public void shouldSuccessfullyGetUsers() throws Exception {
 
 		// Act
-		parser.registerCommand("GET", "/airships", new GetAllAirshipsCommand.Factory(
-				airshipDatabase));
+		parser.registerCommand("GET", "/users", new GetAllUsersCommand.Factory(userDatabase));
 
-		GetAllAirshipsCommand getAllAirships = (GetAllAirshipsCommand) parser.getCommand("GET",
-				"/airships");
+		GetAllUsersCommand getAllUsers = (GetAllUsersCommand) parser.getCommand("GET", "/users");
 
-		getAllAirships.execute();
+		getAllUsers.execute();
 
 		// Assert
-		Assert.assertEquals(getAllAirships.getResult(),
-
-				"Flight ID: 1\nLatitude: 10.0 Longitude: 10.0 Altitude: 1000.0"
-				+ "\nMaximum Altitude Permited: 2000.0 Minimum Altitude Permited: 200.0"
-				+ "\nIs Outside The Given Corridor: false\n"
-
-				+ "Flight ID: 2\nLatitude: 10.0 Longitude: 10.0 Altitude: 3000.0"
-				+ "\nMaximum Altitude Permited: 2000.0 Minimum Altitude Permited: 200.0"
-				+ "\nIs Outside The Given Corridor: true\n");
+		Assert.assertEquals(getAllUsers.getResult(),
+					
+				"username: daniel, password: pass1, email: daniel@gmail.com\n"
+				
+				+ "username: Daniel, password: DanyGs, email: danielacgomes1992@gmail.com, fullName: Daniel Gomes\n");
 	}
 }

@@ -48,7 +48,7 @@ public class GetAirshipsByOwnerCommand extends GetAirshipsCommand
 	@Override
 	protected void internalExecute() throws CommandException
 	{
-		result = listToString(airshipsDatabaseWhereToSearch.getAirshipsOfUser( parameters.get(USERNAME) ));
+		result = listToString(airshipsDatabase.getAirshipsOfUser( parameters.get(USERNAME) ));
 	}
 
 	@Override

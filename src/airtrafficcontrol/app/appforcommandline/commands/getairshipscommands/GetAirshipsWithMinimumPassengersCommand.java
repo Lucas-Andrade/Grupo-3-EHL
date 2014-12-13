@@ -49,7 +49,7 @@ public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand
 	@Override
 	protected void internalExecute() throws CommandException
 	{
-		result = listToString( airshipsDatabaseWhereToSearch
+		result = listToString( airshipsDatabase
 				.getAirshipsThat( new AirshipPredicates.IsBelowPassagerNumber(
 						Long.parseLong( parameters.get( NUMBERBELLOWPASSENGERS ) ) ) ) );
 	}

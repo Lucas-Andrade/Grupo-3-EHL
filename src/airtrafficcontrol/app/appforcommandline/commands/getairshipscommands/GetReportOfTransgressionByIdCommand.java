@@ -72,7 +72,7 @@ public class GetReportOfTransgressionByIdCommand extends GetAirshipsCommand
 	@Override
 	protected void internalExecute() throws CommandException {
 
-		Collection<String> aircraft=airshipsDatabaseWhereToSearch.reportTransgressions();
+		Collection<String> aircraft=airshipsDatabase.reportTransgressions();
 
 
 		StringBuilder flightIDs = new StringBuilder();

@@ -81,7 +81,7 @@ public class GetTransgressingAirshipsCommand extends GetAirshipsCommand
 	
 		String flightdID=parameters.get(FLIGHTID);
 		
-		if( airshipsDatabaseWhereToSearch.checkIfThisAirshipIsInCorridor(flightdID)) {
+		if( airshipsDatabase.checkIfThisAirshipIsInCorridor(flightdID)) {
 			
 			result = "It's Trangressing";	
 		} else{

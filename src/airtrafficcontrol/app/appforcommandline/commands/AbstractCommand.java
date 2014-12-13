@@ -1,12 +1,13 @@
 package airtrafficcontrol.app.appforcommandline.commands;
 
-
+import java.util.List;
 import java.util.Map;
+
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.InvalidParameterValueException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.RequiredParameterNotPresentException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
 import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
-
 
 /**
  * 
@@ -14,15 +15,14 @@ import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoS
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public abstract class AbstractCommand implements Command
-{
-	
+public abstract class AbstractCommand implements Command {
+
 	// INSTANCE FIELDS
 	/**
 	 * The parameters name-value pairs received to execute the command.
 	 */
-	protected final Map< String, String > parameters;
-	
+	protected final Map<String, String> parameters;
+
 	protected String result;
 	
 	// CONSTRUCTOR
@@ -32,21 +32,21 @@ public abstract class AbstractCommand implements Command
 	 * @param parameters
 	 *            The container of the parameters name-value pairs.
 	 */
-	public AbstractCommand( Map< String, String > parameters ) {
-		
+	public AbstractCommand(Map<String, String> parameters) {
+
 		this.parameters = parameters;
 	}
-	
+
 	
 	
 	// EXECUTE METHOD
 	/**
-	 * Performs the action associated with this command, inclusively checks the
-	 * validity of the received parameters.
+	 * Performs the action associated with this command, inclusively checks the validity of the
+	 * received parameters.
 	 * 
 	 * @throws CommandException
-	 *             If the received parameters are not valid (missing parameters,
-	 *             invalid values, ...).
+	 *             If the received parameters are not valid (missing parameters, invalid values,
+	 *             ...).
 	 * @throws NoSuchElementInDatabaseException
 	 *             If an element, expected to be in a certain database, was not
 	 *             found.
@@ -57,16 +57,16 @@ public abstract class AbstractCommand implements Command
 	 */
 	public final void execute() throws CommandException,
 			NoSuchElementInDatabaseException, WrongLoginPasswordException {
-		
-		validateRequiredParameters( getRequiredParameters() );
+
+		validateDemandingParameters(getRequiredParameters());
 		// TODO: other validations may be required.
-		
+
 		internalExecute();
-		
+
 	}
-	
+
 	// UNIMPLEMENTED METHODS
-	
+
 	/**
 	 * Performs the specific action associated with this command.
 	 * 
@@ -75,40 +75,145 @@ public abstract class AbstractCommand implements Command
 	 */
 	protected abstract void internalExecute() throws CommandException,
 			NoSuchElementInDatabaseException, WrongLoginPasswordException;
-	
+
 	/**
-	 * Returns an array of {@link String strings} that has the names of the
-	 * parameters without whom the command cannot execute.
+	 * Returns an array of {@link String strings} that has the names of the parameters without whom
+	 * the command cannot execute.
 	 * 
-	 * @return An array of {@link String strings} that has the names of the
-	 *         parameters without whom the command cannot execute.
+	 * @return An array of {@link String strings} that has the names of the parameters without whom
+	 *         the command cannot execute.
 	 */
 	protected abstract String[] getRequiredParameters();
-	
+
 	// AUXILIAR PRIVATE METHODS
-	
+
 	/**
 	 * Checks whether the required parameters (obtained using the method
-	 * {@link #getRequiredParameters()}) are in {@link #parameters}.
+	 * {@link #getRequiredParameters()}) were received.
 	 * 
 	 * @param requiredParameters
-	 * @throw RequiredParameterNotPresentException If a required parameter is
-	 *        missing in {@link #parameters}.
 	 */
-	private void validateRequiredParameters( String... parameterNames )
+	private void validateDemandingParameters(String... parameterNames)
 			throws RequiredParameterNotPresentException {
 		
-		if( parameterNames == null )
-			return;
-		
+
 		for( String name : parameterNames )
 			if( !parameters.containsKey( name ) )
 				throw new RequiredParameterNotPresentException( name );
 		
 	}
-	
+
 	public String getResult() {
 		
 		return result;
+	}
+
+	
+//protected method - by G.
+	// Do you approve? (y/n)
+	
+	/**
+	 * Convert and return a {@code String} parameter to {@code double}.
+	 * 
+	 * @param name
+	 * @return the converted String parameter
+	 * @throws InvalidParameterValueException
+	 *         If the String can not be converted
+	 */
+	protected double getParameterAsDouble( String name )
+			throws InvalidParameterValueException
+	{
+		try
+		{
+			return Double.parseDouble( parameters.get( name ) );
+		}
+		catch( NullPointerException npe )
+		{
+			throw new NullPointerException();
+		}
+		catch( NumberFormatException nfe )
+		{
+			throw new InvalidParameterValueException( name,
+					parameters.get( name ) );
+		}
+	}
+
+	/**
+	 * Return a {@code String} parameter
+	 * 
+	 * @param name
+	 * @return the parameter
+	 */
+	protected String getParameterAsString( String name )
+			throws InvalidParameterValueException
+	{
+		return parameters.get( name );
+	}
+
+	/**
+	 * Convert and return a {@code String} parameter to {@code int}
+	 * 
+	 * @param name
+	 * @return the converted String parameter
+	 * @throws InvalidParameterValueException
+	 *         If the String can not be converted
+	 */
+	protected int getParameterAsInt( String name )
+			throws InvalidParameterValueException
+	{
+		try
+		{
+			return Integer.parseInt( parameters.get( name ) );
+		}
+		catch( NullPointerException npe )
+		{
+			throw new NullPointerException();
+		}
+		catch( NumberFormatException nfe )
+		{
+			throw new InvalidParameterValueException( name,
+					parameters.get( name ) );
+		}
+	}
+
+	/**
+	 * Convert and return a {@code String} parameter to {@code boolean}.
+	 * 
+	 * @param name
+	 * @return the converted String parameter
+	 * @throws InvalidParameterValueException
+	 *         If the String can not be converted
+	 */
+	protected boolean getParameterAsBoolean( String name )
+			throws InvalidParameterValueException
+	{
+		try
+		{
+			return Boolean.parseBoolean( parameters.get( name ) );
+		}
+		catch( NullPointerException npe )
+		{
+			throw new NullPointerException();
+		}
+		catch( NumberFormatException nfe )
+		{
+			throw new InvalidParameterValueException( name,
+					parameters.get( name ) );
+		}
+	}
+
+
+	/**
+	 * Convert a given {@code String List} to a String
+	 * 
+	 * @param stringList parameter
+	 * @return a string of the given list
+	 */
+	protected String listToString( List<String> stringList )
+	{
+		StringBuilder sb = new StringBuilder();
+		for( String s : stringList )
+			sb.append( s ).append( "\n" );
+		return sb.toString();
 	}
 }

@@ -1,16 +1,10 @@
 package airtrafficcontrol.app.appforcommandline.commands.getairshipscommands;
 
-import java.util.List;
 import java.util.Map;
 
-import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
-import airtrafficcontrol.app.appforcommandline.commands.Command;
-import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
+import airtrafficcontrol.app.appforcommandline.commands.*;
+import airtrafficcontrol.app.appforcommandline.model.airships.*;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
-import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
-import airtrafficcontrol.app.appforcommandline.model.airships.AirshipPredicates;
-import airtrafficcontrol.app.appforcommandline.model.airships.CivilAirship;
-import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
 
 /**
  * Class whose instances have the point to return an {@link Airship}
@@ -24,6 +18,27 @@ public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand
 {
 	private static final String NUMBERBELLOWPASSENGERS = "nbp";
 
+	/**
+	 * Class that implements the {@link CommandFactory} factory, according to the
+	 * AbstratFactory design pattern.
+	 */
+	public static class Factory implements CommandFactory
+	{
+		private final InMemoryAirshipDatabase dataBase;
+		
+		public Factory( InMemoryAirshipDatabase dataBase )
+		{
+			this.dataBase = dataBase;
+		}
+		
+		@Override
+		public Command newInstance( Map<String, String> parameters )
+		{
+			return new GetAirshipsWithMinimumPassengersCommand( dataBase,
+					parameters );
+		}
+	}
+	
 	/**
 	 * Create a {@code GetAirshipsWithMinimumPassengersCommand} that will call
 	 * {@link GetAirshipsCommand} with the parameters {@code airshipsDatabase}
@@ -55,21 +70,12 @@ public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand
 	}
 
 	/**
-	 * Convert a given String List to a String
-	 * @param stringList
-	 * @return a string of the given list
-	 */
-	private String listToString( List<String> stringList )
-	{
-		StringBuilder sb = new StringBuilder();
-		for( String s : stringList)
-			sb.append( s ).append( "\n" );
-		return sb.toString();
-	}
-
-	/**
-	 * Get the required parameters that will be validate in {@link AbstractCommand}
-	 * @return a String Array with the required Parameters
+	 * Returns an array of {@code String}s that has the names of the parameters
+	 * (to be validate in {@link AbstractCommand}) without whom the command
+	 * cannot execute: NUMBERBELLOWPASSENGERS
+	 * 
+	 * @return An array of {@link String}s that has the names of the parameters
+	 *         without whom the command cannot execute.
 	 */
 	@Override
 	protected String[] getRequiredParameters()
@@ -78,24 +84,4 @@ public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand
 	}
 
 
-	/**
-	 * Class that implements the {@link GetProducts} factory, according to the
-	 * AbstratFactory design pattern.
-	 */
-	public static class Factory implements CommandFactory
-	{
-		private final InMemoryAirshipDatabase dataBase;
-
-		public Factory( InMemoryAirshipDatabase dataBase )
-		{
-			this.dataBase = dataBase;
-		}
-
-		@Override
-		public Command newInstance( Map<String, String> parameters )
-		{
-			return new GetAirshipsWithMinimumPassengersCommand( dataBase,
-					parameters );
-		}
-	}
 }

@@ -1,7 +1,6 @@
 package airtrafficcontrol.app.appforcommandline;
 
 import java.util.Scanner;
-
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipByIdCommand;
 import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAllAirshipsCommand;
@@ -9,7 +8,7 @@ import airtrafficcontrol.app.appforcommandline.commands.getuserscommands.GetAllU
 import airtrafficcontrol.app.appforcommandline.commands.getuserscommands.GetUserByUsernameCommand;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.DuplicateParametersException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.InvalidCommandParametersException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.InvalidCommandParametersSyntaxException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.InvalidRegisterException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.UnknownCommandException;
 import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
@@ -76,7 +75,7 @@ public class App {
 			System.out.println(command.getResult());
 
 		} catch (UnknownCommandException | DuplicateParametersException
-				| InvalidCommandParametersException | NoSuchElementInDatabaseException
+				| InvalidCommandParametersSyntaxException | NoSuchElementInDatabaseException
 				| CommandException e) {
 
 			System.out.println(e.getMessage());

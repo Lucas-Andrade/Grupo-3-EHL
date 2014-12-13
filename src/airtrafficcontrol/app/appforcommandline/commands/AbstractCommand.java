@@ -1,10 +1,12 @@
 package airtrafficcontrol.app.appforcommandline.commands;
 
+
 import java.util.Map;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.RequiredParameterNotPresentException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
 import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
+
 
 /**
  * 
@@ -12,14 +14,15 @@ import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoS
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public abstract class AbstractCommand implements Command {
-
+public abstract class AbstractCommand implements Command
+{
+	
 	// INSTANCE FIELDS
 	/**
 	 * The parameters name-value pairs received to execute the command.
 	 */
-	protected final Map<String, String> parameters;
-
+	protected final Map< String, String > parameters;
+	
 	protected String result;
 	
 	// CONSTRUCTOR
@@ -29,21 +32,21 @@ public abstract class AbstractCommand implements Command {
 	 * @param parameters
 	 *            The container of the parameters name-value pairs.
 	 */
-	public AbstractCommand(Map<String, String> parameters) {
-
+	public AbstractCommand( Map< String, String > parameters ) {
+		
 		this.parameters = parameters;
 	}
-
+	
 	
 	
 	// EXECUTE METHOD
 	/**
-	 * Performs the action associated with this command, inclusively checks the validity of the
-	 * received parameters.
+	 * Performs the action associated with this command, inclusively checks the
+	 * validity of the received parameters.
 	 * 
 	 * @throws CommandException
-	 *             If the received parameters are not valid (missing parameters, invalid values,
-	 *             ...).
+	 *             If the received parameters are not valid (missing parameters,
+	 *             invalid values, ...).
 	 * @throws NoSuchElementInDatabaseException
 	 *             If an element, expected to be in a certain database, was not
 	 *             found.
@@ -54,16 +57,16 @@ public abstract class AbstractCommand implements Command {
 	 */
 	public final void execute() throws CommandException,
 			NoSuchElementInDatabaseException, WrongLoginPasswordException {
-
-		validateDemandingParameters(getRequiredParameters());
+		
+		validateRequiredParameters( getRequiredParameters() );
 		// TODO: other validations may be required.
-
+		
 		internalExecute();
-
+		
 	}
-
+	
 	// UNIMPLEMENTED METHODS
-
+	
 	/**
 	 * Performs the specific action associated with this command.
 	 * 
@@ -72,34 +75,38 @@ public abstract class AbstractCommand implements Command {
 	 */
 	protected abstract void internalExecute() throws CommandException,
 			NoSuchElementInDatabaseException, WrongLoginPasswordException;
-
+	
 	/**
-	 * Returns an array of {@link String strings} that has the names of the parameters without whom
-	 * the command cannot execute.
+	 * Returns an array of {@link String strings} that has the names of the
+	 * parameters without whom the command cannot execute.
 	 * 
-	 * @return An array of {@link String strings} that has the names of the parameters without whom
-	 *         the command cannot execute.
+	 * @return An array of {@link String strings} that has the names of the
+	 *         parameters without whom the command cannot execute.
 	 */
 	protected abstract String[] getRequiredParameters();
-
+	
 	// AUXILIAR PRIVATE METHODS
-
+	
 	/**
 	 * Checks whether the required parameters (obtained using the method
-	 * {@link #getRequiredParameters()}) were received.
+	 * {@link #getRequiredParameters()}) are in {@link #parameters}.
 	 * 
 	 * @param requiredParameters
+	 * @throw RequiredParameterNotPresentException If a required parameter is
+	 *        missing in {@link #parameters}.
 	 */
-	private void validateDemandingParameters(String... parameterNames)
+	private void validateRequiredParameters( String... parameterNames )
 			throws RequiredParameterNotPresentException {
 		
-
+		if( parameterNames == null )
+			return;
+		
 		for( String name : parameterNames )
 			if( !parameters.containsKey( name ) )
 				throw new RequiredParameterNotPresentException( name );
 		
 	}
-
+	
 	public String getResult() {
 		
 		return result;

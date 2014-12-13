@@ -1,11 +1,18 @@
 package airtrafficcontrol.app.appforcommandline;
 
 import java.util.Scanner;
+
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipByIdCommand;
+import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsByOwnerCommand;
+import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsWithMinimumPassengersCommand;
 import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAllAirshipsCommand;
+import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetReportOfTransgressionByIdCommand;
+import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetTransgressingAirshipsCommand;
 import airtrafficcontrol.app.appforcommandline.commands.getuserscommands.GetAllUsersCommand;
 import airtrafficcontrol.app.appforcommandline.commands.getuserscommands.GetUserByUsernameCommand;
+import airtrafficcontrol.app.appforcommandline.commands.postcommands.PostAirshipCommand;
+import airtrafficcontrol.app.appforcommandline.commands.postcommands.PostUserCommand;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.DuplicateParametersException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.InvalidCommandParametersSyntaxException;
@@ -55,10 +62,22 @@ public class App {
 					airshipDatabase));
 			parser.registerCommand("GET", "/airships/{flightId}",
 					new GetAirshipByIdCommand.Factory(airshipDatabase));
+			parser.registerCommand("GET", "/airships/owner/{owner}",
+					new GetAirshipsByOwnerCommand.Factory(airshipDatabase));
+			parser.registerCommand("GET", "/airships/nbPassengers/{nbP}/bellow",
+					new GetAirshipsWithMinimumPassengersCommand.Factory(airshipDatabase));
+			parser.registerCommand("GET", "/airships/reports",
+					new GetTransgressingAirshipsCommand.Factory(airshipDatabase));
+			parser.registerCommand("GET", "/airships/reports/{flightId}",
+					new GetReportOfTransgressionByIdCommand.Factory(airshipDatabase));
 
 			// Register Posts For Users
+			parser.registerCommand("POST", "/users", new PostUserCommand.Factory(userDatabase,
+					userDatabase));
 
 			// Register Posts For Airships
+			parser.registerCommand("POST", "/airships/{type}", new PostAirshipCommand.Factory(
+					userDatabase, airshipDatabase));
 
 		} catch (InvalidRegisterException e) {
 

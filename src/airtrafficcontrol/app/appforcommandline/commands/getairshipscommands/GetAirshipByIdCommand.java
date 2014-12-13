@@ -40,7 +40,7 @@ public class GetAirshipByIdCommand extends GetAirshipsCommand {
 
 		if (airship == null) {
 			
-			this.result = "Airship Not Found";
+			this.result = "Airship Not Found\n";
 			return;
 		}
 

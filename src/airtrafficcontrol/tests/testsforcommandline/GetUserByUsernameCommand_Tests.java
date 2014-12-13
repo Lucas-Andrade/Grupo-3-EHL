@@ -55,6 +55,6 @@ public class GetUserByUsernameCommand_Tests {
 		getUser.execute();
 
 		// Assert
-		Assert.assertEquals(getUser.getResult(), "User Not Found");
+		Assert.assertEquals(getUser.getResult(), "User Not Found\n");
 	}
 }

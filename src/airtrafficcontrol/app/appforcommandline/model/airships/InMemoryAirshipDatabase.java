@@ -16,7 +16,7 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	 * {@link User#username username} is mapped to a {@link List} of the {@link Airship#flightId
 	 * flightId}s of the {@link Airship airships} he added to this database..
 	 */
-	private Map<String, List<String>> flightsByUserRegister;
+	private Map<String, List<Airship>> flightsByUserRegister;
 
 	/**
 	 * Creates an empty {@link InMemoryAirshipDatabase in-memory airships database} with no
@@ -25,7 +25,7 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	public InMemoryAirshipDatabase() {
 
 		super();
-		flightsByUserRegister = new HashMap<String, List<String>>();
+		flightsByUserRegister = new HashMap<String, List<Airship>>();
 	}
 
 	/**
@@ -38,7 +38,7 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	 *         stored in this database that were added by the {@link User} with
 	 *         {@link User#username} {@code username}.
 	 */
-	public List<String> getAirshipsOfUser(String username) {
+	public List<Airship> getAirshipsOfUser(String username) {
 
 		return flightsByUserRegister.get(username);
 	}
@@ -116,10 +116,10 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 
 		if (super.add(airship, user)) {
 			if (flightsByUserRegister.containsKey(user.getUsername()))
-				flightsByUserRegister.get(user.getUsername()).add(airship.getIdentification());
+				flightsByUserRegister.get(user.getUsername()).add(airship);
 			else {
-				List<String> newListForNewUser = new ArrayList<>();
-				newListForNewUser.add(airship.getIdentification());
+				List<Airship> newListForNewUser = new ArrayList<>();
+				newListForNewUser.add(airship);
 				flightsByUserRegister.put(user.getUsername(), newListForNewUser);
 			}
 			return true;

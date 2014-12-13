@@ -145,18 +145,18 @@ public class PostAirshipCommand extends PostCommand<Airship>
 	 * @param maxAltitude
 	 * @param minAltitude
 	 * @return
-	 * @throws RequiredParameterNotPresentException
+	 * @throws MissingRequiredParameterException
 	 * @throws InvalidParameterValueException
 	 */
 	@SuppressWarnings( "unused" )
 	// reflection
 	private Airship createCivil( double latitude, double longitude,
 			double altitude, double maxAltitude, double minAltitude )
-			throws RequiredParameterNotPresentException,
+			throws MissingRequiredParameterException,
 			InvalidParameterValueException
 	{
 		if( ! parameters.containsKey( PASSENGERSNUMBER ) )
-			throw new RequiredParameterNotPresentException( PASSENGERSNUMBER );
+			throw new MissingRequiredParameterException( PASSENGERSNUMBER );
 
 		int nbPassengers = getParameterAsInt( PASSENGERSNUMBER );
 
@@ -173,18 +173,18 @@ public class PostAirshipCommand extends PostCommand<Airship>
 	 * @param maxAltitude
 	 * @param minAltitude
 	 * @return
-	 * @throws RequiredParameterNotPresentException
+	 * @throws MissingRequiredParameterException
 	 * @throws InvalidParameterValueException
 	 */
 	@SuppressWarnings( "unused" )
 	// reflection
 	private Airship createMilitary( double latitude, double longitude,
 			double altitude, double maxAltitude, double minAltitude )
-			throws RequiredParameterNotPresentException,
+			throws MissingRequiredParameterException,
 			InvalidParameterValueException
 	{
 		if( ! parameters.containsKey( HASARMOUR ) )
-			throw new RequiredParameterNotPresentException( HASARMOUR );
+			throw new MissingRequiredParameterException( HASARMOUR );
 
 		boolean hasWeapons = getParameterAsBoolean( HASARMOUR );
 

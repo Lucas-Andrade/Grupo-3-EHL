@@ -62,6 +62,6 @@ public class GetAirshipByIdCommand_Tests {
 		getAirship.execute();
 
 		// Assert
-		Assert.assertEquals(getAirship.getResult(), "Airship Not Found");
+		Assert.assertEquals(getAirship.getResult(), "Airship Not Found\n");
 	}
 }

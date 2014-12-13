@@ -40,7 +40,7 @@ public class GetUserByUsernameCommand extends GetUsersCommand {
 
 		if (user == null) {
 			
-			this.result = "User Not Found";
+			this.result = "User Not Found\n";
 			return;
 		}
 

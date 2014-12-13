@@ -1,12 +1,13 @@
 package airtrafficcontrol.app.appforcommandline.commands.postcommands;
 
 import java.util.Map;
-import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
+
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.InvalidParameterValueException;
 import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
 import airtrafficcontrol.app.appforcommandline.model.users.User;
+
 
 	/** 
 	 * Class that extends {@link PostCommand} to add a new user   
@@ -41,14 +42,12 @@ public class PostUserCommand extends PostCommand<User>
 		
 		InMemoryUserDatabase postingUsersDatabase;
 		InMemoryUserDatabase postedUsersDatabase;
-		Map<String,String> parameters;
 		
 		
-		public Factory(InMemoryUserDatabase postingUsersDatabase,InMemoryUserDatabase postedUsersDatabase, Map<String,String> parameters ){
+		public Factory(InMemoryUserDatabase postingUsersDatabase,InMemoryUserDatabase postedUsersDatabase ){
 			
 			this.postingUsersDatabase=postingUsersDatabase;
 			this.postedUsersDatabase=postedUsersDatabase;
-			this.parameters=parameters;
 		}
 		
 		
@@ -79,32 +78,34 @@ public class PostUserCommand extends PostCommand<User>
 	}
 	
 	/**
+	 * @throws InvalidParameterValueException 
+	 * @throws InvalidArgumentException 
 	 * Override of {@link AbstractCommand} 
 	 * 
 	 * execute the main action associated to this command
+	 * @throws   InvalidParameterValueException 
 	 * 
 	 */
 	
 	
 	@Override
-	protected void internalPostExecute() throws CommandException {
+	protected void internalPostExecute() throws InvalidParameterValueException {
 		
-
-		String username = parameters.get(USERNAME);
-		String password = parameters.get(PASSWORD); 
-		String email = parameters.get(EMAIL);
-		String fullName = parameters.get(FULLNAME);
+		
+		String username = getParameterAsString(parameters.get(USERNAME));
+		String password = getParameterAsString(parameters.get(PASSWORD)); 
+		String email = getParameterAsString(parameters.get(EMAIL));
+		String fullName = getParameterAsString(parameters.get(FULLNAME));
 		
 		User user = (fullName !=null ) ? new User(username,password,email,fullName)	: new User(username,password,email);
 		
-
+		
 		User postingUser =usersDatabase.getElementByIdentification(parameters.get("loginName"));	
 		
 		
 		result = database.add(user, postingUser) ? "User was successfull added": "User was not successfull added";
 		
-		 
-	
+		
 	
 	}
 	

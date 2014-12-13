@@ -1,11 +1,9 @@
 package airtrafficcontrol.tests.testsforcommandline;
 
-import static org.junit.Assert.*;
-
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
-
-import airtrafficcontrol.app.appforcommandline.*;
 import airtrafficcontrol.app.appforcommandline.model.Database;
 import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
 import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;

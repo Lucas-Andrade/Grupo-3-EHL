@@ -1,9 +1,13 @@
 package airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions;
 
 
+import airtrafficcontrol.app.appforcommandline.model.Database;
+
+
 /**
- * Base class for all {@link Database} exceptions.
+ * Superclass for all {@link Database} exceptions.
  *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 @SuppressWarnings( "serial" )
 public class DatabaseException extends Exception

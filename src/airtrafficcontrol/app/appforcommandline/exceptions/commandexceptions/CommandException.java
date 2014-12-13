@@ -1,9 +1,13 @@
 package airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions;
 
 
+import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
+
+
 /**
- * Base class for all {@link Command} exceptions.
+ * Superclass for all {@link CommandFactory} exceptions.
  *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 @SuppressWarnings( "serial" )
 public class CommandException extends Exception

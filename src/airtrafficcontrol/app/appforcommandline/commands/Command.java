@@ -14,7 +14,13 @@ import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoS
  */
 public interface Command
 {
-	
+	/**
+	 * Execute the {@link Command}
+	 * 
+	 * @throws CommandException
+	 * @throws NoSuchElementInDatabaseException
+	 * @throws WrongLoginPasswordException
+	 */
 	public void execute() throws CommandException,
 			NoSuchElementInDatabaseException, WrongLoginPasswordException;
 

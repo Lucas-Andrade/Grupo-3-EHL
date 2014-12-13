@@ -6,23 +6,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import airtrafficcontrol.app.appforcommandline.CommandParser;
-import airtrafficcontrol.app.appforcommandline.commands.Command;
-import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
-import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipByIdCommand;
+import airtrafficcontrol.app.appforcommandline.commands.*;
 import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsByOwnerCommand;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.DuplicateParametersException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.InvalidCommandParametersSyntaxException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.InvalidRegisterException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.UnknownCommandException;
-import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
-import airtrafficcontrol.app.appforcommandline.model.Database;
-import airtrafficcontrol.app.appforcommandline.model.Element;
-import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
-import airtrafficcontrol.app.appforcommandline.model.airships.CivilAirship;
-import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
-import airtrafficcontrol.app.appforcommandline.model.airships.MilitaryAirship;
+import airtrafficcontrol.app.appforcommandline.model.airships.*;
 import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 public class GetAirshipsByOwnerCommandTest
@@ -59,8 +46,8 @@ public class GetAirshipsByOwnerCommandTest
 
 		getAirship.execute();
 		// Assert
-		assertTrue( getAirship.getResult().equals(
-				"The User Daniel still did not create Airships" ) );
+		assertEquals( getAirship.getResult(),
+				"The User Daniel still did not create Airships" );
 	}
 	
 	@Test
@@ -69,18 +56,18 @@ public class GetAirshipsByOwnerCommandTest
 		//Arrange
 		User user = new User( "anonymous G", "semPalavraPass", "G@g.com" );
 		Airship airship1 = new CivilAirship( 0, 0, 10, 20, 0, 100 );
-//		Airship airship2 = new MilitaryAirship( 0, 0, 10, 0, 20, false );
 		
 		//Act
 		database.add( airship1, user );
-//		database.add( airship2, user );
 		GetAirshipsByOwnerCommand getAirship = ( GetAirshipsByOwnerCommand )parser
 				.getCommand( "GET", "/airships/owner/anonymous G" );
 		getAirship.execute();
 		
-		System.out.println( getAirship.getResult() );
 		// Assert
-		assertTrue( getAirship.getResult().equals(
-				"The User Daniel still did not create Airships" ) );
+		assertEquals( getAirship.getResult(),
+				"Flight ID: 1\n"
+				+ "Latitude: 0.0 Longitude: 0.0 Altitude: 10.0\n"
+				+ "Maximum Altitude Permited: 20.0 Minimum Altitude Permited: 0.0\n"
+				+ "Is Outside The Given Corridor: false\n" );
 	}
 }

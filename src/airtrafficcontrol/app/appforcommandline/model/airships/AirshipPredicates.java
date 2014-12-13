@@ -29,7 +29,7 @@ public class AirshipPredicates
 		public boolean test( Airship airship )
 		{
 			if( airship instanceof CivilAirship)
-				return ((CivilAirship)airship).getPassengers() > passengerNumber;
+				return ((CivilAirship)airship).getPassengers() < passengerNumber;
 			else
 				return false;
 		}

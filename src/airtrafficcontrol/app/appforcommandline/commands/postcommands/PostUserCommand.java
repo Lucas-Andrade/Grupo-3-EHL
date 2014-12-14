@@ -25,9 +25,9 @@ public class PostUserCommand extends PostCommand<User>
 	private static final String PASSWORD = "password";
 	
 	private static final String EMAIL = "email";
-	
+	 
 	private static final String FULLNAME = "fullName";
-	
+	 
 	private static final String[] REQUIREDPARAMETERS = {USERNAME,PASSWORD,EMAIL};
 	
 	/**
@@ -56,7 +56,7 @@ public class PostUserCommand extends PostCommand<User>
 			return new PostUserCommand( postingUsersDatabase,postedUsersDatabase,parameters);
 		}
 		
-	}
+	} 
 	
 	/**
 	 * Constructor 
@@ -92,17 +92,17 @@ public class PostUserCommand extends PostCommand<User>
 	protected void internalPostExecute() throws InvalidParameterValueException {
 		
 		
-		String username = getParameterAsString(parameters.get(USERNAME));
-		String password = getParameterAsString(parameters.get(PASSWORD)); 
-		String email = getParameterAsString(parameters.get(EMAIL));
-		String fullName = getParameterAsString(parameters.get(FULLNAME));
+		String username = getParameterAsString(USERNAME);	
+		String password = getParameterAsString(PASSWORD); 
+		String email = getParameterAsString(EMAIL);
+		String fullName = getParameterAsString(FULLNAME);
 		
 		User user = (fullName !=null ) ? new User(username,password,email,fullName)	: new User(username,password,email);
 		
 		
 		User postingUser =usersDatabase.getElementByIdentification(parameters.get("loginName"));	
-		
-		
+		 
+		 
 		result = database.add(user, postingUser) ? "User was successfull added": "User was not successfull added";
 		
 		

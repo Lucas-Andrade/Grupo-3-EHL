@@ -89,7 +89,7 @@ public class InMemoryDatabase_Tests {
 		airshipDatabase.add(airship, user);
 
 		// Assert
-		assertFalse(((InMemoryAirshipDatabase) airshipDatabase).checkIfThisAirshipIsInCorridor("5"));
+		assertFalse(((InMemoryAirshipDatabase) airshipDatabase).checkIfThisAirshipIsTransgressing("5"));
 	}
 
 	@Test
@@ -101,7 +101,7 @@ public class InMemoryDatabase_Tests {
 
 		// Assert
 		assertFalse(((InMemoryAirshipDatabase) airshipDatabase)
-				.checkIfThisAirshipIsInCorridor(airship.getIdentification()));
+				.checkIfThisAirshipIsTransgressing(airship.getIdentification()));
 	}
 
 	@Test
@@ -116,7 +116,7 @@ public class InMemoryDatabase_Tests {
 
 		// Assert
 		assertTrue(((InMemoryAirshipDatabase) airshipDatabase)
-				.checkIfThisAirshipIsInCorridor(airship2.getIdentification()));
+				.checkIfThisAirshipIsTransgressing(airship2.getIdentification()));
 	}
 
 	@Test

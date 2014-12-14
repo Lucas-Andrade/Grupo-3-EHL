@@ -15,7 +15,6 @@ import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDat
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-
 public class GetReportOfTransgressionByIdCommand extends GetAirshipsCommand {
 
 	private final static String FLIGHTID = "flightId";
@@ -28,7 +27,6 @@ public class GetReportOfTransgressionByIdCommand extends GetAirshipsCommand {
 	 *
 	 * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
 	 */
-
 	public static class Factory implements CommandFactory {
 
 		InMemoryAirshipDatabase airshipDatabaseWhereAirshipDatabase;
@@ -45,48 +43,42 @@ public class GetReportOfTransgressionByIdCommand extends GetAirshipsCommand {
 					parameters);
 		}
 
-	} 
+	}
 
 	/**
 	 * Constructor
 	 * 
 	 * store the container parameter
 	 * 
-	 * @param airshipsDatabaseWhereToSearch
+	 * @param airshipsDatabase
 	 *            - airship Database target of search
 	 * @param parameters
 	 *            - Container with parameters needed to proceed the search.
 	 */
-
-	public GetReportOfTransgressionByIdCommand(InMemoryAirshipDatabase airshipsDatabaseWhereToSearch,
+	public GetReportOfTransgressionByIdCommand(InMemoryAirshipDatabase airshipsDatabase,
 			Map<String, String> parameters) {
 
-		super(airshipsDatabaseWhereToSearch, parameters);
-
+		super(airshipsDatabase, parameters);
 	}
 
 	/**
 	 * Override of {@link AbstractCommand}
 	 * 
 	 * execute the main action associated to this command
-	 * @throws NoSuchElementInDatabaseException 
+	 * 
+	 * @throws NoSuchElementInDatabaseException
 	 * 
 	 */
-
 	@Override
 	protected void internalExecute() throws CommandException, NoSuchElementInDatabaseException {
 
 		String flightdID = parameters.get(FLIGHTID);
 
-		if (airshipsDatabase.checkIfThisAirshipIsInCorridor(flightdID)) {
-
+		if (airshipsDatabase.checkIfThisAirshipIsTransgressing(flightdID))
 			result = "It's Transgressing";
-		} else {
 
+		else
 			result = "It's Not Transgressing";
-
-		}
-
 	}
 
 	/**
@@ -95,11 +87,9 @@ public class GetReportOfTransgressionByIdCommand extends GetAirshipsCommand {
 	 * Method responsible to get the Obligation parameters associated to this Command
 	 * 
 	 */
-
 	@Override
 	protected String[] getRequiredParameters() {
 
 		return REQUIREDPARAMETERS;
 	}
-
 }

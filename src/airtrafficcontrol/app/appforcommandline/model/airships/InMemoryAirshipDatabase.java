@@ -141,7 +141,7 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	 *         or is not in this database.
 	 * @throws NoSuchElementInDatabaseException
 	 */
-	public boolean checkIfThisAirshipIsInCorridor(String flightId)
+	public boolean checkIfThisAirshipIsTransgressing(String flightId)
 			throws NoSuchElementInDatabaseException {
 
 		Airship theAirship = getElementByIdentification(flightId);

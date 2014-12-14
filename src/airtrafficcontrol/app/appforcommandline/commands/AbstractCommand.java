@@ -178,18 +178,14 @@ public abstract class AbstractCommand implements Command {
 	 * @throws InvalidParameterValueException
 	 *             If the String can not be converted
 	 */
-	protected boolean getParameterAsBoolean(String name) throws InvalidParameterValueException {
-
-		try {
-
-			return Boolean.parseBoolean(parameters.get(name));
-
-		} catch (NullPointerException npe) {
-			throw new NullPointerException();
-
-		} catch (NumberFormatException nfe) {
-			throw new InvalidParameterValueException(name, parameters.get(name));
-		}
+	protected boolean getParameterAsBoolean(String name) throws InvalidParameterValueException
+	{
+		String auxString = parameters.get(name);
+		if( auxString.equalsIgnoreCase( "yes" ) )
+			return true;
+		if( auxString.equalsIgnoreCase( "no" ) )
+			return false;
+		throw new InvalidParameterValueException( name, auxString );
 	}
 
 	/**

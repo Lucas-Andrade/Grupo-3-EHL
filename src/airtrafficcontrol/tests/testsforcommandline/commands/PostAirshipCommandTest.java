@@ -9,31 +9,20 @@ import org.junit.Test;
 import airtrafficcontrol.app.appforcommandline.CommandParser;
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
-import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsWithMinimumPassengersCommand;
 import airtrafficcontrol.app.appforcommandline.commands.postcommands.PostAirshipCommand;
-import airtrafficcontrol.app.appforcommandline.commands.postcommands.PostAirshipCommand.Factory;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.InvalidParameterValueException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.MissingRequiredParameterException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.DuplicateParametersException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.InvalidCommandParametersSyntaxException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.UnknownCommandException;
-import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
-import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
-import airtrafficcontrol.app.appforcommandline.model.airships.CivilAirship;
 import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
 import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
-import airtrafficcontrol.app.appforcommandline.model.users.User;
 
+//POST /airships/Civil latitude=0&longitude=0&altitude=2&minAltitude=0&maxAltitude=10&loginName=MASTER&loginPassword=master
 public class PostAirshipCommandTest
 {
 	private CommandParser parser;
 	private InMemoryAirshipDatabase airshipDatabase;
 	private InMemoryUserDatabase userDatabase;
 	private CommandFactory factory;
-
-	private User user;
-
 
 
 	@Before
@@ -45,7 +34,6 @@ public class PostAirshipCommandTest
 		userDatabase = new InMemoryUserDatabase();
 		factory = new PostAirshipCommand.Factory( userDatabase, airshipDatabase );
 
-		user = new User( "anonymous G", "semPalavraPass", "G@g.com" );
 
 		// Act
 		parser.registerCommand( "POST", "/airships/{type}", factory );
@@ -62,15 +50,14 @@ public class PostAirshipCommandTest
 	public void shouldCreateAnCivilAirship() throws Exception
 	{
 		// Arrange
-		String civilParameters = "type=Civil"
-				+ "&latitude=0"
+		String civilParameters ="latitude=0"
 				+ "&longitude=0"
 				+ "&altitude=0"
 				+ "&minAltitude=0"
 				+ "&maxAltitude=10"
 				+ "&nbPassengers=100"
-				+ "&loginName=Daniel"
-				+ "&loginPassword=DanyGs";
+				+ "&loginName=MASTER"
+				+ "&loginPassword=master";
 		// Act
 		PostAirshipCommand postAirship = ( PostAirshipCommand )parser
 				.getCommand( "POST", "/airships/Civil", civilParameters );
@@ -83,15 +70,14 @@ public class PostAirshipCommandTest
 	public void shouldCreateAnMilitaryAirship() throws Exception
 	{
 		// Arrange
-		String militaryParameters = "type=Military"
-				+ "&latitude=0"
+		String militaryParameters = "latitude=0"
 				+ "&longitude=0"
 				+ "&altitude=0"
 				+ "&minAltitude=0"
 				+ "&maxAltitude=10"
-				+ "&hasArmour=asd"
-				+ "&loginName=Daniel"
-				+ "&loginPassword=DanyGs";
+				+ "&hasArmour=yes"
+				+ "&loginName=MASTER"
+				+ "&loginPassword=master";
 		// Act
 		PostAirshipCommand postAirship = ( PostAirshipCommand )parser
 				.getCommand( "POST", "/airships/Military", militaryParameters );
@@ -99,109 +85,162 @@ public class PostAirshipCommandTest
 
 		assertEquals( postAirship.getResult(), "2" );
 	}
+		
 	
 	@Test
-	public void shouldNotCreateAnAirshipIfOneParameterIsMissing() throws Exception
+	public void shouldNotCreateAnAirshipIfTypeIsIncorrect() throws Exception
 	{
 		// Arrange
-		String militaryParameters = "type=Military"
-				
+		String militaryParameters ="latitude=0"
 				+ "&longitude=0"
 				+ "&altitude=0"
 				+ "&minAltitude=0"
 				+ "&maxAltitude=10"
-				+ "&hasArmour=asd"
-				+ "&loginName=Daniel"
-				+ "&loginPassword=DanyGs";
+				+ "&hasArmour=yes"
+				+ "&loginName=MASTER"
+				+ "&loginPassword=master";
+		
 		// Act
 		PostAirshipCommand postAirship = ( PostAirshipCommand )parser
-				.getCommand( "POST", "/airships/Military", militaryParameters );
+				.getCommand( "POST", "/airships/adrg", militaryParameters );
 		try
 		{
 			postAirship.execute();
-			assert false;
 		}
-		catch( CommandException e )
+		catch(CommandException e)
 		{
-			assert true;
-		}
-	}
-	
-	@Test
-	public void shouldNotCreateAnAirshipIfTheLoginPasswordIsWrong() throws Exception
-	{
-		// Arrange
-		String militaryParameters = "type=Military"
-				+ "&latitude=0"
-				+ "&longitude=0"
-				+ "&altitude=0"
-				+ "&minAltitude=0"
-				+ "&maxAltitude=10"
-				+ "&hasArmour=asd"
-				+ "&loginName=Daniel"
-				+ "&loginPassword=E O SPORTING É O NOSSO GRANDE AMOR";
-		// Act
-		PostAirshipCommand postAirship = ( PostAirshipCommand )parser
-				.getCommand( "POST", "/airships/Military", militaryParameters );
-		try
-		{
-			postAirship.execute();
-			assert false;
-		}
-		catch( WrongLoginPasswordException  e )
-		{
-			assert true;
-		}
-	}
-	
-	
-	@Test
-	public void shouldNotCreateAnAirshipIfItHasGivenAWrongParameter() throws Exception
-	{
-		// Arrange
-		String militaryParameters = "type=Military"
-				+ "&latitude=0"
-				+ "&longitude=0"
-				+ "&altitude=0"
-				+ "&minAltitude=0"
-				+ "&maxAltitude=10"
-				+ "&hasArmour=asd"
-				+ "&parametroFalso=blablabla"
-				+ "&loginName=Daniel"
-				+ "&loginPassword=DanyGs";
-		// Act
-		PostAirshipCommand postAirship = ( PostAirshipCommand )parser
-				.getCommand( "POST", "/airships/Military", militaryParameters );
-		try
-		{
-			postAirship.execute();
-			assert false;
-		}
-		catch( NoSuchElementInDatabaseException e )
-		{
-			assert true;
+			//Assert
+			assertEquals( e.getMessage(), "Required parameter with name type has invalid value adrg."  );
 		}
 	}
 
-	
-	@Test(expected=MissingRequiredParameterException.class)
-	public void shouldNotCreateAnAirshipIfCanNotConvertTheMinimumPassagersNumberToInt() throws UnknownCommandException, DuplicateParametersException, InvalidCommandParametersSyntaxException, NoSuchElementInDatabaseException, WrongLoginPasswordException, CommandException
+
+
+	@Test
+	public void shouldNotCreateAnCivilAirshipIfCanNotConvertTheMinimumPassagersNumberToInt() throws Exception 
 	{
 		// Arrange
-		String civilParameters = "type=Civil"
-				+ "&latitude=0"
+		String civilParameters ="latitude=0"
 				+ "&longitude=0"
 				+ "&altitude=0"
 				+ "&minAltitude=0"
 				+ "&maxAltitude=10"
-				+ "&nbPassengers=100"
-				+ "&loginName=Daniel"
-				+ "&loginPassword=DanyGs";
+				+ "&nbPassengers=blablablablablablablablabla"
+				+ "&loginName=MASTER"
+				+ "&loginPassword=master";
 		// Act
 		PostAirshipCommand postAirship = ( PostAirshipCommand )parser
 				.getCommand( "POST", "/airships/Civil", civilParameters );
 
+		try
+		{
 			postAirship.execute();
+		}
+		catch( InvalidParameterValueException e )
+		{
+			assertEquals( e.getMessage(), "Required parameter with name nbPassengers has invalid value blablablablablablablablabla." );
+		}
 	}
-		
+	
+	@Test
+	public void shouldNotCreateAnMilitaryAirshipIfHasArmourIsNot_yesOrNo() throws Exception 
+	{
+		// Arrange
+		String civilParameters ="latitude=0"
+				+ "&longitude=0"
+				+ "&altitude=0"
+				+ "&minAltitude=0"
+				+ "&maxAltitude=10"
+				+ "&hasArmour=asdth"
+				+ "&loginName=MASTER"
+				+ "&loginPassword=master";
+		// Act
+		PostAirshipCommand postAirship = ( PostAirshipCommand )parser
+				.getCommand( "POST", "/airships/Military", civilParameters );
+
+		try
+		{
+			postAirship.execute();
+		}
+		catch( InvalidParameterValueException e )
+		{
+			assertEquals( e.getMessage(), "Required parameter with name hasArmour has invalid value asdth." );
+		}
+	}
+	
+	
+	@Test
+	public void shouldNotCreateAnCivilAirshipIfPassagersNumberParameterIsMissing() throws Exception 
+	{
+		// Arrange
+		String civilParameters ="latitude=0"
+				+ "&longitude=0"
+				+ "&altitude=0"
+				+ "&minAltitude=0"
+				+ "&maxAltitude=10"
+				+ "&loginName=MASTER"
+				+ "&loginPassword=master";
+		// Act
+		PostAirshipCommand postAirship = ( PostAirshipCommand )parser
+				.getCommand( "POST", "/airships/Civil", civilParameters );
+
+		try
+		{
+			postAirship.execute();
+		}
+		catch( MissingRequiredParameterException e )
+		{
+			assertEquals( e.getMessage(), "Required parameter with name nbPassengers missing." );
+		}
+	}
+	
+	@Test
+	public void shouldNotCreateAnMilitaryAirshipIfHasArmourParameterIsMissing() throws Exception 
+	{
+		// Arrange
+		String civilParameters ="latitude=0"
+				+ "&longitude=0"
+				+ "&altitude=0"
+				+ "&minAltitude=0"
+				+ "&maxAltitude=10"
+				+ "&loginName=MASTER"
+				+ "&loginPassword=master";
+		// Act
+		PostAirshipCommand postAirship = ( PostAirshipCommand )parser
+				.getCommand( "POST", "/airships/Military", civilParameters );
+
+		try
+		{
+			postAirship.execute();
+		}
+		catch( MissingRequiredParameterException e )
+		{
+			assertEquals( e.getMessage(), "Required parameter with name hasArmour missing." );
+		}
+	}
+	
+	@Test
+	public void shouldNotCreateAnAirshipIfTheThePlaceHolderParameterDoNotExist() throws Exception 
+	{
+		// Arrange
+		String civilParameters ="latitude=0"
+				+ "&longitude=0"
+				+ "&altitude=0"
+				+ "&minAltitude=0"
+				+ "&maxAltitude=10"
+				+ "&loginName=MASTER"
+				+ "&loginPassword=master";
+		// Act
+		PostAirshipCommand postAirship = ( PostAirshipCommand )parser
+				.getCommand( "POST", "/airships/OVNI", civilParameters );
+
+		try
+		{
+			postAirship.execute();
+		}
+		catch( InvalidParameterValueException e )
+		{
+			assertEquals( e.getMessage(), "Required parameter with name type has invalid value OVNI." );
+		}
+	}
 }

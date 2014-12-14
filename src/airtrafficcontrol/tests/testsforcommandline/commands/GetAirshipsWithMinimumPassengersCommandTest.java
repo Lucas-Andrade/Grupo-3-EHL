@@ -1,6 +1,7 @@
 package airtrafficcontrol.tests.testsforcommandline.commands;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -8,12 +9,7 @@ import org.junit.Test;
 import airtrafficcontrol.app.appforcommandline.CommandParser;
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
-import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsByOwnerCommand;
 import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsWithMinimumPassengersCommand;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.DuplicateParametersException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.InvalidCommandParametersSyntaxException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.InvalidRegisterException;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandparserexceptions.UnknownCommandException;
 import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
 import airtrafficcontrol.app.appforcommandline.model.airships.CivilAirship;
 import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
@@ -23,7 +19,7 @@ public class GetAirshipsWithMinimumPassengersCommandTest
 {
 	private CommandParser parser;
 	private InMemoryAirshipDatabase database;
-	private CommandFactory factory = new GetAirshipsByOwnerCommand.Factory( database );
+	private CommandFactory factory;
 	private User user;
 	private Airship airship1;
 	private String Airship1Info;
@@ -41,8 +37,9 @@ public class GetAirshipsWithMinimumPassengersCommandTest
 		Airship1Info = "Flight ID: 1\n"
 				+ "Latitude: 0.0 Longitude: 0.0 Altitude: 10.0\n"
 				+ "Maximum Altitude Permited: 20.0 Minimum Altitude Permited: 0.0\n"
-				+ "Is Outside The Given Corridor: false\n";
-
+				+ "Is Outside The Given Corridor: false\n"
+				+ "Number of Passengers: 100\n";
+		
 		//Act
 		parser.registerCommand( "GET", "/airships/nbPassengers/{nbP}/bellow", factory );
 		database.add( airship1, user );
@@ -75,6 +72,7 @@ public class GetAirshipsWithMinimumPassengersCommandTest
 		GetAirshipsWithMinimumPassengersCommand getAirship = ( GetAirshipsWithMinimumPassengersCommand )parser
 				.getCommand( "GET", "/airships/nbPassengers/200/bellow" );
 		getAirship.execute();
+
 		// Assert
 		assertEquals( getAirship.getResult(), Airship1Info );
 	}

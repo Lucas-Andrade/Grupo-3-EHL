@@ -45,7 +45,7 @@ public class GetTransgressingAirshipsCommand extends GetAirshipsCommand {
 					parameters);
 		}
 
-	}
+	} 
 
 	/**
 	 * Constructor
@@ -80,10 +80,10 @@ public class GetTransgressingAirshipsCommand extends GetAirshipsCommand {
 
 		if (airshipsDatabase.checkIfThisAirshipIsInCorridor(flightdID)) {
 
-			result = "It's Trangressing";
+			result = "It's Transgressing";
 		} else {
 
-			result = "It's Not Trangressing";
+			result = "It's Not Transgressing";
 
 		}
 

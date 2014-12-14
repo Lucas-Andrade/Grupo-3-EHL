@@ -29,6 +29,18 @@ public class CivilAirship extends Airship {
 		this.passengers = passengers;
 	}
 
+	// Overrides
+
+	/**
+	 * Override of the {@code toString()} method from {@code Object}.
+	 */
+	@Override
+	public String toString() {
+
+		return new StringBuilder(super.toString()).append("\nNumber of Passengers: ")
+				.append(passengers).toString();
+	}
+
 	// Get Methods
 
 	public int getPassengers() {

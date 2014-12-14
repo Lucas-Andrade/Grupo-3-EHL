@@ -7,6 +7,7 @@ import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
 import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
 
 /** 
@@ -72,16 +73,16 @@ public class GetReportOfTransgressionByIdCommand extends GetAirshipsCommand
 	@Override
 	protected void internalExecute() throws CommandException {
 
-		Collection<String> aircraft=airshipsDatabase.reportTransgressions();
+		Collection<Airship> aircraft=airshipsDatabase.reportTransgressions();
 
 
 		StringBuilder flightIDs = new StringBuilder();
 
 		if( aircraft.isEmpty() ) flightIDs.append("There are no transgressions records");
 		else{
-			for(String element:aircraft){
+			for(Airship element:aircraft){
 
-				flightIDs.append("\n Airship flightID: ").append(element);
+				flightIDs.append("\n Airship flightID: ").append(element.getIdentification());
 			}
 		}
 		

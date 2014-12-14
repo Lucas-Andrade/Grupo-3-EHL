@@ -11,7 +11,7 @@ public class InMemoryUserDatabase extends InMemoryDatabase<User> {
 
 	public InMemoryUserDatabase() {
 
-		User master = new User("Daniel", "DanyGs", "danielacgomes1992@gmail.com", "Daniel Gomes");
+		User master = new User("MASTER", "master", "master@gmail.com");
 
 		this.add(master, master);
 	}

@@ -16,6 +16,18 @@ public class MilitaryAirship extends Airship {
 		this.hasWeapons = hasWeapons;
 	}
 
+	// Overrides
+
+		/**
+		 * Override of the {@code toString()} method from {@code Object}.
+		 */
+		@Override
+		public String toString() {
+
+			return new StringBuilder(super.toString()).append("\nCarries Weapons: ")
+					.append(hasWeapons).toString();
+		}
+	
 	// Get Methods
 
 	public boolean hasWeapons() {

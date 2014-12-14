@@ -46,6 +46,6 @@ public class GetAllUsersCommand_Tests {
 				
 				+ "username: eva, password: pass2, email: eva@gmail.com\n"
 
-				+ "username: Daniel, password: DanyGs, email: danielacgomes1992@gmail.com, fullName: Daniel Gomes\n");
+				+ "username: MASTER, password: master, email: master@gmail.com\n");
 	}
 }

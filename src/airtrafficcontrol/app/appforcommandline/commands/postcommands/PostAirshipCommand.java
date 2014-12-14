@@ -90,7 +90,7 @@ public class PostAirshipCommand extends PostCommand<Airship>
 	@Override
 	protected void internalPostExecute() throws CommandException
 	{
-		String methodName = "create" + TYPE;
+		String methodName = "create" + getParameterAsString( TYPE );
 
 		double latitude = getParameterAsDouble( LATITUDE );
 		double longitude = getParameterAsDouble( LONGITUDE );
@@ -105,7 +105,7 @@ public class PostAirshipCommand extends PostCommand<Airship>
 				.get( LOGINNAME ) );
 		try
 		{
-			Method creatorMethod = c.getMethod( methodName, ( Class<?>[] )null );
+			Method creatorMethod = c.getDeclaredMethod( methodName, Double.TYPE, Double.TYPE, Double.TYPE, Double.TYPE, Double.TYPE );
 			Airship airship = ( Airship )creatorMethod.invoke( this, latitude,
 					longitude, altitude, maxAltitude, minAltitude );
 			database.add( airship, user );

@@ -13,7 +13,7 @@ public class GeographicPosition {
 	public GeographicPosition(double latitude, double longitude, double altitude) {
 
 		this.latitude = new GeographicCoordinate(latitude, 90, -90);
-		this.longitude = new GeographicCoordinate(longitude,  360, 0);
+		this.longitude = new GeographicCoordinate(longitude, 360, 0);
 		this.altitude = new GeographicCoordinate(altitude, 20000, 0);
 	}
 

@@ -1,4 +1,4 @@
-package airtrafficcontrol.tests.testsforcommandline;
+package airtrafficcontrol.tests.testsforcommandline.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -33,15 +33,17 @@ public class InMemoryDatabase_Tests {
 		airship = new MilitaryAirship(0, 0, 0, 10, 0, false);
 		user = new User("X", "P", "T@", "O");
 	}
-	
+
 	@Test
 	public void shouldCreateInMemoryUserDatabaseWithAMasterUser() {
+
 		// Arrange
 		InMemoryUserDatabase userDatabase = new InMemoryUserDatabase();
 		User masterUser = new User("MASTER", "master", "master@gmail.com");
-		
+
 		// Assert
-		Assert.assertEquals(userDatabase.getElementByIdentification("MASTER").toString(), masterUser.toString());
+		Assert.assertEquals(userDatabase.getElementByIdentification("MASTER").toString(),
+				masterUser.toString());
 	}
 
 	@Test (expected = IllegalArgumentException.class)
@@ -50,7 +52,7 @@ public class InMemoryDatabase_Tests {
 		// Assert
 		airshipDatabase.add(null, user);
 	}
-	
+
 	@Test
 	public void shouldAddMilitaryAirship() {
 
@@ -87,7 +89,7 @@ public class InMemoryDatabase_Tests {
 		airshipDatabase.add(airship, user);
 
 		// Assert
-		assertFalse(((InMemoryAirshipDatabase) airshipDatabase).checkIfThisAirshipIsInCorridor("5"));
+		assertFalse(((InMemoryAirshipDatabase) airshipDatabase).checkIfThisAirshipIsTransgressing("5"));
 	}
 
 	@Test
@@ -99,7 +101,7 @@ public class InMemoryDatabase_Tests {
 
 		// Assert
 		assertFalse(((InMemoryAirshipDatabase) airshipDatabase)
-				.checkIfThisAirshipIsInCorridor(airship.getIdentification()));
+				.checkIfThisAirshipIsTransgressing(airship.getIdentification()));
 	}
 
 	@Test
@@ -114,11 +116,11 @@ public class InMemoryDatabase_Tests {
 
 		// Assert
 		assertTrue(((InMemoryAirshipDatabase) airshipDatabase)
-				.checkIfThisAirshipIsInCorridor(airship2.getIdentification()));
+				.checkIfThisAirshipIsTransgressing(airship2.getIdentification()));
 	}
 
 	@Test
-	public void shouldGetAllAirshipsRegistedByTheSameUser() {
+	public void shouldGetAllAirshipsRegistedByTheSameUser() throws NoSuchElementInDatabaseException {
 
 		// Arrange
 		airship2 = new MilitaryAirship(0, 0, 0, 10, 5, false);
@@ -133,6 +135,25 @@ public class InMemoryDatabase_Tests {
 
 		// Assert
 		Assert.assertEquals(airshipDatabase.getAirshipsOfUser("X").toString(), airships.toString());
+	}
+
+	@Test (expected = NoSuchElementInDatabaseException.class)
+	public void shouldThrowNoSuchElementInDatabaseExceptionWhenTryingToGetTheAirshipsOfAUserThatDidNotRegistedAnyAirship()
+			throws NoSuchElementInDatabaseException {
+
+		// Arrange
+		airship2 = new MilitaryAirship(0, 0, 0, 10, 5, false);
+		List<Airship> airships = new ArrayList<>();
+
+		// Act
+		airshipDatabase.add(airship, user);
+		airshipDatabase.add(airship2, user);
+
+		airships.add(airship);
+		airships.add(airship2);
+
+		// Assert
+		airshipDatabase.getAirshipsOfUser("Daniel");
 	}
 
 	@Test
@@ -159,7 +180,7 @@ public class InMemoryDatabase_Tests {
 		airship2 = new CivilAirship(0, 0, 0, 10, 5, 100);
 		Airship airship3 = new CivilAirship(0, 0, 0, 10, 5, 2);
 		Airship airship4 = new CivilAirship(0, 0, 0, 10, 5, 200);
-		
+
 		List<Airship> airships = new ArrayList<>();
 
 		// Act

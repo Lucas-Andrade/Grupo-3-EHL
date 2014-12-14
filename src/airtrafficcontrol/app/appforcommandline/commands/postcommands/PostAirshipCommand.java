@@ -98,9 +98,9 @@ public class PostAirshipCommand extends PostCommand<Airship>
 		try
 		{
 			Method creatorMethod = c.getDeclaredMethod( methodName, Double.TYPE, Double.TYPE, Double.TYPE, Double.TYPE, Double.TYPE );
-			Airship airship;
-			airship = ( Airship )creatorMethod.invoke( this, latitude,
+			Airship airship = ( Airship )creatorMethod.invoke( this, latitude,
 					longitude, altitude, maxAltitude, minAltitude );
+			
 			database.add( airship, user );
 			result = airship.getIdentification();
 		}

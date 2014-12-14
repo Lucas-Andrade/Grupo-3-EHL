@@ -9,10 +9,12 @@ import airtrafficcontrol.app.appforcommandline.model.InMemoryDatabase;
  */
 public class InMemoryUserDatabase extends InMemoryDatabase<User> {
 
+	// Constructor
+
 	public InMemoryUserDatabase() {
 
 		User master = new User("MASTER", "master", "master@gmail.com");
-
+		
 		this.add(master, master);
 	}
 }

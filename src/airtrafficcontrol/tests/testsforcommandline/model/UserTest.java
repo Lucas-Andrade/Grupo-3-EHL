@@ -1,4 +1,4 @@
-package airtrafficcontrol.tests.testsforcommandline;
+package airtrafficcontrol.tests.testsforcommandline.model;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -48,8 +48,8 @@ public class UserTest {
 	
 	public void ShouldReturnUsername(){
 		
-		Assert.assertTrue(user1.getUsername().equals("Pedro"));
-		Assert.assertTrue(user2.getUsername().equals("Gonçalo"));
+		Assert.assertTrue(user1.getIdentification().equals("Pedro"));
+		Assert.assertTrue(user2.getIdentification().equals("Gonçalo"));
 	}
 		
 	@Test

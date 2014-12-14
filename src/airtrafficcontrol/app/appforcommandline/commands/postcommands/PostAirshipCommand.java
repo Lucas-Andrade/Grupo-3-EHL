@@ -1,46 +1,34 @@
 package airtrafficcontrol.app.appforcommandline.commands.postcommands;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.text.MessageFormat;
 import java.util.Map;
 
-import airtrafficcontrol.app.appforcommandline.commands.*;
-import airtrafficcontrol.app.appforcommandline.model.airships.*;
-import airtrafficcontrol.app.appforcommandline.model.users.*;
-import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.*;
+import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
+import airtrafficcontrol.app.appforcommandline.commands.Command;
+import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.InvalidParameterValueException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.MissingRequiredParameterException;
+import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
 import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
+import airtrafficcontrol.app.appforcommandline.model.Param;
+import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
+import airtrafficcontrol.app.appforcommandline.model.airships.CivilAirship;
+import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
+import airtrafficcontrol.app.appforcommandline.model.airships.MilitaryAirship;
+import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
+import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 
 /**
- * 
- * 
+ * Class whose instances have the point to create an Airship.
+ * TODO
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class PostAirshipCommand extends PostCommand<Airship>
 {
-	/**
-	 * Bellow all static Strings used in this {@link Command} that will be
-	 * needed to create an {@link Airship}.
-	 * 
-	 * Type -> {@Civil} or {@code Military} Latitude, longitude,
-	 * altitude, minAltitude and maxAltitude -> {@link Airship} constructor.
-	 * NbPassengers -> {@link CivilAirship} constructor. HasArmour ->
-	 * {@link MilitaryAirship} constructor. LoginName -> validate {@link User}.
-	 */
-	private static final String TYPE = "type";
-	private static final String LATITUDE = "latitude";
-	private static final String LONGITUDE = "longitude";
-	private static final String ALTITUDE = "altitude";
-	private static final String MINALTITUDE = "minAltitude";
-	private static final String MAXALTITUDE = "maxAltitude";
-	private static final String HASARMOUR = "hasArmour";
-	private static final String PASSENGERSNUMBER = "nbPassengers";
-	private static final String LOGINNAME = "loginName";
-
-	private static final String[] REQUIREDPARAMETERS = {TYPE, LATITUDE,
-			LONGITUDE, ALTITUDE, MINALTITUDE, MAXALTITUDE};
-
 	/**
 	 * Class that implements the {@link CommandFactory}, with the point to
 	 * create an instance of {@link PostAirshipCommand}.
@@ -66,6 +54,7 @@ public class PostAirshipCommand extends PostCommand<Airship>
 	}
 
 	/**
+	 * TODO
 	 * 
 	 * @param userDatabase
 	 * @param airshipDatabase
@@ -83,6 +72,7 @@ public class PostAirshipCommand extends PostCommand<Airship>
 	 * TYPE is equal to: <li>Civil, create a {@link CivilAirship} <li>Military,
 	 * create a {@link MilitaryAirship} Then the {@link Airship} info is passed
 	 * to the {@link AbstractCommand} field {@code result}.
+	 * @throws CommandException 
 	 * 
 	 * @throws NoSuchElementInDatabaseException
 	 * @throws WrongLoginPasswordException
@@ -90,31 +80,53 @@ public class PostAirshipCommand extends PostCommand<Airship>
 	@Override
 	protected void internalPostExecute() throws CommandException
 	{
-		String methodName = "create" + getParameterAsString( TYPE );
+		String methodName = "create" + getParameterAsString( Param.TYPE );
 
-		double latitude = getParameterAsDouble( LATITUDE );
-		double longitude = getParameterAsDouble( LONGITUDE );
-		double altitude = getParameterAsDouble( ALTITUDE );
-		double minAltitude = getParameterAsDouble( MINALTITUDE );
-		double maxAltitude = getParameterAsDouble( MAXALTITUDE );
+		double latitude = getParameterAsDouble( Param.LATITUDE );
+		double longitude = getParameterAsDouble( Param.LONGITUDE );
+		double altitude = getParameterAsDouble( Param.ALTITUDE );
+		double minAltitude = getParameterAsDouble( Param.MINALTITUDE );
+		double maxAltitude = getParameterAsDouble( Param.MAXALTITUDE );
 
 
 
 		Class<? extends PostAirshipCommand> c = this.getClass();
 		User user = usersDatabase.getElementByIdentification( parameters
-				.get( LOGINNAME ) );
+				.get( Param.LOGINNAME ) );
+
+
 		try
 		{
 			Method creatorMethod = c.getDeclaredMethod( methodName, Double.TYPE, Double.TYPE, Double.TYPE, Double.TYPE, Double.TYPE );
-			Airship airship = ( Airship )creatorMethod.invoke( this, latitude,
+			Airship airship;
+			airship = ( Airship )creatorMethod.invoke( this, latitude,
 					longitude, altitude, maxAltitude, minAltitude );
 			database.add( airship, user );
 			result = airship.getIdentification();
 		}
-		catch( Exception e )
+		catch( InvocationTargetException e )
 		{
-			throw new CommandException( MessageFormat.format(
-					"Error finding method to create a {0}", TYPE ), e );
+			try
+			{
+				throw e.getTargetException();
+			}
+			catch( MissingRequiredParameterException e1)
+			{
+				throw e1;
+			}
+			catch( InvalidParameterValueException e1)
+			{
+				throw e1;
+			}
+			catch( Throwable e1 )
+			{
+				// If this happen make a call to the God of Java
+				e1.printStackTrace();
+			}
+		}
+		catch( NoSuchMethodException | SecurityException | IllegalAccessException |  IllegalArgumentException e )
+		{
+			throw new InvalidParameterValueException( Param.TYPE, getParameterAsString(Param.TYPE) );
 		}
 	}
 
@@ -132,7 +144,7 @@ public class PostAirshipCommand extends PostCommand<Airship>
 	@Override
 	protected String[] getSpecificRequiredParameters()
 	{
-		return REQUIREDPARAMETERS;
+		return Param.REQUIRED_POST_AIRSHIP_PARAMETERS;
 	}
 
 
@@ -152,13 +164,13 @@ public class PostAirshipCommand extends PostCommand<Airship>
 	// reflection
 	private Airship createCivil( double latitude, double longitude,
 			double altitude, double maxAltitude, double minAltitude )
-			throws MissingRequiredParameterException,
-			InvalidParameterValueException
-	{
-		if( ! parameters.containsKey( PASSENGERSNUMBER ) )
-			throw new MissingRequiredParameterException( PASSENGERSNUMBER );
+					throws MissingRequiredParameterException, InvalidParameterValueException
 
-		int nbPassengers = getParameterAsInt( PASSENGERSNUMBER );
+	{
+		if( ! parameters.containsKey( Param.PASSENGERSNUMBER ) )
+			throw new MissingRequiredParameterException( Param.PASSENGERSNUMBER );
+
+		int nbPassengers = getParameterAsInt( Param.PASSENGERSNUMBER );
 
 		return new CivilAirship( latitude, longitude, altitude, maxAltitude,
 				minAltitude, nbPassengers );
@@ -180,13 +192,13 @@ public class PostAirshipCommand extends PostCommand<Airship>
 	// reflection
 	private Airship createMilitary( double latitude, double longitude,
 			double altitude, double maxAltitude, double minAltitude )
-			throws MissingRequiredParameterException,
-			InvalidParameterValueException
+					throws MissingRequiredParameterException,
+					InvalidParameterValueException
 	{
-		if( ! parameters.containsKey( HASARMOUR ) )
-			throw new MissingRequiredParameterException( HASARMOUR );
+		if( ! parameters.containsKey( Param.HASARMOUR ) )
+			throw new MissingRequiredParameterException( Param.HASARMOUR );
 
-		boolean hasWeapons = getParameterAsBoolean( HASARMOUR );
+		boolean hasWeapons = getParameterAsBoolean( Param.HASARMOUR );
 
 		return new MilitaryAirship( latitude, longitude, altitude, maxAltitude,
 				minAltitude, hasWeapons );

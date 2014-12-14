@@ -63,7 +63,7 @@ public class App {
 			parser.registerCommand("GET", "/airships/{flightId}",
 					new GetAirshipByIdCommand.Factory(airshipDatabase));
 			parser.registerCommand("GET", "/airships/owner/{owner}",
-					new GetAirshipsByOwnerCommand.Factory(airshipDatabase));
+					new GetAirshipsByOwnerCommand.Factory(airshipDatabase, userDatabase));
 			parser.registerCommand("GET", "/airships/nbPassengers/{nbP}/bellow",
 					new GetAirshipsWithMinimumPassengersCommand.Factory(airshipDatabase));
 			parser.registerCommand("GET", "/airships/reports",

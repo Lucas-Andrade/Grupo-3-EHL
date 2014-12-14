@@ -16,9 +16,10 @@ import airtrafficcontrol.app.appforcommandline.model.airships.AirshipPredicates;
 import airtrafficcontrol.app.appforcommandline.model.airships.CivilAirship;
 import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
 import airtrafficcontrol.app.appforcommandline.model.airships.MilitaryAirship;
+import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
 import airtrafficcontrol.app.appforcommandline.model.users.User;
 
-public class InMemoryAirshipDatabaseTests {
+public class InMemoryDatabase_Tests {
 
 	private InMemoryAirshipDatabase airshipDatabase;
 	private Airship airship, airship2;
@@ -32,7 +33,24 @@ public class InMemoryAirshipDatabaseTests {
 		airship = new MilitaryAirship(0, 0, 0, 10, 0, false);
 		user = new User("X", "P", "T@", "O");
 	}
+	
+	@Test
+	public void shouldCreateInMemoryUserDatabaseWithAMasterUser() {
+		// Arrange
+		InMemoryUserDatabase userDatabase = new InMemoryUserDatabase();
+		User masterUser = new User("MASTER", "master", "master@gmail.com");
+		
+		// Assert
+		Assert.assertEquals(userDatabase.getElementByIdentification("MASTER").toString(), masterUser.toString());
+	}
 
+	@Test (expected = IllegalArgumentException.class)
+	public void shouldThrowIllegalArgumentExceptionWhenTryingToAddNullElementsToADatabase() {
+
+		// Assert
+		airshipDatabase.add(null, user);
+	}
+	
 	@Test
 	public void shouldAddMilitaryAirship() {
 

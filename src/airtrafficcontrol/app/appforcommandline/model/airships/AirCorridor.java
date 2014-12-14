@@ -1,8 +1,9 @@
 package airtrafficcontrol.app.appforcommandline.model.airships;
 
 /**
- * Class whose instances will represent the correct flight path an {@code Airship} is allowed to
- * use.
+ * Class whose instances will represent the correct flight path an {@link Airship} is allowed to be.
+ * 
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class AirCorridor {
 
@@ -21,14 +22,17 @@ public class AirCorridor {
 	// Constructor
 
 	/**
-	 * AirCorridor constructor that will receive as parameters altitude limits an {@code Airship}
-	 * can fly.
-	 * 
-	 * If the minimum altitude is less than 0 or the maximum altitue is lower than the minimum
-	 * altitude it will throw an {@link IllegalArgumentException}.
+	 * AirCorridor constructor that will receive as parameters the altitude limits between which an
+	 * {@code Airship} can fly.
 	 * 
 	 * @param maxAltitude
+	 *            - the maximum altitude an {@code Airship} is allowed to fly.
 	 * @param minAltitude
+	 *            - the minimum altitude an {@code Airship} is allowed to fly.
+	 * 
+	 * @throws IllegalArgumentException
+	 *             If the minimum altitude is less than 0 or the maximum altitue is lower than the
+	 *             minimum altitude
 	 */
 	public AirCorridor(double maxAltitude, double minAltitude) {
 
@@ -42,7 +46,7 @@ public class AirCorridor {
 	// Overrides
 
 	/**
-	 * Override of the {@code toString()} method from {@code Object}.
+	 * Override of the {@link Object#toString() toString()} method from {@link Object}.
 	 */
 	@Override
 	public String toString() {
@@ -54,7 +58,7 @@ public class AirCorridor {
 	// Get Methods
 
 	/**
-	 * @return returns the {@code maxAltitude}.
+	 * @return the {@code maxAltitude}.
 	 */
 	public double getMaxAltitude() {
 
@@ -62,7 +66,7 @@ public class AirCorridor {
 	}
 
 	/**
-	 * @return returns the {@code minAltitude}.
+	 * @return the {@code minAltitude}.
 	 */
 	public double getMinAltitude() {
 

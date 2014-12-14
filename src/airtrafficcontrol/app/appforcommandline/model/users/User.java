@@ -3,8 +3,10 @@ package airtrafficcontrol.app.appforcommandline.model.users;
 import airtrafficcontrol.app.appforcommandline.model.Element;
 
 /**
- * Instances of this class represents users. Users have a unique username, a unique email, a
- * password and may or may not have a full name.
+ * Class whose instances represent users. Users have an unique username, email and password and may
+ * or may not have a full name.
+ * 
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class User implements Element {
 
@@ -21,7 +23,7 @@ public class User implements Element {
 	 * Create a new {@code User} giving all the info.
 	 * 
 	 * @param username
-	 *            - the user Name.
+	 *            - the username.
 	 * @param password
 	 *            - the password associated to this User
 	 * @param email

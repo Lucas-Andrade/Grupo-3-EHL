@@ -48,8 +48,8 @@ public class UserTest {
 	
 	public void ShouldReturnUsername(){
 		
-		Assert.assertTrue(user1.getUsername().equals("Pedro"));
-		Assert.assertTrue(user2.getUsername().equals("Gonçalo"));
+		Assert.assertTrue(user1.getIdentification().equals("Pedro"));
+		Assert.assertTrue(user2.getIdentification().equals("Gonçalo"));
 	}
 		
 	@Test

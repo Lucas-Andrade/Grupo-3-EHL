@@ -12,12 +12,16 @@ import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 
+	// Instance Fields
+
 	/**
 	 * The register of the {@link Airship airships} added by each {@link User user}. Each
 	 * {@link User#username username} is mapped to a {@link List} of the {@link Airship#flightId
 	 * flightId}s of the {@link Airship airships} he added to this database..
 	 */
 	private Map<String, List<Airship>> flightsByUserRegister;
+
+	// Constructor
 
 	/**
 	 * Creates an empty {@link InMemoryAirshipDatabase in-memory airships database} with no
@@ -28,17 +32,59 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 		flightsByUserRegister = new HashMap<String, List<Airship>>();
 	}
 
+	// Overrides
+
+	/**
+	 * Stores the {@link Airship airship} {@code airship} in this database, added by the
+	 * {@link User user} {@code userWhoIsAddingThisAirship}.
+	 * 
+	 * @param element
+	 *            The element to be added to this database.
+	 * @param userWhoIsAddingThisAirship
+	 *            The user who added this element to the database.
+	 * @return {@code true} if the element was successfully added;</br> {@code false} otherwise.
+	 */
+	@Override
+	public boolean add(Airship airship, User user) {
+
+		if (super.add(airship, user)) {
+
+			if (flightsByUserRegister.containsKey(user.getIdentification()))
+				flightsByUserRegister.get(user.getIdentification()).add(airship);
+
+			else {
+
+				List<Airship> newListForNewUser = new ArrayList<>();
+				newListForNewUser.add(airship);
+				flightsByUserRegister.put(user.getIdentification(), newListForNewUser);
+			}
+
+			return true;
+		}
+
+		return false;
+	}
+
+	// Get Methods Used By The Commands
+
 	/**
 	 * Returns a list with the {@link Airship#flightId flightId}s of {@link Airship airships} stored
 	 * in this database that were added by the {@link User} with the {@link User#username username}
 	 * {@code username}.
 	 * 
 	 * @param username
+	 * 
 	 * @return A list with the {@link Airship#flightId flightId}'s of {@link Airship airships}
 	 *         stored in this database that were added by the {@link User} with
 	 *         {@link User#username} {@code username}.
+	 * 
+	 * @throws NoSuchElementInDatabaseException
+	 *             if no {@code Airship} was added by the given {@code User}.
 	 */
-	public List<Airship> getAirshipsOfUser(String username) {
+	public List<Airship> getAirshipsOfUser(String username) throws NoSuchElementInDatabaseException {
+
+		if (!flightsByUserRegister.containsKey(username))
+			throw new NoSuchElementInDatabaseException("No Airship was added by the given User");
 
 		return flightsByUserRegister.get(username);
 	}
@@ -77,7 +123,7 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 			if (airship.isTransgressing())
 				transgressingAirships.add(airship);
 		}
-		
+
 		return transgressingAirships;
 	}
 
@@ -93,48 +139,19 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	 *         {@code false} if the {@link Airship airship} with {@link Airship#flightId flightId}
 	 *         {@code flightId} is out of its pre-established {@link AirCorridor altitude corridor}
 	 *         or is not in this database.
-	 * @throws NoSuchElementInDatabaseException 
+	 * @throws NoSuchElementInDatabaseException
 	 */
-	public boolean checkIfThisAirshipIsInCorridor(String flightId) throws NoSuchElementInDatabaseException {
+	public boolean checkIfThisAirshipIsInCorridor(String flightId)
+			throws NoSuchElementInDatabaseException {
 
 		Airship theAirship = getElementByIdentification(flightId);
-		
+
 		if (theAirship == null)
-			throw new NoSuchElementInDatabaseException("The Airship with the given ID doesn't exist in the database");
-		
+			throw new NoSuchElementInDatabaseException(
+					"The Airship with the given ID doesn't exist in the database");
+
 		if (theAirship.isTransgressing())
 			return true;
-		
-		return false;
-	}
-
-	/**
-	 * Stores the {@link Airship airship} {@code airship} in this database, added by the
-	 * {@link User user} {@code userWhoIsAddingThisAirship}.
-	 * 
-	 * @param element
-	 *            The element to be added to this database.
-	 * @param userWhoIsAddingThisAirship
-	 *            The user who added this element to the database.
-	 * @return {@code true} if the element was successfully added;</br> {@code false} otherwise.
-	 */
-	@Override
-	public boolean add(Airship airship, User user) {
-
-		if (super.add(airship, user)) {
-
-			if (flightsByUserRegister.containsKey(user.getUsername()))
-				flightsByUserRegister.get(user.getUsername()).add(airship);
-
-			else {
-
-				List<Airship> newListForNewUser = new ArrayList<>();
-				newListForNewUser.add(airship);
-				flightsByUserRegister.put(user.getUsername(), newListForNewUser);
-			}
-
-			return true;
-		}
 
 		return false;
 	}

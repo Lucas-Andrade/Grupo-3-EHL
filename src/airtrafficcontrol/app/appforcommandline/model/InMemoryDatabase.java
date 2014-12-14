@@ -17,12 +17,16 @@ import airtrafficcontrol.app.appforcommandline.model.users.User;
  */
 public abstract class InMemoryDatabase<T extends Element> implements Database<T> {
 
+	// Instance Fields
+	
 	/**
 	 * The container of {@link Element}, where the: <li>keys are the elements' identifications - see
 	 * {@link Element#getIdentification()}; <li>values are the elements.
 	 */
 	private Map<String, T> database;
 
+	// Constructor
+	
 	/**
 	 * Sets an empty database.
 	 */
@@ -31,6 +35,8 @@ public abstract class InMemoryDatabase<T extends Element> implements Database<T>
 		this.database = new HashMap<String, T>();
 	}
 
+	// Overrides
+	
 	/**
 	 * Stores the {@link Element} {@code element} in this database, added by the {@link User}
 	 * {@code user}.

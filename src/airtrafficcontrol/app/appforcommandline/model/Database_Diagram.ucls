@@ -5,7 +5,7 @@
     project="AirTrafficControl" 
     file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/model/users/User.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="1052" y="325"/>    
+    <position height="-1" width="-1" x="939" y="178"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -26,7 +26,7 @@
   <interface id="3" language="java" name="airtrafficcontrol.app.appforcommandline.model.Element" 
     project="AirTrafficControl" file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/model/Element.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="937" y="79"/>    
+    <position height="-1" width="-1" x="587" y="84"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -48,7 +48,7 @@
     project="AirTrafficControl" 
     file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/model/users/InMemoryUserDatabase.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="434" y="443"/>    
+    <position height="-1" width="-1" x="467" y="514"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -59,7 +59,7 @@
     project="AirTrafficControl" 
     file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/model/airships/Airship.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="798" y="342"/>    
+    <position height="-1" width="-1" x="632" y="312"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -78,25 +78,25 @@
     </display>  
   </class>  
   <realization id="8">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
   </realization>  
-  <association id="9">    
+  <generalization id="9">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <association id="10">    
     <end type="SOURCE" refId="4" navigable="false">      
-      <attribute id="10" name="database">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <attribute id="11" name="database">        
+        <position height="0" width="0" x="-350" y="5"/>      
       </attribute>      
-      <multiplicity id="11" minimum="0" maximum="2147483647">        
-        <position height="0" width="0" x="0" y="0"/>      
+      <multiplicity id="12" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-350" y="5"/>      
       </multiplicity>    
     </end>    
     <end type="TARGET" refId="3" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  
   </association>  
-  <realization id="12">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="2"/>  
-  </realization>  
   <realization id="13">    
     <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="3"/>  
@@ -105,10 +105,10 @@
     <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="4"/>  
   </generalization>  
-  <generalization id="15">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
+  <realization id="15">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </realization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

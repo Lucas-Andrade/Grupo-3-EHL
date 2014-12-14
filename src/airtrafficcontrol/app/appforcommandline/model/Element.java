@@ -1,9 +1,13 @@
 package airtrafficcontrol.app.appforcommandline.model;
 
 /**
- * Contract to be supported by {@code User } and {@code Airship}.
+ * Interface tha imposes a contract to be supported by {@code User } and {@code Airship}.
  * 
- * NOTE: (DIFFERENT ELEMENTS MUST HAVE DIFFERENT IDENTIFICATION)
+ * <li>NOTE - Different elements have different identifications.
+ * 
+ * </br></br>
+ * 
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public interface Element {
 

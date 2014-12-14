@@ -8,44 +8,41 @@ import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 /**
  * Abstract class whose instances represent in-memory databases of {@link Element} that have an
- * identification. An in-memory database exists only during the runtime.
- * 
+ * identification. An in-memory database exists only during the runtime. </br></br> Implements
+ * {@link Database}.
  *
- * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  * @param <T>
  *            The type of the elements stored in the database.
+ * 
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public abstract class InMemoryDatabase<T extends Element> implements Database<T> {
 
 	// Instance Fields
-	
+
 	/**
-	 * The container of {@link Element}, where the: <li>keys are the elements' identifications - see
-	 * {@link Element#getIdentification()}; <li>values are the elements.
+	 * The container {@link Map} where the {@link Element elements} will be stored: <li>The keys are
+	 * the elements' identifications - see {@link Element#getIdentification() getIdentification()}
+	 * method; <li>The values are the elements.
 	 */
 	private Map<String, T> database;
 
 	// Constructor
-	
+
 	/**
-	 * Sets an empty database.
+	 * Constructor used by the subclasses of this class to creates an empty database.
 	 */
 	public InMemoryDatabase() {
 
 		this.database = new HashMap<String, T>();
 	}
 
-	// Overrides
-	
+	// Implemented Methods
+
 	/**
-	 * Stores the {@link Element} {@code element} in this database, added by the {@link User}
-	 * {@code user}.
-	 * 
-	 * @param element
-	 *            The element to be added to this database.
-	 * @param user
-	 *            The user who added this element to the database.
-	 * @return {@code true} if the element was successfully added;</br> {@code false} otherwise.
+	 * Implementation of the method {@link Database#add() add()} from the {@link Database}
+	 * Interface. </br></br>Allows an {@link Element element} to be added to this database by a
+	 * specific {@link User user}.
 	 */
 	@Override
 	public boolean add(T element, User user) {
@@ -61,13 +58,10 @@ public abstract class InMemoryDatabase<T extends Element> implements Database<T>
 	}
 
 	/**
-	 * Returns the element of this database whose identification is {@code identification} (uses
-	 * method {@link Element#getIdentification()}).
-	 * 
-	 * @param identification
-	 *            The element's identification.
-	 * @return The element of this database whose identification is {@code identification}; </br>
-	 *         {@code null} if there's no such element in this database.
+	 * Implementation of the method {@link Database#getElementByIdentification()
+	 * getElementByIdentification()} from the {@link Database} Interface. </br></br>Returns the
+	 * element of this database whose {@code identification} is the same as the one given as
+	 * parameter.
 	 */
 	@Override
 	public T getElementByIdentification(String identification) {
@@ -76,10 +70,9 @@ public abstract class InMemoryDatabase<T extends Element> implements Database<T>
 	}
 
 	/**
-	 * Returns a map whose values are the elements stored in this database and whose keys are the
-	 * corresponding identifications (obtained by the method {@link Element#getIdentification()}
-	 * ).This map is "read-only"; attempts to modify the returned map, whether direct or via its
-	 * collection views, result in an {@link UnsupportedOperationException}. e
+	 * Returns an unmodifiable view of the map that represents this database.This map is "read-only"
+	 * and any attempts to modify it, whether directly or via its collection views, will result in
+	 * an {@link UnsupportedOperationException}.
 	 * 
 	 * @return A "read-only" view of this database.
 	 */

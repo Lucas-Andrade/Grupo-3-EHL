@@ -7,25 +7,33 @@ import java.util.Map;
 import java.util.function.Predicate;
 
 import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
+import airtrafficcontrol.app.appforcommandline.model.Database;
+import airtrafficcontrol.app.appforcommandline.model.Element;
 import airtrafficcontrol.app.appforcommandline.model.InMemoryDatabase;
 import airtrafficcontrol.app.appforcommandline.model.users.User;
 
+/**
+ * Class whose instances represent an in-memory database of {@link Airship airships}. </br></br>
+ * Implements {@link Database}.
+ * 
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
 public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 
 	// Instance Fields
 
 	/**
-	 * The register of the {@link Airship airships} added by each {@link User user}. Each
-	 * {@link User#username username} is mapped to a {@link List} of the {@link Airship#flightId
-	 * flightId}s of the {@link Airship airships} he added to this database..
+	 * The container {@link Map} where all the {@link Airhip airships} will be stored by
+	 * {@link User}: <li>The keys are Strings with the users identifications;</br></br><li>The
+	 * values will be a {@link List} of all the {@link Airhip airships} added by the user whose
+	 * indentification is stored in the correspondeing key.
 	 */
 	private Map<String, List<Airship>> flightsByUserRegister;
 
 	// Constructor
 
 	/**
-	 * Creates an empty {@link InMemoryAirshipDatabase in-memory airships database} with no
-	 * {@link Airship airships} .
+	 * Creates an empty {@code InMemoryAirshipDatabase}.
 	 */
 	public InMemoryAirshipDatabase() {
 
@@ -35,14 +43,10 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	// Overrides
 
 	/**
-	 * Stores the {@link Airship airship} {@code airship} in this database, added by the
-	 * {@link User user} {@code userWhoIsAddingThisAirship}.
-	 * 
-	 * @param element
-	 *            The element to be added to this database.
-	 * @param userWhoIsAddingThisAirship
-	 *            The user who added this element to the database.
-	 * @return {@code true} if the element was successfully added;</br> {@code false} otherwise.
+	 * Override of the implementation of the method {@link InMemoryDatabase#add() add()} from the
+	 * {@link Database} Interface. </br></br>Allows an {@link Element element} to be added to this
+	 * database by a specific {@link User user} records that addiction in the field
+	 * {@code flightsByUserRegister}.
 	 */
 	@Override
 	public boolean add(Airship airship, User user) {
@@ -68,15 +72,13 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	// Get Methods Used By The Commands
 
 	/**
-	 * Returns a list with the {@link Airship#flightId flightId}s of {@link Airship airships} stored
-	 * in this database that were added by the {@link User} with the {@link User#username username}
-	 * {@code username}.
+	 * Auxiliar method to be used by the application commands that will allow a {@link List}
+	 * containing all the airships added by a specified user to be obtained.
 	 * 
 	 * @param username
+	 *            - The user's identification.
 	 * 
-	 * @return A list with the {@link Airship#flightId flightId}'s of {@link Airship airships}
-	 *         stored in this database that were added by the {@link User} with
-	 *         {@link User#username} {@code username}.
+	 * @return A {@link List} containing all the airships added by a specified user.
 	 * 
 	 * @throws NoSuchElementInDatabaseException
 	 *             if no {@code Airship} was added by the given {@code User}.
@@ -90,11 +92,14 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	}
 
 	/**
-	 * Returns a list with the {@link Airship#flightId flightId}s of {@link Airship airships} stored
-	 * in this database that satisfy the specified {@code criteria}.
+	 * Auxiliar method to be used by the application commands that will allow a {@link List}
+	 * containing all the airships that verify a specific criteria to be obtained.
 	 * 
 	 * @param criteria
-	 * @return
+	 *            - The specific validation criteria that have to be verified by the airships
+	 *            contained in the database in order to be selected.
+	 * 
+	 * @return A {@link List} containing all the airships that verify a specific criteria.
 	 */
 	public List<Airship> getAirshipsThat(Predicate<Airship> criteria) {
 
@@ -108,12 +113,12 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	}
 
 	/**
-	 * Returns a list with the {@link Airship#flightId flightId}s of {@link Airship airships} stored
-	 * in this database that are out of their pre-established {@link AirCorridor altitude corridor}.
+	 * Auxiliar method to be used by the application commands that will allow a {@link List}
+	 * containing all the airships that are outside their pre-established {@link AirCorridor
+	 * altitude corridor} to be obtained.
 	 * 
-	 * @return A list with the {@link Airship#flightId flightId}s of {@link Airship airships} stored
-	 *         in this database that are out of the pre-established {@link AirCorridor altitude
-	 *         corridor}s.
+	 * @return A {@link List} containing all the airships that are outside their pre-established
+	 *         {@link AirCorridor altitude corridor}.
 	 */
 	public List<Airship> reportTransgressions() {
 
@@ -128,18 +133,18 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	}
 
 	/**
-	 * Checks whether the {@link Airship airship} with {@link Airship#flightId flightId}
-	 * {@code flightId} is out of its pre-established {@link AirCorridor altitude corridor}.
+	 * Auxiliar method to be used by the application commands to verify in an airship is outside its
+	 * pre-established {@link AirCorridor altitude corridor}.
 	 * 
 	 * @param flightId
-	 *            The {@link Airship#flightId flightId} of the {@link Airship airship} to be
+	 *            - The {@link Airship#flightId flightId} of the {@link Airship airship} to be
 	 *            evaluated.
-	 * @return {@code true} if the {@link Airship airship} with {@link Airship#flightId flightId}
-	 *         {@code flightId} is in the correct {@link AirCorridor altitude corridor}; </br>
-	 *         {@code false} if the {@link Airship airship} with {@link Airship#flightId flightId}
-	 *         {@code flightId} is out of its pre-established {@link AirCorridor altitude corridor}
-	 *         or is not in this database.
+	 * 
+	 * @return {@code true} if the {@code Airship} with the given {@code flightId} is in the
+	 *         correct {@code altitude corridor} or false otherwhise.
+	 * 
 	 * @throws NoSuchElementInDatabaseException
+	 *             If no {@code Airship} exist in the database with the given {@code flightId.}
 	 */
 	public boolean checkIfThisAirshipIsTransgressing(String flightId)
 			throws NoSuchElementInDatabaseException {

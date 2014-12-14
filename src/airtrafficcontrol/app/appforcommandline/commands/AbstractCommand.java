@@ -17,7 +17,8 @@ import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoS
  */
 public abstract class AbstractCommand implements Command {
 
-	// INSTANCE FIELDS
+	// Instance Fields
+
 	/**
 	 * The parameters name-value pairs received to execute the command.
 	 */
@@ -25,7 +26,8 @@ public abstract class AbstractCommand implements Command {
 
 	protected String result;
 
-	// CONSTRUCTOR
+	// Constructor
+
 	/**
 	 * Stores the container {@code parameters}.
 	 * 
@@ -37,31 +39,7 @@ public abstract class AbstractCommand implements Command {
 		this.parameters = parameters;
 	}
 
-	// EXECUTE METHOD
-	/**
-	 * Performs the action associated with this command, inclusively checks the validity of the
-	 * received parameters.
-	 * 
-	 * @throws CommandException
-	 *             If the received parameters are not valid (missing parameters, invalid values,
-	 *             ...).
-	 * @throws NoSuchElementInDatabaseException
-	 *             If an element, expected to be in a certain database, was not found.
-	 * @throws WrongLoginPasswordException
-	 *             If the command needs a login name and a login password and the received password
-	 *             is not the right password for the received login name.
-	 */
-	public final void execute() throws CommandException, NoSuchElementInDatabaseException,
-			WrongLoginPasswordException {
-
-		validateDemandingParameters(getRequiredParameters());
-		// TODO: other validations may be required.
-
-		internalExecute();
-
-	}
-
-	// UNIMPLEMENTED METHODS
+	// Abstract Methods To Be Implemented
 
 	/**
 	 * Performs the specific action associated with this command.
@@ -81,7 +59,7 @@ public abstract class AbstractCommand implements Command {
 	 */
 	protected abstract String[] getRequiredParameters();
 
-	// AUXILIAR PRIVATE METHODS
+	// Private Methods
 
 	/**
 	 * Checks whether the required parameters (obtained using the method
@@ -101,13 +79,41 @@ public abstract class AbstractCommand implements Command {
 
 	}
 
+	// Overrides
+
+	/**
+	 * Performs the action associated with this command, inclusively checks the validity of the
+	 * received parameters.
+	 * 
+	 * @throws CommandException
+	 *             If the received parameters are not valid (missing parameters, invalid values,
+	 *             ...).
+	 * @throws NoSuchElementInDatabaseException
+	 *             If an element, expected to be in a certain database, was not found.
+	 * @throws WrongLoginPasswordException
+	 *             If the command needs a login name and a login password and the received password
+	 *             is not the right password for the received login name.
+	 */
+	@Override
+	public final void execute() throws CommandException, NoSuchElementInDatabaseException,
+			WrongLoginPasswordException {
+
+		validateDemandingParameters(getRequiredParameters());
+		// TODO: other validations may be required.
+
+		internalExecute();
+	}
+
+	/**
+	 * Implementation of the {@code getResult} method from the {@link Command} interface.
+	 */
+	@Override
 	public String getResult() {
 
 		return result;
 	}
 
-	// protected method - by G.
-	// Do you approve? (y/n)
+	// Protected Auxiliar Methods
 
 	/**
 	 * Convert and return a {@code String} parameter to {@code double}.
@@ -120,9 +126,12 @@ public abstract class AbstractCommand implements Command {
 	protected double getParameterAsDouble(String name) throws InvalidParameterValueException {
 
 		try {
+
 			return Double.parseDouble(parameters.get(name));
+
 		} catch (NullPointerException npe) {
 			throw new NullPointerException();
+
 		} catch (NumberFormatException nfe) {
 			throw new InvalidParameterValueException(name, parameters.get(name));
 		}
@@ -150,9 +159,12 @@ public abstract class AbstractCommand implements Command {
 	protected int getParameterAsInt(String name) throws InvalidParameterValueException {
 
 		try {
+
 			return Integer.parseInt(parameters.get(name));
+
 		} catch (NullPointerException npe) {
 			throw new NullPointerException();
+
 		} catch (NumberFormatException nfe) {
 			throw new InvalidParameterValueException(name, parameters.get(name));
 		}
@@ -169,9 +181,12 @@ public abstract class AbstractCommand implements Command {
 	protected boolean getParameterAsBoolean(String name) throws InvalidParameterValueException {
 
 		try {
+
 			return Boolean.parseBoolean(parameters.get(name));
+
 		} catch (NullPointerException npe) {
 			throw new NullPointerException();
+
 		} catch (NumberFormatException nfe) {
 			throw new InvalidParameterValueException(name, parameters.get(name));
 		}
@@ -184,13 +199,16 @@ public abstract class AbstractCommand implements Command {
 	 *            parameter
 	 * @return a string of the given list
 	 */
-	protected String listToString( List<?> stringList, String message )
-	{
+	protected String listToString(List<?> stringList, String message) {
+
 		StringBuilder sb = new StringBuilder();
-		if( stringList == null || stringList.isEmpty() )
+
+		if (stringList == null || stringList.isEmpty())
 			return message;
-		for( Object s : stringList )
-			sb.append( s ).append( "\n" );
+
+		for (Object s : stringList)
+			sb.append(s).append("\n");
+
 		return sb.toString();
 	}
 }

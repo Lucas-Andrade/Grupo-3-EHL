@@ -39,10 +39,8 @@ public class GetAllUsersCommand extends GetUsersCommand {
 
 		StringBuilder result = new StringBuilder();
 
-		for (User user : users) {
-
+		for (User user : users)
 			result.append(user).append("\n");
-		}
 
 		this.result = result.toString();
 	}

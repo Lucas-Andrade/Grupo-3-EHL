@@ -10,7 +10,9 @@ import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDat
 
 public class GetAirshipByIdCommand extends GetAirshipsCommand {
 
-	private static final String[] requiredParameters = {"flightId"};
+	private static final String ID = "flightId";
+	
+	private static final String[] requiredParameters = {ID};
 
 	public static class Factory implements CommandFactory {
 
@@ -38,10 +40,10 @@ public class GetAirshipByIdCommand extends GetAirshipsCommand {
 	protected void internalExecute() throws CommandException {
 
 		Airship airship = airshipsDatabase.getElementByIdentification(this.parameters
-				.get(requiredParameters[0]));
+				.get(ID));
 
 		if (airship == null) {
-			
+
 			this.result = "Airship Not Found\n";
 			return;
 		}

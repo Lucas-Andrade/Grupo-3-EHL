@@ -10,8 +10,10 @@ import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 public class GetUserByUsernameCommand extends GetUsersCommand {
 
-	private static final String[] requiredParameters = {"username"};
+	private static final String USERNAME = "username";
 	
+	private static final String[] requiredParameters = {USERNAME};
+
 	public static class Factory implements CommandFactory {
 
 		private final InMemoryUserDatabase userDatabase;
@@ -38,10 +40,10 @@ public class GetUserByUsernameCommand extends GetUsersCommand {
 	protected void internalExecute() throws CommandException {
 
 		User user = usersDatabase.getElementByIdentification(this.parameters
-				.get(requiredParameters[0]));
+				.get(USERNAME));
 
 		if (user == null) {
-			
+
 			this.result = "User Not Found\n";
 			return;
 		}

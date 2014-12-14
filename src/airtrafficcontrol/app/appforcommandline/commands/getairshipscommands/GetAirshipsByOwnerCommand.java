@@ -1,16 +1,18 @@
 package airtrafficcontrol.app.appforcommandline.commands.getairshipscommands;
 
-import java.text.MessageFormat;
 import java.util.Map;
 
-import airtrafficcontrol.app.appforcommandline.commands.*;
-import airtrafficcontrol.app.appforcommandline.model.Param;
-import airtrafficcontrol.app.appforcommandline.model.airships.*;
-import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
-import airtrafficcontrol.app.appforcommandline.model.users.User;
+import airtrafficcontrol.app.appforcommandline.commands.AbstractCommand;
+import airtrafficcontrol.app.appforcommandline.commands.Command;
+import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.MissingRequiredParameterException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;
 import airtrafficcontrol.app.appforcommandline.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
+import airtrafficcontrol.app.appforcommandline.model.Param;
+import airtrafficcontrol.app.appforcommandline.model.airships.Airship;
+import airtrafficcontrol.app.appforcommandline.model.airships.InMemoryAirshipDatabase;
+import airtrafficcontrol.app.appforcommandline.model.users.InMemoryUserDatabase;
+import airtrafficcontrol.app.appforcommandline.model.users.User;
 
 
 /**
@@ -84,10 +86,7 @@ public class GetAirshipsByOwnerCommand extends GetAirshipsCommand
 		}
 		
 		result = listToString(
-				airshipsDatabase.getAirshipsOfUser( axiliarUsername ),
-				MessageFormat.format(
-						"The User {0} still did not create Airships",
-						axiliarUsername ) );
+				airshipsDatabase.getAirshipsOfUser( axiliarUsername ), "");
 	}
 
 	/**

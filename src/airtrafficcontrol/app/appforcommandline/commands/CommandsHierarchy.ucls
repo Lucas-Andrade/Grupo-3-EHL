@@ -5,7 +5,7 @@
     project="AirTrafficControl" 
     file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/postcommands/PostCommand.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="223" y="452"/>    
+    <position height="-1" width="-1" x="234" y="556"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -27,7 +27,7 @@
     project="AirTrafficControl" 
     file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/AbstractCommand.java" binary="false" 
     corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="144" y="229"/>    
+    <position height="-1" width="-1" x="148" y="272"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -38,7 +38,7 @@
     project="AirTrafficControl" 
     file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/postcommands/PostUserCommand.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="210" y="597"/>    
+    <position height="-1" width="-1" x="693" y="611"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -49,7 +49,7 @@
     project="AirTrafficControl" 
     file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/postcommands/PostAirshipCommand.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="548" y="602"/>    
+    <position height="-1" width="-1" x="694" y="530"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -92,18 +92,6 @@
     </display>  
   </class>  
   <class id="9" language="java" 
-    name="airtrafficcontrol.app.appforcommandline.commands.getuserscommands.GetUserByIdCommand" 
-    project="AirTrafficControl" 
-    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/getuserscommands/GetUserByIdCommand.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="948" y="116"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
-      sort-features="false" accessors="true" visibility="true">      
-      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
-      <operations public="false" package="false" protected="false" private="false" static="true"/>    
-    </display>  
-  </class>  
-  <class id="10" language="java" 
     name="airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAllAirshipsCommand" 
     project="AirTrafficControl" 
     file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/getairshipscommands/GetAllAirshipsCommand.java" 
@@ -115,7 +103,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" 
+  <class id="10" language="java" 
     name="airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipByIdCommand" 
     project="AirTrafficControl" 
     file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/getairshipscommands/GetAirshipByIdCommand.java" 
@@ -127,7 +115,7 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" 
+  <class id="11" language="java" 
     name="airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsByOwnerCommand" 
     project="AirTrafficControl" 
     file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/getairshipscommands/GetAirshipsByOwnerCommand.java" 
@@ -139,12 +127,24 @@
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" 
-    name="airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsWithMinimumPassengersNumberCommand" 
+  <class id="12" language="java" 
+    name="airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetReportOfTransgressionByIdCommand" 
     project="AirTrafficControl" 
-    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/getairshipscommands/GetAirshipsWithMinimumPassengersNumberCommand.java" 
+    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/getairshipscommands/GetReportOfTransgressionByIdCommand.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="968" y="389"/>    
+    <position height="-1" width="-1" x="764" y="454"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" 
+    name="airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetTransgressingAirshipsCommand" 
+    project="AirTrafficControl" 
+    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/getairshipscommands/GetTransgressingAirshipsCommand.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="910" y="389"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -152,11 +152,11 @@
     </display>  
   </class>  
   <class id="14" language="java" 
-    name="airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetReportOfTransgressionByIdCommand" 
+    name="airtrafficcontrol.app.appforcommandline.commands.getuserscommands.GetUserByUsernameCommand" 
     project="AirTrafficControl" 
-    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/getairshipscommands/GetReportOfTransgressionByIdCommand.java" 
+    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/getuserscommands/GetUserByUsernameCommand.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="643" y="515"/>    
+    <position height="-1" width="-1" x="937" y="101"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
@@ -164,74 +164,72 @@
     </display>  
   </class>  
   <class id="15" language="java" 
-    name="airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetTransgressingAirshipsCommand" 
+    name="airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsWithMinimumPassengersCommand" 
     project="AirTrafficControl" 
-    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/getairshipscommands/GetTransgressingAirshipsCommand.java" 
+    file="/AirTrafficControl/src/airtrafficcontrol/app/appforcommandline/commands/getairshipscommands/GetAirshipsWithMinimumPassengersCommand.java" 
     binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="834" y="455"/>    
+    <position height="-1" width="-1" x="476" y="394"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="false" package="false" protected="false" private="false" static="true"/>      
       <operations public="false" package="false" protected="false" private="false" static="true"/>    
     </display>  
   </class>  
-  <realization id="16">    
-    <end type="SOURCE" refId="3"/>    
-    <end type="TARGET" refId="2"/>  
-  </realization>  
+  <generalization id="16">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
   <generalization id="17">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="1"/>  
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="6"/>  
   </generalization>  
   <generalization id="18">    
-    <end type="SOURCE" refId="14"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <generalization id="19">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <generalization id="20">    
     <end type="SOURCE" refId="10"/>    
     <end type="TARGET" refId="6"/>  
   </generalization>  
+  <generalization id="19">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <generalization id="20">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="6"/>  
+  </generalization>  
   <generalization id="21">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="3"/>  
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="6"/>  
   </generalization>  
   <generalization id="22">    
     <end type="SOURCE" refId="7"/>    
     <end type="TARGET" refId="3"/>  
   </generalization>  
   <generalization id="23">    
-    <bendpoint x="705" y="406"/>    
-    <end type="SOURCE" refId="15"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <generalization id="24">    
     <end type="SOURCE" refId="6"/>    
     <end type="TARGET" refId="3"/>  
   </generalization>  
+  <generalization id="24">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
   <generalization id="25">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="3"/>  
+  </generalization>  
+  <generalization id="26">    
     <end type="SOURCE" refId="4"/>    
     <end type="TARGET" refId="1"/>  
   </generalization>  
-  <generalization id="26">    
-    <bendpoint x="785" y="348"/>    
-    <end type="SOURCE" refId="13"/>    
-    <end type="TARGET" refId="6"/>  
-  </generalization>  
-  <generalization id="27">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="7"/>  
-  </generalization>  
+  <realization id="27">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </realization>  
   <generalization id="28">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="7"/>  
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="6"/>  
   </generalization>  
   <generalization id="29">    
-    <end type="SOURCE" refId="12"/>    
-    <end type="TARGET" refId="6"/>  
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="1"/>  
   </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     sort-features="false" accessors="true" visibility="true">    

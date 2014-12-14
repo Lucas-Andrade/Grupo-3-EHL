@@ -1,4 +1,4 @@
-package airtrafficcontrol.app.appforcommandline.commands.postcommands;
+package airtrafficcontrol.tests.testsforcommandline.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -10,6 +10,8 @@ import airtrafficcontrol.app.appforcommandline.CommandParser;
 import airtrafficcontrol.app.appforcommandline.commands.Command;
 import airtrafficcontrol.app.appforcommandline.commands.CommandFactory;
 import airtrafficcontrol.app.appforcommandline.commands.getairshipscommands.GetAirshipsWithMinimumPassengersCommand;
+import airtrafficcontrol.app.appforcommandline.commands.postcommands.PostAirshipCommand;
+import airtrafficcontrol.app.appforcommandline.commands.postcommands.PostAirshipCommand.Factory;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.CommandException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.MissingRequiredParameterException;
 import airtrafficcontrol.app.appforcommandline.exceptions.commandexceptions.WrongLoginPasswordException;

@@ -1,4 +1,4 @@
-package airtrafficcontrol.tests.testsforcommandline;
+package airtrafficcontrol.tests.testsforcommandline.commands;
 
 import static org.junit.Assert.*;
 

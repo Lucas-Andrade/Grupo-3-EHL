@@ -72,8 +72,8 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	// Get Methods Used By The Commands
 
 	/**
-	 * Auxiliar method to be used by the application commands that will allow a {@link List}
-	 * containing all the airships added by a specified user to be obtained.
+	 * Auxiliar method that will allow a {@link List} containing all the airships added by a
+	 * specified user to be obtained.
 	 * 
 	 * @param username
 	 *            - The user's identification.
@@ -92,8 +92,8 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	}
 
 	/**
-	 * Auxiliar method to be used by the application commands that will allow a {@link List}
-	 * containing all the airships that verify a specific criteria to be obtained.
+	 * Auxiliar method that will allow a {@link List} containing all the airships that verify a
+	 * specific criteria to be obtained.
 	 * 
 	 * @param criteria
 	 *            - The specific validation criteria that have to be verified by the airships
@@ -113,9 +113,8 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	}
 
 	/**
-	 * Auxiliar method to be used by the application commands that will allow a {@link List}
-	 * containing all the airships that are outside their pre-established {@link AirCorridor
-	 * altitude corridor} to be obtained.
+	 * Auxiliar method that will allow a {@link List} containing all the airships that are outside
+	 * their pre-established {@link AirCorridor altitude corridor} to be obtained.
 	 * 
 	 * @return A {@link List} containing all the airships that are outside their pre-established
 	 *         {@link AirCorridor altitude corridor}.
@@ -133,8 +132,8 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	}
 
 	/**
-	 * Auxiliar method to be used by the application commands to verify in an airship is outside its
-	 * pre-established {@link AirCorridor altitude corridor}.
+	 * Auxiliar method used to verify in an airship is outside its pre-established
+	 * {@link AirCorridor altitude corridor}.
 	 * 
 	 * @param flightId
 	 *            - The {@link Airship#flightId flightId} of the {@link Airship airship} to be

@@ -3,51 +3,47 @@ package appForConsole.model.airships;
 import java.util.function.Predicate;
 
 /**
- * Class whose inner static classes implement {@link Predicate} and each will implement a different
- * criteria.
+ * Class whose inner static classes implement {@link Predicate}, for the
+ * respective criteria.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class AirshipPredicates {
-
+public class AirshipPredicates
+{
 	/**
-	 * Class whose criteria will verify in a {@link CivilAirship} has less than a specific number of
-	 * passengers.
+	 * Class whose criteria will verify in a {@link CivilAirship} has less than
+	 * a specific number of passengers.
 	 */
-	public static class IsBelowPassagerNumber implements Predicate<Airship> {
-
-		// Instance Fields
-
+	public static class HasPassagersNumberBelowAThreshold implements
+			Predicate<Airship>
+	{
 		/**
-		 * {@code passengerNumber} - The maximum numbers of passengers a {@code CivilAirship} can
-		 * have to verify the criteria represented by the {@link Predicate#test(Object)
-		 * test(Object)} method from the {@link Predicate} Interface.
+		 * {@code passengerNumber} - The threshold number of passengers.
+		 * {@link CivilAirship}s with passengers below this threshold, must
+		 * return {@code true} in {@link Predicate#test(Object)} method.
 		 */
 		private final double passengerNumber;
 
-		// Constructor
-
 		/**
-		 * Creates the criteria {@code IsBelowPassagerNumber}.
+		 * Creates the {@code Predicate} HasPassagersNumberBelowAThreshold}.
 		 * 
-		 * @param passengerNumber
+		 * @param passengerThreshold
 		 */
-		public IsBelowPassagerNumber(double passengerNumber) {
+		public HasPassagersNumberBelowAThreshold( double passengerThreshold )
+		{
 
-			this.passengerNumber = passengerNumber;
+			this.passengerNumber = passengerThreshold;
 		}
-		
-		// Overrides
 
 		/**
-		 * Override of the {@link Predicate#test(Object) test(Object)} method from the
-		 * {@link Predicate} Interface.
+		 * Override of the {@link Predicate#test(Object) test(Object)} method
+		 * from the {@link Predicate} Interface.
 		 */
 		@Override
-		public boolean test(Airship airship) {
-
-			if (airship instanceof CivilAirship)
-				return ((CivilAirship) airship).getPassengers() < passengerNumber;
+		public boolean test( Airship airship )
+		{
+			if( airship instanceof CivilAirship )
+				return ( ( CivilAirship )airship ).getPassengers() < passengerNumber;
 			else
 				return false;
 		}

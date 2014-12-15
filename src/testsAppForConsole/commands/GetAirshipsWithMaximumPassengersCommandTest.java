@@ -9,7 +9,7 @@ import org.junit.Test;
 import appForConsole.CommandParser;
 import appForConsole.commands.Command;
 import appForConsole.commands.CommandFactory;
-import appForConsole.commands.getAirshipsCommands.GetAirshipsWithMaximumPassengersCommand;
+import appForConsole.commands.getAirshipsCommands.GetAirshipsWithANumberOfPassengersBelowACertainThresholdCommand;
 import appForConsole.model.airships.Airship;
 import appForConsole.model.airships.CivilAirship;
 import appForConsole.model.airships.InMemoryAirshipDatabase;
@@ -30,7 +30,7 @@ public class GetAirshipsWithMaximumPassengersCommandTest {
 		// Arrange
 		parser = new CommandParser();
 		database = new InMemoryAirshipDatabase();
-		factory = new GetAirshipsWithMaximumPassengersCommand.Factory(database);
+		factory = new GetAirshipsWithANumberOfPassengersBelowACertainThresholdCommand.Factory(database);
 		user = new User("anonymous G", "semPalavraPass", "G@g.com");
 		airship1 = new CivilAirship(0, 0, 10, 20, 0, 100);
 		Airship1Info = "Flight ID: 1\n" + "Latitude: 0.0 Longitude: 0.0 Altitude: 10.0\n"
@@ -54,7 +54,7 @@ public class GetAirshipsWithMaximumPassengersCommandTest {
 			throws Exception {
 
 		// Act
-		GetAirshipsWithMaximumPassengersCommand getAirship = (GetAirshipsWithMaximumPassengersCommand) parser
+		GetAirshipsWithANumberOfPassengersBelowACertainThresholdCommand getAirship = (GetAirshipsWithANumberOfPassengersBelowACertainThresholdCommand) parser
 				.getCommand("GET", "/airships/nbPassengers/90/bellow");
 		getAirship.execute();
 
@@ -66,7 +66,7 @@ public class GetAirshipsWithMaximumPassengersCommandTest {
 	public void shouldReturnThe_AirShipsWithLessThanAGivenNumber_Message() throws Exception {
 
 		// Act
-		GetAirshipsWithMaximumPassengersCommand getAirship = (GetAirshipsWithMaximumPassengersCommand) parser
+		GetAirshipsWithANumberOfPassengersBelowACertainThresholdCommand getAirship = (GetAirshipsWithANumberOfPassengersBelowACertainThresholdCommand) parser
 				.getCommand("GET", "/airships/nbPassengers/200/bellow");
 		getAirship.execute();
 

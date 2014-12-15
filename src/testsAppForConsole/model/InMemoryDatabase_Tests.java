@@ -194,7 +194,7 @@ public class InMemoryDatabase_Tests {
 
 		// Assert
 		Assert.assertEquals(
-				airshipDatabase.getAirshipsThat(new AirshipPredicates.IsBelowPassagerNumber(102))
+				airshipDatabase.getAirshipsThat(new AirshipPredicates.HasPassagersNumberBelowAThreshold(102))
 						.toString(), airships.toString());
 	}
 }

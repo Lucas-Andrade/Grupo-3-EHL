@@ -18,6 +18,11 @@ import appForConsole.model.airships.InMemoryAirshipDatabase;
  * info of the {@link CivilAirship}s in {@link InMemoryAirshipDatabase}, that
  * have less passengers than the given {@code minimum passengers number}
  * 
+ * This command instances are created and used according to the AbstratFactory
+ * design pattern, making use of a class {@link Factory} that implements the
+ * {@link CommandFactory} Interface whose only method is the
+ * {@link CommandFactory#newInstance(Map) newInstance(Map)} method that will
+ * allow new command instances to be created.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */

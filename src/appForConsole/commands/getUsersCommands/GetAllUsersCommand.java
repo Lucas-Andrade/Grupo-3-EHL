@@ -11,7 +11,7 @@ import appForConsole.model.users.InMemoryUserDatabase;
 import appForConsole.model.users.User;
 
 /**
- * Class whose instances represent the command reponsible for obtaining all the {@link User users}
+ * Class whose instances represent the command responsible for obtaining all the {@link User users}
  * stored in an {@link InMemoryUserDatabase user database}.</br></br>
  * 
  * This command instances are created and used according to the AbstratFactory design pattern,

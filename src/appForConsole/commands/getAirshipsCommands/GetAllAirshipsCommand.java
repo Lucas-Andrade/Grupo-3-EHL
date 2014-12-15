@@ -12,11 +12,12 @@ import appForConsole.model.airships.InMemoryAirshipDatabase;
 
 /**
  * Class whose instances represent the command reponsible for obtaining all the {@link Airship
- * aiships} stored in an {@link InMemoryAirshipDatabase airship database}.</br></br> This command
- * instances are created and used according to the AbstratFactory design pattern, making use of a
- * class {@link Factory} that implements the {@link CommandFactory} Interface whose only method is
- * the {@link CommandFactory#newInstance(Map) newInstance(Map)} method that will allow new command
- * instances to be created.
+ * aiships} stored in an {@link InMemoryAirshipDatabase airship database}.</br></br>
+ * 
+ * This command instances are created and used according to the AbstratFactory design pattern,
+ * making use of a class {@link Factory} that implements the {@link CommandFactory} Interface whose
+ * only method is the {@link CommandFactory#newInstance(Map) newInstance(Map)} method that will
+ * allow new command instances to be created.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */

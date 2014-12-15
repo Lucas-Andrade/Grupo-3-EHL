@@ -165,7 +165,6 @@ public class PostAirshipCommand extends PostCommand<Airship>
 	private Airship createCivil( double latitude, double longitude,
 			double altitude, double maxAltitude, double minAltitude )
 					throws MissingRequiredParameterException, InvalidParameterValueException
-
 	{
 		if( ! parameters.containsKey( Param.PASSENGERSNUMBER ) )
 			throw new MissingRequiredParameterException( Param.PASSENGERSNUMBER );

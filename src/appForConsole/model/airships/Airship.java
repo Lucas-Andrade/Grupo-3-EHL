@@ -35,7 +35,7 @@ public abstract class Airship implements Element {
 
 	/**
 	 * {@code isTransgressing} - boolean variable that will represent the status of an
-	 * {@code Airship} regarding the impossition of its {@code airCorridor}.
+	 * {@code Airship} regarding the imposition of its {@code airCorridor}.
 	 */
 	private final boolean isTransgressing;
 

@@ -10,6 +10,7 @@ import appForConsole.model.airships.MilitaryAirship;
 
 public class Airships_Test {
 
+	@SuppressWarnings ("unused")
 	private Airship airship1, airship2, airship3, airship4;
 
 	@Before

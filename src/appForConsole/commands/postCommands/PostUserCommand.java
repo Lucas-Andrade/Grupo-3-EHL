@@ -91,9 +91,19 @@ public class PostUserCommand extends PostCommand<User> {
 
 		User postingUser = usersDatabase.getElementByIdentification(parameters.get(LOGIN_NAME));
 
+		for(User u: database.getAll().values())
+		{
+			if( u.getEmail().equals( email ) )
+			{
+				result = "User was not successfull added - email already exists";
+				return;
+			}
+		}
 		result = database.add(user, postingUser) ? "User was successfull added"
-				: "User was not successfull added";
+				: "User was not successfull added - username already exists";
 	}
+	//POST /users username=j&password=adg&email=azd@s&loginName=MASTER&loginPassword=master
+
 
 	/**
 	 * Override of {@link AbstractCommand}

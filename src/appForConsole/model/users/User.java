@@ -157,4 +157,14 @@ public class User implements Element {
 
 		return username;
 	}
+	
+	/**
+	 * Gets the {@code email} identification
+	 * 
+	 * @return a string with an email.
+	 */
+	public String getEmail() {
+
+		return email;
+	}
 }

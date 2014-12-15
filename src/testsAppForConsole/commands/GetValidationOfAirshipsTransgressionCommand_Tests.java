@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import appForConsole.CommandParser;
-import appForConsole.commands.getAirshipsCommands.GetTransgressingAirshipsCommand;
+import appForConsole.commands.getAirshipsCommands.GetValidationOfAirshipsTransgressionCommand;
 import appForConsole.exceptions.commandParserExceptions.InvalidRegisterException;
 import appForConsole.model.airships.CivilAirship;
 import appForConsole.model.airships.InMemoryAirshipDatabase;
@@ -14,11 +14,11 @@ import appForConsole.model.users.User;
 
 /**
  * 
- * Those Tests were created to test the {@link GetTransgressingAirshipsCommand} Class who's a
+ * Those Tests were created to test the {@link GetValidationOfAirshipsTransgressionCommand} Class who's a
  * Command of the Air Traffic Project
  *
  */
-public class GetTransgressingAirshipsCommand_Tests {
+public class GetValidationOfAirshipsTransgressionCommand_Tests {
 
 	private CommandParser commandParser = new CommandParser();
 	private InMemoryAirshipDatabase airshipsDatabaseWhereToSearch = new InMemoryAirshipDatabase();
@@ -29,7 +29,7 @@ public class GetTransgressingAirshipsCommand_Tests {
 	public void BeforeTests() throws InvalidRegisterException {
 
 		commandParser.registerCommand("GET", "/airships/reports",
-				new GetTransgressingAirshipsCommand.Factory(airshipsDatabaseWhereToSearch));
+				new GetValidationOfAirshipsTransgressionCommand.Factory(airshipsDatabaseWhereToSearch));
 
 	}
 
@@ -44,7 +44,7 @@ public class GetTransgressingAirshipsCommand_Tests {
 		airshipsDatabaseWhereToSearch.add(bombardeiro, pantunes);
 		airshipsDatabaseWhereToSearch.add(boing777, pantunes);
 
-		GetTransgressingAirshipsCommand getReport = (GetTransgressingAirshipsCommand) commandParser
+		GetValidationOfAirshipsTransgressionCommand getReport = (GetValidationOfAirshipsTransgressionCommand) commandParser
 				.getCommand("GET", "/airships/reports");
 		getReport.execute();
 		Assert.assertEquals("There are no transgressions recorded", getReport.getResult());
@@ -62,7 +62,7 @@ public class GetTransgressingAirshipsCommand_Tests {
 		airshipsDatabaseWhereToSearch.add(alouette, pantunes);
 		airshipsDatabaseWhereToSearch.add(superblanik, pantunes);
 
-		GetTransgressingAirshipsCommand getReport = (GetTransgressingAirshipsCommand) commandParser
+		GetValidationOfAirshipsTransgressionCommand getReport = (GetValidationOfAirshipsTransgressionCommand) commandParser
 				.getCommand("GET", "/airships/reports");
 		getReport.execute();
 		Assert.assertEquals("\n Airship flightID: 1" + "\n Airship flightID: 3",

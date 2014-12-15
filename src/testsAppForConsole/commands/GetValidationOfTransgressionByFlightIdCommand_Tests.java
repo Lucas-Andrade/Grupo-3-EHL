@@ -5,7 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import appForConsole.CommandParser;
-import appForConsole.commands.getAirshipsCommands.GetReportOfTransgressionByIdCommand;
+import appForConsole.commands.getAirshipsCommands.GetValidationOfTransgressionByFlightIdCommand;
 import appForConsole.exceptions.commandParserExceptions.InvalidRegisterException;
 import appForConsole.model.airships.InMemoryAirshipDatabase;
 import appForConsole.model.airships.MilitaryAirship;
@@ -13,11 +13,11 @@ import appForConsole.model.users.User;
 
 /**
  * 
- * Those Tests were created to test the {@link GetReportOfTransgressionByIdCommand} Class who's a
+ * Those Tests were created to test the {@link GetValidationOfTransgressionByFlightIdCommand} Class who's a
  * Command of the Air Traffic Project
  *
  */
-public class GetReportOfTransgressionByIdCommand_Tests {
+public class GetValidationOfTransgressionByFlightIdCommand_Tests {
 
 	private CommandParser commandParser = new CommandParser();
 
@@ -29,7 +29,7 @@ public class GetReportOfTransgressionByIdCommand_Tests {
 	public void BeforeTests() throws InvalidRegisterException {
 
 		commandParser.registerCommand("GET", "/airships/reports/{flightId}",
-				new GetReportOfTransgressionByIdCommand.Factory(airshipsDatabaseWhereToSearch));
+				new GetValidationOfTransgressionByFlightIdCommand.Factory(airshipsDatabaseWhereToSearch));
 	}
 
 	@Test
@@ -39,7 +39,7 @@ public class GetReportOfTransgressionByIdCommand_Tests {
 
 		airshipsDatabaseWhereToSearch.add(bombardeiro, pantunes);
 
-		GetReportOfTransgressionByIdCommand getReport = (GetReportOfTransgressionByIdCommand) commandParser
+		GetValidationOfTransgressionByFlightIdCommand getReport = (GetValidationOfTransgressionByFlightIdCommand) commandParser
 				.getCommand("GET", "/airships/reports/1");
 		getReport.execute();
 
@@ -54,7 +54,7 @@ public class GetReportOfTransgressionByIdCommand_Tests {
 
 		airshipsDatabaseWhereToSearch.add(f16, pantunes);
 
-		GetReportOfTransgressionByIdCommand getReport = (GetReportOfTransgressionByIdCommand) commandParser
+		GetValidationOfTransgressionByFlightIdCommand getReport = (GetValidationOfTransgressionByFlightIdCommand) commandParser
 				.getCommand("GET", "/airships/reports/2");
 		getReport.execute();
 

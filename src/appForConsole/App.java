@@ -7,8 +7,8 @@ import appForConsole.commands.getAirshipsCommands.GetAirshipByIdCommand;
 import appForConsole.commands.getAirshipsCommands.GetAirshipsByOwnerCommand;
 import appForConsole.commands.getAirshipsCommands.GetAirshipsWithANumberOfPassengersBelowACertainThresholdCommand;
 import appForConsole.commands.getAirshipsCommands.GetAllAirshipsCommand;
-import appForConsole.commands.getAirshipsCommands.GetReportOfTransgressionByIdCommand;
-import appForConsole.commands.getAirshipsCommands.GetTransgressingAirshipsCommand;
+import appForConsole.commands.getAirshipsCommands.GetValidationOfAirshipsTransgressionCommand;
+import appForConsole.commands.getAirshipsCommands.GetValidationOfTransgressionByFlightIdCommand;
 import appForConsole.commands.getUsersCommands.GetAllUsersCommand;
 import appForConsole.commands.getUsersCommands.GetUserByUsernameCommand;
 import appForConsole.commands.postCommands.PostAirshipCommand;
@@ -116,10 +116,10 @@ public class App
 					new GetAirshipsWithANumberOfPassengersBelowACertainThresholdCommand.Factory(
 							airshipDatabase ) );
 			parser.registerCommand( "GET", "/airships/reports",
-					new GetTransgressingAirshipsCommand.Factory(
+					new GetValidationOfAirshipsTransgressionCommand.Factory(
 							airshipDatabase ) );
 			parser.registerCommand( "GET", "/airships/reports/{flightId}",
-					new GetReportOfTransgressionByIdCommand.Factory(
+					new GetValidationOfTransgressionByFlightIdCommand.Factory(
 							airshipDatabase ) );
 
 			// Register Posts For Users

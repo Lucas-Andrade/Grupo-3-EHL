@@ -68,11 +68,33 @@ public class PostUserCommand_Tests {
 		Assert.assertEquals("User was successfull added", postUser.getResult());
 
 		postUser = (PostUserCommand) commandParser.getCommand("POST", "/users",
+				"username=null&password=pass2&email=pedros@gmail.com&"
+						+ "fullName=Pantunes&loginName=MASTER&loginPassword=master");
+
+		postUser.execute();
+
+		Assert.assertEquals("User was not successfull added - username already exists", postUser.getResult());
+	}
+	
+	@Test
+	public void VerifyThatUserIsNotAddedIntoUsersDatabaseBecauseAlreadyWasAddedOneWithTheSameEmail()
+			throws Exception {
+
+		postUser = (PostUserCommand) commandParser.getCommand("POST", "/users",
+				"username=nulls&password=pass2&email=pedro@gmail.com&"
+						+ "fullName=Pantunes&loginName=MASTER&loginPassword=master");
+
+		postUser.execute();
+
+		Assert.assertEquals("User was successfull added", postUser.getResult());
+
+		postUser = (PostUserCommand) commandParser.getCommand("POST", "/users",
 				"username=null&password=pass2&email=pedro@gmail.com&"
 						+ "fullName=Pantunes&loginName=MASTER&loginPassword=master");
 
 		postUser.execute();
 
-		Assert.assertEquals("User was not successfull added", postUser.getResult());
+		Assert.assertEquals("User was not successfull added - email already exists", postUser.getResult());
 	}
+	
 }

@@ -15,7 +15,7 @@ import appForConsole.model.airships.CivilAirship;
 import appForConsole.model.airships.InMemoryAirshipDatabase;
 import appForConsole.model.users.User;
 
-public class GetAirshipsWithMaximumPassengersCommandTest {
+public class GetAirshipsWithANumberOfPassengersBelowACertainThresholdCommand_Test {
 
 	private CommandParser parser;
 	private InMemoryAirshipDatabase database;

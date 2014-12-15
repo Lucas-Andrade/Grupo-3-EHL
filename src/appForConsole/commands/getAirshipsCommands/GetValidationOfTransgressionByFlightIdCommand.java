@@ -1,22 +1,25 @@
 package appForConsole.commands.getAirshipsCommands;
 
-import java.util.Collection;
 import java.util.Map;
 
 import appForConsole.commands.AbstractCommand;
 import appForConsole.commands.Command;
 import appForConsole.commands.CommandFactory;
 import appForConsole.exceptions.commandExecptions.CommandException;
-import appForConsole.model.airships.Airship;
+import appForConsole.exceptions.dataBaseExceptions.NoSuchElementInDatabaseException;
 import appForConsole.model.airships.InMemoryAirshipDatabase;
 
 /**
- * Class that extends {@link GetAirshipsCommand} to obtain the information of airships who
- * transgressed the corridor.
+ * Class that extends {@link GetAirshipsCommand} to obtain the information if one airship
+ * transgressed their corridor.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetTransgressingAirshipsCommand extends GetAirshipsCommand {
+public class GetValidationOfTransgressionByFlightIdCommand extends GetAirshipsCommand {
+
+	private final static String FLIGHTID = "flightId";
+
+	private final static String[] REQUIREDPARAMETERS = {FLIGHTID};
 
 	/**
 	 * 
@@ -26,17 +29,20 @@ public class GetTransgressingAirshipsCommand extends GetAirshipsCommand {
 	 */
 	public static class Factory implements CommandFactory {
 
-		InMemoryAirshipDatabase airshipsDatabase;
+		InMemoryAirshipDatabase airshipDatabaseWhereAirshipDatabase;
 
-		public Factory(InMemoryAirshipDatabase airshipsDatabase) {
+		public Factory(InMemoryAirshipDatabase airshipDatabaseWhereToSearch) {
 
-			this.airshipsDatabase = airshipsDatabase;
+			this.airshipDatabaseWhereAirshipDatabase = airshipDatabaseWhereToSearch;
+
 		}
 
 		public Command newInstance(Map<String, String> parameters) {
 
-			return new GetTransgressingAirshipsCommand(airshipsDatabase, parameters);
+			return new GetValidationOfTransgressionByFlightIdCommand(airshipDatabaseWhereAirshipDatabase,
+					parameters);
 		}
+
 	}
 
 	/**
@@ -44,15 +50,15 @@ public class GetTransgressingAirshipsCommand extends GetAirshipsCommand {
 	 * 
 	 * store the container parameter
 	 * 
-	 * @param airshipsDatabaseWhereToSearch
+	 * @param airshipsDatabase
 	 *            - airship Database target of search
 	 * @param parameters
 	 *            - Container with parameters needed to proceed the search.
 	 */
-	public GetTransgressingAirshipsCommand(InMemoryAirshipDatabase airshipsDatabaseWhereToSearch,
+	public GetValidationOfTransgressionByFlightIdCommand(InMemoryAirshipDatabase airshipsDatabase,
 			Map<String, String> parameters) {
 
-		super(airshipsDatabaseWhereToSearch, parameters);
+		super(airshipsDatabase, parameters);
 	}
 
 	/**
@@ -60,22 +66,19 @@ public class GetTransgressingAirshipsCommand extends GetAirshipsCommand {
 	 * 
 	 * execute the main action associated to this command
 	 * 
+	 * @throws NoSuchElementInDatabaseException
+	 * 
 	 */
 	@Override
-	protected void internalExecute() throws CommandException {
+	protected void internalExecute() throws CommandException, NoSuchElementInDatabaseException {
 
-		Collection<Airship> aircraft = airshipsDatabase.reportTransgressions();
+		String flightdID = parameters.get(FLIGHTID);
 
-		StringBuilder flightIDs = new StringBuilder();
-
-		if (aircraft.isEmpty())
-			flightIDs.append("There are no transgressions recorded");
+		if (airshipsDatabase.checkIfThisAirshipIsTransgressing(flightdID))
+			result = "It's Transgressing";
 
 		else
-			for (Airship element : aircraft)
-				flightIDs.append("\n Airship flightID: ").append(element.getIdentification());
-
-		result = flightIDs.toString();
+			result = "It's Not Transgressing";
 	}
 
 	/**
@@ -87,6 +90,6 @@ public class GetTransgressingAirshipsCommand extends GetAirshipsCommand {
 	@Override
 	protected String[] getRequiredParameters() {
 
-		return null;
+		return REQUIREDPARAMETERS;
 	}
 }

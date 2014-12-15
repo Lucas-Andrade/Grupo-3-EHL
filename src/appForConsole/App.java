@@ -5,7 +5,7 @@ import java.util.Scanner;
 import appForConsole.commands.Command;
 import appForConsole.commands.getAirshipsCommands.GetAirshipByIdCommand;
 import appForConsole.commands.getAirshipsCommands.GetAirshipsByOwnerCommand;
-import appForConsole.commands.getAirshipsCommands.GetAirshipsWithMinimumPassengersCommand;
+import appForConsole.commands.getAirshipsCommands.GetAirshipsWithMaximumPassengersCommand;
 import appForConsole.commands.getAirshipsCommands.GetAllAirshipsCommand;
 import appForConsole.commands.getAirshipsCommands.GetReportOfTransgressionByIdCommand;
 import appForConsole.commands.getAirshipsCommands.GetTransgressingAirshipsCommand;
@@ -65,7 +65,7 @@ public class App {
 			parser.registerCommand("GET", "/airships/owner/{owner}",
 					new GetAirshipsByOwnerCommand.Factory(airshipDatabase, userDatabase));
 			parser.registerCommand("GET", "/airships/nbPassengers/{nbP}/bellow",
-					new GetAirshipsWithMinimumPassengersCommand.Factory(airshipDatabase));
+					new GetAirshipsWithMaximumPassengersCommand.Factory(airshipDatabase));
 			parser.registerCommand("GET", "/airships/reports",
 					new GetTransgressingAirshipsCommand.Factory(airshipDatabase));
 			parser.registerCommand("GET", "/airships/reports/{flightId}",

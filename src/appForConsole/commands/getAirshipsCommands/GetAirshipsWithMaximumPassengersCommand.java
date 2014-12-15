@@ -21,7 +21,7 @@ import appForConsole.model.airships.InMemoryAirshipDatabase;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand {
+public class GetAirshipsWithMaximumPassengersCommand extends GetAirshipsCommand {
 
 	/**
 	 * Class that implements the {@link CommandFactory} factory, according to the AbstratFactory
@@ -39,7 +39,7 @@ public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand 
 		@Override
 		public Command newInstance(Map<String, String> parameters) {
 
-			return new GetAirshipsWithMinimumPassengersCommand(dataBase, parameters);
+			return new GetAirshipsWithMaximumPassengersCommand(dataBase, parameters);
 		}
 	}
 
@@ -51,7 +51,7 @@ public class GetAirshipsWithMinimumPassengersCommand extends GetAirshipsCommand 
 	 * @param airshipsDatabaseWhereToSearch
 	 * @param parameters
 	 */
-	public GetAirshipsWithMinimumPassengersCommand(
+	public GetAirshipsWithMaximumPassengersCommand(
 			InMemoryAirshipDatabase airshipsDatabaseWhereToSearch, Map<String, String> parameters) {
 
 		super(airshipsDatabaseWhereToSearch, parameters);

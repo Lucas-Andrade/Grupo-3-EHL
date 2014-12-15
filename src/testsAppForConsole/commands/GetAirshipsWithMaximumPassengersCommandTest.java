@@ -9,13 +9,13 @@ import org.junit.Test;
 import appForConsole.CommandParser;
 import appForConsole.commands.Command;
 import appForConsole.commands.CommandFactory;
-import appForConsole.commands.getAirshipsCommands.GetAirshipsWithMinimumPassengersCommand;
+import appForConsole.commands.getAirshipsCommands.GetAirshipsWithMaximumPassengersCommand;
 import appForConsole.model.airships.Airship;
 import appForConsole.model.airships.CivilAirship;
 import appForConsole.model.airships.InMemoryAirshipDatabase;
 import appForConsole.model.users.User;
 
-public class GetAirshipsWithMinimumPassengersCommandTest {
+public class GetAirshipsWithMaximumPassengersCommandTest {
 
 	private CommandParser parser;
 	private InMemoryAirshipDatabase database;
@@ -30,7 +30,7 @@ public class GetAirshipsWithMinimumPassengersCommandTest {
 		// Arrange
 		parser = new CommandParser();
 		database = new InMemoryAirshipDatabase();
-		factory = new GetAirshipsWithMinimumPassengersCommand.Factory(database);
+		factory = new GetAirshipsWithMaximumPassengersCommand.Factory(database);
 		user = new User("anonymous G", "semPalavraPass", "G@g.com");
 		airship1 = new CivilAirship(0, 0, 10, 20, 0, 100);
 		Airship1Info = "Flight ID: 1\n" + "Latitude: 0.0 Longitude: 0.0 Altitude: 10.0\n"
@@ -54,7 +54,7 @@ public class GetAirshipsWithMinimumPassengersCommandTest {
 			throws Exception {
 
 		// Act
-		GetAirshipsWithMinimumPassengersCommand getAirship = (GetAirshipsWithMinimumPassengersCommand) parser
+		GetAirshipsWithMaximumPassengersCommand getAirship = (GetAirshipsWithMaximumPassengersCommand) parser
 				.getCommand("GET", "/airships/nbPassengers/90/bellow");
 		getAirship.execute();
 
@@ -66,7 +66,7 @@ public class GetAirshipsWithMinimumPassengersCommandTest {
 	public void shouldReturnThe_AirShipsWithLessThanAGivenNumber_Message() throws Exception {
 
 		// Act
-		GetAirshipsWithMinimumPassengersCommand getAirship = (GetAirshipsWithMinimumPassengersCommand) parser
+		GetAirshipsWithMaximumPassengersCommand getAirship = (GetAirshipsWithMaximumPassengersCommand) parser
 				.getCommand("GET", "/airships/nbPassengers/200/bellow");
 		getAirship.execute();
 

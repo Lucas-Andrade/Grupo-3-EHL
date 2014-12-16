@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: test.java.commands.GetAirshipsWithANumberOfPassengersBelowACertainThresholdCommand_Test
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 sec - in test.java.commands.GetAirshipsWithANumberOfPassengersBelowACertainThresholdCommand_Test

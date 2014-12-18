@@ -81,44 +81,6 @@ public class InMemoryDatabase_Tests {
 		assertFalse(airshipDatabase.add(airship, user));
 	}
 
-	@Test (expected = NoSuchElementInDatabaseException.class)
-	public void shouldThrowNoSuchElementInDatabaseExceptionWhenTryingToFindNonExistingAirship()
-			throws NoSuchElementInDatabaseException {
-
-		// Act
-		airshipDatabase.add(airship, user);
-
-		// Assert
-		assertFalse(((InMemoryAirshipDatabase) airshipDatabase).checkIfThisAirshipIsTransgressing("5"));
-	}
-
-	@Test
-	public void shouldReturnFalseCheckingIfThisAirshipIsInCorridor()
-			throws NoSuchElementInDatabaseException {
-
-		// Act
-		airshipDatabase.add(airship, user);
-
-		// Assert
-		assertFalse(((InMemoryAirshipDatabase) airshipDatabase)
-				.checkIfThisAirshipIsTransgressing(airship.getIdentification()));
-	}
-
-	@Test
-	public void shouldReturnTrueCheckingIfThisAirshipIsInCorridor()
-			throws NoSuchElementInDatabaseException {
-
-		// Arrange
-		airship2 = new MilitaryAirship(0, 0, 0, 10, 5, false);
-
-		// Act
-		airshipDatabase.add(airship2, user);
-
-		// Assert
-		assertTrue(((InMemoryAirshipDatabase) airshipDatabase)
-				.checkIfThisAirshipIsTransgressing(airship2.getIdentification()));
-	}
-
 	@Test
 	public void shouldGetAllAirshipsRegistedByTheSameUser() throws NoSuchElementInDatabaseException {
 
@@ -170,7 +132,7 @@ public class InMemoryDatabase_Tests {
 		airships.add(airship2);
 
 		// Assert
-		Assert.assertEquals(airshipDatabase.reportTransgressions().toString(), airships.toString());
+		Assert.assertEquals(airshipDatabase.getAirshipsThat(new AirshipPredicates.IsTransgressing()).toString(), airships.toString());
 	}
 
 	@Test
@@ -194,7 +156,6 @@ public class InMemoryDatabase_Tests {
 
 		// Assert
 		Assert.assertEquals(
-				airshipDatabase.getAirshipsThat(new AirshipPredicates.HasPassagersNumberBelowAThreshold(102))
-						.toString(), airships.toString());
+				airshipDatabase.getAirshipsThat(new AirshipPredicates.HasPassagersNumberBelowAThreshold(102)).toString(), airships.toString());
 	}
 }

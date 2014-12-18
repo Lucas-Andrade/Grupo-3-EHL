@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 
+import main.java.exceptions.dataBaseExceptions.DatabaseException;
 import main.java.exceptions.dataBaseExceptions.NoSuchElementInDatabaseException;
 import main.java.model.Database;
 import main.java.model.Element;
@@ -26,7 +27,7 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	 * The container {@link Map} where all the {@link Airhip airships} will be stored by
 	 * {@link User}: <li>The keys are Strings with the users identifications;</br></br><li>The
 	 * values will be a {@link List} of all the {@link Airhip airships} added by the user whose
-	 * indentification is stored in the correspondeing key.
+	 * indentification is stored in the corresponding key.
 	 */
 	private Map<String, List<Airship>> flightsByUserRegister;
 
@@ -45,7 +46,7 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	/**
 	 * Override of the implementation of the method {@link InMemoryDatabase#add() add()} from the
 	 * {@link Database} Interface. </br></br>Allows an {@link Element element} to be added to this
-	 * database by a specific {@link User user} records that addiction in the field
+	 * database by a specific {@link User user} and records that addiction to the {@link map}
 	 * {@code flightsByUserRegister}.
 	 */
 	@Override
@@ -63,6 +64,25 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 				flightsByUserRegister.put(user.getIdentification(), newListForNewUser);
 			}
 
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Override of the implementation of the method {@link InMemoryDatabase#remove() remove()} from
+	 * the {@link Database} Interface. </br></br>Allows an {@link Airship airship} to be removed
+	 * from this database by a specific {@link User user} and deletes that record from the
+	 * {@code flightsByUserRegister} field.
+	 * @throws DatabaseException 
+	 */
+	@Override
+	public boolean remove(Airship airship, User user) throws DatabaseException {
+
+		if (super.remove(airship, user)) {
+
+			flightsByUserRegister.values().remove(airship);
 			return true;
 		}
 
@@ -92,14 +112,14 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 	}
 
 	/**
-	 * Auxiliar method that will allow a {@link List} containing all the airships that verify a
-	 * specific criteria to be obtained.
+	 * Auxiliar method that will return a {@link List} containing all the airships that verify a
+	 * certain given criteria.
 	 * 
 	 * @param criteria
-	 *            - The specific validation criteria that have to be verified by the airships
+	 *            - The specific validation criteria that has to be verified by the airships
 	 *            contained in the database in order to be selected.
 	 * 
-	 * @return A {@link List} containing all the airships that verify a specific criteria.
+	 * @return A {@link List} containing all the airships that verify the given criteria.
 	 */
 	public List<Airship> getAirshipsThat(Predicate<Airship> criteria) {
 
@@ -110,53 +130,5 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 				selectedAirships.add(airship);
 
 		return selectedAirships;
-	}
-
-	/**
-	 * Auxiliar method that will allow a {@link List} containing all the airships that are outside
-	 * their pre-established {@link AirCorridor altitude corridor} to be obtained.
-	 * 
-	 * @return A {@link List} containing all the airships that are outside their pre-established
-	 *         {@link AirCorridor altitude corridor}.
-	 */
-	public List<Airship> reportTransgressions() {
-
-		List<Airship> transgressingAirships = new ArrayList<>();
-
-		for (Airship airship : getAll().values()) {
-			if (airship.isTransgressing())
-				transgressingAirships.add(airship);
-		}
-
-		return transgressingAirships;
-	}
-
-	/**
-	 * Auxiliar method used to verify in an airship is outside its pre-established
-	 * {@link AirCorridor altitude corridor}.
-	 * 
-	 * @param flightId
-	 *            - The {@link Airship#flightId flightId} of the {@link Airship airship} to be
-	 *            evaluated.
-	 * 
-	 * @return {@code true} if the {@code Airship} with the given {@code flightId} is in the correct
-	 *         {@code altitude corridor} or false otherwhise.
-	 * 
-	 * @throws NoSuchElementInDatabaseException
-	 *             If no {@code Airship} exist in the database with the given {@code flightId.}
-	 */
-	public boolean checkIfThisAirshipIsTransgressing(String flightId)
-			throws NoSuchElementInDatabaseException {
-
-		Airship theAirship = getElementByIdentification(flightId);
-
-		if (theAirship == null)
-			throw new NoSuchElementInDatabaseException(
-					"The Airship with the given ID doesn't exist in the database");
-
-		if (theAirship.isTransgressing())
-			return true;
-
-		return false;
 	}
 }

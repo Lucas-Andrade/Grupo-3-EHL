@@ -2,6 +2,7 @@ package main.java.model;
 
 import java.util.Map;
 
+import main.java.exceptions.dataBaseExceptions.DatabaseException;
 import main.java.model.users.User;
 
 /**
@@ -27,6 +28,19 @@ public interface Database<T extends Element> {
 	 * @return {@code true} if the element is added and {@code false} otherwise.
 	 */
 	public boolean add(T element, User user);
+
+	/**
+	 * Allows an {@link Element element} to be removed from this database by a specific {@link User
+	 * user}.
+	 * 
+	 * @param element
+	 *            - the element to be removed.
+	 * @param user
+	 *            - the user that will remove the element.
+	 * 
+	 * @return {@code true} if the element is removed and {@code false} otherwise.
+	 */
+	public boolean remove(T element, User user)  throws DatabaseException;
 
 	/**
 	 * Returns the element of this database whose {@code identification} is the same as the one

@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import main.java.exceptions.dataBaseExceptions.DatabaseException;
 import main.java.model.users.User;
 
 /**
@@ -57,6 +58,29 @@ public abstract class InMemoryDatabase<T extends Element> implements Database<T>
 		return true;
 	}
 
+	/**
+	 * Implementation of the method {@link Database#remove() remove()} from the {@link Database}
+	 * Interface. </br></br>Allows an {@link Element element} to be removed from this database by a
+	 * specific {@link User user}.
+	 * @throws DatabaseException 
+	 */
+	@Override
+	public boolean remove(T element, User user) throws DatabaseException {
+
+		if (element == null || user == null)
+			throw new IllegalArgumentException();
+		
+		if(getElementByIdentification(element.getIdentification()) == null)
+			return false;
+		
+		if(element.getIdentification().equals("MASTER"))
+			throw new DatabaseException("Cannot remove the MASTER user.");
+
+		database.remove(element.getIdentification());
+		
+		return true;
+	}
+	
 	/**
 	 * Implementation of the method {@link Database#getElementByIdentification()
 	 * getElementByIdentification()} from the {@link Database} Interface. </br></br>Returns the

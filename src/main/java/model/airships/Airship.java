@@ -34,8 +34,8 @@ public abstract class Airship implements Element {
 	private final AirCorridor airCorridor;
 
 	/**
-	 * {@code isTransgressing} - boolean variable that will represent the status of an
-	 * {@code Airship} regarding the imposition of its {@code airCorridor}.
+	 * {@code isTransgressing} - boolean variable that will represent if an {@code Airship} is outside
+	 * its pre-established {@link AirCorridor airCorridor}.
 	 */
 	private final boolean isTransgressing;
 

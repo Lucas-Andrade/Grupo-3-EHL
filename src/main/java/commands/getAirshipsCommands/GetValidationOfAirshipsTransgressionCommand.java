@@ -8,6 +8,7 @@ import main.java.commands.Command;
 import main.java.commands.CommandFactory;
 import main.java.exceptions.commandExecptions.CommandException;
 import main.java.model.airships.Airship;
+import main.java.model.airships.AirshipPredicates;
 import main.java.model.airships.InMemoryAirshipDatabase;
 
 /**
@@ -49,8 +50,8 @@ public class GetValidationOfAirshipsTransgressionCommand extends GetAirshipsComm
 	 * @param parameters
 	 *            - Container with parameters needed to proceed the search.
 	 */
-	public GetValidationOfAirshipsTransgressionCommand(InMemoryAirshipDatabase airshipsDatabaseWhereToSearch,
-			Map<String, String> parameters) {
+	public GetValidationOfAirshipsTransgressionCommand(
+			InMemoryAirshipDatabase airshipsDatabaseWhereToSearch, Map<String, String> parameters) {
 
 		super(airshipsDatabaseWhereToSearch, parameters);
 	}
@@ -64,16 +65,19 @@ public class GetValidationOfAirshipsTransgressionCommand extends GetAirshipsComm
 	@Override
 	protected void internalExecute() throws CommandException {
 
-		Collection<Airship> aircraft = airshipsDatabase.reportTransgressions();
+		Collection<Airship> aircraft = airshipsDatabase
+				.getAirshipsThat(new AirshipPredicates.IsTransgressing());
+
+		if (aircraft.isEmpty()) {
+
+			result = "There are no transgressions recorded";
+			return;
+		}
 
 		StringBuilder flightIDs = new StringBuilder();
 
-		if (aircraft.isEmpty())
-			flightIDs.append("There are no transgressions recorded");
-
-		else
-			for (Airship element : aircraft)
-				flightIDs.append("\n Airship flightID: ").append(element.getIdentification());
+		for (Airship element : aircraft)
+			flightIDs.append("\n Airship flightID: ").append(element.getIdentification());
 
 		result = flightIDs.toString();
 	}

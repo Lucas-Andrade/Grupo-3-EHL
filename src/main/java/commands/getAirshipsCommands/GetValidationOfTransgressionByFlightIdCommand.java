@@ -7,6 +7,7 @@ import main.java.commands.Command;
 import main.java.commands.CommandFactory;
 import main.java.exceptions.commandExecptions.CommandException;
 import main.java.exceptions.dataBaseExceptions.NoSuchElementInDatabaseException;
+import main.java.model.airships.Airship;
 import main.java.model.airships.InMemoryAirshipDatabase;
 
 /**
@@ -39,8 +40,8 @@ public class GetValidationOfTransgressionByFlightIdCommand extends GetAirshipsCo
 
 		public Command newInstance(Map<String, String> parameters) {
 
-			return new GetValidationOfTransgressionByFlightIdCommand(airshipDatabaseWhereAirshipDatabase,
-					parameters);
+			return new GetValidationOfTransgressionByFlightIdCommand(
+					airshipDatabaseWhereAirshipDatabase, parameters);
 		}
 
 	}
@@ -72,11 +73,14 @@ public class GetValidationOfTransgressionByFlightIdCommand extends GetAirshipsCo
 	@Override
 	protected void internalExecute() throws CommandException, NoSuchElementInDatabaseException {
 
-		String flightdID = parameters.get(FLIGHTID);
+		Airship airship;
 
-		if (airshipsDatabase.checkIfThisAirshipIsTransgressing(flightdID))
+		if ((airship = airshipsDatabase.getElementByIdentification(parameters.get(FLIGHTID))) == null)
+			throw new NoSuchElementInDatabaseException(
+					"The Airship with the given ID doesn't exist in the database");
+
+		if (airship.isTransgressing())
 			result = "It's Transgressing";
-
 		else
 			result = "It's Not Transgressing";
 	}

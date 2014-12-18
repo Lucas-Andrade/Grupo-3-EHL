@@ -3,24 +3,22 @@ package main.java.model.airships;
 import java.util.function.Predicate;
 
 /**
- * Class whose inner static classes implement {@link Predicate}, for the
- * respective criteria.
+ * Class whose inner static classes implement {@link Predicate}, for the respective criteria.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class AirshipPredicates
-{
+public class AirshipPredicates {
+
 	/**
-	 * Class whose criteria will verify in a {@link CivilAirship} has less than
-	 * a specific number of passengers.
+	 * Class whose criteria will verify if a {@link CivilAirship} has less than a specific number of
+	 * passengers.
 	 */
-	public static class HasPassagersNumberBelowAThreshold implements
-			Predicate<Airship>
-	{
+	public static class HasPassagersNumberBelowAThreshold implements Predicate<Airship> {
+
 		/**
-		 * {@code passengerNumber} - The threshold number of passengers.
-		 * {@link CivilAirship}s with passengers below this threshold, must
-		 * return {@code true} in {@link Predicate#test(Object)} method.
+		 * {@code passengerNumber} - The threshold number of passengers. {@link CivilAirship}s with
+		 * passengers below this threshold, must return {@code true} in
+		 * {@link Predicate#test(Object)} method.
 		 */
 		private final double passengerNumber;
 
@@ -29,23 +27,44 @@ public class AirshipPredicates
 		 * 
 		 * @param passengerThreshold
 		 */
-		public HasPassagersNumberBelowAThreshold( double passengerThreshold )
-		{
+		public HasPassagersNumberBelowAThreshold(double passengerThreshold) {
 
 			this.passengerNumber = passengerThreshold;
 		}
 
 		/**
-		 * Override of the {@link Predicate#test(Object) test(Object)} method
-		 * from the {@link Predicate} Interface.
+		 * Override of the {@link Predicate#test(Object) test(Object)} method from the
+		 * {@link Predicate} Interface.
 		 */
 		@Override
-		public boolean test( Airship airship )
-		{
-			if( airship instanceof CivilAirship )
-				return ( ( CivilAirship )airship ).getPassengers() < passengerNumber;
+		public boolean test(Airship airship) {
+
+			if (airship instanceof CivilAirship)
+				return ((CivilAirship) airship).getPassengers() < passengerNumber;
 			else
 				return false;
 		}
 	}
+
+	/**
+	 * Class whose criteria will verify if an {@link Airship} is transgressing.
+	 */
+	public static class IsTransgressing implements Predicate<Airship> {
+
+		/**
+		 * Override of the {@link Predicate#test(Object) test(Object)} method from the
+		 * {@link Predicate} Interface.
+		 */
+		@Override
+		public boolean test(Airship airship) {
+
+			if (airship.isTransgressing())
+				return true;
+			
+			return false;
+		}
+	}
+	
+	
+	
 }

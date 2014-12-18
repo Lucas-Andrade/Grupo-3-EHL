@@ -158,6 +158,8 @@ public class User implements Element {
 		return username;
 	}
 	
+	// Get Methods
+	
 	/**
 	 * Gets the {@code email} identification
 	 * 

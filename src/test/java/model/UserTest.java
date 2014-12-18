@@ -6,13 +6,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * 
- * Those Tests were created to test the {@link User} Class 
- * who's part of  the Air Traffic Project
- *
- */
-
 public class UserTest {
 	
 	User user1, user2;

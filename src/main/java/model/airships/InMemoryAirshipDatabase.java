@@ -89,7 +89,7 @@ public class InMemoryAirshipDatabase extends InMemoryDatabase<Airship> {
 		return false;
 	}
 
-	// Get Methods Used By The Commands
+	// Auxiliar Get Methods Supported By The Database
 
 	/**
 	 * Auxiliar method that will allow a {@link List} containing all the airships added by a

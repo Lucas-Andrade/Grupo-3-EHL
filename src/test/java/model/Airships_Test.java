@@ -20,7 +20,7 @@ public class Airships_Test {
 		airship2 = new MilitaryAirship(30, 40, 5000, 4000, 200, false);
 		airship3 = new MilitaryAirship(30, 40, 2000, 3000, 200, true);
 	}
-
+	
 	@Test (expected = IllegalArgumentException.class)
 	public void shouldThrowIllegalArgumentExceptionIfCivilAirshipHasLessThatZeroPassengers() {
 

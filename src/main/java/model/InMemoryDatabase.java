@@ -22,16 +22,17 @@ public abstract class InMemoryDatabase<T extends Element> implements Database<T>
 	// Instance Fields
 
 	/**
-	 * The container {@link Map} where the {@link Element elements} will be stored: <li>The keys are
-	 * the elements' identifications - see {@link Element#getIdentification() getIdentification()}
-	 * method; <li>The values are the elements.
+	 * The container {@link Map} representing the database where the {@link Element elements} will
+	 * be stored: <li>The keys are the elements' identifications - see
+	 * {@link Element#getIdentification() getIdentification()} method; <li>The values are the
+	 * elements.
 	 */
 	private Map<String, T> database;
 
 	// Constructor
 
 	/**
-	 * Constructor used by the subclasses of this class to creates an empty database.
+	 * Constructor used by the subclasses of this class to create an empty database.
 	 */
 	public InMemoryDatabase() {
 
@@ -62,25 +63,26 @@ public abstract class InMemoryDatabase<T extends Element> implements Database<T>
 	 * Implementation of the method {@link Database#remove() remove()} from the {@link Database}
 	 * Interface. </br></br>Allows an {@link Element element} to be removed from this database by a
 	 * specific {@link User user}.
-	 * @throws DatabaseException 
+	 * 
+	 * @throws DatabaseException
 	 */
 	@Override
 	public boolean remove(T element, User user) throws DatabaseException {
 
 		if (element == null || user == null)
 			throw new IllegalArgumentException();
-		
-		if(getElementByIdentification(element.getIdentification()) == null)
+
+		if (getElementByIdentification(element.getIdentification()) == null)
 			return false;
-		
-		if(element.getIdentification().equals("MASTER"))
+
+		if (element.getIdentification().equals("MASTER"))
 			throw new DatabaseException("Cannot remove the MASTER user.");
 
 		database.remove(element.getIdentification());
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * Implementation of the method {@link Database#getElementByIdentification()
 	 * getElementByIdentification()} from the {@link Database} Interface. </br></br>Returns the
@@ -94,6 +96,9 @@ public abstract class InMemoryDatabase<T extends Element> implements Database<T>
 	}
 
 	/**
+	 * Implementation of the method {@link Database#getAll() getAll()} from the {@link Database}
+	 * Interface.</br></br>
+	 * 
 	 * Returns an unmodifiable view of the map that represents this database.This map is "read-only"
 	 * and any attempts to modify it, whether directly or via its collection views, will result in
 	 * an {@link UnsupportedOperationException}.

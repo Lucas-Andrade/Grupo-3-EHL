@@ -64,7 +64,4 @@ public class AirshipPredicates {
 			return false;
 		}
 	}
-	
-	
-	
 }

@@ -34,8 +34,8 @@ public abstract class Airship implements Element {
 	private final AirCorridor airCorridor;
 
 	/**
-	 * {@code isTransgressing} - boolean variable that will represent if an {@code Airship} is outside
-	 * its pre-established {@link AirCorridor airCorridor}.
+	 * {@code isTransgressing} - boolean variable that will represent if an {@code Airship} is
+	 * outside its pre-established {@link AirCorridor airCorridor}.
 	 */
 	private final boolean isTransgressing;
 
@@ -103,9 +103,10 @@ public abstract class Airship implements Element {
 				.append(isTransgressing).toString();
 	}
 
-	// Get Methods
-
 	/**
+	 * Override of the method {@link Element#getIdentification() getIdentification()} from the
+	 * {@link Element} Interface.
+	 * 
 	 * @return the {@code flightId}.
 	 */
 	@Override
@@ -113,6 +114,8 @@ public abstract class Airship implements Element {
 
 		return flightId;
 	}
+
+	// Get Methods
 
 	/**
 	 * @return the {@code coordinates}.

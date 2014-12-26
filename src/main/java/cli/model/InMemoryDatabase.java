@@ -288,4 +288,5 @@ public abstract class InMemoryDatabase< T extends Element > implements
 			return null;
 		}
 	}
+
 }

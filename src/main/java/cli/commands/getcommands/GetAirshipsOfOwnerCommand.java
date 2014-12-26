@@ -87,4 +87,5 @@ public class GetAirshipsOfOwnerCommand implements
 		
 		return db.getAirshipsOfUser( username );
 	}
+	
 }

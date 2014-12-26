@@ -1,6 +1,7 @@
 package main.java.cli;
 
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -99,10 +100,17 @@ public class CommandParser
 {
 	
 	// INSTANCE FIELDS
+	
 	/**
 	 * The root of the parser's internal tree.
 	 */
 	private final Node root = new Node( "/" );
+	
+	/**
+	 * A map container that stores the registered commands.
+	 */
+	private final Map< String, String > register = new HashMap<>();
+	
 	
 	
 	// INNER CLASS
@@ -272,6 +280,7 @@ public class CommandParser
 		
 		String[] treePathElementsArray = (method.trim() + path).split( "/" );
 		updateSubtree( root, treePathElementsArray, 0, cmdFactory );
+		register.put( method + " " + path, cmdFactory.getCommandsDescription() );
 	}
 	
 	/**
@@ -313,6 +322,19 @@ public class CommandParser
 		Callable< ? > command = getCommandInternal( root,
 				methodAndPathElements, 0, parametersMap );
 		return command;
+	}
+	
+	/**
+	 * Returns an unmodifiable view of a map whose keys are the string-commands
+	 * and whose values are a description of the commands produced by the
+	 * factories assigned to those string-commands.
+	 * 
+	 * @return An unmodifiable view of a map whose keys are the string-commands
+	 * and whose values are a description of the commands produced by the
+	 * factories assigned to those string-commands.
+	 */
+	public Map< String, String > getRegisteredCommands() {
+		return Collections.unmodifiableMap( register );
 	}
 	
 	
@@ -470,8 +492,7 @@ public class CommandParser
 		if( pathStartIndex == methodAndPathElements.length )
 		{
 			if( rootNode.factory == null )
-				throw new UnknownCommandException(
-						"Current node has no command factory!" );
+				throw new UnknownCommandException( "Unknown command!" );
 			
 			return rootNode.factory.newInstance( parameters );
 		}
@@ -479,7 +500,7 @@ public class CommandParser
 		String currentContent = methodAndPathElements[pathStartIndex];
 		Node child = rootNode.getChildForContent( currentContent );
 		if( child == null )
-			throw new UnknownCommandException( "Command path not found!" );
+			throw new UnknownCommandException( "Unknown command!" );
 		
 		if( isPlaceHolderString( child.content ) )
 			parameters.put(

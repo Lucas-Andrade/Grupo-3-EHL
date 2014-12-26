@@ -171,7 +171,8 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 		{
 			List< Airship > newListForNewUser = new ArrayList<>();
 			newListForNewUser.add( airship );
-			flightsByUserRegister.put( user.getIdentification(), newListForNewUser );
+			flightsByUserRegister.put( user.getIdentification(),
+					newListForNewUser );
 		}
 	}
 	
@@ -192,14 +193,15 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 		{
 			List< Airship > list = entry.getValue();
 			for( Airship airship : list )
-				if( airship.getIdentification() == flightId )
+				if( airship.getIdentification().equals( flightId ) )
 				{
 					list.remove( airship );
 					if( list.isEmpty() )
 						flightsByUserRegister.remove( entry.getKey() );
 					continueSearch = false;
 				}
-			if( !continueSearch ) break;
+			if( !continueSearch )
+				break;
 		}
 	}
 	

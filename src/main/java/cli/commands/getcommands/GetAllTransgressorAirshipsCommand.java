@@ -77,4 +77,5 @@ public class GetAllTransgressorAirshipsCommand implements
 		return database
 				.getAllElementsThat( new AirshipPredicates.IsTrangressingItsAirCorridor() );
 	}
+	
 }

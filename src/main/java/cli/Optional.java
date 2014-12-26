@@ -187,8 +187,9 @@ public class Optional< T >
 	@SuppressWarnings( "rawtypes" )
 	public boolean isEmptyCollectionorEmptyMap() {
 		
-		return((value instanceof Collection || value instanceof Map) && ((Collection)value)
-				.isEmpty());
+		boolean isEmptyCollection = (value instanceof Collection && ((Collection)value).isEmpty());
+		boolean isEmptyMap = (value instanceof Map && ((Map)value).isEmpty());
+		return isEmptyCollection || isEmptyMap;
 	}
 	
 	/**
@@ -291,4 +292,5 @@ public class Optional< T >
 		
 		return value.toString();
 	}
+	
 }

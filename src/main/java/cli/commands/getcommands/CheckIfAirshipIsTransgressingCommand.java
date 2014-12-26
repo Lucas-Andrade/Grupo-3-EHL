@@ -91,6 +91,7 @@ public class CheckIfAirshipIsTransgressingCommand implements
 			theAirship = null;
 		
 		return new Optional< Airship >( theAirship, new NullPointerException(
-				flightId + " is not transgressing its air corridor." ) );
+				"Airship with "+ flightId + " is not transgressing its air corridor." ) );
 	}
+	
 }

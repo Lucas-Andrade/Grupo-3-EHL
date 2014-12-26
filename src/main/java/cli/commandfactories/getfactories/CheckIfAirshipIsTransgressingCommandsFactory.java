@@ -56,7 +56,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends
 	public CheckIfAirshipIsTransgressingCommandsFactory(
 			Database< Airship > database ) throws InvalidArgumentException {
 		
-		super( "Checks whether an airships is transgressing its air corridor." );
+		super( "Checks whether an airship is transgressing its air corridor." );
 		
 		if( database == null )
 			throw new InvalidArgumentException(

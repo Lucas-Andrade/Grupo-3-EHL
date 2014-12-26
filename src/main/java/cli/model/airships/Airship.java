@@ -96,7 +96,7 @@ public abstract class Airship implements Element
 	 */
 	private static String flightIDGenerator() {
 		
-		return Long.toString( ++ID );
+		return "id"+ Long.toString( ++ID );
 	}
 	
 	// Overrides

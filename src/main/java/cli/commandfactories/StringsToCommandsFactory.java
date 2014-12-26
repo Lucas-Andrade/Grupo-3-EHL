@@ -47,16 +47,6 @@ public abstract class StringsToCommandsFactory< R > implements
 	 */
 	private final String commandsDescription;
 	
-	// GETTER
-	/**
-	 * Returns the description of commands produced by this factory.
-	 * 
-	 * @return the commandDescription
-	 */
-	public String getCommandsDescription() {
-		return commandsDescription;
-	}
-	
 	
 	
 	// CONSTRUCTOR
@@ -81,8 +71,17 @@ public abstract class StringsToCommandsFactory< R > implements
 	
 	
 	
-	// IMPLEMENTATION OF newInstance METHOD
-	// INHERITED FROM CallablesFactory INTERFACE
+	// IMPLEMENTATION OF METHODS INHERITED FROM CallablesFactory INTERFACE
+	
+	/**
+	 * Returns the description of the commands produced by this factory.
+	 * 
+	 * @return The description of the commands produced by this factory.
+	 */
+	public String getCommandsDescription() {
+		return commandsDescription;
+	}
+	
 	/**
 	 * Produces a command. It starts by performing some validation operations
 	 * over the received parameters (seeing if there are required parameters
@@ -121,7 +120,10 @@ public abstract class StringsToCommandsFactory< R > implements
 		
 	}
 	
+	
+	
 	// AUXILIARY PRIVATE METHOD used in the method newInstance
+	
 	/**
 	 * Checks whether the required parameters for performing the
 	 * {@link #newInstance()} method (known through the method

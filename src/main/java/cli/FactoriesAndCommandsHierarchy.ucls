@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class-diagram version="1.1.7" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
+  realizations="true" associations="true" dependencies="false" nesting-relationships="true">  
+  <class id="1" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/getfactories/getbyidfactories/GetAirshipByFlightIdCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1151" y="360"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/getfactories/getallfactories/GetAllUsersInADatabaseCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1151" y="184"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="3" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.postfactories.PostUserCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/postfactories/PostUserCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1076" y="842"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="4" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.getfactories.getallfactories.GetAllAirshipsInADatabaseCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/getfactories/getallfactories/GetAllAirshipsInADatabaseCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="772" y="184"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="5" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.getfactories.GetAirshipsWithLessPassengersThanCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/getfactories/GetAirshipsWithLessPassengersThanCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1077" y="435"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="6" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.getfactories.GetAirshipsOfOwnerCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/getfactories/GetAirshipsOfOwnerCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1077" y="503"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="7" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/getfactories/getallfactories/GetAllElementsInADatabaseCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="980" y="107"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="8" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.getfactories.GetAllTransgressorAirshipsCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/getfactories/GetAllTransgressorAirshipsCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1077" y="571"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="9" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.getfactories.CheckIfAirshipIsTransgressingCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/getfactories/CheckIfAirshipIsTransgressingCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1077" y="637"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="10" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.getfactories.getbyidfactories.GetElementByIdentificationCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/getfactories/getbyidfactories/GetElementByIdentificationCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="980" y="282"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <interface id="11" language="java" name="main.java.commandlineuserinterface.commandfactories.CallablesFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/CallablesFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="256" y="390"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </interface>  
+  <class id="12" language="java" name="main.java.commandlineuserinterface.commandfactories.StringsToCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/StringsToCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="340" y="495"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="13" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.postfactories.PostAirshipCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/postfactories/PostAirshipCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1076" y="752"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="14" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/getfactories/getbyidfactories/GetUserByUsernameCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="772" y="362"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="15" language="java" 
+    name="main.java.commandlineuserinterface.commandfactories.postfactories.PostCommandsFactory" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commandfactories/postfactories/PostCommandsFactory.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="718" y="779"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="16" language="java" 
+    name="main.java.commandlineuserinterface.commands.getcommands.CheckIfAirshipIsTransgressingCommand" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commands/getcommands/CheckIfAirshipIsTransgressingCommand.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1522" y="636"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="17" language="java" 
+    name="main.java.commandlineuserinterface.commands.getcommands.GetAllTransgressorAirshipsCommand" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commands/getcommands/GetAllTransgressorAirshipsCommand.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1522" y="570"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="18" language="java" 
+    name="main.java.commandlineuserinterface.commands.getcommands.GetAirshipsOfOwnerCommand" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commands/getcommands/GetAirshipsOfOwnerCommand.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1522" y="502"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="19" language="java" 
+    name="main.java.commandlineuserinterface.commands.getcommands.GetAllElementsInADatabaseCommand" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commands/getcommands/GetAllElementsInADatabaseCommand.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1522" y="106"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="20" language="java" name="main.java.commandlineuserinterface.commands.postcommands.PostCivilAirshipCommand" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commands/postcommands/PostCivilAirshipCommand.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1520" y="716"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="21" language="java" 
+    name="main.java.commandlineuserinterface.commands.getcommands.GetAirshipsWithLessPassengersThanCommand" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commands/getcommands/GetAirshipsWithLessPassengersThanCommand.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1510" y="433"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="22" language="java" 
+    name="main.java.commandlineuserinterface.commands.getcommands.GetElementFromADatabaseByIdCommand" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commands/getcommands/GetElementFromADatabaseByIdCommand.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1518" y="282"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="23" language="java" 
+    name="main.java.commandlineuserinterface.commands.postcommands.PostMilitaryAirshipCommand" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commands/postcommands/PostMilitaryAirshipCommand.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1520" y="774"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <class id="24" language="java" name="main.java.commandlineuserinterface.commands.postcommands.PostUserCommand" 
+    project="ATC_teamwork02_etapa2" 
+    file="/ATC_teamwork02_etapa2/src/main/java/commandlineuserinterface/commands/postcommands/PostUserCommand.java" 
+    binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="1520" y="841"/>    
+    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+      sort-features="false" accessors="true" visibility="true">      
+      <attributes public="false" package="false" protected="false" private="false" static="true"/>      
+      <operations public="false" package="false" protected="false" private="false" static="true"/>    
+    </display>  
+  </class>  
+  <dependency id="25">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="18"/>  
+  </dependency>  
+  <generalization id="26">    
+    <bendpoint x="610" y="298"/>    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="27">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="28">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <dependency id="29">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="16"/>  
+  </dependency>  
+  <generalization id="30">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <dependency id="31">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="24"/>  
+  </dependency>  
+  <generalization id="32">    
+    <end type="SOURCE" refId="14"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <generalization id="33">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="10"/>  
+  </generalization>  
+  <dependency id="34">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="21"/>  
+  </dependency>  
+  <dependency id="35">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="17"/>  
+  </dependency>  
+  <generalization id="36">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="37">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="15"/>  
+  </generalization>  
+  <generalization id="38">    
+    <bendpoint x="584" y="140"/>    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <dependency id="39">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="23"/>  
+  </dependency>  
+  <dependency id="40">    
+    <end type="SOURCE" refId="13"/>    
+    <end type="TARGET" refId="20"/>  
+  </dependency>  
+  <generalization id="41">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <dependency id="42">    
+    <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="22"/>  
+  </dependency>  
+  <generalization id="43">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="7"/>  
+  </generalization>  
+  <dependency id="44">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="19"/>  
+  </dependency>  
+  <realization id="45">    
+    <end type="SOURCE" refId="12"/>    
+    <end type="TARGET" refId="11"/>  
+  </realization>  
+  <generalization id="46">    
+    <end type="SOURCE" refId="9"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <generalization id="47">    
+    <end type="SOURCE" refId="15"/>    
+    <end type="TARGET" refId="12"/>  
+  </generalization>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    sort-features="false" accessors="true" visibility="true">    
+    <attributes public="false" package="false" protected="false" private="false" static="true"/>    
+    <operations public="false" package="false" protected="false" private="false" static="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

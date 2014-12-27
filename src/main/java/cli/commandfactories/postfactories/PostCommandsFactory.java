@@ -3,7 +3,7 @@ package main.java.cli.commandfactories.postfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-import main.java.cli.PlaceholdersAndParametersDictionary;
+import main.java.cli.StringsDictionary;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.exceptions.InternalErrorException;
 import main.java.cli.exceptions.InvalidArgumentException;
@@ -117,8 +117,8 @@ public abstract class PostCommandsFactory< E extends Element, R > extends
 			throws NoSuchElementInDatabaseException, InternalErrorException,
 			CommandFactoryException {
 		
-		loginName = getParameterAsString( PlaceholdersAndParametersDictionary.LOGINNAME );
-		loginPassword = getParameterAsString( PlaceholdersAndParametersDictionary.LOGINPASSWORD );
+		loginName = getParameterAsString( StringsDictionary.LOGINNAME );
+		loginPassword = getParameterAsString( StringsDictionary.LOGINPASSWORD );
 		
 		User user = getUserWhoIsPosting();
 		if( !user.authenticatePassword( loginPassword ) )

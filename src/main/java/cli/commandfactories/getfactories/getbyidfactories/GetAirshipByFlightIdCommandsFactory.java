@@ -2,7 +2,7 @@ package main.java.cli.commandfactories.getfactories.getbyidfactories;
 
 
 import java.util.concurrent.Callable;
-import main.java.cli.PlaceholdersAndParametersDictionary;
+import main.java.cli.StringsDictionary;
 import main.java.cli.commandfactories.CallablesFactory;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.Database;
@@ -25,7 +25,7 @@ public class GetAirshipByFlightIdCommandsFactory extends
 	 * Creates a new {@link GetAirshipByFlightIdCommandFactory} that produces
 	 * commands to get an airship with a certain flightId from {@code database}.
 	 * That flightId is the value of the parameter with key
-	 * {@link PlaceholdersAndParametersDictionary#FLIGHTID} received in the
+	 * {@link StringsDictionary#FLIGHTID} received in the
 	 * parameters map.
 	 * 
 	 * @param database
@@ -37,6 +37,6 @@ public class GetAirshipByFlightIdCommandsFactory extends
 			throws InvalidArgumentException {
 		
 		super( "Gets an airship with a certain flightId.",
-				PlaceholdersAndParametersDictionary.FLIGHTID, database );
+				StringsDictionary.FLIGHTID, database );
 	}
 }

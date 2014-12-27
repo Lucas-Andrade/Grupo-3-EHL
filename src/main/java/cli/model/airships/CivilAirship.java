@@ -67,7 +67,7 @@ public class CivilAirship extends Airship
 	public String toString() {
 		
 		return new StringBuilder( super.toString() )
-				.append( "\nNumber of Passengers: " ).append( passengers )
+				.append( "Number of Passengers: " ).append( passengers ).append( "\n" ) 
 				.toString();
 	}
 	

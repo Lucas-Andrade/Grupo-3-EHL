@@ -1,7 +1,15 @@
 package main.java.cli;
 
+import java.util.HashMap;
+import java.util.Map;
 
-/**
+import main.java.cli.translations.translators.ToHtmlTranslator;
+import main.java.cli.translations.translators.ToJsonTranslator;
+import main.java.cli.translations.translators.ToPlainTextTranslator;
+import main.java.cli.translations.translators.Translator;
+
+
+/**TODO
  * A list of names of placeholders and parameters that are recognized in the
  * commands. The placeholders or parameters names in the commands to be
  * registered or in the concrete commands to be executed are to be accessed
@@ -17,7 +25,7 @@ package main.java.cli;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public final class PlaceholdersAndParametersDictionary
+public final class StringsDictionary
 {
 	
 	// AIRSHIP RELATED. PLACEHOLDERS NAMES
@@ -37,7 +45,7 @@ public final class PlaceholdersAndParametersDictionary
 	public static final String LONGITUDE = "longitude";
 	public static final String NUMBEROFPASSENGERS = "nbPassengers";
 	
-	// AIRSHIP RELATED. PARAMETERS NAMES
+	// AIRSHIP RELATED. AIRSHIPS TYPE
 	// beware!!! changes in these fields values affect invocations by reflection
 	// in class PostAirshipCommandsFactory
 	
@@ -52,4 +60,16 @@ public final class PlaceholdersAndParametersDictionary
 	public static final String LOGINPASSWORD = "loginPassword";
 	public static final String PASSWORD = "password";
 	public static final String USERNAME = "username"; // also a placeholder
+	
+	//TRANSLATOR RELATED. ACCEPT PARAMMETERS VALUES 
+	public static final Map<String, Translator> TRANSLATORS = new HashMap<String, Translator>();
+	static
+	{
+		TRANSLATORS.put("text/html", new ToHtmlTranslator());
+		TRANSLATORS.put("text/plain", new ToPlainTextTranslator());
+		TRANSLATORS.put("application/json", new ToJsonTranslator());	
+	}
+	
+	
+	
 }

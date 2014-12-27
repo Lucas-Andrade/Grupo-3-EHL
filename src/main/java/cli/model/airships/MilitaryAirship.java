@@ -65,7 +65,7 @@ public class MilitaryAirship extends Airship
 	public String toString() {
 		
 		return new StringBuilder( super.toString() )
-				.append( "\nCarries Weapons: " ).append( hasWeapons )
+				.append( "Carries Weapons: " ).append( hasWeapons ).append( "\n" )
 				.toString();
 	}
 	

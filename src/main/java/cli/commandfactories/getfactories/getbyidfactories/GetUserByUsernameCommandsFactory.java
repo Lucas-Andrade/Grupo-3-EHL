@@ -2,7 +2,7 @@ package main.java.cli.commandfactories.getfactories.getbyidfactories;
 
 
 import java.util.concurrent.Callable;
-import main.java.cli.PlaceholdersAndParametersDictionary;
+import main.java.cli.StringsDictionary;
 import main.java.cli.commandfactories.CallablesFactory;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.Database;
@@ -25,7 +25,7 @@ public class GetUserByUsernameCommandsFactory extends
 	 * Creates a new {@link GetUserByUsernameCommandFactory} that produces
 	 * commands to get a user with a certain username from {@code database}.
 	 * That username is the value of the parameter with key
-	 * {@link PlaceholdersAndParametersDictionary#USERNAME} received in the
+	 * {@link StringsDictionary#USERNAME} received in the
 	 * parameters map.
 	 * 
 	 * @param database
@@ -37,6 +37,6 @@ public class GetUserByUsernameCommandsFactory extends
 			throws InvalidArgumentException {
 		
 		super( "Gets a user with a certain username.",
-				PlaceholdersAndParametersDictionary.USERNAME, database );
+				StringsDictionary.USERNAME, database );
 	}
 }

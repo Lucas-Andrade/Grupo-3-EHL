@@ -3,7 +3,7 @@ package main.java.cli.commandfactories.postfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-import main.java.cli.PlaceholdersAndParametersDictionary;
+import main.java.cli.StringsDictionary;
 import main.java.cli.commandfactories.CallablesFactory;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.commands.postcommands.PostUserCommand;
@@ -58,9 +58,9 @@ public class PostUserCommandsFactory extends PostCommandsFactory< User, String >
 		super( "Adds a new user.", postingUsersDatabase, postedUsersDatabase );
 		
 		this.requiredParametersNames = new String[]{
-				PlaceholdersAndParametersDictionary.USERNAME,
-				PlaceholdersAndParametersDictionary.PASSWORD,
-				PlaceholdersAndParametersDictionary.EMAIL };
+				StringsDictionary.USERNAME,
+				StringsDictionary.PASSWORD,
+				StringsDictionary.EMAIL };
 	}
 	
 	
@@ -121,10 +121,10 @@ public class PostUserCommandsFactory extends PostCommandsFactory< User, String >
 	 */
 	private void getValuesOfTheParametersMap() {
 		
-		username = getParameterAsString( PlaceholdersAndParametersDictionary.USERNAME );
-		password = getParameterAsString( PlaceholdersAndParametersDictionary.PASSWORD );
-		email = getParameterAsString( PlaceholdersAndParametersDictionary.EMAIL );
-		fullName = getParameterAsString( PlaceholdersAndParametersDictionary.FULLNAME );
+		username = getParameterAsString( StringsDictionary.USERNAME );
+		password = getParameterAsString( StringsDictionary.PASSWORD );
+		email = getParameterAsString( StringsDictionary.EMAIL );
+		fullName = getParameterAsString( StringsDictionary.FULLNAME );
 	}
 	
 	

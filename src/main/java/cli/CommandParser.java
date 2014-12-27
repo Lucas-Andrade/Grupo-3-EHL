@@ -6,13 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
+import main.java.cli.exceptions.InternalErrorException;
 import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.commandparserexceptions.DuplicateParametersException;
-import main.java.cli.exceptions.commandparserexceptions.InvalidCommandParametersSyntaxException;
 import main.java.cli.exceptions.commandparserexceptions.InvalidCommandSyntaxException;
 import main.java.cli.exceptions.commandparserexceptions.InvalidRegisterException;
 import main.java.cli.exceptions.commandparserexceptions.UnknownCommandException;
 import main.java.cli.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
+import main.java.cli.exceptions.factoryexceptions.InvalidParameterValueException;
 import main.java.cli.exceptions.factoryexceptions.MissingRequiredParameterException;
 import main.java.cli.exceptions.factoryexceptions.WrongLoginPasswordException;
 
@@ -294,19 +294,39 @@ public class CommandParser
 	 * @param args
 	 *            The command's {@link String string} representation that is to
 	 *            be parsed.
-	 * @return The corresponding {@link Callable} instance
-	 * @throws Exception
-	 *             If the user who is posting is not in the
-	 *             {@code postingUsersDatabase}. The concrete type of this
-	 *             exception is {@link NoSuchElementInDatabaseException} and its
-	 *             message is <i>«{login name} not found in {database's
-	 *             name}.»</i>.
+	 * @return The corresponding {@link Callable} instance.
+	 * @throws MissingRequiredParameterException
+	 *             If the received map does not contain one of the required
+	 *             parameters for instantiating the command.
+	 * @throws InvalidCommandSyntaxException
+	 *             If {@code args.length} is not 2 or 3.
 	 * @throws WrongLoginPasswordException
 	 *             If the login password received does not match the login
 	 *             username's password.
+	 * @throws InvalidArgumentException
+	 *             If {@code parameters==null}.
+	 * @throws UnknownCommandException
+	 *             If the given string-command wasn't registered.
+	 * @throws InternalErrorException
+	 *             If an internal error occurred (not supposed to happen).
+	 * @throws InvalidParameterValueException
+	 *             If the value received in the parameters map for a required
+	 *             parameter is invalid.
+	 * @throws NoSuchElementInDatabaseException
+	 *             If there is no user in {@link #postingUsersDatabase} whose
+	 *             username is the login name receive in the parameters map. The
+	 *             message of this exception is <i>«{login name} not found in
+	 *             {@code postingUsersDatabase.getDatabaseName()}»</i>.
+	 * @throws RequiredParameterNotPresentException
+	 *             If some parameters needed to create the new instance are
+	 *             missing.
 	 */
-	public Callable< ? > getCommand( String... args )
-			throws WrongLoginPasswordException, Exception {
+	public Callable< ? > getCommand( Map< String, String > argsParametersMap,
+			String... args ) throws MissingRequiredParameterException,
+			InvalidArgumentException, InvalidCommandSyntaxException,
+			WrongLoginPasswordException, UnknownCommandException,
+			NoSuchElementInDatabaseException, InvalidParameterValueException,
+			InternalErrorException {
 		
 		if( args.length < 2 || args.length > 3 )
 			throw new InvalidCommandSyntaxException(
@@ -315,12 +335,8 @@ public class CommandParser
 		String cmd = args[0] + args[1];
 		String[] methodAndPathElements = cmd.split( "/" );
 		
-		Map< String, String > parametersMap = (args.length == 2)
-				? new HashMap< String, String >()
-				: getParametersFromParametersList( args[2] );
-		
 		Callable< ? > command = getCommandInternal( root,
-				methodAndPathElements, 0, parametersMap );
+				methodAndPathElements, 0, argsParametersMap );
 		return command;
 	}
 	
@@ -330,8 +346,8 @@ public class CommandParser
 	 * factories assigned to those string-commands.
 	 * 
 	 * @return An unmodifiable view of a map whose keys are the string-commands
-	 * and whose values are a description of the commands produced by the
-	 * factories assigned to those string-commands.
+	 *         and whose values are a description of the commands produced by
+	 *         the factories assigned to those string-commands.
 	 */
 	public Map< String, String > getRegisteredCommands() {
 		return Collections.unmodifiableMap( register );
@@ -402,51 +418,6 @@ public class CommandParser
 	
 	// used in getCommand method
 	/**
-	 * Interprets the string {@code parameters} that contains a parameters-list
-	 * written with the syntax
-	 * 
-	 * <pre>
-	 *  {@literal<}parameters-list> -> {@literal<}name>={@literal<}value>[&{@literal<}name>={@literal<}value>]*
-	 *  {@literal<}name> -> {@literal<}string>
-	 *  {@literal<}value> -> {@literal<}string>
-	 * </pre>
-	 * 
-	 * and produces a {@link Map} whose keys are the "{@code names}" and whose
-	 * values are the "{@code values}".
-	 * 
-	 * @throws InvalidCommandParametersSyntaxException
-	 *             If the parameters are not correctly separated by '{@code &}'
-	 *             or a certain parameter has not the format
-	 *             <code>{@literal <}name>={@literal <}value></code>.
-	 * @throws DuplicateParametersException
-	 *             If several values for the same parameter have been received
-	 *             in the parameters-list.
-	 */
-	private Map< String, String > getParametersFromParametersList(
-			String parameters ) throws InvalidCommandParametersSyntaxException,
-			DuplicateParametersException {
-		
-		Map< String, String > parametersMap = new HashMap<>();
-		
-		if( parameters != null )
-		{
-			String[] parametersElements = parameters.split( "&" );
-			for( String parameterElement : parametersElements )
-			{
-				String[] keyAndValue = parameterElement.split( "=" );
-				if( keyAndValue.length != 2 )
-					throw new InvalidCommandParametersSyntaxException(
-							"Invalid syntax in parameteres list!" );
-				if( parametersMap.containsKey( keyAndValue[0] ) )
-					throw new DuplicateParametersException( keyAndValue[0] );
-				parametersMap.put( keyAndValue[0], keyAndValue[1] );
-			}
-		}
-		return parametersMap;
-	}
-	
-	// used in getCommand method
-	/**
 	 * Returns a command.
 	 * <p>
 	 * Auxiliary method that recursively traverses the parser's internal tree of
@@ -468,26 +439,37 @@ public class CommandParser
 	 *            corresponding node is to be found in the current iteration of
 	 *            this method.
 	 * @return The {@link Callable} instance corresponding .
-	 * @throws Exception
-	 *             If the user who is posting is not in the
-	 *             {@code postingUsersDatabase}. The concrete type of this
-	 *             exception is {@link NoSuchElementInDatabaseException} and its
-	 *             message is <i>«{login name} not found in {database's
-	 *             name}.»</i>.
 	 * @throws WrongLoginPasswordException
 	 *             If the login password received does not match the login
 	 *             username's password.
 	 * @throws InvalidArgumentException
 	 *             If {@code parameters==null}.
+	 * @throws UnknownCommandException
+	 *             If the given string-command wasn't registered.
+	 * @throws InternalErrorException
+	 *             If an internal error occurred (not supposed to happen).
+	 * @throws InvalidParameterValueException
+	 *             If the value received in the parameters map for a required
+	 *             parameter is invalid.
+	 * @throws NoSuchElementInDatabaseException
+	 *             If there is no user in {@link #postingUsersDatabase} whose
+	 *             username is the login name receive in the parameters map. The
+	 *             message of this exception is <i>«{login name} not found in
+	 *             {@code postingUsersDatabase.getDatabaseName()}»</i>.
 	 * @throws RequiredParameterNotPresentException
 	 *             If some parameters needed to create the new instance are
 	 *             missing.
+	 * @throws MissingRequiredParameterException
+	 *             If the received map does not contain one of the required
+	 *             parameters for instantiating the command.
 	 */
 	private Callable< ? > getCommandInternal( Node rootNode,
 			String[] methodAndPathElements, int pathStartIndex,
 			Map< String, String > parameters )
-			throws WrongLoginPasswordException, Exception,
-			InvalidArgumentException, MissingRequiredParameterException {
+			throws WrongLoginPasswordException, InvalidArgumentException,
+			MissingRequiredParameterException, UnknownCommandException,
+			NoSuchElementInDatabaseException, InvalidParameterValueException,
+			InternalErrorException {
 		
 		if( pathStartIndex == methodAndPathElements.length )
 		{

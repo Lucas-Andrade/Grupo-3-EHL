@@ -6,7 +6,6 @@ import java.util.concurrent.Callable;
 import main.java.cli.exceptions.InternalErrorException;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
-import main.java.cli.exceptions.factoryexceptions.CommandFactoryException;
 import main.java.cli.exceptions.factoryexceptions.InvalidParameterValueException;
 import main.java.cli.exceptions.factoryexceptions.MissingRequiredParameterException;
 import main.java.cli.exceptions.factoryexceptions.WrongLoginPasswordException;
@@ -93,25 +92,30 @@ public abstract class StringsToCommandsFactory< R > implements
 	 *            The container of the parameters needed to create the
 	 *            {@link Callable} instance.
 	 * @return An instance of {@code Callable<R>}.
-	 * @throws Exception
-	 *             If the user who is posting is not in the
-	 *             {@code postingUsersDatabase}. The concrete type of this
-	 *             exception is {@link NoSuchElementInDatabaseException} and its
-	 *             message is <i>«{login name} not found in {database's
-	 *             name}.»</i>.
 	 * @throws InvalidArgumentException
-	 *             If {@code parameters==null} or the value received in the parameters map for a required
-	 *             parameter is invalid.
+	 *             If {@code parameters==null} or the value received in the
+	 *             parameters map for a required parameter is invalid.
 	 * @throws NoSuchElementInDatabaseException
 	 *             If there is no user in {@link #postingUsersDatabase} whose
 	 *             username is the login name receive in the parameters map. The
 	 *             message of this exception is <i>«{login name} not found in
 	 *             {@code postingUsersDatabase.getDatabaseName()}»</i>.
-	 * @throws CommandFactoryException 
-	 * @throws InternalErrorException 
+	 * @throws InternalErrorException
+	 *             If an internal error occurred (not supposed to happen).
+	 * @throws MissingRequiredParameterException
+	 *             If the received map does not contain one of the required
+	 *             parameters for instantiating the command.
+	 * @throws WrongLoginPasswordException
+	 *             If the login password received does not match the login
+	 *             username's password.
+	 * @throws InvalidParameterValueException
+	 *             If the value received in the parameters map for a required
+	 *             parameter is invalid.
 	 */
 	public final Callable< R > newInstance( Map< String, String > parameters )
-			throws NoSuchElementInDatabaseException, InternalErrorException, CommandFactoryException, InvalidArgumentException {
+			throws NoSuchElementInDatabaseException, InternalErrorException,
+			InvalidArgumentException, MissingRequiredParameterException,
+			InvalidParameterValueException, WrongLoginPasswordException {
 		
 		this.parametersMap = parameters;
 		
@@ -172,15 +176,17 @@ public abstract class StringsToCommandsFactory< R > implements
 	 *             {@code postingUsersDatabase.getDatabaseName()}»</i>.
 	 * @throws InternalErrorException
 	 *             If an internal error that wasn't supposed to happen happened.
-	 * @throws MissingRequiredParameterException 
-	 * @throws CommandFactoryException 
-	 * @throws InvalidArgumentException 
+	 * @throws MissingRequiredParameterException
+	 *             If the received map does not contain one of the required
+	 *             parameters for instantiating the command.
+	 * @throws InvalidArgumentException
 	 *             If the value received in the parameters map for a required
 	 *             parameter is invalid.
 	 */
 	protected abstract Callable< R > internalNewInstance()
 			throws InvalidParameterValueException, WrongLoginPasswordException,
-			NoSuchElementInDatabaseException, InternalErrorException, MissingRequiredParameterException, CommandFactoryException, InvalidArgumentException;
+			NoSuchElementInDatabaseException, InternalErrorException,
+			MissingRequiredParameterException, InvalidArgumentException;
 	
 	/**
 	 * Returns an array of {@link String}s with the names of the parameters

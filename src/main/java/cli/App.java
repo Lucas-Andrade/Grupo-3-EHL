@@ -53,18 +53,7 @@ import main.java.cli.model.users.User;
  * <li>"POST /airships/type latitude={@value}&longitude={@value}
  * &altitude={@value} &minAltitude={@value}&maxAltitude={@value}&
  * {@code airshipCharacteristic}={@value}&loginName={@value}&loginPassword={@value}
- * ={@value}&loginName={@value}&loginPassword={@value}={@value}
- * &loginName={@value}&loginPassword={@value} ={@value}&loginName={@value}
- * &loginPassword={@value}={@value}&loginName={@value}
- * &loginPassword={@value} ={@value}&loginName={@value}&loginPassword={@value}
- * ={@value} &loginName={@value}&loginPassword={@value} ={@value}
- * &loginName={@value} &loginPassword={@value}={@value}
- * &loginName={@value}&loginPassword={@value} ={@value}&loginName={@value}
- * &loginPassword={@value}={@value} &loginName={@value}&loginPassword={@value}
- * ={@value}&loginName={@value} &loginPassword={@value}={@value}
- * &loginName={@value} &loginPassword={@value} ={@value}&loginName={@value}
- * &loginPassword={@value} ={@value} &loginName={@value}&loginPassword={@value}
- * ={@value} &loginName={@value} &loginPassword={@value}" - create an
+ * ={@value}&loginName={@value}&loginPassword={@value}" - create an
  * {@link Airship} with the type {@code Civil} or {@code Military}. If the
  * type:={@code Civil}, {@code airshipCharacteristic}:= nbPassengers. If the
  * type:={@code Military}, {@code airshipCharacteristic}:== hasArmour -> (yes or
@@ -180,12 +169,14 @@ public class App
 		}
 	}
 	
-	
+	//TODO
 	private static void execute( String[] args ) {
 		try
 		{
-			Callable< ? > command = cmdParser.getCommand( args );
+			Parser parser = new Parser(cmdParser, args);
+			Callable< ? > command = parser.getCommand( args );
 			System.out.println( command.call() );
+			//TODO
 		}
 		catch( Exception e )
 		{

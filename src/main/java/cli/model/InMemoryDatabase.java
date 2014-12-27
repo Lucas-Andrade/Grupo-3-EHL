@@ -164,17 +164,9 @@ public abstract class InMemoryDatabase< T extends Element > implements
 		if( identification == null )
 			throw new InvalidArgumentException(
 					"Cannot get element with null identification." );
-		try
-		{
-			return new Optional< T >( database.get( identification ),
+		return new Optional< T >( database.get( identification ),
 					new NoSuchElementInDatabaseException( identification,
 							databaseName ) );
-		}
-		catch( InvalidArgumentException e )
-		{ // never happens because the Optional was instantiated with a non null
-			// NoSuchElementInDatabaseException
-			return null;
-		}
 	}
 	
 	/**

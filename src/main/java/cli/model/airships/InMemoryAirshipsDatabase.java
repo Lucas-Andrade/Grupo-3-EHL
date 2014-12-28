@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-
 import main.java.cli.Optional;
 import main.java.cli.exceptions.InternalErrorException;
 import main.java.cli.exceptions.InvalidArgumentException;
@@ -113,7 +112,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 	
 	
 	
-	// OTHER PUBLIC METHOD
+	// OTHER PUBLIC METHODS
 	
 	/**
 	 * Returns a list with the {@link Airship}s stored in this database that
@@ -145,6 +144,50 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 		}
 		catch( InvalidArgumentException e )
 		{// never happens because new InternalErrorException() is not null
+			return null;
+		}
+	}
+	
+	/**
+	 * by G - alterar o nome find TODO
+	 * 
+	 * 
+	 * 
+	 * Auxiliar method that will allow a {@link List} containing all the
+	 * airships that are outside their pre-established {@link AirCorridor
+	 * altitude corridor} to be obtained.
+	 * 
+	 * @return A {@link List} containing all the airships that are outside their
+	 *         pre-established {@link AirCorridor altitude corridor}.
+	 */
+	public Optional< Iterable< Airship >> getAirshipsCloserTo(
+			GeographicPosition gp, int nrOfAirshipsToGet ) {
+		List< Airship > findedAirships = new ArrayList< Airship >();
+		try
+		{
+			findedAirships.addAll( getAll().get().values() );
+			findedAirships.sort( new AirshipComparators.ComparatorByDistance(
+					gp ) );
+		}
+		catch( Exception e )
+		{
+			// never happend
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		try
+		{
+			return new Optional< Iterable< Airship >>(
+					findedAirships.subList( 0, nrOfAirshipsToGet ),
+					new InternalErrorException(
+							"Not supposed to generate null list in getAirshipsCloserTo()" ),
+					getDatabaseName() + " is empty." );
+		}
+		catch( InvalidArgumentException e )
+		{// never happens cause the value given is instance of collection and
+			// the string given is not null
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -200,6 +243,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 					if( list.isEmpty() )
 						flightsByUserRegister.remove( entry.getKey() );
 					continueSearch = false;
+					break;
 				}
 			if( !continueSearch )
 				break;
@@ -207,32 +251,4 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 	}
 	
 	
-	/**by G - alterar o nome find
-	 * TODO
-	 * 
-	 * 
-	 * 
-	 * Auxiliar method that will allow a {@link List} containing all the airships that are outside
-	 * their pre-established {@link AirCorridor altitude corridor} to be obtained.
-	 * 
-	 * @return A {@link List} containing all the airships that are outside their pre-established
-	 *         {@link AirCorridor altitude corridor}.
-	 */
-	public List<Airship> find ( GeographicPosition gp, int total )
-	{
-		List<Airship> findedAirships = new ArrayList<Airship>();
-		try
-		{
-			findedAirships.addAll( getAll().get().values() );
-			findedAirships.sort( new AirshipComparators.ComparatorByDistance( gp ) );
-		}
-		catch( Exception e )
-		{
-			//never happend
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		return findedAirships.subList( 0, total );
-	}
 }

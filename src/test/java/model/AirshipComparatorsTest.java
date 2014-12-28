@@ -67,7 +67,7 @@ public class AirshipComparatorsTest
 		}
 		
 		//Assert
-		for( Airship a : database.find( gp, 10 ) )
+		for( Airship a : database.getAirshipsCloserTo( gp, 10 ) )
 		{
 			System.out.println( a );
 		}

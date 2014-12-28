@@ -16,7 +16,7 @@ public abstract class Airship implements Element
 	
 	/**
 	 * {@code ID} - long static variable that will contain the numeric value of
-	 * the last atributed ID. This variable will be updated every time a new
+	 * the last attributed ID. This variable will be updated every time a new
 	 * {@code Airship} is created.
 	 */
 	private static long ID = 0;
@@ -40,7 +40,7 @@ public abstract class Airship implements Element
 	
 	/**
 	 * {@code isTransgressing} - boolean variable that will represent the status
-	 * of an {@code Airship} regarding the impossition of its
+	 * of an {@code Airship} regarding the imposition of its
 	 * {@code airCorridor}.
 	 */
 	private final boolean isTransgressing;
@@ -49,7 +49,7 @@ public abstract class Airship implements Element
 	
 	/**
 	 * Class constructor that will be used by the {@code Airship} subclasses in
-	 * orden to instatiate the fields that are common to all the airships. It
+	 * order to instantiate the fields that are common to all the airships. It
 	 * will receive the geographic coordinates of the airship as a parameter as
 	 * well as the maximum and minimum altitudes the airship is allowed to fly.
 	 * 

@@ -35,7 +35,7 @@ public class GeographicPosition
 	/**
 	 * Creates a {@code GeographicPosition} making sure that the its
 	 * {@link GeographicCoordinate geographic coordinates}'s values are to be
-	 * whitin the correct limits.
+	 * within the correct limits.
 	 * 
 	 * @param latitude
 	 *            - The value for the airships latitude.

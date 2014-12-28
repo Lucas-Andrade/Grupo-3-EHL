@@ -22,9 +22,9 @@ import main.java.cli.model.users.User;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
+public class InMemoryAirshipsDatabase extends InMemoryDatabase<Airship>
 {
-	
+
 	// Instance Field
 	/**
 	 * The container {@link Map} where all the {@link Airship}s will be stored
@@ -35,86 +35,89 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 	 * by the user whose identification is stored in the corresponding key.</li>
 	 * </ul>
 	 */
-	private Map< String, List< Airship >> flightsByUserRegister;
-	
+	private Map<String, List<Airship>> flightsByUserRegister;
+
 	// Constructor
 	/**
 	 * Creates an empty {@link InMemoryAirshipDatabase} with the name
 	 * {@code databaseName}.
 	 * 
 	 * @param databaseName
-	 *            This database's name.
+	 *        This database's name.
 	 * @throws InvalidArgumentException
-	 *             If {@code databaseName==null}.
+	 *         If {@code databaseName==null}.
 	 */
 	public InMemoryAirshipsDatabase( String databaseName )
-			throws InvalidArgumentException {
-		
+			throws InvalidArgumentException
+	{
+
 		super( databaseName );
-		flightsByUserRegister = new HashMap< String, List< Airship >>();
+		flightsByUserRegister = new HashMap<String, List<Airship>>();
 	}
-	
-	
-	
+
+
+
 	// OVERRIDES OF METHODS OF InMemoryDatabase
-	
+
 	/**
 	 * Stores the {@link Airship} {@code airship} in this database, added by the
 	 * {@link User} {@code userWhoIsAddingThisAirship}.
 	 * 
 	 * @param element
-	 *            The element to be added to this database.
+	 *        The element to be added to this database.
 	 * @param userWhoIsAddingThisAirship
-	 *            The user who is adding this element to the database.
+	 *        The user who is adding this element to the database.
 	 * @return {@code true} if the element was successfully added;</br>
 	 *         {@code false} if there's already an airship with the same flight
 	 *         id.
 	 * @throws InvalidArgumentException
-	 *             If either {@code airship} or {@code user} are {@code null}.
+	 *         If either {@code airship} or {@code user} are {@code null}.
 	 */
 	@Override
 	public boolean add( Airship airship, User user )
-			throws InvalidArgumentException {
-		
+			throws InvalidArgumentException
+	{
+
 		if( super.add( airship, user ) )
 		{
 			addAirshipToItsUsersListOfAirships( airship, user );
 			return true;
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Removes the {@code Element} with identification {@code identification}
 	 * from this database.
 	 * 
 	 * @param flightId
-	 *            The flightId of the airship to be removed.
+	 *        The flightId of the airship to be removed.
 	 * @return {@code true} if the airship was successfully removed; </br>
 	 *         {@code false} otherwise.
 	 * @throws DatabaseException
-	 *             When trying to perform an forbidden operation in a database.
+	 *         When trying to perform an forbidden operation in a database.
 	 * @throws InvalidArgumentException
-	 *             If {@code flightId==null}.
+	 *         If {@code flightId==null}.
 	 */
 	@Override
 	public boolean removeByIdentification( String flightId )
-			throws InvalidArgumentException, DatabaseException {
-		
+			throws InvalidArgumentException, DatabaseException
+	{
+
 		if( super.removeByIdentification( flightId ) )
 		{
 			removeAirshipFromItsUsersListOfAirships( flightId );
 			return true;
 		}
-		
+
 		return false;
 	}
-	
-	
-	
+
+
+
 	// OTHER PUBLIC METHOD
-	
+
 	/**
 	 * Returns a list with the {@link Airship}s stored in this database that
 	 * were added by the {@link User} with the username {@code username}.
@@ -127,19 +130,19 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 	 * </p>
 	 * 
 	 * @param username
-	 *            The username of the user whose airships are to get.
+	 *        The username of the user whose airships are to get.
 	 * @return A list of {@link Airship}s stored in this database that were
 	 *         added by the {@link User} with username {@code username}.
 	 */
-	public Optional< Iterable< Airship >> getAirshipsOfUser( String username ) {
-		
-		List< Airship > list = flightsByUserRegister.get( username );
-		if( list == null )
-			list = new ArrayList<>();
-		
+	public Optional<Iterable<Airship>> getAirshipsOfUser( String username )
+	{
+
+		List<Airship> list = flightsByUserRegister.get( username );
+		if( list == null ) list = new ArrayList<>();
+
 		try
 		{
-			return new Optional< Iterable< Airship >>( list,
+			return new Optional<Iterable<Airship>>( list,
 					new InternalErrorException(), "No airship added by "
 							+ username );
 		}
@@ -148,51 +151,53 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 			return null;
 		}
 	}
-	
-	
-	
+
+
+
 	// AUXILIARY PRIVATE METHODS
-	
+
 	// used in method add
 	/**
 	 * Updates the list of airships of {@code user} by adding {@code airship} to
 	 * it.
 	 * 
 	 * @param airship
-	 *            The airship to be added to {@code user}'s list of airships.
+	 *        The airship to be added to {@code user}'s list of airships.
 	 * @param user
-	 *            The user whose list is to be updated.
+	 *        The user whose list is to be updated.
 	 */
-	private void addAirshipToItsUsersListOfAirships( Airship airship, User user ) {
-		
+	private void addAirshipToItsUsersListOfAirships( Airship airship, User user )
+	{
+
 		if( flightsByUserRegister.containsKey( user.getIdentification() ) )
 			flightsByUserRegister.get( user.getIdentification() ).add( airship );
-		
+
 		else
 		{
-			List< Airship > newListForNewUser = new ArrayList<>();
+			List<Airship> newListForNewUser = new ArrayList<>();
 			newListForNewUser.add( airship );
 			flightsByUserRegister.put( user.getIdentification(),
 					newListForNewUser );
 		}
 	}
-	
+
 	// used in method removeByIdentification
 	/**
 	 * Updates the list of airships of the owner of the {@link Airship} with the
 	 * given {@code flightId} by removing it.
 	 * 
 	 * @param flightId
-	 *            The flightId of the airship to be removed from its owner's
-	 *            list of airships.
+	 *        The flightId of the airship to be removed from its owner's list of
+	 *        airships.
 	 */
-	private void removeAirshipFromItsUsersListOfAirships( String flightId ) {
-		
+	private void removeAirshipFromItsUsersListOfAirships( String flightId )
+	{
+
 		boolean continueSearch = true;
-		for( Entry< String, List< Airship >> entry : flightsByUserRegister
+		for( Entry<String, List<Airship>> entry : flightsByUserRegister
 				.entrySet() )
 		{
-			List< Airship > list = entry.getValue();
+			List<Airship> list = entry.getValue();
 			for( Airship airship : list )
 				if( airship.getIdentification().equals( flightId ) )
 				{
@@ -201,38 +206,50 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 						flightsByUserRegister.remove( entry.getKey() );
 					continueSearch = false;
 				}
-			if( !continueSearch )
-				break;
+			if( ! continueSearch ) break;
 		}
 	}
-	
-	
-	/**by G - alterar o nome find
-	 * TODO
+
+
+	/**
+	 * by G Problems: Optional not used, IndexOutOfBoundsException extends
+	 * RuntimeException
 	 * 
 	 * 
 	 * 
-	 * Auxiliar method that will allow a {@link List} containing all the airships that are outside
-	 * their pre-established {@link AirCorridor altitude corridor} to be obtained.
 	 * 
-	 * @return A {@link List} containing all the airships that are outside their pre-established
-	 *         {@link AirCorridor altitude corridor}.
+	 * Returns an {@link Airship} {@code List} sorted by the distance from each
+	 * {@code Airship} {@link GeographicPosition} to a
+	 * {@code GeographicPositionReference}. The returned {@code List} maximum
+	 * length: {@code listLength}
+	 * 
+	 * Note: The {@link GeographicCoordinate Altitude} is not taken in
+	 * consideration.
+	 * 
+	 * 
+	 * @param GeographicPositionReference
+	 * @param listLength
+	 * @return an {@link Airship} {@code List} sorted by the distance from each
+	 *         {@code Airship} {@link GeographicPosition} to a
+	 *         {@code GeographicPositionReference}.
 	 */
-	public List<Airship> find ( GeographicPosition gp, int total )
+	public List<Airship> getAirshipsByDistance(
+			GeographicPosition GeographicPositionReference, int listLength )
 	{
-		List<Airship> findedAirships = new ArrayList<Airship>();
+		List<Airship> airshipsList = new ArrayList<Airship>();
 		try
 		{
-			findedAirships.addAll( getAll().get().values() );
-			findedAirships.sort( new AirshipComparators.ComparatorByDistance( gp ) );
+			airshipsList.addAll( getAll().get().values() );
+			airshipsList.sort( new AirshipComparators.ComparatorByDistance(
+					GeographicPositionReference ) );
 		}
 		catch( Exception e )
 		{
-			//never happend
+			// never happend
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		return findedAirships.subList( 0, total );
+
+		return airshipsList.subList( 0, listLength );
 	}
 }

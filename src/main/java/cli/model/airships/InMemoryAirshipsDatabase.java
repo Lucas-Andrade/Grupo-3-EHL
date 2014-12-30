@@ -138,9 +138,11 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 		
 		try
 		{
-			return new Optional< Iterable< Airship >>( list,
-					new InternalErrorException(), "No airship added by "
-							+ username );
+			return new Optional< Iterable< Airship >>(
+					list,
+					new InternalErrorException(
+							"Not supposed to generate null list in getAirshipsOfUser()" ),
+					"No airship added by " + username );
 		}
 		catch( InvalidArgumentException e )
 		{// never happens because new InternalErrorException() is not null
@@ -149,37 +151,63 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 	}
 	
 	/**
-	 * by G - alterar o nome find TODO
+	 * by G Problems: Optional not used, IndexOutOfBoundsException extends
+	 * RuntimeException
+	 * by E @ G: See if this solves! 
 	 * 
 	 * 
+	 * Returns an {@link Iterable} with the {@code nrOfAirshipsToGet}
+	 * {@link Airship}s stored in this database that are closer to the
+	 * {@link GeographicPosition} {@code reference}. The altitudes are not taken
+	 * in consideration.
+	 * <p>
+	 * This result is wrapped in an {@link Optional} instance whose method
+	 * {@link Optional#get()} throws {@link InternalErrorException} if the
+	 * result is {@code null} (since this is never supposed to happen) and whose
+	 * method {@link Optional#toString()} returns the string <i>«
+	 * {@code databaseName} is empty.»</i>.
+	 * </p>
 	 * 
-	 * Auxiliar method that will allow a {@link List} containing all the
-	 * airships that are outside their pre-established {@link AirCorridor
-	 * altitude corridor} to be obtained.
 	 * 
-	 * @return A {@link List} containing all the airships that are outside their
-	 *         pre-established {@link AirCorridor altitude corridor}.
+	 * @param reference
+	 *            The reference latitude and longitude.
+	 * @param nrOfAirshipsToGet
+	 *            The number of closer airships to get.
+	 * @return an {@link Airship} {@code List} sorted by the distance from each
+	 *         {@code Airship} {@link GeographicPosition} to a
+	 *         {@code GeographicPositionReference}.
+	 * @throws InvalidArgumentException
+	 *             If {@code nrOfAirshipsToGet<0}.
 	 */
 	public Optional< Iterable< Airship >> getAirshipsCloserTo(
-			GeographicPosition gp, int nrOfAirshipsToGet ) {
-		List< Airship > findedAirships = new ArrayList< Airship >();
+			GeographicPosition reference, int nrOfAirshipsToGet )
+			throws InvalidArgumentException {
+		
+		
+		if( nrOfAirshipsToGet < 0 )
+			throw new InvalidArgumentException(
+					"Number of airships cannot be negative." );
+		
+		
+		List< Airship > airshipsList = new ArrayList< Airship >();
 		try
 		{
-			findedAirships.addAll( getAll().get().values() );
-			findedAirships.sort( new AirshipComparators.ComparatorByDistance(
-					gp ) );
+			airshipsList.addAll( getAll().get().values() );
 		}
 		catch( Exception e )
-		{
-			// never happend
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		{ // never happens because getAll() never has null values
+			System.out.println( "ERROR1 in getAirshipsCloserTo()" );
 		}
+		airshipsList.sort( new AirshipComparators.ComparatorByDistance(
+				reference ) );
 		
+		
+		if( nrOfAirshipsToGet <= airshipsList.size() )
+			airshipsList = airshipsList.subList( 0, nrOfAirshipsToGet );
 		try
 		{
 			return new Optional< Iterable< Airship >>(
-					findedAirships.subList( 0, nrOfAirshipsToGet ),
+					airshipsList,
 					new InternalErrorException(
 							"Not supposed to generate null list in getAirshipsCloserTo()" ),
 					getDatabaseName() + " is empty." );
@@ -187,11 +215,11 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 		catch( InvalidArgumentException e )
 		{// never happens cause the value given is instance of collection and
 			// the string given is not null
-			e.printStackTrace();
+			System.out.println( "ERROR2 in getAirshipsCloserTo()" );
 			return null;
 		}
+		
 	}
-	
 	
 	
 	// AUXILIARY PRIVATE METHODS
@@ -231,7 +259,6 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 	 */
 	private void removeAirshipFromItsUsersListOfAirships( String flightId ) {
 		
-		boolean continueSearch = true;
 		for( Entry< String, List< Airship >> entry : flightsByUserRegister
 				.entrySet() )
 		{
@@ -242,13 +269,11 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 					list.remove( airship );
 					if( list.isEmpty() )
 						flightsByUserRegister.remove( entry.getKey() );
-					continueSearch = false;
-					break;
+					return;
 				}
-			if( !continueSearch )
-				break;
 		}
 	}
+	
 	
 	
 }

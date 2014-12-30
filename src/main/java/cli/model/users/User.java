@@ -188,4 +188,12 @@ public class User implements Element
 		
 		return email;
 	}
+
+	/**
+	 * @return the fullName
+	 */
+	public String getFullName()
+	{
+		return fullName;
+	}
 }

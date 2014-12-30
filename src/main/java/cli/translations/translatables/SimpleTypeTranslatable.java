@@ -1,26 +1,46 @@
 package main.java.cli.translations.translatables;
 
-public class SimpleTypeTranslatable implements Translatable
-{
+import java.util.Map;
 
+import main.java.cli.translations.translators.Translator;
+
+/**
+ * Instances of this class have a "simple" {@code PropertyBag}, i.e., an
+ * {@code Map} with the desired info to be read by a {@link Translator}. The
+ * {@code key}s are the property names and the {@code values}s its
+ * descriptions.
+ * 
+ * This {@code PropertyBag} have an associated {@code Tag}.
+ * 
+ *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
+public class SimpleTypeTranslatable implements
+		Translatable<Map<String, String>>
+{
 	private final String tag;
-	private final String[][] properties;
-	
-	public SimpleTypeTranslatable(String tag, String[][] properties)
+	private final Map<String, String> propertyBag;
+
+	public SimpleTypeTranslatable( String tag, Map<String, String> propertyBag )
 	{
 		this.tag = tag;
-		this.properties = properties;
+		this.propertyBag = propertyBag;
 	}
-	
+
 	@Override
 	public String getTag()
 	{
 		return tag;
 	}
 
-	public String[][] getPropertiesBag()
+	@Override
+	public Map<String, String> getPropertiesBag()
 	{
-		return properties;
+		return propertyBag;
 	}
 
+	public void addProperty( String key, String value )
+	{
+		propertyBag.put( key, value );
+	}
 }

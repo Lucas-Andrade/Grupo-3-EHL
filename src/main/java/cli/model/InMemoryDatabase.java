@@ -165,8 +165,8 @@ public abstract class InMemoryDatabase< T extends Element > implements
 			throw new InvalidArgumentException(
 					"Cannot get element with null identification." );
 		return new Optional< T >( database.get( identification ),
-					new NoSuchElementInDatabaseException( identification,
-							databaseName ) );
+				new NoSuchElementInDatabaseException( identification,
+						databaseName ) );
 	}
 	
 	/**
@@ -186,17 +186,9 @@ public abstract class InMemoryDatabase< T extends Element > implements
 	 */
 	public Optional< Iterable< T >> getAllElements() {
 		
-		try
-		{
-			return new Optional< Iterable< T > >(
-					Collections.unmodifiableCollection( database.values() ),
-					new InternalErrorException(), getDatabaseName()
-							+ " is empty." );
-		}
-		catch( InvalidArgumentException e )
-		{ // never happens because the InternalErrorException is not null
-			return null;
-		}
+		return new Optional< Iterable< T > >(
+				Collections.unmodifiableCollection( database.values() ),
+				getDatabaseName() + " is empty." );
 	}
 	
 	
@@ -221,16 +213,9 @@ public abstract class InMemoryDatabase< T extends Element > implements
 	 */
 	public Optional< Map< String, T > > getAll() {
 		
-		try
-		{
-			return new Optional< Map< String, T > >(
-					Collections.unmodifiableMap( database ),
-					new InternalErrorException(), databaseName + " is empty." );
-		}
-		catch( InvalidArgumentException e )
-		{ // never happens because the exception is not null
-			return null;
-		}
+		return new Optional< Map< String, T > >(
+				Collections.unmodifiableMap( database ), databaseName
+						+ " is empty." );
 	}
 	
 	/**
@@ -259,26 +244,19 @@ public abstract class InMemoryDatabase< T extends Element > implements
 					"Cannot use a null criteria to get elements from "
 							+ databaseName );
 		
+		List< T > selectedElements = new ArrayList<>();
 		try
-		{
-			List< T > selectedElements = new ArrayList<>();
-			
-			
-			for( T element : getAll().get().values() )
+		{			
+			for( T element : getAllElements().get() )
 				if( criteria.test( element ) )
-					selectedElements.add( element );
-			
-			
-			return new Optional< Iterable< T >>( selectedElements,
-					new InternalErrorException(), "No such element in "
-							+ databaseName );
+					selectedElements.add( element );			
 		}
 		catch( Exception e )
-		{ // never happens because
-			// 1. getAll() is never null and
-			// 2. new InternalErrorException() is also not null
-			return null;
+		{ // never happens because getAll() is never null
 		}
-	}
 
+		return new Optional< Iterable< T >>( selectedElements, "No such element in "
+						+ databaseName );
+	}
+	
 }

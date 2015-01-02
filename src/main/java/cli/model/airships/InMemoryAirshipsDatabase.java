@@ -136,24 +136,13 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 		if( list == null )
 			list = new ArrayList<>();
 		
-		try
-		{
-			return new Optional< Iterable< Airship >>(
-					list,
-					new InternalErrorException(
-							"Not supposed to generate null list in getAirshipsOfUser()" ),
-					"No airship added by " + username );
-		}
-		catch( InvalidArgumentException e )
-		{// never happens because new InternalErrorException() is not null
-			return null;
-		}
+		return new Optional< Iterable< Airship >>( list, "No airship added by "
+				+ username );
 	}
 	
 	/**
 	 * by G Problems: Optional not used, IndexOutOfBoundsException extends
-	 * RuntimeException
-	 * by E @ G: See if this solves! 
+	 * RuntimeException by E @ G: See if this solves!
 	 * 
 	 * 
 	 * Returns an {@link Iterable} with the {@code nrOfAirshipsToGet}
@@ -196,7 +185,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 		}
 		catch( Exception e )
 		{ // never happens because getAll() never has null values
-			System.out.println( "ERROR1 in getAirshipsCloserTo()" );
+			System.out.println( "ERROR in getAirshipsCloserTo()" );
 		}
 		airshipsList.sort( new AirshipComparators.ComparatorByDistance(
 				reference ) );
@@ -204,20 +193,8 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 		
 		if( nrOfAirshipsToGet <= airshipsList.size() )
 			airshipsList = airshipsList.subList( 0, nrOfAirshipsToGet );
-		try
-		{
-			return new Optional< Iterable< Airship >>(
-					airshipsList,
-					new InternalErrorException(
-							"Not supposed to generate null list in getAirshipsCloserTo()" ),
-					getDatabaseName() + " is empty." );
-		}
-		catch( InvalidArgumentException e )
-		{// never happens cause the value given is instance of collection and
-			// the string given is not null
-			System.out.println( "ERROR2 in getAirshipsCloserTo()" );
-			return null;
-		}
+		return new Optional< Iterable< Airship >>( airshipsList,
+				getDatabaseName() + " is empty." );
 		
 	}
 	

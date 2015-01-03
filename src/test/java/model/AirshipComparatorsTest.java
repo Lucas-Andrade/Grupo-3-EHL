@@ -77,9 +77,15 @@ public class AirshipComparatorsTest
 			gp = null;
 			e.printStackTrace();
 		}
+		
+		//Assert
+		for( Airship a : database.getAirshipsCloserTo( gp, 10 ).get() )
+		{
+			System.out.println( a );
+		}
 
 		// Assert
 		assertEquals( expectedAirshipList,
-				database.getAirshipsByDistance( gp, 10 ) );
+				database.getAirshipsCloserTo( gp, 10 ).get() );
 	}
 }

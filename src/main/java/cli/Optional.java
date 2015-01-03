@@ -10,44 +10,50 @@ import main.java.cli.exceptions.NullValueInOptionalException;
 
 /**
  * Class whose instances represent values returned by methods. This class is
- * inspired by {@link java.util.Optional} class's structure and functionality,
- * with some twists: its purpose is not only to wrap results that might be
+ * inspired by {@link java.util.Optional}'s structure and functionality, with
+ * some twists: its purpose is not only to wrap results that might be
  * {@code null} and prevent unexpected {@link NullPointerException}s that might
- * come from trying to use them (in this version of Optional, one may even
- * choose the exception to be thrown by method {@link #get()}), but also to wrap
- * results that might be empty collections for which one would like to specify
- * its string representation.
+ * come from trying to use them, but also to wrap results that might be empty
+ * collections or empty maps and for which we would like to specify its string
+ * representation.
  * <p>
  * If the value represented by a certain <code>Optional{@literal <}T></code>
- * instance is {@code null}, when called by that instance, the method
- * {@link #get()} throws an exception and the method {@link #toString()} returns
- * that same exception's message. The exception to be thrown is chosen in the
- * instantiation moment.
+ * instance is {@code null}, the method {@link #get()} throws an exception and
+ * the method {@link #toString()} returns that same exception's message. The
+ * exception to be thrown is either the one chosen in the instantiation moment
+ * or a default {@link NullValueInOptionalException} with message <i>«null»</i>.
  * </p>
  * <p>
  * If the value represented by a certain <code>Optional{@literal <}T></code>
  * instance is an empty collection or an empty map (meaning {@code T} implements
- * {@link Collection} or implements {@link Map} and value{@code .isEmpty()} is
- * {@code true}), when called by that instance, the method {@link #toString()}
- * may return a specified {@link String}. This string is chosen in the
- * instantiation moment.
+ * {@link Collection} or implements {@link Map} and {@code isEmpty()} ), the
+ * method {@link #toString()} may either return a specific {@link String} chosen
+ * in the instantiation moment or the default string representation of the
+ * value.
  * </p>
  * <p>
- * There are two constructors. Both constructors receive the value to be
- * represented and the exception to be thrown if that value is {@code null}. The
- * existence of two constructors allows <code>Optional{@literal <}T></code>
- * instances that represent empty collections or maps to have one of two
- * different string representations:
- * <ul>
- * <li><b>one of the constructors can only be used when the type {@code T}
- * implements {@link Collection} or {@link Map}</b> and it also receives as
- * argument a string representation of the value if it is an empty collection or
- * an empty map.</li>
- * <li>the string representation of an instance created using the other
- * constructor, whether it represents an empty collection or other non-
- * {@code null} value is the result of calling {@code value.toString()}.</li>
- * </ul>
- * 
+ * There are three constructors. All constructors receive as argument:
+ * <ol>
+ * <li>the value {@code value} of type {@code T} to be represented and</li>
+ * </ol>
+ * Two of these constructors allow the representation of {@code null} values;
+ * they receive:
+ * <ol start="2">
+ * <li>the exception {@code toBeThrownIfNull} to be thrown by method
+ * {@link #get()} if {@code value==null}. If this argument is {@code null}, the
+ * exception thrown is a {@link NullValueInOptionalException} with message
+ * <i>«null»</i>.</li>
+ * </ol>
+ * Two of these constructors allow the representation of values that are empty
+ * {@link Collection}s or {@link Map}s; they receive:
+ * <ol start="3">
+ * <li >the string representation {@code toStringIfEmpty} to be returned by the
+ * method {@link #toString()} if {@code value.isEmpty()}. If this argument is
+ * {@code null}, the string returned is {@code value.toString()}.</li>
+ * </ol>
+ * One of these constructors receives either {@code toBeThrownIfNull} and
+ * {@code toStringIfEmpty} in order to allow the creation of {@link Optional}s
+ * that represent collections or maps that may be {@code null} or empty.
  * </p>
  * <p>
  * {@link Optional} instances are immutable.
@@ -74,87 +80,95 @@ public class Optional< T >
 	private final T value;
 	
 	/**
-	 * The exception to be thrown by the method {@link #get()} if {@link #value}
-	 * is {@code null}. Also, if {@link #value} is {@code null} the method
-	 * {@link #toString()} returns this exception's message.
+	 * The exception given in the constructor to be thrown by the method
+	 * {@link #get()} if {@link #value} is {@code null}. Also, if {@link #value}
+	 * is {@code null} the method {@link #toString()} returns this exception's
+	 * message.
 	 */
 	private final Exception toBeThrownIfNull;
 	
 	/**
-	 * The string to be returned by the method {@link #toString()} if this value
-	 * is an instance of {@link Collection} or {@link Map} which is empty (known
-	 * via method {@link Collection#isEmpty()} or {@link Map#isEmpty()}) and
-	 * this string is non-{@code null} (it is non-{@code null} if this instance
-	 * was created using the second constructor).
+	 * The string given in the constructor to be returned by the method
+	 * {@link #toString()} if this value is an empty instance of
+	 * {@link Collection} or {@link Map} (known via method
+	 * {@link Collection#isEmpty()} or {@link Map#isEmpty()}).
 	 */
-	private final String toStringIfIsEmptyCollectionOrMap;
+	private final String toStringIfEmpty;
 	
 	
 	
 	// CONSTRUCTORS
 	
 	/**
-	 * Creates a new instance of {@link Optional} that represents {@code value}.
+	 * Creates a new instance of {@link Optional} that represents {@code value}
+	 * which may be {@code null}.
 	 * 
 	 * @param value
 	 *            The value to be represented by this optional.
 	 * @param toBeThrownIfNull
 	 *            The exception to be thrown by the method {@link #get()} if
-	 *            {@code value==null}. If this exception is {@code null}, the
-	 *            method {@link #get()} will thrown a
-	 *            NullValueInOptionalException with message <i>«Null
-	 *            value.»</i> if {@code value==null}.
+	 *            {@code value==null}. If this argument is {@code null}, the
+	 *            method {@link #get()} will throw a
+	 *            {@link NullValueInOptionalException} with message
+	 *            <i>«null»</i> if {@code value==null}.
 	 */
 	public Optional( T value, Exception toBeThrownIfNull ) {
 		
 		this.value = value;
 		this.toBeThrownIfNull = (toBeThrownIfNull == null)
-				? new NullValueInOptionalException( "Null value." )
+				? new NullValueInOptionalException( "null" )
 				: toBeThrownIfNull;
-		this.toStringIfIsEmptyCollectionOrMap = null;
+		this.toStringIfEmpty = null;
 	}
 	
 	/**
 	 * Creates a new instance of {@link Optional} that represents {@code value},
-	 * only if {@code T} implements {@link Collection} or implements {@link Map}
-	 * .
+	 * meant to be a {@link Collection} or a {@link Map}, which may be empty.
 	 * 
-	 * @param collectionValue
-	 *            The value (must be an instance of {@link Collection} or
-	 *            {@link Map}) to be represented by this optional.
+	 * @param value
+	 *            The value to be represented by this optional, meant to be an
+	 *            instance of {@link Collection} or a {@link Map}.
+	 * @param toStringIfEmpty
+	 *            The string to be returned by the method {@link #toString()} if
+	 *            {@code value.is Empty()}. If this argument is {@code null},
+	 *            the method {@link #toString()} will return
+	 *            {@code value.toString()} if {@code value.isEmpty()}.
+	 */
+	public Optional( T value, String toStringIfEmpty ) {
+		
+		this.value = value;
+		this.toBeThrownIfNull = null;
+		this.toStringIfEmpty = toStringIfEmpty;
+	}
+	
+	/**
+	 * Creates a new instance of {@link Optional} that represents {@code value},
+	 * meant to be a {@link Collection} or a {@link Map}, which may be
+	 * {@code null} or empty.
+	 * 
+	 * @param value
+	 *            The value to be represented by this optional, meant to be an
+	 *            instance of {@link Collection} or a {@link Map}.
 	 * @param toBeThrownIfNull
 	 *            The exception to be thrown by the method {@link #get()} if
-	 *            {@code value==null}. If this exception is {@code null}, the
-	 *            method {@link #get()} will thrown a
-	 *            NullValueInOptionalException with message <i>«Null
-	 *            value.»</i> if {@code value==null}.
-	 * @param toStringIfIsEmptyCollectionOrMap
+	 *            {@code value==null}. If this argument is {@code null}, the
+	 *            method {@link #get()} will throw a
+	 *            {@link NullValueInOptionalException} with message
+	 *            <i>«null»</i> if {@code value==null}.
+	 * @param toStringIfEmpty
 	 *            The string to be returned by the method {@link #toString()} if
-	 *            {@code value} is empty (known via method
-	 *            {@link Collection#isEmpty()} or {@link Map#isEmpty()}).
-	 * @throws InvalidArgumentException
-	 *             If {@code value} is not an instance of {@link Collection} or
-	 *             </br>if {@code toBeThrownIsEmptyCollectionOrMap==null}.
+	 *            {@code value.is Empty()}. If this argument is {@code null},
+	 *            the method {@link #toString()} will return
+	 *            {@code value.toString()} if {@code value.isEmpty()}.
 	 */
-	public Optional( T collectionValue, Exception toBeThrownIfNull,
-			String toStringIfIsEmptyCollectionOrMap )
+	public Optional( T value, Exception toBeThrownIfNull, String toStringIfEmpty )
 			throws InvalidArgumentException {
 		
-		if( !(collectionValue instanceof Collection || collectionValue instanceof Map) )
-			throw new InvalidArgumentException(
-					"Cannot use this constructor, a "
-							+ collectionValue.getClass().getSimpleName()
-							+ " is not a Collection." );
-		
-		if( toStringIfIsEmptyCollectionOrMap == null )
-			throw new InvalidArgumentException(
-					"Invalid null string representation for empty collections." );
-		
-		this.value = collectionValue;
+		this.value = value;
 		this.toBeThrownIfNull = (toBeThrownIfNull == null)
-				? new NullValueInOptionalException( "Null value." )
+				? new NullValueInOptionalException( "null" )
 				: toBeThrownIfNull;
-		this.toStringIfIsEmptyCollectionOrMap = toStringIfIsEmptyCollectionOrMap;
+		this.toStringIfEmpty = toStringIfEmpty;
 	}
 	
 	
@@ -174,16 +188,14 @@ public class Optional< T >
 	
 	/**
 	 * Returns {@code true} if the stored value is an instance of
-	 * {@link Collection} and is empty (as defined in method
-	 * {@link Collection#isEmpty()}).
+	 * {@link Collection} or {@link Map} and is empty (as defined in method
+	 * {@link Collection#isEmpty()} or {@link Map#isEmpty()}, respectively).
 	 *
-	 * @return {@code true} if the stored value is an instance of collection and
-	 *         is empty (as defined in method {@link Collection#isEmpty()});
-	 *         </br> {@code false} if the stored value is not a collection or
-	 *         it's a non-empty collection.
+	 * @return {@code true} if the stored value is empty; </br> {@code false} if
+	 *         the stored value is not a collection nor a map or it's not empty.
 	 */
 	@SuppressWarnings( "rawtypes" )
-	public boolean isEmptyCollectionorEmptyMap() {
+	public boolean isEmpty() {
 		
 		boolean isEmptyCollection = (value instanceof Collection && ((Collection)value)
 				.isEmpty());
@@ -193,27 +205,30 @@ public class Optional< T >
 	
 	/**
 	 * Returns {@code true} if the stored value is an instance of
-	 * {@link Collection} and is empty (as defined in method
-	 * {@link Collection#isEmpty()}).
+	 * {@link Collection} or {@link Map} and the constructor was given a string
+	 * representation for empty values.
 	 *
-	 * @return {@code true} if the stored value is an instance of collection and
-	 *         is empty (as defined in method {@link Collection#isEmpty()});
-	 *         </br> {@code false} if the stored value is not a collection or
-	 *         it's a non-empty collection.
+	 * @return {@code true} if the stored value is a {@link Collection} or a
+	 *         {@link Map} and the constructor was given a string representation
+	 *         for empty values; </br> {@code false} if the stored value is not
+	 *         a collection nor a map or if the constructor wasn't given a
+	 *         string representation for empty values.
 	 */
-	public boolean hasSpecifiedStringRepresentationIfEmptyCollectionOrMap() {
+	public boolean hasSpecificStringRepresentationIfEmpty() {
 		
-		return toStringIfIsEmptyCollectionOrMap != null;
+		return isEmpty() && toStringIfEmpty != null;
 	}
 	
 	/**
 	 * Returns the value represented by this {@code Optional} instance, if it is
-	 * non-{@code null}. If it is {@code null} throws the exception specified in
-	 * the constructor.
+	 * non-{@code null}. If it is {@code null} throws either the exception
+	 * specified in the constructor or a {@link NullValueInOptionalException}
+	 * with message <i>«null»</i>.
 	 *
 	 * @return The non-{@code null} value represented by this.
 	 * @throws Exception
-	 *             If the value represented by this is {@code null}.
+	 *             If the value represented by this {@link Optional} is
+	 *             {@code null}.
 	 */
 	public T get() throws Exception {
 		
@@ -271,9 +286,8 @@ public class Optional< T >
 	 * If the value is {@code null}, this method returns the message of the
 	 * exception specified in the instantiation moment (obtained via method
 	 * {@link Exception#getMessage()}).<br />
-	 * If the value is an empty collection and there was received a specified
-	 * string representation for it in the constructor, that's what will be
-	 * returned.<br/>
+	 * If the value is an empty collection or map and the constructor received a
+	 * specified string representation for it, that string will be returned.<br/>
 	 * Otherwise, this method returns the result of {@code value.toString()}.
 	 * </p>
 	 *
@@ -285,9 +299,8 @@ public class Optional< T >
 		
 		if( value == null ) { return toBeThrownIfNull.getMessage(); }
 		
-		if( isEmptyCollectionorEmptyMap()
-				&& toStringIfIsEmptyCollectionOrMap != null )
-			return toStringIfIsEmptyCollectionOrMap;
+		if( isEmpty() && toStringIfEmpty != null )
+			return toStringIfEmpty;
 		
 		return value.toString();
 	}

@@ -173,12 +173,9 @@ public class InMemoryAirshipsDatabase_Tests {
 		
 		 
 		
-		List<Airship> sortedList = (List<Airship>) airshipDatabase.getAirshipsByDistance(new GeographicPosition(60, 225, 10000), 2);
+	 String result = airshipDatabase.getAirshipsCloserTo(new GeographicPosition(60, 225, 10000), 2).toString() ;
 
-		assertTrue(sortedList.contains(air1)&&sortedList.contains(air3));
-		assertFalse(sortedList.contains(air2) && sortedList.contains(air4) && sortedList.contains(air5) &&
-							sortedList.contains(air6)&&sortedList.contains(air7));
-		
+	 Assert.assertEquals("["+air1.toString()+", "+air3.toString()+"]",result);
 	}
 	
 	

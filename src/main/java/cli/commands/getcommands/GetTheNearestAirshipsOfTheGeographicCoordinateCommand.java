@@ -26,7 +26,7 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 	private final InMemoryAirshipsDatabase airshipsDatabase;
 	
 	/**
-	* The desired number of airships nearest to the geographic coordinates.
+	* The number of airships to get nearest to the geographic coordinates.
 	*/
 	private final int airshipsNumber;
 	
@@ -50,7 +50,7 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 	 * @param airshipsDatabase
 	 * 			 The airships database.
 	 * @param airshipsNumber
-	 * 			The desired number of airships nearest to the geographic coordinates.
+	 * 			The number of airships to get nearest to the geographic coordinates.
 	 * @param latitude
 	 * 			The latitude geographic coordinate.
 	 * @param longitude
@@ -103,7 +103,7 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 	@Override
 	public Optional<Iterable<Airship>> call() throws Exception {
 		
-		return  airshipsDatabase.getAirshipsByDistance(new GeographicPosition(latitude, longitude, 0), airshipsNumber);
+		return  airshipsDatabase.getAirshipsCloserTo(new GeographicPosition(latitude, longitude, 0), airshipsNumber);
 	
 	}
 

@@ -100,7 +100,7 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 		/**
 		 * 
 		 * 
-		 * Method responsible to set the desired  number of airships field needed
+		 * Method responsible to set the number of airships to get field needed
 		 *  to {@code PatchUserPasswordCommands} command.
 		 *  
 		 * This method calls the 

@@ -1,207 +1,216 @@
 package test.java.model;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
 
-import main.java.exceptions.dataBaseExceptions.DatabaseException;
-import main.java.exceptions.dataBaseExceptions.NoSuchElementInDatabaseException;
-import main.java.model.airships.Airship;
-import main.java.model.airships.AirshipPredicates;
-import main.java.model.airships.CivilAirship;
-import main.java.model.airships.InMemoryAirshipDatabase;
-import main.java.model.airships.MilitaryAirship;
-import main.java.model.users.InMemoryUserDatabase;
-import main.java.model.users.User;
+import main.java.cli.exceptions.InvalidArgumentException;
+import main.java.cli.exceptions.databaseexceptions.DatabaseException;
+import main.java.cli.model.airships.Airship;
+import main.java.cli.model.airships.AirshipPredicates;
+import main.java.cli.model.airships.CivilAirship;
+import main.java.cli.model.airships.InMemoryAirshipsDatabase;
+import main.java.cli.model.airships.MilitaryAirship;
+import main.java.cli.model.users.InMemoryUsersDatabase;
+import main.java.cli.model.users.User;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class InMemoryDatabase_Tests {
-
-	InMemoryUserDatabase userDatabase;
-	private InMemoryAirshipDatabase airshipDatabase;
-	private Airship airship, airship2, airship3;
-	private User user, user2;
+  
+	InMemoryUsersDatabase userDatabase;
+	private InMemoryAirshipsDatabase airshipDatabase;
+	private Airship airship, airship2;
+	private User user;
 
 	// Before
-	
-	@Before
-	public void Before() {
 
-		// Arrange
-		userDatabase = new InMemoryUserDatabase();
-		airshipDatabase = new InMemoryAirshipDatabase();
-		airship = new MilitaryAirship(0, 0, 0, 10, 0, false);
-		user = new User("X", "P", "T@", "O");
+	@Before
+	public void Before() { 
+		try {
+
+			// Arrange
+			userDatabase = new InMemoryUsersDatabase("newUsersDataBase");
+
+			airshipDatabase = new InMemoryAirshipsDatabase(
+					"newAirshipsdataBase");
+
+			airship = new MilitaryAirship(0, 0, 0, 10, 0, false);
+			user = new User("X", "P", "T@", "O");
+
+		} catch (InvalidArgumentException e) { 
+			e.printStackTrace();
+		} 
+
 	}
 
 	// Test Normal Dinamic And Prerequisites
-	
+
 	@Test
 	public void shouldCreateInMemoryUserDatabaseWithAMasterUser() {
+		try {
+			// Arrange
+			User masterUser = new User("MASTER", "master", "master@master");
 
-		// Arrange
-		InMemoryUserDatabase userDatabase = new InMemoryUserDatabase();
-		User masterUser = new User("MASTER", "master", "master@gmail.com");
+			// Assert 
+			Assert.assertEquals(
+					userDatabase.getElementByIdentification("MASTER")
+							.toString(), masterUser.toString());
 
-		// Assert
-		Assert.assertEquals(userDatabase.getElementByIdentification("MASTER").toString(),
-				masterUser.toString());
-	}
+		} catch (InvalidArgumentException e) {
+			e.printStackTrace();
+		}
 
-	@Test
-	public void shouldAddAnElementToTheDatabase() {
-
-		// Assert
-		assertTrue(airshipDatabase.add(airship, user));
-		assertTrue(userDatabase.add(user, user));
-	}
-
-	@Test
-	public void shouldNotAddTheSameElemenToADatabase() {
-
-		// Act
-		airshipDatabase.add(airship, user);
-
-		// Assert
-		assertFalse(airshipDatabase.add(airship, user));
-	}
-
-	@Test
-	public void shouldRemoveAnElement() throws DatabaseException {
-
-		// Act
-		airshipDatabase.add(airship, user);
-
-		// Assert
-		assertTrue(airshipDatabase.remove(airship, user));
-	}
-
-	@Test
-	public void shouldNotRemoveAnElementThatDoesNotExist() throws DatabaseException {
-
-		// Assert
-		assertFalse(airshipDatabase.remove(airship, user));
-	}
-	
-	@Test
-	public void shouldGetAllAirshipsRegistedByTheSameUser() throws NoSuchElementInDatabaseException {
-
-		// Arrange
-		user2 = new User("daniel", "d", "@d");
-		airship2 = new MilitaryAirship(0, 0, 0, 10, 5, false);
-		airship3 = new CivilAirship(0, 0, 0, 10, 5, 20);
-		List<Airship> airships = new ArrayList<>();
-
-		// Act
-		airshipDatabase.add(airship, user);
-		airshipDatabase.add(airship2, user);
-		airshipDatabase.add(airship3, user2);
-
-		airships.add(airship);
-		airships.add(airship2);
-
-		// Assert
-		Assert.assertEquals(airshipDatabase.getAirshipsOfUser("X").toString(), airships.toString());
 	}
 
 	@Test
 	public void shouldGetAllAirshipsThatAreTransgressing() {
+		try {
+			// Arrange
+			airship2 = new MilitaryAirship(0, 0, 0, 10, 5, false);
+			List<Airship> airships = new ArrayList<>();
 
-		// Arrange
-		airship2 = new MilitaryAirship(0, 0, 0, 10, 5, false);
-		List<Airship> airships = new ArrayList<>();
+			// Act
+			airshipDatabase.add(airship, user);
+			airshipDatabase.add(airship2, user);
 
-		// Act
-		airshipDatabase.add(airship, user);
-		airshipDatabase.add(airship2, user);
+			airships.add(airship2);
 
-		airships.add(airship2);
+			// Assert
+			Assert.assertEquals(
+					airshipDatabase
+							.getAllElementsThat(
+									new AirshipPredicates.IsTrangressingItsAirCorridor())
+							.toString(), airships.toString());
 
-		// Assert
-		Assert.assertEquals(airshipDatabase
-				.getAirshipsThat(new AirshipPredicates.IsTransgressing()).toString(), airships
-				.toString());
+		} catch (InvalidArgumentException e) {
+			e.printStackTrace();
+		}
 	}
-
+	
 	@Test
 	public void shouldGetAllAirshipsThatVerifyHaveANumberOfPassengersBellowAThreshold() {
+ 
+		try {
+			// Arrange
+			airship2 = new CivilAirship(0, 0, 0, 10, 5, 100);
+			Airship airship3 = new CivilAirship(0, 0, 0, 10, 5, 2);
+			Airship airship4 = new CivilAirship(0, 0, 0, 10, 5, 200);
 
-		// Arrange
-		airship2 = new CivilAirship(0, 0, 0, 10, 5, 100);
-		Airship airship3 = new CivilAirship(0, 0, 0, 10, 5, 2);
-		Airship airship4 = new CivilAirship(0, 0, 0, 10, 5, 200);
+			InMemoryAirshipsDatabase airships = new InMemoryAirshipsDatabase(
+					"secondUsersDataBase");
 
-		List<Airship> airships = new ArrayList<>();
+			// Act
+			airshipDatabase.add(airship, user);
+			airshipDatabase.add(airship2, user);
+			airshipDatabase.add(airship3, user);
+			airshipDatabase.add(airship4, user);
 
-		// Act
-		airshipDatabase.add(airship, user);
-		airshipDatabase.add(airship2, user);
-		airshipDatabase.add(airship3, user);
-		airshipDatabase.add(airship4, user);
+			airships.add(airship3, user);
+			airships.add(airship2, user);
 
-		airships.add(airship2);
-		airships.add(airship3);
-
-		// Assert
-		Assert.assertEquals(
-				airshipDatabase.getAirshipsThat(
-						new AirshipPredicates.HasPassagersNumberBelowAThreshold(102)).toString(),
-				airships.toString());
+			// Assert
+			Assert.assertEquals(
+					airshipDatabase
+							.getAllElementsThat(
+									new AirshipPredicates.HasPassagersNumberBelowAThreshold(
+											102)).toString(), airships
+							.getAllElements().toString());
+		} catch (InvalidArgumentException e) {
+			e.printStackTrace();
+		}
 	}
-
-	// Test Exceptions
+ 
+	@Test
+	public void shouldNotRemoveAnUserBecauseTheUserIsNotRegistedIntoInMemoryUsersDatabase() throws DatabaseException, InvalidArgumentException {
+ 
+		Assert.assertFalse(userDatabase.removeByIdentification("pantunes"));
+		
+		
+	}
 	
-	@Test (expected = DatabaseException.class)
-	public void shouldThrowDatabaseExceptionWhenTryingToRemoveTheMasterUserFromAUserDatabase()
-			throws DatabaseException {
+	@Test
+	public void shouldRemoveAnUserInTheInMemoryUsersDatabase() throws DatabaseException, InvalidArgumentException {
+ 
+		User pantunes = new User("pantunes","pass","pantunes@gmai.com");
+		userDatabase.add(pantunes, user);
+		Assert.assertTrue(userDatabase.removeByIdentification("pantunes"));
+		
+		
+	} 
+	
+	@Test
+	public void shouldNotAddAnAirshipBecauseThisAirShipIsAlreadyRegistedIntoInMemoryAirshipsDatabase() throws DatabaseException, InvalidArgumentException {
+ 
+		Assert.assertTrue(airshipDatabase.add(airship, user));
+		Assert.assertFalse(airshipDatabase.add(airship, user));
+		
+		   
+	}  
+	
+	// Test Exceptions
 
-		// Assert
-		userDatabase.remove(new User("MASTER", "master", "master@gmail.com"), user);
+	@Test(expected = DatabaseException.class)
+	
+	public void shouldThrowDatabaseExceptionWhenTryingToRemoveTheMasterUserFromAUserDatabase() 
+			throws DatabaseException, InvalidArgumentException {
+	
+			// Assert
+
+			userDatabase.removeByIdentification("MASTER");
+
 	}
+	
+	@Test(expected = InvalidArgumentException.class)
+	public void shouldThrowInvalidArgumentExceptionWhenTryToGetAnElementByIdentificationGivingNullIdenfitication() 
+			throws InvalidArgumentException {
 
-	@Test (expected = IllegalArgumentException.class)
-	public void shouldThrowIllegalArgumentExceptionWhenTryingToAddNullElementsToADatabase() {
+			// Assert
+ 
+			userDatabase.getElementByIdentification( null );
 
-		// Assert
-		airshipDatabase.add(null, user);
-	}
 
-	@Test (expected = IllegalArgumentException.class)
-	public void shouldThrowIllegalArgumentExceptionWhenTryingToAddElementsToADatabaseGivenNullUser() {
+	} 
+	
+	@Test(expected = InvalidArgumentException.class)
+	public void shouldThrowInvalidArgumentExceptionWhenTryToCreateAnInMemoryUsersDatabaseWythNullDatabaseName() 
+			throws InvalidArgumentException {
 
-		// Assert
+			// Assert
+			userDatabase = new InMemoryUsersDatabase(null) ; 
+	} 
+	
+	@Test(expected = InvalidArgumentException.class)
+	public void shouldThrowInvalidArgumentExceptionWhenTryToGetAllElementsUsingAnNullPredicate() 
+			throws InvalidArgumentException {
+
+			// Assert
+		airshipDatabase.getAllElementsThat(null);
+	}  
+	
+	@Test(expected = InvalidArgumentException.class)
+	public void shouldThrowInvalidArgumentExceptionWhenTryToRemoveAnElementGivingANullIdentification() 
+			throws InvalidArgumentException, DatabaseException {
+
+			// Assert
+		airshipDatabase.removeByIdentification(null);
+	} 
+	 
+	@Test(expected = InvalidArgumentException.class)
+	public void shouldThrowInvalidArgumentExceptionWhenTryToAddAnAirshipGivingANullUser() 
+			throws InvalidArgumentException {
+ 
+			// Assert
 		airshipDatabase.add(airship, null);
-	}
+	} 
+	
+	@Test(expected = InvalidArgumentException.class)
+	public void shouldThrowInvalidArgumentExceptionWhenTryToAddAnAirshipGivingANullAirship() 
+			throws InvalidArgumentException {
 
-	@Test (expected = NoSuchElementInDatabaseException.class)
-	public void shouldThrowNoSuchElementInDatabaseExceptionWhenTryingToGetTheAirshipsOfAUserThatDidNotRegistedAnyAirship()
-			throws NoSuchElementInDatabaseException {
-
-		// Arrange
-		airship2 = new MilitaryAirship(0, 0, 0, 10, 5, false);
-		List<Airship> airships = new ArrayList<>();
-
-		// Act
-		airshipDatabase.add(airship, user);
-		airshipDatabase.add(airship2, user);
-
-		airships.add(airship);
-		airships.add(airship2);
-
-		// Assert
-		airshipDatabase.getAirshipsOfUser("Daniel");
-	}
-
-	@Test (expected = IllegalArgumentException.class)
-	public void shouldThrowIllegalArgumentExceptionWhenTryingToRemoveNullElementsFromADatabase()
-			throws DatabaseException {
-
-		// Assert
-		airshipDatabase.remove(null, user);
-	}
+			// Assert
+		airshipDatabase.add(null,user);
+	} 
+	
 }

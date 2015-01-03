@@ -16,10 +16,10 @@ public class User implements Element
 	// Instance Fields
 	
 	private final String username;
-	private final String password;
+	private String password;
 	private final String email;
 	private final String fullName;
-	
+	 
 	// Constructors
 	
 	/**
@@ -38,25 +38,24 @@ public class User implements Element
 	 *             name given are {@code null} or the empty string (""); if the
 	 *             given email has no '@' or has more than one '@'.
 	 */
-	public User( String username, String password, String email, String fullName )
-			throws InvalidArgumentException {
-		
-		if( username == null || username.equals( "" ) )
-			throw new InvalidArgumentException( "Invalid username." );
-		else this.username = username;
-		
-		if( password == null || password.equals( "" ) )
-			throw new InvalidArgumentException( "Invalid password." );
-		else this.password = password;
-		
-		if( email == null || email.equals( "" ) || !hasOneAT( email ) )
-			throw new InvalidArgumentException( "Invalid email." );
-		else this.email = email;
-		
-		if( fullName == null )
-			throw new InvalidArgumentException( "Invalid full name for user." );
+	public User(String username, String password, String email, String fullName) throws InvalidArgumentException {
+		  
+		if (username == null || username.equals(""))
+			throw new InvalidArgumentException("Invalid username");
+
+		if (password == null || password.equals(""))
+			throw new InvalidArgumentException("Invalid password");
+
+		if (email == null || email.equals("") || !hasOneAT(email))
+			throw new InvalidArgumentException("Invalid email");
+
+		if (fullName == null)
+			throw new InvalidArgumentException("Invalid fullname");
+
+		this.username = username;
+		this.password = password;
+		this.email = email;
 		this.fullName = fullName;
-		
 	}
 	
 	/**
@@ -124,45 +123,41 @@ public class User implements Element
 		result.append( username ).append( ", password: " ).append( password )
 				.append( ", email: " ).append( email );
 		
-		return fullName.equals( "" ) ? result.toString() : result
+		return fullName.equals( "" ) ? result.append("\n").toString() : result
 				.append( ", fullName: " ).append( fullName ).append("\n").toString();
 	}
 	
+	public String toStringWithoutPassword() {
+
+		StringBuilder result = new StringBuilder("username: ");
+
+		result.append(username).append(", email: ").append(email);
+ 
+		return fullName.equals("") ? result.append("\n").toString() : result.append(", fullName: ")
+				.append(fullName).append("\n").toString(); 
+	}
+		
 	/**
 	 * Override of the {@code equals} method from the {@link Object} class.
 	 */
 	@Override
-	public boolean equals( Object obj ) {
-		
-		if( this == obj )
+	public boolean equals(Object obj) {
+
+		if (this == obj)
 			return true;
-		
-		if( obj == null )
+
+		if (obj == null)
 			return false;
-		
-		if( getClass() != obj.getClass() )
+
+		if (!(obj instanceof User))
 			return false;
-		
-		if( email == null )
-		{
-			if( ((User)obj).email != null )
-				return false;
-			
-		}
-		else
-			if( !email.equals( ((User)obj).email ) )
-				return false;
-		
-		if( username == null )
-		{
-			if( ((User)obj).username != null )
-				return false;
-			
-		}
-		else
-			if( !username.equals( ((User)obj).username ) )
-				return false;
-		
+
+		if (!email.equals(((User) obj).email))
+			return false;
+
+		if (!username.equals(((User) obj).username))
+			return false;
+
 		return true;
 	}
 	
@@ -196,4 +191,27 @@ public class User implements Element
 	{
 		return fullName;
 	}
+ 
+	/**
+	 * 
+	 * Change the User {@code password} 
+	 * 
+	 * @param newPassword - The new User password. 
+	 */
+	public boolean changePassword(String newPassword , String oldPassword){
+	
+		if( this.authenticatePassword(oldPassword))  { 
+					
+			this.password = newPassword;
+			
+				return true;
+	
+			}
+		
+		return false;
+	}
+
+
+
+
 }

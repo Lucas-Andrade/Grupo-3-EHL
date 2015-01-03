@@ -1,23 +1,26 @@
 package test.java.model;
 
-import main.java.model.users.User;
+import main.java.cli.exceptions.InvalidArgumentException;
+import main.java.cli.model.airships.Airship;
+import main.java.cli.model.airships.MilitaryAirship;
+import main.java.cli.model.users.User;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class UserTest {
-	
+	 
 	User user1, user2;
-
+ 
 	@Before
 	
-	public void BeforeTests(){
-		
+	public void BeforeTests() throws InvalidArgumentException{
+
 		user1 = new User("Pedro","pass","pedro@gmail.com","Pedro Antunes");
 		user2 = new User("Gonçalo","pass2","Gonçalo@gmail.com");
-	
-	}
+	 	 
+	}  
 	
 	@Test
 	
@@ -26,17 +29,23 @@ public class UserTest {
 		Assert.assertTrue(user1.getIdentification().equals("Pedro"));
 		Assert.assertTrue(user2.getIdentification().equals("Gonçalo"));
 
-	}
-	 
-	@Test
+	}  
+	  
+	@Test 
 	
-	public void ShouldReturnAString(){
+	public void ShouldReturnAStringWithAllTheInformation(){
 		
-		Assert.assertTrue(user1.toString().equals("username: Pedro, password: pass, email: pedro@gmail.com, fullName: Pedro Antunes"));
-		Assert.assertTrue(user2.toString().equals("username: Gonçalo, password: pass2, email: Gonçalo@gmail.com"));
+		Assert.assertTrue(user1.toString().equals("username: Pedro, password: pass, email: pedro@gmail.com, fullName: Pedro Antunes\n"));
+		
+	}
+	
+	@Test
+	public void ShouldReturnAStringWithAllTheInformationExceptFullname() {
+
+		Assert.assertTrue(user2.toString().equals("username: Gonçalo, password: pass2, email: Gonçalo@gmail.com\n"));
 
 	}
-	
+
 	@Test
 	
 	public void ShouldReturnUsername(){
@@ -44,7 +53,23 @@ public class UserTest {
 		Assert.assertTrue(user1.getIdentification().equals("Pedro"));
 		Assert.assertTrue(user2.getIdentification().equals("Gonçalo"));
 	}
+	@Test 
+	public void ShouldReturnTheUserFullname(){
 		
+		Assert.assertEquals("Pedro Antunes",user1.getFullName());
+		
+	}
+
+	
+	@Test 
+	
+	public void ShouldReturnAnUserEmail(){
+		
+		
+		Assert.assertEquals("pedro@gmail.com",user1.getEmail());
+		
+	}
+	
 	@Test
 
 	public void ShouldAnUserBeInstanceOfUserClass(){
@@ -56,7 +81,7 @@ public class UserTest {
 	
 	@Test
 	
-	public void VerifyIfUsersAreEquals(){
+	public void VerifyIfUsersAreEquals() throws InvalidArgumentException{
 		
 		Assert.assertTrue(user1.equals(new User("Pedro","pass","pedro@gmail.com","Pedro Antunes")));
 		Assert.assertFalse(user1.equals(user2)); 
@@ -65,7 +90,7 @@ public class UserTest {
  
 	@Test 
 	
-	public void VerifyIfUsersHasDiferentsUsernames(){
+	public void VerifyIfUsersHasDiferentsUsernames() throws InvalidArgumentException{
 		
 		Assert.assertFalse(user1.equals(new User("Gonçalo","pass","pedro@gmail.com","Pedro Antunes")));
 	
@@ -73,77 +98,141 @@ public class UserTest {
 	
 	@Test
 	
-	public void VerifyIfUsersHasDiferentsEmails(){
+	public void VerifyIfUsersHasDiferentsEmails() throws InvalidArgumentException{
 		
 		Assert.assertFalse(user1.equals(new User("Pedro","pass","Gonçalo@gmail.com","Pedro Antunes")));
 
  
 	} 
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test
+	
+	public void ShouldChangeTheUserPassword(){
 
-	public void ShouldThrowIllegalArgumentExceptionWhenUsernameIsNull(){
+		Assert.assertTrue(user1.changePassword("newpass", "pass"));
+		 
+	}
+	
+	@Test
+	
+	public void ShouldNotChangeTheUserPassword(){
+
+		Assert.assertFalse(user1.changePassword("newpass", "password"));
+		 
+	} 
+  
+	@Test 
+	
+	public void ShouldReturnAStringWithoutPasswordButWithAnFullname(){
+		
+		Assert.assertEquals("username: Pedro, email: pedro@gmail.com, fullName: Pedro Antunes\n",user1.toStringWithoutPassword());
+
+	}
+	
+	@Test
+	
+	public void ShouldReturnAStringWithoutPasswordButWithoutAnFullname(){
+		
+		
+		Assert.assertEquals("username: Gonçalo, email: Gonçalo@gmail.com\n",user2.toStringWithoutPassword());
+ 
+		
+	} 
+	
+	@Test
+	
+	public void ShouldAuthenticatePassword(){
+		
+		Assert.assertTrue(user1.authenticatePassword("pass"));
+		
+	}
+	
+	@Test
+	
+	public void ShouldNotAuthenticatePassword(){
+		
+		Assert.assertFalse(user1.authenticatePassword("password"));
+		
+	}
+		
+	@Test(expected=InvalidArgumentException.class)
+
+	public void ShouldThrowInvalidArgumentExceptionWhenUsernameIsNull() throws InvalidArgumentException{
 	
 		new User(null,"pass","pantunes@gmail.com","Pantunes da Silva Pantunes");
 	} 
 
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=InvalidArgumentException.class)
 
-	public void ShouldThrowIllegalArgumentExceptionWhenPasswordIsNull(){
+	public void ShouldThrowInvalidArgumentExceptionWhenPasswordIsNull() throws InvalidArgumentException{
 	
 		new User("Pantunes",null,"pantunes@gmail.com","Pantunes da Silva Pantunes");
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=InvalidArgumentException.class)
 
-	public void ShouldThrowIllegalArgumentExceptionWhenEmailIsNull(){
+	public void ShouldThrowInvalidArgumentExceptionWhenEmailIsNull() throws InvalidArgumentException{
 	
 		new User("Pantunes","pass",null,"Pantunes da Silva Pantunes");
 	}
 			
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=InvalidArgumentException.class)
 
-	public void ShouldThrowIllegalArgumentExceptionWhenEmailDoesntHaveAt(){
+	public void ShouldThrowInvalidArgumentExceptionWhenEmailDoesntHaveAt() throws InvalidArgumentException{
 
 		new User("Pantunes","pass","pantunesgmail.com","Pantunes da Silva Pantunes");
 
 	}
 
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=InvalidArgumentException.class)
 
-	public void ShouldThrowIllegalArgumentExceptionWhenEmailDoesntHaveOnlyOneAt(){
+	public void ShouldThrowInvalidArgumentExceptionWhenEmailDoesntHaveOnlyOneAt() throws InvalidArgumentException{
 		
 		new User("Pantunes","pass","pant@unes@gmail.com","Pantunes da Silva Pantunes");
-	}
+	} 
+	 
+	@Test(expected=InvalidArgumentException.class)
 	
-	@Test(expected=IllegalArgumentException.class)
-	
-	public void ShouldThrowIllegalArgumentExceptionWhenFullnameIsNull(){
+	public void ShouldThrowInvalidArgumentExceptionWhenFullnameIsNull() throws InvalidArgumentException{
 		
 		new User("pantunes","pass","pantunes@gmail.com",null);
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=InvalidArgumentException.class)
 
-	public void ShouldThrowIllegalArgumentExceptionWhenUsernameIsAnEmptyString(){
+	public void ShouldThrowInvalidArgumentExceptionWhenUsernameIsAnEmptyString() throws InvalidArgumentException {
 		
 		new User("","pass","pantunes@gmail.com","Pantunes da Silva Pantunes");
 
-	}
+	} 
+ 
+	@Test(expected=InvalidArgumentException.class)
 
-	@Test(expected=IllegalArgumentException.class)
-
-	public void ShouldThrowIllegalArgumentExceptionWhenPasswordIsAnEmptyString(){
+	public void ShouldThrowInvalidArgumentExceptionWhenPasswordIsAnEmptyString() throws InvalidArgumentException{
 		
 		new User("pantunes","","pantunes@gmail.com","Pantunes da Silva Pantunes");
 
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected=InvalidArgumentException.class)
 
-	public void ShouldThrowIllegalArgumentExceptionWhenEmailIsAnEmptyString(){
+	public void ShouldThrowInvalidArgumentExceptionWhenEmailIsAnEmptyString() throws InvalidArgumentException{
 		
 		new User("pantunes","password","","Pantunes da Silva Pantunes");
 
-	}
+	} 
+	 
+	@Test 
+	
+	public void OnlyBecauseIWant100PercentCoverage() throws InvalidArgumentException{
+		
+		Airship airship = new MilitaryAirship(0, 0, 0, 10, 0, false);
+		Assert.assertFalse(user1.equals(null)); 
+		Assert.assertTrue(user1.equals(user1));
+		Assert.assertFalse(user1.equals(airship));  
+ 
+	} 
+
+	
+	
 }

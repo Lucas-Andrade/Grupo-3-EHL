@@ -38,6 +38,7 @@ public final class StringsDictionary
 	public static final String LATITUDE = "latitude";
 	public static final String LONGITUDE = "longitude";
 	public static final String NUMBEROFPASSENGERS = "nbPassengers";
+	public static final String NUMBEROFAIRSHIPSTOFIND = "nbAirships"; 
 	
 	// AIRSHIP RELATED. AIRSHIPS TYPE
 	// beware!!! changes in these fields values affect invocations by reflection
@@ -52,6 +53,8 @@ public final class StringsDictionary
 	public static final String FULLNAME = "fullname";
 	public static final String LOGINNAME = "loginName";
 	public static final String LOGINPASSWORD = "loginPassword";
+	public static final String NEWPASSWORD = "newPassword";
+	public static final String OLDPASSWORD = "oldPassword";
 	public static final String PASSWORD = "password";
 	public static final String USERNAME = "username"; // also a placeholder
 	

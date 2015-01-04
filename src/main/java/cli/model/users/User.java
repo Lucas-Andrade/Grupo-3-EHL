@@ -197,9 +197,14 @@ public class User implements Element
 	 * Change the User {@code password} 
 	 * 
 	 * @param newPassword - The new User password. 
+	 * @throws InvalidArgumentException 
 	 */
-	public boolean changePassword(String newPassword , String oldPassword){
-	
+	public boolean changePassword(String newPassword , String oldPassword) throws InvalidArgumentException{
+		
+		if (newPassword == null || newPassword.equals(""))
+			throw new InvalidArgumentException("Invalid new password");
+		
+			
 		if( this.authenticatePassword(oldPassword))  { 
 					
 			this.password = newPassword;

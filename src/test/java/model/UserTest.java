@@ -107,7 +107,7 @@ public class UserTest {
 	
 	@Test
 	
-	public void ShouldChangeTheUserPassword(){
+	public void ShouldChangeTheUserPassword() throws InvalidArgumentException{
 
 		Assert.assertTrue(user1.changePassword("newpass", "pass"));
 		 
@@ -115,7 +115,7 @@ public class UserTest {
 	
 	@Test
 	
-	public void ShouldNotChangeTheUserPassword(){
+	public void ShouldNotChangeTheUserPassword() throws InvalidArgumentException{
 
 		Assert.assertFalse(user1.changePassword("newpass", "password"));
 		 
@@ -219,6 +219,22 @@ public class UserTest {
 	public void ShouldThrowInvalidArgumentExceptionWhenEmailIsAnEmptyString() throws InvalidArgumentException{
 		
 		new User("pantunes","password","","Pantunes da Silva Pantunes");
+
+	} 
+	
+	
+	@Test(expected=InvalidArgumentException.class)
+
+	public void ShouldThrowInvalidArgumentExceptionWhenTryingToChangeThePasswordGivingANull() throws InvalidArgumentException{
+		
+		user1.changePassword(null, "pass");
+
+	} 
+	@Test(expected=InvalidArgumentException.class)
+
+	public void ShouldThrowInvalidArgumentExceptionWhenTryingToChangeThePasswordGivingAStringWithoutCharacters() throws InvalidArgumentException{
+		
+		user1.changePassword("", "pass");
 
 	} 
 	 

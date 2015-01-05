@@ -7,7 +7,7 @@ import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 
-public class DeleteAirshipCommand implements Callable<Optional<Airship>> {
+public class DeleteAirshipCommand implements Callable<String> {
 
 	private final InMemoryAirshipsDatabase database;
 	
@@ -28,10 +28,11 @@ public class DeleteAirshipCommand implements Callable<Optional<Airship>> {
 	}
 
 	@Override
-	public Optional<Airship> call() throws Exception {
+	public String call() throws Exception {
 
-		
-		// TODO Auto-generated method stub
-		return null;
+		if(database.removeByIdentification(identification))
+			return "Airship successfully removed";
+
+		return "Airship doesn't exist in the database";
 	}
 }

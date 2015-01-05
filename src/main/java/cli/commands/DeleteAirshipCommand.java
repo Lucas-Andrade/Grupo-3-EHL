@@ -1,8 +1,8 @@
 package main.java.cli.commands;
 
 import java.util.concurrent.Callable;
-
 import main.java.cli.exceptions.InvalidArgumentException;
+import main.java.cli.exceptions.databaseexceptions.DatabaseException;
 import main.java.cli.model.Database;
 import main.java.cli.model.airships.Airship;
 
@@ -26,11 +26,18 @@ public class DeleteAirshipCommand implements Callable<String> {
 		this.identification = identification;
 	}
 
+	
 	@Override
-	public String call() throws Exception {
+	public String call() throws DatabaseException {
 
-		if(airshipDatabase.removeByIdentification(identification))
-			return "Airship successfully removed";
+		try
+		{
+			if(airshipDatabase.removeByIdentification(identification))
+				return "Airship successfully removed";
+		}
+		catch( InvalidArgumentException e )
+		{//never happens because identification is non null
+		}
 
 		return "Airship doesn't exist in the database";
 	}

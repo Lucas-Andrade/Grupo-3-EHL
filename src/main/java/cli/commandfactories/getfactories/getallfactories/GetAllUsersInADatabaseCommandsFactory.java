@@ -2,14 +2,14 @@ package main.java.cli.commandfactories.getfactories.getallfactories;
 
 
 import java.util.concurrent.Callable;
-import main.java.cli.commandfactories.CallablesFactory;
+import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.Database;
 import main.java.cli.model.users.User;
 
 
 /**
- * A {@link CallablesFactory factory} that creates commands to get all the users
+ * A {@link StringsToCommandsFactory factory} that creates commands to get all the users
  * in an users database. Commands are {@link Callable} instances.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes

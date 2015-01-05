@@ -1,10 +1,8 @@
 package main.java.cli.commandfactories.getfactories;
 
 import java.util.concurrent.Callable;
-
 import main.java.cli.Optional;
 import main.java.cli.StringsDictionary;
-import main.java.cli.commandfactories.CallablesFactory;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.commands.getcommands.GetTheNearestAirshipsOfTheGeographicCoordinateCommand;
 import main.java.cli.exceptions.InvalidArgumentException;
@@ -14,7 +12,7 @@ import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 
 /**
- * Class whose instances are {@link CallablesFactory factories} that produce
+ * Class whose instances are {@link StringsToCommandsFactory factories} that produce
  * commands of type {@link GetTheNearestAirshipsOfTheGeograficCoordinateCommand}
  * . Commands are {@link Callable} instances.
  * 

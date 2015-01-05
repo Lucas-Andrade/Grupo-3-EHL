@@ -4,7 +4,6 @@ package main.java.cli.commandfactories.userauthenticatingfactories.patchfactorie
 import java.util.concurrent.Callable;
 import main.java.cli.Optional;
 import main.java.cli.StringsDictionary;
-import main.java.cli.commandfactories.CallablesFactory;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.commands.patchcommands.PatchUserPasswordCommand;
 import main.java.cli.exceptions.InvalidArgumentException;
@@ -14,7 +13,7 @@ import main.java.cli.model.users.User;
 
 
 /**
- * Class whose instances are {@link CallablesFactory factories} that produce a
+ * Class whose instances are {@link StringsToCommandsFactory factories} that produce a
  * command of type {@link PatchUserPasswordCommands}. Commands are
  * {@link Callable} instances. This class extends
  * {@link StringsToCommandsFactory}

@@ -3,14 +3,14 @@ package main.java.cli.commandfactories.getfactories.getbyidfactories;
 
 import java.util.concurrent.Callable;
 import main.java.cli.StringsDictionary;
-import main.java.cli.commandfactories.CallablesFactory;
+import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.Database;
 import main.java.cli.model.airships.Airship;
 
 
 /**
- * A {@link CallablesFactory factory} that creates commands to get an airship
+ * A {@link StringsToCommandsFactory factory} that creates commands to get an airship
  * with a certain flightId from an airship database. Commands are
  * {@link Callable} instances.
  * 

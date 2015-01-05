@@ -54,7 +54,7 @@ public interface Database< T extends Element >
 	 * @throws DatabaseException
 	 *             If performing a forbidden operation in a database.
 	 * @throws InvalidArgumentException
-	 *             If {@code element==null}.
+	 *             If {@code identification==null}.
 	 */
 	public boolean removeByIdentification( String identification )
 			throws DatabaseException, InvalidArgumentException;

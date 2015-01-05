@@ -6,7 +6,6 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.StringsDictionary;
-import main.java.cli.commandfactories.CallablesFactory;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.commandfactories.userauthenticatingfactories.UserAuthenticatingFactory;
 import main.java.cli.commands.postcommands.PostCivilAirshipCommand;
@@ -21,7 +20,7 @@ import main.java.cli.model.users.User;
 
 
 /**
- * Class whose instances are {@link CallablesFactory factories} that produce
+ * Class whose instances are {@link StringsToCommandsFactory factories} that produce
  * commands that post airships. Commands are {@link Callable} instances.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes

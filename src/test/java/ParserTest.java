@@ -1,6 +1,8 @@
-package main.java.cli;
+package test.java;
 
 
+import main.java.cli.CommandParser;
+import main.java.cli.Parser;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.exceptions.commandparserexceptions.DuplicateParametersException;
 import main.java.cli.exceptions.commandparserexceptions.InvalidCommandParametersSyntaxException;

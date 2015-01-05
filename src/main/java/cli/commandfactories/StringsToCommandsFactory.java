@@ -2,7 +2,6 @@ package main.java.cli.commandfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import main.java.cli.exceptions.InternalErrorException;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
@@ -30,7 +29,6 @@ import main.java.cli.exceptions.factoryexceptions.WrongLoginPasswordException;
  * @see Map
  */
 public abstract class StringsToCommandsFactory< R >
-	implements CallablesFactory< R, String, String >
 {
 
 	// INSTANCE FIELDS

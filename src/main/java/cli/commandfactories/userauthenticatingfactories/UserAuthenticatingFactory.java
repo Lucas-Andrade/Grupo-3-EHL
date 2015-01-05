@@ -3,7 +3,6 @@ package main.java.cli.commandfactories.userauthenticatingfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import main.java.cli.StringsDictionary;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.exceptions.InternalErrorException;
@@ -107,14 +106,21 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
 	 * It starts by authenticating the password of the user who is posting (both
 	 * user and password are expected in the parameters map) and returns a
 	 * {@link Callable} instance ready to be called.
-	 * @throws InternalErrorException 
-	 * @throws InvalidParameterValueException 
-	 * @throws MissingRequiredParameterException 
-	 * @throws NoSuchElementInDatabaseException 
-	 * @throws WrongLoginPasswordException 
+	 * 
+	 * @throws InternalErrorException
+	 * @throws InvalidParameterValueException
+	 * @throws MissingRequiredParameterException
+	 * @throws NoSuchElementInDatabaseException
+	 * @throws WrongLoginPasswordException
+	 * @throws InvalidArgumentException
+	 * @see {@link #internalInternalNewInstance(User)} for more information on
+	 *      the exceptions thrown.
 	 */
-	protected final Callable< R > internalNewInstance() throws MissingRequiredParameterException, InvalidParameterValueException, InternalErrorException, NoSuchElementInDatabaseException, WrongLoginPasswordException
-			 {
+	protected final Callable< R > internalNewInstance()
+			throws MissingRequiredParameterException,
+			InvalidParameterValueException, InternalErrorException,
+			NoSuchElementInDatabaseException, WrongLoginPasswordException,
+			InvalidArgumentException {
 		
 		loginName = getParameterAsString( StringsDictionary.LOGINNAME );
 		loginPassword = getParameterAsString( StringsDictionary.LOGINPASSWORD );
@@ -164,11 +170,16 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
 	 *             parameters for instantiating the command.
 	 * @throws InvalidParameterValueException
 	 *             If the received value for a required parameter was invalid.
-	 * @throws Exception 
+	 * @throws InvalidArgumentException
+	 *             If the received value for a required parameter was invalid.
+	 * @throws NoSuchElementInDatabaseException
+	 *             If an element expected to be in a certain database was not
+	 *             found in it.
 	 */
 	protected abstract Callable< R > internalInternalNewInstance(
 			User userWhoIsPosting ) throws InternalErrorException,
-			MissingRequiredParameterException, InvalidParameterValueException;
+			MissingRequiredParameterException, InvalidParameterValueException,
+			NoSuchElementInDatabaseException, InvalidArgumentException;
 	
 	/**
 	 * Returns an array of {@link String}s that has the names of the parameters

@@ -3,7 +3,6 @@ package main.java.cli.commandfactories.getfactories.getallfactories;
 
 import java.util.concurrent.Callable;
 import main.java.cli.Optional;
-import main.java.cli.commandfactories.CallablesFactory;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.commands.getcommands.GetAllElementsInADatabaseCommand;
 import main.java.cli.exceptions.InvalidArgumentException;
@@ -12,7 +11,7 @@ import main.java.cli.model.Element;
 
 
 /**
- * Abstract class whose subclasses' instances are {@link CallablesFactory
+ * Abstract class whose subclasses' instances are {@link StringsToCommandsFactory
  * factories} that produce commands of type
  * {@link GetAllElementsInADatabaseCommand}. Commands are {@link Callable}
  * instances.

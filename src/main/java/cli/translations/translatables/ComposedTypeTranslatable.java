@@ -10,27 +10,24 @@ package main.java.cli.translations.translatables;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class ComposedTypeTranslatable implements
-		Translatable<Translatable<?>[]>
+		Translatable< Translatable< ? >[] >
 {
+	
 	private final String tag;
-	private final Translatable<?>[] propertyBag;
-
-	public ComposedTypeTranslatable( String tag,
-			Translatable<?>[] propertyBag )
-	{
+	private final Translatable< ? >[] propertyBag;
+	
+	public ComposedTypeTranslatable( String tag, Translatable< ? >[] propertyBag ) {
 		this.tag = tag;
 		this.propertyBag = propertyBag;
 	}
-
+	
 	@Override
-	public String getTag()
-	{
+	public String getTag() {
 		return tag;
 	}
-
+	
 	@Override
-	public Translatable<?>[] getPropertiesBag()
-	{
+	public Translatable< ? >[] getPropertiesBag() {
 		return propertyBag;
 	}
 }

@@ -75,8 +75,8 @@ public class GetAllTransgressorAirshipsCommandsFactory extends
 	}
 	
 	/**
-	 * Returns an array of strings with name of the parameters needed to produce
-	 * the command: {@code null} because factories of this type need no
+	 * Returns an array of strings with the name of the parameters needed to
+	 * produce the command: {@code null} because factories of this type need no
 	 * parameters to create their commands.
 	 * 
 	 * @return {@code null}.

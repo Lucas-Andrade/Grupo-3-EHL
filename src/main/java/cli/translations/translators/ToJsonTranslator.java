@@ -1,29 +1,12 @@
 package main.java.cli.translations.translators;
 
-import main.java.cli.translations.translatables.ComposedTypeTranslatable;
-import main.java.cli.translations.translatables.MapTypeTranslatable;
-import main.java.cli.translations.translatables.SimpleTypeTranslatable;
+import main.java.cli.translations.translatables.Translatable;
 
 public class ToJsonTranslator implements Translator
 {
 
 	@Override
-	public String encode( SimpleTypeTranslatable simpleType )
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String encode( ComposedTypeTranslatable composedType )
-	{
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String encode( MapTypeTranslatable mapType )
-	{
+	public String encode( Translatable translatable ) {
 		// TODO Auto-generated method stub
 		return null;
 	}

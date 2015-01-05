@@ -3,6 +3,7 @@ package main.java.cli;
 
 import java.util.Scanner;
 import java.util.concurrent.Callable;
+import main.java.cli.commandfactories.HelpCommandsFactory;
 import main.java.cli.commandfactories.getfactories.CheckIfAirshipIsTransgressingCommandsFactory;
 import main.java.cli.commandfactories.getfactories.GetAirshipsOfOwnerCommandsFactory;
 import main.java.cli.commandfactories.getfactories.GetAirshipsWithLessPassengersThanCommandsFactory;
@@ -11,8 +12,9 @@ import main.java.cli.commandfactories.getfactories.getallfactories.GetAllAirship
 import main.java.cli.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
 import main.java.cli.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory;
 import main.java.cli.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
-import main.java.cli.commandfactories.postfactories.PostAirshipCommandsFactory;
-import main.java.cli.commandfactories.postfactories.PostUserCommandsFactory;
+import main.java.cli.commandfactories.getfactories.GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory;
+import main.java.cli.commandfactories.userauthenticatingfactories.postfactories.PostAirshipCommandsFactory;
+import main.java.cli.commandfactories.userauthenticatingfactories.postfactories.PostUserCommandsFactory;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.exceptions.commandparserexceptions.InvalidRegisterException;
 import main.java.cli.model.airships.AirCorridor;
@@ -53,11 +55,11 @@ import main.java.cli.model.users.User;
  * <li>"POST /airships/type latitude={@value}&longitude={@value}
  * &altitude={@value} &minAltitude={@value}&maxAltitude={@value}&
  * {@code airshipCharacteristic}={@value}&loginName={@value}&loginPassword={@value}
- * ={@value}&loginName={@value}&loginPassword={@value}" - create an
+ * ={@value}&loginName={@value}&loginPassword={@value} " - create an
  * {@link Airship} with the type {@code Civil} or {@code Military}. If the
  * type:={@code Civil}, {@code airshipCharacteristic}:= nbPassengers. If the
  * type:={@code Military}, {@code airshipCharacteristic}:== hasArmour -> (yes or
- * no).
+ * no).</li>
  * <ul>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -93,12 +95,12 @@ public class App
 		registerCommands();
 		
 		
-		// App's behavior if arguments are given in app's execution command
-		if( args.length !=0 )
+		// App's behavior if arguments are given when app starts
+		if( args.length != 0 )
 			execute( args );
 		
 		
-		// App's behavior if app is executed with no arguments
+		// App's behavior if app starts with no arguments
 		else
 		{
 			System.out.print( "> " );
@@ -106,7 +108,6 @@ public class App
 			
 			while( !input.equals( "EXIT" ) )
 			{
-				
 				execute( input.split( " " ) );
 				System.out.print( "\n> " );
 				input = scanner.nextLine();
@@ -120,13 +121,15 @@ public class App
 		
 		try
 		{
-			// Register Get Users
-			cmdParser.registerCommand( "GET", "/users",
-					new GetAllUsersInADatabaseCommandsFactory( usersDatabase ) );
-			cmdParser.registerCommand( "GET", "/users/{username}",
-					new GetUserByUsernameCommandsFactory( usersDatabase ) );
 			
-			// Register Get Airships
+			// DELETE
+			
+			// cmdParser.registerCommand( "DELETE", "/airships/{flightId}",
+			// new DeleteAirshipCommandsFactory( usersDatabase,
+			// airshipsDatabase ) );
+			
+			// GET /airships
+			
 			cmdParser.registerCommand( "GET", "/airships",
 					new GetAllAirshipsInADatabaseCommandsFactory(
 							airshipsDatabase ) );
@@ -146,14 +149,41 @@ public class App
 			cmdParser.registerCommand( "GET", "/airships/reports/{flightId}",
 					new CheckIfAirshipIsTransgressingCommandsFactory(
 							airshipsDatabase ) );
+			cmdParser
+					.registerCommand(
+							"GET",
+							"/airships/find",
+							new GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory(
+									airshipsDatabase ) );
 			
-			// Register Posts For Users
+			// GET /users
+			
+			cmdParser.registerCommand( "GET", "/users",
+					new GetAllUsersInADatabaseCommandsFactory( usersDatabase ) );
+			cmdParser.registerCommand( "GET", "/users/{username}",
+					new GetUserByUsernameCommandsFactory( usersDatabase ) );
+			
+			// OPTION
+			
+			cmdParser.registerCommand( "OPTION", "/", new HelpCommandsFactory(
+					cmdParser ) );
+			
+			// PATCH
+			
+			// cmdParser.registerCommand( "PATCH", "/users/{username}",
+			// new PatchUserCommandsFactory( usersDatabase, usersDatabase ));
+			
+			// cmdParser.registerCommand( "PATCH", "/airships/{flightId}",
+			// new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase
+			// ));
+			
+			// POST
+			
 			cmdParser
 					.registerCommand( "POST", "/users",
 							new PostUserCommandsFactory( usersDatabase,
 									usersDatabase ) );
 			
-			// Register Posts For Airships
 			cmdParser.registerCommand( "POST", "/airships/{type}",
 					new PostAirshipCommandsFactory( usersDatabase,
 							airshipsDatabase ) );
@@ -167,20 +197,28 @@ public class App
 		{// never happens cause usersDatabase and airshipsDatabase are not null
 			System.out.println( e.getMessage() );
 		}
+		
 	}
 	
-	//TODO
+	
+	// TODO
 	private static void execute( String[] args ) {
+		
 		try
 		{
-			Parser parser = new Parser(cmdParser, args);
-			Callable< ? > command = parser.getCommand( args );
+			Parser parser = new Parser( cmdParser, args );
+			Callable< ? > command = parser.getCommand();
+			// Translatable< ? > translatableOutput =
+			// ToTranslatableConversor.convert( command.call() );
+			// String result = getTranslator().encode(translatableOutput);
+			// parser.getStream().print(result);
 			System.out.println( command.call() );
-			//TODO
+			// TODO: has errors! must change Translatable,
+			// ToTranslatableConversor and Translator interfaces
 		}
 		catch( Exception e )
 		{
-			System.out.println(e.getMessage());
+			System.out.println( e.getMessage() );
 		}
 	}
 	

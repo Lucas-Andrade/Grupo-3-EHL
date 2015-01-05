@@ -27,7 +27,7 @@ import main.java.cli.exceptions.factoryexceptions.WrongLoginPasswordException;
  * A concrete string-command has the following syntax:
  * 
  * <pre>
- * {@literal<}string-command> -> {@literal<}method> {@literal<}path> [{@literal<}parameter-list>]
+ * {@literal<}string-command> -> {@literal<}method> {@literal<}path> [{@literal<}parameters-list>]
  *  
  *  {@literal<}method> -> GET | POST
  *  
@@ -39,8 +39,9 @@ import main.java.cli.exceptions.factoryexceptions.WrongLoginPasswordException;
  *  {@literal<}value> -> {@literal<}string>
  * </pre>
  * 
- * String-commands are string representations of {@link Callable} instances that
- * are able to perform some action through their method {@link Callable#call()}.
+ * String-commands are string representations of {@link Callable command}
+ * instances that are able to perform some action through their method
+ * {@link Callable#call()}.
  * <p>
  * String-commands are registered through method
  * {@link #registerCommand(String, String, StringsToCommandsFactory)

@@ -1,4 +1,4 @@
-package main.java.cli.commandfactories.postfactories;
+package main.java.cli.commandfactories.userauthenticatingfactories.postfactories;
 
 
 import java.util.Map;
@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 import main.java.cli.StringsDictionary;
 import main.java.cli.commandfactories.CallablesFactory;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
+import main.java.cli.commandfactories.userauthenticatingfactories.UserAuthenticatingFactory;
 import main.java.cli.commands.postcommands.PostUserCommand;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.Database;
@@ -18,7 +19,7 @@ import main.java.cli.model.users.User;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PostUserCommandsFactory extends PostCommandsFactory< User, String >
+public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, String >
 {
 	
 	// INSTANCE FIELDS
@@ -73,14 +74,14 @@ public class PostUserCommandsFactory extends PostCommandsFactory< User, String >
 	 * @return A command that posts a user.
 	 */
 	@Override
-	protected Callable< String > postsInternalNewInstance(User userWhoIsPosting) {
+	protected Callable< String > internalInternalNewInstance(User userWhoIsPosting) {
 		
 		getValuesOfTheParametersMap();
 		
 		try
 		{
 			return new PostUserCommand( username, password, email, fullName,
-					databaseWhereToPost, userWhoIsPosting );
+					theDatabase, userWhoIsPosting );
 		}
 		catch( InvalidArgumentException e )
 		{// never happens cause databaseWhereToPost is not null

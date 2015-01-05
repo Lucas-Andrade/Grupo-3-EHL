@@ -1,4 +1,4 @@
-package main.java.cli.commandfactories.postfactories;
+package main.java.cli.commandfactories.userauthenticatingfactories;
 
 
 import java.util.Map;
@@ -17,30 +17,34 @@ import main.java.cli.model.users.User;
 
 
 /**
- * Abstract base class for all "post commands" factories.
+ * Abstract base class for all factories that produce commands which change
+ * databases and, consequently, need to authenticate a user before creating a
+ * command. (e.g. post, patch and delete commands).
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  * @param <E>
- *            The type of the elements to be posted.
+ *            The type of the elements contained in the database which will be
+ *            changed.
  * @param <R>
  *            The type parameter of the {@link Callable} instance returned by
  *            the method {@link #internalNewInstance()}.
  */
-public abstract class PostCommandsFactory< E extends Element, R > extends
+public abstract class UserAuthenticatingFactory< E extends Element, R > extends
 		StringsToCommandsFactory< R >
 {
 	
 	// INSTANCE FIELDS
 	
 	/**
-	 * The users' database that stores the user who's posting.
+	 * The users database that stores the user who is making changes to
+	 * {@link #theDatabase}.
 	 */
-	private final Database< User > postingUsersDatabase;
+	private final Database< User > usersDatabase;
 	
 	/**
-	 * The database where to post the new element.
+	 * The database to suffer changes.
 	 */
-	protected final Database< E > databaseWhereToPost;
+	protected final Database< E > theDatabase;
 	
 	/**
 	 * The login name received in the parameters map.
@@ -61,28 +65,27 @@ public abstract class PostCommandsFactory< E extends Element, R > extends
 	 * 
 	 * @param commandsDescription
 	 *            A short description of the commands produced by this factory.
-	 * @param postingUsersDatabase
-	 *            The users database that stores the user who is posting.
-	 * @param postedElementsDatabase
-	 *            The database where to post the new element.
+	 * @param usersDatabase
+	 *            The users database that stores the user who is making changes
+	 *            to {@code theDatabase}.
+	 * @param theDatabase
+	 *            The database to suffer changes.
 	 * @throws InvalidArgumentException
-	 *             If either {@code commandsDescription},
-	 *             {@code postingUsersDatabase} or
-	 *             {@code postedElementsDatabase} are {@code null}.
+	 *             If either {@code commandsDescription}, {@code usersDatabase}
+	 *             or {@code theDatabase} are {@code null}.
 	 */
-	public PostCommandsFactory( String commandsDescription,
-			Database< User > postingUsersDatabase,
-			Database< E > postedElementsDatabase )
+	public UserAuthenticatingFactory( String commandsDescription,
+			Database< User > usersDatabase, Database< E > theDatabase )
 			throws InvalidArgumentException {
 		
 		super( commandsDescription );
 		
-		if( postingUsersDatabase == null || postedElementsDatabase == null )
+		if( usersDatabase == null || theDatabase == null )
 			throw new InvalidArgumentException(
 					"Cannot instantiate post factory with null databases." );
 		
-		this.postingUsersDatabase = postingUsersDatabase;
-		this.databaseWhereToPost = postedElementsDatabase;
+		this.usersDatabase = usersDatabase;
+		this.theDatabase = theDatabase;
 	}
 	
 	
@@ -90,7 +93,7 @@ public abstract class PostCommandsFactory< E extends Element, R > extends
 	// IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
 	
 	/**
-	 * Produces a post command.
+	 * Produces a command that changes databases.
 	 * <ul>
 	 * <li>
 	 * Sets the values of the fields {@link #loginName} and
@@ -105,24 +108,25 @@ public abstract class PostCommandsFactory< E extends Element, R > extends
 	 * {@link Callable} instance ready to be called.
 	 * 
 	 * @throws NoSuchElementInDatabaseException
-	 *             If there is no user in {@link #postingUsersDatabase} whose
-	 *             username is the login name receive in the parameters map. The
-	 *             message of this exception is <i>«{login name} not found in
+	 *             If there is no user in {@link #usersDatabase} whose username
+	 *             is the login name receive in the parameters map. The message
+	 *             of this exception is <i>«{login name} not found in
 	 *             {@code postingUsersDatabase.getDatabaseName()}»</i>.
 	 * @throws InternalErrorException
 	 *             If an internal error that wasn't supposed to happen happened.
 	 * @throws WrongLoginPasswordException
 	 *             If the login password received does not match the login
 	 *             username's password.
-	 * @throws InvalidParameterValueException 
+	 * @throws InvalidParameterValueException
 	 *             If the received value for a required parameter was invalid.
-	 * @throws MissingRequiredParameterException 
+	 * @throws MissingRequiredParameterException
 	 *             If the received map does not contain one of the required
 	 *             parameters for instantiating the command.
 	 */
 	protected final Callable< R > internalNewInstance()
 			throws NoSuchElementInDatabaseException, InternalErrorException,
-			WrongLoginPasswordException, MissingRequiredParameterException, InvalidParameterValueException {
+			WrongLoginPasswordException, MissingRequiredParameterException,
+			InvalidParameterValueException {
 		
 		loginName = getParameterAsString( StringsDictionary.LOGINNAME );
 		loginPassword = getParameterAsString( StringsDictionary.LOGINPASSWORD );
@@ -131,7 +135,7 @@ public abstract class PostCommandsFactory< E extends Element, R > extends
 		if( !user.authenticatePassword( loginPassword ) )
 			throw new WrongLoginPasswordException( loginName, loginPassword );
 		
-		return postsInternalNewInstance( user );
+		return internalInternalNewInstance( user );
 	};
 	
 	/**
@@ -173,7 +177,7 @@ public abstract class PostCommandsFactory< E extends Element, R > extends
 	 * @throws InvalidParameterValueException
 	 *             If the received value for a required parameter was invalid.
 	 */
-	protected abstract Callable< R > postsInternalNewInstance(
+	protected abstract Callable< R > internalInternalNewInstance(
 			User userWhoIsPosting ) throws InternalErrorException,
 			MissingRequiredParameterException, InvalidParameterValueException;
 	
@@ -198,17 +202,16 @@ public abstract class PostCommandsFactory< E extends Element, R > extends
 	 * 
 	 * @return The user who is posting.
 	 * @throws NoSuchElementInDatabaseException
-	 *             If there is no user in {@link #postingUsersDatabase} whose
-	 *             username is the login name receive in the parameters map. The
-	 *             message of this exception is <i>«{login name} not found in
+	 *             If there is no user in {@link #usersDatabase} whose username
+	 *             is the login name receive in the parameters map. The message
+	 *             of this exception is <i>«{login name} not found in
 	 *             {@code postingUsersDatabase.getDatabaseName()}»</i>.
 	 */
 	private User getUserWhoIsPosting() throws NoSuchElementInDatabaseException {
 		
 		try
 		{
-			return postingUsersDatabase.getElementByIdentification( loginName )
-					.get();
+			return usersDatabase.getElementByIdentification( loginName ).get();
 		}
 		catch( Exception e )
 		{

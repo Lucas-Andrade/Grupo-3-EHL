@@ -1,4 +1,4 @@
-package main.java.cli.commandfactories.postfactories;
+package main.java.cli.commandfactories.userauthenticatingfactories.postfactories;
 
 
 import java.lang.reflect.InvocationTargetException;
@@ -8,6 +8,7 @@ import java.util.concurrent.Callable;
 import main.java.cli.StringsDictionary;
 import main.java.cli.commandfactories.CallablesFactory;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
+import main.java.cli.commandfactories.userauthenticatingfactories.UserAuthenticatingFactory;
 import main.java.cli.commands.postcommands.PostCivilAirshipCommand;
 import main.java.cli.commands.postcommands.PostMilitaryAirshipCommand;
 import main.java.cli.exceptions.InternalErrorException;
@@ -26,7 +27,7 @@ import main.java.cli.model.users.User;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class PostAirshipCommandsFactory extends
-		PostCommandsFactory< Airship, String >
+		UserAuthenticatingFactory< Airship, String >
 {
 	
 	// INSTANCE FIELDS
@@ -95,7 +96,7 @@ public class PostAirshipCommandsFactory extends
 	 * @throws InternalErrorException
 	 */
 	@Override
-	protected Callable< String > postsInternalNewInstance( User userWhoIsPosting )
+	protected Callable< String > internalInternalNewInstance( User userWhoIsPosting )
 			throws InternalErrorException, MissingRequiredParameterException,
 			InvalidParameterValueException {
 		
@@ -217,7 +218,7 @@ public class PostAirshipCommandsFactory extends
 		{
 			return new PostCivilAirshipCommand( latitude, longitude, altitude,
 					maxAltitude, minAltitude, numberOfPassengers,
-					databaseWhereToPost, userWhoIsPosting );
+					theDatabase, userWhoIsPosting );
 		}
 		catch( InvalidArgumentException e )
 		{// never happens for databaseWhereToPost is not null
@@ -258,7 +259,7 @@ public class PostAirshipCommandsFactory extends
 		{
 			return new PostMilitaryAirshipCommand( latitude, longitude,
 					altitude, maxAltitude, minAltitude, hasArmour,
-					databaseWhereToPost, userWhoIsPosting );
+					theDatabase, userWhoIsPosting );
 		}
 		catch( InvalidArgumentException e )
 		{// never happens for databaseWhereToPost is not null

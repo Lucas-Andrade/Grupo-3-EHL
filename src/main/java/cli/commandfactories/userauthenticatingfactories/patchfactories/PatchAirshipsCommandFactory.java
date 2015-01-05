@@ -5,6 +5,8 @@ import java.util.concurrent.Callable;
 
 import main.java.cli.StringsDictionary;
 import main.java.cli.commandfactories.userauthenticatingfactories.UserAuthenticatingFactory;
+import main.java.cli.commands.patchcommands.PatchCivilAirshipCommand;
+import main.java.cli.commands.patchcommands.PatchMilitaryAirshipCommand;
 import main.java.cli.exceptions.InternalErrorException;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.exceptions.factoryexceptions.InvalidParameterValueException;
@@ -139,8 +141,8 @@ public class PatchAirshipsCommandFactory extends UserAuthenticatingFactory<Airsh
 	private Callable<String> patchCivilAirship(User userWhoIsPosting) {
 
 		try {
-			return new PatchCivilAirshipCommand(databaseWhereToPost, identification,
-					userWhoIsPosting, latitude, longitude, altitude, maxAltitude, minAltitude,
+			return new PatchCivilAirshipCommand(airshipsDatabase, identification, userWhoIsPosting,
+					latitude, longitude, altitude, maxAltitude, minAltitude,
 					((CivilAirship) airship).getPassengers());
 
 		} catch (InvalidArgumentException e) {// never happens for databaseWhereToPost is not null
@@ -153,7 +155,7 @@ public class PatchAirshipsCommandFactory extends UserAuthenticatingFactory<Airsh
 	private Callable<String> pacthMilitaryAirship(User userWhoIsPosting) {
 
 		try {
-			return new PatchMilitaryAirshipCommand(databaseWhereToPost, identification,
+			return new PatchMilitaryAirshipCommand(airshipsDatabase, identification,
 					userWhoIsPosting, latitude, longitude, altitude, maxAltitude, minAltitude,
 					((MilitaryAirship) airship).hasWeapons());
 

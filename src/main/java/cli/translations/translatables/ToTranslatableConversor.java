@@ -1,17 +1,16 @@
 package main.java.cli.translations.translatables;
 
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
 import main.java.cli.StringsDictionary;
 import main.java.cli.model.Element;
 import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.CivilAirship;
 import main.java.cli.model.airships.MilitaryAirship;
 import main.java.cli.model.users.User;
-
 
 /**
  * 
@@ -21,18 +20,17 @@ import main.java.cli.model.users.User;
  */
 public class ToTranslatableConversor
 {
-	
 	/**
 	 * 
 	 * @param element
 	 * @return
 	 */
-	public static SimpleTypeTranslatable convert( Element element ) {
+	public static Translatable convert( Object element )
+	{
 		try
 		{
-			return (SimpleTypeTranslatable)ToTranslatableConversor.class
-					.getDeclaredMethod( "convert", element.getClass() ).invoke(
-							ToTranslatableConversor.class, element );
+			return ( Translatable )ToTranslatableConversor.class.getDeclaredMethod( "convert",
+					element.getClass() ).invoke( ToTranslatableConversor.class, element );
 		}
 		catch( NoSuchMethodException e )
 		{
@@ -61,27 +59,25 @@ public class ToTranslatableConversor
 		}
 		return null;
 	}
-	
+
 	/**
 	 * 
 	 * @param collection
 	 * @param tag
 	 * @return
 	 */
-	public static ComposedTypeTranslatable convert(
-			Collection< Element > collection, String tag ) {
-		Translatable< ? >[] propertyBag = new Translatable< ? >[collection
-				.size()];
-		
-		int i = 0;
+	public static Translatable convert( Iterable< Element > collection, String tag )
+	{
+		Map< String, Object > propertiesBag =  new HashMap< String, Object >();
+
 		for( Element element : collection )
 		{
-			propertyBag[i++ ] = convert( element );
+			propertiesBag.put( element.getIdentification(), convert( element ) );
 		}
-		
-		return new ComposedTypeTranslatable( tag, propertyBag );
+
+		return new Translatable( tag, null, null, null, propertiesBag, null );
 	}
-	
+
 	/**
 	 * 
 	 * @param map
@@ -90,90 +86,78 @@ public class ToTranslatableConversor
 	 * @param valueTag
 	 * @return
 	 */
-	public static MapTypeTranslatable convert( Map< String, String > map,
-			String entryTag, String keyTag, String valueTag ) {
-		return new MapTypeTranslatable( entryTag + "s", entryTag, keyTag,
-				valueTag, map );
+	public static Translatable convert( Map< String, Object > propertiesBag, String tag, String entryTag, String keyTag,
+			String valueTag )
+	{
+		return new Translatable( tag, entryTag, keyTag, valueTag, propertiesBag, null );
 	}
-	
+
 	/**
 	 * 
 	 * @param user
 	 * @return
 	 */
 	@SuppressWarnings( "unused" )
-	private static SimpleTypeTranslatable convert( User user ) {
-		System.out.println( "user" );
-		Map< String, String > propertyBag = new HashMap< String, String >();
-		propertyBag.put( StringsDictionary.USERNAME, user.getIdentification() );
-		propertyBag.put( StringsDictionary.EMAIL, user.getEmail() );
-		propertyBag.put( StringsDictionary.FULLNAME, user.getFullName() );
-		
-		return new SimpleTypeTranslatable( "User", propertyBag,
-				user.toStringWithoutPassword() );
+	private static Translatable convert( User user )
+	{
+		Map< String, Object > propertiesBag = new HashMap< String, Object >();
+		propertiesBag.put( StringsDictionary.USERNAME, user.getIdentification() );
+		propertiesBag.put( StringsDictionary.EMAIL, user.getEmail() );
+		propertiesBag.put( StringsDictionary.FULLNAME, user.getFullName() );
+
+		return new Translatable( null, "User", null, null, propertiesBag, user.toString() );
 	}
-	
+
 	/**
 	 * 
 	 * @param civilAirship
 	 * @return
 	 */
 	@SuppressWarnings( "unused" )
-	private static SimpleTypeTranslatable convert( CivilAirship civilAirship ) {
-		System.out.println( "Civil" );
-		Map< String, String > propertyBag = createAirshipPropertyBag( civilAirship );
-		
-		propertyBag.put( "Number of Passengers",
-				String.valueOf( civilAirship.getPassengers() ) );
-		return new SimpleTypeTranslatable( "Civil Airship", propertyBag,
-				civilAirship.toString() );
+	private static Translatable convert( CivilAirship civilAirship )
+	{
+//		System.out.println( "Civil" );
+		Map< String, Object > propertiesBag = createAirshipPropertyBag( civilAirship );
+
+		propertiesBag.put( "Number of Passengers", String.valueOf( civilAirship.getPassengers() ) );
+		return new Translatable( null, "Civil Airship", null, null, propertiesBag, civilAirship.toString() );
 	}
-	
+
 	/**
 	 *
 	 * @param militaryAirship
 	 * @return
 	 */
 	@SuppressWarnings( "unused" )
-	private static SimpleTypeTranslatable convert(
-			MilitaryAirship militaryAirship ) {
-		Map< String, String > propertyBag = createAirshipPropertyBag( militaryAirship );
-		
-		propertyBag.put( "Carries Weapons",
-				String.valueOf( militaryAirship.hasWeapons() ) );
-		return new SimpleTypeTranslatable( "Military Airship", propertyBag,
-				militaryAirship.toString() );
+	private static Translatable convert( MilitaryAirship militaryAirship )
+	{
+		Map< String, Object > propertiesBag = createAirshipPropertyBag( militaryAirship );
+
+		propertiesBag.put( "Carries Weapons", String.valueOf( militaryAirship.hasWeapons() ) );
+		return new Translatable( null, "Military Airship", null, null, propertiesBag, militaryAirship.toString() );
 	}
-	
+
 	/**
 	 * 
 	 * @param airship
 	 * @return
 	 */
-	private static Map< String, String > createAirshipPropertyBag(
-			Airship airship ) {
-		Map< String, String > propertyBag = new HashMap< String, String >();
-		propertyBag.put( StringsDictionary.FLIGHTID,
-				airship.getIdentification() );
-		propertyBag.put(
-				StringsDictionary.LATITUDE,
-				String.valueOf( airship.getCoordinates().getLatitude()
-						.getValue() ) );
-		propertyBag.put(
-				StringsDictionary.LONGITUDE,
-				String.valueOf( airship.getCoordinates().getLongitude()
-						.getValue() ) );
-		propertyBag.put(
-				StringsDictionary.ALTITUDE,
-				String.valueOf( airship.getCoordinates().getAltitude()
-						.getValue() ) );
-		propertyBag.put( StringsDictionary.AIRCORRIDOR_MINALTITUDE,
+	private static Map< String, Object > createAirshipPropertyBag( Airship airship )
+	{
+		Map< String, Object > propertiesBag = new HashMap< String, Object >();
+		propertiesBag.put( StringsDictionary.FLIGHTID, airship.getIdentification() );
+		propertiesBag.put( StringsDictionary.LATITUDE,
+				String.valueOf( airship.getCoordinates().getLatitude().getValue() ) );
+		propertiesBag.put( StringsDictionary.LONGITUDE,
+				String.valueOf( airship.getCoordinates().getLongitude().getValue() ) );
+		propertiesBag.put( StringsDictionary.ALTITUDE,
+				String.valueOf( airship.getCoordinates().getAltitude().getValue() ) );
+		propertiesBag.put( StringsDictionary.AIRCORRIDOR_MINALTITUDE,
 				String.valueOf( airship.getAirCorridor().getMinAltitude() ) );
-		propertyBag.put( StringsDictionary.AIRCORRIDOR_MAXALTITUDE,
+		propertiesBag.put( StringsDictionary.AIRCORRIDOR_MAXALTITUDE,
 				String.valueOf( airship.getAirCorridor().getMaxAltitude() ) );
-		propertyBag.put( "Is Outside The Given Corridor",
-				String.valueOf( airship.isTransgressing() ) );
-		
-		return propertyBag;
+		propertiesBag.put( "Is Outside The Given Corridor", String.valueOf( airship.isTransgressing() ) );
+
+		return propertiesBag;
 	}
 }

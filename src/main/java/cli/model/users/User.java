@@ -1,27 +1,24 @@
 package main.java.cli.model.users;
 
-
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.Element;
 
-
 /**
- * Instances of this class represents users. Users have a unique username, a
- * unique email, a password and may or may not have a full name.
+ * Instances of this class represents users. Users have a unique username, a unique email, a
+ * password and may or may not have a full name.
  */
 
-public class User implements Element
-{
-	
+public class User implements Element {
+
 	// Instance Fields
-	
+
 	private final String username;
 	private final String password;
 	private final String email;
 	private final String fullName;
-	
+
 	// Constructors
-	
+
 	/**
 	 * Create a new {@code User} giving all the info.
 	 * 
@@ -34,31 +31,31 @@ public class User implements Element
 	 * @param fullName
 	 *            - the user full name. (optional info)
 	 * @throws InvalidArgumentException
-	 *             If either the username, the password, the email or the full
-	 *             name given are {@code null} or the empty string (""); if the
-	 *             given email has no '@' or has more than one '@'.
+	 *             If either the username, the password, the email or the full name given are
+	 *             {@code null} or the empty string (""); if the given email has no '@' or has more
+	 *             than one '@'.
 	 */
-	public User( String username, String password, String email, String fullName )
+	public User(String username, String password, String email, String fullName)
 			throws InvalidArgumentException {
+
+		if (username == null || username.equals(""))
+			throw new InvalidArgumentException("Invalid username.");
+
+		if (password == null || password.equals(""))
+			throw new InvalidArgumentException("Invalid password.");
+
+		if (email == null || email.equals("") || !hasOneAT(email))
+			throw new InvalidArgumentException("Invalid email.");
+
+		if (fullName == null)
+			throw new InvalidArgumentException("Invalid full name for user.");
 		
-		if( username == null || username.equals( "" ) )
-			throw new InvalidArgumentException( "Invalid username." );
-		else this.username = username;
-		
-		if( password == null || password.equals( "" ) )
-			throw new InvalidArgumentException( "Invalid password." );
-		else this.password = password;
-		
-		if( email == null || email.equals( "" ) || !hasOneAT( email ) )
-			throw new InvalidArgumentException( "Invalid email." );
-		else this.email = email;
-		
-		if( fullName == null )
-			throw new InvalidArgumentException( "Invalid full name for user." );
+		this.username = username;
+		this.password = password;
+		this.email = email;
 		this.fullName = fullName;
-		
 	}
-	
+
 	/**
 	 * Create a new {@code User} giving the minimum info needed.
 	 * 
@@ -69,18 +66,16 @@ public class User implements Element
 	 * @param email
 	 *            - the user email
 	 * @throws InvalidArgumentException
-	 *             If either the username, the password or the email given are
-	 *             {@code null} or the empty string (""); if the given email has
-	 *             no '@' or has more than one '@'.
+	 *             If either the username, the password or the email given are {@code null} or the
+	 *             empty string (""); if the given email has no '@' or has more than one '@'.
 	 */
-	public User( String username, String password, String email )
-			throws InvalidArgumentException {
-		
-		this( username, password, email, "" );
+	public User(String username, String password, String email) throws InvalidArgumentException {
+
+		this(username, password, email, "");
 	}
-	
+
 	// Private Methods
-	
+
 	/**
 	 * Method responsible for check if email has one and only one "@".
 	 * 
@@ -88,29 +83,29 @@ public class User implements Element
 	 *            - email
 	 * @return boolean with
 	 */
-	private boolean hasOneAT( String email ) {
-		
-		int hasAt = email.indexOf( "@" );
-		return hasAt != -1 && hasAt == email.lastIndexOf( "@" ) ? true : false;
+	private boolean hasOneAT(String email) {
+
+		int hasAt = email.indexOf("@");
+		return hasAt != -1 && hasAt == email.lastIndexOf("@");
 	}
-	
+
 	// Public Methods
-	
+
 	/**
 	 * Checks whether this user's password equals {@code introducedPassword}.
 	 * 
 	 * @param introducedPassword
 	 *            The password to be checked.
-	 * @return {@code true} if this user's password equals
-	 *         {@code introducedPassword};</br> {@code false} otherwise.
+	 * @return {@code true} if this user's password equals {@code introducedPassword};</br>
+	 *         {@code false} otherwise.
 	 */
-	public boolean authenticatePassword( String introducedPassword ) {
-		
-		return this.password.equals( introducedPassword );
+	public boolean authenticatePassword(String introducedPassword) {
+
+		return this.password.equals(introducedPassword);
 	}
-	
+
 	// Overrides
-	
+
 	/**
 	 * Gets all the {@code User} Information
 	 * 
@@ -118,54 +113,42 @@ public class User implements Element
 	 */
 	@Override
 	public String toString() {
-		
-		StringBuilder result = new StringBuilder( "username: " );
-		
-		result.append( username ).append( ", password: " ).append( password )
-				.append( ", email: " ).append( email );
-		
-		return fullName.equals( "" ) ? result.toString() : result
-				.append( ", fullName: " ).append( fullName ).append("\n").toString();
+
+		StringBuilder result = new StringBuilder("username: ");
+
+		result.append(username).append(", password: ").append(password).append(", email: ")
+				.append(email);
+
+		return fullName.equals("") ? result.append("\n").toString() : result.append(", fullName: ")
+				.append(fullName).append("\n").toString();
 	}
-	
+
 	/**
 	 * Override of the {@code equals} method from the {@link Object} class.
 	 */
 	@Override
-	public boolean equals( Object obj ) {
-		
-		if( this == obj )
+	public boolean equals(Object obj) {
+
+		if (this == obj)
 			return true;
-		
-		if( obj == null )
+
+		if (obj == null)
 			return false;
-		
-		if( getClass() != obj.getClass() )
+
+		if (getClass() != obj.getClass())
 			return false;
+
+		User user = (User) obj;
 		
-		if( email == null )
-		{
-			if( ((User)obj).email != null )
-				return false;
-			
-		}
-		else
-			if( !email.equals( ((User)obj).email ) )
-				return false;
-		
-		if( username == null )
-		{
-			if( ((User)obj).username != null )
-				return false;
-			
-		}
-		else
-			if( !username.equals( ((User)obj).username ) )
-				return false;
-		
+		if (!email.equals(user.email))
+			return false;
+
+		if (!username.equals(user.username))
+			return false;
+
 		return true;
 	}
-	
+
 	/**
 	 * Gets the {@code User} identification
 	 * 
@@ -173,19 +156,19 @@ public class User implements Element
 	 */
 	@Override
 	public String getIdentification() {
-		
+
 		return username;
 	}
-	
+
 	// Get Methods
-	
+
 	/**
 	 * Gets the {@code email} identification
 	 * 
 	 * @return a string with an email.
 	 */
 	public String getEmail() {
-		
+
 		return email;
 	}
 }

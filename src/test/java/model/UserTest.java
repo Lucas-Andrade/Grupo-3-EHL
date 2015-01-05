@@ -1,149 +1,150 @@
 package test.java.model;
 
-import main.java.model.users.User;
+import main.java.cli.exceptions.InvalidArgumentException;
+import main.java.cli.model.users.User;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class UserTest {
-	
+
 	User user1, user2;
 
+	// Before
+
 	@Before
-	
-	public void BeforeTests(){
-		
-		user1 = new User("Pedro","pass","pedro@gmail.com","Pedro Antunes");
-		user2 = new User("Gonçalo","pass2","Gonçalo@gmail.com");
-	
+	public void CreateUsers() throws InvalidArgumentException {
+
+		user1 = new User("Pedro", "pass", "pedro@gmail.com", "Pedro Antunes");
+		user2 = new User("Gonçalo", "pass2", "Gonçalo@gmail.com");
 	}
-	
+
+	// Test Normal Dinamic And Prerequisites
+
 	@Test
-	
 	public void ShouldReturnUserIdentification() {
-	
-		Assert.assertTrue(user1.getIdentification().equals("Pedro"));
-		Assert.assertTrue(user2.getIdentification().equals("Gonçalo"));
 
-	}
-	 
-	@Test
-	
-	public void ShouldReturnAString(){
-		
-		Assert.assertTrue(user1.toString().equals("username: Pedro, password: pass, email: pedro@gmail.com, fullName: Pedro Antunes"));
-		Assert.assertTrue(user2.toString().equals("username: Gonçalo, password: pass2, email: Gonçalo@gmail.com"));
-
-	}
-	
-	@Test
-	
-	public void ShouldReturnUsername(){
-		
 		Assert.assertTrue(user1.getIdentification().equals("Pedro"));
 		Assert.assertTrue(user2.getIdentification().equals("Gonçalo"));
 	}
-		
-	@Test
 
-	public void ShouldAnUserBeInstanceOfUserClass(){
-		
+	@Test
+	public void ShouldReturnAString() {
+
+		Assert.assertEquals(user1.toString(),
+				"username: Pedro, password: pass, email: pedro@gmail.com, fullName: Pedro Antunes\n");
+		Assert.assertEquals(user2.toString(),
+				"username: Gonçalo, password: pass2, email: Gonçalo@gmail.com\n");
+
+	}
+
+	@Test
+	public void ShouldReturnUsername() {
+
+		Assert.assertTrue(user1.getIdentification().equals("Pedro"));
+		Assert.assertTrue(user2.getIdentification().equals("Gonçalo"));
+	}
+
+	@Test
+	public void ShouldAnUserBeInstanceOfUserClass() {
+
 		Assert.assertTrue(user1.getClass().equals(User.class));
 		Assert.assertTrue(user2.getClass().equals(User.class));
-
 	}
-	
+
 	@Test
-	
-	public void VerifyIfUsersAreEquals(){
-		
-		Assert.assertTrue(user1.equals(new User("Pedro","pass","pedro@gmail.com","Pedro Antunes")));
-		Assert.assertFalse(user1.equals(user2)); 
-	
+	public void VerifyIfUsersAreEquals() throws InvalidArgumentException {
+
+		Assert.assertTrue(user1
+				.equals(new User("Pedro", "pass", "pedro@gmail.com", "Pedro Antunes")));
+		Assert.assertFalse(user1.equals(user2));
 	}
- 
-	@Test 
-	
-	public void VerifyIfUsersHasDiferentsUsernames(){
-		
-		Assert.assertFalse(user1.equals(new User("Gonçalo","pass","pedro@gmail.com","Pedro Antunes")));
-	
-	}
-	
+
 	@Test
-	
-	public void VerifyIfUsersHasDiferentsEmails(){
-		
-		Assert.assertFalse(user1.equals(new User("Pedro","pass","Gonçalo@gmail.com","Pedro Antunes")));
+	public void VerifyIfUsersHaveDiferentsUsernames() throws InvalidArgumentException {
 
- 
-	} 
-	
-	@Test(expected=IllegalArgumentException.class)
-
-	public void ShouldThrowIllegalArgumentExceptionWhenUsernameIsNull(){
-	
-		new User(null,"pass","pantunes@gmail.com","Pantunes da Silva Pantunes");
-	} 
-
-	@Test(expected=IllegalArgumentException.class)
-
-	public void ShouldThrowIllegalArgumentExceptionWhenPasswordIsNull(){
-	
-		new User("Pantunes",null,"pantunes@gmail.com","Pantunes da Silva Pantunes");
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-
-	public void ShouldThrowIllegalArgumentExceptionWhenEmailIsNull(){
-	
-		new User("Pantunes","pass",null,"Pantunes da Silva Pantunes");
-	}
-			
-	@Test(expected=IllegalArgumentException.class)
-
-	public void ShouldThrowIllegalArgumentExceptionWhenEmailDoesntHaveAt(){
-
-		new User("Pantunes","pass","pantunesgmail.com","Pantunes da Silva Pantunes");
-
+		Assert.assertFalse(user1.equals(new User("Gonçalo", "pass", "pedro@gmail.com",
+				"Pedro Antunes")));
 	}
 
-	@Test(expected=IllegalArgumentException.class)
+	@Test
+	public void VerifyIfUsersHaveDiferentsEmails() throws InvalidArgumentException {
 
-	public void ShouldThrowIllegalArgumentExceptionWhenEmailDoesntHaveOnlyOneAt(){
-		
-		new User("Pantunes","pass","pant@unes@gmail.com","Pantunes da Silva Pantunes");
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-	
-	public void ShouldThrowIllegalArgumentExceptionWhenFullnameIsNull(){
-		
-		new User("pantunes","pass","pantunes@gmail.com",null);
-	}
-	
-	@Test(expected=IllegalArgumentException.class)
-
-	public void ShouldThrowIllegalArgumentExceptionWhenUsernameIsAnEmptyString(){
-		
-		new User("","pass","pantunes@gmail.com","Pantunes da Silva Pantunes");
-
+		Assert.assertFalse(user1.equals(new User("Pedro", "pass", "Gonçalo@gmail.com",
+				"Pedro Antunes")));
 	}
 
-	@Test(expected=IllegalArgumentException.class)
+	@Test
+	public void AutenticatePasswordCorrectly() throws InvalidArgumentException {
 
-	public void ShouldThrowIllegalArgumentExceptionWhenPasswordIsAnEmptyString(){
-		
-		new User("pantunes","","pantunes@gmail.com","Pantunes da Silva Pantunes");
-
+		Assert.assertTrue(user1.authenticatePassword("pass"));
+		Assert.assertFalse(user2.authenticatePassword("pass"));
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
+	
+	// Test Exceptions
 
-	public void ShouldThrowIllegalArgumentExceptionWhenEmailIsAnEmptyString(){
-		
-		new User("pantunes","password","","Pantunes da Silva Pantunes");
+	@Test (expected = InvalidArgumentException.class)
+	public void ShouldThrowInvalidArgumentExceptionWhenUsernameIsNull()
+			throws InvalidArgumentException {
 
+		new User(null, "pass", "pantunes@gmail.com", "Pantunes da Silva Pantunes");
+	}
+
+	@Test (expected = InvalidArgumentException.class)
+	public void ShouldThrowIllegalArgumentExceptionWhenPasswordIsNull()
+			throws InvalidArgumentException {
+
+		new User("Pantunes", null, "pantunes@gmail.com", "Pantunes da Silva Pantunes");
+	}
+
+	@Test (expected = InvalidArgumentException.class)
+	public void ShouldThrowInvalidArgumentExceptionWhenEmailIsNull()
+			throws InvalidArgumentException {
+
+		new User("Pantunes", "pass", null, "Pantunes da Silva Pantunes");
+	}
+
+	@Test (expected = InvalidArgumentException.class)
+	public void ShouldThrowInvalidArgumentExceptionWhenEmailDoesntHaveAt()
+			throws InvalidArgumentException {
+
+		new User("Pantunes", "pass", "pantunesgmail.com", "Pantunes da Silva Pantunes");
+	}
+
+	@Test (expected = InvalidArgumentException.class)
+	public void ShouldThrowInvalidArgumentExceptionWhenEmailDoesntHaveOnlyOneAt()
+			throws InvalidArgumentException {
+
+		new User("Pantunes", "pass", "pant@unes@gmail.com", "Pantunes da Silva Pantunes");
+	}
+
+	@Test (expected = InvalidArgumentException.class)
+	public void ShouldThrowIllegalArgumentExceptionWhenFullnameIsNull()
+			throws InvalidArgumentException {
+
+		new User("pantunes", "pass", "pantunes@gmail.com", null);
+	}
+
+	@Test (expected = InvalidArgumentException.class)
+	public void ShouldThrowInvalidArgumentExceptionWhenUsernameIsAnEmptyString()
+			throws InvalidArgumentException {
+
+		new User("", "pass", "pantunes@gmail.com", "Pantunes da Silva Pantunes");
+	}
+
+	@Test (expected = InvalidArgumentException.class)
+	public void ShouldThrowInvalidArgumentExceptionWhenPasswordIsAnEmptyString()
+			throws InvalidArgumentException {
+
+		new User("pantunes", "", "pantunes@gmail.com", "Pantunes da Silva Pantunes");
+	}
+
+	@Test (expected = InvalidArgumentException.class)
+	public void ShouldThrowInvalidArgumentExceptionWhenEmailIsAnEmptyString()
+			throws InvalidArgumentException {
+
+		new User("pantunes", "password", "", "Pantunes da Silva Pantunes");
 	}
 }

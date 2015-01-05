@@ -220,7 +220,7 @@ public class Parser
 		catch( FileNotFoundException e )
 		{
 			throw new InvalidParameterValueException( StringsDictionary.STREAM,
-					filePath );
+					filePath, e.getMessage() );
 		}
 	}
 	

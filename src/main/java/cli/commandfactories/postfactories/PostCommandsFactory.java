@@ -3,13 +3,13 @@ package main.java.cli.commandfactories.postfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-import main.java.cli.PlaceholdersAndParametersDictionary;
+import main.java.cli.StringsDictionary;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.exceptions.InternalErrorException;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
-import main.java.cli.exceptions.factoryexceptions.CommandFactoryException;
 import main.java.cli.exceptions.factoryexceptions.InvalidParameterValueException;
+import main.java.cli.exceptions.factoryexceptions.MissingRequiredParameterException;
 import main.java.cli.exceptions.factoryexceptions.WrongLoginPasswordException;
 import main.java.cli.model.Database;
 import main.java.cli.model.Element;
@@ -111,14 +111,21 @@ public abstract class PostCommandsFactory< E extends Element, R > extends
 	 *             {@code postingUsersDatabase.getDatabaseName()}»</i>.
 	 * @throws InternalErrorException
 	 *             If an internal error that wasn't supposed to happen happened.
-	 * @throws CommandFactoryException 
+	 * @throws WrongLoginPasswordException
+	 *             If the login password received does not match the login
+	 *             username's password.
+	 * @throws InvalidParameterValueException 
+	 *             If the received value for a required parameter was invalid.
+	 * @throws MissingRequiredParameterException 
+	 *             If the received map does not contain one of the required
+	 *             parameters for instantiating the command.
 	 */
 	protected final Callable< R > internalNewInstance()
 			throws NoSuchElementInDatabaseException, InternalErrorException,
-			CommandFactoryException {
+			WrongLoginPasswordException, MissingRequiredParameterException, InvalidParameterValueException {
 		
-		loginName = getParameterAsString( PlaceholdersAndParametersDictionary.LOGINNAME );
-		loginPassword = getParameterAsString( PlaceholdersAndParametersDictionary.LOGINPASSWORD );
+		loginName = getParameterAsString( StringsDictionary.LOGINNAME );
+		loginPassword = getParameterAsString( StringsDictionary.LOGINPASSWORD );
 		
 		User user = getUserWhoIsPosting();
 		if( !user.authenticatePassword( loginPassword ) )
@@ -158,14 +165,17 @@ public abstract class PostCommandsFactory< E extends Element, R > extends
 	 * 
 	 * @param userWhoIsPosting
 	 *            The user who's login name was received in the parameters map.
-	 * @throws CommandFactoryException
 	 * @throws InternalErrorException
+	 *             If an internal error that wasn't supposed to happen happened.
+	 * @throws MissingRequiredParameterException
+	 *             If the received map does not contain one of the required
+	 *             parameters for instantiating the command.
 	 * @throws InvalidParameterValueException
 	 *             If the received value for a required parameter was invalid.
 	 */
 	protected abstract Callable< R > postsInternalNewInstance(
-			User userWhoIsPosting ) throws CommandFactoryException,
-			InternalErrorException;
+			User userWhoIsPosting ) throws InternalErrorException,
+			MissingRequiredParameterException, InvalidParameterValueException;
 	
 	/**
 	 * Returns an array of {@link String}s that has the names of the parameters

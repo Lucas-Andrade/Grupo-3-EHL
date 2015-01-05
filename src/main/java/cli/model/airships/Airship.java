@@ -11,8 +11,14 @@ public abstract class Airship implements Element {
 	// Instance Fields
 
 	/**
+<<<<<<< HEAD
 	 * {@code ID} - long static variable that will contain the numeric value of the last atributed
 	 * ID. This variable will be updated every time a new {@code Airship} is created.
+=======
+	 * {@code ID} - long static variable that will contain the numeric value of
+	 * the last attributed ID. This variable will be updated every time a new
+	 * {@code Airship} is created.
+>>>>>>> branch 'AppForCommandLineWithCallables' of https://github.com/Lucas-Andrade/Grupo-3-EHL.git
 	 */
 	private static long ID = 0;
 
@@ -32,18 +38,31 @@ public abstract class Airship implements Element {
 	private final AirCorridor airCorridor;
 
 	/**
+<<<<<<< HEAD
 	 * {@code isTransgressing} - boolean variable that will represent the status of an
 	 * {@code Airship} regarding the impossition of its {@code airCorridor}.
+=======
+	 * {@code isTransgressing} - boolean variable that will represent the status
+	 * of an {@code Airship} regarding the imposition of its
+	 * {@code airCorridor}.
+>>>>>>> branch 'AppForCommandLineWithCallables' of https://github.com/Lucas-Andrade/Grupo-3-EHL.git
 	 */
 	private final boolean isTransgressing;
 
 	// Constructor
 
 	/**
+<<<<<<< HEAD
 	 * Class constructor that will be used by the {@code Airship} subclasses in orden to instatiate
 	 * the fields that are common to all the airships. It will receive the geographic coordinates of
 	 * the airship as a parameter as well as the maximum and minimum altitudes the airship is
 	 * allowed to fly.
+=======
+	 * Class constructor that will be used by the {@code Airship} subclasses in
+	 * order to instantiate the fields that are common to all the airships. It
+	 * will receive the geographic coordinates of the airship as a parameter as
+	 * well as the maximum and minimum altitudes the airship is allowed to fly.
+>>>>>>> branch 'AppForCommandLineWithCallables' of https://github.com/Lucas-Andrade/Grupo-3-EHL.git
 	 * 
 	 * The constructor will allocate a flightID to the airship that will be automatically generated
 	 * using the method {@code flightIDGenerator()}.

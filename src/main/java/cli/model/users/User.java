@@ -13,7 +13,7 @@ public class User implements Element {
 	// Instance Fields
 
 	private final String username;
-	private final String password;
+	private String password;
 	private final String email;
 	private final String fullName;
 
@@ -49,7 +49,7 @@ public class User implements Element {
 
 		if (fullName == null)
 			throw new InvalidArgumentException("Invalid full name for user.");
-		
+
 		this.username = username;
 		this.password = password;
 		this.email = email;
@@ -123,6 +123,16 @@ public class User implements Element {
 				.append(fullName).append("\n").toString();
 	}
 
+	public String toStringWithoutPassword() {
+
+		StringBuilder result = new StringBuilder("username: ");
+
+		result.append(username).append(", email: ").append(email);
+ 
+		return fullName.equals("") ? result.append("\n").toString() : result.append(", fullName: ")
+				.append(fullName).append("\n").toString(); 
+	}
+		
 	/**
 	 * Override of the {@code equals} method from the {@link Object} class.
 	 */
@@ -138,6 +148,10 @@ public class User implements Element {
 		if (getClass() != obj.getClass())
 			return false;
 
+		if (!(obj instanceof User))
+
+			return false;
+
 		User user = (User) obj;
 		
 		if (!email.equals(user.email))
@@ -145,7 +159,7 @@ public class User implements Element {
 
 		if (!username.equals(user.username))
 			return false;
-
+			
 		return true;
 	}
 
@@ -171,4 +185,40 @@ public class User implements Element {
 
 		return email;
 	}
+
+	/**
+	 * @return the fullName
+	 */
+	public String getFullName()
+	{
+		return fullName;
+	}
+ 
+	/**
+	 * 
+	 * Change the User {@code password} 
+	 * 
+	 * @param newPassword - The new User password. 
+	 * @throws InvalidArgumentException 
+	 */
+	public boolean changePassword(String newPassword , String oldPassword) throws InvalidArgumentException{
+		
+		if (newPassword == null || newPassword.equals(""))
+			throw new InvalidArgumentException("Invalid new password");
+		
+			
+		if( this.authenticatePassword(oldPassword))  { 
+					
+			this.password = newPassword;
+			
+				return true;
+	
+			}
+		
+		return false;
+	}
+
+
+
+
 }

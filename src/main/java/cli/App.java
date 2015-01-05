@@ -48,6 +48,7 @@ import main.java.cli.model.users.User;
  * <li>"POST /airships/type latitude={@value}&longitude={@value} &altitude={@value}
  * &minAltitude={@value}&maxAltitude={@value}&
  * {@code airshipCharacteristic}={@value}&loginName={@value}&loginPassword={@value}
+<<<<<<< HEAD
  * ={@value}&loginName={@value}&loginPassword={@value}={@value}
  * &loginName={@value}&loginPassword={@value} ={@value}&loginName={@value}
  * &loginPassword={@value}={@value}&loginName={@value}
@@ -69,9 +70,36 @@ import main.java.cli.model.users.User;
  * &loginPassword={@value} ={@value}&loginName={@value} &loginPassword={@value}={@value}
  * &loginName={@value} &loginPassword={@value} ={@value}&loginName={@value} &loginPassword={@value}
  * ={@value} &loginName={@value}&loginPassword={@value} ={@value} &loginName={@value}
- * &loginPassword={@value}" - create an {@link Airship} with the type {@code Civil} or
- * {@code Military}. If the type:={@code Civil}, {@code airshipCharacteristic}:= nbPassengers. If
- * the type:={@code Military}, {@code airshipCharacteristic}:== hasArmour -> (yes or no).
+ * &loginPassword={@value}={@value}&loginName={@value}&loginPassword={@value} <<<<<<< HEAD
+ * ={@value}&loginName={@value}&loginPassword={@value}={@value} &loginName={@value}
+ * &loginPassword={@value} ={@value}&loginName={@value} &loginPassword={@value}={@value}
+ * &loginName={@value} &loginPassword={@value} ={@value}&loginName={@value}&loginPassword={@value}
+ * ={@value} &loginName={@value}&loginPassword={@value} ={@value} &loginName={@value}
+ * &loginPassword={@value}={@value} &loginName={@value}&loginPassword={@value} ={@value}
+ * &loginName={@value} &loginPassword={@value}={@value} &loginName={@value}&loginPassword={@value}
+ * ={@value}&loginName={@value} &loginPassword={@value}={@value} &loginName={@value}
+ * &loginPassword={@value} ={@value}&loginName={@value} &loginPassword={@value} ={@value}
+ * &loginName={@value}&loginPassword={@value} ={@value} &loginName={@value} &loginPassword={@value}
+ * ={@value}&loginName={@value} &loginPassword={@value} ={@value}&loginName={@value}
+ * &loginPassword={@value}={@value} &loginName={@value}&loginPassword={@value} ={@value}
+ * &loginName={@value} &loginPassword={@value} ={@value}&loginName={@value} &loginPassword={@value}
+ * ={@value}&loginName={@value} &loginPassword={@value} ={@value} &loginName={@value}
+ * &loginPassword={@value} ={@value} &loginName={@value} &loginPassword={@value}={@value}
+ * &loginName={@value}&loginPassword={@value} ={@value}&loginName={@value} &loginPassword={@value}
+ * ={@value} &loginName={@value} &loginPassword={@value} ={@value}&loginName={@value}
+ * &loginPassword={@value}={@value} &loginName={@value} &loginPassword={@value} ={@value}
+ * &loginName={@value} &loginPassword={@value} ={@value} &loginName={@value}&loginPassword={@value}
+ * ={@value} &loginName={@value} &loginPassword={@value}" - create an {@link Airship} with the type
+ * {@code Civil} or {@code Military}. If the type:={@code Civil}, {@code airshipCharacteristic}:=
+ * nbPassengers. If the type:={@code Military},
+ * {@code airshipCharacteristic}:== hasArmour -> (yes or no).
+=======
+ * ={@value}&loginName={@value}&loginPassword={@value}:== hasArmour -> (yes or no). =======
+ * ={@value}&loginName={@value}&loginPassword={@value}" - create an {@link Airship} with the type
+ * {@code Civil} or {@code Military}. If the type:={@code Civil}, {@code airshipCharacteristic}:=
+ * nbPassengers. If the type:={@code Military}, {@code airshipCharacteristic}:== hasArmour -> (yes
+ * or no). >>>>>>> branch 'AppForCommandLineWithCallables' of
+ * https://github.com/Lucas-Andrade/Grupo-3-EHL.git
  * <ul>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -83,12 +111,12 @@ public class App {
 
 	private static InMemoryUsersDatabase usersDatabase;
 	private static InMemoryAirshipsDatabase airshipsDatabase;
-	
+
 	static {// static block needed to catch exceptions while initializing databases
 		try {
 			usersDatabase = new InMemoryUsersDatabase("users database");
 			airshipsDatabase = new InMemoryAirshipsDatabase("airships database");
-			
+
 		} catch (InvalidArgumentException e) {// never happens cause the strings given as arguments
 												// are non-null
 			System.out.println(e.getMessage());
@@ -151,19 +179,20 @@ public class App {
 
 		} catch (InvalidRegisterException e) {
 			System.out.println(e.getMessage());
-			
+
 		} catch (InvalidArgumentException e) {// never happens cause usersDatabase and
 												// airshipsDatabase are not null
-			System.out.println(e.getMessage());
 		}
 	}
 
+	// TODO
 	private static void execute(String[] args) {
 
 		try {
-			Callable<?> command = cmdParser.getCommand(args);
+			Parser parser = new Parser(cmdParser, args);
+			Callable<?> command = parser.getCommand(args);
 			System.out.println(command.call());
-			
+			// TODO
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}

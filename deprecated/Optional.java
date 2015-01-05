@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
 import main.java.cli.exceptions.InvalidArgumentException;
+import main.java.cli.exceptions.NullValueInOptionalException;
 
 
 /**
@@ -99,22 +100,19 @@ public class Optional< T >
 	 *            The value to be represented by this optional.
 	 * @param toBeThrownIfNull
 	 *            The exception to be thrown by the method {@link #get()} if
-	 *            {@code value==null}.
-	 * @throws InvalidArgumentException
-	 *             If {@code toBeThrownIfNull==null}.
+	 *            {@code value==null}. If this exception is {@code null}, the
+	 *            method {@link #get()} will thrown a
+	 *            NullValueInOptionalException with message <i>«Null
+	 *            value.»</i> if {@code value==null}.
 	 */
-	public Optional( T value, Exception toBeThrownIfNull )
-			throws InvalidArgumentException {
-		
-		if( toBeThrownIfNull == null )
-			throw new InvalidArgumentException(
-					"Cannot instantiate an Optional with null exception." );
+	public Optional( T value, Exception toBeThrownIfNull ) {
 		
 		this.value = value;
-		this.toBeThrownIfNull = toBeThrownIfNull;
+		this.toBeThrownIfNull = (toBeThrownIfNull == null)
+				? new NullValueInOptionalException( "Null value." )
+				: toBeThrownIfNull;
 		this.toStringIfIsEmptyCollectionOrMap = null;
 	}
-	
 	
 	/**
 	 * Creates a new instance of {@link Optional} that represents {@code value},
@@ -126,15 +124,17 @@ public class Optional< T >
 	 *            {@link Map}) to be represented by this optional.
 	 * @param toBeThrownIfNull
 	 *            The exception to be thrown by the method {@link #get()} if
-	 *            {@code value==null}.
+	 *            {@code value==null}. If this exception is {@code null}, the
+	 *            method {@link #get()} will thrown a
+	 *            NullValueInOptionalException with message <i>«Null
+	 *            value.»</i> if {@code value==null}.
 	 * @param toStringIfIsEmptyCollectionOrMap
 	 *            The string to be returned by the method {@link #toString()} if
 	 *            {@code value} is empty (known via method
 	 *            {@link Collection#isEmpty()} or {@link Map#isEmpty()}).
 	 * @throws InvalidArgumentException
-	 *             If {@code value} is not an instance of {@link Collection};
-	 *             </br>if {@code toBeThrownIfNull} or
-	 *             {@code toBeThrownIsEmptyCollection} are {@code null}.
+	 *             If {@code value} is not an instance of {@link Collection} or
+	 *             </br>if {@code toBeThrownIsEmptyCollectionOrMap==null}.
 	 */
 	public Optional( T collectionValue, Exception toBeThrownIfNull,
 			String toStringIfIsEmptyCollectionOrMap )
@@ -146,16 +146,14 @@ public class Optional< T >
 							+ collectionValue.getClass().getSimpleName()
 							+ " is not a Collection." );
 		
-		if( toBeThrownIfNull == null )
-			throw new InvalidArgumentException(
-					"Cannot instantiate an Optional with null exceptions." );
-		
 		if( toStringIfIsEmptyCollectionOrMap == null )
 			throw new InvalidArgumentException(
 					"Invalid null string representation for empty collections." );
 		
 		this.value = collectionValue;
-		this.toBeThrownIfNull = toBeThrownIfNull;
+		this.toBeThrownIfNull = (toBeThrownIfNull == null)
+				? new NullValueInOptionalException( "Null value." )
+				: toBeThrownIfNull;
 		this.toStringIfIsEmptyCollectionOrMap = toStringIfIsEmptyCollectionOrMap;
 	}
 	
@@ -187,7 +185,8 @@ public class Optional< T >
 	@SuppressWarnings( "rawtypes" )
 	public boolean isEmptyCollectionorEmptyMap() {
 		
-		boolean isEmptyCollection = (value instanceof Collection && ((Collection)value).isEmpty());
+		boolean isEmptyCollection = (value instanceof Collection && ((Collection)value)
+				.isEmpty());
 		boolean isEmptyMap = (value instanceof Map && ((Map)value).isEmpty());
 		return isEmptyCollection || isEmptyMap;
 	}
@@ -292,4 +291,5 @@ public class Optional< T >
 		
 		return value.toString();
 	}
+	
 }

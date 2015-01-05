@@ -35,6 +35,22 @@ import main.java.cli.model.users.User;
 		 */
 		private final Database<User> userDatabase;
 	
+		/**
+		 * The User username.
+		 */
+		private String username;
+	
+		/*
+		 * The old password needed to check if is the true User who's is changing the password.
+		 */
+		
+		private String oldPassword;
+		
+		/*
+		 * The new User password.
+		 */		
+		private String newPassword;
+		
 		// CONSTRUCTOR
 		
 		/**
@@ -71,7 +87,11 @@ import main.java.cli.model.users.User;
 		@Override
 		protected Callable<Optional<String>> internalNewInstance() throws InvalidArgumentException {
 
-		return new PatchUserPasswordCommand(userDatabase,getUsername(), getOldPassword(),getNewPassword());
+			getUsername();
+			getOldPassword();
+			getNewPassword();
+		
+			return new PatchUserPasswordCommand(userDatabase,username, oldPassword, newPassword);
 
 		}
 		
@@ -102,9 +122,9 @@ import main.java.cli.model.users.User;
 		 * 
 		 * @return a String with the username value. 
 		 */		
-		private String getUsername(){
+		private void getUsername(){
 		
-		return getParameterAsString(requiredParameters[0]);
+		username = getParameterAsString(requiredParameters[0]);
 		
 		}
 
@@ -120,9 +140,9 @@ import main.java.cli.model.users.User;
 		 * 
 		 * @return a String with the OldPassword value. 
 		 */
-		private String getOldPassword(){
+		private void getOldPassword(){
 		
-		return getParameterAsString(requiredParameters[1]);
+		oldPassword = getParameterAsString(requiredParameters[1]);
 		
 	}
 		
@@ -138,9 +158,9 @@ import main.java.cli.model.users.User;
 		 * 
 		 * @return a String with the NewPassword value. 
 		 */
-		private String getNewPassword(){
+		private void getNewPassword(){
 		
-		return getParameterAsString(requiredParameters[2]);
+		newPassword = getParameterAsString(requiredParameters[2]);
 		
 	}
 

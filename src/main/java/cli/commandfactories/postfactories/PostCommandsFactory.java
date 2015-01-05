@@ -3,6 +3,7 @@ package main.java.cli.commandfactories.postfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
+
 import main.java.cli.StringsDictionary;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.exceptions.InternalErrorException;
@@ -103,26 +104,10 @@ public abstract class PostCommandsFactory< E extends Element, R > extends
 	 * It starts by authenticating the password of the user who is posting (both
 	 * user and password are expected in the parameters map) and returns a
 	 * {@link Callable} instance ready to be called.
-	 * 
-	 * @throws NoSuchElementInDatabaseException
-	 *             If there is no user in {@link #postingUsersDatabase} whose
-	 *             username is the login name receive in the parameters map. The
-	 *             message of this exception is <i>«{login name} not found in
-	 *             {@code postingUsersDatabase.getDatabaseName()}»</i>.
-	 * @throws InternalErrorException
-	 *             If an internal error that wasn't supposed to happen happened.
-	 * @throws WrongLoginPasswordException
-	 *             If the login password received does not match the login
-	 *             username's password.
-	 * @throws InvalidParameterValueException 
-	 *             If the received value for a required parameter was invalid.
-	 * @throws MissingRequiredParameterException 
-	 *             If the received map does not contain one of the required
-	 *             parameters for instantiating the command.
+	 * @throws Exception 
 	 */
 	protected final Callable< R > internalNewInstance()
-			throws NoSuchElementInDatabaseException, InternalErrorException,
-			WrongLoginPasswordException, MissingRequiredParameterException, InvalidParameterValueException {
+			throws Exception {
 		
 		loginName = getParameterAsString( StringsDictionary.LOGINNAME );
 		loginPassword = getParameterAsString( StringsDictionary.LOGINPASSWORD );
@@ -172,10 +157,12 @@ public abstract class PostCommandsFactory< E extends Element, R > extends
 	 *             parameters for instantiating the command.
 	 * @throws InvalidParameterValueException
 	 *             If the received value for a required parameter was invalid.
+	 * @throws InvalidArgumentException 
+	 * @throws Exception 
 	 */
 	protected abstract Callable< R > postsInternalNewInstance(
 			User userWhoIsPosting ) throws InternalErrorException,
-			MissingRequiredParameterException, InvalidParameterValueException;
+			MissingRequiredParameterException, InvalidParameterValueException, InvalidArgumentException, Exception;
 	
 	/**
 	 * Returns an array of {@link String}s that has the names of the parameters

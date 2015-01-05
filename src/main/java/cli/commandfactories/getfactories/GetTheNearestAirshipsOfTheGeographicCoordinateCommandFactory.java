@@ -36,6 +36,22 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 		 */
 		private final String[] requiredParameters;
 		
+		/**
+		 *  The number of airship to get
+		 */
+		private int numberOfAirshipsToGet;
+		
+
+		/**
+		 *  The longitude parameter of the Geographic Coordinate.   
+		 */
+		private double Longitude;
+		
+
+		/**
+		 * The latitude parameter of the Geographic Coordinate.  
+		 */
+		private double Latitude;
 		
 		// CONSTRUCTOR
 
@@ -61,7 +77,7 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 		this.requiredParameters= new String[] { StringsDictionary.LATITUDE,StringsDictionary.LONGITUDE, 
 																			StringsDictionary.NUMBEROFAIRSHIPSTOFIND};
 					
-	}
+		}
 
 		// IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
 
@@ -76,10 +92,14 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 		
 		protected Callable<Optional< Iterable<Airship > > >  internalNewInstance() throws InvalidParameterValueException, InvalidArgumentException{
 
-		return  new GetTheNearestAirshipsOfTheGeographicCoordinateCommand(airshipsDatabase,getNumberOfAirshipsTofind(),
-																									getLatitude(),getLongitude() );
+			getNumberOfAirshipsTofind();
+			getLongitude();
+			getLatitude();
+			
+		return  new GetTheNearestAirshipsOfTheGeographicCoordinateCommand(airshipsDatabase,numberOfAirshipsToGet,
+																									Latitude, Longitude );
 	
-	}
+		}
 
 		/**
 		 * Method responsible to return a array who contains all the required parameters 
@@ -88,12 +108,12 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 		 * @return a array with required parameters.
 		 * 
 		 */
-	@Override
+		@Override
 		protected String[] getRequiredParameters() {
 		
 		return requiredParameters;
 	
-	}
+		}
 
 		// AUXILIARY PRIVATE METHODS
 	
@@ -110,10 +130,10 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 		 * 
 		 * @return a int with the desired  number of airships value. 
 		 */		
-		private int getNumberOfAirshipsTofind() throws InvalidParameterValueException {
+		private void  getNumberOfAirshipsTofind() throws InvalidParameterValueException {
 		
-		return getParameterAsInt(requiredParameters[2]);
-	}
+		numberOfAirshipsToGet = getParameterAsInt( requiredParameters[2] );
+		}
 		
 		/**
 		 * 
@@ -127,10 +147,10 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 		 * 
 		 * @return a double with the desired  number of airships longitude value. 
 		 */		
-		private double getLongitude() throws InvalidParameterValueException {
+		private void getLongitude() throws InvalidParameterValueException {
 		
-		return getParameterAsDouble(requiredParameters[1]);
-	}
+		Longitude = getParameterAsDouble(requiredParameters[1]);
+		}
 		
 		/**
 		 * 
@@ -144,10 +164,10 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 		 * 
 		 * @return a double with the desired  number of airships latitude value. 
 		 */		
-		private double getLatitude() throws InvalidParameterValueException {
+		private void getLatitude() throws InvalidParameterValueException {
 
-		return getParameterAsDouble(requiredParameters[0]);
-	}
+		Latitude = getParameterAsDouble(requiredParameters[0]);
+		}
 
 
 	

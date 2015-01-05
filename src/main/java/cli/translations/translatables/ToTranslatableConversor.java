@@ -1,7 +1,6 @@
 package main.java.cli.translations.translatables;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 

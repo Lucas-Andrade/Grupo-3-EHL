@@ -66,7 +66,6 @@ public interface CallablesFactory< R, K, V >
 	 */
 	public Callable< R > newInstance( Map< K, V > parameters )
 			throws MissingRequiredParameterException,
-			InvalidParameterValueException, WrongLoginPasswordException,
-			Exception;
+			InvalidParameterValueException, WrongLoginPasswordException;
 
 }

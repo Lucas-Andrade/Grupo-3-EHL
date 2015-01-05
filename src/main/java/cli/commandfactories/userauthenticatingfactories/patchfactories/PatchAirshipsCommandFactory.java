@@ -50,7 +50,7 @@ public class PatchAirshipsCommandFactory extends UserAuthenticatingFactory<Airsh
 
 	@SuppressWarnings ("unchecked")
 	@Override
-	protected Callable<String> internalInternalNewInstance(User userWhoIsPosting) throws Exception {
+	protected Callable<String> internalInternalNewInstance(User userWhoIsPosting)  {
 
 		getValuesOfTheParametersMap();
 
@@ -89,14 +89,24 @@ public class PatchAirshipsCommandFactory extends UserAuthenticatingFactory<Airsh
 		return requiredParameters;
 	}
 
-	private void getValuesOfTheParametersMap() throws Exception {
+
+	private void getValuesOfTheParametersMap() throws MissingRequiredParameterException, InvalidArgumentException  {
 
 		if (!parametersMap.containsKey(StringsDictionary.FLIGHTID))
 			throw new MissingRequiredParameterException(StringsDictionary.FLIGHTID);
 
 		identification = getParameterAsString(StringsDictionary.FLIGHTID);
 
-		airship = airshipsDatabase.getElementByIdentification(identification).get();
+		try
+		{
+			airship = airshipsDatabase.getElementByIdentification(identification).get();
+		}
+		catch( Exception e1 )
+		{
+			//By G, should not happen? 
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 
 		type = airship.getClass().toString();
 

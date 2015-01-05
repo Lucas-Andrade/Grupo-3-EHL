@@ -6,7 +6,6 @@ import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import main.java.cli.exceptions.InternalErrorException;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.exceptions.commandparserexceptions.DuplicateParametersException;
@@ -159,12 +158,37 @@ public class Parser
 	 * received in the constructor.
 	 * 
 	 * @return The corresponding {@link Callable} instance.
-	 * @throws Exception 
+	 * @throws InvalidArgumentException
+	 *             If {@code parameters==null}.
+	 * @throws InvalidCommandSyntaxException
+	 *             If {@code args.length} is not 2 or 3.
+	 * @throws InvalidParameterValueException
+	 *             If the value received in the parameters map for a required
+	 *             parameter is invalid.
+	 * @throws InternalErrorException
+	 *             If an internal error occurred (not supposed to happen).
+	 * @throws MissingRequiredParameterException
+	 *             If the received map does not contain one of the required
+	 *             parameters for instantiating the command.
+	 * @throws NoSuchElementInDatabaseException
+	 *             If there is no user in {@link #postingUsersDatabase} whose
+	 *             username is the login name receive in the parameters map. The
+	 *             message of this exception is <i>«{login name} not found in
+	 *             {@code postingUsersDatabase.getDatabaseName()}»</i>.
 	 * @throws RequiredParameterNotPresentException
 	 *             If some parameters needed to create the new instance are
 	 *             missing.
+	 * @throws UnknownCommandException
+	 *             If the given string-command wasn't registered.
+	 * @throws WrongLoginPasswordException
+	 *             If the login password received does not match the login
+	 *             username's password.
 	 */
-	public Callable< ? > getCommand() throws Exception {
+	public Callable< ? > getCommand() throws WrongLoginPasswordException,
+			MissingRequiredParameterException, InvalidCommandSyntaxException,
+			UnknownCommandException, NoSuchElementInDatabaseException,
+			InvalidParameterValueException, InvalidArgumentException,
+			InternalErrorException {
 		
 		return cmdParser.getCommand( parametersMap, args );
 	}

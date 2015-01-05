@@ -107,10 +107,14 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
 	 * It starts by authenticating the password of the user who is posting (both
 	 * user and password are expected in the parameters map) and returns a
 	 * {@link Callable} instance ready to be called.
-	 * @throws Exception 
+	 * @throws InternalErrorException 
+	 * @throws InvalidParameterValueException 
+	 * @throws MissingRequiredParameterException 
+	 * @throws NoSuchElementInDatabaseException 
+	 * @throws WrongLoginPasswordException 
 	 */
-	protected final Callable< R > internalNewInstance()
-			throws Exception {
+	protected final Callable< R > internalNewInstance() throws MissingRequiredParameterException, InvalidParameterValueException, InternalErrorException, NoSuchElementInDatabaseException, WrongLoginPasswordException
+			 {
 		
 		loginName = getParameterAsString( StringsDictionary.LOGINNAME );
 		loginPassword = getParameterAsString( StringsDictionary.LOGINPASSWORD );
@@ -164,7 +168,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
 	 */
 	protected abstract Callable< R > internalInternalNewInstance(
 			User userWhoIsPosting ) throws InternalErrorException,
-			MissingRequiredParameterException, InvalidParameterValueException, Exception;
+			MissingRequiredParameterException, InvalidParameterValueException;
 	
 	/**
 	 * Returns an array of {@link String}s that has the names of the parameters

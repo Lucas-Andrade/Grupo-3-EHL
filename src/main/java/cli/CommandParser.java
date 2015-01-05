@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
+
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.exceptions.InternalErrorException;
 import main.java.cli.exceptions.InvalidArgumentException;
@@ -296,38 +297,13 @@ public class CommandParser
 	 *            The command's {@link String string} representation that is to
 	 *            be parsed.
 	 * @return The corresponding {@link Callable} instance.
-	 * @throws MissingRequiredParameterException
-	 *             If the received map does not contain one of the required
-	 *             parameters for instantiating the command.
-	 * @throws InvalidCommandSyntaxException
-	 *             If {@code args.length} is not 2 or 3.
-	 * @throws WrongLoginPasswordException
-	 *             If the login password received does not match the login
-	 *             username's password.
-	 * @throws InvalidArgumentException
-	 *             If {@code parameters==null}.
-	 * @throws UnknownCommandException
-	 *             If the given string-command wasn't registered.
-	 * @throws InternalErrorException
-	 *             If an internal error occurred (not supposed to happen).
-	 * @throws InvalidParameterValueException
-	 *             If the value received in the parameters map for a required
-	 *             parameter is invalid.
-	 * @throws NoSuchElementInDatabaseException
-	 *             If there is no user in {@link #postingUsersDatabase} whose
-	 *             username is the login name receive in the parameters map. The
-	 *             message of this exception is <i>«{login name} not found in
-	 *             {@code postingUsersDatabase.getDatabaseName()}»</i>.
+	 * @throws Exception 
 	 * @throws RequiredParameterNotPresentException
 	 *             If some parameters needed to create the new instance are
 	 *             missing.
 	 */
 	public Callable< ? > getCommand( Map< String, String > argsParametersMap,
-			String... args ) throws MissingRequiredParameterException,
-			InvalidArgumentException, InvalidCommandSyntaxException,
-			WrongLoginPasswordException, UnknownCommandException,
-			NoSuchElementInDatabaseException, InvalidParameterValueException,
-			InternalErrorException {
+			String... args ) throws Exception {
 		
 		if( args.length < 2 || args.length > 3 )
 			throw new InvalidCommandSyntaxException(
@@ -440,37 +416,15 @@ public class CommandParser
 	 *            corresponding node is to be found in the current iteration of
 	 *            this method.
 	 * @return The {@link Callable} instance corresponding .
-	 * @throws WrongLoginPasswordException
-	 *             If the login password received does not match the login
-	 *             username's password.
-	 * @throws InvalidArgumentException
-	 *             If {@code parameters==null}.
-	 * @throws UnknownCommandException
-	 *             If the given string-command wasn't registered.
-	 * @throws InternalErrorException
-	 *             If an internal error occurred (not supposed to happen).
-	 * @throws InvalidParameterValueException
-	 *             If the value received in the parameters map for a required
-	 *             parameter is invalid.
-	 * @throws NoSuchElementInDatabaseException
-	 *             If there is no user in {@link #postingUsersDatabase} whose
-	 *             username is the login name receive in the parameters map. The
-	 *             message of this exception is <i>«{login name} not found in
-	 *             {@code postingUsersDatabase.getDatabaseName()}»</i>.
+	 * @throws Exception 
 	 * @throws RequiredParameterNotPresentException
 	 *             If some parameters needed to create the new instance are
 	 *             missing.
-	 * @throws MissingRequiredParameterException
-	 *             If the received map does not contain one of the required
-	 *             parameters for instantiating the command.
 	 */
 	private Callable< ? > getCommandInternal( Node rootNode,
 			String[] methodAndPathElements, int pathStartIndex,
 			Map< String, String > parameters )
-			throws WrongLoginPasswordException, InvalidArgumentException,
-			MissingRequiredParameterException, UnknownCommandException,
-			NoSuchElementInDatabaseException, InvalidParameterValueException,
-			InternalErrorException {
+			throws Exception {
 		
 		if( pathStartIndex == methodAndPathElements.length )
 		{

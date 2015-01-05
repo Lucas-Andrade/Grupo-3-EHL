@@ -174,9 +174,10 @@ public class PostAirshipCommandsFactory extends
 	 * @throws InvalidParameterValueException
 	 *             If the value received for a certain parameter is not
 	 *             convertible to correct type.
+	 * @throws MissingRequiredParameterException 
 	 */
 	private void getValuesOfTheParametersMap()
-			throws InvalidParameterValueException {
+			throws InvalidParameterValueException, MissingRequiredParameterException {
 		
 		type = getParameterAsString( StringsDictionary.AIRSHIP_TYPE );
 		latitude = getParameterAsDouble( StringsDictionary.LATITUDE );

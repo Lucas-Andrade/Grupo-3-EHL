@@ -9,6 +9,7 @@ import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.commands.getcommands.GetTheNearestAirshipsOfTheGeographicCoordinateCommand;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.exceptions.factoryexceptions.InvalidParameterValueException;
+import main.java.cli.exceptions.factoryexceptions.MissingRequiredParameterException;
 import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 	
@@ -66,15 +67,16 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 		// IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
 
 		/**
-		 * 
-		 * Returns a command of type {@link GetTheNearestAirshipsOfTheGeograficCoordinateCommand}. 
-		 * 
-		 * @return  a command of type {@link GetTheNearestAirshipsOfTheGeograficCoordinateCommand}. 
-		 * @throws InvalidArgumentException 
-		 */
+	 * 
+	 * Returns a command of type {@link GetTheNearestAirshipsOfTheGeograficCoordinateCommand}.
+	 * 
+	 * @return a command of type {@link GetTheNearestAirshipsOfTheGeograficCoordinateCommand}.
+	 * @throws InvalidArgumentException
+	 * @throws MissingRequiredParameterException
+	 */
 		@Override
 		
-		protected Callable<Optional< Iterable<Airship > > >  internalNewInstance() throws InvalidParameterValueException, InvalidArgumentException{
+		protected Callable<Optional< Iterable<Airship > > >  internalNewInstance() throws InvalidParameterValueException, InvalidArgumentException, MissingRequiredParameterException{
 
 		return  new GetTheNearestAirshipsOfTheGeographicCoordinateCommand(airshipsDatabase,getNumberOfAirshipsTofind(),
 																									getLatitude(),getLongitude() );
@@ -126,8 +128,9 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 		 * the value of the airships longitude.
 		 * 
 		 * @return a double with the desired  number of airships longitude value. 
+		 * @throws MissingRequiredParameterException 
 		 */		
-		private double getLongitude() throws InvalidParameterValueException {
+		private double getLongitude() throws InvalidParameterValueException, MissingRequiredParameterException {
 		
 		return getParameterAsDouble(requiredParameters[1]);
 	}
@@ -143,8 +146,9 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 		 * the value of the airships latitude.
 		 * 
 		 * @return a double with the desired  number of airships latitude value. 
+		 * @throws MissingRequiredParameterException 
 		 */		
-		private double getLatitude() throws InvalidParameterValueException {
+		private double getLatitude() throws InvalidParameterValueException, MissingRequiredParameterException {
 
 		return getParameterAsDouble(requiredParameters[0]);
 	}

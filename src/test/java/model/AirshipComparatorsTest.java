@@ -22,7 +22,7 @@ public class AirshipComparatorsTest
 	private InMemoryAirshipsDatabase database;
 
 	@Test
-	public void test()
+	public void test() throws InvalidArgumentException, Exception
 	{
 		// Arrange
 		GeographicPosition gp;

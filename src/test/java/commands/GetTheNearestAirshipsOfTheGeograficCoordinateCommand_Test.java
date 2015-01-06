@@ -58,53 +58,48 @@ public class GetTheNearestAirshipsOfTheGeograficCoordinateCommand_Test {
 		 
 		Parser parser = new Parser(cmdParser,"GET", "/airships/find", "nbAirships=2&latitude=60&longitude=225");
 		
-		String result = parser.getCommand("GET", "/airships/find", "nbAirships=2&latitude=60&longitude=225").call().toString();
+		String result = parser.getCommand().call().toString();
 			
-		Assert.assertEquals("["+air1.toString()+", "+air3.toString()+"]",result);
+		Assert.assertEquals(
+								new StringBuilder("[").append(air1.toString())
+									.append(", ").append(air3.toString())
+									.append("]").toString()
+																, result);
 				
 	}
 	
 	@Test(expected=InvalidArgumentException.class)	
 	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullAirshipDatabase()  throws Exception{
 					
-		@SuppressWarnings("unused")
-		GetTheNearestAirshipsOfTheGeographicCoordinateCommand getTheNearestAirship = new GetTheNearestAirshipsOfTheGeographicCoordinateCommand(
-			null,3, 45, 100);
+		new GetTheNearestAirshipsOfTheGeographicCoordinateCommand(null,3, 45, 100);
 			
 	}	
 	
 	@Test(expected=InvalidArgumentException.class)	
-	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANegativeValueToDesiredAirshipsNumber()  throws Exception{
+	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANegativeValueToDesiredAirshipsNumber() throws Exception  {
 					
-		@SuppressWarnings("unused")
-		GetTheNearestAirshipsOfTheGeographicCoordinateCommand getTheNearestAirship = new GetTheNearestAirshipsOfTheGeographicCoordinateCommand(
-			airshipsDatabase,-4, 45, 100);
+		 new GetTheNearestAirshipsOfTheGeographicCoordinateCommand(airshipsDatabase,-4, 45, 100).call();
 			
 	}	
 		
 	@Test(expected=InvalidArgumentException.class)	
 	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveAInvalidValueToLatitude()  throws Exception{
 					
-		@SuppressWarnings("unused")
-		GetTheNearestAirshipsOfTheGeographicCoordinateCommand getTheNearestAirship = new GetTheNearestAirshipsOfTheGeographicCoordinateCommand(
-			airshipsDatabase,2, -245, 100);
+		 new GetTheNearestAirshipsOfTheGeographicCoordinateCommand(airshipsDatabase,2, -245, 100).call();
 			
 	}
 	
 	@Test(expected=InvalidArgumentException.class)	
 	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveAInvalidValueToLongitude()  throws Exception{
 					
-		@SuppressWarnings("unused")
-		GetTheNearestAirshipsOfTheGeographicCoordinateCommand getTheNearestAirship = new GetTheNearestAirshipsOfTheGeographicCoordinateCommand(
-			airshipsDatabase,2, 45, 1000);
+		 new GetTheNearestAirshipsOfTheGeographicCoordinateCommand(airshipsDatabase,2, 45, 1000).call();
 			
 	}
 	
 	@Test(expected=InvalidArgumentException.class)	
 	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullAirShipDatabaseInTheFactory()  throws Exception{
 					
-		@SuppressWarnings("unused")
-		GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory getTheNearestAirship = new GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory(null);
+		new GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory(null);
 			
-	}	
+	}		
 }

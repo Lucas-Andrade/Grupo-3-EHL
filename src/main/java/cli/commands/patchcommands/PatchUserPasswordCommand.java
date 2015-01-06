@@ -13,7 +13,7 @@ import main.java.cli.model.users.User;
 	 * 
 	 * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
 	 */
-	public class PatchUserPasswordCommand implements Callable< Optional<String> >  {
+	public class PatchUserPasswordCommand implements Callable< String >  {
 
 	
  
@@ -67,12 +67,9 @@ import main.java.cli.model.users.User;
 			String oldPassword, String newPassword) throws InvalidArgumentException {
 	 
 		
-		if(identification == null)			
-			throw new InvalidArgumentException("Cannot instantiate command with null identification.");		
 		if(userDataBase == null)
 			throw new InvalidArgumentException("Cannot instantiate command with null database.");
-		if(newPassword == null)
-			throw new InvalidArgumentException("Cannot instantiate command with null newPassword.");
+
 		if(oldPassword == null)
 			throw new InvalidArgumentException("Cannot instantiate command with null oldPassword.");
 		
@@ -100,12 +97,12 @@ import main.java.cli.model.users.User;
 	 */ 
 
 	@Override
-	public Optional<String> call() throws Exception {
+	public String call() throws Exception {
 		
 		if(userDatabase.getElementByIdentification(identification).get().changePassword(newPassword, oldPassword))
-			return new Optional<String>("The User Password was successfully changed",	new NullPointerException() );
+			return "The User Password was successfully changed";
 		
-		return new Optional<String>("The User Password was not changed",	new NullPointerException() );
+		return "The User Password was not changed";
 	
 	}
 

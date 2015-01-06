@@ -11,10 +11,8 @@ import main.java.cli.outputformatters.Translatable;
  *
  *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-class StringConversor
-	extends Converter
+class StringConversor extends Conversor
 {
-
 	@Override
 	Translatable convert( Object string )
 	{
@@ -22,7 +20,7 @@ class StringConversor
 		String str = ( String )string;
 
 		Map< String, Object > propertiesBag = new HashMap< String, Object >();
-		propertiesBag.put( "Message", str );
+		propertiesBag.put( "message", str );
 
 		return new Translatable( null, null, null, null, propertiesBag, str );
 	}

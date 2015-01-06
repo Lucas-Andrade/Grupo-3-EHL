@@ -1,13 +1,13 @@
 package main.java.cli.commands;
-import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.parsingtools.CommandParser;
+import main.java.cli.utils.OptionsList;
 import main.java.cli.utils.exceptions.InvalidArgumentException;
 
 /**
  *TODO:document
  */
-public class HelpCommand implements Callable< Map< String, String > >
+public class HelpCommand implements Callable< OptionsList >
 {
 	
 	// INSTANCE FIELD
@@ -25,9 +25,9 @@ public class HelpCommand implements Callable< Map< String, String > >
 		this.cmdParser = cmdParser;
 	}
 	
-	public Map< String, String > call() {
+	public OptionsList call() {
 		
-		return cmdParser.getRegisteredCommands();
+		return new OptionsList(cmdParser.getRegisteredCommands());
 		//
 		// String delimiter = "---------------------------------------------\n";
 		// StringBuilder result = new StringBuilder( delimiter );

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import main.java.cli.outputformatters.Translatable;
 import main.java.cli.utils.Optional;
+import main.java.cli.utils.OptionsList;
 import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
 
 
@@ -14,6 +15,7 @@ import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
  * {@link #convert(Object)} must be
  * <ul>
  * <li>an instance of {@link String} or
+ * <li>an instance of {@link OptionsList} or
  * <li>an instance of {@link Optional} representing an instance of one of the
  * following types:
  * <ul>
@@ -38,31 +40,33 @@ public class ToTranslatableConversor
 	 * {@code instance}.
 	 * </p>
 	 */
-	private static String userClass = "User"; // User
 	private static String civilClass = "CivilAirship"; // CivilAirship
-	private static String militaryClass = "MilitaryAirship"; // MilitaryAirship
-	private static String stringClass = "String"; // String
 	private static String iterableUserClass = "itUser"; // Iterable<User>
 	private static String iterableCivilClass = "itCivilAirship"; // Iterable<CivilAirship>
 	private static String iterableMilitaryClass = "itMilitaryAirship"; // Iterable<MilitaryAirship>
+	private static String militaryClass = "MilitaryAirship"; // MilitaryAirship
+	private static String optionsListClass = "OptionsList"; // OptionsList
+	private static String stringClass = "String"; // String
+	private static String userClass = "User"; // User
 	
 	/**
 	 * The mapping between strings that represent instance types and the
-	 * {@link Converter} instance needed to convert instances of that type into
+	 * {@link Conversor} instance needed to convert instances of that type into
 	 * {@link Translatables} (uses the {@link ResultTypesStringsDictionary}).
 	 */
-	private static final Map< String, Converter > CONVERSORSbyTYPE = new HashMap< String, Converter >();
+	private static final Map< String, Conversor > CONVERSORSbyTYPE = new HashMap< String, Conversor >();
 	static
 	{
-		CONVERSORSbyTYPE.put( userClass, new UserConverter() );
-		CONVERSORSbyTYPE.put( civilClass, new CivilAirshipConverter() );
-		CONVERSORSbyTYPE.put( militaryClass, new MilitaryAirshipConverter() );
+		CONVERSORSbyTYPE.put( userClass, new UserConversor() );
+		CONVERSORSbyTYPE.put( civilClass, new CivilAirshipConversor() );
+		CONVERSORSbyTYPE.put( militaryClass, new MilitaryAirshipConversor() );
 		CONVERSORSbyTYPE.put( stringClass, new StringConversor() );
 		CONVERSORSbyTYPE.put( iterableUserClass, new IterableUserConversor() );
 		CONVERSORSbyTYPE.put( iterableCivilClass,
 				new IterableAirshipConversor() );
 		CONVERSORSbyTYPE.put( iterableMilitaryClass,
 				new IterableAirshipConversor() );
+		CONVERSORSbyTYPE.put( optionsListClass, new OptionsListConversor() );
 		
 	}
 	
@@ -72,6 +76,7 @@ public class ToTranslatableConversor
 	 * <b> The argument {@code object} must be
 	 * <ul>
 	 * <li>an instance of {@link String} or
+	 * <li>an instance of {@link OptionsList} or
 	 * <li>an instance of {@link Optional} representing an instance of one of
 	 * the following types:
 	 * <ul>
@@ -103,6 +108,9 @@ public class ToTranslatableConversor
 		
 		if( object instanceof String )
 			return CONVERSORSbyTYPE.get( stringClass ).convert( (String)object );
+		
+		if( object instanceof OptionsList )
+			return CONVERSORSbyTYPE.get( optionsListClass ).convert( (OptionsList)object );
 		
 		// caso nao seja Optional nem String
 		throw new UnknownTypeException(
@@ -164,22 +172,22 @@ public class ToTranslatableConversor
 	}
 	
 	/**
-	 * Returns the correct {@link Converter} for an object of type whose string
+	 * Returns the correct {@link Conversor} for an object of type whose string
 	 * representation is {@code objectType}.
 	 * 
 	 * @param objectType
 	 *            The string representation of the type of the object to be
 	 *            converted.
-	 * @return The correct {@link Converter} for an object of type whose string
+	 * @return The correct {@link Conversor} for an object of type whose string
 	 *         representation is {@code objectType}.
 	 * @throws UnknownTypeException
 	 *             If {@code objectType} is unknown.
 	 */
 	
-	private static Converter getConversor( String objectType )
+	private static Conversor getConversor( String objectType )
 			throws UnknownTypeException {
 		
-		Converter c = CONVERSORSbyTYPE.get( objectType );
+		Conversor c = CONVERSORSbyTYPE.get( objectType );
 		
 		if( c == null )
 			throw new UnknownTypeException(

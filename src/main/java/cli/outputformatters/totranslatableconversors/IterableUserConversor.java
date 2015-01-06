@@ -15,7 +15,7 @@ import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-class IterableUserConversor extends Converter
+class IterableUserConversor extends Conversor
 {
 	
 	public Translatable convert( Object iterableOfUsers ) throws UnknownTypeException {

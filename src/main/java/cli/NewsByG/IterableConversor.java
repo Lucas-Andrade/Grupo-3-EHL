@@ -20,12 +20,12 @@ public class IterableConversor implements Converter<Iterable<Element>>
 	{
 		Map< String, Object > propertiesBag =  new HashMap< String, Object >();
 
-		for( Element element : iterable )
-		{
-			propertiesBag.put( element.getIdentification(), convert( element ) );
-		}
+//		for( Element element : iterable )
+//		{
+//			propertiesBag.put( element.getIdentification(), convert( element ) );
+//		}
 
-		return new Translatable( tag, null, null, null, propertiesBag, null );
+		return new Translatable( null, null, null, null, propertiesBag, null );
 	}
 
 }

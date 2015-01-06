@@ -3,7 +3,7 @@ package main.java.cli.commandfactories.userauthenticatingfactories.patchfactorie
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.concurrent.Callable;
-import main.java.cli.StringsDictionary;
+import main.java.cli.CommandLineDictionary;
 import main.java.cli.commandfactories.userauthenticatingfactories.UserAuthenticatingFactory;
 import main.java.cli.commands.patchcommands.PatchCivilAirshipCommand;
 import main.java.cli.commands.patchcommands.PatchMilitaryAirshipCommand;
@@ -52,7 +52,7 @@ public class PatchAirshipsCommandFactory extends
 		
 		this.airshipsDatabase = airshipsDatabase;
 		
-		this.requiredParameters = new String[]{ StringsDictionary.FLIGHTID };
+		this.requiredParameters = new String[]{ CommandLineDictionary.FLIGHTID };
 	}
 	
 	@SuppressWarnings( "unchecked" )
@@ -102,7 +102,7 @@ public class PatchAirshipsCommandFactory extends
 				| IllegalAccessException | IllegalArgumentException e )
 		{
 			throw new InvalidParameterValueException(
-					StringsDictionary.AIRSHIP_TYPE, type );
+					CommandLineDictionary.AIRSHIP_TYPE, type );
 		}
 	}
 	
@@ -134,7 +134,7 @@ public class PatchAirshipsCommandFactory extends
 		// if (!parametersMap.containsKey(StringsDictionary.FLIGHTID))
 		// 		throw new MissingRequiredParameterException(StringsDictionary.FLIGHTID);
 		
-		identification = getParameterAsString( StringsDictionary.FLIGHTID );
+		identification = getParameterAsString( CommandLineDictionary.FLIGHTID );
 		
 		try
 		{
@@ -156,7 +156,7 @@ public class PatchAirshipsCommandFactory extends
 		
 		try
 		{
-			latitude = getParameterAsDouble( StringsDictionary.LATITUDE );
+			latitude = getParameterAsDouble( CommandLineDictionary.LATITUDE );
 			
 		}
 		catch( MissingRequiredParameterException e )
@@ -166,7 +166,7 @@ public class PatchAirshipsCommandFactory extends
 		
 		try
 		{
-			longitude = getParameterAsDouble( StringsDictionary.LONGITUDE );
+			longitude = getParameterAsDouble( CommandLineDictionary.LONGITUDE );
 			
 		}
 		catch( MissingRequiredParameterException e )
@@ -176,7 +176,7 @@ public class PatchAirshipsCommandFactory extends
 		
 		try
 		{
-			altitude = getParameterAsDouble( StringsDictionary.ALTITUDE );
+			altitude = getParameterAsDouble( CommandLineDictionary.ALTITUDE );
 			
 		}
 		catch( MissingRequiredParameterException e )
@@ -186,7 +186,7 @@ public class PatchAirshipsCommandFactory extends
 		
 		try
 		{
-			maxAltitude = getParameterAsDouble( StringsDictionary.AIRCORRIDOR_MAXALTITUDE );
+			maxAltitude = getParameterAsDouble( CommandLineDictionary.AIRCORRIDOR_MAXALTITUDE );
 			
 		}
 		catch( MissingRequiredParameterException e )
@@ -196,7 +196,7 @@ public class PatchAirshipsCommandFactory extends
 		
 		try
 		{
-			minAltitude = getParameterAsDouble( StringsDictionary.AIRCORRIDOR_MINALTITUDE );
+			minAltitude = getParameterAsDouble( CommandLineDictionary.AIRCORRIDOR_MINALTITUDE );
 			
 		}
 		catch( MissingRequiredParameterException e )

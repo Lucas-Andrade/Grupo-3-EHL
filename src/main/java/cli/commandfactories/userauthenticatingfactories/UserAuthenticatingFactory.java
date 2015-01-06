@@ -3,7 +3,7 @@ package main.java.cli.commandfactories.userauthenticatingfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-import main.java.cli.StringsDictionary;
+import main.java.cli.CommandLineDictionary;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.exceptions.InternalErrorException;
 import main.java.cli.exceptions.InvalidArgumentException;
@@ -122,8 +122,8 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
 			NoSuchElementInDatabaseException, WrongLoginPasswordException,
 			InvalidArgumentException {
 		
-		loginName = getParameterAsString( StringsDictionary.LOGINNAME );
-		loginPassword = getParameterAsString( StringsDictionary.LOGINPASSWORD );
+		loginName = getParameterAsString( CommandLineDictionary.LOGINNAME );
+		loginPassword = getParameterAsString( CommandLineDictionary.LOGINPASSWORD );
 		
 		User user = getUserWhoIsPosting();
 		if( !user.authenticatePassword( loginPassword ) )

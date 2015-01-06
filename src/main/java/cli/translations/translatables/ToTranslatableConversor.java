@@ -4,7 +4,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 
-import main.java.cli.StringsDictionary;
+import main.java.cli.CommandLineDictionary;
 import main.java.cli.model.Element;
 import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.CivilAirship;
@@ -100,9 +100,9 @@ public class ToTranslatableConversor
 	private static Translatable convert( User user )
 	{
 		Map< String, Object > propertiesBag = new HashMap< String, Object >();
-		propertiesBag.put( StringsDictionary.USERNAME, user.getIdentification() );
-		propertiesBag.put( StringsDictionary.EMAIL, user.getEmail() );
-		propertiesBag.put( StringsDictionary.FULLNAME, user.getFullName() );
+		propertiesBag.put( CommandLineDictionary.USERNAME, user.getIdentification() );
+		propertiesBag.put( CommandLineDictionary.EMAIL, user.getEmail() );
+		propertiesBag.put( CommandLineDictionary.FULLNAME, user.getFullName() );
 
 		return new Translatable( null, "User", null, null, propertiesBag, user.toString() );
 	}
@@ -144,16 +144,16 @@ public class ToTranslatableConversor
 	private static Map< String, Object > createAirshipPropertyBag( Airship airship )
 	{
 		Map< String, Object > propertiesBag = new HashMap< String, Object >();
-		propertiesBag.put( StringsDictionary.FLIGHTID, airship.getIdentification() );
-		propertiesBag.put( StringsDictionary.LATITUDE,
+		propertiesBag.put( CommandLineDictionary.FLIGHTID, airship.getIdentification() );
+		propertiesBag.put( CommandLineDictionary.LATITUDE,
 				String.valueOf( airship.getCoordinates().getLatitude().getValue() ) );
-		propertiesBag.put( StringsDictionary.LONGITUDE,
+		propertiesBag.put( CommandLineDictionary.LONGITUDE,
 				String.valueOf( airship.getCoordinates().getLongitude().getValue() ) );
-		propertiesBag.put( StringsDictionary.ALTITUDE,
+		propertiesBag.put( CommandLineDictionary.ALTITUDE,
 				String.valueOf( airship.getCoordinates().getAltitude().getValue() ) );
-		propertiesBag.put( StringsDictionary.AIRCORRIDOR_MINALTITUDE,
+		propertiesBag.put( CommandLineDictionary.AIRCORRIDOR_MINALTITUDE,
 				String.valueOf( airship.getAirCorridor().getMinAltitude() ) );
-		propertiesBag.put( StringsDictionary.AIRCORRIDOR_MAXALTITUDE,
+		propertiesBag.put( CommandLineDictionary.AIRCORRIDOR_MAXALTITUDE,
 				String.valueOf( airship.getAirCorridor().getMaxAltitude() ) );
 		propertiesBag.put( "Is Outside The Given Corridor", String.valueOf( airship.isTransgressing() ) );
 

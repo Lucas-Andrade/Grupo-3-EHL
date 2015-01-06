@@ -3,7 +3,7 @@ package main.java.cli.commandfactories.userauthenticatingfactories.postfactories
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-import main.java.cli.StringsDictionary;
+import main.java.cli.CommandLineDictionary;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.commandfactories.userauthenticatingfactories.UserAuthenticatingFactory;
 import main.java.cli.commands.postcommands.PostUserCommand;
@@ -58,9 +58,9 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
 		super( "Adds a new user.", postingUsersDatabase, postedUsersDatabase );
 		
 		this.requiredParametersNames = new String[]{
-				StringsDictionary.USERNAME,
-				StringsDictionary.PASSWORD,
-				StringsDictionary.EMAIL };
+				CommandLineDictionary.USERNAME,
+				CommandLineDictionary.PASSWORD,
+				CommandLineDictionary.EMAIL };
 	}
 	
 	
@@ -121,10 +121,10 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
 	 */
 	private void getValuesOfTheParametersMap() {
 		
-		username = getParameterAsString( StringsDictionary.USERNAME );
-		password = getParameterAsString( StringsDictionary.PASSWORD );
-		email = getParameterAsString( StringsDictionary.EMAIL );
-		fullName = getParameterAsString( StringsDictionary.FULLNAME );
+		username = getParameterAsString( CommandLineDictionary.USERNAME );
+		password = getParameterAsString( CommandLineDictionary.PASSWORD );
+		email = getParameterAsString( CommandLineDictionary.EMAIL );
+		fullName = getParameterAsString( CommandLineDictionary.FULLNAME );
 	}
 	
 	

@@ -55,7 +55,7 @@ public class GetAirshipsOfOwnerCommand implements
 		if( database == null )
 			throw new InvalidArgumentException(
 					"Cannot instantiate command with null database." );
-		if( ownerUsername == null )
+		if( ownerUsername == null || ownerUsername == "")
 			throw new InvalidArgumentException(
 					"Cannot instantiate command with a null username." );
 		

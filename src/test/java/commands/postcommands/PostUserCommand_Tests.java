@@ -1,4 +1,4 @@
-package test.java.commands;
+package test.java.commands.postcommands;
 
 import main.java.CommandParser;
 import main.java.commands.postCommands.PostUserCommand;

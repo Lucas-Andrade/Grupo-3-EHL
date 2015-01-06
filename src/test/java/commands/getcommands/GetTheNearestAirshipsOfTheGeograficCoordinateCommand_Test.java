@@ -1,4 +1,4 @@
-package test.java.commands;
+package test.java.commands.getcommands;
 
 
 import main.java.cli.CommandParser;
@@ -35,7 +35,7 @@ public class GetTheNearestAirshipsOfTheGeograficCoordinateCommand_Test {
 	}
 		
 	@Test
-	public void shouldGiveAllTheAirshipsNearestOfTheGeograficCoordinate() throws Exception{
+	public void shouldGiveAllTheAirshipsNearestToTheGeograficCoordinate() throws Exception{
 	 	
 		
 		Airship air1 = new CivilAirship(30, 225, 10000, 20000, 0, 100);

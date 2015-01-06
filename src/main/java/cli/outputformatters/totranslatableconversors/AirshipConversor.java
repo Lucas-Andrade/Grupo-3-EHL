@@ -13,7 +13,7 @@ import main.java.cli.utils.CommandLineStringsDictionary;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-abstract class AirshipConverter extends Converter
+abstract class AirshipConversor extends Conversor
 {
 	
 	/**
@@ -23,6 +23,7 @@ abstract class AirshipConverter extends Converter
 	 * @return
 	 */
 	protected Map< String, Object > createAirshipPropertiesBag( Airship airship ) {
+		
 		Map< String, Object > propertiesBag = new HashMap< String, Object >();
 		propertiesBag.put( CommandLineStringsDictionary.FLIGHTID,
 				airship.getIdentification() );
@@ -44,8 +45,6 @@ abstract class AirshipConverter extends Converter
 		propertiesBag.put(
 				CommandLineStringsDictionary.AIRCORRIDOR_MAXALTITUDE,
 				String.valueOf( airship.getAirCorridor().getMaxAltitude() ) );
-		propertiesBag.put( "Is Outside The Given Corridor",
-				String.valueOf( airship.isTransgressing() ) );
 		
 		return propertiesBag;
 	}

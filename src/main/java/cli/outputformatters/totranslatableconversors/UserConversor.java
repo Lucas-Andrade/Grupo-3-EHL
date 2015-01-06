@@ -14,7 +14,7 @@ import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-class UserConversor extends Converter
+class UserConversor extends Conversor
 {
 	
 	@Override
@@ -36,7 +36,7 @@ class UserConversor extends Converter
 		propertiesBag.put( "email", u.getEmail() );
 		propertiesBag.put( "fullname", u.getFullName() );
 		
-		return new Translatable( null, "User", null, null, propertiesBag,
+		return new Translatable( "User", null, null, null, propertiesBag,
 				u.toStringWithoutPassword() );
 	}
 }

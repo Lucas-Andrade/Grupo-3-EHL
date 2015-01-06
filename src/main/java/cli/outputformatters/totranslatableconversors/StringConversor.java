@@ -3,7 +3,7 @@ package main.java.cli.outputformatters.totranslatableconversors;
 import main.java.cli.outputformatters.Translatable;
 
 
-public class StringConversor extends Converter
+public class StringConversor extends Conversor
 {
 	
 	@Override

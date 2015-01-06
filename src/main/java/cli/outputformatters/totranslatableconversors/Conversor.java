@@ -11,7 +11,7 @@ import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-abstract class Converter
+abstract class Conversor
 {
 	
 	/**

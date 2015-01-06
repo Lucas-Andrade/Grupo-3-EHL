@@ -51,15 +51,15 @@ public class ToTranslatableConversor
 	
 	/**
 	 * The mapping between strings that represent instance types and the
-	 * {@link Converter} instance needed to convert instances of that type into
+	 * {@link Conversor} instance needed to convert instances of that type into
 	 * {@link Translatables} (uses the {@link ResultTypesStringsDictionary}).
 	 */
-	private static final Map< String, Converter > CONVERSORSbyTYPE = new HashMap< String, Converter >();
+	private static final Map< String, Conversor > CONVERSORSbyTYPE = new HashMap< String, Conversor >();
 	static
 	{
 		CONVERSORSbyTYPE.put( userClass, new UserConversor() );
-		CONVERSORSbyTYPE.put( civilClass, new CivilAirshipConverter() );
-		CONVERSORSbyTYPE.put( militaryClass, new MilitaryAirshipConverter() );
+		CONVERSORSbyTYPE.put( civilClass, new CivilAirshipConversor() );
+		CONVERSORSbyTYPE.put( militaryClass, new MilitaryAirshipConversor() );
 		CONVERSORSbyTYPE.put( stringClass, new StringConversor() );
 		CONVERSORSbyTYPE.put( iterableUserClass, new IterableUserConversor() );
 		CONVERSORSbyTYPE.put( iterableCivilClass,
@@ -172,22 +172,22 @@ public class ToTranslatableConversor
 	}
 	
 	/**
-	 * Returns the correct {@link Converter} for an object of type whose string
+	 * Returns the correct {@link Conversor} for an object of type whose string
 	 * representation is {@code objectType}.
 	 * 
 	 * @param objectType
 	 *            The string representation of the type of the object to be
 	 *            converted.
-	 * @return The correct {@link Converter} for an object of type whose string
+	 * @return The correct {@link Conversor} for an object of type whose string
 	 *         representation is {@code objectType}.
 	 * @throws UnknownTypeException
 	 *             If {@code objectType} is unknown.
 	 */
 	
-	private static Converter getConversor( String objectType )
+	private static Conversor getConversor( String objectType )
 			throws UnknownTypeException {
 		
-		Converter c = CONVERSORSbyTYPE.get( objectType );
+		Conversor c = CONVERSORSbyTYPE.get( objectType );
 		
 		if( c == null )
 			throw new UnknownTypeException(

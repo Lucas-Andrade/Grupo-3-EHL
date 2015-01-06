@@ -29,7 +29,7 @@ import main.java.cli.commandfactories.StringsToCommandsFactory;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public final class CommandLineDictionary
+public final class CommandLineStringsDictionary
 {
 	
 	// AIRSHIP RELATED. PLACEHOLDERS NAMES

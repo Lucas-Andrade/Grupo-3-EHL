@@ -2,10 +2,9 @@ package main.java.cli.NewsByG;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import main.java.cli.CommandLineDictionary;
 import main.java.cli.model.users.User;
 import main.java.cli.translations.translatables.Translatable;
+import main.java.cli.CommandLineStringsDictionary;
 
 /**TODO
  * 
@@ -13,15 +12,18 @@ import main.java.cli.translations.translatables.Translatable;
  *
  *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class UserConverter implements Converter< User >
+class UserConverter extends Converter
 {
 	@Override
-	public Translatable convert( User user )
+	Translatable convert( Object user )
 	{
+		//TODO cast exceptions
+		User u = (User)user;
+		
 		Map< String, Object > propertiesBag = new HashMap< String, Object >();
-		propertiesBag.put( CommandLineDictionary.USERNAME, user.getIdentification() );
-		propertiesBag.put( CommandLineDictionary.EMAIL, user.getEmail() );
-		propertiesBag.put( CommandLineDictionary.FULLNAME, user.getFullName() );
+		propertiesBag.put( CommandLineStringsDictionary.USERNAME, u.getIdentification() );
+		propertiesBag.put( CommandLineStringsDictionary.EMAIL, u.getEmail() );
+		propertiesBag.put( CommandLineStringsDictionary.FULLNAME, u.getFullName() );
 
 		return new Translatable( null, "User", null, null, propertiesBag, user.toString() );
 	}

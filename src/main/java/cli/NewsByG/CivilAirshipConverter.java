@@ -1,10 +1,9 @@
 package main.java.cli.NewsByG;
 
 import java.util.Map;
-
-import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.CivilAirship;
 import main.java.cli.translations.translatables.Translatable;
+import main.java.cli.CommandLineStringsDictionary;
 
 /**TODO
  * 
@@ -15,12 +14,14 @@ import main.java.cli.translations.translatables.Translatable;
 public class CivilAirshipConverter extends AirshipConverter
 {
 	@Override
-	public Translatable convert( Airship civilAirship )
+	Translatable convert( Object civilAirship )
 	{
-		Map< String, Object > propertiesBag = createAirshipPropertiesBag( civilAirship );
-
-		propertiesBag.put( "Number of Passengers", String.valueOf( ((CivilAirship)civilAirship).getPassengers() ) );
+		CivilAirship ca = (CivilAirship) civilAirship;
 		
-		return new Translatable( null, "Civil Airship", null, null, propertiesBag, civilAirship.toString() );
+		Map< String, Object > propertiesBag = createAirshipPropertiesBag( ca );
+
+		propertiesBag.put( "Number of Passengers", String.valueOf( ((CivilAirship)ca).getPassengers() ) );
+		
+		return new Translatable( null, "Civil Airship", null, null, propertiesBag, ca.toString() );
 	}
 }

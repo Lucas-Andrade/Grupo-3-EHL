@@ -4,7 +4,7 @@ package main.java.cli.commandfactories.getfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.Optional;
-import main.java.cli.CommandLineDictionary;
+import main.java.cli.CommandLineStringsDictionary;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.commands.getcommands.CheckIfAirshipIsTransgressingCommand;
 import main.java.cli.exceptions.InvalidArgumentException;
@@ -61,7 +61,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends
 			throw new InvalidArgumentException(
 					"Cannot instantiate factory with null database!" );
 		
-		this.requiredParametersNames = new String[]{ CommandLineDictionary.FLIGHTID };
+		this.requiredParametersNames = new String[]{ CommandLineStringsDictionary.FLIGHTID };
 		this.database = database;
 	}
 	

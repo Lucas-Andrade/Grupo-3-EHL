@@ -1,7 +1,7 @@
 package main.java.cli.commandfactories.userauthenticatingfactories;
 
 import java.util.concurrent.Callable;
-import main.java.cli.CommandLineDictionary;
+import main.java.cli.CommandLineStringsDictionary;
 import main.java.cli.commands.DeleteAirshipCommand;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.Database;
@@ -21,14 +21,14 @@ public class DeleteAirshipCommandFactory extends UserAuthenticatingFactory<Airsh
 
 		this.airshipDatabase = airshipDatabase;
 
-		this.requiredParameters = new String[] {CommandLineDictionary.FLIGHTID};
+		this.requiredParameters = new String[] {CommandLineStringsDictionary.FLIGHTID};
 	}
 
 	@Override
 	protected Callable<String> internalInternalNewInstance(User userWhoIsPosting) {
 
 		try {
-			return new DeleteAirshipCommand(airshipDatabase, CommandLineDictionary.FLIGHTID);
+			return new DeleteAirshipCommand(airshipDatabase, CommandLineStringsDictionary.FLIGHTID);
 
 		} catch (InvalidArgumentException e)
 		{// never happens for databaseWhereToPost is not null

@@ -1,21 +1,26 @@
 package main.java.cli.NewsByG;
+
+
 import main.java.cli.translations.translatables.Translatable;
 
 
-/**TODO
- * 
- * {@code Conversor}s convert a given {@code Object} to a {@link Translatable} 
- * 
+/**
+ * Utility classes that convert instances of a certain concrete type into a
+ * {@link Translatable}.
  *
- *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
- * @param <T>
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public interface Converter<T>
+abstract class Converter
 {
+	
 	/**
 	 * 
 	 * @param object
 	 * @return
 	 */
-	Translatable convert(T object);
+	abstract Translatable convert(Object object);
+	
+	// ISTO NAO PÔDE SER GENERICO SENAO NAO CONSEGUIMOS FAZER O convert() DA
+	// CLASSE ToTranslatableConversor
+	// é culpa do Java.
 }

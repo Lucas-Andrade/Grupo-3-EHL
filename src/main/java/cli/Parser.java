@@ -39,12 +39,12 @@ import main.java.cli.translations.translators.Translator;
  * <li>This class will break the Open-Closed Principle (see SOLID principles);
  * every time a new {@link Translator} is created, a new entry has to be added
  * to the static field {@link #TRANSLATORS}.</li>
- * <li>This class makes use of the static fields in {@link CommandLineDictionary}.
+ * <li>This class makes use of the static fields in {@link CommandLineStringsDictionary}.
  * </ul>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  * @see CommandParser
- * @see CommandLineDictionary
+ * @see CommandLineStringsDictionary
  * @see Translator
  */
 public class Parser
@@ -54,14 +54,14 @@ public class Parser
 	/**
 	 * The mapping between strings that may be contained in the string-command
 	 * and the {@link Translator} instance they correspond to (uses the
-	 * {@link CommandLineDictionary}).
+	 * {@link CommandLineStringsDictionary}).
 	 */
 	public static final Map< String, Translator > TRANSLATORS = new HashMap< String, Translator >();
 	static
 	{
-		TRANSLATORS.put( CommandLineDictionary.HTML, new ToHtmlTranslator() );
-		TRANSLATORS.put( CommandLineDictionary.TEXT, new ToPlainTextTranslator() );
-		TRANSLATORS.put( CommandLineDictionary.JSON, new ToJsonTranslator() );
+		TRANSLATORS.put( CommandLineStringsDictionary.HTML, new ToHtmlTranslator() );
+		TRANSLATORS.put( CommandLineStringsDictionary.TEXT, new ToPlainTextTranslator() );
+		TRANSLATORS.put( CommandLineStringsDictionary.JSON, new ToJsonTranslator() );
 	}
 	
 	
@@ -195,46 +195,46 @@ public class Parser
 	
 	/**
 	 * Returns the {@link Translator} correspondent to the value of the
-	 * parameter with name {@link CommandLineDictionary#ACCEPT} received in the
+	 * parameter with name {@link CommandLineStringsDictionary#ACCEPT} received in the
 	 * parameters-list of the string-command; if this parameter wasn't in the
 	 * parameters-list returns the translator correspondent to
-	 * {@link CommandLineDictionary#TEXT}.
+	 * {@link CommandLineStringsDictionary#TEXT}.
 	 * 
 	 * @return The translator correspondent to the value of the parameter with
-	 *         name {@link CommandLineDictionary#ACCEPT} or<br/>
-	 *         the translator {@link CommandLineDictionary#TEXT} if no value was
+	 *         name {@link CommandLineStringsDictionary#ACCEPT} or<br/>
+	 *         the translator {@link CommandLineStringsDictionary#TEXT} if no value was
 	 *         received.
 	 * @throws InvalidParameterValueException
 	 *             If the value of the parameter accept is unknown.
 	 */
 	public Translator getTranslator() throws InvalidParameterValueException {
 		
-		String translator = findValueOf( CommandLineDictionary.ACCEPT );
+		String translator = findValueOf( CommandLineStringsDictionary.ACCEPT );
 		if( translator == null )
-			translator = CommandLineDictionary.TEXT;
+			translator = CommandLineStringsDictionary.TEXT;
 		
 		Translator t = TRANSLATORS.get( translator );
 		if( t == null )
-			throw new InvalidParameterValueException( CommandLineDictionary.ACCEPT,
+			throw new InvalidParameterValueException( CommandLineStringsDictionary.ACCEPT,
 					translator );
 		return t;
 	}
 	
 	/**
 	 * Returns the stream correspondent to the value of the parameter with name
-	 * {@link CommandLineDictionary#STREAM} received in the parameters-list of the
+	 * {@link CommandLineStringsDictionary#STREAM} received in the parameters-list of the
 	 * string-command; if this parameter wasn't in the parameters-list returns
 	 * the {@link PrintStream} {@link System#out}.
 	 * 
 	 * @return The stream correspondent to the value of the parameter with name
-	 *         {@link CommandLineDictionary#STREAM} or<br />
+	 *         {@link CommandLineStringsDictionary#STREAM} or<br />
 	 *         the stream {@link System#out} if no value was received.
 	 * @throws InvalidParameterValueException
 	 *             If the value of the parameter accept is unknown.
 	 */
 	public PrintStream getStream() throws InvalidParameterValueException {
 		
-		String filePath = findValueOf( CommandLineDictionary.STREAM );
+		String filePath = findValueOf( CommandLineStringsDictionary.STREAM );
 		if( filePath == null )
 			return System.out;
 		try
@@ -243,8 +243,8 @@ public class Parser
 		}
 		catch( FileNotFoundException e )
 		{
-			throw new InvalidParameterValueException( CommandLineDictionary.STREAM,
-					filePath );
+			throw new InvalidParameterValueException( CommandLineStringsDictionary.STREAM,
+					filePath, e.getMessage() );
 		}
 	}
 	

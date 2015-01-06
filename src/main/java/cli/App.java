@@ -207,14 +207,16 @@ public class App
 		try
 		{
 			Parser parser = new Parser( cmdParser, args );
+			
 			Callable< ? > command = parser.getCommand();
-			// Translatable< ? > translatableOutput =
-			// ToTranslatableConversor.convert( command.call() );
-			// String result = getTranslator().encode(translatableOutput);
-			// parser.getStream().print(result);
 			System.out.println( command.call() );
-			// TODO: has errors! must change Translatable,
-			// ToTranslatableConversor and Translator interfaces
+			//
+			//CommandAndResultType command = parser.getCommand();
+			// Translatable intermediateRepr = ToTranslatableConversor.convert( command.getCallable().call(), command.getResultType() );
+			// String result = getTranslator().encode(intermediateRepr);
+			// parser.getStream().print(result);
+			//
+			// TODO: has errors! must change Translatable, ToTranslatableConversor and Translator interfaces
 		}
 		catch( Exception e )
 		{

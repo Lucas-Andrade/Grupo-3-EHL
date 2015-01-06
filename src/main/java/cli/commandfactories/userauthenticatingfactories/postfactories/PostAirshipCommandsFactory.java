@@ -5,7 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import main.java.cli.CommandLineDictionary;
+import main.java.cli.CommandLineStringsDictionary;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.commandfactories.userauthenticatingfactories.UserAuthenticatingFactory;
 import main.java.cli.commands.postcommands.PostCivilAirshipCommand;
@@ -74,12 +74,12 @@ public class PostAirshipCommandsFactory extends
 		super( "Adds a new airship.", postingUsersDatabase, airshipsDatabase );
 		
 		this.requiredParametersNames = new String[]{
-				CommandLineDictionary.AIRSHIP_TYPE,
-				CommandLineDictionary.LATITUDE,
-				CommandLineDictionary.LONGITUDE,
-				CommandLineDictionary.ALTITUDE,
-				CommandLineDictionary.AIRCORRIDOR_MINALTITUDE,
-				CommandLineDictionary.AIRCORRIDOR_MAXALTITUDE };
+				CommandLineStringsDictionary.AIRSHIP_TYPE,
+				CommandLineStringsDictionary.LATITUDE,
+				CommandLineStringsDictionary.LONGITUDE,
+				CommandLineStringsDictionary.ALTITUDE,
+				CommandLineStringsDictionary.AIRCORRIDOR_MINALTITUDE,
+				CommandLineStringsDictionary.AIRCORRIDOR_MAXALTITUDE };
 	}
 	
 	
@@ -135,7 +135,7 @@ public class PostAirshipCommandsFactory extends
 				| IllegalAccessException | IllegalArgumentException e )
 		{
 			throw new InvalidParameterValueException(
-					CommandLineDictionary.AIRSHIP_TYPE, type );
+					CommandLineStringsDictionary.AIRSHIP_TYPE, type );
 		}
 		
 	}
@@ -178,18 +178,18 @@ public class PostAirshipCommandsFactory extends
 	private void getValuesOfTheParametersMap()
 			throws InvalidParameterValueException, MissingRequiredParameterException {
 		
-		type = getParameterAsString( CommandLineDictionary.AIRSHIP_TYPE );
-		latitude = getParameterAsDouble( CommandLineDictionary.LATITUDE );
-		longitude = getParameterAsDouble( CommandLineDictionary.LONGITUDE );
-		altitude = getParameterAsDouble( CommandLineDictionary.ALTITUDE );
-		minAltitude = getParameterAsDouble( CommandLineDictionary.AIRCORRIDOR_MINALTITUDE );
-		maxAltitude = getParameterAsDouble( CommandLineDictionary.AIRCORRIDOR_MAXALTITUDE );
+		type = getParameterAsString( CommandLineStringsDictionary.AIRSHIP_TYPE );
+		latitude = getParameterAsDouble( CommandLineStringsDictionary.LATITUDE );
+		longitude = getParameterAsDouble( CommandLineStringsDictionary.LONGITUDE );
+		altitude = getParameterAsDouble( CommandLineStringsDictionary.ALTITUDE );
+		minAltitude = getParameterAsDouble( CommandLineStringsDictionary.AIRCORRIDOR_MINALTITUDE );
+		maxAltitude = getParameterAsDouble( CommandLineStringsDictionary.AIRCORRIDOR_MAXALTITUDE );
 	}
 	
 	/**
 	 * Private method is invoked using reflection inside the
 	 * {@link #postsInternalNewInstance()}. <b>This method's name must be
-	 * <i>post{@link CommandLineDictionary#CIVIL} Airship</i></b>.
+	 * <i>post{@link CommandLineStringsDictionary#CIVIL} Airship</i></b>.
 	 * 
 	 * @return A command that posts civil airships.
 	 * @throws MissingRequiredParameterException
@@ -208,11 +208,11 @@ public class PostAirshipCommandsFactory extends
 			InvalidParameterValueException, InternalErrorException {
 		
 		if( !parametersMap
-				.containsKey( CommandLineDictionary.NUMBEROFPASSENGERS ) )
+				.containsKey( CommandLineStringsDictionary.NUMBEROFPASSENGERS ) )
 			throw new MissingRequiredParameterException(
-					CommandLineDictionary.NUMBEROFPASSENGERS );
+					CommandLineStringsDictionary.NUMBEROFPASSENGERS );
 		
-		numberOfPassengers = getParameterAsInt( CommandLineDictionary.NUMBEROFPASSENGERS );
+		numberOfPassengers = getParameterAsInt( CommandLineStringsDictionary.NUMBEROFPASSENGERS );
 		
 		try
 		{
@@ -229,7 +229,7 @@ public class PostAirshipCommandsFactory extends
 	/**
 	 * Private method is invoked using reflection inside the
 	 * {@link #postsInternalNewInstance()}. <b>This method's name must be
-	 * <i>post{@link CommandLineDictionary#MILITARY}
+	 * <i>post{@link CommandLineStringsDictionary#MILITARY}
 	 * Airship</i></b>.
 	 * 
 	 * @return A command that posts military airships.
@@ -249,11 +249,11 @@ public class PostAirshipCommandsFactory extends
 			InvalidParameterValueException, InternalErrorException {
 		
 		if( !parametersMap
-				.containsKey( CommandLineDictionary.HASARMOUR ) )
+				.containsKey( CommandLineStringsDictionary.HASARMOUR ) )
 			throw new MissingRequiredParameterException(
-					CommandLineDictionary.HASARMOUR );
+					CommandLineStringsDictionary.HASARMOUR );
 		
-		hasArmour = getParameterAsBoolean( CommandLineDictionary.HASARMOUR );
+		hasArmour = getParameterAsBoolean( CommandLineStringsDictionary.HASARMOUR );
 		
 		try
 		{

@@ -14,7 +14,7 @@ import main.java.cli.NewsByG.UserConverter;
  *
  *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class ResultTypesDictionary
+public class ResultTypesStringsDictionary
 {
 	public static final String USER = "user";
 	public static final String CIVIL = "civil";

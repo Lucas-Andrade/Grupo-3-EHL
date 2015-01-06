@@ -2,7 +2,7 @@ package main.java.cli.commandfactories.getfactories;
 
 import java.util.concurrent.Callable;
 import main.java.cli.Optional;
-import main.java.cli.CommandLineDictionary;
+import main.java.cli.CommandLineStringsDictionary;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.commands.getcommands.GetTheNearestAirshipsOfTheGeographicCoordinateCommand;
 import main.java.cli.exceptions.InvalidArgumentException;
@@ -63,8 +63,8 @@ public class GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory
 
 		this.airshipsDatabase = airshipsDatabase;
 		this.requiredParameters =
-				new String[]{ CommandLineDictionary.LATITUDE, CommandLineDictionary.LONGITUDE,
-						CommandLineDictionary.NUMBEROFAIRSHIPSTOFIND };
+				new String[]{ CommandLineStringsDictionary.LATITUDE, CommandLineStringsDictionary.LONGITUDE,
+						CommandLineStringsDictionary.NUMBEROFAIRSHIPSTOFIND };
 
 	}
 

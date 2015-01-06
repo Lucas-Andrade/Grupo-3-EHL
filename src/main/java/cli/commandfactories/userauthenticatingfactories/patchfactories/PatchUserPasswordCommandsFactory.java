@@ -3,7 +3,7 @@ package main.java.cli.commandfactories.userauthenticatingfactories.patchfactorie
 
 import java.util.concurrent.Callable;
 import main.java.cli.Optional;
-import main.java.cli.CommandLineDictionary;
+import main.java.cli.CommandLineStringsDictionary;
 import main.java.cli.commandfactories.StringsToCommandsFactory;
 import main.java.cli.commands.patchcommands.PatchUserPasswordCommand;
 import main.java.cli.exceptions.InvalidArgumentException;
@@ -57,8 +57,8 @@ public class PatchUserPasswordCommandsFactory extends
 					"It's not allow instantiate a factory with null Users database" );
 		
 		this.userDatabase = userDatabase;
-		this.requiredParameters = new String[]{ CommandLineDictionary.USERNAME,
-				CommandLineDictionary.OLDPASSWORD, CommandLineDictionary.NEWPASSWORD };
+		this.requiredParameters = new String[]{ CommandLineStringsDictionary.USERNAME,
+				CommandLineStringsDictionary.OLDPASSWORD, CommandLineStringsDictionary.NEWPASSWORD };
 		
 	}
 	

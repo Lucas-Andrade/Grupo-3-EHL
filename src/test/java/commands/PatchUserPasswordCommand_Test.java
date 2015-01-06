@@ -2,7 +2,7 @@ package test.java.commands;
 
 import main.java.cli.CommandParser;
 import main.java.cli.Parser;
-import main.java.cli.commandfactories.patchfactories.PatchUserPasswordCommandsFactory;
+import main.java.cli.commandfactories.userauthenticatingfactories.patchfactories.PatchUserPasswordCommandsFactory;
 import main.java.cli.commands.patchcommands.PatchUserPasswordCommand;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.exceptions.commandparserexceptions.InvalidRegisterException;
@@ -35,8 +35,9 @@ public class PatchUserPasswordCommand_Test {
 		
 		userDatabase.add(user1, user1);
 		
-		Parser parser = new Parser(cmdparser,"PATCH", "/users/pantunes", "oldPassword=pass&newPassword=pass2");
-		String result = parser.getCommand("PATCH", "/users/pantunes", "oldPassword=pass&newPassword=pass2").call().toString();
+		Parser parser = new Parser(cmdparser,"PATCH", "/users/pantunes", "oldPassword=pass&newPassword=pass2&loginName=pantunes&loginPassword=pass");
+		
+		String result = parser.getCommand().call().toString();
 		
 		Assert.assertEquals("The User Password was successfully changed",result);
 		 
@@ -49,8 +50,8 @@ public class PatchUserPasswordCommand_Test {
 		
 		userDatabase.add(user1, user1);
 		
-		Parser parser = new Parser(cmdparser,"PATCH", "/users/pantunes", "oldPassword=fakepass&newPassword=pass2");
-		String result = parser.getCommand("PATCH", "/users/pantunes", "oldPassword=fakepass&newPassword=pass2").call().toString();
+		Parser parser = new Parser(cmdparser,"PATCH", "/users/pantunes", "oldPassword=fakepass&newPassword=pass2&loginName=pantunes&loginPassword=pass");
+		String result = parser.getCommand().call().toString();
 		
 		Assert.assertEquals("The User Password was not changed",result);
 		 
@@ -63,9 +64,9 @@ public class PatchUserPasswordCommand_Test {
 		User user1 = new User("pantunes", "pass","Pantunes@gmail.com");
 		
 		userDatabase.add(user1, user1);
-				
-		@SuppressWarnings("unused")
-		PatchUserPasswordCommand patchuserPassword = new PatchUserPasswordCommand(userDatabase,"pantunes",null,"newPassword");
+		
+		new PatchUserPasswordCommand(userDatabase,"pantunes",null,"newPassword").call();
+			
 			
 	}
 	
@@ -74,40 +75,37 @@ public class PatchUserPasswordCommand_Test {
 	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullNewPassword()  throws Exception{
 		
 						
-		@SuppressWarnings("unused")
-		PatchUserPasswordCommand patchuserPassword = new PatchUserPasswordCommand(userDatabase,"pantunes","oldPassword",null);
-			
-	}
-	
-	@Test(expected=InvalidArgumentException.class)
-	
-	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullIdentification()  throws Exception{
+		User user1 = new User("pantunes", "pass","Pantunes@gmail.com");
 		
-					
-		@SuppressWarnings("unused")
-		PatchUserPasswordCommand patchuserPassword = new PatchUserPasswordCommand(userDatabase,null,"oldPassword","newPassword");
+		userDatabase.add(user1, user1);
+		
+		new PatchUserPasswordCommand(userDatabase,"pantunes","oldPassword",null).call();
+			
+	}
+	
+	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullIdentification() throws Exception  {
+		
+		
+		 new PatchUserPasswordCommand(userDatabase,null,"oldPassword","newPassword").call();
 			
 	}
 	
 	
 	@Test(expected=InvalidArgumentException.class)
 	
-	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullUserDatabase()  throws Exception{
+	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullUserDatabase() throws InvalidArgumentException  {
 		
 						
-		@SuppressWarnings("unused")
-		PatchUserPasswordCommand patchuserPassword = new PatchUserPasswordCommand(null,"pantunes","oldPassword","newPassword");
+		 new PatchUserPasswordCommand(null,"pantunes","oldPassword","newPassword");
 			 
 	}
 	
 	
 	@Test(expected=InvalidArgumentException.class)
 	
-	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullUserDatabaseInTheFactory()  throws Exception{
+	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullUserDatabaseInTheFactory() throws InvalidArgumentException   {
 					
-		@SuppressWarnings("unused")
-		PatchUserPasswordCommandsFactory patchuserPassword = new PatchUserPasswordCommandsFactory(null);
-			
-	}	
+		new PatchUserPasswordCommandsFactory(null);
+	}	  
 	
 }

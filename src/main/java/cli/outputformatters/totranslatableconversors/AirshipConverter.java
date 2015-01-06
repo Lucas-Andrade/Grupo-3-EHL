@@ -18,7 +18,7 @@ abstract class AirshipConverter extends Converter
 	 * @param airship
 	 * @return
 	 */
-	protected Map< String, Object > createAirshipPropertiesBag( Airship airship )
+	Map< String, Object > createAirshipPropertiesBag( Airship airship )
 	{
 		Map< String, Object > propertiesBag = new HashMap< String, Object >();
 		propertiesBag.put( CommandLineStringsDictionary.FLIGHTID, airship.getIdentification() );

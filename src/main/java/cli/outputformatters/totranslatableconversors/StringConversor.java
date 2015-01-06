@@ -5,12 +5,18 @@ import java.util.Map;
 
 import main.java.cli.outputformatters.Translatable;
 
-public class StringConversor
-	implements Converter
+/**
+ * 
+ * 
+ *
+ *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
+class StringConversor
+	extends Converter
 {
 
 	@Override
-	public Translatable convert( Object string )
+	Translatable convert( Object string )
 	{
 		// TODO cast exceptions
 		String str = ( String )string;

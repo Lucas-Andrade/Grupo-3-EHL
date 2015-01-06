@@ -3,7 +3,6 @@ package main.java.cli.outputformatters.totranslatableconversors;
 import java.util.Map;
 import main.java.cli.model.airships.CivilAirship;
 import main.java.cli.outputformatters.Translatable;
-import main.java.cli.utils.CommandLineStringsDictionary;
 
 /**TODO
  * 
@@ -11,10 +10,10 @@ import main.java.cli.utils.CommandLineStringsDictionary;
  *
  *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class CivilAirshipConverter extends AirshipConverter
+class CivilAirshipConverter extends AirshipConverter
 {
 	@Override
-	Translatable convert( Object civilAirship )
+	public Translatable convert( Object civilAirship )
 	{
 		CivilAirship ca = (CivilAirship) civilAirship;
 		
@@ -22,6 +21,6 @@ public class CivilAirshipConverter extends AirshipConverter
 
 		propertiesBag.put( "Number of Passengers", String.valueOf( ((CivilAirship)ca).getPassengers() ) );
 		
-		return new Translatable( null, "Civil Airship", null, null, propertiesBag, ca.toString() );
+		return new Translatable( "CivilAirship", null, null, null, propertiesBag, ca.toString() );
 	}
 }

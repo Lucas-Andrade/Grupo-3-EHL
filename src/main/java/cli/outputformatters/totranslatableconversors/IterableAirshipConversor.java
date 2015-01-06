@@ -3,7 +3,7 @@ package main.java.cli.outputformatters.totranslatableconversors;
 import main.java.cli.outputformatters.Translatable;
 
 
-public class IterableAirshipConversor extends Converter
+class IterableAirshipConversor extends Converter
 {
 	
 	@Override

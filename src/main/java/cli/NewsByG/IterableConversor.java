@@ -8,7 +8,7 @@ import main.java.cli.translations.translatables.Translatable;
 
 /**TODO
  * ?!?!?! Iterable generic -> <?> or <Element>
- * 
+ * Como fazemos o iterable?!?!      p_q
  * 
  *
  *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes

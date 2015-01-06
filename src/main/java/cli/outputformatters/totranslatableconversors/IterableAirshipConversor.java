@@ -37,7 +37,7 @@ class IterableAirshipConversor extends Conversor
 					ToTranslatableConversor.convert( user ) );
 		}
 		
-		return new Translatable( "users", "user", null, null, propertiesBag, null );
+		return new Translatable( "airships", "airship", null, null, propertiesBag, null );
 	}
 	
 }

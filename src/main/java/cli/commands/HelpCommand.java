@@ -27,18 +27,7 @@ public class HelpCommand implements Callable< OptionsList >
 	
 	public OptionsList call() {
 		
-		return new OptionsList(cmdParser.getRegisteredCommands());
-		//
-		// String delimiter = "---------------------------------------------\n";
-		// StringBuilder result = new StringBuilder( delimiter );
-		// for( Map.Entry< String, String > entry : register.entrySet() )
-		// {
-		// result.append( " :)  " ).append( entry.getKey() ).append( "\n" )
-		// .append( entry.getValue() ).append( "\n" )
-		// .append( delimiter );
-		// }
-		// return result.toString();
-		
+		return new OptionsList(cmdParser.getRegisteredCommands());		
 	}
 	
 }

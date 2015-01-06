@@ -8,6 +8,8 @@ import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 import main.java.cli.model.users.InMemoryUsersDatabase;
 import main.java.cli.model.users.User;
+import main.java.cli.outputformatters.Translatable;
+import main.java.cli.outputformatters.totranslatableconversors.ToTranslatableConversor;
 import main.java.cli.parsingtools.CommandParser;
 import main.java.cli.parsingtools.Parser;
 import main.java.cli.parsingtools.commandfactories.HelpCommandsFactory;
@@ -209,21 +211,18 @@ public class App
 		try
 		{
 			Parser parser = new Parser( cmdParser, args );
-			
 			Callable< ? > command = parser.getCommand();
-			System.out.println( command.call() );
+			
+			//System.out.println( command.call() );
 			//
-			//CommandAndResultType command = parser.getCommand();
-			// Translatable intermediateRepr = ToTranslatableConversor.convert( command.getCallable().call(), command.getResultType() );
-			// String result = getTranslator().encode(intermediateRepr);
-			// parser.getStream().print(result);
-			//
-			// TODO: has errors! must change Translatable, ToTranslatableConversor and Translator interfaces
+			 Translatable intermediateRepr = ToTranslatableConversor.convert( command.call() );
+			 String output = parser.getTranslator().encode(intermediateRepr);
+			 parser.getStream().print(output);
 		}
 		catch( Exception e )
 		{
 			System.out.println( e.getMessage() );
 		}
 	}
-	
+
 }

@@ -2,7 +2,6 @@ package main.java.cli.outputformatters.totranslatableconversors;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import main.java.cli.outputformatters.Translatable;
 import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
 
@@ -32,5 +31,6 @@ class StringConversor extends Conversor
 		propertiesBag.put( "message", str );
 
 		return new Translatable( null, null, null, null, propertiesBag, str );
+
 	}
 }

@@ -20,7 +20,7 @@ import main.java.cli.outputformatters.translators.Translator;
  * <li>simple instances (of classes whose instance fields are representable by
  * simple name-value pairs),</li>
  * <li> {@link Iterable}s or</li>
- * <li> {@link Map}s.</li>
+ * <li> {@link Map}s with {@code String} keys and values.</li>
  * </ul>
  * and are inspired by the needs of translators that convert objects to HTML or
  * JSON.
@@ -52,9 +52,20 @@ import main.java.cli.outputformatters.translators.Translator;
  * {@code null tag}, a non-{@code null entryTag} (which shall be the singular of
  * {@code tag}) and the entries in the properties bag have {@link Translatables}
  * as values (their keys are useless).</li>
- * <li>{@link Map} have all tags with non-{@code null} values and several
- * entries in the properties bag.</li>
+ * <li>{@code Map<String,String>} have all tags with non-{@code null} values and
+ * several entries in the properties bag.</li>
  * </ul>
+ * Summarizing,
+ * 
+ * <pre>
+             | String | Simple | Iterable |  Map 
+ * ————————————+————————+————————+——————————+——————— 
+ * tag         |   n    |    V   |     V    |   V 
+ * entryTag    |   n    |    n   |     V    |   V 
+ * keyTag      |   n    |    n   |     n    |   V 
+ * valueTag    |   n    |    n   |     n    |   V
+ * </pre>
+ * 
  * </p>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes

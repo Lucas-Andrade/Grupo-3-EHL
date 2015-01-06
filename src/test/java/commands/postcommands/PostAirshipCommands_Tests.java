@@ -10,9 +10,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-
-//POST /airships/Civil latitude=0&longitude=0&altitude=2&minAltitude=0&maxAltitude=10&loginName=MASTER&loginPassword=master
-public class PostAirshipCommand_Tests {
+public class PostAirshipCommands_Tests {
 
 	private InMemoryAirshipsDatabase airshipsDatabase;
 	private User user1;

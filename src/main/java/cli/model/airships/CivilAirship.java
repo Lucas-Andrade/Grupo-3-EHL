@@ -1,29 +1,24 @@
 package main.java.cli.model.airships;
 
-
 import main.java.cli.exceptions.InvalidArgumentException;
 
-
 /**
- * Class whose instances will represent a civil airship. This type of airships
- * is distinguished from the others because they have a number of passengers the
- * airship has.
+ * Class whose instances will represent a civil airship. This type of airships is distinguished from
+ * the others because they have a number of passengers the airship has.
  * 
  * Extends {@link Airship}.
  */
-public class CivilAirship extends Airship
-{
-	
+public class CivilAirship extends Airship {
+
 	// Instance Fields
-	
+
 	/**
-	 * {@code passengers} - int variable that represents the number of
-	 * passengers the airship has.
+	 * {@code passengers} - int variable that represents the number of passengers the airship has.
 	 */
 	private final int passengers;
-	
+
 	// Constructor
-	
+
 	/**
 	 * Class constructor that will create an {@code Civil Airship}. It will receive the geographic
 	 * coordinates of the airship as a parameter as well as the maximum and minimum altitudes the
@@ -45,38 +40,57 @@ public class CivilAirship extends Airship
 	 * @throws InvalidArgumentException
 	 *             If some given arguments have invalid values.
 	 */
-	public CivilAirship( double latitude, double longitude, double altitude,
-			double maxAltitude, double minAltitude, int passengers )
-			throws InvalidArgumentException {
-		
-		super( latitude, longitude, altitude, maxAltitude, minAltitude );
-		
-		if( passengers < 0 )
-			throw new InvalidArgumentException(
-					"The number of passengers cannot be less than 0." );
-		
+	public CivilAirship(double latitude, double longitude, double altitude, double maxAltitude,
+			double minAltitude, int passengers) throws InvalidArgumentException {
+
+		super(latitude, longitude, altitude, maxAltitude, minAltitude);
+
+		if (passengers < 0)
+			throw new InvalidArgumentException("The number of passengers cannot be less than 0.");
+
 		this.passengers = passengers;
 	}
-	
+
+	private CivilAirship(double latitude, double longitude, double altitude, double maxAltitude,
+			double minAltitude, int passengers, String identification)
+			throws InvalidArgumentException {
+
+		super(latitude, longitude, altitude, maxAltitude, minAltitude, identification);
+
+		if (passengers < 0)
+			throw new InvalidArgumentException("The number of passengers cannot be less than 0.");
+
+		this.passengers = passengers;
+	}
+
+	// Public Methods
+
+	public static Airship createANewAirshipWithAPreDefinedIdentification(double latitude,
+			double longitude, double altitude, double maxAltitude, double minAltitude,
+			int passengers, String identification) throws InvalidArgumentException {
+
+		return new CivilAirship(latitude, longitude, altitude, maxAltitude, minAltitude,
+				passengers, identification);
+	}
+
 	// Overrides
-	
+
 	/**
 	 * Override of the {@code toString()} method from {@code Object}.
 	 */
 	@Override
 	public String toString() {
-		
-		return new StringBuilder( super.toString() )
-				.append( "Number of Passengers: " ).append( passengers ).append( "\n" ) 
-				.toString();
+
+		return new StringBuilder(super.toString()).append("Number of Passengers: ")
+				.append(passengers).append("\n").toString();
 	}
-	
+
 	// Get Methods
 	/**
 	 * @return the {@code passengers}.
 	 */
 	public int getPassengers() {
-		
+
 		return passengers;
 	}
 }

@@ -54,8 +54,8 @@ public class PatchMilitaryAirshipCommand implements Callable<String> {
 
 		if (airshipDatabase.removeByIdentification(identification)) {
 
-			Airship airship = new MilitaryAirship(latitude, longitude, altitude, maxAltitude,
-					minAltitude, hasWeapons);
+			Airship airship = MilitaryAirship.createANewAirshipWithAPreDefinedIdentification(latitude,
+					longitude, altitude, maxAltitude, minAltitude, hasWeapons, identification);
 
 			airshipDatabase.add(airship, user);
 

@@ -1,4 +1,4 @@
-package test.java.commands;
+package test.java.commands.patchcommands;
 
 import main.java.cli.CommandParser;
 import main.java.cli.Parser;
@@ -116,5 +116,4 @@ public class PatchUserPasswordCommand_Test {
 					
 		new PatchUserPasswordCommandsFactory(null);
 	}	  
-	
 }

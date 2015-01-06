@@ -13,4 +13,7 @@ public class ResultsTypesStringsDictionary
 	public static final String CIVIL = "civil";
 	public static final String MILITARY = "military";
 	
+	public static final String AIRSHIP = "airship";
+	public static final String ITERABLE_AIRSHIPS = 
+	
 }

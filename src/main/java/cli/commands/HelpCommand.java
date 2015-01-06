@@ -1,8 +1,8 @@
 package main.java.cli.commands;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import main.java.cli.CommandParser;
-import main.java.cli.exceptions.InvalidArgumentException;
+import main.java.cli.parsingtools.CommandParser;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
 
 /**
  *TODO:document

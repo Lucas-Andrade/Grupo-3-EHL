@@ -3,25 +3,27 @@ package main.java.cli;
 
 import java.util.Scanner;
 import java.util.concurrent.Callable;
-import main.java.cli.commandfactories.HelpCommandsFactory;
-import main.java.cli.commandfactories.getfactories.CheckIfAirshipIsTransgressingCommandsFactory;
-import main.java.cli.commandfactories.getfactories.GetAirshipsOfOwnerCommandsFactory;
-import main.java.cli.commandfactories.getfactories.GetAirshipsWithLessPassengersThanCommandsFactory;
-import main.java.cli.commandfactories.getfactories.GetAllTransgressorAirshipsCommandsFactory;
-import main.java.cli.commandfactories.getfactories.getallfactories.GetAllAirshipsInADatabaseCommandsFactory;
-import main.java.cli.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
-import main.java.cli.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory;
-import main.java.cli.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
-import main.java.cli.commandfactories.getfactories.GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory;
-import main.java.cli.commandfactories.userauthenticatingfactories.postfactories.PostAirshipCommandsFactory;
-import main.java.cli.commandfactories.userauthenticatingfactories.postfactories.PostUserCommandsFactory;
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.commandparserexceptions.InvalidRegisterException;
 import main.java.cli.model.airships.AirCorridor;
 import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 import main.java.cli.model.users.InMemoryUsersDatabase;
 import main.java.cli.model.users.User;
+import main.java.cli.parsingtools.CommandParser;
+import main.java.cli.parsingtools.Parser;
+import main.java.cli.parsingtools.commandfactories.HelpCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.CheckIfAirshipIsTransgressingCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.GetAirshipsOfOwnerCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.GetAirshipsWithLessPassengersThanCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.GetAllTransgressorAirshipsCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllAirshipsInADatabaseCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.postfactories.PostAirshipCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.postfactories.PostUserCommandsFactory;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
+import main.java.cli.utils.exceptions.commandparserexceptions.InvalidRegisterException;
 
 
 /**

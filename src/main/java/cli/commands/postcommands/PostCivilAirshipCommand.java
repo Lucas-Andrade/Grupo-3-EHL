@@ -2,11 +2,11 @@ package main.java.cli.commands.postcommands;
 
 
 import java.util.concurrent.Callable;
-import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.Database;
 import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.CivilAirship;
 import main.java.cli.model.users.User;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
 
 
 /**

@@ -2,13 +2,8 @@ package test.java.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.databaseexceptions.DatabaseException;
-import main.java.cli.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.CivilAirship;
 import main.java.cli.model.airships.GeographicPosition;
@@ -16,7 +11,9 @@ import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 import main.java.cli.model.airships.MilitaryAirship;
 import main.java.cli.model.users.InMemoryUsersDatabase;
 import main.java.cli.model.users.User;
-
+import main.java.cli.utils.exceptions.InvalidArgumentException;
+import main.java.cli.utils.exceptions.databaseexceptions.DatabaseException;
+import main.java.cli.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,18 +1,17 @@
 package test.java.commands;
 
 
-import main.java.cli.CommandParser;
-import main.java.cli.Parser;
-import main.java.cli.commandfactories.getfactories.GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory;
 import main.java.cli.commands.getcommands.GetTheNearestAirshipsOfTheGeographicCoordinateCommand;
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.commandparserexceptions.InvalidRegisterException;
 import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.CivilAirship;
 import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 import main.java.cli.model.airships.MilitaryAirship;
 import main.java.cli.model.users.User;
-
+import main.java.cli.parsingtools.CommandParser;
+import main.java.cli.parsingtools.Parser;
+import main.java.cli.parsingtools.commandfactories.getfactories.GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
+import main.java.cli.utils.exceptions.commandparserexceptions.InvalidRegisterException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

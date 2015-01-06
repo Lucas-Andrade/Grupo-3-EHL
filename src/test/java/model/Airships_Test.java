@@ -4,7 +4,7 @@ package test.java.model;
 import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.CivilAirship;
 import main.java.cli.model.airships.MilitaryAirship;
-import main.java.cli.exceptions.InvalidArgumentException;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

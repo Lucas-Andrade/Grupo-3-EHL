@@ -2,18 +2,15 @@ package test.java.model;
 
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 import java.util.List;
-
-import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.CivilAirship;
 import main.java.cli.model.airships.GeographicPosition;
 import main.java.cli.model.airships.InMemoryAirshipsDatabase;
 import main.java.cli.model.airships.MilitaryAirship;
 import main.java.cli.model.users.User;
-
+import main.java.cli.utils.exceptions.InvalidArgumentException;
 import org.junit.Test;
 
 

@@ -2,7 +2,7 @@ package test.java.commandlineuserinterface.exceptions;
 
 
 import static org.junit.Assert.*;
-import main.java.cli.exceptions.factoryexceptions.WrongLoginPasswordException;
+import main.java.cli.utils.exceptions.factoryexceptions.WrongLoginPasswordException;
 import org.junit.Test;
 
 

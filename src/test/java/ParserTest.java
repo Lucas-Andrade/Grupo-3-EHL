@@ -1,12 +1,12 @@
 package test.java;
 
 
-import main.java.cli.CommandParser;
-import main.java.cli.Parser;
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.commandparserexceptions.DuplicateParametersException;
-import main.java.cli.exceptions.commandparserexceptions.InvalidCommandParametersSyntaxException;
-import main.java.cli.exceptions.commandparserexceptions.InvalidCommandSyntaxException;
+import main.java.cli.parsingtools.CommandParser;
+import main.java.cli.parsingtools.Parser;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
+import main.java.cli.utils.exceptions.commandparserexceptions.DuplicateParametersException;
+import main.java.cli.utils.exceptions.commandparserexceptions.InvalidCommandParametersSyntaxException;
+import main.java.cli.utils.exceptions.commandparserexceptions.InvalidCommandSyntaxException;
 import org.junit.Test;
 
 

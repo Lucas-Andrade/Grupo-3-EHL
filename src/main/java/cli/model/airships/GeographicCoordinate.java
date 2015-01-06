@@ -2,7 +2,7 @@ package main.java.cli.model.airships;
 
 
 import java.text.MessageFormat;
-import main.java.cli.exceptions.InvalidArgumentException;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
 
 
 /**

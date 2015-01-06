@@ -1,8 +1,8 @@
 package main.java.cli.model.airships;
 
 
-import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.Element;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
 
 
 /**

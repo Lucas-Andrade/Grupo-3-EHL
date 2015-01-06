@@ -1,10 +1,10 @@
 package main.java.cli.model;
 
 
-import main.java.cli.Optional;
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.databaseexceptions.DatabaseException;
 import main.java.cli.model.users.User;
+import main.java.cli.utils.Optional;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
+import main.java.cli.utils.exceptions.databaseexceptions.DatabaseException;
 
 
 /**

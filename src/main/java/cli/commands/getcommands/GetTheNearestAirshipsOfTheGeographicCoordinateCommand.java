@@ -1,13 +1,12 @@
 package main.java.cli.commands.getcommands;
 
 import java.util.concurrent.Callable;
-
-import main.java.cli.Optional;
-import main.java.cli.exceptions.InternalErrorException;
-import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.GeographicPosition;
 import main.java.cli.model.airships.InMemoryAirshipsDatabase;
+import main.java.cli.utils.Optional;
+import main.java.cli.utils.exceptions.InternalErrorException;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
 	
 	/**
 	 * Class whose instance represent commands to get the nearest airships of

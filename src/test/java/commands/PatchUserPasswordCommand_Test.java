@@ -1,15 +1,13 @@
 package test.java.commands;
 
-import main.java.cli.CommandParser;
-import main.java.cli.Parser;
-import main.java.cli.commandfactories.patchfactories.PatchUserPasswordCommandsFactory;
 import main.java.cli.commands.patchcommands.PatchUserPasswordCommand;
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.commandparserexceptions.InvalidRegisterException;
-
 import main.java.cli.model.users.InMemoryUsersDatabase;
 import main.java.cli.model.users.User;
-
+import main.java.cli.parsingtools.CommandParser;
+import main.java.cli.parsingtools.Parser;
+import main.java.cli.parsingtools.commandfactories.patchfactories.PatchUserPasswordCommandsFactory;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
+import main.java.cli.utils.exceptions.commandparserexceptions.InvalidRegisterException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

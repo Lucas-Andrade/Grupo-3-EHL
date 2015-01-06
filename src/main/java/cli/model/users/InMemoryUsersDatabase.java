@@ -1,11 +1,11 @@
 package main.java.cli.model.users;
 
 
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.databaseexceptions.DatabaseException;
 import main.java.cli.model.Database;
 import main.java.cli.model.InMemoryDatabase;
 import main.java.cli.model.airships.Airship;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
+import main.java.cli.utils.exceptions.databaseexceptions.DatabaseException;
 
 
 /**

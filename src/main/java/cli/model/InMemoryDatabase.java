@@ -7,12 +7,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import main.java.cli.Optional;
-import main.java.cli.exceptions.InternalErrorException;
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.databaseexceptions.DatabaseException;
-import main.java.cli.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 import main.java.cli.model.users.User;
+import main.java.cli.utils.Optional;
+import main.java.cli.utils.exceptions.InternalErrorException;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
+import main.java.cli.utils.exceptions.databaseexceptions.DatabaseException;
+import main.java.cli.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
 /**

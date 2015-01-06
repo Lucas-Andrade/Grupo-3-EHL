@@ -1,11 +1,10 @@
 package main.java.cli.commands.patchcommands;
 
 import java.util.concurrent.Callable;
-
-import main.java.cli.Optional;
-import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.Database;
 import main.java.cli.model.users.User;
+import main.java.cli.utils.Optional;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
 	/**
 	 * Class whose instance represent commands to change an User Password  
 	 * who belongs in one users database.

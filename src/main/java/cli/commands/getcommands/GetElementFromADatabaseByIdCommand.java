@@ -2,12 +2,12 @@ package main.java.cli.commands.getcommands;
 
 
 import java.util.concurrent.Callable;
-import main.java.cli.Optional;
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 import main.java.cli.model.Database;
 import main.java.cli.model.Element;
 import main.java.cli.model.InMemoryDatabase;
+import main.java.cli.utils.Optional;
+import main.java.cli.utils.exceptions.InvalidArgumentException;
+import main.java.cli.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
 /**

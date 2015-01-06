@@ -12,10 +12,10 @@ import main.java.cli.utils.CommandLineStringsDictionary;
  *
  *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-class UserConverter extends Converter
+class UserConverter implements Converter
 {
 	@Override
-	Translatable convert( Object user )
+	public Translatable convert( Object user )
 	{
 		//TODO cast exceptions
 		User u = (User)user;

@@ -1,15 +1,23 @@
 package main.java.cli.outputformatters.totranslatableconversors;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import main.java.cli.outputformatters.Translatable;
 
-
-public class StringConversor extends Converter
+public class StringConversor
+	implements Converter
 {
-	
+
 	@Override
-	Translatable convert( Object object ) {
-		// TODO Auto-generated method stub
-		return null;
+	public Translatable convert( Object string )
+	{
+		// TODO cast exceptions
+		String str = ( String )string;
+
+		Map< String, Object > propertiesBag = new HashMap< String, Object >();
+		propertiesBag.put( "Message", str );
+
+		return new Translatable( null, null, null, null, propertiesBag, str );
 	}
-	
 }

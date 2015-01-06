@@ -10,7 +10,7 @@ import main.java.cli.outputformatters.Translatable;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-abstract class Converter
+public interface Converter
 {
 	
 	/**
@@ -18,7 +18,7 @@ abstract class Converter
 	 * @param object
 	 * @return
 	 */
-	abstract Translatable convert(Object object);
+	public Translatable convert(Object object);
 	
 	// ISTO NAO PÔDE SER GENERICO SENAO NAO CONSEGUIMOS FAZER O convert() DA
 	// CLASSE ToTranslatableConversor

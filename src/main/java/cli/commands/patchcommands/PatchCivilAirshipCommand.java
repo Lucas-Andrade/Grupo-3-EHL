@@ -11,7 +11,7 @@ import main.java.cli.model.users.User;
 public class PatchCivilAirshipCommand implements Callable<String> {
 
 	private final Database<Airship> airshipDatabase;
-	
+
 	private final String identification;
 
 	private final User user;
@@ -55,11 +55,11 @@ public class PatchCivilAirshipCommand implements Callable<String> {
 
 		if (airshipDatabase.removeByIdentification(identification)) {
 
-			Airship airship = new CivilAirship(latitude, longitude, altitude, maxAltitude,
-					minAltitude, passengers);
+			Airship airship = CivilAirship.createANewAirshipWithAPreDefinedIdentification(latitude,
+					longitude, altitude, maxAltitude, minAltitude, passengers, identification);
 
 			airshipDatabase.add(airship, user);
-			
+
 			return "Airship successfully altered";
 		}
 

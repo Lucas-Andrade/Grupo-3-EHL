@@ -107,5 +107,4 @@ public class PatchUserPasswordCommand_Test {
 					
 		new PatchUserPasswordCommandsFactory(null);
 	}	  
-	
 }

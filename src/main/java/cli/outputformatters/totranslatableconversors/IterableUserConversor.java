@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import main.java.cli.model.users.User;
 import main.java.cli.outputformatters.Translatable;
-import main.java.cli.utils.ResultsTypesStringsDictionary;
+import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
 
 
 /**
@@ -18,7 +18,7 @@ import main.java.cli.utils.ResultsTypesStringsDictionary;
 class IterableUserConversor extends Converter
 {
 	
-	Translatable convert( Object iterableOfUsers ) {
+	Translatable convert( Object iterableOfUsers ) throws UnknownTypeException {
 		// TODO: handle ClassCastException
 		Iterable< User > it = (Iterable< User >)iterableOfUsers;
 		
@@ -27,14 +27,10 @@ class IterableUserConversor extends Converter
 		
 		for( User user : it )
 		{
-			propertiesBag.put(
-					user.getIdentification(),
-					ToTranslatableConversor.convert( user,
-							ResultsTypesStringsDictionary.USER )
-							.getPropertiesBag() );
+			propertiesBag.put( user.getIdentification(),
+					ToTranslatableConversor.convert( user ) );
 		}
 		
 		return new Translatable( "tag", null, null, null, propertiesBag, null );
 	}
-	
 }

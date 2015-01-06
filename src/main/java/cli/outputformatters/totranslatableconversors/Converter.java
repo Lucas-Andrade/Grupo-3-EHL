@@ -2,6 +2,7 @@ package main.java.cli.outputformatters.totranslatableconversors;
 
 
 import main.java.cli.outputformatters.Translatable;
+import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
 
 
 /**
@@ -17,8 +18,9 @@ abstract class Converter
 	 * 
 	 * @param object
 	 * @return
+	 * @throws UnknownTypeException 
 	 */
-	abstract Translatable convert(Object object);
+	abstract Translatable convert(Object object) throws UnknownTypeException;
 	
 	// ISTO NAO PÔDE SER GENERICO SENAO NAO CONSEGUIMOS FAZER O convert() DA
 	// CLASSE ToTranslatableConversor

@@ -4,6 +4,12 @@ import java.util.Map;
 import main.java.cli.model.airships.MilitaryAirship;
 import main.java.cli.outputformatters.Translatable;
 
+/**
+ * Class whose instances convert instances of {@link MilitaryAirships} into
+ * {@link Translatables}.
+ *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
 class MilitaryAirshipConverter extends AirshipConverter
 {
 	@Override

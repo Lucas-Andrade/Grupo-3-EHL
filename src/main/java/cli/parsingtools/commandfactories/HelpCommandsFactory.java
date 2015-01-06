@@ -1,10 +1,10 @@
 package main.java.cli.parsingtools.commandfactories;
 
 
-import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.commands.HelpCommand;
 import main.java.cli.parsingtools.CommandParser;
+import main.java.cli.utils.OptionsList;
 import main.java.cli.utils.exceptions.InvalidArgumentException;
 
 
@@ -16,7 +16,7 @@ import main.java.cli.utils.exceptions.InvalidArgumentException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class HelpCommandsFactory extends
-		StringsToCommandsFactory< Map< String, String > >
+		StringsToCommandsFactory< OptionsList >
 {
 	
 	// INSTANCE FIELD
@@ -60,7 +60,7 @@ public class HelpCommandsFactory extends
 	 * 
 	 * @return A command of type {@link HelpCommand}.
 	 */
-	public final Callable< Map< String, String > > internalNewInstance() {
+	public final Callable< OptionsList > internalNewInstance() {
 		
 		try
 		{

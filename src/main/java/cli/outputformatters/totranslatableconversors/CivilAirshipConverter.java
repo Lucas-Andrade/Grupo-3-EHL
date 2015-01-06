@@ -3,13 +3,12 @@ package main.java.cli.outputformatters.totranslatableconversors;
 import java.util.Map;
 import main.java.cli.model.airships.CivilAirship;
 import main.java.cli.outputformatters.Translatable;
-import main.java.cli.utils.CommandLineStringsDictionary;
 
-/**TODO
- * 
- * 
+/**
+ * Class whose instances convert instances of {@link CivilAirship} into
+ * {@link Translatables}.
  *
- *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class CivilAirshipConverter extends AirshipConverter
 {

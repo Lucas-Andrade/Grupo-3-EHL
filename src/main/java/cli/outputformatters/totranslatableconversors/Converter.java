@@ -6,8 +6,8 @@ import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
 
 
 /**
- * Utility classes that convert instances of a certain concrete type into a
- * {@link Translatable}.
+ * Class whose instances convert instances of a certain concrete type into
+ * {@link Translatable}s.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -15,14 +15,16 @@ abstract class Converter
 {
 	
 	/**
+	 * Converts {@link object} into a {@link Translatable}. *
 	 * 
 	 * @param object
-	 * @return
-	 * @throws UnknownTypeException 
+	 *            The instance to be converted into a {@link Translatable}.
+	 * @return The {@link Translatable}.
+	 * @throws UnknownTypeException
+	 *             If {@code object} has not the expected concrete type.
 	 */
-	abstract Translatable convert(Object object) throws UnknownTypeException;
+	abstract Translatable convert( Object object ) throws UnknownTypeException;
 	
 	// ISTO NAO PÔDE SER GENERICO SENAO NAO CONSEGUIMOS FAZER O convert() DA
-	// CLASSE ToTranslatableConversor
-	// é culpa do Java.
+	// CLASSE ToTranslatableConversor. que genéricos fraquinhos!
 }

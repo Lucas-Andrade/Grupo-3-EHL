@@ -14,6 +14,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+	/**
+	 * 
+	 *  Test Class for {@link PatchUserPasswordCommand}
+	 *  and {@link PatchUserPasswordCommandsFactory} classes.
+	 * 
+	 *
+	 *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+	 */
+
 public class PatchUserPasswordCommand_Test {
 
 	CommandParser cmdparser = new CommandParser();
@@ -26,7 +35,7 @@ public class PatchUserPasswordCommand_Test {
 	
 	cmdparser.registerCommand("PATCH", "/users/{username}", new PatchUserPasswordCommandsFactory(userDatabase) );
 	
-	} 
+	}  
 
 	@Test
 	public void shouldChangesTheUserPassword() throws Exception{

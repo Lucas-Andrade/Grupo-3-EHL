@@ -16,6 +16,15 @@ import main.java.cli.model.users.User;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+	
+	/**
+	 *  
+	 *  Test Class for  {@link GetTheNearestAirshipsOfTheGeographicCoordinateCommand} 
+	 *  and {@link GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory} classes.
+	 * 
+	 * 
+	 *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+	 */
 
 public class GetTheNearestAirshipsOfTheGeograficCoordinateCommand_Test {
 
@@ -67,6 +76,7 @@ public class GetTheNearestAirshipsOfTheGeograficCoordinateCommand_Test {
 																, result);
 				
 	}
+	
 	
 	@Test(expected=InvalidArgumentException.class)	
 	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullAirshipDatabase()  throws Exception{

@@ -172,7 +172,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 			GeographicPosition reference, int nrOfAirshipsToGet )
 			throws InvalidArgumentException {
 		
-		
+		 
 		if( nrOfAirshipsToGet < 0 )
 			throw new InvalidArgumentException(
 					"Number of airships cannot be negative." );
@@ -190,7 +190,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 		airshipsList.sort( new AirshipComparators.ComparatorByDistance(
 				reference ) );
 		
-		
+		 
 		if( nrOfAirshipsToGet <= airshipsList.size() )
 			airshipsList = airshipsList.subList( 0, nrOfAirshipsToGet );
 		return new Optional< Iterable< Airship >>( airshipsList,
@@ -238,7 +238,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship >
 		
 		for( Entry< String, List< Airship >> entry : flightsByUserRegister
 				.entrySet() )
-		{
+		{ 
 			List< Airship > list = entry.getValue();
 			for( Airship airship : list )
 				if( airship.getIdentification().equals( flightId ) )

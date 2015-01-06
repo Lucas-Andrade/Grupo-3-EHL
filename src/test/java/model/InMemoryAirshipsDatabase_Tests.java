@@ -21,6 +21,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+	/**
+	 * 
+	 * Test class for {@link InMemoryAirshipsDatabase} class.
+	 *
+	 *	@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+	 */
+ 
 public class InMemoryAirshipsDatabase_Tests {
      
 	InMemoryUsersDatabase userDatabase;
@@ -31,7 +38,7 @@ public class InMemoryAirshipsDatabase_Tests {
 	@Before
 	public void Before() { 
 		try {
-
+ 
 			// Arrange
 			userDatabase = new InMemoryUsersDatabase("newUsersDataBase");
 
@@ -149,9 +156,8 @@ public class InMemoryAirshipsDatabase_Tests {
 		
 }
 	
-	
 	@Test
-	public void find() throws InvalidArgumentException{
+	public void shouldFindTheTwoAirshipsNearestToGeographicalPosition() throws InvalidArgumentException{
 		
 		
 		Airship air1 = new CivilAirship(30, 225, 10000, 20000, 0, 100);
@@ -175,16 +181,42 @@ public class InMemoryAirshipsDatabase_Tests {
 		
 	 String result = airshipDatabase.getAirshipsCloserTo(new GeographicPosition(60, 225, 10000), 2).toString() ;
 
-	 Assert.assertEquals("["+air1.toString()+", "+air3.toString()+"]",result);
+	 Assert.assertEquals(new StringBuilder("[").append(air1.toString())
+			 				.append(", ").append(air3.toString())
+			 				.append("]").toString()
+			 											,result);
 	}
 	
+	@Test
+	public void shouldReturnAllAirshipsInAirshipsMemoryDatabseBecauseTheNumberAskedIsHigherThanAirshipsInDatabase() throws InvalidArgumentException{
+		
+		
+		Airship air1 = new CivilAirship(30, 225, 10000, 20000, 0, 100);
+		Airship air2 = new MilitaryAirship(0, 315, 15000, 20000, 0, true);
+		Airship air3 = new CivilAirship(45, 180, 12000, 20000, 0, 50);
+
+
+		airshipDatabase.add(air1, user);
+		airshipDatabase.add(air2, user);
+		airshipDatabase.add(air3, user);
 	
+		  
+		
+	 String result = airshipDatabase.getAirshipsCloserTo(new GeographicPosition(60, 225, 10000), 5).toString() ;
+
+	 String expectedResult = new StringBuilder("[").append(air1.toString())
+			 				.append(", ").append(air3.toString())
+			 				.append(", ").append(air2.toString())
+			 				.append("]").toString();
+			 											
+	 Assert.assertEquals(expectedResult,result);
+	}
 	
-	
+		
 	// Test Exceptions
 
 	@Test(expected = InvalidArgumentException.class)
-	public void shouldThrowInvalidArgumentExceptionWhenTryingToAddNullElementsToADatabase()
+	public void shouldThrowInvalidArgumentExceptionWhenTryToAddNullElementsToADatabase()
 			throws InvalidArgumentException {
 
 		// Assert
@@ -194,17 +226,17 @@ public class InMemoryAirshipsDatabase_Tests {
 	}
 	
 	@Test(expected = InvalidArgumentException.class)
-	public void shouldThrowInvalidArgumentExceptionWhenTryingToAddElementsToADatabaseGivenNullUser()
+	public void shouldThrowInvalidArgumentExceptionWhenTryToAddElementsToADatabaseGivenNullUser()
 
 			throws InvalidArgumentException {
 
 		// Assert
-		airshipDatabase.add(airship, null);
+		airshipDatabase.add(airship, null); 
 
 	} 
 	
 	@Test(expected = InvalidArgumentException.class)
-	public void shouldThrowInvalidArgumentExceptionWhenTryingToRemoveNullElementsFromADatabase() 
+	public void shouldThrowInvalidArgumentExceptionWhenTryToRemoveNullElementsFromADatabase() 
 			throws  InvalidArgumentException, DatabaseException {
 
 	
@@ -212,6 +244,11 @@ public class InMemoryAirshipsDatabase_Tests {
 	
 	}
 
+	@Test(expected=InvalidArgumentException.class)
+	public void shouldThrowInvalidArgumentExceptionWhenTrytoGiveANegativeNumberOfAirshipsToFindAtgetAirshipsCloserToMethod()
+			throws InvalidArgumentException
+	{
  
-
+		airshipDatabase.getAirshipsCloserTo(new GeographicPosition(60, 225, 10000), -3);
+	}
 }

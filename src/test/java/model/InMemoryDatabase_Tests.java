@@ -2,6 +2,7 @@ package test.java.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.exceptions.databaseexceptions.DatabaseException;
@@ -148,6 +149,27 @@ public class InMemoryDatabase_Tests {
 		
 		   
 	}  
+	
+	
+	@Test 
+	public void shoulgetAllTheElementInMemoryDatabase() throws Exception {
+		
+		Airship airship1 = new CivilAirship(45, 300, 10000, 20000, 0, 100);
+		Airship airship2 = new CivilAirship(-45, 160, 5000, 15000, 0, 300);
+		
+		
+		airshipDatabase.add(airship, user);
+		airshipDatabase.add(airship1, user);
+		
+		Map<String,Airship> mapResult = airshipDatabase.getAll().get();
+			
+		Assert.assertTrue(mapResult.containsKey(airship.getIdentification())
+							&& mapResult.containsKey(airship1.getIdentification()));
+		
+		Assert.assertFalse(mapResult.containsKey(airship2.getIdentification()));
+	
+	}
+	
 	
 	// Test Exceptions
 

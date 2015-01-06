@@ -32,42 +32,39 @@ public class AirshipComparatorsTest
 			User user = new User( "username", "password", "email@" );
 			database = new InMemoryAirshipsDatabase( "airships database" );
 
-			Airship a0 = new CivilAirship( 1, 2, 5, 10, 0, 10 );
-			Airship a1 = new CivilAirship( 5, 3, 6, 10, 0, 10 );
-			Airship a2 = new CivilAirship( 7, 5, 7, 10, 0, 10 );
-			Airship a3 = new CivilAirship( 9, 2, 8, 10, 0, 10 );
-			Airship a4 = new CivilAirship( - 11, 1, 5, 10, 0, 10 );
-			Airship a5 = new MilitaryAirship( - 12, 2, 4, 10, 0, true );
-			Airship a6 = new MilitaryAirship( 45, 67, 4, 10, 0, true );
-			Airship a7 = new MilitaryAirship( 12, 12, 4, 10, 0, true );
-			Airship a8 = new MilitaryAirship( 34, 2, 4, 10, 0, true );
-			Airship a9 = new MilitaryAirship( 0, 0, 4, 10, 0, true );
-
+			
+			Airship air1 = new CivilAirship(30, 225, 10000, 20000, 0, 100);
+			Airship air2 = new MilitaryAirship(0, 315, 15000, 20000, 0, true);
+			Airship air3 = new CivilAirship(45, 180, 12000, 20000, 0, 50);
+			Airship air4 = new MilitaryAirship(-60, 90, 15000, 20000, 0, false);
+			Airship air5 = new CivilAirship(-60, 225, 12000, 20000, 0, 50);
+			Airship air6 = new CivilAirship(-90, 360, 12000, 20000, 0, 50);
+			Airship air7 = new CivilAirship(30, 45, 12000, 20000, 0, 50);
+			Airship air8 = new MilitaryAirship(-30, 45, 15000, 20000, 0, false);
+			
+			
 			gp = new GeographicPosition( 0, 0, 0 );
 			
 			// Act
-			database.add( a0, user );
-			database.add( a1, user );
-			database.add( a2, user );
-			database.add( a3, user );
-			database.add( a4, user );
-			database.add( a5, user );
-			database.add( a6, user );
-			database.add( a7, user );
-			database.add( a8, user );
-			database.add( a9, user );
+			database.add( air1, user );
+			database.add( air2, user );
+			database.add( air3, user );
+			database.add( air4, user );
+			database.add( air5, user );
+			database.add( air6, user );
+			database.add( air7, user );
+			database.add( air8, user );
 
 
-			expectedAirshipList.add( a9 );
-			expectedAirshipList.add( a0 );
-			expectedAirshipList.add( a1 );
-			expectedAirshipList.add( a2 );
-			expectedAirshipList.add( a3 );
-			expectedAirshipList.add( a4 );
-			expectedAirshipList.add( a5 );
-			expectedAirshipList.add( a7 );
-			expectedAirshipList.add( a8 );
-			expectedAirshipList.add( a6 );
+			expectedAirshipList.add( air8 );
+			expectedAirshipList.add( air7 );
+			expectedAirshipList.add( air4 );
+			expectedAirshipList.add( air3 );
+			expectedAirshipList.add( air1 );
+			expectedAirshipList.add( air5 );
+			expectedAirshipList.add( air2 );
+			expectedAirshipList.add( air6 );
+		
 			
 
 		}
@@ -78,12 +75,6 @@ public class AirshipComparatorsTest
 			e.printStackTrace();
 		}
 		
-		//Assert
-		for( Airship a : database.getAirshipsCloserTo( gp, 10 ).get() )
-		{
-			System.out.println( a );
-		}
-
 		// Assert
 		assertEquals( expectedAirshipList,
 				database.getAirshipsCloserTo( gp, 10 ).get() );

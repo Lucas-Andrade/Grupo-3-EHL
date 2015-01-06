@@ -38,8 +38,12 @@ public class InternalErrorException extends Exception
 	}
 	
 	/**
-	 * Constructs an {@link InternalErrorException} with the specified detail
-	 * message.
+	 * Constructs an {@link InternalErrorException} with the message:
+	 * <p>
+	 * <i>«Sorry! An internal error that was supposed to never happen happened.
+	 * <br/>
+	 * {@code message}»</i>
+	 * </p>
 	 * 
 	 * @param message
 	 *            The detail message.

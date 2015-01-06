@@ -24,8 +24,11 @@ import main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactories
 import main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.postfactories.PostAirshipCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.postfactories.PostUserCommandsFactory;
+import main.java.cli.utils.exceptions.InternalErrorException;
 import main.java.cli.utils.exceptions.InvalidArgumentException;
 import main.java.cli.utils.exceptions.commandparserexceptions.InvalidRegisterException;
+import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTranslatableException;
+import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
 
 
 /**
@@ -59,11 +62,15 @@ import main.java.cli.utils.exceptions.commandparserexceptions.InvalidRegisterExc
  * <li>"POST /airships/type latitude={@value}&longitude={@value}
  * &altitude={@value} &minAltitude={@value}&maxAltitude={@value}&
  * {@code airshipCharacteristic}={@value}&loginName={@value}&loginPassword={@value}
- * ={@value}&loginName={@value}&loginPassword={@value} " - create an
- * {@link Airship} with the type {@code Civil} or {@code Military}. If the
- * type:={@code Civil}, {@code airshipCharacteristic}:= nbPassengers. If the
- * type:={@code Military}, {@code airshipCharacteristic}:== hasArmour -> (yes or
- * no).</li>
+ * ={@value}&loginName={@value}&loginPassword={@value}={@value}
+ * &loginName={@value}&loginPassword={@value} ={@value}&loginName={@value}
+ * &loginPassword={@value}={@value}&loginName={@value}
+ * &loginPassword={@value} ={@value}&loginName={@value}&loginPassword={@value}
+ * ={@value} &loginName={@value}&loginPassword={@value} ={@value}
+ * &loginName={@value} &loginPassword={@value} " - create an {@link Airship}
+ * with the type {@code Civil} or {@code Military}. If the type:={@code Civil},
+ * {@code airshipCharacteristic}:= nbPassengers. If the type:={@code Military},
+ * {@code airshipCharacteristic}:== hasArmour -> (yes or no).</li>
  * <ul>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -210,19 +217,31 @@ public class App
 		
 		try
 		{
+			
 			Parser parser = new Parser( cmdParser, args );
 			Callable< ? > command = parser.getCommand();
 			
-			//System.out.println( command.call() );
-			//
-			 Translatable intermediateRepr = ToTranslatableConversor.convert( command.call() );
-			 String output = parser.getTranslator().encode(intermediateRepr);
-			 parser.getStream().print(output);
+			
+			String output;
+			try
+			{
+				Translatable intermediateRepr = ToTranslatableConversor
+						.convert( command.call() );
+				output = parser.getTranslator().encode( intermediateRepr );
+			}
+			catch( UnknownTypeException | UnknownTranslatableException e )
+			{
+				throw new InternalErrorException( e.getMessage() );
+			}
+			
+			
+			parser.getStream().print( output );
+			
 		}
 		catch( Exception e )
 		{
 			System.out.println( e.getMessage() );
 		}
 	}
-
+	
 }

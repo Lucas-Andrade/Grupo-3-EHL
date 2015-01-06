@@ -1,4 +1,4 @@
-package main.java.cli.outputformatters.totranslatableconversors;
+package test.java.outputformatters;
 
 import static org.junit.Assert.assertEquals;
 import main.java.cli.model.airships.Airship;
@@ -6,11 +6,11 @@ import main.java.cli.model.airships.CivilAirship;
 import main.java.cli.model.airships.MilitaryAirship;
 import main.java.cli.model.users.User;
 import main.java.cli.outputformatters.Translatable;
+import main.java.cli.outputformatters.totranslatableconversors.ToTranslatableConversor;
 import main.java.cli.utils.CommandLineStringsDictionary;
 import main.java.cli.utils.Optional;
 import main.java.cli.utils.exceptions.InvalidArgumentException;
 import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
-
 import org.junit.Test;
 
 public class ToTranslatableConversorTest

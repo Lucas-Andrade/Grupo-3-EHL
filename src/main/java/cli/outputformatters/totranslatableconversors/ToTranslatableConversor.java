@@ -12,20 +12,16 @@ import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
 /**
  * Class whose method {@link #convert} converts instances of certain types into
  * {@link Translatables}. <b> The argument {@code object} of method
- * {@link #convert(Object)} must be
- * <ul>
- * <li>an instance of {@link String} or
- * <li>an instance of {@link OptionsList} or
- * <li>an instance of {@link Optional} representing an instance of one of the
- * following types:
+ * {@link #convert(Object)} must be an instance of one of the following types:
  * <ul>
  * <li>{@link User}, {@link CivilAirship} or {@link MilitaryAirship},</li>
- * <li>{@link Iterable} of instances of one of the three previous types,</li>
- * <li>{@link Iterable} of {@link Airship}s or</li>
+ * <li>{@link Iterable} of one of the three previous types,</li>
+ * <li>{@link Iterable} of {@link Airship}s,</li>
+ * <li>{@link OptionsList},</li>
+ * <li>{@link String} or</li>
+ * <li>{@link Optional} representing one of the previous types.</li>
  * </ul>
- * </li>
- * </ul>
- * </b>
+ * </li> </ul> </b>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -73,21 +69,19 @@ public class ToTranslatableConversor
 	/**
 	 * Converts {@code object} into a {@link Translatable}.
 	 * <p>
-	 * <b> The argument {@code object} must be
-	 * <ul>
-	 * <li>an instance of {@link String} or
-	 * <li>an instance of {@link OptionsList} or
-	 * <li>an instance of {@link Optional} representing an instance of one of
-	 * the following types:
+	 * <b> The argument {@code object} must be an instance of one of the
+	 * following types:
 	 * <ul>
 	 * <li>{@link User}, {@link CivilAirship} or {@link MilitaryAirship},</li>
-	 * <li>{@link Iterable} of instances of one of the three previous types,</li>
-	 * <li>{@link Iterable} of {@link Airship}s or</li>
-	 * </ul>
-	 * </li>
+	 * <li>{@link Iterable} of one of the three previous types,</li>
+	 * <li>{@link Iterable} of {@link Airship}s,</li>
+	 * <li>{@link OptionsList},</li>
+	 * <li>{@link String} or</li>
+	 * <li>{@link Optional} representing one of the previous types.</li>
+	 * <ul>
+	 * </ul></li>
 	 * 
-	 * </ul>
-	 * </b>
+	 * </ul> </b>
 	 * </p>
 	 * 
 	 * @param object
@@ -106,21 +100,12 @@ public class ToTranslatableConversor
 		if( object instanceof Optional )
 			return getTranslatableOfValueContainedInOptional( (Optional< ? >)object );
 		
-		if( object instanceof String )
-			return CONVERSORSbyTYPE.get( stringClass ).convert( (String)object );
-		
-		if( object instanceof OptionsList )
-			return CONVERSORSbyTYPE.get( optionsListClass ).convert( (OptionsList)object );
-		
-		// caso nao seja Optional nem String
-		throw new UnknownTypeException(
-				"Cannot convert empty iterables to string." );
-		
-		
+		return getTranslatableOfValue( object );
 	}
 	
+	
 	/**
-	 * Returns the {@link Translatable} that returns from converting the value
+	 * Returns the {@link Translatable} that results from converting the value
 	 * represented by the {@link Optional} {@code optional}.
 	 * 
 	 * @param optional
@@ -146,30 +131,56 @@ public class ToTranslatableConversor
 				return CONVERSORSbyTYPE.get( stringClass ).convert(
 						optional.toString() );
 			
-			// se for um Iterable nao vazio
-			if( obj instanceof Iterable )
-			{
-				// pegamos no 1o elemento e extraímos o nome do seu tipo
-				String elementsType = ((Iterable< ? >)obj).iterator().next()
-						.getClass().getSimpleName();
-				
-				// vemos se ha conversor para iteraveis desse tipo
-				return getConversor( "it" + elementsType ).convert( obj );
-			}
-			
-			
-			// se nao for um Iterable
-			return getConversor( obj.getClass().getSimpleName() ).convert( obj );
-			
-			
+			// obter o translatable
+			return getTranslatableOfValue( obj );
 			
 		}
 		catch( Exception e )
-		{// se sai excepçao é porq value é null, manda-se a msg da excepçao
-			// pro StringConversor
+		{
+			// se sai excepçao é porq value é null
+			// manda-se a msg da excepçao pro StringConversor
 			return CONVERSORSbyTYPE.get( stringClass ).convert( e.getMessage() );
 		}
 	}
+	
+	
+	/**
+	 * Returns the {@link Translatable} that results from converting {@code obj}
+	 * .
+	 * 
+	 * @param obj
+	 *            The value to be converted.
+	 * @return The {@link Translatable} that returns from converting {@code obj}
+	 *         .
+	 * @throws UnknownTypeException
+	 *             If the value is not one of the mentioned in
+	 *             {@link #convert(Object)} documentation.
+	 */
+	private static Translatable getTranslatableOfValue( Object obj )
+			throws UnknownTypeException {
+		
+		
+		if( obj instanceof Iterable )
+		{
+			// se for um Iterable nao vazio
+			if( ((Iterable< ? >)obj).iterator().hasNext() )
+			{
+				String elementsType = ((Iterable< ? >)obj).iterator().next()
+						.getClass().getSimpleName();
+				return getConversor( "it" + elementsType ).convert( obj );
+			}
+			
+			// se for um Iterable vazio que nao estava dentro de um Optional
+			// (o getTranslatableOfValueContainedInOptional trata este caso à
+			// parte)
+			else throw new UnknownTypeException(
+					"Cannot convert empty iterables to string." );
+		}
+		
+		// se nao for um Iterable
+		return getConversor( obj.getClass().getSimpleName() ).convert( obj );
+	}
+	
 	
 	/**
 	 * Returns the correct {@link Conversor} for an object of type whose string
@@ -183,7 +194,6 @@ public class ToTranslatableConversor
 	 * @throws UnknownTypeException
 	 *             If {@code objectType} is unknown.
 	 */
-	
 	private static Conversor getConversor( String objectType )
 			throws UnknownTypeException {
 		

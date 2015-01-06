@@ -37,7 +37,7 @@ public class ToTranslatableConversorTest
 		try
 		{
 			Translatable t = ToTranslatableConversor.convert( str );
-			assertEquals(t.getPropertiesBag().get( "Message" ), str);
+			assertEquals(t.getPropertiesBag().get( "message" ), str);
 		}
 		catch( UnknownTypeException e )
 		{
@@ -53,7 +53,7 @@ public class ToTranslatableConversorTest
 		try
 		{
 			Translatable t = ToTranslatableConversor.convert( user );
-			assertEquals(t.getTag(), "User");
+			assertEquals(t.getTag(), "user");
 			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.USERNAME ), "username");
 			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.EMAIL ), "email@");
 			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.FULLNAME ), "");
@@ -71,15 +71,14 @@ public class ToTranslatableConversorTest
 		try
 		{
 			Translatable t = ToTranslatableConversor.convert( airship );
-			assertEquals(t.getTag(), "CivilAirship");
+			assertEquals(t.getTag(), "civilAirship");
 			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.FLIGHTID ), airship.get().getIdentification());
-			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.LATITUDE ), "0.0");
-			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.LONGITUDE ), "0.0");
-			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.ALTITUDE ), "0.0");
-			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.AIRCORRIDOR_MINALTITUDE ), "0.0");
-			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.AIRCORRIDOR_MAXALTITUDE ), "10.0");
-			assertEquals(t.getPropertiesBag().get( "Is Outside The Given Corridor" ), "false");
-			assertEquals(t.getPropertiesBag().get( "Number of Passengers" ), "10");
+			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.LATITUDE ), 0.0);
+			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.LONGITUDE ), 0.0);
+			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.ALTITUDE ), 0.0);
+			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.AIRCORRIDOR_MINALTITUDE ), 0.0);
+			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.AIRCORRIDOR_MAXALTITUDE ), 10.0);
+			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.NUMBEROFPASSENGERS ), 10);
 		}
 		catch( UnknownTypeException e )
 		{
@@ -94,15 +93,14 @@ public class ToTranslatableConversorTest
 		try
 		{
 			Translatable t = ToTranslatableConversor.convert( airship );
-			assertEquals(t.getTag(), "MilitaryAirship");
+			assertEquals(t.getTag(), "militaryAirship");
 			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.FLIGHTID ), airship.get().getIdentification());
-			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.LATITUDE ), "0.0");
-			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.LONGITUDE ), "0.0");
-			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.ALTITUDE ), "0.0");
-			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.AIRCORRIDOR_MINALTITUDE ), "0.0");
-			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.AIRCORRIDOR_MAXALTITUDE ), "10.0");
-			assertEquals(t.getPropertiesBag().get( "Is Outside The Given Corridor" ), "false");
-			assertEquals(t.getPropertiesBag().get( "Carries Weapons" ), "true");
+			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.LATITUDE ), 0.0);
+			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.LONGITUDE ), 0.0);
+			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.ALTITUDE ), 0.0);
+			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.AIRCORRIDOR_MINALTITUDE ), 0.0);
+			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.AIRCORRIDOR_MAXALTITUDE ), 10.0);
+			assertEquals(t.getPropertiesBag().get( CommandLineStringsDictionary.HASARMOUR ), true);
 		}
 		catch( UnknownTypeException e )
 		{

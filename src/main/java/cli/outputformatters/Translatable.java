@@ -50,8 +50,8 @@ import main.java.cli.outputformatters.translators.Translator;
  * a non-{@code null tag} and several entries in the properties bag.</li>
  * <li>{@link Iterable}s have {@code null keyTag, null valueTag}, a non-
  * {@code null tag}, a non-{@code null entryTag} (which shall be the singular of
- * {@code tag}) and several entries in the properties bag whose keys are
- * useless.</li>
+ * {@code tag}) and the entries in the properties bag have {@link Translatables}
+ * as values (their keys are useless).</li>
  * <li>{@link Map} have all tags with non-{@code null} values and several
  * entries in the properties bag.</li>
  * </ul>

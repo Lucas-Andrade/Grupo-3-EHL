@@ -9,28 +9,35 @@ import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
 
 
 /**
- * TODO ?!?!?! Iterable generic -> <?> or <Element> Como fazemos o iterable?!?!
- * p_q
- * 
+/**
+ * Class whose instances convert instances of {@code Iterable<User>} into
+ * {@link Translatables}.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 class IterableUserConversor extends Conversor
 {
-	
-	public Translatable convert( Object iterableOfUsers ) throws UnknownTypeException {
-		// TODO: handle ClassCastException
-		Iterable< User > it = (Iterable< User >)iterableOfUsers;
+	@SuppressWarnings( "unchecked" )
+	Translatable convert( Object iterableOfUsers ) throws UnknownTypeException {
 		
+		Iterable< User > it;
+		try
+		{
+			it = (Iterable< User >)iterableOfUsers;
+		}
+		catch( ClassCastException e )
+		{
+			throw new UnknownTypeException( "Could not convert " + iterableOfUsers
+					+ " into a translatable." );
+		}
 		
-		Map< String, Object > propertiesBag = new HashMap< String, Object >();
-		
+		Map< String, Object > propertiesBag = new HashMap< String, Object >();		
 		for( User user : it )
 		{
 			propertiesBag.put( user.getIdentification(),
 					ToTranslatableConversor.convert( user ) );
 		}
 		
-		return new Translatable( "tag", null, null, null, propertiesBag, null );
+		return new Translatable( "users", "user", null, null, propertiesBag, null );
 	}
 }

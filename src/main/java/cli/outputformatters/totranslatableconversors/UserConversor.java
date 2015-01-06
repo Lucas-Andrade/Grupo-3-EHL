@@ -36,7 +36,7 @@ class UserConversor extends Conversor
 		propertiesBag.put( "email", u.getEmail() );
 		propertiesBag.put( "fullname", u.getFullName() );
 		
-		return new Translatable( "User", null, null, null, propertiesBag,
+		return new Translatable( "user", null, null, null, propertiesBag,
 				u.toStringWithoutPassword() );
 	}
 }

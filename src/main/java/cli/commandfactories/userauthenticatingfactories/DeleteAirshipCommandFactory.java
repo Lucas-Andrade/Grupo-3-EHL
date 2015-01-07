@@ -13,6 +13,8 @@ public class DeleteAirshipCommandFactory extends UserAuthenticatingFactory<Airsh
 	private final Database<Airship> airshipDatabase;
 
 	private final String[] requiredParameters;
+	
+	private String flightId;
 
 	public DeleteAirshipCommandFactory(Database<User> usersDatabase,
 			Database<Airship> airshipDatabase) throws InvalidArgumentException {
@@ -27,8 +29,10 @@ public class DeleteAirshipCommandFactory extends UserAuthenticatingFactory<Airsh
 	@Override
 	protected Callable<String> internalInternalNewInstance(User userWhoIsPosting) {
 
+		getFlightId();
+		
 		try {
-			return new DeleteAirshipCommand(airshipDatabase, CommandLineStringsDictionary.FLIGHTID);
+			return new DeleteAirshipCommand(airshipDatabase, flightId);
 
 		} catch (InvalidArgumentException e)
 		{// never happens for databaseWhereToPost is not null
@@ -41,4 +45,13 @@ public class DeleteAirshipCommandFactory extends UserAuthenticatingFactory<Airsh
 
 		return requiredParameters;
 	}
+	
+	private void getFlightId(){
+		
+		
+		flightId = getParameterAsString(requiredParameters[0]);
+	}
+	
+	
+	
 }

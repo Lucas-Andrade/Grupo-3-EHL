@@ -65,15 +65,17 @@ public class HelpCommand_Tests {
 		Map<String,String> result = (Map<String, String>) parser.getCommand().call();
 		
 		
-		Assert.assertTrue(result.containsValue(new GetAirshipByFlightIdCommandsFactory(airshipsDatabase ).getCommandsDescription()));
-		
+		Assert.assertTrue(result.containsValue(new GetAllAirshipsInADatabaseCommandsFactory(airshipsDatabase).getCommandsDescription()));
+		Assert.assertTrue(result.containsValue(new GetAirshipByFlightIdCommandsFactory(airshipsDatabase).getCommandsDescription()));
+		Assert.assertTrue(result.containsValue(new PatchUserPasswordCommandsFactory(usersDatabase).getCommandsDescription()));
+		Assert.assertTrue(result.containsValue(new PostUserCommandsFactory(usersDatabase,usersDatabase).getCommandsDescription()));
+
 	}
 	
 	
 	@Test(expected=InvalidArgumentException.class)
 	public void shouldThrowInvalidArgumentExceptionGivingANullCommandParserInHelpCommand() throws InvalidArgumentException, InvalidCommandParametersSyntaxException, DuplicateParametersException, InvalidCommandSyntaxException, InvalidRegisterException{
 		
-
 		 new HelpCommand(null);
 	}
 	

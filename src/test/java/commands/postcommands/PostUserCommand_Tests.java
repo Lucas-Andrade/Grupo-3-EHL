@@ -1,7 +1,5 @@
 package test.java.commands.postcommands;
 
-import main.java.cli.commands.postcommands.PostCivilAirshipCommand;
-import main.java.cli.commands.postcommands.PostMilitaryAirshipCommand;
 import main.java.cli.commands.postcommands.PostUserCommand;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.users.InMemoryUsersDatabase;

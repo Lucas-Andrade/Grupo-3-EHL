@@ -4,9 +4,8 @@ import java.util.concurrent.Callable;
 
 import main.java.cli.CommandParser;
 import main.java.cli.Parser;
-import main.java.cli.commandfactories.getfactories.getallfactories.GetAllAirshipsInADatabaseCommandsFactory;
-import main.java.cli.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
-import main.java.cli.commands.getcommands.GetAllElementsInADatabaseCommand;
+import main.java.cli.commandfactories.getfactories.GetAirshipsOfOwnerCommandsFactory;
+import main.java.cli.commands.getcommands.GetAirshipsOfOwnerCommand;
 import main.java.cli.exceptions.InternalErrorException;
 import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.exceptions.commandparserexceptions.InvalidCommandSyntaxException;
@@ -17,7 +16,6 @@ import main.java.cli.exceptions.factoryexceptions.InvalidParameterValueException
 import main.java.cli.exceptions.factoryexceptions.MissingRequiredParameterException;
 import main.java.cli.exceptions.factoryexceptions.WrongLoginPasswordException;
 import main.java.cli.model.airships.InMemoryAirshipsDatabase;
-import main.java.cli.model.users.InMemoryUsersDatabase;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -28,18 +26,15 @@ import org.junit.Test;
  * 
  * <pre>
  * 
- * {@link GetAllElementsInADatabaseCommandsFactory}
- * {@link GetAllUsersInADatabaseCommandsFactory}
- * {@link GetAllAirshipsInADatabaseCommandsFactory}
+ * {@link GetAirshipsOfOwnerCommandsFactory}
  * 
  * </pre>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetAllCommandsFactories_Tests {
+public class GetAirshipsOfOwnerCommandsFactory_Tests {
 
 	private static CommandParser cmdparser = new CommandParser();
-	private static InMemoryUsersDatabase userDatabase;
 	private static InMemoryAirshipsDatabase airshipsDatabase;
 
 	// Before Class
@@ -50,47 +45,33 @@ public class GetAllCommandsFactories_Tests {
 
 		cmdparser = new CommandParser();
 
-		userDatabase = new InMemoryUsersDatabase("Users Database");
 		airshipsDatabase = new InMemoryAirshipsDatabase("Airships Database");
 
-		cmdparser.registerCommand("GET", "/airships", new GetAllAirshipsInADatabaseCommandsFactory(
-				airshipsDatabase));
-
-		cmdparser.registerCommand("GET", "/users", new GetAllUsersInADatabaseCommandsFactory(
-				userDatabase));
+		cmdparser.registerCommand("GET", "/airships/owner/{owner}",
+				new GetAirshipsOfOwnerCommandsFactory(airshipsDatabase));
 	}
 
 	// Test Normal Dinamic And Prerequisites
 
 	@Test
-	public void shouldSuccessfullyCreateTheCorrectCommands() throws WrongLoginPasswordException,
+	public void shouldSuccessfullyCreateTheCorrectCommand() throws WrongLoginPasswordException,
 			MissingRequiredParameterException, InvalidCommandSyntaxException,
 			UnknownCommandException, NoSuchElementInDatabaseException,
 			InvalidParameterValueException, InvalidArgumentException, InternalErrorException,
 			Exception {
 
-		Callable<?> getAllUsersCommand = (new Parser(cmdparser, "GET", "/users")).getCommand();
+		Callable<?> getAirshipsOfOwnerCommands = (new Parser(cmdparser, "GET",
+				"/airships/owner/Daniel")).getCommand();
 
-		Callable<?> getAllAirshipsCommand = (new Parser(cmdparser, "GET", "/airships"))
-				.getCommand();
-
-		Assert.assertTrue(getAllUsersCommand instanceof GetAllElementsInADatabaseCommand);
-		Assert.assertTrue(getAllAirshipsCommand instanceof GetAllElementsInADatabaseCommand);
+		Assert.assertTrue(getAirshipsOfOwnerCommands instanceof GetAirshipsOfOwnerCommand);
 	}
 
 	// Test Exceptions
 
 	@Test (expected = InvalidArgumentException.class)
-	public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAllAirshipsInADatabaseCommandsFactoryGivenANullDatabase()
+	public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAirshipsOfOwnerCommandsFactoryGivenANullDatabase()
 			throws InvalidArgumentException {
 
-		new GetAllAirshipsInADatabaseCommandsFactory(null);
-	}
-
-	@Test (expected = InvalidArgumentException.class)
-	public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAllUsersInADatabaseCommandsFactoryGivenANullDatabase()
-			throws InvalidArgumentException {
-
-		new GetAllUsersInADatabaseCommandsFactory(null);
+		new GetAirshipsOfOwnerCommandsFactory(null);
 	}
 }

@@ -67,7 +67,7 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
 		
 		super( commandsDescription );
 		
-		if( identificationParameterName == null )
+		if( identificationParameterName == null ) // This Never Happens, Right?
 			throw new InvalidArgumentException(
 					"Cannot instantiate factory with null parameter name!" );
 		if( database == null )

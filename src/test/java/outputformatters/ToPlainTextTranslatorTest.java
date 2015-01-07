@@ -2,20 +2,25 @@ package test.java.outputformatters;
 
 
 import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringJoiner;
+
 import main.java.cli.model.airships.Airship;
 import main.java.cli.model.airships.CivilAirship;
 import main.java.cli.model.airships.MilitaryAirship;
 import main.java.cli.model.users.User;
 import main.java.cli.outputformatters.totranslatableconversors.ToTranslatableConversor;
+import main.java.cli.outputformatters.translators.ToJsonTranslator;
 import main.java.cli.outputformatters.translators.ToPlainTextTranslator;
 import main.java.cli.utils.Optional;
 import main.java.cli.utils.OptionsList;
 import main.java.cli.utils.exceptions.InvalidArgumentException;
 import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTranslatableException;
 import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
+
 import org.junit.Test;
 
 
@@ -29,8 +34,10 @@ public class ToPlainTextTranslatorTest
 {
 	
 	@Test
-	public void test() {
-		fail( "Not yet implemented" );
+	public void test()
+	{
+		
+		System.out.println(new StringJoiner( " : ", "{ ", " }" ).add( "ola" ).add( "adeus" ).toString());;
 	}
 	
 	public static void main( String[] args ) throws InvalidArgumentException,

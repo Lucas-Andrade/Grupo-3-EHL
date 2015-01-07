@@ -36,14 +36,14 @@ public class ToTranslatableConversor
 	 * {@code instance}.
 	 * </p>
 	 */
-	private static String civilClass = "CivilAirship"; // CivilAirship
-	private static String iterableUserClass = "itUser"; // Iterable<User>
-	private static String iterableCivilClass = "itCivilAirship"; // Iterable<CivilAirship>
-	private static String iterableMilitaryClass = "itMilitaryAirship"; // Iterable<MilitaryAirship>
-	private static String militaryClass = "MilitaryAirship"; // MilitaryAirship
-	private static String optionsListClass = "OptionsList"; // OptionsList
-	private static String stringClass = "String"; // String
-	private static String userClass = "User"; // User
+	private static String civilClass = "CivilAirship";					// CivilAirship
+	private static String iterableUserClass = "itUser"; 				// Iterable<User>
+	private static String iterableCivilClass = "itCivilAirship"; 		// Iterable<CivilAirship>
+	private static String iterableMilitaryClass = "itMilitaryAirship";	// Iterable<MilitaryAirship>
+	private static String militaryClass = "MilitaryAirship";			// MilitaryAirship
+	private static String optionsListClass = "OptionsList";				// OptionsList
+	private static String stringClass = "String";						// String
+	private static String userClass = "User";							// User
 	
 	/**
 	 * The mapping between strings that represent instance types and the
@@ -145,13 +145,11 @@ public class ToTranslatableConversor
 	
 	
 	/**
-	 * Returns the {@link Translatable} that results from converting {@code obj}
-	 * .
+	 * Returns the {@link Translatable} that results from converting {@code obj}.
 	 * 
 	 * @param obj
 	 *            The value to be converted.
-	 * @return The {@link Translatable} that returns from converting {@code obj}
-	 *         .
+	 * @return The {@link Translatable} that returns from converting {@code obj}.
 	 * @throws UnknownTypeException
 	 *             If the value is not one of the mentioned in
 	 *             {@link #convert(Object)} documentation.

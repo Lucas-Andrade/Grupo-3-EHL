@@ -9,7 +9,6 @@ import main.java.cli.utils.exceptions.conversorsexceptions.UnknownTypeException;
 
 
 /**
-/**
  * Class whose instances convert instances of {@code Iterable<User>} into
  * {@link Translatables}.
  *

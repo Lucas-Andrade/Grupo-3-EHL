@@ -66,6 +66,22 @@ import main.java.cli.outputformatters.translators.Translator;
  * valueTag    |   n    |    n   |     n    |   V
  * </pre>
  * 
+ *
+ * 
+ * ?????????????????????????????????????????????????????????<p>
+ * CRIAR UMA NOVA LINHA SERÁ MAIS FÁCIL QUE UMA NOVA COLUNA <p>
+ * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!<p>
+ * 
+ * <pre>
+ *            |  tag   | entryTag |  keyTag  | valueTag  
+ * ———————————+————————+——————————+——————————+———————————
+ * String     |  null  |   null   |   null   |  null 
+ * Simple     |   v    |   null   |   null   |  null  
+ * Iterable   |   v    |    v     |   null   |  null 
+ * Map        |   v    |    v     |    v     |   v
+ * 
+ * </pre>
+ * 
  * </p>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes

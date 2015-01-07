@@ -49,7 +49,7 @@ public class PostAirshipCommandsFactory_Tests {
 	// Before Class
 
 	@BeforeClass
-	public static void createTheCommandParserAndRegisterTheCommands()
+	public static void createUsersAndAirshipsDatabaseAndAddAUser()
 			throws InvalidRegisterException, InvalidArgumentException {
 
 		usersDatabase = new InMemoryUsersDatabase("Users Database");
@@ -59,6 +59,8 @@ public class PostAirshipCommandsFactory_Tests {
 		
 		usersDatabase.add(user, user);
 	}
+	
+	// Before
 	
 	@Before
 	public void createParametersMap() {

@@ -234,10 +234,11 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
 	 */
 	private String[] copyToNewArrayWith2MorePositions( String[] array ) {
 		
-		if( array == null )
+		if( array == null ) // Not Suppossed To Happen At The Moment
 			return new String[2];
 		
 		String[] result = new String[array.length + 2];
+		
 		for( int index = 0; index < array.length; ++index )
 			result[index] = array[index];
 		return result;

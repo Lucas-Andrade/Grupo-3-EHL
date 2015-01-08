@@ -1,16 +1,18 @@
 package main.java.domain.commands.postcommands;
 
 import java.util.concurrent.Callable;
+
 import main.java.domain.model.Database;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 /**
- * Class that extends {@link PostCommand} to add a new user into an User Database.
+ * Class whose instances are commands that post users in a given database.
+ * 
+ * Implements the Interface {@link Callable} of {@link String}.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-
 public class PostUserCommand implements Callable<String> {
 
 	// INSTANCE FIELDS
@@ -34,20 +36,21 @@ public class PostUserCommand implements Callable<String> {
 	private String fullName;
 
 	// CONSTRUCTOR
+
 	/**
 	 * Creates a new instance of this command that adds a user with these properties to
-	 * {@code databaseWhereToPost}.
+	 * {@link #databaseWhereToPost}.
 	 * 
 	 * @param username
 	 * @param password
 	 * @param email
 	 * @param fullname
 	 * @param databaseWhereToPost
-	 *            The database where to add the new user.
+	 *            - The database where to add the new user.
 	 * @param userWhoIsPosting
-	 *            The user whose login name was given in the post command.
+	 *            - The user whose login name was given in the post command.
 	 * @throws InvalidArgumentException
-	 *             If {@code databaseWhereToPost==null}.
+	 *             If the {@code databaseWhereToPost} is null.
 	 */
 	public PostUserCommand(String username, String password, String email, String fullname,
 			Database<User> databaseWhereToPost, User userWhoIsPosting)
@@ -65,12 +68,14 @@ public class PostUserCommand implements Callable<String> {
 	}
 
 	// IMPLEMENTATION OF METHOD call INHERITED FROM Callable INTERFACE
+
 	/**
 	 * Adds a new user with the properties given in the constructor to the database given in the
-	 * constructor.
+	 * constructor. Returns a message saying if the user was successfully added or not.
 	 * 
 	 * @return A message of success if the user was successfully posted; </br>a message of failure
 	 *         if it wasn't.
+	 * 
 	 * @throws Exception
 	 *             If the value given for {@code username}, {@code password} or {@code email} is
 	 *             invalid.
@@ -83,10 +88,9 @@ public class PostUserCommand implements Callable<String> {
 
 		if (databaseWhereToPost.add(theUser, userWhoIsPosting))
 			return "New user successfully added: " + theUser.toString();
-		
+
 		return new StringBuilder("User not added. Either the username «").append(username)
 				.append("» or\nthe email «").append(email).append("» already exist in ")
 				.append(databaseWhereToPost.getDatabaseName()).toString();
 	}
-
 }

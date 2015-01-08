@@ -59,7 +59,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory_Tests {
 			Exception {
 
 		Callable<?> getAirshipsWithLessPassengersThanCommand = (new Parser(cmdparser, "GET",
-				"/airships/nbPassengers/20/bellow")).getCommand();
+				"/airships/nbPassengers/30/bellow")).getCommand();
 
 		Assert.assertTrue(getAirshipsWithLessPassengersThanCommand instanceof GetAirshipsWithLessPassengersThanCommand);
 	}

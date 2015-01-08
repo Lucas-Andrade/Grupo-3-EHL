@@ -2,8 +2,10 @@ package main.java.cli.parsingtools.commandfactories.getfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
+
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.CheckIfAirshipIsTransgressingCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -13,74 +15,81 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands of
  * type {@link CheckIfAirshipIsTransgressingCommand}. Commands are {@link Callable} instances.
  * 
+ * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link Airship Airships}.
+ * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class CheckIfAirshipIsTransgressingCommandsFactory extends
-		StringsToCommandsFactory<String> {
+public class CheckIfAirshipIsTransgressingCommandsFactory extends StringsToCommandsFactory<String> {
 
 	// INSTANCE FIELDS
 
 	/**
-	 * The array of strings with the names of the parameters needed to produce the command.
+	 * {@code requiredParametersNames} - The array of strings with the names of the parameters
+	 * needed to produce the command.
 	 */
 	private final String[] requiredParametersNames;
 
 	/**
-	 * The database where to search.
+	 * {@code airshipsDatabase} - The database where to search the elements from.
 	 */
-	private final Database<Airship> database;
+	private final Database<Airship> airshipsDatabase;
 
 	/**
-	 * The flightId of the airships to be evaluated.
+	 * {@code flightId} - The flightId of the airships to be evaluated.
 	 */
 	private String flightId;
 
 	// CONSTRUCTOR
+
 	/**
 	 * Creates a new {@link CheckIfAirshipIsTransgressingCommandFactory} that produces commands of
 	 * type {@link CheckIfAirshipIsTransgressingCommand}.
 	 * 
-	 * @param database
-	 *            The database where to search.
+	 * @param airshipsDatabase
+	 *            - The database where to search.
+	 * 
 	 * @throws InvalidArgumentException
-	 *             If {@code database==null}.
+	 *             If the {@code airshipsDatabase} is null.
 	 */
-	public CheckIfAirshipIsTransgressingCommandsFactory(Database<Airship> database)
+	public CheckIfAirshipIsTransgressingCommandsFactory(Database<Airship> airshipsDatabase)
 			throws InvalidArgumentException {
 
 		super("Checks whether an airship is transgressing its air corridor.");
 
-		if (database == null)
+		if (airshipsDatabase == null)
 			throw new InvalidArgumentException("Cannot instantiate factory with null database!");
 
 		this.requiredParametersNames = new String[] {CLIStringsDictionary.FLIGHTID};
-		this.database = database;
+		this.airshipsDatabase = airshipsDatabase;
 	}
 
 	// IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
 
 	/**
-	 * Returns a command of type {@link CheckIfAirshipIsTransgressingCommand}.
+	 * Returns a command of type {@link CheckIfAirshipIsTransgressingCommand} after getting the
+	 * necessary {@code required parameters} using the private auxiliar method
+	 * {@link #setFlightIdValueOfTheParametersMap()}.
 	 * 
 	 * @return A command of type {@link CheckIfAirshipIsTransgressingCommand}.
 	 */
 	@Override
 	protected Callable<String> internalNewInstance() {
 
-		getFlightIdValueOfTheParametersMap();
+		setFlightIdValueOfTheParametersMap();
+
 		try {
-			return new CheckIfAirshipIsTransgressingCommand(database, flightId);
+			return new CheckIfAirshipIsTransgressingCommand(airshipsDatabase, flightId);
+
 		} catch (InvalidArgumentException e) { // never happens because database is not null
 			return null;
 		}
 	}
 
 	/**
-	 * Returns an array of strings with name of the parameter needed to produce the command: the
-	 * name of the parameter that contains the owner's username.
+	 * Returns an array of strings with name of the parameters needed to produce the command - in
+	 * this case the name of the parameter that contains the airships's flightId.
 	 * 
-	 * @return An array of strings with the name of the parameter that contains the the owner's
-	 *         username.
+	 * @return An array of strings with the name of the required parameters.
 	 */
 	@Override
 	protected String[] getRequiredParameters() {
@@ -88,16 +97,17 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends
 		return requiredParametersNames;
 	}
 
-	// AUXILIARY PRIVATE METHODS
+	// PRIVATE AUXILIAR METHOD
+
 	/**
 	 * Sets the value of the field {@link #flightId} with the value received in the parameters map.
 	 * <p>
-	 * If this method is called inside {@link #internalNewInstance(Map)} and this one is called
-	 * inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed that the field
-	 * {@link #flightId} is non-{@code null} after this method finishes its job.
+	 * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
+	 * last one is called inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed
+	 * that the field {@link #flightId} is non-{@code null} after this method finishes its job.
 	 * </p>
 	 */
-	private void getFlightIdValueOfTheParametersMap() {
+	private void setFlightIdValueOfTheParametersMap() {
 
 		flightId = getParameterAsString(requiredParametersNames[0]);
 	}

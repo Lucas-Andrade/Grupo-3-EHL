@@ -17,7 +17,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetAllTransgressorAirshipsCommand implements
+public class GetAllTransgressingAirshipsCommand implements
 		Callable< Optional< Iterable< Airship >>>
 {
 	
@@ -40,7 +40,7 @@ public class GetAllTransgressorAirshipsCommand implements
 	 * @throws InvalidArgumentException
 	 *             If {@code database==null}.
 	 */
-	public GetAllTransgressorAirshipsCommand( InMemoryAirshipsDatabase database )
+	public GetAllTransgressingAirshipsCommand( InMemoryAirshipsDatabase database )
 			throws InvalidArgumentException {
 		
 		if( database == null )

@@ -2,7 +2,7 @@ package test.java.domain.commands.getcommands;
 
 import java.util.ArrayList;
 import java.util.List;
-import main.java.domain.commands.getcommands.GetAllTransgressorAirshipsCommand;
+import main.java.domain.commands.getcommands.GetAllTransgressingAirshipsCommand;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
@@ -26,7 +26,7 @@ public class GetAllTransgressorAirshipsCommand_Tests {
 	private InMemoryUsersDatabase userDatabase;
 	private User user1, user2;
 	private Airship airship1, airship2, airship3;
-	private GetAllTransgressorAirshipsCommand getAllTransgressorAirships;
+	private GetAllTransgressingAirshipsCommand getAllTransgressorAirships;
 
 	// Before
 
@@ -59,7 +59,7 @@ public class GetAllTransgressorAirshipsCommand_Tests {
 			throws Exception {
 
 		// Act
-		getAllTransgressorAirships = new GetAllTransgressorAirshipsCommand(airshipsDatabase);
+		getAllTransgressorAirships = new GetAllTransgressingAirshipsCommand(airshipsDatabase);
 		Iterable<Airship> testedAirships = getAllTransgressorAirships.call().get();
 
 		List<Airship> airships = new ArrayList<Airship>();
@@ -77,6 +77,6 @@ public class GetAllTransgressorAirshipsCommand_Tests {
 	public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullDatabase()
 			throws InvalidArgumentException {
 
-		getAllTransgressorAirships = new GetAllTransgressorAirshipsCommand(null);
+		getAllTransgressorAirships = new GetAllTransgressingAirshipsCommand(null);
 	}
 }

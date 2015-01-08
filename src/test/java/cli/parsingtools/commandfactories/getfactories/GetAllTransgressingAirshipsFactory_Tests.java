@@ -3,8 +3,8 @@ package test.java.cli.parsingtools.commandfactories.getfactories;
 import java.util.concurrent.Callable;
 import main.java.cli.parsingtools.CommandParser;
 import main.java.cli.parsingtools.Parser;
-import main.java.cli.parsingtools.commandfactories.getfactories.GetAllTransgressorAirshipsCommandsFactory;
-import main.java.domain.commands.getcommands.GetAllTransgressorAirshipsCommand;
+import main.java.cli.parsingtools.commandfactories.getfactories.GetAllTransgressingAirshipsCommandsFactory;
+import main.java.domain.commands.getcommands.GetAllTransgressingAirshipsCommand;
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
@@ -45,7 +45,7 @@ public class GetAllTransgressingAirshipsFactory_Tests {
 
 		airshipsDatabase = new InMemoryAirshipsDatabase("Airships Database");
 
-		cmdparser.registerCommand("GET", "/airships/reports", new GetAllTransgressorAirshipsCommandsFactory(
+		cmdparser.registerCommand("GET", "/airships/reports", new GetAllTransgressingAirshipsCommandsFactory(
 				airshipsDatabase));
 	}
 
@@ -61,7 +61,7 @@ public class GetAllTransgressingAirshipsFactory_Tests {
 		Callable<?> getAllTransgressinAirshipsCommand = (new Parser(cmdparser, "GET", "/airships/reports"))
 				.getCommand();
 
-		Assert.assertTrue(getAllTransgressinAirshipsCommand instanceof GetAllTransgressorAirshipsCommand);
+		Assert.assertTrue(getAllTransgressinAirshipsCommand instanceof GetAllTransgressingAirshipsCommand);
 	}
 
 	// Test Exceptions
@@ -70,6 +70,6 @@ public class GetAllTransgressingAirshipsFactory_Tests {
 	public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAllTransgressorAirshipsCommandsFactoryGivenANullDatabase()
 			throws InvalidArgumentException {
 
-		new GetAllTransgressorAirshipsCommandsFactory(null);
+		new GetAllTransgressingAirshipsCommandsFactory(null);
 	}
 }

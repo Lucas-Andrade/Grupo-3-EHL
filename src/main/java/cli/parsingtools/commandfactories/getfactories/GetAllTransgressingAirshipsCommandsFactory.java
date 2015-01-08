@@ -4,7 +4,7 @@ import java.util.concurrent.Callable;
 
 import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
-import main.java.domain.commands.getcommands.GetAllTransgressorAirshipsCommand;
+import main.java.domain.commands.getcommands.GetAllTransgressingAirshipsCommand;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.utils.Optional;
@@ -12,14 +12,14 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 /**
  * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands of
- * type {@link GetAllTransgressorAirshipsCommand}. Commands are {@link Callable} instances.
+ * type {@link GetAllTransgressingAirshipsCommand}. Commands are {@link Callable} instances.
  * 
  * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link Optional} {@link Iterable
  * Iterables} of {@link Airship}.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetAllTransgressorAirshipsCommandsFactory extends
+public class GetAllTransgressingAirshipsCommandsFactory extends
 		StringsToCommandsFactory<Optional<Iterable<Airship>>> {
 
 	// INSTANCE FIELDS
@@ -33,7 +33,7 @@ public class GetAllTransgressorAirshipsCommandsFactory extends
 
 	/**
 	 * Creates a new {@link GetAllElementsInADatabaseCommandFactory factory} that produces commands
-	 * of type {@link GetAllTransgressorAirshipsCommand}.
+	 * of type {@link GetAllTransgressingAirshipsCommand}.
 	 * 
 	 * @param airshipsDatabase
 	 *            - The airshipsDatabase where to get the elements from.
@@ -41,7 +41,7 @@ public class GetAllTransgressorAirshipsCommandsFactory extends
 	 * @throws InvalidArgumentException
 	 *             If the {@code airshipsDatabase} is null.
 	 */
-	public GetAllTransgressorAirshipsCommandsFactory(InMemoryAirshipsDatabase airshipsDatabase)
+	public GetAllTransgressingAirshipsCommandsFactory(InMemoryAirshipsDatabase airshipsDatabase)
 			throws InvalidArgumentException {
 
 		super("Gets all airships that are transgressing their air corridors.");
@@ -55,15 +55,15 @@ public class GetAllTransgressorAirshipsCommandsFactory extends
 	// IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
 
 	/**
-	 * Returns a command of type {@link GetAllTransgressorAirshipsCommand}.
+	 * Returns a command of type {@link GetAllTransgressingAirshipsCommand}.
 	 * 
-	 * @return A command of type {@link GetAllTransgressorAirshipsCommand}.
+	 * @return A command of type {@link GetAllTransgressingAirshipsCommand}.
 	 */
 	@Override
 	protected Callable<Optional<Iterable<Airship>>> internalNewInstance() {
 
 		try {
-			return new GetAllTransgressorAirshipsCommand(airshipsDatabase);
+			return new GetAllTransgressingAirshipsCommand(airshipsDatabase);
 
 		} catch (InvalidArgumentException e) { // Never happens because database is not null!
 			return null;

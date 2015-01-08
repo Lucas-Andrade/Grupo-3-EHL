@@ -11,7 +11,7 @@ import main.java.cli.parsingtools.commandfactories.HelpCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.getfactories.CheckIfAirshipIsTransgressingCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.getfactories.GetAirshipsOfOwnerCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.getfactories.GetAirshipsWithLessPassengersThanCommandsFactory;
-import main.java.cli.parsingtools.commandfactories.getfactories.GetAllTransgressorAirshipsCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.GetAllTransgressingAirshipsCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.getfactories.GetTheNearestAirshipsToGeographicPositionCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllAirshipsInADatabaseCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
@@ -165,7 +165,7 @@ public class App
 					new GetAirshipsWithLessPassengersThanCommandsFactory(
 							airshipsDatabase ) );
 			cmdParser.registerCommand( "GET", "/airships/reports",
-					new GetAllTransgressorAirshipsCommandsFactory(
+					new GetAllTransgressingAirshipsCommandsFactory(
 							airshipsDatabase ) );
 			cmdParser.registerCommand( "GET", "/airships/reports/{flightId}",
 					new CheckIfAirshipIsTransgressingCommandsFactory(

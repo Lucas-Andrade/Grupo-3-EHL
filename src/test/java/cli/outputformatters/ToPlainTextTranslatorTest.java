@@ -22,6 +22,8 @@ import org.junit.Test;
  * Tests to target {@link ToPlainTextTranslator}. These are
  * not unitary-tests, are visual tests meant to be seen on console.
  * 
+ * Due the maven building, the class is commented,
+ * to see the tests uncomment the class.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */

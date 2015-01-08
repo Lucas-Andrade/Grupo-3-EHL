@@ -167,8 +167,8 @@ public class ToTranslatableConversor
 	 * 
 	 * @param obj
 	 *            The value to be converted.
-	 * @return The {@link Translatable} that returns from converting {@code obj}
-	 *         .
+	 * @return The {@link Translatable} that returns from converting {@code obj}.
+	 * 
 	 * @throws UnknownTypeException
 	 *             If the value is not one of the mentioned in
 	 *             {@link #convert(Object)} documentation.

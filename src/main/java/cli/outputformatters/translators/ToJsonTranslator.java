@@ -3,6 +3,7 @@ package main.java.cli.outputformatters.translators;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.StringJoiner;
+
 import main.java.cli.outputformatters.Translatable;
 import main.java.utils.exceptions.formattersexceptions.UnknownTranslatableException;
 
@@ -20,8 +21,6 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTranslatableExcept
 public class ToJsonTranslator
 	implements Translator
 {
-	private final static String INDENTATION = "{\n   ";
-	
 	/**
 	 * Translate a {@link Translatable} to a string with the {@code Json}
 	 * representation.
@@ -50,35 +49,39 @@ public class ToJsonTranslator
 	}
 
 	/**
+	 * Create a String in Json representation for {@code String-Translatable}s
 	 * 
 	 * @param translatable
-	 * @return
+	 * @return A string with Json representation of {@code translatable}.
 	 */
-	private String mapEncode( Translatable translatable )
+	private String stringEnconde( Translatable translatable )
 	{
-		StringJoiner strJoinerList = new StringJoiner( ", ", "[ ", " ]" );
-		for( Entry< String, Object > entry : translatable.getPropertiesBag().entrySet() )
-		{
-			strJoinerList.add( createSimple( entry, translatable.getEntryTag(), translatable.getKeyTag(),
-					translatable.getValueTag() ) );
-		}
-
-		return new StringBuilder( "{ \"" ).append( translatable.getTag() )
-											.append( "\" : " )
-											.append( strJoinerList.toString() )
-											.append( " }" )
-											.toString();
+		Entry< String, Object > entry = translatable.getPropertiesBag().entrySet().iterator().next();
+		return getSimpleJsonJoiner( entry.getKey(), entry.getValue() ).toString();
 	}
 
 	/**
+	 * Create a String in Json representation for {@code simple-Translatable}s
 	 * 
 	 * @param translatable
-	 * @return
+	 * @return A string with Json representation of {@code translatable}.
+	 */
+	private String simpleEncode( Translatable translatable )
+	{
+		return getConposedJsonBuilder( translatable.getPropertiesBag().entrySet(), translatable.getTag() ).toString();
+	}
+
+	/**
+	 * Create a String in Json representation for {@code iterable-Translatable}s
+	 * 
+	 * @param translatable
+	 * @return A string with Json representation of {@code translatable}.
 	 * @throws UnknownTranslatableException
 	 */
 	private String iterableEnconde( Translatable translatable ) throws UnknownTranslatableException
 	{
-		StringJoiner strJoinerList = new StringJoiner( ", ", "[ ", " ]" );
+		StringBuilder indentation = getIndentation( ++IndentationLength );
+		StringJoiner strJoinerList = new StringJoiner( ", " + indentation, "[ ", " ]" );
 		try
 		{
 			for( Object object : translatable.getPropertiesBag().values() )
@@ -92,81 +95,56 @@ public class ToJsonTranslator
 					"Translatable representing iterable has non-translatable values in the properties bag." );
 		}
 
+		IndentationLength--;
 		return new StringBuilder( "{ \"" ).append( translatable.getTag() )
 											.append( "\" : " )
+											.append( indentation )
 											.append( strJoinerList.toString() )
 											.append( " }" )
 											.toString();
-
 	}
 
 	/**
+	 * Create a String in Json representation for {@code map-Translatable}s
 	 * 
 	 * @param translatable
-	 * @return
+	 * @return A string with Json representation of {@code translatable}.
+	 * @throws UnknownTranslatableException
 	 */
-	private String simpleEncode( Translatable translatable )
+	private String mapEncode( Translatable translatable )
 	{
-		return createSimple( translatable.getPropertiesBag().entrySet(), translatable.getTag() );
-	}
+		StringBuilder indentation = getIndentation( ++IndentationLength );
+		StringJoiner strJoinerList = new StringJoiner( ", " + indentation, "[ ", " ]" );
 
-	/**
-	 * 
-	 * @param entries
-	 * @param tag
-	 * @return
-	 */
-	private String createSimple( Set< Entry< String, Object > > entries, String tag )
-	{
-		StringJoiner strJoinerList = new StringJoiner( ", " );
-		for( Entry< String, Object > entry : entries )
+		for( Entry< String, Object > entry : translatable.getPropertiesBag().entrySet() )
 		{
-			strJoinerList.merge( getSimpleJoiner( entry.getKey(), entry.getValue() ) );
+			strJoinerList.add( getUnitaryConposedJsonBuilder( entry, translatable.getEntryTag(),
+					translatable.getKeyTag(), translatable.getValueTag() ) );
 		}
 
-		return new StringBuilder( "{\n \"" ).append( tag )
+		return new StringBuilder( "{ \"" ).append( translatable.getTag() )
 											.append( "\" : " )
+											.append( indentation )
 											.append( strJoinerList.toString() )
 											.append( " }" )
 											.toString();
 	}
 
+	// Auxiliary methods
 	/**
+	 * Create a {@link StringJoiner} for a simple {@code Object} with the
+	 * required Json format, i.e., <br>
+	 * <code>{ "obj1" : obj2 }</code><br>
 	 * 
-	 * @param entry
-	 * @param tag
-	 * @param keyTag
-	 * @param valueTag
-	 * @return
-	 */
-	private String createSimple( Entry< String, Object > entry, String tag, String keyTag, String valueTag )
-	{
-		StringBuilder strB = new StringBuilder( INDENTATION ).append( "\"" ).append( tag )
-				.append( "\" : " )
-				.append( getSimpleJoiner( keyTag, entry.getKey() ) )
-				.append( ", " )
-				.append( getSimpleJoiner( valueTag, entry.getValue() ) )
-				.append( " }" );
-		return strB.toString();
-	}
-
-	/**
-	 * 
-	 * @param translatable
-	 * @return
-	 */
-	private String stringEnconde( Translatable translatable )
-	{
-		return getSimpleJoiner( "message", translatable.toString() ).toString();
-	}
-
-	/**
+	 * If {@code obj2} is a {@code String} than it will also printed with
+	 * quotation marks i.e., <br>
+	 * <code>{ "obj1" : "obj2" }</code>
 	 * 
 	 * @param obj1
 	 * @param obj2
-	 * @return
+	 * @return a {@code StringJoiner} with the Json format
 	 */
-	private StringJoiner getSimpleJoiner( Object obj1, Object obj2 )
+	private StringJoiner getSimpleJsonJoiner( Object obj1, Object obj2 )
 	{
 		StringBuilder str1 = new StringBuilder( "\"" ).append( obj1 ).append( "\"" );
 		StringBuilder str2 = new StringBuilder();
@@ -176,6 +154,85 @@ public class ToJsonTranslator
 		else
 			str2.append( obj2 );
 
-		return new StringJoiner( " : ", INDENTATION, " }" ).add( str1 ).add( str2 );
+		return new StringJoiner( " : ", "{ ", " }" ).add( str1 ).add( str2 );
+	}
+
+	/**
+	 * Create a {@link StringBuilder} for a composed {@code Object}s with the
+	 * required Json format, i.e.,<br>
+	 * <code>{ "tag" : <br>&emsp;(*), <br>&emsp;(*), <br>&emsp;(*), <br>&emsp;... }</code>
+	 * <br>
+	 * where (*) are created by the method {@link #getSimpleJsonJoiner}.
+	 * 
+	 * @param entries
+	 * @param tag
+	 * @return a StringBuiler with the Json format
+	 */
+	private StringBuilder getConposedJsonBuilder( Set< Entry< String, Object > > entries, String tag )
+	{
+		StringBuilder indentation = getIndentation( ++IndentationLength );
+
+		StringJoiner strJoinerList = new StringJoiner( "," );
+
+		for( Entry< String, Object > entry : entries )
+		{
+			strJoinerList.add( indentation
+					+ getSimpleJsonJoiner( entry.getKey(), entry.getValue() ).toString() );
+		}
+
+		IndentationLength--;
+		return new StringBuilder( "{ \"" ).append( tag )
+											.append( "\" :" )
+											.append( strJoinerList.toString() )
+											.append( " }" );
+	}
+
+	/**
+	 * Create a {@link StringBuilder} for an {@code Entry-Object} with the
+	 * required Json format, i.e.,<br>
+	 * <code>{ "tag" : <br>&emsp;(*key) }, <br>&emsp;(*value) }</code>
+	 * <br>
+	 * where (*key) and (*value) are created by the method {@link #getSimpleJsonJoiner}.
+	 * 
+	 * @param entry
+	 * @param tag
+	 * @param keyTag
+	 * @param valueTag
+	 * @return a StringBuiler with the Json format
+	 */
+	private StringBuilder getUnitaryConposedJsonBuilder( Entry< String, Object > entry, String tag,
+			String keyTag, String valueTag )
+	{
+		StringBuilder indentation = getIndentation( ++IndentationLength );
+		StringBuilder strB =
+				new StringBuilder( "{ \"" ).append( tag )
+											.append( "\" : " )
+											.append( indentation )
+											.append( getSimpleJsonJoiner( keyTag, entry.getKey() ) )
+											.append( "," )
+											.append( indentation )
+											.append( getSimpleJsonJoiner( valueTag, entry.getValue() ) )
+											.append( " }" );
+		IndentationLength--;
+		return strB;
+	}
+
+	//Indentation
+	private static int IndentationLength = 0;
+	
+	/**
+	 * Create a StringBuilder for a indentation with the specified length
+	 * 
+	 * @param indentationLength
+	 * @return the indentation
+	 */
+	private StringBuilder getIndentation( int indentationLength )
+	{
+		StringBuilder indentation = new StringBuilder( "\r\n" );
+		for( int i = 0; i < indentationLength; i++ )
+		{
+			indentation.append( "   " );
+		}
+		return indentation;
 	}
 }

@@ -1,7 +1,8 @@
 package main.java.cli.model.airships;
 
-import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.Element;
+import main.java.domain.model.airships.AirCorridor;
+import main.java.utils.exceptions.InvalidArgumentException;
 
 /**
  * Abstract class whose instances will represent an Airship performing a specific flight.

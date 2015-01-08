@@ -1,7 +1,7 @@
 package main.java.cli.model.users;
 
-import main.java.cli.exceptions.InvalidArgumentException;
 import main.java.cli.model.Element;
+import main.java.utils.exceptions.InvalidArgumentException;
 
 /**
  * Instances of this class represents users. Users have a unique username, a unique email, a

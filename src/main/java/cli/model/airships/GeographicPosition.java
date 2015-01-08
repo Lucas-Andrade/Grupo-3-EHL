@@ -1,6 +1,7 @@
 package main.java.cli.model.airships;
 
-import main.java.cli.exceptions.InvalidArgumentException;
+import main.java.domain.model.airships.GeographicCoordinate;
+import main.java.utils.exceptions.InvalidArgumentException;
 
 /**
  * Class whose instances will represent a specific position in space where an {@link Airship} is.

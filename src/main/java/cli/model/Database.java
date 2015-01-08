@@ -1,9 +1,9 @@
 package main.java.cli.model;
 
-import main.java.cli.Optional;
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.databaseexceptions.DatabaseException;
 import main.java.cli.model.users.User;
+import main.java.utils.Optional;
+import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.databaseexceptions.DatabaseException;
 
 /**
  * Interface whose instances represent databases of elements that have an individual identification.

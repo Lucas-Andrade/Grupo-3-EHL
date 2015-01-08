@@ -1,9 +1,9 @@
 package main.java.cli.model.users;
 
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.databaseexceptions.DatabaseException;
 import main.java.cli.model.Database;
 import main.java.cli.model.InMemoryDatabase;
+import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.databaseexceptions.DatabaseException;
 
 /**
  * Class whose instances represent in-memory databases of {@link User}s. An in-memory database

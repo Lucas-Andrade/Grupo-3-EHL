@@ -6,12 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-import main.java.cli.Optional;
-import main.java.cli.exceptions.InternalErrorException;
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.databaseexceptions.DatabaseException;
-import main.java.cli.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
+
 import main.java.cli.model.users.User;
+import main.java.utils.Optional;
+import main.java.utils.exceptions.InternalErrorException;
+import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.databaseexceptions.DatabaseException;
+import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 /**
  * Abstract class whose instances represent in-memory databases of {@link Element} that have an

@@ -4,15 +4,21 @@ import main.java.domain.commands.postcommands.PostUserCommand;
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * This Test class tests the following classes:
  * 
- * Those Tests were created to test the {@link PostUserCommand} Class who's part of the Air Traffic
- * Project
+ * <pre>
+ * 
+ * {@link PostUserCommand}
+ * 
+ * </pre>
  *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class PostUserCommand_Tests {
 
@@ -72,17 +78,17 @@ public class PostUserCommand_Tests {
 		String testedInformation = postUser.call();
 
 		// Assert
-		Assert.assertEquals(testedInformation,
+		Assert.assertEquals(
+				testedInformation,
 				"User not added. Either the username «Daniel» or\nthe email «@pedro» already exist in Users Database");
 	}
 
 	// Test Exceptions
-	
-	 @Test (expected = InvalidArgumentException.class)
-	 public void
-	 shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullDatabase()
-	 throws InvalidArgumentException {
-	
-		 postUser = new PostUserCommand("Pedro", "pass2", "@pedro", "Pedro Antunes", null, user1);
-	 }
+
+	@Test (expected = InvalidArgumentException.class)
+	public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullDatabase()
+			throws InvalidArgumentException {
+
+		postUser = new PostUserCommand("Pedro", "pass2", "@pedro", "Pedro Antunes", null, user1);
+	}
 }

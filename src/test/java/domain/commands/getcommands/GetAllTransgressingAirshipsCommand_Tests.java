@@ -2,6 +2,7 @@ package test.java.domain.commands.getcommands;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import main.java.domain.commands.getcommands.GetAllTransgressingAirshipsCommand;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
@@ -10,17 +11,23 @@ import main.java.domain.model.airships.MilitaryAirship;
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 /**
+ * This Test class tests the following classes:
  * 
- * Those Tests were created to test the {@link GetValidationOfAirshipsTransgressionCommand} Class who's a
- * Command of the Air Traffic Project
+ * <pre>
+ * 
+ * {@link GetAllTransgressingAirshipsCommand}
+ * 
+ * </pre>
  *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetAllTransgressorAirshipsCommand_Tests {
+public class GetAllTransgressingAirshipsCommand_Tests {
 
 	private InMemoryAirshipsDatabase airshipsDatabase;
 	private InMemoryUsersDatabase userDatabase;

@@ -8,10 +8,23 @@ import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.domain.model.airships.MilitaryAirship;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * This Test class tests the following classes:
+ * 
+ * <pre>
+ * 
+ * {@link PatchCivilAirshipCommand}
+ * {@link PatchMilitaryAirshipCommand}
+ * 
+ * </pre>
+ *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
 public class PatchAirshipCommands_Tests {
 
 	private InMemoryAirshipsDatabase airshipsDatabase;

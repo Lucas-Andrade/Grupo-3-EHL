@@ -2,6 +2,7 @@ package test.java.domain.commands.getcommands;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
@@ -10,10 +11,22 @@ import main.java.domain.model.airships.MilitaryAirship;
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * This Test class tests the following classes:
+ * 
+ * <pre>
+ * 
+ * {@link GetAllElementsInADatabaseCommand}
+ * 
+ * </pre>
+ *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
 public class GetAllElementsInADatabaseCommand_Tests {
 
 	private InMemoryAirshipsDatabase airshipsDatabase;
@@ -79,7 +92,7 @@ public class GetAllElementsInADatabaseCommand_Tests {
 		List<User> users = new ArrayList<User>();
 
 		// The Addition Order Matters
-		users.add(new User( "MASTER", "master", "master@master" ));
+		users.add(new User("MASTER", "master", "master@master"));
 		users.add(user2);
 		users.add(user1);
 

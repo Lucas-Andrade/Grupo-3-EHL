@@ -45,6 +45,7 @@ public class CheckIfAirshipIsTransgressingCommand implements Callable<String> {
 	}
 
 	// IMPLEMENTATION OF METHOD call INHERITED FROM Callable INTERFACE
+
 	/**
 	 * Returns the airship with flight Id {@code flightId} (given in the constructor) if it is in
 	 * {@code database} (given in the constructor) and is transgressing its pre-established air
@@ -68,13 +69,15 @@ public class CheckIfAirshipIsTransgressingCommand implements Callable<String> {
 	 */
 	@Override
 	public String call() throws Exception {
-		
-		Airship theAirship = db.getElementByIdentification( flightId ).get();
+
+		Airship theAirship = db.getElementByIdentification(flightId).get();
 		// method get throws exception if this flightId is not in db
-		
-		if(theAirship.isTransgressing() )
-			return "The Airship with the Flight ID " + flightId+ " is transgressing its air corridor.";
-		
-		return "The Airship with the Flight ID " + flightId + " is not transgressing its air corridor.";
+
+		if (theAirship.isTransgressing())
+			return "The Airship with the Flight ID " + flightId
+					+ " is transgressing its air corridor.";
+
+		return "The Airship with the Flight ID " + flightId
+				+ " is not transgressing its air corridor.";
 	}
 }

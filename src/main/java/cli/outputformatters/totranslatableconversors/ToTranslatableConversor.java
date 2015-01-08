@@ -11,8 +11,13 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTypeException;
 
 /**
  * Class whose method {@link #convert} converts instances of certain types into
- * {@link Translatables}. <b> The argument {@code object} of method
- * {@link #convert(Object)} must be an instance of one of the following types:
+ * {@link Translatables}.
+ * <p>
+ * <b>The following conventions are obligatory:</b>
+ * </p>
+ * <p>
+ * The argument {@code object} of method {@link #convert(Object)} <b>must be</b> an
+ * instance of one of the following types:
  * <ul>
  * <li>{@link User}, {@link CivilAirship} or {@link MilitaryAirship},</li>
  * <li>{@link Iterable} of one of the three previous types,</li>
@@ -22,6 +27,7 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTypeException;
  * <li>{@link Optional} representing one of the previous types.</li>
  * </ul>
  * </li> </ul> </b>
+ * </p>
  * <p>
  * <b>Implementation note:</b>
  * </p>
@@ -76,7 +82,8 @@ public class ToTranslatableConversor
 				new IterablesToTranslatables.IterableAirshipConversor() );
 		CONVERSORSbyTYPE.put( iterableMilitaryClass,
 				new IterablesToTranslatables.IterableAirshipConversor() );
-		CONVERSORSbyTYPE.put( optionsListClass, new OptionsListToTranslatableConversor() );
+		CONVERSORSbyTYPE.put( optionsListClass,
+				new OptionsListToTranslatableConversor() );
 		
 	}
 	
@@ -143,7 +150,7 @@ public class ToTranslatableConversor
 			obj = optional.get();
 			
 			
-			// se o value for um Iterable vazio
+			// se o value for uma Collection vazia ou um Map vazio
 			if( optional.isEmpty() )
 				return CONVERSORSbyTYPE.get( stringClass ).convert(
 						optional.toString() );
@@ -187,9 +194,7 @@ public class ToTranslatableConversor
 				return getConversor( "it" + elementsType ).convert( obj );
 			}
 			
-			// se for um Iterable vazio que nao estava dentro de um Optional
-			// (o getTranslatableOfValueContainedInOptional trata este caso à
-			// parte)
+			// se for um Iterable vazio
 			else throw new UnknownTypeException(
 					"Cannot convert empty iterables to string." );
 		}

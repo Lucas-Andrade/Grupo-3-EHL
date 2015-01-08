@@ -94,12 +94,12 @@ public class PatchAirshipsCommandFactory_Tests {
 			InvalidParameterValueException, WrongLoginPasswordException, InternalErrorException,
 			InvalidArgumentException {
 		
-		onlyRequiredParameters.put(CLIStringsDictionary.FLIGHTID, "id1");
+		onlyRequiredParameters.put(CLIStringsDictionary.FLIGHTID, airship1.getIdentification());
 
 		Callable<?> patchCivilAirshipCommand = (new PatchAirshipCommandsFactory(usersDatabase,
 				airshipsDatabase)).newInstance(onlyRequiredParameters);
 
-		onlyRequiredParameters.put(CLIStringsDictionary.FLIGHTID, "id2");
+		onlyRequiredParameters.put(CLIStringsDictionary.FLIGHTID, airship2.getIdentification());
 
 		Callable<?> patchMilitaryAirshipCommand = (new PatchAirshipCommandsFactory(usersDatabase,
 				airshipsDatabase)).newInstance(onlyRequiredParameters);
@@ -114,12 +114,12 @@ public class PatchAirshipsCommandFactory_Tests {
 			InvalidParameterValueException, WrongLoginPasswordException, InternalErrorException,
 			InvalidArgumentException {
 
-		parameters.put(CLIStringsDictionary.FLIGHTID, "id1");
+		parameters.put(CLIStringsDictionary.FLIGHTID, airship1.getIdentification());
 
 		Callable<?> patchCivilAirshipCommand = (new PatchAirshipCommandsFactory(usersDatabase,
 				airshipsDatabase)).newInstance(parameters);
 
-		parameters.put(CLIStringsDictionary.FLIGHTID, "id2");
+		parameters.put(CLIStringsDictionary.FLIGHTID, airship2.getIdentification());
 
 		Callable<?> patchMilitaryAirshipCommand = (new PatchAirshipCommandsFactory(usersDatabase,
 				airshipsDatabase)).newInstance(parameters);

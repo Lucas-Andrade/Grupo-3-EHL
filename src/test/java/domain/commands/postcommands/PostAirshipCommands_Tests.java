@@ -38,7 +38,8 @@ public class PostAirshipCommands_Tests {
 		String testedInformation = postCivilAirship.call();
 
 		// Assert
-		Assert.assertEquals(testedInformation, "Flight Id: id2" );
+		Assert.assertEquals(testedInformation, "Flight Id: "+airshipsDatabase.getAirshipsOfUser(user1.getIdentification())
+																	.get().iterator().next().getIdentification());
 	}
 	
 	@Test
@@ -50,7 +51,8 @@ public class PostAirshipCommands_Tests {
 		String testedInformation = postMilitaryAirship.call();
 
 		// Assert
-		Assert.assertEquals(testedInformation, "Flight Id: id1" );
+		Assert.assertEquals(testedInformation, "Flight Id: "+airshipsDatabase.getAirshipsOfUser(user1.getIdentification())
+																.get().iterator().next().getIdentification());
 	}
 
 	// Test Exceptions

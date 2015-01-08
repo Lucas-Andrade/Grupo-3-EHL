@@ -115,10 +115,9 @@ public class ParserTest
 		
 		usersDatabase.add(user1, user1);
 		
-		Parser parser = new Parser(cmdparser,"GET", "/users/pantunes","output-file=src/main/java/cli/TestFile");
+		Parser parser = new Parser(cmdparser,"GET", "/users/pantunes","output-file=src/main/java/cli/TestFile.txt");
 	
 		Assert.assertEquals("PrintStream",parser.getStream().getClass().getSimpleName());
-		
 		
 	}
 	
@@ -138,12 +137,12 @@ public class ParserTest
 		usersDatabase.add(user1, user1);
 		
 		Parser parser = new Parser(cmdparser,"GET", "/users/pantunes");
-	
-		Assert.assertEquals("PrintStream",parser.getStream().getClass().getSimpleName());
 		
-		
+		Assert.assertFalse(parser.getStream().checkError());
+				
 	}
 		
+	
 	@Test(expected=InvalidParameterValueException.class)
 	public void shouldThrowInvalidParameterValueExceptionWhenGiveAnInvalidPathForOutputFile() throws  InvalidParameterValueException, InvalidArgumentException,
 																				InvalidRegisterException, InvalidCommandParametersSyntaxException,

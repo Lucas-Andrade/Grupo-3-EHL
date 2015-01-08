@@ -1,7 +1,8 @@
 package test.java.domain.commands;
 
 
-import java.util.Map;
+
+
 import main.java.cli.HelpCommand;
 import main.java.cli.parsingtools.CommandParser;
 import main.java.cli.parsingtools.Parser;
@@ -23,6 +24,7 @@ import main.java.utils.exceptions.parsingexceptions.factoriesexceptions.MissingR
 import main.java.utils.exceptions.parsingexceptions.factoriesexceptions.WrongLoginPasswordException;
 import main.java.utils.exceptions.parsingexceptions.parserexceptions.DuplicateParametersException;
 import main.java.utils.exceptions.parsingexceptions.parserexceptions.InvalidCommandParametersSyntaxException;
+
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -56,17 +58,17 @@ public class HelpCommand_Tests {
 		
 		cmdParser.registerCommand( "POST", "/users",new PostUserCommandsFactory( usersDatabase,	usersDatabase ) );	
 		
+		
+		
 		Parser parser = new Parser(cmdParser,"OPTION", "/");
 		
 		
-		 @SuppressWarnings("unchecked")
-		Map<String,String> result = (Map<String, String>) parser.getCommand().call();
-		
-		
-		Assert.assertTrue(result.containsValue(new GetAllAirshipsInADatabaseCommandsFactory(airshipsDatabase).getCommandsDescription()));
-		Assert.assertTrue(result.containsValue(new GetAirshipByFlightIdCommandsFactory(airshipsDatabase).getCommandsDescription()));
-		Assert.assertTrue(result.containsValue(new PatchUserPasswordCommandsFactory(usersDatabase).getCommandsDescription()));
-		Assert.assertTrue(result.containsValue(new PostUserCommandsFactory(usersDatabase,usersDatabase).getCommandsDescription()));
+		String result = parser.getCommand().call().toString();
+			 
+		Assert.assertTrue(result.contains(new GetAllAirshipsInADatabaseCommandsFactory(airshipsDatabase).getCommandsDescription()));
+		Assert.assertTrue(result.contains(new GetAirshipByFlightIdCommandsFactory(airshipsDatabase).getCommandsDescription()));
+		Assert.assertTrue(result.contains(new PatchUserPasswordCommandsFactory(usersDatabase).getCommandsDescription()));
+		Assert.assertTrue(result.contains(new PostUserCommandsFactory(usersDatabase,usersDatabase).getCommandsDescription()));
 
 	}
 	
@@ -77,6 +79,10 @@ public class HelpCommand_Tests {
 		 new HelpCommand(null);
 	}
 	
-	
+	@Test(expected=InvalidArgumentException.class)
+	public void shouldThrowInvalidArgumentExceptionGivingANullCommandParserInHelpCommandFactory() throws InvalidArgumentException, InvalidCommandParametersSyntaxException, DuplicateParametersException, InvalidCommandSyntaxException, InvalidRegisterException{
+		
+		 new HelpCommandsFactory(null);
+	}
 
 }

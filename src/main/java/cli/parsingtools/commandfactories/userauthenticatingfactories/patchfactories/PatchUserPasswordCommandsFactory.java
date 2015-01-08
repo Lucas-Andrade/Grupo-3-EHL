@@ -1,164 +1,151 @@
 package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.patchfactories;
 
 import java.util.concurrent.Callable;
+
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.UserAuthenticatingFactory;
 import main.java.domain.commands.patchcommands.PatchUserPasswordCommand;
 import main.java.domain.model.Database;
+import main.java.domain.model.airships.Airship;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
 
+/**
+ * Class whose instances are {@link CallablesFactory factories} that produce a command of type
+ * {@link PatchUserPasswordCommands}. Commands are {@link Callable} instances. This class extends
+ * {@link StringsToCommandsFactory}
+ *
+ * Extends {@link UserAuthenticatingFactory} of {@link Airship Airships} and {@link User user}.
+ *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
+public class PatchUserPasswordCommandsFactory extends UserAuthenticatingFactory<User, String> {
+
+	// INSTANCE FIELDS
 
 	/**
-	 	* Class whose instances are {@link CallablesFactory factories} that produce
-	 *  a command of type  {@link PatchUserPasswordCommands}. Commands are
-	 * {@link Callable} instances. This class extends {@link StringsToCommandsFactory}
-	 *	 
-	 *	 @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+	 * {@code requiredParametersNames} - The array of strings with the names of the parameters
+	 * needed to produce the command.
 	 */
+	private String[] requiredParametersNames;
 
-		// public class PatchUserPasswordCommandsFactory extends StringsToCommandsFactory<Optional<String>> {
-	public class PatchUserPasswordCommandsFactory extends UserAuthenticatingFactory< User , String > {
-		// INSTANCE FIELDS
-		
-		/**
-		 * The array of strings whose stores all the required parameters. 
-		 */	
-		private String[] requiredParameters;
-	
-		/**
-		 * The users database.  
-		 */
-		private final Database<User> userDatabase;
-	
-		/**
-		 * The User username.
-		 */
-		private String username;
-	
-		/*
-		 * The old password needed to check if is the true User who's is changing the password.
-		 */
-		
-		private String oldPassword;
-		
-		/*
-		 * The new User password.
-		 */		
-		private String newPassword;
-		
-		// CONSTRUCTOR
-		
-		/**
-		 * Creates a new {@link PatchUserPasswordCommandsFactory} that produces
-		 * commands of type {@link PatchUserPasswordCommands}.
-		 * 
-		 * @param userDatabase
-		 *            The database where to get the User from.
-		 * @throws InvalidArgumentException
-		 *             If {@code userDatabase==null}.
-		 */
-		public PatchUserPasswordCommandsFactory(Database<User> userDatabase)
+	/**
+	 * {@code usersDatabase} - The users database that contains the user.
+	 */
+	private final Database<User> userDatabase;
+
+	/**
+	 * {@code username} - The user's username.
+	 */
+	private String username;
+
+	/*
+	 * {@code oldPassword} - The old password needed to confirm if its the rightfull user who's
+	 * changing the password.
+	 */
+	private String oldPassword;
+
+	/*
+	 * {@code newPawwsord} - The new user password that will be atributed to the user if the command
+	 * is successful.
+	 */
+	private String newPassword;
+
+	// CONSTRUCTOR
+
+	/**
+	 * Creates a new {@link PatchUserPasswordCommandsFactory} that produces commands of type
+	 * {@link PatchUserPasswordCommands}.
+	 * 
+	 * @param userDatabase
+	 *            The database where to get the User from.
+	 * @throws InvalidArgumentException
+	 *             If the {@code userDatabase} is null.
+	 */
+	public PatchUserPasswordCommandsFactory(Database<User> userDatabase)
 			throws InvalidArgumentException {
 
-			super("Change An User Password", userDatabase, userDatabase);
-		
-		 
+		super("Change An User Password", userDatabase, userDatabase);
+
 		this.userDatabase = userDatabase;
-		this.requiredParameters = new String[] {CLIStringsDictionary.USERNAME,
-				CLIStringsDictionary.OLDPASSWORD, CLIStringsDictionary.NEWPASSWORD };
-
-	} 
-			
-		// IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
-
-		/**
-		 *  Method  responsible to return a command of the type {@code PatchUserPasswordCommands}. 
-		 * 
-		 * @return a command of the type {@code PatchUserPasswordCommands}
-		 * @throws InvalidArgumentException 
-		 * 
-		 */
-		@Override
-		protected Callable<String> internalInternalNewInstance(User user) throws InvalidArgumentException {
-
-			
-			getUsername();
-			getOldPassword();
-			getNewPassword();
-		
-			
-			return new PatchUserPasswordCommand(userDatabase,username, oldPassword, newPassword);
-
-		}
-		
-		/**
-		 * Method responsible to return a array who contains all the required parameters 
-		 * Needed to create a {@code PatchUserPasswordCommands} command.
-		 * 
-		 * @return a array with required parameters.
-		 * 
-		 */
-		@Override
-		protected String[] getSpecificRequiredParameters() {
-			
-		return requiredParameters;
-		
-		}
-	
-		// AUXILIARY PRIVATE METHODS
-		
-		/**
-		 * 
-		 * Method responsible to set the username field needed
-		 *  to {@code PatchUserPasswordCommands} command.
-		 *  
-		 * This method calls the 
-		 * 		{@link StringsToCommandsFactory#getParameterAsString(String)} 
-		 * where searches on the Map, with all the parameters, 
-		 * the value of the username.
-		 * 
-		 */		
-		private void getUsername(){
-		
-		username = getParameterAsString(requiredParameters[0]);
-		
-		}
-
-		/**
-		 * 
-		 * Method responsible to set the OldPassword field needed
-		 *  to {@code PatchUserPasswordCommands} command.
-		 *  
-		 * This method calls the 
-		 * 		{@link StringsToCommandsFactory#getParameterAsString(String)} 
-		 * where searches on the Map, with all the parameters, 
-		 * the value of the OldPassword.
-		 * 
-		 */
-		private void getOldPassword(){
-		
-		oldPassword = getParameterAsString(requiredParameters[1]);
-		
+		this.requiredParametersNames = new String[] {CLIStringsDictionary.USERNAME,
+				CLIStringsDictionary.OLDPASSWORD, CLIStringsDictionary.NEWPASSWORD};
 	}
-		
-		/**
-		 * 
-		 * Method responsible to set the NewPassword field needed
-		 *  to {@code PatchUserPasswordCommands} command.
-		 *  
-		 * This method calls the 
-		 * 		{@link StringsToCommandsFactory#getParameterAsString(String)} 
-		 * where searches on the Map, with all the parameters, 
-		 * the value of the NewPassword.
-		 * 
-		 */
-		private void getNewPassword(){
-		
-		newPassword = getParameterAsString(requiredParameters[2]);
-		
+
+	// IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
+
+	/**
+	 * Method responsible for returning a command of the type {@link PatchUserPasswordCommand} after
+	 * getting the necessary {@code required parameters} using the private auxiliar methods
+	 * {@link #setUsername()}, {@link #setOldPassword()}, {@link #setNewPassword()}.
+	 * 
+	 * @param user
+	 *            - The user who's password is to be changed.
+	 * 
+	 * @return A {@link PatchUserPasswordCommand}
+	 * 
+	 * @throws InvalidArgumentException
+	 */
+	@Override
+	protected Callable<String> internalInternalNewInstance(User user)
+			throws InvalidArgumentException {
+
+		setUsername();
+		setOldPassword();
+		setNewPassword();
+
+		return new PatchUserPasswordCommand(userDatabase, username, oldPassword, newPassword);
 	}
-		
-				
+
+	/**
+	 * Returns an array of strings with name of the parameters needed to produce the command: the
+	 * name of the parameters that contain the user's username, old password and new password.
+	 * 
+	 * @return An array of strings with the name of the required parameters.
+	 */
+	@Override
+	protected String[] getSpecificRequiredParameters() {
+
+		return requiredParametersNames;
+
 	}
+
+	// PRIVATE AUXILIAR METHODS
+
+	/**
+	 * Method responsible to set the username field needed to {@code PatchUserPasswordCommands}
+	 * command.
+	 * 
+	 * This method calls the {@link StringsToCommandsFactory#getParameterAsString(String)} where
+	 * searches on the Map, with all the parameters, the value of the username.
+	 */
+	private void setUsername() {
+
+		username = getParameterAsString(requiredParametersNames[0]);
+	}
+
+	/**
+	 * Method responsible to set the OldPassword field needed to {@code PatchUserPasswordCommands}
+	 * command.
+	 * 
+	 * This method calls the {@link StringsToCommandsFactory#getParameterAsString(String)} where
+	 * searches on the Map, with all the parameters, the value of the OldPassword.
+	 */
+	private void setOldPassword() {
+
+		oldPassword = getParameterAsString(requiredParametersNames[1]);
+	}
+
+	/**
+	 * Method responsible to set the NewPassword field needed to {@code PatchUserPasswordCommands}
+	 * command.
+	 * 
+	 * This method calls the {@link StringsToCommandsFactory#getParameterAsString(String)} where
+	 * searches on the Map, with all the parameters, the value of the NewPassword.
+	 */
+	private void setNewPassword() {
+
+		newPassword = getParameterAsString(requiredParametersNames[2]);
+	}
+}

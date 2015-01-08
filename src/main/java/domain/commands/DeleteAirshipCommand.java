@@ -26,7 +26,6 @@ public class DeleteAirshipCommand implements Callable<String> {
 		this.identification = identification;
 	}
 
-	
 	@Override
 	public String call() throws DatabaseException {
 

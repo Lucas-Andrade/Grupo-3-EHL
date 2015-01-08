@@ -2,8 +2,11 @@ package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Map;
 import java.util.concurrent.Callable;
+
 import main.java.cli.CLIStringsDictionary;
+import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.UserAuthenticatingFactory;
 import main.java.domain.commands.patchcommands.PatchCivilAirshipCommand;
 import main.java.domain.commands.patchcommands.PatchMilitaryAirshipCommand;
@@ -19,27 +22,68 @@ import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseExce
 import main.java.utils.exceptions.parsingexceptions.InvalidParameterValueException;
 import main.java.utils.exceptions.parsingexceptions.factoriesexceptions.MissingRequiredParameterException;
 
+/**
+ * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands that
+ * patch airships. Commands are {@link Callable} instances.
+ * 
+ * Extends {@link UserAuthenticatingFactory} of {@link Airship Airships} and {@link String Strings}.
+ * 
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
 public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory<Airship, String> {
 
+	// Instance Fields
+	
 	private final InMemoryAirshipsDatabase airshipsDatabase;
 
 	/**
-	 * The string representation of the airship's concrete type.
+	 * {@code identification} - The identification of the airship we will
 	 */
-	private String type;
-
 	private String identification;
 
-	private Airship airship;
-
+	/**
+	 * The properties of the airship to be added.
+	 */
 	private double latitude;
 	private double longitude;
 	private double altitude;
 	private double minAltitude;
 	private double maxAltitude;
 
-	private final String[] requiredParameters;
+	/**
+	 * {@code type} - The string representation of the airship's concrete type. This will be only
+	 * obtained after we find the airship in the database by its {@link #identification} and assert
+	 * what type of airship it is in the auxiliar private method
+	 * {@link #setValuesOfTheParametersMap()}
+	 */
+	private String type;
 
+	/**
+	 * {@code originalAirship} - The variable where the airship's to be altered original state will be
+	 * saved.
+	 */
+	private Airship originalAirship;
+
+	/**
+	 * {@code requiredParametersNames} - The array of strings with the names of the parameters
+	 * needed to produce the command.
+	 */
+	private final String[] requiredParametersNames;
+
+	// Constructor
+
+	/**
+	 * Creates a new {@link PatchAirshipCommandsFactory} that produces commands of type
+	 * {@link PatchCivilAirshipCommand} or {@link PatchMilitaryAirshipCommand}.
+	 * 
+	 * @param usersDatabase
+	 *            - The users database that stores the user who is posting.
+	 * @param airshipsDatabase
+	 *            - The airships database where the airship to be altered is.
+	 * 
+	 * @throws InvalidArgumentException
+	 *             If either {@code usersDatabase} or {@code airshipDatabase} are {@code null}.
+	 */
 	public PatchAirshipCommandsFactory(Database<User> usersDatabase,
 			InMemoryAirshipsDatabase airshipsDatabase) throws InvalidArgumentException {
 
@@ -47,16 +91,37 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory<Airsh
 
 		this.airshipsDatabase = airshipsDatabase;
 
-		this.requiredParameters = new String[] {CLIStringsDictionary.FLIGHTID};
+		this.requiredParametersNames = new String[] {CLIStringsDictionary.FLIGHTID};
 	}
 
+	// IMPLEMENTATION OF METHODS INHERITED FROM UserAuthenticatingFactory
+
+	/**
+	 * Returns a command of type {@link PatchCivilAirshipCommand} or
+	 * {@link PatchMilitaryAirshipCommand} after getting the necessary {@code required parameters}
+	 * using the private auxiliar method {@link #setValuesOfTheParametersMap()}.
+	 * 
+	 * The created command depends on the value of {@link #type} and its created using reflection.
+	 * 
+	 * @param userWhoIsPatching
+	 *            - The user who is patching the airship.
+	 * 
+	 * @return A command that patches airships.
+	 * 
+	 * @throws MissingRequiredParameterException
+	 *             If any of the required parameters is missing.
+	 * @throws InvalidParameterValueException
+	 *             If any of the parameters have an invalid value.
+	 * @throws InternalErrorException
+	 *             Should never happen!
+	 */
 	@SuppressWarnings ("unchecked")
 	@Override
 	protected Callable<String> internalInternalNewInstance(User userWhoIsPatching)
 			throws NoSuchElementInDatabaseException, InvalidArgumentException,
 			InternalErrorException, InvalidParameterValueException {
 
-		getValuesOfTheParametersMap();
+		setValuesOfTheParametersMap();
 
 		String methodName = "patch" + type + "Airship";
 
@@ -81,13 +146,32 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory<Airsh
 		}
 	}
 
+	/**
+	 * Returns an array of strings with name of the parameters needed to produce the command - in
+	 * this case it will return the name of the parameters that contain the airship's identification
+	 * and properties.
+	 * 
+	 * @return An array of strings with the name of the required parameters.
+	 */
 	@Override
 	protected String[] getSpecificRequiredParameters() {
 
-		return requiredParameters;
+		return requiredParametersNames;
 	}
 
+	// PRIVATE AUXILIAR METHOD - used in the method postsInternalNewInstance()
+
 	/**
+	 * Sets the value of the airship's type and properties fields with the values received in the
+	 * parameters map.
+	 * <p>
+	 * If this method is called inside {@link #internalNewInstance(Map)} and this one is called
+	 * inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed that the fields
+	 * {@link #identification}, {@link #latitude}, {@link #longitude}, {@link #altitude},
+	 * {@link #minAltitude} and {@link #maxAltitude} are non- {@code null} after this method
+	 * finishes its job.
+	 * </p>
+	 * 
 	 * @throws NoSuchElementInDatabaseException
 	 *             If the given flightId refers to an airship that is not contained in airships
 	 *             database.
@@ -96,15 +180,14 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory<Airsh
 	 * @throws InvalidParameterValueException
 	 *             If the values received for latitude, longitude, altitude and air corridor's
 	 *             limits are invalid.
-	 * 
 	 */
-	private void getValuesOfTheParametersMap() throws InvalidArgumentException,
+	private void setValuesOfTheParametersMap() throws InvalidArgumentException,
 			NoSuchElementInDatabaseException, InvalidParameterValueException {
 
 		identification = getParameterAsString(CLIStringsDictionary.FLIGHTID);
 
 		try {
-			airship = airshipsDatabase.getElementByIdentification(identification).get();
+			originalAirship = airshipsDatabase.getElementByIdentification(identification).get();
 
 		} catch (InvalidArgumentException e) {
 			throw e;
@@ -116,7 +199,7 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory<Airsh
 			// instanciado em getElementByIdentification
 		}
 
-		if (airship instanceof CivilAirship)
+		if (originalAirship instanceof CivilAirship)
 			type = "Civil";
 		else
 			type = "Military";
@@ -125,60 +208,84 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory<Airsh
 			latitude = getParameterAsDouble(CLIStringsDictionary.LATITUDE);
 
 		} catch (MissingRequiredParameterException e) {
-			latitude = airship.getCoordinates().getLatitude().getValue();
+			latitude = originalAirship.getCoordinates().getLatitude().getValue();
 		}
 
 		try {
 			longitude = getParameterAsDouble(CLIStringsDictionary.LONGITUDE);
 
 		} catch (MissingRequiredParameterException e) {
-			longitude = airship.getCoordinates().getLongitude().getValue();
+			longitude = originalAirship.getCoordinates().getLongitude().getValue();
 		}
 
 		try {
 			altitude = getParameterAsDouble(CLIStringsDictionary.ALTITUDE);
 
 		} catch (MissingRequiredParameterException e) {
-			altitude = airship.getCoordinates().getAltitude().getValue();
+			altitude = originalAirship.getCoordinates().getAltitude().getValue();
 		}
 
 		try {
 			maxAltitude = getParameterAsDouble(CLIStringsDictionary.AIRCORRIDOR_MAXALTITUDE);
 
 		} catch (MissingRequiredParameterException e) {
-			maxAltitude = airship.getAirCorridor().getMaxAltitude();
+			maxAltitude = originalAirship.getAirCorridor().getMaxAltitude();
 		}
 
 		try {
 			minAltitude = getParameterAsDouble(CLIStringsDictionary.AIRCORRIDOR_MINALTITUDE);
 
 		} catch (MissingRequiredParameterException e) {
-			minAltitude = airship.getAirCorridor().getMinAltitude();
+			minAltitude = originalAirship.getAirCorridor().getMinAltitude();
 		}
 	}
 
-	// used with reflection
+	// Methods Used With Reflection
+
+	/**
+	 * 
+	 * Private method that is invoked using reflection inside the
+	 * {@link #postsInternalNewInstance()}.
+	 * <p>
+	 * <b> This method's name must be <i>patchCivilAirship</i></b>.
+	 * 
+	 * @param userWhoIsPatching
+	 *            - The user who is patching the airship.
+	 * 
+	 * @return A {@link PatchCivilAirshipCommand}.
+	 */
 	@SuppressWarnings ("unused")
 	private Callable<String> patchCivilAirship(User userWhoIsPacthing) {
 
 		try {
 			return new PatchCivilAirshipCommand(airshipsDatabase, identification,
 					userWhoIsPacthing, latitude, longitude, altitude, maxAltitude, minAltitude,
-					((CivilAirship) airship).getPassengers());
+					((CivilAirship) originalAirship).getPassengers());
 
 		} catch (InvalidArgumentException e) {// never happens for databaseWhereToPost is not null
 			return null;
 		}
 	}
 
-	// used with reflection
+	/**
+	 * 
+	 * Private method that is invoked using reflection inside the
+	 * {@link #postsInternalNewInstance()}.
+	 * <p>
+	 * <b> This method's name must be <i>patchMilitaryAirship</i></b>.
+	 * 
+	 * @param userWhoIsPatching
+	 *            - The user who is patching the airship.
+	 * 
+	 * @return A {@link PatchMilitaryAirshipCommand}.
+	 */
 	@SuppressWarnings ("unused")
 	private Callable<String> patchMilitaryAirship(User userWhoIsPatching) {
 
 		try {
 			return new PatchMilitaryAirshipCommand(airshipsDatabase, identification,
 					userWhoIsPatching, latitude, longitude, altitude, maxAltitude, minAltitude,
-					((MilitaryAirship) airship).hasWeapons());
+					((MilitaryAirship) originalAirship).hasWeapons());
 
 		} catch (InvalidArgumentException e) {// never happens for databaseWhereToPost is not null
 			return null;

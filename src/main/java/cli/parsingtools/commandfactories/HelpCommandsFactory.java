@@ -1,8 +1,9 @@
 package main.java.cli.parsingtools.commandfactories;
 
 import java.util.concurrent.Callable;
-import main.java.cli.HelpCommand;
+
 import main.java.cli.parsingtools.CommandParser;
+import main.java.domain.commands.HelpCommand;
 import main.java.utils.OptionsList;
 import main.java.utils.exceptions.InvalidArgumentException;
 

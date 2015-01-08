@@ -1,4 +1,4 @@
-package main.java.cli;
+package main.java.domain.commands;
 
 
 import java.util.concurrent.Callable;

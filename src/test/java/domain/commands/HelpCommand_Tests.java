@@ -1,6 +1,5 @@
 package test.java.domain.commands;
 
-import main.java.cli.HelpCommand;
 import main.java.cli.parsingtools.CommandParser;
 import main.java.cli.parsingtools.Parser;
 import main.java.cli.parsingtools.commandfactories.HelpCommandsFactory;
@@ -8,6 +7,7 @@ import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.
 import main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.patchfactories.PatchUserPasswordCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.postfactories.PostUserCommandsFactory;
+import main.java.domain.commands.HelpCommand;
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.utils.exceptions.InternalErrorException;

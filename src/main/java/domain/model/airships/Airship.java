@@ -144,7 +144,7 @@ public abstract class Airship implements Element {
 	public String toString() {
 
 		return new StringBuilder("Flight ID: ").append(flightId).append(coordinates)
-				.append(airCorridor).append("\nIs Outside The Given Corridor: ")
+				.append(airCorridor).append("Is Outside The Given Corridor: ")
 				.append(isTransgressing).toString();
 	}
 

@@ -3,25 +3,35 @@ package main.java.cli;
 
 import java.util.Scanner;
 import java.util.concurrent.Callable;
-import main.java.cli.commandfactories.HelpCommandsFactory;
-import main.java.cli.commandfactories.getfactories.CheckIfAirshipIsTransgressingCommandsFactory;
-import main.java.cli.commandfactories.getfactories.GetAirshipsOfOwnerCommandsFactory;
-import main.java.cli.commandfactories.getfactories.GetAirshipsWithLessPassengersThanCommandsFactory;
-import main.java.cli.commandfactories.getfactories.GetAllTransgressorAirshipsCommandsFactory;
-import main.java.cli.commandfactories.getfactories.getallfactories.GetAllAirshipsInADatabaseCommandsFactory;
-import main.java.cli.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
-import main.java.cli.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory;
-import main.java.cli.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
-import main.java.cli.commandfactories.getfactories.GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory;
-import main.java.cli.commandfactories.userauthenticatingfactories.postfactories.PostAirshipCommandsFactory;
-import main.java.cli.commandfactories.userauthenticatingfactories.postfactories.PostUserCommandsFactory;
-import main.java.cli.exceptions.InvalidArgumentException;
-import main.java.cli.exceptions.commandparserexceptions.InvalidRegisterException;
-import main.java.cli.model.airships.AirCorridor;
-import main.java.cli.model.airships.Airship;
-import main.java.cli.model.airships.InMemoryAirshipsDatabase;
-import main.java.cli.model.users.InMemoryUsersDatabase;
-import main.java.cli.model.users.User;
+import main.java.cli.outputformatters.Translatable;
+import main.java.cli.outputformatters.totranslatableconversors.ToTranslatableConversor;
+import main.java.cli.parsingtools.CommandParser;
+import main.java.cli.parsingtools.Parser;
+import main.java.cli.parsingtools.commandfactories.HelpCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.CheckIfAirshipIsTransgressingCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.GetAirshipsOfOwnerCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.GetAirshipsWithLessPassengersThanCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.GetAllTransgressorAirshipsCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.GetTheNearestAirshipsToGeographicPositionCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllAirshipsInADatabaseCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.DeleteAirshipCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.patchfactories.PatchAirshipCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.patchfactories.PatchUserPasswordCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.postfactories.PostAirshipCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.postfactories.PostUserCommandsFactory;
+import main.java.domain.model.airships.AirCorridor;
+import main.java.domain.model.airships.Airship;
+import main.java.domain.model.airships.InMemoryAirshipsDatabase;
+import main.java.domain.model.users.InMemoryUsersDatabase;
+import main.java.domain.model.users.User;
+import main.java.utils.exceptions.InternalErrorException;
+import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
+import main.java.utils.exceptions.formattersexceptions.UnknownTranslatableException;
+import main.java.utils.exceptions.formattersexceptions.UnknownTypeException;
 
 
 /**
@@ -55,7 +65,18 @@ import main.java.cli.model.users.User;
  * <li>"POST /airships/type latitude={@value}&longitude={@value}
  * &altitude={@value} &minAltitude={@value}&maxAltitude={@value}&
  * {@code airshipCharacteristic}={@value}&loginName={@value}&loginPassword={@value}
- * ={@value}&loginName={@value}&loginPassword={@value} " - create an
+ * ={@value}&loginName={@value}&loginPassword={@value}={@value}
+ * &loginName={@value}&loginPassword={@value} ={@value}&loginName={@value}
+ * &loginPassword={@value}={@value}&loginName={@value}
+ * &loginPassword={@value} ={@value}&loginName={@value}&loginPassword={@value}
+ * ={@value} &loginName={@value}&loginPassword={@value} ={@value}
+ * &loginName={@value} &loginPassword={@value}={@value}
+ * &loginName={@value}&loginPassword={@value} ={@value}&loginName={@value}
+ * &loginPassword={@value}={@value} &loginName={@value}&loginPassword={@value}
+ * ={@value}&loginName={@value} &loginPassword={@value}={@value}
+ * &loginName={@value} &loginPassword={@value} ={@value}&loginName={@value}
+ * &loginPassword={@value} ={@value} &loginName={@value}&loginPassword={@value}
+ * ={@value} &loginName={@value} &loginPassword={@value} " - create an
  * {@link Airship} with the type {@code Civil} or {@code Military}. If the
  * type:={@code Civil}, {@code airshipCharacteristic}:= nbPassengers. If the
  * type:={@code Military}, {@code airshipCharacteristic}:== hasArmour -> (yes or
@@ -124,9 +145,9 @@ public class App
 			
 			// DELETE
 			
-			// cmdParser.registerCommand( "DELETE", "/airships/{flightId}",
-			// new DeleteAirshipCommandsFactory( usersDatabase,
-			// airshipsDatabase ) );
+			 cmdParser.registerCommand( "DELETE", "/airships/{flightId}",
+			 new DeleteAirshipCommandsFactory( usersDatabase,
+			 airshipsDatabase ) );
 			
 			// GET /airships
 			
@@ -153,7 +174,7 @@ public class App
 					.registerCommand(
 							"GET",
 							"/airships/find",
-							new GetTheNearestAirshipsOfTheGeographicCoordinateCommandFactory(
+							new GetTheNearestAirshipsToGeographicPositionCommandsFactory(
 									airshipsDatabase ) );
 			
 			// GET /users
@@ -170,12 +191,12 @@ public class App
 			
 			// PATCH
 			
-			// cmdParser.registerCommand( "PATCH", "/users/{username}",
-			// new PatchUserCommandsFactory( usersDatabase, usersDatabase ));
+			 cmdParser.registerCommand( "PATCH", "/users/{username}",
+			 new PatchUserPasswordCommandsFactory( usersDatabase ));
 			
-			// cmdParser.registerCommand( "PATCH", "/airships/{flightId}",
-			// new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase
-			// ));
+			 cmdParser.registerCommand( "PATCH", "/airships/{flightId}",
+			 new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase
+			 ));
 			
 			// POST
 			
@@ -206,15 +227,26 @@ public class App
 		
 		try
 		{
+			
 			Parser parser = new Parser( cmdParser, args );
 			Callable< ? > command = parser.getCommand();
-			// Translatable< ? > translatableOutput =
-			// ToTranslatableConversor.convert( command.call() );
-			// String result = getTranslator().encode(translatableOutput);
-			// parser.getStream().print(result);
-			System.out.println( command.call() );
-			// TODO: has errors! must change Translatable,
-			// ToTranslatableConversor and Translator interfaces
+			
+			
+			String output;
+			try
+			{
+				Translatable intermediateRepr = ToTranslatableConversor
+						.convert( command.call() );
+				output = parser.getTranslator().encode( intermediateRepr );
+			}
+			catch( UnknownTypeException | UnknownTranslatableException e )
+			{
+				throw new InternalErrorException( e.getMessage() );
+			}
+			
+			
+			parser.getStream().print( output );
+			
 		}
 		catch( Exception e )
 		{

@@ -47,11 +47,7 @@ public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory<Airs
 	}
 	
 	private void getFlightId(){
-		
-		
+				
 		flightId = getParameterAsString(requiredParameters[0]);
 	}
-	
-	
-	
 }

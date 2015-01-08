@@ -1,123 +1,118 @@
 package main.java.cli.parsingtools.commandfactories.getfactories;
 
-
 import java.util.Map;
 import java.util.concurrent.Callable;
+
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.GetAirshipsOfOwnerCommand;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.utils.Optional;
 import main.java.utils.exceptions.InvalidArgumentException;
 
-
 /**
- * Class whose instances are {@link StringsToCommandsFactory factories} that produce
- * commands of type {@link GetAirshipsByOwnerCommand}. Commands are
- * {@link Callable} instances.
+ * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands of
+ * type {@link GetAirshipsByOwnerCommand}. Commands are {@link Callable} instances.
  * 
- * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link Optional} {@link Iterable
+ * Iterables} of {@link Airship}.
+ * 
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes.
  */
 public class GetAirshipsOfOwnerCommandsFactory extends
-		StringsToCommandsFactory< Optional< Iterable< Airship > > >
-{
-	
+		StringsToCommandsFactory<Optional<Iterable<Airship>>> {
+
 	// INSTANCE FIELDS
-	
+
 	/**
-	 * The array of strings with the names of the parameters needed to produce
-	 * the command.
+	 * {@code requiredParametersNames} - The array of strings with the names of the parameters
+	 * needed to produce the command.
 	 */
 	private final String[] requiredParametersNames;
-	
+
 	/**
-	 * The database where to get the airships from.
+	 * {@code airshipsDatabase} - The database where to search the elements from.
 	 */
-	private final InMemoryAirshipsDatabase database;
-	
+	private final InMemoryAirshipsDatabase airshipsDatabase;
+
 	/**
-	 * The username of the user whose airships are to get from {@link #database}
+	 * {@code ownerUsername} - The username of the user whose airships are to get from
+	 * {@link #airshipsDatabase}
 	 */
 	private String ownerUsername;
-	
-	
+
 	// CONSTRUCTOR
+
 	/**
-	 * Creates a new {@link GetAirshipsByOwnerCommandFactory} that produces
-	 * commands of type {@link GetAirshipsByOwnerCommand}.
+	 * Creates a new {@link GetAirshipsByOwnerCommandFactory} that produces commands of type
+	 * {@link GetAirshipsByOwnerCommand}.
 	 * 
-	 * @param database
-	 *            The database where to get the airships from.
+	 * @param airshipsDatabase
+	 *            - The database where to get the airships from.
+	 * 
 	 * @throws InvalidArgumentException
-	 *             If {@code database==null}.
+	 *             If the {@code airshipsDatabase} is null.
 	 */
-	public GetAirshipsOfOwnerCommandsFactory( InMemoryAirshipsDatabase database )
+	public GetAirshipsOfOwnerCommandsFactory(InMemoryAirshipsDatabase airshipsDatabase)
 			throws InvalidArgumentException {
-		
-		super( "Gets all airships added by a certain user." );
-		
-		if( database == null )
-			throw new InvalidArgumentException(
-					"Cannot instantiate factory with null database!" );
-		
-		this.requiredParametersNames = new String[]{ CLIStringsDictionary.OWNER };
-		this.database = database;
+
+		super("Gets all airships added by a certain user.");
+
+		if (airshipsDatabase == null)
+			throw new InvalidArgumentException("Cannot instantiate factory with null database!");
+
+		this.requiredParametersNames = new String[] {CLIStringsDictionary.OWNER};
+		this.airshipsDatabase = airshipsDatabase;
 	}
-	
-	
-	
+
 	// IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
-	
+
 	/**
-	 * Returns a command of type {@link GetAirshipsByOwnerCommand}.
+	 * Returns a command of type {@link GetAirshipsByOwnerCommand} after getting the necessary
+	 * {@code required parameters} using the private auxiliar method
+	 * {@link #setOwnersUsernameValueOfTheParametersMap()}.
 	 * 
 	 * @return A command of type {@link GetAirshipsByOwnerCommand}.
 	 */
 	@Override
-	protected Callable< Optional< Iterable< Airship > >> internalNewInstance() {
+	protected Callable<Optional<Iterable<Airship>>> internalNewInstance() {
+
+		setOwnersUsernameValueOfTheParametersMap();
 		
-		getOwnersUsernameValueOfTheParametersMap();
-		try
-		{
-			return new GetAirshipsOfOwnerCommand( database, ownerUsername );
-		}
-		catch( InvalidArgumentException e )
-		{ // never happens because database is not null
+		try {
+			return new GetAirshipsOfOwnerCommand(airshipsDatabase, ownerUsername);
+		} catch (InvalidArgumentException e) { // never happens because database is not null
 			return null;
 		}
 	}
-	
+
 	/**
-	 * Returns an array of strings with name of the parameter needed to produce
-	 * the command: the name of the parameter that contains the owner's
-	 * username.
+	 * Returns an array of strings with name of the parameter needed to produce the command - in
+	 * this case the name of the parameter that contains the owner's username.
 	 * 
-	 * @return An array of strings with the name of the parameter that contains
-	 *         the the owner's username.
+	 * @return An array of strings with the name of the required parameters.
 	 */
 	@Override
 	protected String[] getRequiredParameters() {
-		
+
 		return requiredParametersNames;
 	}
-	
-	
-	
-	// AUXILIARY PRIVATE METHODS
+
+	// PRIVATE AUXILIAR METHOD
+
 	/**
-	 * Sets the value of the field {@link #ownerUsername} with the value
-	 * received in the parameters map.
+	 * Sets the value of the field {@link #ownerUsername} with the value received in the parameters
+	 * map needed to {@link GetAirshipsOfOwnerCommand}.
 	 * <p>
-	 * If this method is called inside {@link #internalNewInstance(Map)} and
-	 * this one is called inside
-	 * {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed that
-	 * the field {@link #ownerUsername} is non-{@code null} after this method
-	 * finishes its job.
+	 * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
+	 * last one is called inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed
+	 * that the field {@link #ownerUsername} is non-{@code null} after this method finishes its job.
 	 * </p>
 	 */
-	private void getOwnersUsernameValueOfTheParametersMap() {
-		
-		ownerUsername = getParameterAsString( requiredParametersNames[0] );
+	private void setOwnersUsernameValueOfTheParametersMap() {
+
+		ownerUsername = getParameterAsString(requiredParametersNames[0]);
 	}
 }

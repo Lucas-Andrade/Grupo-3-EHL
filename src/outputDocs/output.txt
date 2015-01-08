@@ -1,0 +1,48 @@
+__/options\__
+
+  DELETE /airships/{flightId}
+Delete An Airship
+
+  GET /airships
+Gets the list of all airships.
+
+  GET /airships/find
+Get the nearest aircrafts of Geographic coordinates
+
+  GET /airships/nbPassengers/{nbP}/bellow
+Gets all airships that are transgressing their air corridors.
+
+  GET /airships/owner/{owner}
+Gets all airships added by a certain user.
+
+  GET /airships/reports
+Gets all airships that are transgressing their air corridors.
+
+  GET /airships/reports/{flightId}
+Checks whether an airship is transgressing its air corridor.
+
+  GET /airships/{flightId}
+Gets an airship with a certain flightId.
+
+  GET /users
+Gets the list of all users.
+
+  GET /users/{username}
+Gets a user with a certain username.
+
+  OPTION /
+Returns the descriptions of known commands.
+
+  PATCH /airships/{flightId}
+Change an Airship Coordinates and/or AirCorridor
+
+  PATCH /users/{username}
+Change An User Password
+
+  POST /airships/{type}
+Adds a new airship.
+
+  POST /users
+Adds a new user.
+
+\__options__/

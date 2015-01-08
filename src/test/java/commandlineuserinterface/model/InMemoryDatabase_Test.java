@@ -1,4 +1,4 @@
-package test.java.model;
+package test.java.commandlineuserinterface.model;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -19,7 +19,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class InMemoryDatabase_Tests {
+public class InMemoryDatabase_Test {
 
 	private InMemoryAirshipDatabase airshipDatabase;
 	private Airship airship, airship2;

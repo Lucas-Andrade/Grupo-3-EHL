@@ -76,7 +76,7 @@ public class GeographicPosition {
 	public String toString() {
 
 		return new StringBuilder("\nLatitude: ").append(latitude.getValue()).append(" Longitude: ")
-				.append(longitude.getValue()).append(" Altitude: ").append(altitude.getValue()).append("\n")
+				.append(longitude.getValue()).append(" Altitude: ").append(altitude.getValue())
 				.toString();
 	}
 

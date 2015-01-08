@@ -19,11 +19,13 @@ import org.junit.Test;
 
 
 /**
- * Tests to target {@link ToPlainTextTranslator}. These are not unitary-tests.
+ * Tests to target {@link ToPlainTextTranslator}. These are
+ * not unitary-tests, are visual tests meant to be seen on console.
  * 
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
+@SuppressWarnings( "unused" )
 public class ToPlainTextTranslatorTest
 {
 	

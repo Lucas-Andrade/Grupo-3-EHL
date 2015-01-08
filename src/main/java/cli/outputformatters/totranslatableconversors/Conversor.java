@@ -16,7 +16,6 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTypeException;
  */
 abstract class Conversor
 {
-	
 	/**
 	 * Converts {@link object} into a {@link Translatable}. *
 	 * 

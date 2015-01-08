@@ -16,7 +16,6 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTypeException;
  */
 class OptionsListToTranslatableConversor extends Conversor
 {
-	
 	@Override
 	Translatable convert( Object optionsList ) throws UnknownTypeException {
 		
@@ -37,5 +36,4 @@ class OptionsListToTranslatableConversor extends Conversor
 		return new Translatable( "options", "option", "command", "description",
 				options, optList.options.toString() );
 	}
-	
 }

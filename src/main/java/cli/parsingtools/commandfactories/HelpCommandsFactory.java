@@ -23,14 +23,16 @@ public class HelpCommandsFactory extends StringsToCommandsFactory<OptionsList> {
 	private CommandParser cmdParser;
 
 	// CONSTRUCTOR
+
 	/**
-	 * Creates a new {@link HelpCommandsFactory} that produces commands of type {@link HelpFactory}.
+	 * Creates a new {@link HelpCommandsFactory} that produces commands of type {@link HelpCommand}.
 	 * 
 	 * @param cmdParser
-	 *            The command parser with the registry of the commands whose descriptions are to be
-	 *            returned by the {@link HelpCommand}s produced by this factory.
+	 *            - The command parser with the registry of the commands whose descriptions are to
+	 *            be returned by the {@link HelpCommand} produced by this factory.
+	 * 
 	 * @throws InvalidArgumentException
-	 *             If {@code cmdParser==null}.
+	 *             If the {@code cmdParser} is null.
 	 */
 	public HelpCommandsFactory(CommandParser cmdParser) throws InvalidArgumentException {
 
@@ -38,6 +40,7 @@ public class HelpCommandsFactory extends StringsToCommandsFactory<OptionsList> {
 
 		if (cmdParser == null)
 			throw new InvalidArgumentException("Cannot instantiate factory with null parser.");
+
 		this.cmdParser = cmdParser;
 	}
 
@@ -61,8 +64,8 @@ public class HelpCommandsFactory extends StringsToCommandsFactory<OptionsList> {
 
 	/**
 	 * Returns an array of strings with the name of the parameters needed to produce
-	 * {@link HelpCommand}s: {@code null} because factories of this type need no parameters from the
-	 * string-commands.
+	 * {@link HelpCommand}s - in this case it will return {@code null} because factories of this type
+	 * don't require any parameters to create their commands.
 	 * 
 	 * @return {@code null}.
 	 */

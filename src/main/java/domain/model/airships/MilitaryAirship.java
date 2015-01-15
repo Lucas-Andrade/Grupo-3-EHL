@@ -80,46 +80,13 @@ public class MilitaryAirship extends Airship {
 	 *             If invalid values were received for the {@code latitude}, {@code longitude},
 	 *             {@code altitude}, {@code maxAltitude} and {@code minAltitude}.
 	 */
-	private MilitaryAirship(double latitude, double longitude, double altitude, double maxAltitude,
+	public MilitaryAirship(double latitude, double longitude, double altitude, double maxAltitude,
 			double minAltitude, boolean hasWeapons, String identification)
 			throws InvalidArgumentException {
 
 		super(latitude, longitude, altitude, maxAltitude, minAltitude, identification);
 
 		this.hasWeapons = hasWeapons;
-	}
-
-	// Public Methods
-
-	/**
-	 * Public static method used with the sole purpose of creating a civil airship using the private
-	 * constructor of this class.
-	 * 
-	 * @param latitude
-	 *            - the double value corresponding to airship's latitude.
-	 * @param longitude
-	 *            - the double value corresponding to airship's longitude.
-	 * @param altitude
-	 *            - the double value corresponding to airship's altitude.
-	 * @param maxAltitude
-	 *            - maximum altitude the airship is allowed to fly.
-	 * @param minAltitude
-	 *            - minimum altitude the airship is allowed to fly.
-	 * @param hasWeapons
-	 *            - boolean variable that represents if the airship has weapons or not.
-	 * @param flightId
-	 *            - the airship's flightId.
-	 * @return Returns a {@code MilitaryAirship} created using the given parameters.
-	 * @throws InvalidArgumentException
-	 *             If invalid values were received for the {@code latitude}, {@code longitude},
-	 *             {@code altitude}, {@code maxAltitude} and {@code minAltitude}.
-	 */
-	public static Airship createANewAirshipWithAPreDefinedIdentification(double latitude,
-			double longitude, double altitude, double maxAltitude, double minAltitude,
-			boolean hasWeapons, String identification) throws InvalidArgumentException {
-
-		return new MilitaryAirship(latitude, longitude, altitude, maxAltitude, minAltitude,
-				hasWeapons, identification);
 	}
 
 	// Overrides

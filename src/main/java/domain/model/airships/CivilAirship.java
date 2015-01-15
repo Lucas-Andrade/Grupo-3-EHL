@@ -81,7 +81,7 @@ public class CivilAirship extends Airship {
 	 *             If invalid values were received for the {@code latitude}, {@code longitude},
 	 *             {@code altitude}, {@code maxAltitude} and {@code minAltitude}.
 	 */
-	private CivilAirship(double latitude, double longitude, double altitude, double maxAltitude,
+	public CivilAirship(double latitude, double longitude, double altitude, double maxAltitude,
 			double minAltitude, int passengers, String flightId) throws InvalidArgumentException {
 
 		super(latitude, longitude, altitude, maxAltitude, minAltitude, flightId);
@@ -90,39 +90,6 @@ public class CivilAirship extends Airship {
 			throw new InvalidArgumentException("The number of passengers cannot be less than 0.");
 
 		this.passengers = passengers;
-	}
-
-	// Public Methods
-
-	/**
-	 * Public static method used with the sole purpose of creating a civil airship using the private
-	 * constructor of this class.
-	 * 
-	 * @param latitude
-	 *            - the double value corresponding to airship's latitude.
-	 * @param longitude
-	 *            - the double value corresponding to airship's longitude.
-	 * @param altitude
-	 *            - the double value corresponding to airship's altitude.
-	 * @param maxAltitude
-	 *            - maximum altitude the airship is allowed to fly.
-	 * @param minAltitude
-	 *            - minimum altitude the airship is allowed to fly.
-	 * @param passengers
-	 *            - the int value that represents the numbers of passengers the airship has.
-	 * @param flightId
-	 *            - the airship's flightId.
-	 * @return Returns a {@code CivilAirship} created using the given parameters.
-	 * @throws InvalidArgumentException
-	 *             If invalid values were received for the {@code latitude}, {@code longitude},
-	 *             {@code altitude}, {@code maxAltitude} and {@code minAltitude}.
-	 */
-	public static Airship createANewAirshipWithAPreDefinedIdentification(double latitude,
-			double longitude, double altitude, double maxAltitude, double minAltitude,
-			int passengers, String identification) throws InvalidArgumentException {
-
-		return new CivilAirship(latitude, longitude, altitude, maxAltitude, minAltitude,
-				passengers, identification);
 	}
 
 	// Overrides

@@ -119,6 +119,7 @@ public abstract class UserAuthenticatingFactory<E extends Element, R> extends
 		loginPassword = getParameterAsString(CLIStringsDictionary.LOGINPASSWORD);
 
 		User user = getUserWhoIsPosting();
+		
 		if (!user.authenticatePassword(loginPassword))
 			throw new WrongLoginPasswordException(loginName, loginPassword);
 

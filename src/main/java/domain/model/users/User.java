@@ -126,33 +126,6 @@ public class User implements Element {
 	}
 
 	/**
-	 * Public method used to change the User {@code password}
-	 * 
-	 * @param newPassword
-	 *            - The {@code User}'s new password.
-	 * @param oldPassword
-	 *            - The {@code User}'s old password.
-	 * 
-	 * @throws InvalidArgumentException
-	 *             If the new password is {@code null} or and empty String.
-	 */
-	public boolean changePassword(String newPassword, String oldPassword)
-			throws InvalidArgumentException {
-
-		if (newPassword == null || newPassword.equals(""))
-			throw new InvalidArgumentException("Invalid new password");
-
-		if (this.authenticatePassword(oldPassword)) {
-
-			this.password = newPassword;
-
-			return true;
-		}
-
-		return false;
-	}
-
-	/**
 	 * @return a String with the {@code User}'s username, password, email and fullname.
 	 */
 	public String toStringWithoutPassword() {

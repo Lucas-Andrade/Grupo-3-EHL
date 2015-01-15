@@ -42,7 +42,7 @@ public abstract class Airship implements Element {
 	// Constructors
 
 	/**
-	 * Public constructor that will be used by the {@code Airship} subclasses in order to
+	 * Protected constructor that will be used by the {@code Airship} subclasses in order to
 	 * instantiate the fields that are common to all the airships. It will receive the geographic
 	 * coordinates of the airship as a parameter as well as the maximum and minimum altitudes the
 	 * airship is allowed to fly.
@@ -67,7 +67,7 @@ public abstract class Airship implements Element {
 	 *             If invalid values were received for the {@code latitude}, {@code longitude},
 	 *             {@code altitude}, {@code maxAltitude} and {@code minAltitude}.
 	 */
-	public Airship(double latitude, double longitude, double altitude, double maxAltitude,
+	protected Airship(double latitude, double longitude, double altitude, double maxAltitude,
 			double minAltitude) throws InvalidArgumentException {
 
 		coordinates = new GeographicPosition(latitude, longitude, altitude);

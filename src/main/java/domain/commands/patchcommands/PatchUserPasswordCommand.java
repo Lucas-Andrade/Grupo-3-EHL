@@ -5,6 +5,7 @@ import java.util.concurrent.Callable;
 import main.java.domain.model.Database;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.databaseexceptions.DatabaseException;
 
 /**
  * Class whose instances are commands that change the user's password from a user who belongs in a
@@ -79,17 +80,25 @@ public class PatchUserPasswordCommand implements Callable<String> {
 	 * Returns a String with the information regarding the success of the user's password change.
 	 * 
 	 * @return A String with the information regarding the success of the operation.
+	 * @throws InvalidArgumentException
 	 * 
 	 * @throws Exception
 	 *             This method will not throw exceptions.
 	 */
 	@Override
-	public String call() throws Exception {
+	public String call() throws InvalidArgumentException {
 
-		if (userDatabase.getElementByIdentification(identification).get()
-				.changePassword(newPassword, oldPassword))
-			return "The User Password was successfully changed";
+		try {
+			userDatabase.removeByIdentification(identification);
 
-		return "The User Password was not changed";
+			User user = new User(identification, newPassword, email, fullname);
+
+			userDatabase.add(user, user);
+
+			return "User password successfully changed";
+
+		} catch (DatabaseException e) {
+			return "The user does not exist in the database";
+		}
 	}
 }

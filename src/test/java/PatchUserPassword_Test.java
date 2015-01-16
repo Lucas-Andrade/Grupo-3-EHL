@@ -8,6 +8,7 @@ import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
+import main.java.utils.exceptions.parsingexceptions.factoriesexceptions.WrongLoginPasswordException;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -45,48 +46,47 @@ public class PatchUserPassword_Test {
 	// Test Normal Dinamic And Prerequisites
 
 	@Test
-	public void shouldChangesTheUserPassword() throws Exception {
+	public void shouldChangeTheUserPassword() throws Exception {
 
 		User user1 = new User("pantunes", "pass", "Pantunes@gmail.com");
 
 		userDatabase.add(user1, user1);
 
 		Parser parser = new Parser(cmdparser, "PATCH", "/users/pantunes",
-				"oldPassword=pass&newPassword=pass2&loginName=pantunes&loginPassword=pass");
+				"newPassword=pass2&loginName=pantunes&loginPassword=pass");
 
 		String result = parser.getCommand().call().toString();
 
-		Assert.assertEquals("The User Password was successfully changed", result);
-
+		Assert.assertEquals(result, "User password successfully changed");
 	}
 
 	@Test
-	public void shouldNotChangesTheUserPassword() throws Exception {
+	public void shouldNotPatchTheUserAndSendAnErrorMessageWhenTryingToPatchAnUserThatIsNotInTheDatabase()
+			throws InvalidArgumentException {
 
-		User user1 = new User("pantunes", "pass", "Pantunes@gmail.com");
+		
+		
+		String result = new PatchUserPasswordCommand(userDatabase, "pantunes", "pass",
+				"Pantunes@gmail.com", "").call();
 
-		userDatabase.add(user1, user1);
-
-		Parser parser = new Parser(cmdparser, "PATCH", "/users/pantunes",
-				"oldPassword=fakepass&newPassword=pass2&loginName=pantunes&loginPassword=pass");
-		String result = parser.getCommand().call().toString();
-
-		Assert.assertEquals("The User Password was not changed", result);
-
+		Assert.assertEquals(result, "The user does not exist in the database");
 	}
 
 	// Test Exceptions
 
-	@Test (expected = InvalidArgumentException.class)
-	public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullOldPassword()
+	@Test (expected = WrongLoginPasswordException.class)
+	public void shouldThrowWrongLoginPasswordExceptionWhenTryingToCreateTheCommandGivenAFakePassword()
 			throws Exception {
 
 		User user1 = new User("pantunes", "pass", "Pantunes@gmail.com");
 
 		userDatabase.add(user1, user1);
 
-		new PatchUserPasswordCommand(userDatabase, "pantunes", null, "newPassword").call();
+		Parser parser = new Parser(cmdparser, "PATCH", "/users/pantunes",
+				"newPassword=pass2&loginName=pantunes&loginPassword=fakepass");
+		String result = parser.getCommand().call().toString();
 
+		Assert.assertEquals("The User Password was not changed", result);
 	}
 
 	@Test (expected = InvalidArgumentException.class)

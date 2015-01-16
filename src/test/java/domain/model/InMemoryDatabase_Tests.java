@@ -3,6 +3,7 @@ package test.java.domain.model;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
 import main.java.domain.model.InMemoryDatabase;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.AirshipPredicates;
@@ -13,6 +14,8 @@ import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.databaseexceptions.DatabaseException;
+import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -125,14 +128,6 @@ public class InMemoryDatabase_Tests {
 	}
 
 	@Test
-	public void shouldNotRemoveAnUserBecauseTheUserIsNotRegistedIntoInMemoryUsersDatabase()
-			throws DatabaseException, InvalidArgumentException {
-
-		Assert.assertFalse(userDatabase.removeByIdentification("pantunes"));
-
-	}
-
-	@Test
 	public void shouldRemoveAnUserInTheInMemoryUsersDatabase() throws DatabaseException,
 			InvalidArgumentException {
 
@@ -170,6 +165,13 @@ public class InMemoryDatabase_Tests {
 	}
 
 	// Test Exceptions
+
+	@Test (expected = NoSuchElementInDatabaseException.class)
+	public void shouldNotRemoveAnUserBecauseTheUserIsNotRegistedIntoInMemoryUsersDatabase()
+			throws DatabaseException, InvalidArgumentException {
+
+		userDatabase.removeByIdentification("pantunes");
+	}
 
 	@Test (expected = DatabaseException.class)
 	public void shouldThrowDatabaseExceptionWhenTryingToRemoveTheMasterUserFromAUserDatabase()

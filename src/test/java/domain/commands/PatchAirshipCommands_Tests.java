@@ -62,7 +62,7 @@ public class PatchAirshipCommands_Tests {
 				airship1.getIdentification(), user1, 2, 4, 13, 100, 50, 100);
 
 		// Assert
-		Assert.assertEquals(patchCivilAirship.call(), "Airship successfully altered");
+		Assert.assertEquals(patchCivilAirship.call(), "Airship successfully patched");
 		Assert.assertEquals(
 				airshipsDatabase.getElementByIdentification(airship1.getIdentification())
 						.toString(), "Flight ID: " + airship1.getIdentification()
@@ -80,7 +80,7 @@ public class PatchAirshipCommands_Tests {
 				airship2.getIdentification(), user1, 20, 10, 30, 100, 50, false);
 
 		// Assert
-		Assert.assertEquals(patchMilitaryAirship.call(), "Airship successfully altered");
+		Assert.assertEquals(patchMilitaryAirship.call(), "Airship successfully patched");
 		Assert.assertEquals(
 				airshipsDatabase.getElementByIdentification(airship2.getIdentification())
 						.toString(), "Flight ID: " + airship2.getIdentification()

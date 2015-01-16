@@ -3,10 +3,12 @@ package main.java.domain.commands.patchcommands;
 import java.util.concurrent.Callable;
 
 import main.java.domain.model.Database;
+import main.java.domain.model.InMemoryDatabase;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.databaseexceptions.DatabaseException;
 
 /**
  * Class whose instances are commands that change an airship's properties belonging to an airships
@@ -98,25 +100,30 @@ public class PatchCivilAirshipCommand implements Callable<String> {
 	 * {@link #identification} with another airship with the new parameters given in the constructor
 	 * to the given {@link #databaseWhereToPost}.
 	 * 
+	 * If the method {@link InMemoryDatabase#removeByIdentification(String)
+	 * removeByIdentification(String)} throws {@link DatabaseException} the airship will not be
+	 * patched and the method will return an error message
 	 * 
-	 * @return A string saying if the patching was successful or not.
+	 * @return A string informing if the patching was successful or not.
 	 * 
-	 * @throws Exception
-	 *             If the value given for some property is invalid.
+	 * @throws InvalidArgumentException
+	 *             If any of the given values for the airship's proprerties is invalid.
 	 */
 	@Override
-	public String call() throws Exception {
+	public String call() throws InvalidArgumentException {
+		
+		try {
+			airshipDatabase.removeByIdentification(identification);
 
-		if (airshipDatabase.removeByIdentification(identification)) {
-
-			Airship airship = CivilAirship.createANewAirshipWithAPreDefinedIdentification(latitude,
-					longitude, altitude, maxAltitude, minAltitude, passengers, identification);
+			Airship airship = new CivilAirship(latitude, longitude, altitude, maxAltitude,
+					minAltitude, passengers, identification);
 
 			airshipDatabase.add(airship, user);
 
-			return "Airship successfully altered";
-		}
+			return "Airship successfully patched";
 
-		return "Airship does not exist in the database";
+		} catch (DatabaseException e) {
+			return "Airship does not exist in the database";
+		}
 	}
 }

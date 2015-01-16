@@ -12,9 +12,8 @@ import org.junit.Test;
  * This Test class tests the following classes:
  * 
  * <p>
- * {@link Airship}, {@link CivilAirship} and {@link MilitaryAirship};
- * {@link GeographicalPosition}, {@link GeographicalCoordinate} and
- * {@link AirCorridor}.
+ * {@link Airship}, {@link CivilAirship} and {@link MilitaryAirship}; {@link GeographicalPosition},
+ * {@link GeographicalCoordinate} and {@link AirCorridor}.
  * </p>
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -36,12 +35,10 @@ public class Airships_Test {
 	// Test Normal Dinamic And Prerequisites
 
 	@Test
-	public void shouldCreateCivilAirshipsWithASpecificFlightIdUsingTheStaticMethodCreateANewAirshipWithAPreDefinedIdentification()
-			throws InvalidArgumentException {
+	public void shouldCreateCivilAirshipsWithASpecificFlightId() throws InvalidArgumentException {
 
 		// Arrange
-		airship4 = CivilAirship.createANewAirshipWithAPreDefinedIdentification(0, 0, 0, 100, 50,
-				20, "id3");
+		airship4 = new CivilAirship(0, 0, 0, 100, 50, 20, "id3");
 
 		// Assert
 		Assert.assertEquals(airship4.toString(), "Flight ID: id3\n"
@@ -55,8 +52,7 @@ public class Airships_Test {
 			throws InvalidArgumentException {
 
 		// Arrange
-		airship4 = MilitaryAirship.createANewAirshipWithAPreDefinedIdentification(0, 0, 60, 100,
-				50, false, "id3");
+		airship4 = new MilitaryAirship(0, 0, 60, 100, 50, false, "id3");
 
 		// Assert
 		Assert.assertEquals(airship4.toString(), "Flight ID: id3\n"
@@ -77,10 +73,10 @@ public class Airships_Test {
 	// Test Exceptions
 
 	@Test (expected = InvalidArgumentException.class)
-	public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateCivilAirshipsWithASpecificFlightIdUsingTheStaticMethodCreateANewAirshipWithAPreDefinedIdentificationGivinANegativeNumberOfPassengers()
+	public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateCivilAirshipsWithASpecificFlightIdGivenANegativeNumberOfPassengers()
 			throws InvalidArgumentException {
 
-		airship4 = CivilAirship.createANewAirshipWithAPreDefinedIdentification(0, 0, 0, 100, 50,
+		airship4 = new CivilAirship(0, 0, 0, 100, 50,
 				-3, "id3");
 	}
 

@@ -58,7 +58,7 @@ import main.java.cli.outputformatters.translators.Translator;
  * Summarizing,
  * 
  * <pre>
-             | String | Simple | Iterable |  Map 
+ *             | String | Simple | Iterable |  Map 
  * ————————————+————————+————————+——————————+——————— 
  * tag         |   n    |    V   |     V    |   V 
  * entryTag    |   n    |    n   |     V    |   V 

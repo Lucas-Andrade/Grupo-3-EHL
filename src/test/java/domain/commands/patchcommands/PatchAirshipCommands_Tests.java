@@ -1,4 +1,4 @@
-package test.java.domain.commands;
+package test.java.domain.commands.patchcommands;
 
 import main.java.domain.commands.patchcommands.PatchCivilAirshipCommand;
 import main.java.domain.commands.patchcommands.PatchMilitaryAirshipCommand;

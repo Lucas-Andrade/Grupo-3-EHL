@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import main.java.domain.model.Database;
 import main.java.domain.model.InMemoryDatabase;
 import main.java.domain.model.users.User;
@@ -20,9 +21,9 @@ import main.java.utils.exceptions.databaseexceptions.DatabaseException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class InMemoryAirshipsDatabase extends InMemoryDatabase<Airship> {
-
+	
 	// Instance Field
-
+	
 	/**
 	 * The container {@link Map} where all the {@link Airship}s will be stored by {@link User}:
 	 * <ul>
@@ -31,10 +32,10 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase<Airship> {
 	 * identification is stored in the corresponding key.</li>
 	 * </ul>
 	 */
-	private Map<String, List<Airship>> flightsByUserRegister;
-
+	private Map<String, List<Airship>>	flightsByUserRegister;
+	
 	// Constructor
-
+	
 	/**
 	 * Creates an empty {@link InMemoryAirshipDatabase} with the name {@code databaseName}.
 	 * 
@@ -45,14 +46,14 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase<Airship> {
 	 *             If {@code databaseName} is null.
 	 */
 	public InMemoryAirshipsDatabase(String databaseName) throws InvalidArgumentException {
-
+	
 		super(databaseName);
-
+		
 		flightsByUserRegister = new HashMap<String, List<Airship>>();
 	}
-
+	
 	// OVERRIDE OF METHODS InMemoryDatabase
-
+	
 	/**
 	 * Stores an {@link #Airship} in this database, added by a specific {@link User}
 	 * 
@@ -71,15 +72,15 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase<Airship> {
 	 */
 	@Override
 	public boolean add(Airship airship, User user) throws InvalidArgumentException {
-
+	
 		if (super.add(airship, user)) {
 			addAirshipToItsUsersListOfAirships(airship, user);
 			return true;
 		}
-
+		
 		return false;
 	}
-
+	
 	/**
 	 * Removes the {@code airship} with the given {@code flightId} from this database.
 	 * 
@@ -92,23 +93,23 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase<Airship> {
 	 * @return {@code true} if the airship was successfully removed and {@code false} otherwise.
 	 * 
 	 * @throws DatabaseException
-	 *             When trying to perform an forbidden operation in a database.
+	 *             When trying to remove and element that does not exist in the database.
 	 * @throws InvalidArgumentException
 	 *             If {@code flightId} is null.
 	 */
 	@Override
 	public boolean removeByIdentification(String flightId) throws InvalidArgumentException,
-			DatabaseException {
-
+		DatabaseException {
+	
 		super.removeByIdentification(flightId);
-
+		
 		removeAirshipFromItsUsersListOfAirships(flightId);
 		
 		return true;
 	}
-
+	
 	// OTHER PUBLIC METHODS
-
+	
 	/**
 	 * Returns a list with the {@link #Airship airships} stored in this database that were added by
 	 * the {@link User} with the given {@code username}.
@@ -130,15 +131,15 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase<Airship> {
 	 * @see Optional
 	 */
 	public Optional<Iterable<Airship>> getAirshipsOfUser(String username) {
-
+	
 		List<Airship> list = flightsByUserRegister.get(username);
-
+		
 		if (list == null)
 			list = new ArrayList<>();
-
+		
 		return new Optional<Iterable<Airship>>(list, "No airship added by " + username);
 	}
-
+	
 	/**
 	 * Returns an {@link Iterable} specific number of {@link #Airship airships} (determined by the
 	 * given parameter {@code nrOfAirshipsToGet}) stored in this database that are closer to the
@@ -167,31 +168,31 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase<Airship> {
 	 * @see Optional
 	 */
 	public Optional<Iterable<Airship>> getAirshipsCloserTo(GeographicPosition reference,
-			int nrOfAirshipsToGet) throws InvalidArgumentException {
-
+		int nrOfAirshipsToGet) throws InvalidArgumentException {
+	
 		if (nrOfAirshipsToGet < 0)
 			throw new InvalidArgumentException("Number of airships cannot be negative.");
-
+		
 		List<Airship> airshipsList = new ArrayList<Airship>();
-
+		
 		try {
 			airshipsList.addAll(getAll().get().values());
-
+			
 		} catch (Exception e) { // This never happens because getAll() never has null values!
 			System.out.println("ERROR in getAirshipsCloserTo()");
 		}
-
+		
 		airshipsList.sort(new AirshipComparators.ComparatorByDistance(reference));
-
+		
 		if (nrOfAirshipsToGet <= airshipsList.size())
 			airshipsList = airshipsList.subList(0, nrOfAirshipsToGet);
-
+		
 		return new Optional<Iterable<Airship>>(airshipsList, getDatabaseName() + " is empty.");
-
+		
 	}
-
+	
 	// PRIVATE AUXILIAR METHODS
-
+	
 	// Used in method add
 	/**
 	 * Updates the list of airships of the given {@code user} by adding an {@code airship} to it.
@@ -204,17 +205,17 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase<Airship> {
 	 *            - The user whose list is to be updated.
 	 */
 	private void addAirshipToItsUsersListOfAirships(Airship airship, User user) {
-
+	
 		if (flightsByUserRegister.containsKey(user.getIdentification()))
 			flightsByUserRegister.get(user.getIdentification()).add(airship);
-
+		
 		else {
 			List<Airship> newListForNewUser = new ArrayList<>();
 			newListForNewUser.add(airship);
 			flightsByUserRegister.put(user.getIdentification(), newListForNewUser);
 		}
 	}
-
+	
 	// Used in method removeByIdentification
 	/**
 	 * Updates the list of airships posted the {@code users} by removing an {@code airship} with the
@@ -226,19 +227,19 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase<Airship> {
 	 *            - The flightId of the airship to be removed from its user's list of airships.
 	 */
 	private void removeAirshipFromItsUsersListOfAirships(String flightId) {
-
+	
 		for (Entry<String, List<Airship>> entry : flightsByUserRegister.entrySet()) {
-
+			
 			List<Airship> list = entry.getValue();
-
+			
 			for (Airship airship : list)
 				if (airship.getIdentification().equals(flightId)) {
-
+					
 					list.remove(airship);
-
+					
 					if (list.isEmpty())
 						flightsByUserRegister.remove(entry.getKey());
-
+					
 					return;
 				}
 		}

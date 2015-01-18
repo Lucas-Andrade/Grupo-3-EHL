@@ -14,6 +14,7 @@ import main.java.utils.exceptions.parsingexceptions.InvalidParameterValueExcepti
 import main.java.utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import main.java.utils.exceptions.parsingexceptions.parserexceptions.DuplicateParametersException;
 import main.java.utils.exceptions.parsingexceptions.parserexceptions.InvalidCommandParametersSyntaxException;
+
 import org.junit.Assert;
 import org.junit.Test;
 

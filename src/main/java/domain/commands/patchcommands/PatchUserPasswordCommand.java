@@ -92,7 +92,10 @@ public class PatchUserPasswordCommand implements Callable<String> {
 	 * {@link InMemoryDatabase#getElementByIdentification(String)
 	 * getElementByIdentification(String)} return and create a new {@link Optional} that will will
 	 * throw {@link NoSuchElementInDatabaseException} when it's {@link Optional#get() get()} method
-	 * is called. An error message will be returned when this exception is caught by the try-catch.
+	 * is called. This will also happen if someone tries to change the "MASTER" user's password.
+	 * 
+	 * 
+	 * An error message will be returned when this exception is caught by the try-catch.
 	 * 
 	 * @return A String with the information regarding the success of the operation.
 	 * 

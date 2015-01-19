@@ -1,0 +1,26 @@
+package main.java.gui.JPanels;
+
+import java.awt.Dimension;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
+public class JUserPanelForMainWindow extends JScrollPane {
+
+	
+	private static final long serialVersionUID = 1L;
+
+	
+	public JUserPanelForMainWindow() {
+		
+		 
+	
+	
+		this.setPreferredSize(new Dimension(40, 40));
+
+		
+		setVisible(true);
+		
+	}
+
+}

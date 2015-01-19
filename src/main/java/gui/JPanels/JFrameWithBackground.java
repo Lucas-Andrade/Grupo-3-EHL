@@ -1,23 +1,19 @@
-package main.java.gui;
+package main.java.gui.JPanels;
 
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
-
-import javax.swing.ImageIcon;
-import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-public class JDialogWithBackground extends JDialog {
+public class JFrameWithBackground extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	Image bImage;
-	ImageIcon bImageIcon;
 
-	public JDialogWithBackground(String path) {
+	public JFrameWithBackground(String path) {
 
 		this.bImage = this.createImage(path);
-		this.bImageIcon = new ImageIcon(path);
 
 		this.initComponents();
 
@@ -26,10 +22,9 @@ public class JDialogWithBackground extends JDialog {
 	public void initComponents() {
 
 		super.setContentPane(new NewContentPane());
-		super.setSize(bImageIcon.getIconWidth(), bImageIcon.getIconHeight());
-		super.setLocationRelativeTo(null);
-		
-		
+
+		super.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
 	}
 
 	private Image createImage(String path) {
@@ -45,6 +40,7 @@ public class JDialogWithBackground extends JDialog {
 		protected void paintComponent(final Graphics g) {
 
 			super.paintComponent(g);
+
 			g.drawImage(bImage, 0, 0, this);
 
 		}

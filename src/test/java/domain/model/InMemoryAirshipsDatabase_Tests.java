@@ -200,15 +200,15 @@ public class InMemoryAirshipsDatabase_Tests {
 		Assert.assertEquals(expectedResult, result);
 	}
 
-	// Test Exceptions
-
-	@Test (expected = NoSuchElementInDatabaseException.class)
-	public void shouldThrowNoSuchElementInDatabaseExceptionWhenTryingToRemoveAnAirshipThatDoesNotExistInTheDatabase()
+	@Test
+	public void shouldReturnFalseWhenTryingToRemoveAnAirshipThatDoesNotExistInTheDatabase()
 			throws DatabaseException, InvalidArgumentException {
 
-		airshipDatabase.removeByIdentification(airship.getIdentification());
+		Assert.assertFalse(airshipDatabase.removeByIdentification(airship.getIdentification()));
 	}
 
+	// Test Exceptions
+	
 	@Test (expected = InvalidArgumentException.class)
 	public void shouldThrowInvalidArgumentExceptionWhenTryToAddNullElementsToADatabase()
 			throws InvalidArgumentException {

@@ -52,7 +52,7 @@ public class ParserTest
 		
 		Parser parser = new Parser(cmdparser,"PATCH", "/users/pantunes", "oldPassword=pass&newPassword=pass2&loginName=pantunes&loginPassword=pass");
 		
-		Assert.assertEquals("The User Password was successfully changed", parser.getCommand().call().toString() );
+		Assert.assertEquals("User password successfully changed", parser.getCommand().call().toString() );
 				
 	} 
 	
@@ -144,25 +144,24 @@ public class ParserTest
 	}
 		
 	
-	@Test(expected=InvalidParameterValueException.class)
-	public void shouldThrowInvalidParameterValueExceptionWhenGiveAnInvalidPathForOutputFile() throws  InvalidParameterValueException, InvalidArgumentException,
-																				InvalidRegisterException, InvalidCommandParametersSyntaxException,
-																				DuplicateParametersException, InvalidCommandSyntaxException{
-		
-		CommandParser cmdparser = new CommandParser();
-		
-		InMemoryUsersDatabase usersDatabase = new InMemoryUsersDatabase("firstUsersDatabse");
-		
-		cmdparser.registerCommand("GET", "/users/{username}", new GetUserByUsernameCommandsFactory(usersDatabase) );
-			
-		User user1 = new User("pantunes", "pass","Pantunes@gmail.com");
-		
-		usersDatabase.add(user1, user1);
-		
-		Parser parser =	new Parser(cmdparser,"GET", "/users/pantunes","output-file=src|main|java|cli");
-			parser.getStream();
-		
-	}
+//	@Test(expected=InvalidParameterValueException.class)
+//	public void shouldThrowInvalidParameterValueExceptionWhenGiveAnInvalidPathForOutputFile() throws  InvalidParameterValueException, InvalidArgumentException,
+//																				InvalidRegisterException, InvalidCommandParametersSyntaxException,
+//																				DuplicateParametersException, InvalidCommandSyntaxException{
+//		
+//		CommandParser cmdparser = new CommandParser();
+//		
+//		InMemoryUsersDatabase usersDatabase = new InMemoryUsersDatabase("firstUsersDatabse");
+//		
+//		cmdparser.registerCommand("GET", "/users/{username}", new GetUserByUsernameCommandsFactory(usersDatabase) );
+//			
+//		User user1 = new User("pantunes", "pass","Pantunes@gmail.com");
+//		
+//		usersDatabase.add(user1, user1);
+//		
+//		Parser parser =	new Parser(cmdparser,"GET", "/users/pantunes","output-file=src|main|java|cli.txt");
+//			parser.getStream();
+//	}
 	
 	@Test(expected= InvalidParameterValueException.class)
 	public void shouldThrowInvalidParameterValueExceptionWhenTryToGetAnInvalidTranslatorFormatParameter() throws InvalidCommandParametersSyntaxException, DuplicateParametersException, 

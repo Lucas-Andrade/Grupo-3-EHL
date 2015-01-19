@@ -128,8 +128,7 @@ public abstract class InMemoryDatabase<T extends Element> implements Database<T>
 			throw new InvalidArgumentException("Cannot remove element with null identification.");
 
 		if (!database.containsKey(identification))
-			throw new NoSuchElementInDatabaseException(
-					"There is no element with the given identification in this database");
+			return false;
 
 		database.remove(identification);
 		return true;

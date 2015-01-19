@@ -1,11 +1,14 @@
 package main.java.domain.commands.patchcommands;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
 
 import main.java.domain.model.Database;
 import main.java.domain.model.InMemoryDatabase;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
+import main.java.domain.model.airships.MilitaryAirship;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.databaseexceptions.DatabaseException;
@@ -18,37 +21,39 @@ import main.java.utils.exceptions.databaseexceptions.DatabaseException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PatchCivilAirshipCommand implements Callable<String> {
-
+public class PatchAirshipCommand implements Callable<String> {
+	
 	// INSTANCE FIELDS
-
+	
 	/**
 	 * The users database that contains the airship we want to patch.
 	 */
-	private final Database<Airship> airshipDatabase;
-
+	private final Database<Airship>	airshipDatabase;
+	
 	/**
 	 * The airship's identification giving by the username.
 	 */
-	private final String identification;
-
+	private final String			identification;
+	
 	/**
 	 * The user that will patch the airship
 	 */
-	private final User user;
-
+	private final User				user;
+	
 	/**
 	 * The properties of the airship that can be changed.
 	 */
-	private final double latitude;
-	private final double longitude;
-	private final double altitude;
-	private final double maxAltitude;
-	private final double minAltitude;
-	private final int passengers;
-
+	private Double					latitude;
+	private Double					longitude;
+	private Double					altitude;
+	private Double					maxAltitude;
+	private Double					minAltitude;
+	
+	private Airship					airship;
+	private String					type;
+	
 	// CONSTRUCTOR
-
+	
 	/**
 	 * Creates a new instance of this command that patches a civil airship with these properties in
 	 * {@link databaseWhereToPost}.
@@ -67,34 +72,33 @@ public class PatchCivilAirshipCommand implements Callable<String> {
 	 * @throws InvalidArgumentException
 	 *             If the {@code airshipsDatabase} is null.
 	 */
-	public PatchCivilAirshipCommand(Database<Airship> airshipDatabase, String identification,
-			User user, double latitude, double longitude, double altitude, double maxAltitude,
-			double minAltitude, int passengers) throws InvalidArgumentException {
-
+	public PatchAirshipCommand(Database<Airship> airshipDatabase, String identification, User user,
+		Double latitude, Double longitude, Double altitude, Double maxAltitude, Double minAltitude)
+		throws InvalidArgumentException {
+	
 		if (airshipDatabase == null)
 			throw new InvalidArgumentException("Cannot instantiate command with null database.");
-
+		
 		if (identification == null)
 			throw new InvalidArgumentException(
-					"Cannot instantiate command with null identification.");
-
+				"Cannot instantiate command with null identification.");
+		
 		if (user == null)
 			throw new InvalidArgumentException();
-
+		
 		this.airshipDatabase = airshipDatabase;
 		this.identification = identification;
 		this.user = user;
-
+		
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.altitude = altitude;
 		this.maxAltitude = maxAltitude;
 		this.minAltitude = minAltitude;
-		this.passengers = passengers;
 	}
-
+	
 	// IMPLEMENTATION OF METHOD call INHERITED FROM Callable INTERFACE
-
+	
 	/**
 	 * Replaces a civil airship belonging to an airships database that is specified by the given
 	 * {@link #identification} with another airship with the new parameters given in the constructor
@@ -110,20 +114,73 @@ public class PatchCivilAirshipCommand implements Callable<String> {
 	 *             If any of the given values for the airship's proprerties is invalid.
 	 */
 	@Override
-	public String call() throws InvalidArgumentException {
-		
+	public String call() throws InvalidArgumentException, Exception {
+	
 		try {
+			
+			if (latitude == null && longitude == null && altitude == null && maxAltitude == null
+				&& minAltitude == null)
+				return "Airship not patched beacause no new parameter was given";
+			
+			Airship originalAirship = airshipDatabase.getElementByIdentification(identification)
+				.get();
+			
+			if (latitude == null)
+				latitude = originalAirship.getCoordinates().getLatitude().getValue();
+			
+			if (longitude == null)
+				longitude = originalAirship.getCoordinates().getLongitude().getValue();
+			
+			if (altitude == null)
+				altitude = originalAirship.getCoordinates().getAltitude().getValue();
+			
+			if (maxAltitude == null)
+				maxAltitude = originalAirship.getAirCorridor().getMaxAltitude();
+			
+			if (minAltitude == null)
+				minAltitude = originalAirship.getAirCorridor().getMinAltitude();
+			
 			airshipDatabase.removeByIdentification(identification);
-
-			Airship airship = new CivilAirship(latitude, longitude, altitude, maxAltitude,
-					minAltitude, passengers, identification);
-
+			
+			type = originalAirship.getClass().getSimpleName();
+			
+			String methodName = "create" + type;
+			
+			Class<? extends PatchAirshipCommand> c = this.getClass();
+			Class<? extends Airship> u = originalAirship.getClass();
+			
+			try {
+				Method creatorMethod = c.getDeclaredMethod(methodName, u);
+				creatorMethod.invoke(this, originalAirship);
+				
+			} catch (InvocationTargetException e) {
+				throw new InvalidArgumentException(e.getMessage());
+				
+			} catch (NoSuchMethodException | SecurityException | IllegalAccessException e) {
+				return "UPS"; // Never Supposed To Happen!
+			}
+			
 			airshipDatabase.add(airship, user);
-
+			
 			return "Airship successfully patched";
-
+			
 		} catch (DatabaseException e) {
 			return "Airship does not exist in the database";
 		}
+	}
+	
+	@SuppressWarnings ("unused")
+	private void createCivilAirship(CivilAirship originalAirship) throws InvalidArgumentException {
+	
+		airship = new CivilAirship(latitude, longitude, altitude, maxAltitude, minAltitude,
+			originalAirship.getPassengers(), identification);
+	}
+	
+	@SuppressWarnings ("unused")
+	private void createMilitaryAirship(MilitaryAirship originalAirship)
+		throws InvalidArgumentException {
+	
+		airship = new MilitaryAirship(latitude, longitude, altitude, maxAltitude, minAltitude,
+			originalAirship.hasWeapons(), identification);
 	}
 }

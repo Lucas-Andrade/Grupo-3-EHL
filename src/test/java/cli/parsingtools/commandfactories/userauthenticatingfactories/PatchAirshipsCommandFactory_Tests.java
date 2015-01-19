@@ -3,10 +3,10 @@ package test.java.cli.parsingtools.commandfactories.userauthenticatingfactories;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
+
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.patchfactories.PatchAirshipCommandsFactory;
-import main.java.domain.commands.patchcommands.PatchCivilAirshipCommand;
-import main.java.domain.commands.patchcommands.PatchMilitaryAirshipCommand;
+import main.java.domain.commands.patchcommands.PatchAirshipCommand;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
@@ -20,6 +20,7 @@ import main.java.utils.exceptions.parsingexceptions.InvalidParameterValueExcepti
 import main.java.utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import main.java.utils.exceptions.parsingexceptions.factoriesexceptions.MissingRequiredParameterException;
 import main.java.utils.exceptions.parsingexceptions.factoriesexceptions.WrongLoginPasswordException;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -89,55 +90,32 @@ public class PatchAirshipsCommandFactory_Tests {
 	// Test Normal Dinamic And Prerequisites
 
 	@Test
-	public void shouldSuccessfullyCreateTheCorrectCommandsGivenNoneOfTheOptionalParameters()
+	public void shouldSuccessfullyCreateTheCorrectCommandGivenAllOfTheOptionalParameters()
+			throws NoSuchElementInDatabaseException, MissingRequiredParameterException,
+			InvalidParameterValueException, WrongLoginPasswordException, InternalErrorException,
+			InvalidArgumentException {
+		
+		parameters.put(CLIStringsDictionary.FLIGHTID, airship1.getIdentification());
+
+		Callable<?> patchAirshipCommand = (new PatchAirshipCommandsFactory(usersDatabase,
+				airshipsDatabase)).newInstance(parameters);
+
+		Assert.assertTrue(patchAirshipCommand instanceof PatchAirshipCommand);
+	}
+	
+	@Test
+	public void shouldSuccessfullyCreateTheCorrectCommandGivenNoneOfTheOptionalParameters()
 			throws NoSuchElementInDatabaseException, MissingRequiredParameterException,
 			InvalidParameterValueException, WrongLoginPasswordException, InternalErrorException,
 			InvalidArgumentException {
 		
 		onlyRequiredParameters.put(CLIStringsDictionary.FLIGHTID, airship1.getIdentification());
 
-		Callable<?> patchCivilAirshipCommand = (new PatchAirshipCommandsFactory(usersDatabase,
+		Callable<?> patchAirshipCommand = (new PatchAirshipCommandsFactory(usersDatabase,
 				airshipsDatabase)).newInstance(onlyRequiredParameters);
 
-		onlyRequiredParameters.put(CLIStringsDictionary.FLIGHTID, airship2.getIdentification());
-
-		Callable<?> patchMilitaryAirshipCommand = (new PatchAirshipCommandsFactory(usersDatabase,
-				airshipsDatabase)).newInstance(onlyRequiredParameters);
-
-		Assert.assertTrue(patchCivilAirshipCommand instanceof PatchCivilAirshipCommand);
-		Assert.assertTrue(patchMilitaryAirshipCommand instanceof PatchMilitaryAirshipCommand);
-	}
-	
-	@Test
-	public void shouldSuccessfullyCreateTheCorrectCommandsGivingAllOptionalParameters()
-			throws NoSuchElementInDatabaseException, MissingRequiredParameterException,
-			InvalidParameterValueException, WrongLoginPasswordException, InternalErrorException,
-			InvalidArgumentException {
-
-		parameters.put(CLIStringsDictionary.FLIGHTID, airship1.getIdentification());
-
-		Callable<?> patchCivilAirshipCommand = (new PatchAirshipCommandsFactory(usersDatabase,
-				airshipsDatabase)).newInstance(parameters);
-
-		parameters.put(CLIStringsDictionary.FLIGHTID, airship2.getIdentification());
-
-		Callable<?> patchMilitaryAirshipCommand = (new PatchAirshipCommandsFactory(usersDatabase,
-				airshipsDatabase)).newInstance(parameters);
-
-		Assert.assertTrue(patchCivilAirshipCommand instanceof PatchCivilAirshipCommand);
-		Assert.assertTrue(patchMilitaryAirshipCommand instanceof PatchMilitaryAirshipCommand);
+		Assert.assertTrue(patchAirshipCommand instanceof PatchAirshipCommand);
 	}
 
 	// Test Exceptions
-
-	@Test (expected = NoSuchElementInDatabaseException.class)
-	public void shouldThrowNoSuchElementInDatabaseExceptionWhenTryingToCreateAPatchAirshipCommandGivingTheIdentificationOfAnNonExistingID()
-			throws InvalidArgumentException, NoSuchElementInDatabaseException,
-			MissingRequiredParameterException, InvalidParameterValueException,
-			WrongLoginPasswordException, InternalErrorException {
-
-		parameters.put(CLIStringsDictionary.FLIGHTID, "id20");
-		
-		new PatchAirshipCommandsFactory(usersDatabase, airshipsDatabase).newInstance(parameters);
-	}
 }

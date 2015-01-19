@@ -101,11 +101,13 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase<Airship> {
 	public boolean removeByIdentification(String flightId) throws InvalidArgumentException,
 		DatabaseException {
 	
-		super.removeByIdentification(flightId);
+		if (super.removeByIdentification(flightId)) {
+			
+			removeAirshipFromItsUsersListOfAirships(flightId);
+			return true;
+		}
 		
-		removeAirshipFromItsUsersListOfAirships(flightId);
-		
-		return true;
+		return false;
 	}
 	
 	// OTHER PUBLIC METHODS

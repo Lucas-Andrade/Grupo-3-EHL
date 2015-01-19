@@ -1,0 +1,79 @@
+package main.java.gui;
+
+import java.awt.Color;
+import java.awt.EventQueue;
+
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+
+import main.java.gui.JPanels.JCommonPostAirshipPanel;
+import main.java.gui.JPanels.JDialogWithBackground;
+import main.java.gui.JPanels.JOkCancelPanel;
+import main.java.gui.JPanels.JPanelWithAishipsImages;
+import main.java.gui.JPanels.JPanelWithSpecificCivilAirhipParameters;
+import main.java.gui.JPanels.JPanelWithSpecificMilitaryAirhipParameters;
+
+public class PostAirshipsWindow extends JDialogWithBackground{
+
+	
+	private static final long serialVersionUID = 1L;
+	
+	private static final String MILITARYAIRSHIP = "Military Airship";
+	private static final String CIVILAIRSHIP = "Civil Airship";
+
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+
+			@Override
+			public void run() {
+
+			new PostAirshipsWindow();
+
+			}
+		});
+	}
+
+	public PostAirshipsWindow() {
+		super(new Color(65, 72, 78), 370, 550);
+		initialize();
+	}
+	
+	
+	private void initialize() {
+
+
+		JTabbedPane TypeAirshipTabbedPane = new JTabbedPane();
+		TypeAirshipTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
+
+		JPanel civilpanel = new JPanel();
+		civilpanel.setBackground(new Color(65, 72, 78));
+		civilpanel.setSize(370, 550);
+		
+		JPanel militaryPanel = new JPanel();
+		militaryPanel.setBackground(new Color(65, 72, 78));
+		militaryPanel.setSize(370, 550);
+		
+		TypeAirshipTabbedPane.addTab(CIVILAIRSHIP, null, civilpanel, null);
+		TypeAirshipTabbedPane.addTab(MILITARYAIRSHIP, null, militaryPanel, null);
+
+		this.getContentPane().add(TypeAirshipTabbedPane);
+
+		civilpanel.add(new JPanelWithAishipsImages(
+				"src/main/resources/images/civil.png"));
+		militaryPanel.add(new JPanelWithAishipsImages(
+				"src/main/resources/images/military.png"));
+
+		civilpanel.add(new JCommonPostAirshipPanel());
+		militaryPanel.add(new JCommonPostAirshipPanel());
+
+		civilpanel.add(new JPanelWithSpecificCivilAirhipParameters());
+		militaryPanel.add(new JPanelWithSpecificMilitaryAirhipParameters());
+
+		civilpanel.add(new JOkCancelPanel());
+		militaryPanel.add(new JOkCancelPanel());
+
+		this.setVisible(true);
+
+	}
+
+}

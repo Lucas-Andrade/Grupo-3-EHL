@@ -5,21 +5,20 @@ import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Toolkit;
 import java.net.MalformedURLException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import main.java.gui.JPanels.JDialogWithBackground;
+import main.java.gui.JPanels.JLablePlusJTextField;
+import main.java.gui.JPanels.JLablePlusPasswordField;
+import main.java.gui.JPanels.JOkCancelPanel;
+import main.java.gui.JPanels.JPanelImage;
 
 
-public class LogInWindow {
+public class LogInWindow extends JDialogWithBackground{
 
-	
+
+	private static final long serialVersionUID = 1L;
+
 	public static void main(String[] args) {
 
 		EventQueue.invokeLater(new Runnable() {
@@ -40,134 +39,63 @@ public class LogInWindow {
 
 	
 	public LogInWindow() throws MalformedURLException {
+		super(new Color (65,72,78),370, 360);
 		initialize();
 
 	}
 
 	private void initialize() throws MalformedURLException {
 		
-		JDialogWithBackground jDialogLogin = new JDialogWithBackground("src/main/resources/images/ImageGray370x350.jpg");
-		jDialogLogin.setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/Air-icon.png"));
-		
-
-		
-		jDialogLogin.setTitle("Air Traffic Controll");
-		jDialogLogin.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		jDialogLogin.setVisible(true);
-
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{20, 285, 20, 0};
-		gridBagLayout.rowHeights = new int[]{125, 35, 45, 30, 40, 40, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, 0.0};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gridBagLayout.columnWidths = new int[]{285};
+		gridBagLayout.rowHeights = new int[]{125, 35, 45, 30, 40, 0};
+		gridBagLayout.columnWeights = new double[]{0.0};
+		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		
-		jDialogLogin.getContentPane().setLayout(gridBagLayout);
-		
-		jDialogLogin.setResizable(false);   
-
+		this.getContentPane().setLayout(gridBagLayout);
 		{
-			ImagePanel radarIcon = new ImagePanel("src/main/resources/images/radar.png");
+			JPanelImage radarIcon = new JPanelImage("src/main/resources/images/radar.png");
 			
 			GridBagConstraints radarTextBox = new GridBagConstraints();
-			radarTextBox.insets = new Insets(0, 0, 5, 5);
+			radarTextBox.insets = new Insets(0, 0, 5, 0);
 			radarTextBox.anchor = GridBagConstraints.CENTER;
-			radarTextBox.gridx = 1;
+			radarTextBox.gridx = 0;
 			radarTextBox.gridy = 0;
 			
-			jDialogLogin.getContentPane().add(radarIcon, radarTextBox);
+			this.getContentPane().add(radarIcon, radarTextBox);
 
-		}	
-		
-			
-		
+		}		
 		{
-			
-			JLabel usernameTextLabel = new JLabel("Username");	
-			usernameTextLabel.setForeground(Color.WHITE);
-
-			GridBagConstraints usernameTextBox = new GridBagConstraints();
-			usernameTextBox.insets = new Insets(0, 0, 5, 5);
-			usernameTextBox.anchor = GridBagConstraints.CENTER;
-			usernameTextBox.gridx = 1;
-			usernameTextBox.gridy = 1;
-			jDialogLogin.getContentPane().add(usernameTextLabel, usernameTextBox);
-			
-		}	
-		
-		{
-			
-			JTextField usernameTextField = new JTextField();
-			usernameTextField.setColumns(20);
-			
+				
 			GridBagConstraints usernameBox = new GridBagConstraints();
 			usernameBox.anchor = GridBagConstraints.NORTH;
-			usernameBox.insets = new Insets(0, 0, 5, 5);
-			usernameBox.gridx = 1;
-			usernameBox.gridy = 2;
-			jDialogLogin.getContentPane().add(usernameTextField, usernameBox);
+			usernameBox.insets = new Insets(0, 0, 5, 0);
+			usernameBox.gridx = 0;
+			usernameBox.gridy = 1;
+			this.getContentPane().add(new JLablePlusJTextField("Username", 20, Color.WHITE), usernameBox);
 
 		}
-		
-		
-		{
-			ImageIcon lockerIcon = new ImageIcon("src/main/resources/images/locker.png");			
-			JLabel PasswordTextLabel = new JLabel("Password");	
-			
-			PasswordTextLabel.setIcon(lockerIcon);
-			PasswordTextLabel.setForeground(Color.WHITE);
-
-			GridBagConstraints PasswordTextBox = new GridBagConstraints();
-			
-			PasswordTextBox.insets = new Insets(0, 0, 5, 5);
-			PasswordTextBox.anchor = GridBagConstraints.CENTER;
-			PasswordTextBox.gridx = 1;
-			PasswordTextBox.gridy = 3;
-			jDialogLogin.getContentPane().add(PasswordTextLabel, PasswordTextBox);
-			
-		}	
-
-		
-		{
-			
-			JPasswordField fullnameTextField = new JPasswordField();
-			fullnameTextField.setColumns(20);
-			
-			GridBagConstraints fullnameBox = new GridBagConstraints();
-			fullnameBox.anchor = GridBagConstraints.NORTH;
-			fullnameBox.insets = new Insets(0, 0, 5, 5);
-			fullnameBox.gridx = 1;
-			fullnameBox.gridy = 4;
-			jDialogLogin.getContentPane().add(fullnameTextField, fullnameBox);
+		{					
+			GridBagConstraints passwordBox = new GridBagConstraints();
+			passwordBox.anchor = GridBagConstraints.NORTH;
+			passwordBox.insets = new Insets(0, 0, 5, 0);
+			passwordBox.gridx = 0;
+			passwordBox.gridy = 2;
+			this.getContentPane().add(new JLablePlusPasswordField("Password", 20, Color.WHITE,
+							"src/main/resources/images/locker.png"), passwordBox);
 
 		}
-		
-		
 		{
-
-			JPanel okCancelPanel = new JPanel();
-
-			okCancelPanel.setOpaque(false);
-			
-			GridBagConstraints okCancelPanelBox = new GridBagConstraints();
-			okCancelPanelBox.insets = new Insets(0, 0, 0, 5);
-			okCancelPanelBox.anchor = GridBagConstraints.NORTH;
-			okCancelPanelBox.gridx = 1;
-			okCancelPanelBox.gridy = 5;
-			jDialogLogin.getContentPane().add(okCancelPanel, okCancelPanelBox);
-
-			JButton okButton = new JButton("Ok");
-			okButton.setActionCommand("Ok");
-			okCancelPanel.add(okButton);
-
-			JButton cancelButton = new JButton("Close");
-			cancelButton.setActionCommand("Close");
-			okCancelPanel.add(cancelButton);
+			GridBagConstraints okCancelBox = new GridBagConstraints();
+			okCancelBox.anchor = GridBagConstraints.NORTH;
+			okCancelBox.insets = new Insets(0, 0, 5, 0);
+			okCancelBox.gridx = 0;
+			okCancelBox.gridy = 4;
+			this.getContentPane().add(new JOkCancelPanel("Ok", "Close"), okCancelBox);
+					
 		}
 		
-		
-		
-		
+		this.setVisible(true);		
 	}
-
 }

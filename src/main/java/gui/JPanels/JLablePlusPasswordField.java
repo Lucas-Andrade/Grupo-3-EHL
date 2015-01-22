@@ -1,8 +1,6 @@
 package main.java.gui.JPanels;
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.GridLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -49,40 +47,32 @@ public class JLablePlusPasswordField extends JPanel {
 	}
 
 	private void initial() {
-
 		
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		setLayout(gridBagLayout);
+		setLayout(new GridLayout(2, 1, 0, 0));
+	
+		JPanel panelLabel = new JPanel();
+		panelLabel.setBackground(new Color(0,0,0,0));
+		add(panelLabel);
 		
+		JLabel labelPassword = new JLabel(JLabelText);
+		labelPassword.setForeground(JLabelColor);
+		labelPassword.setBackground(new Color(0,0,0,0));
 		
-		JLabel label = new JLabel(JLabelText);
-		label.setForeground(JLabelColor);
-		label.setBackground(new Color(0,0,0,0));
+		if(path!=null) labelPassword.setIcon(new ImageIcon(path));
 		
-		if(path!=null) label.setIcon(new ImageIcon(path));
+		panelLabel.add(labelPassword);
 		
-		GridBagConstraints labeltextBox = new GridBagConstraints();
-		labeltextBox.insets = new Insets(0, 0, 5, 0);
-		labeltextBox.gridx = 0;
-		labeltextBox.gridy = 0;
-		
-		
-		this.add(label, labeltextBox);
-		
+		JPanel panelPasswordField = new JPanel();
+		panelPasswordField.setBackground(new Color(0,0,0,0));
+		add(panelPasswordField);
 		
 		JPasswordField textField = new JPasswordField();
 		textField.setColumns(JTextFieldSize);
+
+		panelPasswordField.add(textField);
 		
 		
-		GridBagConstraints textFieldBox = new GridBagConstraints();
-		textFieldBox.insets = new Insets(0, 0, 5, 0);
-		textFieldBox.gridx = 0;
-		textFieldBox.gridy = 1;
-		this.add(textField, textFieldBox);
+		
 		this.setBackground(new Color(0,0,0,0));;
 	}
 

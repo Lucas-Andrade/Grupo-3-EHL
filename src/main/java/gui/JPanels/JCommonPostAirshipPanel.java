@@ -1,9 +1,8 @@
 package main.java.gui.JPanels;
 
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -20,67 +19,51 @@ public class JCommonPostAirshipPanel extends JPanel {
 
 	private void initial()  {
 
-		GridBagLayout CommonPanelBox = new GridBagLayout();
-		CommonPanelBox.columnWidths = new int[] { 170,170 };
-		CommonPanelBox.rowHeights = new int[] { 80, 0, 0, 15 };
-		CommonPanelBox.columnWeights = new double[] { 1.0 };
-		CommonPanelBox.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0 };
-		
-		this.setLayout(CommonPanelBox);
+
 		this.setBackground(new Color(0,0,0,0));
-		
-		JLablePlusJTextField latitude = new JLablePlusJTextField("Latitude", 8,Color.WHITE);
-		GridBagConstraints LatitudeBox = new GridBagConstraints();
-		
-		LatitudeBox.insets = new Insets(0, 0, 0, 0);
-		LatitudeBox.gridx = 0;
-		LatitudeBox.gridy = 0;
-		
-		
-		this.add(latitude, LatitudeBox);
+		this.setLayout(new GridLayout(2,1));
+	
+		JPanel geoCoordinates = new JPanel();
+		geoCoordinates.setLayout(new FlowLayout());
+		geoCoordinates.setBackground(new Color(0,0,0,0));
 
 		
-		JLablePlusJTextField minAltitude = new JLablePlusJTextField("Min. Altitude", 8,Color.WHITE);		
-		GridBagConstraints minAltitudeBox = new GridBagConstraints();
-		
-		minAltitudeBox.insets = new Insets(0, 0, 0, 0);
-		minAltitudeBox.gridx = 0;
-		minAltitudeBox.gridy = 1;
-		
-		this.add(minAltitude, minAltitudeBox);
-
+		JLablePlusJTextField latitude = new JLablePlusJTextField("Latitude", 8,Color.WHITE);		
+		geoCoordinates.add(latitude);
 		
 		JLablePlusJTextField longitude = new JLablePlusJTextField("Longitude",8,Color.WHITE);
-		GridBagConstraints LongitudeBox = new GridBagConstraints();
-		LongitudeBox.insets = new Insets(0, 0, 0, 0);
-		LongitudeBox.gridx = 1;
-		LongitudeBox.gridy = 0;
-		
-		this.add(longitude, LongitudeBox);
+		geoCoordinates.add(longitude);
+	
+		JLablePlusJTextField altitude = new JLablePlusJTextField("Altitude", 8,Color.WHITE);
+		geoCoordinates.add(altitude);
+				
+
+		JPanel  altitudeParameters= new JPanel();
+		altitudeParameters.setLayout(new FlowLayout());
+		altitudeParameters.setBackground(new Color(0,0,0,0));	
 		
 		JLablePlusJTextField maxAltitude = new JLablePlusJTextField("Max. Altitude", 8,Color.WHITE);
-		GridBagConstraints maxAltitudeBox = new GridBagConstraints();
-		maxAltitudeBox.insets = new Insets(0, 0, 0, 0);
-		maxAltitudeBox.gridx = 1;
-		maxAltitudeBox.gridy = 1;
+		altitudeParameters.add(maxAltitude);
 		
-		this.add(maxAltitude, maxAltitudeBox);
-			
-		JLablePlusJTextField altitude = new JLablePlusJTextField("Altitude", 8,Color.WHITE);		
-		GridBagConstraints altitudeBox = new GridBagConstraints();
-		altitudeBox.insets = new Insets(0, 0, 0, 0);
-		altitudeBox.gridx = 0;
-		altitudeBox.gridy = 2;
-		
-		this.add(altitude, altitudeBox);
-		
-		
+		JLablePlusJTextField minAltitude = new JLablePlusJTextField("Min. Altitude", 8,Color.WHITE);
+		altitudeParameters.add(minAltitude);
+					
 		Border whiteline = BorderFactory.createLineBorder(Color.WHITE);
-		TitledBorder title = BorderFactory.createTitledBorder(whiteline, "Geographical Coordiantes");
-		title.setTitleColor(Color.WHITE);			
-		title.setTitleJustification(TitledBorder.CENTER);
-		this.setBorder(title);
-			
+		
+		TitledBorder titlegeoCoordinates = BorderFactory.createTitledBorder(whiteline, "Geographical Coordinates");
+		titlegeoCoordinates.setTitleColor(Color.WHITE);			
+		titlegeoCoordinates.setTitleJustification(TitledBorder.LEFT);
+		geoCoordinates.setBorder(titlegeoCoordinates);
+				
+		
+		TitledBorder titlealtitudeParameters = BorderFactory.createTitledBorder(whiteline, "Air Corridor");
+		titlealtitudeParameters.setTitleColor(Color.WHITE);			
+		titlealtitudeParameters.setTitleJustification(TitledBorder.LEFT);
+		altitudeParameters.setBorder(titlealtitudeParameters);
+		
+		this.add(geoCoordinates);		
+		this.add(altitudeParameters);
+
 	}
 	
 

@@ -71,9 +71,7 @@ public class PostAirshipsWindow extends JDialogWithBackground{
 
 		civilpanel.add(new JOkCancelPanel());
 		militaryPanel.add(new JOkCancelPanel());
-
 		this.setVisible(true);
-
 	}
 
 }

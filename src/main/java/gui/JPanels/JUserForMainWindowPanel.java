@@ -13,8 +13,11 @@ import main.java.gui.Borders.TextRoundBorder;
 @SuppressWarnings("serial")
 public class JUserForMainWindowPanel extends JPanel {
 
-	
-	
+	JButton addUser;
+	JButton removeUser;
+	JButton infoAllUsers;
+	JButton logout;
+	JButton changePassword;
 	public JUserForMainWindowPanel(){
 		
 				
@@ -32,23 +35,65 @@ public class JUserForMainWindowPanel extends JPanel {
 		username.setForeground(Color.WHITE);		
 		panel.add(username);
 		
-		JButton changePassword = new JButton("Change Password");	
+		changePassword = new JButton("Change Password");	
 		panel.add(changePassword);
 
-		JButton logout = new JButton("Logout");
+		logout = new JButton("Logout");
 		panel.add(logout);
 		
 		JPanel userOptions = new JPanel();
 		userOptions.setLayout(new GridLayout(3,0));
 		this.add(userOptions);
 		
-		JButton addUser = new JButton(new ImageIcon("src/main/resources/images/removeUser.png"));
+		addUser = new JButton(new ImageIcon("src/main/resources/images/removeUser.png"));
 		userOptions.add(addUser);
-		JButton removeUser = new JButton(new ImageIcon("src/main/resources/images/infoUser.png"));
+		removeUser = new JButton(new ImageIcon("src/main/resources/images/infoUser.png"));
 		userOptions.add(removeUser);
-		JButton infoAllUsers = new JButton(new ImageIcon("src/main/resources/images/addUser.png"));
+		infoAllUsers = new JButton(new ImageIcon("src/main/resources/images/addUser.png"));
 		userOptions.add(infoAllUsers);
 	}
+
+	public JButton getJButtonAddUser() {
+		return addUser;
+	}
+
+	public void setJButtonAddUser(JButton addUser) {
+		this.addUser = addUser;
+	}
+
+	public JButton getJButtonRemoveUser() {
+		return removeUser;
+	}
+
+	public void setJButtonRemoveUser(JButton removeUser) {
+		this.removeUser = removeUser;
+	}
+
+	public JButton getJButtonInfoAllUsers() {
+		return infoAllUsers;
+	}
+
+	public void setJButtonInfoAllUsers(JButton infoAllUsers) {
+		this.infoAllUsers = infoAllUsers;
+	}
+
+	public JButton getJButtonLogout() {
+		return logout;
+	}
+
+	public void setJButtonLogout(JButton logout) {
+		this.logout = logout;
+	}
+
+	public JButton getChangePassword() {
+		return changePassword;
+	}
+
+	public void setChangePassword(JButton changePassword) {
+		this.changePassword = changePassword;
+	}
+	
+	
 	
 	
 }

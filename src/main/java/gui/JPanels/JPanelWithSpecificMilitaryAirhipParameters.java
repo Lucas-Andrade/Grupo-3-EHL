@@ -15,6 +15,10 @@ public class JPanelWithSpecificMilitaryAirhipParameters extends JPanel {
 
 	private final static String YES = "Yes";
 	private final static String NO = "No";
+	private JRadioButton YesButton;
+	private JRadioButton NoButton;
+	private ButtonGroup groupButtons;
+	
 	
 	private static final long serialVersionUID = 1L;
 
@@ -32,7 +36,7 @@ public class JPanelWithSpecificMilitaryAirhipParameters extends JPanel {
 		 militaryArmorLabel.setForeground(Color.WHITE);
 		 this.add(militaryArmorLabel);
 				
-		 JRadioButton YesButton = new JRadioButton(YES);
+		 YesButton = new JRadioButton(YES);
 		 YesButton.setForeground(Color.WHITE);
 		 YesButton.setMnemonic(KeyEvent.VK_B);
 		 YesButton.setActionCommand(YES);
@@ -41,19 +45,38 @@ public class JPanelWithSpecificMilitaryAirhipParameters extends JPanel {
 		 this.add(YesButton);
 		
 		 
-		 JRadioButton NoButton = new JRadioButton(NO);
+		 NoButton = new JRadioButton(NO);
 		 NoButton.setForeground(Color.WHITE);
 		 NoButton.setMnemonic(KeyEvent.VK_B);
 		 NoButton.setActionCommand(NO);
 		 NoButton.setOpaque(false);
 		 this.add(NoButton);
 		 	 
-		 ButtonGroup groupButtons = new ButtonGroup();
+		 groupButtons = new ButtonGroup();
 		 groupButtons.add(YesButton);
 		 groupButtons.add(NoButton);
 		 
 		 this.setBorder(BorderFactory.createEmptyBorder(10, 0, 16, 100));
 		
 	}
+
+
+	public JRadioButton getYesButton() {
+		return YesButton;
+	}
+
+	public JRadioButton getNoButton() {
+		return NoButton;
+	}
+
+
+	public ButtonGroup getGroupButtons() {
+		return groupButtons;
+	}
+
+
+	
+	
+	
 
 }

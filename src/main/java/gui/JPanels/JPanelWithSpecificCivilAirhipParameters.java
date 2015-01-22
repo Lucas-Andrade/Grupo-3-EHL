@@ -11,8 +11,9 @@ public class JPanelWithSpecificCivilAirhipParameters extends JPanel {
 
 
 	private static final long serialVersionUID = 1L;
-
-	
+	private JTextField numberPassengersTextField;
+	private JLabel numberPassengerLabel;
+	 
 	public JPanelWithSpecificCivilAirhipParameters() {
 		Initial();
 	}
@@ -28,7 +29,7 @@ public class JPanelWithSpecificCivilAirhipParameters extends JPanel {
 		 this.add(numberPassengerLabel);
 		
 		
-		 JTextField numberPassengersTextField = new JTextField();
+		 numberPassengersTextField = new JTextField();
 		 numberPassengersTextField.setColumns(10);
 		 this.add(numberPassengersTextField);	
 		 
@@ -38,4 +39,14 @@ public class JPanelWithSpecificCivilAirhipParameters extends JPanel {
 		 
 	}
 
+	public JTextField getNumberPassengerJTextField(){
+		
+		return numberPassengersTextField;		
+	}
+	
+	public JLabel getNumberPassengerJLabel(){
+		
+		return numberPassengerLabel;		
+	}
+	
 }

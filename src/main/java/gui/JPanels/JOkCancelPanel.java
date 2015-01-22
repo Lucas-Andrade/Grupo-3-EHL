@@ -13,6 +13,8 @@ public class JOkCancelPanel extends JPanel {
 	
 	private String leftButton;
 	private String rightButton;
+	private JButton okButton ;
+	private JButton cancelButton;
 	
 	public JOkCancelPanel() {
 
@@ -38,14 +40,26 @@ public class JOkCancelPanel extends JPanel {
 		
 		 this.setOpaque(false);
 		 
-		 JButton okButton = new JButton(leftButton);
+		 okButton = new JButton(leftButton);
 		 okButton.setActionCommand(leftButton);
 		 this.add(okButton);
 		 
-		 JButton cancelButton = new JButton(rightButton);
+		 cancelButton = new JButton(rightButton);
 		 cancelButton.setActionCommand(rightButton);
 		 this.add(cancelButton);
 	
 	}
 
+	public JButton getleftButton(){
+		
+		return okButton;
+		
+	}
+	
+	public JButton getRightButton(){
+		
+		return cancelButton;
+		
+	}
+	
 }

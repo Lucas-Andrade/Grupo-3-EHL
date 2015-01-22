@@ -2,7 +2,6 @@ package main.java.gui.JPanels;
 
 import java.awt.Dimension;
 
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 public class JUserPanelForMainWindow extends JScrollPane {

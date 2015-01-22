@@ -36,7 +36,7 @@ public abstract class JDialogWithBackground extends JDialog {
 	public void initComponents() {
 		
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/Air-icon.png"));
-		this.setTitle("Air Traffic Controll");
+		this.setTitle("Air Traffic Control");
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);	

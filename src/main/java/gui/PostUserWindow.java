@@ -33,7 +33,7 @@ public class PostUserWindow extends JDialogWithBackground{
 
 	public PostUserWindow()   {
 		
-		super(new Color (65,72,78),370, 550);
+		super(new Color (65,72,78),370, 570);
 		initialize();
 		
 	}
@@ -41,12 +41,8 @@ public class PostUserWindow extends JDialogWithBackground{
 		
 	
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] { 350 };
-		gridBagLayout.rowHeights = new int[] { 165, 0, 40, 0, 42, 0, 0 };
-		
-		gridBagLayout.columnWeights = new double[] { 0.0 };
-		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		
+
+
 		this.getContentPane().setLayout(gridBagLayout);
 		 
 		
@@ -117,7 +113,7 @@ public class PostUserWindow extends JDialogWithBackground{
 
 			this.getContentPane().add(new JOkCancelPanel(), okCancelBox);
 		}
-		
+		this.pack();
 		this.setVisible(true);
 
 	}

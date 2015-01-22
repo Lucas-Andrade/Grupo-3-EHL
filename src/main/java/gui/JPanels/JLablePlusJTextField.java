@@ -1,9 +1,7 @@
 package main.java.gui.JPanels;
 
 import java.awt.Color;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +20,7 @@ public class JLablePlusJTextField extends JPanel {
 		
 		this.JLabelText = JLabelText;
 		this.JTextFieldSize = JTextFieldSize;
-		
+			
 		initial();
 	}
 	
@@ -41,37 +39,26 @@ public class JLablePlusJTextField extends JPanel {
 
 	private void initial() {
 
+		setLayout(new GridLayout(2, 1, 0,0));
 		
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{0, 0};
-		gridBagLayout.rowHeights = new int[]{0, 0, 0};
-		gridBagLayout.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gridBagLayout.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		setLayout(gridBagLayout);
-		
+		JPanel panelLabel = new JPanel();
+		panelLabel.setBackground(new Color(0,0,0,0));
+		add(panelLabel);
 		
 		JLabel label = new JLabel(JLabelText);
 		label.setForeground(JLabelColor);
 		label.setBackground(new Color(0,0,0,0));
+		panelLabel.add(label);
 		
-		GridBagConstraints labeltextBox = new GridBagConstraints();
-		labeltextBox.insets = new Insets(0, 0, 5, 0);
-		labeltextBox.gridx = 0;
-		labeltextBox.gridy = 0;
-		
-		this.add(label, labeltextBox);
-		
+		JPanel paneltextField = new JPanel();
+		paneltextField.setBackground(new Color(0,0,0,0));
+		add(paneltextField);
 		
 		JTextField textField = new JTextField();
-		textField.setColumns(JTextFieldSize);
+		textField.setColumns(JTextFieldSize);		
+		paneltextField.add(textField);
 
-		
-		GridBagConstraints textFieldBox = new GridBagConstraints();
-		textFieldBox.insets = new Insets(0, 0, 5, 0);
-		textFieldBox.gridx = 0;
-		textFieldBox.gridy = 1;
-		this.add(textField, textFieldBox);
-		this.setBackground(new Color(0,0,0,0));;
+		this.setBackground(new Color(0,0,0,0));
 	}
 
 }

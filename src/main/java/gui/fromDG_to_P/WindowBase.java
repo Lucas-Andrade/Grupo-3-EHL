@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import java.util.concurrent.Callable;
 
 import javax.swing.JComponent;
@@ -11,7 +12,12 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 
 /**
- * 
+ * Abstract swing window, with:
+ * <ul>
+ * <li> an Image
+ * <li> two buttons, without {@link ActionListener}s
+ * <li> error Label, where the exception message will be printed.
+ * <ul>
  * 
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -26,7 +32,7 @@ public abstract class WindowBase
 	 */
 	private ButtonsPanel buttonsPanel;
 	/**
-	 * Label where a exception message will be printed.
+	 * Label where the exception message will be printed.
 	 */
 	private JLabel errorLabel;
 
@@ -51,6 +57,7 @@ public abstract class WindowBase
 		addComponent( errorLabel, GridBagConstraints.BELOW_BASELINE );
 
 		getRootPane().setDefaultButton( buttonsPanel.getLeftButton() );
+		
 	}
 
 	//Private methods
@@ -61,7 +68,7 @@ public abstract class WindowBase
 		setSize( width, height );
 		getContentPane().setBackground( new Color( 65, 72, 78 ) );
 
-		setIconImage( Toolkit.getDefaultToolkit().getImage( "src/ByD/Air-icon.png" ) );
+		setIconImage( Toolkit.getDefaultToolkit().getImage( "" ) );//TODO
 
 		setTitle( "Air Traffic Controll" );
 		setLocationRelativeTo( null );

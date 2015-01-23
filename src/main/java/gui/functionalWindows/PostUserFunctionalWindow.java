@@ -35,29 +35,32 @@ public class PostUserFunctionalWindow
 	public PostUserFunctionalWindow( PostUserWindow window, InMemoryUsersDatabase usersDatabase,
 			User userWhoIsPosting )
 	{
-		super( window );
-		this.usersDatabase = usersDatabase;
-		this.userWhoIsPosting = userWhoIsPosting;
+//		super( window );
+//		this.usersDatabase = usersDatabase;
+//		this.userWhoIsPosting = userWhoIsPosting;
 	}
 
 
 	@Override
 	protected FunctionalWindowSwingWorker getSwingWorker()
 	{
-		return new FunctionalWindowSwingWorker()
-		{
-			String username = window.getUsername();
-			String password = window.getUsername();
-			String email = window.getUsername();
-			String fullName = window.getUsername();
-
-			@Override
-			protected String doInBackground() throws Exception
-			{
-				return new PostUserCommand( username, password, email, fullName, usersDatabase,
-						userWhoIsPosting ).call();
-			}
-		};
+		//TODO
+		return null;
+		
+//		return new FunctionalWindowSwingWorker()
+//		{
+//			String username = window.getUsername();
+//			String password = window.getUsername();
+//			String email = window.getUsername();
+//			String fullName = window.getUsername();
+//
+//			@Override
+//			protected String doInBackground() throws Exception
+//			{
+//				return new PostUserCommand( username, password, email, fullName, usersDatabase,
+//						userWhoIsPosting ).call();
+//			}
+//		};
 	}
 
 	

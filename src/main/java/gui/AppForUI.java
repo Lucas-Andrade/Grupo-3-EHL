@@ -14,6 +14,7 @@ public class AppForUI {
 	@SuppressWarnings ("unused")
 	private static InMemoryAirshipsDatabase airshipsDatabase;
 	
+	
 	public static void main(String[] args) throws InvalidArgumentException {
 	
 		usersDatabase = new InMemoryUsersDatabase("Users Database");

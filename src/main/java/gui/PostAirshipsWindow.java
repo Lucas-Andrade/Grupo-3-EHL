@@ -58,12 +58,21 @@ public class PostAirshipsWindow extends JDialogWithBackground{
 
 		this.getContentPane().add(TypeAirshipTabbedPane);
 
-		civilpanel.add(new JPanelWithAishipsImages(
-				"src/main/resources/images/civil.png"));
+		JPanelWithAishipsImages cena = new JPanelWithAishipsImages(
+				"src/main/resources/images/civil.png");
+		civilpanel.add(cena);
+		
+		
+	
 		militaryPanel.add(new JPanelWithAishipsImages(
 				"src/main/resources/images/military.png"));
 
-		civilpanel.add(new JCommonPostAirshipPanel());
+		
+		JCommonPostAirshipPanel cena2 = new JCommonPostAirshipPanel();
+		civilpanel.add(cena2);
+		
+		cena2.getJAltitudePanel().getJTextField().getText();
+		
 		militaryPanel.add(new JCommonPostAirshipPanel());
 
 		civilpanel.add(new JPanelWithSpecificCivilAirhipParameters());

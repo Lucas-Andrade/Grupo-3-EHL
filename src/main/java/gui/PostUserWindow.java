@@ -113,7 +113,7 @@ public class PostUserWindow extends JDialogWithBackground{
 
 			this.getContentPane().add(new JOkCancelPanel(), okCancelBox);
 		}
-		this.pack();
+	
 		this.setVisible(true);
 
 	}

@@ -49,4 +49,7 @@ public class LogInWindow extends JDialogWithBackground{
 		
 		this.setVisible(true);		
 	}
+	
+	
+	
 }

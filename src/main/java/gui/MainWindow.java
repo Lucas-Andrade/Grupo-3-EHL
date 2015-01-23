@@ -2,18 +2,14 @@ package main.java.gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
@@ -21,6 +17,7 @@ import javax.swing.border.EmptyBorder;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
 import main.java.domain.model.airships.MilitaryAirship;
+import main.java.domain.model.users.User;
 import main.java.gui.Borders.TextRoundBorder;
 import main.java.gui.JPanels.JLogoPanel;
 import main.java.gui.JPanels.JPanelImage;
@@ -30,35 +27,37 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 public class MainWindow extends JFrame {
 
+	private User user;
 	private static final long serialVersionUID = 1L;
 
-	
+//	public static void main(String[] args) {
+//		
+//		
+//		
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					new MainWindow();
+//								
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
-	public static void main(String[] args) {
+
+	
+	public MainWindow(User user) throws InvalidArgumentException {
+	
 		
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					new MainWindow();
-								
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-
-	
-	public MainWindow() throws InvalidArgumentException {
-	
+		this.user=user;
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setBounds(100, 100, 1350, 720);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/radar.png"));
 		this.setTitle("Air Traffic Control");
-		this.setLayout(null);
 	
 		
 		JPanel contentPane = new JPanel();
@@ -83,16 +82,17 @@ public class MainWindow extends JFrame {
 		Box.gridy = 0;		
 		contentPane.add(logo,Box);		
 		
-		JUserForMainWindowPanel user = new JUserForMainWindowPanel();
+		JUserForMainWindowPanel userForMain = new JUserForMainWindowPanel();
 		Box.insets = new Insets(5, 0, 0, 0);
 		Box.gridx = 2;
 		Box.gridy = 0;		
 		
-		contentPane.add(user,Box);		
+		
+		contentPane.add(userForMain,Box);		
 		
 		JSeparator line0 = new JSeparator(JSeparator.HORIZONTAL);
 		line0.setForeground(Color.WHITE);
-		line0.setPreferredSize(new Dimension(251,1));
+		line0.setPreferredSize(new Dimension(300,1));
 		Box.insets = new Insets(170, 0, 0, 0);
 		Box.gridx = 0;
 		Box.gridy = 0;
@@ -100,7 +100,7 @@ public class MainWindow extends JFrame {
 		
 		JSeparator line1 = new JSeparator(JSeparator.HORIZONTAL);
 		line1.setForeground(Color.WHITE);
-		line1.setPreferredSize(new Dimension(668,1));
+		line1.setPreferredSize(new Dimension(722,1));
 		Box.insets = new Insets(170, 0, 0, 0);
 		Box.gridx = 1;
 		Box.gridy = 0;
@@ -109,7 +109,7 @@ public class MainWindow extends JFrame {
 		
 		JSeparator line2 = new JSeparator(JSeparator.HORIZONTAL);
 		line2.setForeground(Color.WHITE);
-		line2.setPreferredSize(new Dimension(415,1));
+		line2.setPreferredSize(new Dimension(311,1));
 		Box.insets = new Insets(170, 0, 0, 0);
 		Box.gridx = 2;
 		Box.gridy = 0;
@@ -125,10 +125,10 @@ public class MainWindow extends JFrame {
 		Box.gridy = 1;		
 		getContentPane().add(worldMap,Box);
 					
-		JLabel militaryAirship = new JLabel("ola");
+//		JLabel militaryAirship = new JLabel("ola");
 		
-		militaryAirship.setBounds(0, 0, 50, 50);
-		add(militaryAirship);
+//		militaryAirship.setBounds(0, 0, 50, 50);
+//		add(militaryAirship);
 //		worldMap.add(militaryAirship);		
 		 
 		/////////////////////////////////////////////////////////////////////////////////////////////////
@@ -175,5 +175,14 @@ public class MainWindow extends JFrame {
 		
 		
 	}
+
+
+
+	public User getUser() {
+		return user;
+	}
+
+
+	
 
 }

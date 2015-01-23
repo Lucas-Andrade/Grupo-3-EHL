@@ -34,7 +34,7 @@ public class PostAirshipsWindow extends JDialogWithBackground{
 	}
 
 	public PostAirshipsWindow() {
-		super(new Color(65, 72, 78), 370, 550);
+		super(new Color(65, 72, 78), 400, 600);
 		initialize();
 	}
 	

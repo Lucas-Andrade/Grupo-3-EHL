@@ -3,60 +3,80 @@ package main.java.gui.JPanels;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.AbstractBorder;
 
+import main.java.domain.model.Database;
 import main.java.domain.model.Element;
 import main.java.gui.Borders.TextRoundBorder;
 
 @SuppressWarnings("serial")
 public class JScrollPanelForElements<E extends Element > extends JPanel {
 
+	protected Map<JButton,String> infoContainer = new HashMap<JButton,String>();
+	
+	public JScrollPanelForElements( ) {
 		
-	public JScrollPanelForElements( Iterable <E> database) {
-		
-		
-		this.setLayout(new BorderLayout());
-		this.setPreferredSize(new Dimension(200,200));
-		
-		JPanel contactListPanel = new JPanel();
-		
-		
-		int counter=0;
-		
-		Iterator<E> iterator=  database.iterator();
-		
-		while(iterator.hasNext()){
-			
-			JButton button = new JButton();
-			JLabel label = new JLabel("Flight " +iterator.next().getIdentification());
-			
-			
-			button.add(label);
-			button.setOpaque(true);
-			button.setContentAreaFilled(false);
-			
-			button.setBackground(new Color(65, 72, 78));
-			contactListPanel.add(button);
-			++counter;
-		}
-					
-		contactListPanel.setLayout(new GridLayout(counter,1)); 
-		
-		JScrollPane scrollPane = new JScrollPane(contactListPanel);
-		this.add(scrollPane, BorderLayout.CENTER);
-		
-		AbstractBorder brdr = new TextRoundBorder(Color.WHITE,6,12,0);
-		
-		this.setBorder(brdr);
+		this.setLayout(new FlowLayout());
 		this.setBackground(new Color(65, 72, 78));
-
+		
 	}
 
+	
+	public JPanel produceAJScrollPaneWithAllElements(Database<E> database) throws Exception{
+			
+		JPanel listPanel = new JPanel();				
+		int counter=0;
+				
+		for(E element:database.getAllElements().get()){
+			
+			JButton button = new JButton();		
+			
+							
+			button.add(new JLabel(element.getIdentification()));
+			button.setOpaque(true);
+			button.setContentAreaFilled(false);			
+			button.setBackground(new Color(65, 72, 78));
+			
+			infoContainer.put(button, getString(element));
+			
+			listPanel.add(button);
+			++counter;
+			
+		}
+					
+		listPanel.setLayout(new GridLayout(counter,1)); 
+		listPanel.setPreferredSize(new Dimension(200,350));	
+		
+		JScrollPane scrollPane = new JScrollPane(listPanel);
+		scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		scrollPane.setPreferredSize(new Dimension(200,200));
+		scrollPane.setBackground(new Color(65,72,78));
+		scrollPane.setBorder(new TextRoundBorder(Color.WHITE,6,12,0));
+		this.add(scrollPane, BorderLayout.CENTER);
+		
+		JPanel panel = new JPanel();		
+		panel.setBorder(new TextRoundBorder(Color.WHITE,6,12,0));
+		panel.setBackground(new Color(65,72,78));
+		panel.setPreferredSize(new Dimension(200, 200));
+		this.add(panel, BorderLayout.CENTER);
+
+		return this;
+	}
+	
+	protected String getString(E element){
+		
+		return element.toString();
+		
+	}
+
+	
 }

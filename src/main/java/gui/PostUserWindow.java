@@ -33,7 +33,7 @@ public class PostUserWindow extends JDialogWithBackground{
 
 	public PostUserWindow()   {
 		
-		super(new Color (65,72,78),370, 570);
+		super(new Color (65,72,78),400, 600);
 		initialize();
 		
 	}

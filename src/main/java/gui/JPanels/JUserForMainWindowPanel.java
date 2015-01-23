@@ -1,6 +1,8 @@
 package main.java.gui.JPanels;
 
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 
 import javax.swing.ImageIcon;
@@ -20,30 +22,42 @@ public class JUserForMainWindowPanel extends JPanel {
 	JButton changePassword;
 	public JUserForMainWindowPanel(){
 		
-				
+		this.setLayout(new FlowLayout());
+		this.setBackground(new Color(65, 72, 78));
+		
+		JLogoPanel logopanel = new JLogoPanel(); 
+		this.add(logopanel,FlowLayout.LEFT);
+		
+		JPanel oneColorPanel = new JPanel();
+		oneColorPanel.setPreferredSize(new Dimension(800,100));
+		oneColorPanel.setBackground(new Color(65, 72, 78));
+		this.add(oneColorPanel);
+		
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout());
+		this.add(panel);
+		panel.setBackground(new Color(65, 72, 78));
+		
 		JPanelImage userImage = new JPanelImage("src/main/resources/images/users/chuck_norris.jpg");
 		userImage.setBorder( new TextRoundBorder(Color.WHITE,6,12,0));
-		this.setBackground(new Color(65, 72, 78));
-			
-		this.add(userImage);
-		JPanel panel = new JPanel();
-		this.add(panel);
-		panel.setLayout(new GridLayout(3,0));
-		panel.setBackground(new Color(65, 72, 78));
-			
+		panel.add(userImage);	
+	
+		JPanel myOptions = new JPanel(new GridLayout(3,0));
+		myOptions.setBackground(new Color(65, 72, 78));		
+		panel.add(myOptions);
+
 		JLabel username = new JLabel("CHUCK NORRIS"); 
 		username.setForeground(Color.WHITE);		
-		panel.add(username);
-		
+		myOptions.add(username);		
 		changePassword = new JButton("Change Password");	
-		panel.add(changePassword);
-
+		myOptions.add(changePassword);		
 		logout = new JButton("Logout");
-		panel.add(logout);
+		myOptions.add(logout);
 		
+			
 		JPanel userOptions = new JPanel();
 		userOptions.setLayout(new GridLayout(3,0));
-		this.add(userOptions);
+		panel.add(userOptions);
 		
 		addUser = new JButton(new ImageIcon("src/main/resources/images/removeUser.png"));
 		userOptions.add(addUser);
@@ -51,8 +65,12 @@ public class JUserForMainWindowPanel extends JPanel {
 		userOptions.add(removeUser);
 		infoAllUsers = new JButton(new ImageIcon("src/main/resources/images/addUser.png"));
 		userOptions.add(infoAllUsers);
+	
 	}
 
+	
+	
+	
 	public JButton getJButtonAddUser() {
 		return addUser;
 	}

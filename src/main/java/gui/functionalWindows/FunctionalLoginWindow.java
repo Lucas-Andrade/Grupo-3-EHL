@@ -1,10 +1,11 @@
-package main.java.gui.ByGD;
+package main.java.gui.functionalWindows;
 
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.gui.MainWindow;
+import main.java.gui.fromDG_to_P.LogInWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
 
-public class FunctionalLoginWindow extends FunctionalWindow {
+public class FunctionalLoginWindow extends FunctionalWindow<Void> {
 	
 	// Fields
 	
@@ -27,7 +28,7 @@ public class FunctionalLoginWindow extends FunctionalWindow {
 	// Implementation of the method inherited from the FunctionalWindow class
 	
 	@Override
-	protected void leftButtonAction() throws Exception {
+	protected Void leftButtonAction() throws Exception {
 	
 		String username = functionalWindow.getUserPanel().getTextField().getText();
 		String password = functionalWindow.getPasswordPanel().getTextField().getText();
@@ -41,6 +42,7 @@ public class FunctionalLoginWindow extends FunctionalWindow {
 		} else {
 			throw new InvalidArgumentException("Wrong Password!");
 		}
+		return null;
 		
 	}
 }

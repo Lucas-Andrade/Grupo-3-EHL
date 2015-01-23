@@ -1,4 +1,4 @@
-package main.java.gui.ByGD;
+package main.java.gui.fromDG_to_P;
 
 import java.awt.Color;
 

@@ -1,9 +1,11 @@
-package main.java.gui.ByGD;
+package main.java.gui;
 
 import java.awt.EventQueue;
 
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.domain.model.users.InMemoryUsersDatabase;
+import main.java.gui.fromDG_to_P.LogInWindow;
+import main.java.gui.functionalWindows.FunctionalLoginWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 public class AppForUI {

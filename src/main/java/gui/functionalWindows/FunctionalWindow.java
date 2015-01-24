@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
-import main.java.gui.fromDG_to_P.WindowBase;
+import main.java.gui.To_be_eliminated.windows.WindowBase;
 
 /**
  * Abstract swing window, that have the responsibility to add the
@@ -17,45 +17,45 @@ import main.java.gui.fromDG_to_P.WindowBase;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public abstract class FunctionalWindow< T >
-{
+public abstract class FunctionalWindow<T> {
+	
 	/**
 	 * The {@code WindowBase} where will be added its functionality
 	 */
 	private WindowBase functionalWindow;
-
-
+	
 	/**
 	 * Add the {@link ActionListener}s to the {@code window buttons}
 	 * 
 	 * @param nonFunctionalWindow
 	 */
-	public FunctionalWindow( WindowBase nonFunctionalWindow )
-	{
+	public FunctionalWindow(WindowBase nonFunctionalWindow) {
+	
 		functionalWindow = nonFunctionalWindow;
-
+		
 		addRightButtonAction();
 		addLeftButtonAction();
 		
 		functionalWindow.setVisible( true );
 	}
-
+	
 	// Private Methods
+	
 	/**
 	 * Right button -> dispose
 	 */
-	private void addRightButtonAction()
-	{
-		functionalWindow.getButtonsPanel().getRightButton().addActionListener( new ActionListener()
-		{
+	private void addRightButtonAction() {
+	
+		functionalWindow.getButtonsPanel().getRightButton().addActionListener(new ActionListener() {
+			
 			@Override
-			public void actionPerformed( ActionEvent click )
-			{
+			public void actionPerformed(ActionEvent click) {
+			
 				functionalWindow.dispose();
 			}
-		} );
+		});
 	}
-
+	
 	/**
 	 * Left button
 	 * <ul>
@@ -65,16 +65,16 @@ public abstract class FunctionalWindow< T >
 	 * <li>get the return command and show it.
 	 * <ul>
 	 */
-	private void addLeftButtonAction()
-	{
-		functionalWindow.getButtonsPanel().getLeftButton().addActionListener( new ActionListener()
-		{
+	private void addLeftButtonAction() {
+	
+		functionalWindow.getButtonsPanel().getLeftButton().addActionListener(new ActionListener() {
+			
 			@Override
-			public void actionPerformed( ActionEvent click )
-			{
+			public void actionPerformed(ActionEvent click) {
+			
 				getSwingWorker().run();
 			}
-		} );
+		});
 	}
 
 
@@ -107,6 +107,7 @@ public abstract class FunctionalWindow< T >
 	protected abstract class FunctionalWindowSwingWorker
 		extends SwingWorker< T, Void >
 	{
+
 		@Override
 		final protected void done()
 		{
@@ -127,13 +128,11 @@ public abstract class FunctionalWindow< T >
 		}
 	}
 
-
-
 	/**
 	 * @return the window
 	 */
-	public WindowBase getFunctionalWindow()
-	{
+	public WindowBase getFunctionalWindow() {
+	
 		return functionalWindow;
 	}
 }

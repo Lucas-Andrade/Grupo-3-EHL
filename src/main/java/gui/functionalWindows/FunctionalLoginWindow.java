@@ -1,9 +1,10 @@
 package main.java.gui.functionalWindows;
 
+import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.domain.model.users.User;
-import main.java.gui.MainWindow;
-import main.java.gui.fromDG_to_P.LogInWindow;
+import main.java.gui.To_be_eliminated.windows.LogInWindow;
+import main.java.gui.designWindows.windows.MainWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 /**
@@ -15,16 +16,20 @@ import main.java.utils.exceptions.InvalidArgumentException;
 public class FunctionalLoginWindow
 	extends FunctionalWindow< User >
 {
-	private InMemoryUsersDatabase usersDatabase;
 	private LogInWindow functionalWindow;
 
-	public FunctionalLoginWindow( LogInWindow nonFunctionalWindow, InMemoryUsersDatabase usersDatabase )
+	private InMemoryUsersDatabase usersDatabase;
+	private InMemoryAirshipsDatabase airshipdatabase;
+
+	public FunctionalLoginWindow( LogInWindow nonFunctionalWindow, InMemoryUsersDatabase usersDatabase,
+			InMemoryAirshipsDatabase airshipdatabase )
 	{
 		super( nonFunctionalWindow );
 
 		this.functionalWindow = nonFunctionalWindow;
 
 		this.usersDatabase = usersDatabase;
+		this.airshipdatabase = airshipdatabase;
 	}
 
 	@Override
@@ -54,7 +59,15 @@ public class FunctionalLoginWindow
 	@Override
 	protected void functionalWindowDone( User resultOfDoInBackGround )
 	{
-		new MainWindow(resultOfDoInBackGround);
+		try
+		{
+			new MainWindow( airshipdatabase, usersDatabase, resultOfDoInBackGround );
+		}
+		catch( Exception e )
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		functionalWindow.dispose();
 	}
 }

@@ -1,6 +1,5 @@
 package main.java.gui.fromDG_to_P.panelsandutils.airshipspanles;
 
-
 @SuppressWarnings ("serial")
 public class MilitaryAirshipPanel extends AirshipsPanel {
 	
@@ -19,7 +18,7 @@ public class MilitaryAirshipPanel extends AirshipsPanel {
 	
 	@Override
 	protected void createAndAddSpecificComponents() {
-		
+	
 		specificFieldPanel = new SpecificMilitaryAirshipFieldPanel();
 		
 		this.add(specificFieldPanel);
@@ -28,7 +27,7 @@ public class MilitaryAirshipPanel extends AirshipsPanel {
 	// Public Get Methods
 	
 	public SpecificMilitaryAirshipFieldPanel getSpecificFieldPanel() {
-		
+	
 		return specificFieldPanel;
 	}
 }

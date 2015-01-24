@@ -8,7 +8,7 @@ import main.java.gui.JPanels.JPanelImage;
 
 @SuppressWarnings ("serial")
 public class AirshipsImages extends JPanel {
-
+	
 	// Constructor
 	
 	public AirshipsImages(String firstImagePath, String secondImagePath) {

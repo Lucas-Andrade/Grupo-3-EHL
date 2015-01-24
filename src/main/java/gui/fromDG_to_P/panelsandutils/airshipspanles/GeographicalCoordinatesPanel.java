@@ -2,7 +2,7 @@ package main.java.gui.fromDG_to_P.panelsandutils.airshipspanles;
 
 import java.awt.Color;
 
-import ByGD.panelsandutils.LabelPlusTextFieldPanel;
+import main.java.gui.fromDG_to_P.panelsandutils.LabelPlusTextFieldPanel;
 
 @SuppressWarnings ("serial")
 public class GeographicalCoordinatesPanel extends PanelWithBorder {

@@ -2,8 +2,8 @@ package main.java.gui.fromDG_to_P.windows;
 
 import javax.swing.JTabbedPane;
 
-import ByGD.panelsandutils.airships.CivilAirshipPanel;
-import ByGD.panelsandutils.airships.MilitaryAirshipPanel;
+import main.java.gui.fromDG_to_P.panelsandutils.airshipspanles.CivilAirshipPanel;
+import main.java.gui.fromDG_to_P.panelsandutils.airshipspanles.MilitaryAirshipPanel;
 
 @SuppressWarnings ("serial")
 public class PostAirshipsWindow extends WindowBase {

@@ -51,7 +51,8 @@ public class FunctionalPatchUserWindow extends FunctionalWindow {
 				
 				new SuccessfulActionWindow(result, Color.GREEN);
 				
-				new MainWindow(null, usersDatabase, usersDatabase.getElementByIdentification(username).get());
+				new MainWindow(null, usersDatabase, usersDatabase.getElementByIdentification(
+					username).get());
 				
 				functionalWindow.dispose();
 				
@@ -76,14 +77,14 @@ public class FunctionalPatchUserWindow extends FunctionalWindow {
 		
 		return false;
 	}
-
+	
 	@Override
 	protected FunctionalWindowSwingWorker getSwingWorker() {
 	
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 	protected void functionalWindowDone(Object resultOfDoInBackGround) {
 	

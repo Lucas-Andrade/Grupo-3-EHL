@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
-import ByGD.panelsandutils.GridBagUtils;
+import main.java.gui.fromDG_to_P.panelsandutils.GridBagUtils;
 
 @SuppressWarnings ("serial")
 public abstract class PopUpWindow extends JDialog {
@@ -37,12 +37,15 @@ public abstract class PopUpWindow extends JDialog {
 		this.getContentPane().setBackground(new Color(65, 72, 78));
 		this.getContentPane().setLayout(new GridBagLayout());
 		
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/ByGD/Air-icon.png"));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(
+			"src/main/resources/images/Air-icon.png"));
 		
 		// this.setLocationRelativeTo(null);
 		
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		
+		this.setVisible(true);
 	}
 	
 	private void createAndAddComponents(String message, Color color) {

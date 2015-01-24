@@ -2,7 +2,7 @@ package main.java.gui.fromDG_to_P.windows;
 
 import java.awt.Color;
 
-import ByGD.panelsandutils.LabelPlusTextFieldPanel;
+import main.java.gui.fromDG_to_P.panelsandutils.LabelPlusTextFieldPanel;
 
 @SuppressWarnings ("serial")
 public class PatchUserWindow extends WindowBase {
@@ -18,7 +18,7 @@ public class PatchUserWindow extends WindowBase {
 	
 	public PatchUserWindow(int width, int height) {
 	
-		super(width, height, "src/ByGD/user.png");
+		super(width, height, "src/main/resources/images/user.png");
 	}
 	
 	// Implementation of the method inherited from the WindowBase class
@@ -29,7 +29,7 @@ public class PatchUserWindow extends WindowBase {
 		userPanel = new LabelPlusTextFieldPanel("Username", Color.WHITE, null, 20, false);
 		
 		oldPasswordPanel = new LabelPlusTextFieldPanel("Old Password", Color.WHITE,
-			"src/ByGD/locker.png", 20, true);
+			"src/main/resources/images/locker.png", 20, true);
 		
 		newPasswordPanel = new LabelPlusTextFieldPanel("New Password", Color.WHITE, null, 20, true);
 		

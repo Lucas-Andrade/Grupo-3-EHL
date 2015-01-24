@@ -42,7 +42,8 @@ public class FunctionalLoginWindow extends FunctionalWindow<Void> {
 				// TODO
 				User user = usersDatabase.getElementByIdentification(username).get();
 				
-				if (usersDatabase.getElementByIdentification(username).get().authenticatePassword(password)) {
+				if (usersDatabase.getElementByIdentification(username).get()
+					.authenticatePassword(password)) {
 					
 					new MainWindow(null, usersDatabase, user);
 					

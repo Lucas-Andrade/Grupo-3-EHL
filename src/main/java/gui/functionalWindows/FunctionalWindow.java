@@ -38,7 +38,6 @@ public abstract class FunctionalWindow<T> {
 	
 	// Private Auxilar Methods
 	
-
 	/**
 	 * Right button -> dispose
 	 */

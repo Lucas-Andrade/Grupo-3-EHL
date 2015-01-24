@@ -18,7 +18,7 @@ public abstract class PanelWithBorder extends JPanel {
 	
 	public PanelWithBorder(String borderTitle, Color borderColor) {
 	
-		this.setLayout(new GridLayout(1,3));
+		this.setLayout(new GridLayout(1, 3));
 		this.setBackground(new Color(0, 0, 0, 0));
 		
 		createAndAddSpecificComponents();

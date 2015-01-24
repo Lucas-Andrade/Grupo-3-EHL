@@ -3,7 +3,7 @@ package main.java.gui.fromDG_to_P.windows;
 import java.awt.Color;
 
 import main.java.gui.JPanels.JPanelImage;
-import ByGD.panelsandutils.LabelPlusTextFieldPanel;
+import main.java.gui.fromDG_to_P.panelsandutils.LabelPlusTextFieldPanel;
 
 @SuppressWarnings ("serial")
 public class PostUserWindow extends WindowBase {
@@ -19,7 +19,7 @@ public class PostUserWindow extends WindowBase {
 	
 	public PostUserWindow(int width, int height) {
 	
-		super(width, height, "src/ByGD/user.png");
+		super(width, height, "src/main/resources/images/user.png");
 	}
 	
 	// Implementation of the method inherited from the WindowBase class
@@ -27,11 +27,11 @@ public class PostUserWindow extends WindowBase {
 	@Override
 	protected void createAndAddSpecificComponents() {
 	
-		JPanelImage postUserImage = new JPanelImage("src/ByGD/user.png");
+		JPanelImage postUserImage = new JPanelImage("src/main/resources/images/user.png");
 		
 		userPanel = new LabelPlusTextFieldPanel("Username", Color.WHITE, null, 20, false);
 		
-		passwordPanel = new LabelPlusTextFieldPanel("Password", Color.WHITE, "src/ByGD/locker.png",
+		passwordPanel = new LabelPlusTextFieldPanel("Password", Color.WHITE, "src/main/resources/images/locker.png",
 			20, true);
 		
 		emailPanel = new LabelPlusTextFieldPanel("Email", Color.WHITE, null, 20, false);

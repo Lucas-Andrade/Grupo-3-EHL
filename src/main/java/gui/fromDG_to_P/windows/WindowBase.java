@@ -60,6 +60,8 @@ public abstract class WindowBase extends JDialog {
 		createAndAddComponents();
 		
 		getRootPane().setDefaultButton(buttonsPanel.getLeftButton());
+		
+		this.setVisible(true);
 	}
 	
 	// Private methods
@@ -70,14 +72,13 @@ public abstract class WindowBase extends JDialog {
 		this.setSize(width, height);
 		this.getContentPane().setBackground(new Color(65, 72, 78));
 		
-		this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/ByD/Air-icon.png"));
+		this.setIconImage(Toolkit.getDefaultToolkit().getImage(
+			"src/main/resources/images/Air-icon.png"));
 		
 		this.setTitle("Air Traffic Controll");
 		this.setLocationRelativeTo(null);
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-		
-		this.setVisible(true);
 	}
 	
 	// Private Auxiliar Method

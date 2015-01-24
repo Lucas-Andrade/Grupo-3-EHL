@@ -19,7 +19,8 @@ public class FailedActionWindow extends PopUpWindow {
 	@Override
 	protected void createAndAddSpecificComponents() {
 	
-		this.getContentPane().add(new JPanelImage("src/ByGD/failIcon.png"), this.getConstraints());
+		this.getContentPane().add(new JPanelImage("src/main/resources/images/failIcon.png"),
+			this.getConstraints());
 		
 		this.setTitle("Failed Action");
 	}

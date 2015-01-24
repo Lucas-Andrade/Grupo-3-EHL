@@ -15,7 +15,7 @@ public class LogInWindow extends WindowBase {
 	
 	public LogInWindow(int width, int height) {
 	
-		super(width, height);
+		super(width, height, "src/main/resources/images/radar.png");
 		
 		initialize();
 	}
@@ -24,13 +24,11 @@ public class LogInWindow extends WindowBase {
 	
 	private void initialize() {
 	
-		JPanelImage radarIcon = new JPanelImage("src/ByD/radar.png");
 		
 		userPanel = new JLablePlusJTextField("Username", Color.WHITE, null, 20);
 		
 		passwordPanel = new JLablePlusJTextField("Password", Color.WHITE, "src/ByD/locker.png", 20);
 		
-		this.addComponent(radarIcon, 0);
 		this.addComponent(userPanel, 1);
 		this.addComponent(passwordPanel, 2);
 	}

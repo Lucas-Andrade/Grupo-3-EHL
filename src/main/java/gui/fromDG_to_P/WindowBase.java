@@ -7,9 +7,12 @@ import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.concurrent.Callable;
 
+import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+
+import main.java.gui.JPanels.JPanelImage;
 
 /**
  * Abstract swing window, with:
@@ -44,17 +47,15 @@ public abstract class WindowBase
 	 * @param width
 	 * @param height
 	 */
-	public WindowBase( int width, int height )
+	public WindowBase( int width, int height, String imagePath)
 	{
 		setDefaultWindow( width, height );
 
 		constraints = GridBagUtils.createGridBagConstraints();
 
-		createButtonsAndErrorLabel();
-
-
-		addComponent( buttonsPanel, GridBagConstraints.BASELINE_TRAILING );
-		addComponent( errorLabel, GridBagConstraints.BELOW_BASELINE );
+		addComponent( new JPanelImage(imagePath), 0 );
+		
+		createButtonsAndErrorLabel();		
 
 		getRootPane().setDefaultButton( buttonsPanel.getLeftButton() );
 		
@@ -79,9 +80,11 @@ public abstract class WindowBase
 	private void createButtonsAndErrorLabel()
 	{
 		buttonsPanel = new ButtonsPanel();
-
+		addComponent( buttonsPanel, GridBagConstraints.BASELINE_TRAILING );
+		
 		errorLabel = new JLabel( " " );
 		errorLabel.setForeground( Color.RED );
+		addComponent( errorLabel, GridBagConstraints.BELOW_BASELINE );
 	}
 
 	// Protected Methods

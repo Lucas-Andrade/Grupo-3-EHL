@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.SwingConstants;
 
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -115,7 +116,7 @@ public class MainWindow extends JFrame {
 		Box.gridy = 0;
 		contentPane.add(new JUserForMainWindowPanel());
 		
-		JSeparator line0 = new JSeparator(JSeparator.HORIZONTAL);
+		JSeparator line0 = new JSeparator(SwingConstants.HORIZONTAL);
 		line0.setForeground(Color.WHITE);
 		line0.setPreferredSize(new Dimension(1330,1));
 		

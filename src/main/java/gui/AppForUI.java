@@ -4,9 +4,8 @@ import java.awt.EventQueue;
 
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.domain.model.users.InMemoryUsersDatabase;
-import main.java.gui.fromDG_to_P.LogInWindow;
-import main.java.gui.functionalWindows.FunctionalLoginWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
+import ByGD.windows.PostAirshipsWindow;
 
 public class AppForUI {
 	
@@ -24,7 +23,11 @@ public class AppForUI {
 			@Override
 			public void run() {
 			
-				new FunctionalLoginWindow(new LogInWindow(360, 370), usersDatabase);
+//				new FunctionalLoginWindow(new LogInWindow(400, 500), usersDatabase);
+//				new SuccessfulActionWindow("We are the champions!!!", Color.GREEN);
+//				new FailedActionWindow("You Moron!!!", Color.RED);
+//				new FunctionalPatchUserWindow(new PatchUserWindow(400, 600), usersDatabase);
+				new PostAirshipsWindow(500, 700);
 			}
 		});
 	}

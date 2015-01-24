@@ -1,4 +1,4 @@
-package main.java.gui.fromDG_to_P;
+package main.java.gui.fromDG_to_P.panelsandutils;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;

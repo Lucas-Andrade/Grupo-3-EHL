@@ -1,8 +1,9 @@
 package main.java.gui.functionalWindows;
 
 import main.java.domain.model.users.InMemoryUsersDatabase;
+import main.java.domain.model.users.User;
 import main.java.gui.MainWindow;
-import main.java.gui.fromDG_to_P.LogInWindow;
+import main.java.gui.fromDG_to_P.windows.LogInWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 public class FunctionalLoginWindow extends FunctionalWindow<Void> {
@@ -28,21 +29,38 @@ public class FunctionalLoginWindow extends FunctionalWindow<Void> {
 	// Implementation of the method inherited from the FunctionalWindow class
 	
 	@Override
-	protected Void leftButtonAction() throws Exception {
+	protected FunctionalWindow<Void>.FunctionalWindowSwingWorker getSwingWorker() {
 	
-		String username = functionalWindow.getUserPanel().getTextField().getText();
-		String password = functionalWindow.getPasswordPanel().getTextField().getText();
-		
-		if (usersDatabase.getElementByIdentification(username).get().authenticatePassword(password)) {
+		return new FunctionalWindowSwingWorker() {
 			
-			new MainWindow();
+			String username = functionalWindow.getUserPanel().getTextField().getText();
+			String password = functionalWindow.getPasswordPanel().getTextField().getText();
 			
-			functionalWindow.getAbstractDialogWindow().dispose();
+			@Override
+			protected Void doInBackground() throws Exception {
 			
-		} else {
-			throw new InvalidArgumentException("Wrong Password!");
-		}
-		return null;
+				// TODO
+				User user = usersDatabase.getElementByIdentification(username).get();
+				
+				if (usersDatabase.getElementByIdentification(username).get().authenticatePassword(password)) {
+					
+					new MainWindow(null, usersDatabase, user);
+					
+					functionalWindow.dispose();
+					
+				} else {
+					throw new InvalidArgumentException("Wrong Password!");
+				}
+				
+				return null;
+			}
+		};
+	}
+	
+	@Override
+	protected void functionalWindowDone(Void resultOfDoInBackGround) {
+	
+		// TODO Auto-generated method stub
 		
 	}
 }

@@ -1,4 +1,4 @@
-package main.java.gui.fromDG_to_P;
+package main.java.gui.fromDG_to_P.panelsandutils;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;
@@ -11,7 +11,7 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 @SuppressWarnings ("serial")
-public class JLablePlusJTextField extends JPanel {
+public class LabelPlusTextFieldPanel extends JPanel {
 	
 	// Fields
 	
@@ -22,11 +22,12 @@ public class JLablePlusJTextField extends JPanel {
 	
 	// Constructor
 	
-	public JLablePlusJTextField(String labelText, Color labelColor, String path, int textFieldSize) {
+	public LabelPlusTextFieldPanel(String labelText, Color labelColor, String path,
+		int textFieldSize, boolean isPasswordField) {
 	
 		createLabel(labelText, labelColor, path);
 		
-		createTextField(labelText, textFieldSize);
+		createTextField(textFieldSize, isPasswordField);
 		
 		setPanelSpecifications();
 	}
@@ -43,9 +44,9 @@ public class JLablePlusJTextField extends JPanel {
 			label.setIcon(new ImageIcon(path));
 	}
 	
-	private void createTextField(String labelText, int textFieldSize) {
+	private void createTextField(int textFieldSize, boolean isPasswordField) {
 	
-		if (labelText.equals("Password"))
+		if (isPasswordField)
 			textField = new JPasswordField();
 		else
 			textField = new JTextField();

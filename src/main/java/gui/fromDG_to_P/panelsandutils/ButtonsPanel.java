@@ -1,4 +1,4 @@
-package main.java.gui.fromDG_to_P;
+package main.java.gui.fromDG_to_P.panelsandutils;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;

@@ -1,25 +1,81 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                        http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 
-	<groupId>degp.airtrafficcontrolapp</groupId>
-	<artifactId>degp-air-traffic-control-app</artifactId>
-	<version>0.2.0-SNAPSHOT</version>
+	<!-- THE BASICS -->
+
+	<!-- Maven Coordinates -->
+	<groupId> degp.airtrafficcontrolapp </groupId>
+	<artifactId> air-traffic-control-app </artifactId>
+	<version> Teamwork2-Stage3-SNAPSHOT </version>
 	<packaging>jar</packaging>
 
+
 	<name>DEGP's Air Traffic Control App</name>
-	<url>http://maven.apache.org</url>
+	<description>Air Traffic Control app with a GUI</description>
+	<inceptionYear>2015</inceptionYear>
+	<developers>
+		<developer>
+			<name>Daniel Gomes</name>
+		</developer>
+		<developer>
+			<name>Eva Gomes</name>
+		</developer>
+		<developer>
+			<name>Gonçalo Carvalho</name>
+		</developer>
+		<developer>
+			<name>Pedro Antunes</name>
+		</developer>
+	</developers>
+	<!-- <contributors></contributors> -->
+	<!-- <mailingLists></mailingLists> -->
+
+
+	<prerequisites>
+		<maven>3.0.4</maven>
+	</prerequisites>
+
+
+	<!-- <modules></modules> -->
+
+
+	<scm>
+		<connection>https://github.com/Lucas-Andrade/Grupo-3-EHL/tree/AppForCommandLine3</connection>
+		<url>https://github.com/Lucas-Andrade/Grupo-3-EHL/tree/AppForCommandLine3</url>
+	</scm>
+	<!-- <issueManagement></issueManagement> -->
+	<!-- <ciManagement></ciManagement> -->
+	<!-- <distributionManagement></distributionManagement> -->
+
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
+		<sonar.exclusions>src/**/gui/**</sonar.exclusions>
 	</properties>
 
 
-	<build>
-		<plugins>
+	<!-- <dependencyManagement></dependencyManagement> -->
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+		</dependency>
+	</dependencies>
 
+
+	<!-- <repositories></repositories> -->
+	<!-- <pluginRepositories></pluginRepositories> -->
+
+
+	<build>
+		<defaultGoal>clean package sonar:sonar</defaultGoal>
+
+		<plugins>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -30,7 +86,6 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -45,7 +100,6 @@
 				</configuration>
 			</plugin>
 
-
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
@@ -58,7 +112,6 @@
 					</archive>
 				</configuration>
 			</plugin>
-
 
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
@@ -82,9 +135,11 @@
 				</configuration>
 			</plugin>
 
-
-
-
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>2.5</version>
+			</plugin>
 
 			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-javadoc-plugin</artifactId> 
 				<version>2.10.1</version> <configuration> <show>private</show> <nohelp>true</nohelp> 
@@ -99,21 +154,16 @@
 				Packages</title> <packages>src/main/java</packages> <packages>src/main.java:src/main.java.commands</packages> 
 				</group> </groups> </configuration> </plugin> -->
 
-
-
-
-
 		</plugins>
 	</build>
 
 
-	<dependencies>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-		</dependency>
-	</dependencies>
+	<!-- <reporting></reporting> -->
 
 
 </project>
+
+
+<!-- WEBLIOGRAPHY -->
+<!-- POM elements here: http://maven.apache.org/pom.html -->
+<!-- POM order conventions here: http://maven.apache.org/developers/conventions/code.html -->

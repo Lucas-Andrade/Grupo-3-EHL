@@ -96,7 +96,7 @@ public abstract class FunctionalWindow<T> {
 	 * 
 	 * @param resultOfDoInBackGround
 	 */
-	protected abstract void functionalWindowDone( T resultOfDoInBackGround );
+	protected abstract void functionalWindowDone( T resultOfDoInBackGround ) throws Exception;
 
 
 	// InnerClass

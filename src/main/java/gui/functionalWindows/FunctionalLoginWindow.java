@@ -1,11 +1,11 @@
 package main.java.gui.functionalWindows;
 
-import main.java.domain.model.airships.InMemoryAirshipsDatabase;
-import main.java.domain.model.users.InMemoryUsersDatabase;
+import main.java.domain.commands.AuthenticateUserCommand;
+import main.java.domain.model.Database;
+import main.java.domain.model.airships.Airship;
 import main.java.domain.model.users.User;
 import main.java.gui.To_be_eliminated.windows.LogInWindow;
 import main.java.gui.designWindows.windows.MainWindow;
-import main.java.utils.exceptions.InvalidArgumentException;
 
 /**
  * 
@@ -18,18 +18,18 @@ public class FunctionalLoginWindow
 {
 	private LogInWindow functionalWindow;
 
-	private InMemoryUsersDatabase usersDatabase;
-	private InMemoryAirshipsDatabase airshipdatabase;
+	private Database< User > usersDatabase;
+	private Database< Airship > airshipsDatabase;
 
-	public FunctionalLoginWindow( LogInWindow nonFunctionalWindow, InMemoryUsersDatabase usersDatabase,
-			InMemoryAirshipsDatabase airshipdatabase )
+	public FunctionalLoginWindow( LogInWindow nonFunctionalWindow, Database< User > usersDatabase,
+			Database< Airship > airshipsDatabase )
 	{
 		super( nonFunctionalWindow );
 
 		this.functionalWindow = nonFunctionalWindow;
 
 		this.usersDatabase = usersDatabase;
-		this.airshipdatabase = airshipdatabase;
+		this.airshipsDatabase = airshipsDatabase;
 	}
 
 	@Override
@@ -40,28 +40,21 @@ public class FunctionalLoginWindow
 			String username = functionalWindow.getUserPanel().getTextField().getText();
 			String password = functionalWindow.getPasswordPanel().getTextField().getText();
 
+			
 			@Override
 			protected User doInBackground() throws Exception
 			{
-				User user = usersDatabase.getElementByIdentification( username ).get();
-				if( user.authenticatePassword( password ) )
-				{
-					return user;
-				}
-				else
-				{
-					throw new InvalidArgumentException( "Wrong Password!" );
-				}
+				return new AuthenticateUserCommand( username, password, usersDatabase ).call().get();
 			}
 		};
 	}
 
 	@Override
-	protected void functionalWindowDone( User resultOfDoInBackGround )
+	protected void functionalWindowDone( User resultOfDoInBackGround ) throws Exception
 	{
 		try
 		{
-			new MainWindow( airshipdatabase, usersDatabase, resultOfDoInBackGround );
+			new MainWindow( airshipsDatabase, usersDatabase, resultOfDoInBackGround );
 		}
 		catch( Exception e )
 		{

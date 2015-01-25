@@ -182,6 +182,22 @@ public class User implements Element {
 
 		return true;
 	}
+	
+	/**
+	 *  Override of the {@code equals} method from the {@link Object} class.
+	 */
+	@Override
+	public int hashCode()
+	{
+		final int prime = 31;
+		int result = prime + email.hashCode();
+		result = prime * result + fullName.hashCode();
+		result = prime * result + password.hashCode();
+		return prime * result + username.hashCode();
+	}
+
+	
+	// Get Methods
 
 	/**
 	 * Override of the method {@link Element#getIdentification() getIdentification()} from the
@@ -194,8 +210,6 @@ public class User implements Element {
 
 		return username;
 	}
-
-	// Get Methods
 
 	/**
 	 * Gets the {@code email} identification

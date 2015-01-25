@@ -1,5 +1,6 @@
 package main.java.gui;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 
 import main.java.domain.model.Database;

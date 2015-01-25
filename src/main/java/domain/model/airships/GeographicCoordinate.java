@@ -39,12 +39,12 @@ public class GeographicCoordinate {
 			throws InvalidArgumentException {
 
 		if (value < minValue)
-			throw new InvalidArgumentException(MessageFormat.format("Invalid value '{0}'"
-					+ " is smaller than minimum value allowed ('{1}')", value, minValue));
+			throw new InvalidArgumentException(MessageFormat.format("Invalid value {0}"
+					+ " is smaller than minimum value allowed ({1})", value, minValue));
 
 		if (value > maxValue)
-			throw new InvalidArgumentException(MessageFormat.format("Invalid value '{0}'"
-					+ " is greater than maximum value allowed ('{1}')", value, maxValue));
+			throw new InvalidArgumentException(MessageFormat.format("Invalid value {0}"
+					+ " is greater than maximum value allowed ({1})", value, maxValue));
 
 		this.value = value;
 	}

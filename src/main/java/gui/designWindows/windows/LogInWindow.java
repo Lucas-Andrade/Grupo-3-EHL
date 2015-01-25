@@ -13,6 +13,8 @@ public class LogInWindow extends WindowBase{
 
 	
 	private GridBagConstraints constraints = GridBagUtils.createGridBagConstraints();
+	private JLablePlusJTextField getUserPanel;
+	private JLablePlusJTextField getPasswordPanel;
 
 	public LogInWindow() {
 		
@@ -25,16 +27,23 @@ public class LogInWindow extends WindowBase{
 	private void initialize()  {		
 
 
-		this.getContentPane().add( new JLablePlusJTextField("Username", 20, Color.WHITE), 
-									GridBagUtils.updateGridBagConstraints(constraints ,0,1, new Insets(5, 0, 0, 0)));
-		
-		this.getContentPane().add( new JLablePlusJTextField("Password", 20, Color.WHITE,true,"src/main/resources/images/locker.png"), 
-									GridBagUtils.updateGridBagConstraints(constraints,0,2, new Insets(5, 0, 15, 0)));
+		getUserPanel=  new JLablePlusJTextField("Username", 20, Color.WHITE);		
+		this.getContentPane().add(getUserPanel,GridBagUtils.updateGridBagConstraints(constraints ,0,1, new Insets(5, 0, 0, 0)));
+		getPasswordPanel = new JLablePlusJTextField("Password", 20, Color.WHITE,true,"src/main/resources/images/locker.png");
+		this.getContentPane().add( getPasswordPanel , GridBagUtils.updateGridBagConstraints(constraints,0,2, new Insets(5, 0, 15, 0)));
 		
 
 		this.setVisible(true);
 		
 		
 		
+	}
+
+	public JLablePlusJTextField getGetUserPanel() {
+		return getUserPanel;
+	}
+
+	public JLablePlusJTextField getGetPasswordPanel() {
+		return getPasswordPanel;
 	}
 }

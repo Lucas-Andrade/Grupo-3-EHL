@@ -66,7 +66,7 @@ public class JLablePlusJTextField extends JPanel {
 	public JLabel getJLabel() {
 		return label;
 	}
-
+	
 	public JTextField getJTextField() {
 		return textField;
 	}

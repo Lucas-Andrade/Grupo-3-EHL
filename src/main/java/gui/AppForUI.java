@@ -6,7 +6,12 @@ import java.awt.EventQueue;
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.gui.To_be_eliminated.windows.LogInWindow;
+import main.java.gui.To_be_eliminated.windows.PatchUserWindow;
+import main.java.gui.To_be_eliminated.windows.popup.FailedActionWindow;
+import main.java.gui.To_be_eliminated.windows.popup.SuccessfulActionWindow;
+import main.java.gui.designWindows.windows.PostAirshipsWindow;
 import main.java.gui.functionalWindows.FunctionalLoginWindow;
+import main.java.gui.functionalWindows.FunctionalPatchUserWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 public class AppForUI {
@@ -24,6 +29,7 @@ public class AppForUI {
 			
 			@Override
 			public void run() {
+				
 				new FunctionalLoginWindow(new LogInWindow(360, 370), usersDatabase, airshipsDatabase);
 				new SuccessfulActionWindow("We are the champions!!!", Color.GREEN);
 				new FailedActionWindow("You Moron!!!", Color.RED);

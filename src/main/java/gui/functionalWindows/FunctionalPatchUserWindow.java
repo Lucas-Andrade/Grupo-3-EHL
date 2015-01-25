@@ -9,7 +9,7 @@ import main.java.gui.To_be_eliminated.windows.popup.SuccessfulActionWindow;
 import main.java.gui.designWindows.windows.MainWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
 
-public class FunctionalPatchUserWindow extends FunctionalWindow {
+public class FunctionalPatchUserWindow extends FunctionalWindow<String> {
 	
 	// Fields
 	
@@ -31,7 +31,7 @@ public class FunctionalPatchUserWindow extends FunctionalWindow {
 	
 	// Implementation of the method inherited from the FunctionalWindow class
 	
-	@Override
+// @Override
 	protected void leftButtonAction() throws Exception {
 	
 		String newPassword = functionalWindow.getNewPasswordPanel().getTextField().getText();
@@ -81,14 +81,48 @@ public class FunctionalPatchUserWindow extends FunctionalWindow {
 	@Override
 	protected FunctionalWindowSwingWorker getSwingWorker() {
 	
-		// TODO Auto-generated method stub
-		return null;
+		String newPassword = functionalWindow.getNewPasswordPanel().getTextField().getText();
+		
+		if (newPassword.equals(""))
+			throw new InvalidArgumentException("Please Insert a New Password");
+		
+		if (newPasswordConfirmation(newPassword)) {
+		
+		} else {
+			throw new InvalidArgumentException("The Passwords Don't Match");
+		}
+		
+		return new FunctionalWindowSwingWorker() {
+			
+			String username = functionalWindow.getUserPanel().getTextField().getText();
+			String oldPassword = functionalWindow.getOldPasswordPanel().getTextField().getText();
+			String newPassword = functionalWindow.getNewPasswordPanel().getTextField().getText();
+			String newPasswordToConfirm = functionalWindow.getNewPasswordConfirmationPanel()
+				.getTextField().getText();
+			
+			@Override
+			protected String doInBackground() throws Exception {
+			
+				return new PatchUserPasswordCommand(usersDatabase, username, oldPassword,
+					newPassword).call();
+			}
+		};
 	}
 	
 	@Override
-	protected void functionalWindowDone(Object resultOfDoInBackGround) {
+	protected void functionalWindowDone(String resultOfDoInBackGround) {
 	
-		// TODO Auto-generated method stub
-		
+		if (resultOfDoInBackGround.equals("User password successfully changed")) {
+			
+			new SuccessfulActionWindow(resultOfDoInBackGround, Color.GREEN);
+			
+			new MainWindow(null, usersDatabase, usersDatabase.getElementByIdentification(
+				resultOfDoInBackGround).get());
+			
+			functionalWindow.dispose();
+			
+		} else {
+			throw new InvalidArgumentException(resultOfDoInBackGround);
+		}
 	}
 }

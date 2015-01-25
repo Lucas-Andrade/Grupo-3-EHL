@@ -15,7 +15,7 @@ public class JBodyPanelForMainWindow extends JPanel{
 	
 	private JPanel airshipsScrollPane;
 
-	public JBodyPanelForMainWindow(Database<Airship> airshipdatabase) throws Exception {
+	public JBodyPanelForMainWindow(Database<Airship> airshipdatabase) {
 		
 		this.setLayout(new FlowLayout());
 		

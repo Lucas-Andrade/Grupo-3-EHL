@@ -29,7 +29,7 @@ public class MainWindow extends JFrame {
 	
 	private User user;
 
-	public MainWindow(Database<Airship> airshipdatabase, Database<User> userdatabase, User user) throws Exception {
+	public MainWindow(Database<Airship> airshipdatabase, Database<User> userdatabase, User user) {
 		
 		this.user = user;
 		

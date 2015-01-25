@@ -16,6 +16,7 @@ import javax.swing.JScrollPane;
 
 
 
+
 import main.java.domain.model.Database;
 import main.java.domain.model.Element;
 import main.java.gui.designWindows.borders.TextRoundBorder;
@@ -33,26 +34,31 @@ public class JScrollPanelForElements<E extends Element > extends JPanel {
 	}
 
 	
-	public JPanel produceAJScrollPaneWithAllElements(Database<E> database) throws Exception{
+	public JPanel produceAJScrollPaneWithAllElements(Database<E> database) {
 			
 		JPanel listPanel = new JPanel();				
 		int counter=0;
 				
-		for(E element:database.getAllElements().get()){
+		try {
+			for(E element:database.getAllElements().get()){
+				
+				JButton button = new JButton();		
+				
+								
+				button.add(new JLabel(element.getIdentification()));
+				button.setOpaque(true);
+				button.setContentAreaFilled(false);			
+				button.setBackground(new Color(65, 72, 78));
+				
+				infoContainer.put(button, getString(element));
+				
+				listPanel.add(button);
+				++counter;
+				
+			}
+		} catch (Exception e) {
 			
-			JButton button = new JButton();		
-			
-							
-			button.add(new JLabel(element.getIdentification()));
-			button.setOpaque(true);
-			button.setContentAreaFilled(false);			
-			button.setBackground(new Color(65, 72, 78));
-			
-			infoContainer.put(button, getString(element));
-			
-			listPanel.add(button);
-			++counter;
-			
+			e.printStackTrace();
 		}
 					
 		listPanel.setLayout(new GridLayout(counter,1)); 

@@ -1,7 +1,6 @@
-package main.java.gui.designWindows.windows;
+package main.java.gui.designWindows.JPanels;
 
 import main.java.domain.model.users.User;
-import main.java.gui.designWindows.JPanels.JScrollPanelForElements;
 
 @SuppressWarnings("serial")
 public class  JScrollPanelForUsers extends JScrollPanelForElements<User>{

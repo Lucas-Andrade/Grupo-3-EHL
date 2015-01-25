@@ -1,4 +1,4 @@
-package main.java.gui.designWindows.JPanels;
+package main.java.gui.designWindows.JPanels.ForMainWindow;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
@@ -7,7 +7,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
-public class JButtonsPanelForMainWindow extends JPanel{
+public class JFooterPanelForMainWindow extends JPanel{
 
 	JButton getNearestAirships;
 	JButton getTransgressinips;
@@ -17,7 +17,7 @@ public class JButtonsPanelForMainWindow extends JPanel{
 	JButton deleteAirship;
 
 	
-	public JButtonsPanelForMainWindow(){
+	public JFooterPanelForMainWindow(){
 		
 		this.setLayout(new FlowLayout());
 		this.setBackground(new Color(65,72,78));

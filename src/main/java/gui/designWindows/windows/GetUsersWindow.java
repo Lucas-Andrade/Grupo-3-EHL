@@ -1,35 +1,16 @@
 package main.java.gui.designWindows.windows;
 
-import java.awt.Color;
-
 import main.java.domain.model.Database;
 import main.java.domain.model.users.User;
-import main.java.gui.designWindows.JPanels.JDialogWithBackground;
+import main.java.gui.designWindows.JPanels.JScrollPanelForUsers;
 
 @SuppressWarnings("serial")
-public class GetUsersWindow extends JDialogWithBackground {
+public class GetUsersWindow extends WindowBase {
 
 	private Database<User> database;
-
-//	public static void main(String[] args) {
-//		
-//		EventQueue.invokeLater(new Runnable() {
-//			@Override
-//			public void run() {
-//
-//			try {
-//				new GetUsersWindow();
-//			} catch (InvalidArgumentException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//
-//			}
-//		});
-//	}
 		
 	public GetUsersWindow(Database<User> database) throws Exception {
-		super(new Color(65, 72, 78), 400, 200);
+		super(400, 200);
 		this.database = database;
 		initial();
 		

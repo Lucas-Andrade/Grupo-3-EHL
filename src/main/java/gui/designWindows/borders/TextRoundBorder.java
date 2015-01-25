@@ -14,10 +14,10 @@ import java.awt.geom.RoundRectangle2D;
 
 import javax.swing.border.AbstractBorder;
 
+@SuppressWarnings("serial")
 public class TextRoundBorder extends AbstractBorder {
 
 
-	private static final long serialVersionUID = 1L;
 	
 	
 	 	private Color color;

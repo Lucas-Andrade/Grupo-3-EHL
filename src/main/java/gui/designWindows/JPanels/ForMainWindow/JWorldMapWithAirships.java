@@ -1,4 +1,4 @@
-package main.java.gui.designWindows.JPanels;
+package main.java.gui.designWindows.JPanels.ForMainWindow;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -10,6 +10,11 @@ import javax.swing.JPanel;
 
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
+import main.java.gui.designWindows.JPanels.JScrollPanelForElements;
+import main.java.gui.designWindows.JPanels.ForAll.JPanelImage;
+
+
+
 
 @SuppressWarnings("serial")
 public class JWorldMapWithAirships extends JScrollPanelForElements<Airship>{
@@ -28,8 +33,9 @@ public class JWorldMapWithAirships extends JScrollPanelForElements<Airship>{
 	
 	public JPanel createAJPanelWithWorldMapAndAirships(Database<Airship> database) throws Exception{
 		
-		JPanelImage worldMap = new JPanelImage("src/main/resources/images/planisphere.png");
-	    worldMap.setLayout(null);
+
+		JPanelImage.createImage worldMap = new JPanelImage.createImage("src/main/resources/images/planisphere.png");
+		worldMap.setLayout(null);
 	    this.add(worldMap);
 			
 			

@@ -1,4 +1,4 @@
-package main.java.gui.designWindows.JPanels;
+package main.java.gui.designWindows.JPanels.ForPostAirshipWindow;
 
 import java.awt.Color;
 

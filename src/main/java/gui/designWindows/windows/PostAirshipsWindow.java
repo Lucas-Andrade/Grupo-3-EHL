@@ -1,86 +1,106 @@
 package main.java.gui.designWindows.windows;
 
 import java.awt.Color;
-import java.awt.EventQueue;
+import java.awt.FlowLayout;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import main.java.gui.designWindows.JPanels.JCommonPostAirshipPanel;
-import main.java.gui.designWindows.JPanels.JDialogWithBackground;
-import main.java.gui.designWindows.JPanels.JOkCancelPanel;
-import main.java.gui.designWindows.JPanels.JPanelWithAishipsImages;
-import main.java.gui.designWindows.JPanels.JPanelWithSpecificCivilAirhipParameters;
-import main.java.gui.designWindows.JPanels.JPanelWithSpecificMilitaryAirhipParameters;
+import main.java.gui.designWindows.JPanels.ForAll.JPanelImage;
+import main.java.gui.designWindows.JPanels.ForAll.JTwoButtonsPanel;
+import main.java.gui.designWindows.JPanels.ForPostAirshipWindow.JCommonPostAirshipPanel;
+import main.java.gui.designWindows.JPanels.ForPostAirshipWindow.JPanelWithSpecificCivilAirhipParameters;
+import main.java.gui.designWindows.JPanels.ForPostAirshipWindow.JPanelWithSpecificMilitaryAirhipParameters;
 
-public class PostAirshipsWindow extends JDialogWithBackground{
+@SuppressWarnings("serial")
+public class PostAirshipsWindow extends WindowBase{
 
 	
-	private static final long serialVersionUID = 1L;
 	
 	private static final String MILITARYAIRSHIP = "Military Airship";
 	private static final String CIVILAIRSHIP = "Civil Airship";
-
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-
-			@Override
-			public void run() {
-
-			new PostAirshipsWindow();
-
-			}
-		});
-	}
+	
+	private JCommonPostAirshipPanel militaryAirshipCommonPainel;
+	private JCommonPostAirshipPanel civilAirshipCommonPainel;
+	private JPanelWithSpecificMilitaryAirhipParameters specificMilitaryPanel;
+	private JPanelWithSpecificCivilAirhipParameters specificCivilPanel;
+	private JTwoButtonsPanel civilOkCancelPanel;
+	private JTwoButtonsPanel militaryOkCancelPanel;
 
 	public PostAirshipsWindow() {
-		super(new Color(65, 72, 78), 400, 600);
+		super(860,310);
 		initialize();
+		this.setVisible(true);
+
+		
 	}
 	
 	
-	private void initialize() {
-
+	private void  initialize() {
 
 		JTabbedPane TypeAirshipTabbedPane = new JTabbedPane();
 		TypeAirshipTabbedPane.setTabLayoutPolicy(JTabbedPane.SCROLL_TAB_LAYOUT);
-
-		JPanel civilpanel = new JPanel();
-		civilpanel.setBackground(new Color(65, 72, 78));
-		civilpanel.setSize(370, 550);
 		
-		JPanel militaryPanel = new JPanel();
+		JPanel civilpanel = new JPanel(new FlowLayout());
+		civilpanel.setBackground(new Color(65, 72, 78));
+	
+		JPanel militaryPanel = new JPanel(new FlowLayout());
 		militaryPanel.setBackground(new Color(65, 72, 78));
-		militaryPanel.setSize(370, 550);
+	
 		
 		TypeAirshipTabbedPane.addTab(CIVILAIRSHIP, null, civilpanel, null);
 		TypeAirshipTabbedPane.addTab(MILITARYAIRSHIP, null, militaryPanel, null);
 
-		this.getContentPane().add(TypeAirshipTabbedPane);
+		this.add(TypeAirshipTabbedPane,0);
 
-		JPanelWithAishipsImages cena = new JPanelWithAishipsImages(
-				"src/main/resources/images/civil.png");
-		civilpanel.add(cena);
+	
+		civilpanel.add(new JPanelImage("src/main/resources/images/civil.png","src/main/resources/images/add.png"));
+		militaryPanel.add(new JPanelImage("src/main/resources/images/military.png","src/main/resources/images/add.png"));
+
 		
+		 civilAirshipCommonPainel = new JCommonPostAirshipPanel();
+		civilpanel.add(civilAirshipCommonPainel);
+	
+		 militaryAirshipCommonPainel = new JCommonPostAirshipPanel();
+		militaryPanel.add(militaryAirshipCommonPainel);
+
+		specificCivilPanel = new JPanelWithSpecificCivilAirhipParameters();
+		civilpanel.add(specificCivilPanel);
+		specificMilitaryPanel = new JPanelWithSpecificMilitaryAirhipParameters();
+		militaryPanel.add(specificMilitaryPanel);
+
 		
 	
-		militaryPanel.add(new JPanelWithAishipsImages(
-				"src/main/resources/images/military.png"));
+	}
 
-		
-		JCommonPostAirshipPanel cena2 = new JCommonPostAirshipPanel();
-		civilpanel.add(cena2);
-		
-		cena2.getJAltitudePanel().getJTextField().getText();
-		
-		militaryPanel.add(new JCommonPostAirshipPanel());
 
-		civilpanel.add(new JPanelWithSpecificCivilAirhipParameters());
-		militaryPanel.add(new JPanelWithSpecificMilitaryAirhipParameters());
+	public JCommonPostAirshipPanel getMilitaryAirshipCommonPainel() {
+		return militaryAirshipCommonPainel;
+	}
 
-		civilpanel.add(new JOkCancelPanel());
-		militaryPanel.add(new JOkCancelPanel());
-		this.setVisible(true);
+
+	public JCommonPostAirshipPanel getCivilAirshipCommonPainel() {
+		return civilAirshipCommonPainel;
+	}
+
+
+	public JPanelWithSpecificMilitaryAirhipParameters getSpecificMilitaryPanel() {
+		return specificMilitaryPanel;
+	}
+
+
+	public JPanelWithSpecificCivilAirhipParameters getSpecificCivilPanel() {
+		return specificCivilPanel;
+	}
+
+
+	public JTwoButtonsPanel getCivilOkCancelPanel() {
+		return civilOkCancelPanel;
+	}
+
+
+	public JTwoButtonsPanel getMilitaryOkCancelPanel() {
+		return militaryOkCancelPanel;
 	}
 
 }

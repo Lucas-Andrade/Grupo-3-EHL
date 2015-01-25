@@ -11,9 +11,11 @@ import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 
-import main.java.gui.To_be_eliminated.panelsandutils.ButtonsPanel;
-import main.java.gui.To_be_eliminated.panelsandutils.GridBagUtils;
-import main.java.gui.designWindows.JPanels.JPanelImage;
+import main.java.gui.designWindows.GridBagUtils;
+import main.java.gui.designWindows.JPanels.ForAll.JPanelImage;
+import main.java.gui.designWindows.JPanels.ForAll.JTwoButtonsPanel;
+
+
 
 /**
  * Abstract swing window, with:
@@ -34,7 +36,7 @@ public abstract class WindowBase
 	 * Panel with two buttons, the first have the point to {@code call} a
 	 * {@link Callable}, and the second to dispose this {@code JDialog}.
 	 */
-	private ButtonsPanel buttonsPanel;
+	private JTwoButtonsPanel buttonsPanel;
 	/**
 	 * Label where the exception message will be printed.
 	 */
@@ -48,7 +50,7 @@ public abstract class WindowBase
 	 * @param width
 	 * @param height
 	 */
-	public WindowBase( int width, int height, String imagePath)
+	public WindowBase( int width, int height, String... imagePath)
 	{
 		setDefaultWindow( width, height );
 
@@ -62,6 +64,8 @@ public abstract class WindowBase
 		
 	}
 
+	
+	
 	//Private methods
 	/**
 	 * 
@@ -88,7 +92,8 @@ public abstract class WindowBase
 	 */
 	private void createButtonsAndErrorLabel()
 	{
-		buttonsPanel = new ButtonsPanel();
+		buttonsPanel = new JTwoButtonsPanel();
+		buttonsPanel.setBackground(new Color(0,0,0,0));
 		addComponent( buttonsPanel, GridBagConstraints.BASELINE_TRAILING );
 		
 		errorLabel = new JLabel( " " );
@@ -113,7 +118,7 @@ public abstract class WindowBase
 	/**
 	 * @return the buttonsPanel
 	 */
-	public ButtonsPanel getButtonsPanel()
+	public JTwoButtonsPanel getButtonsPanel()
 	{
 		return buttonsPanel;
 	}

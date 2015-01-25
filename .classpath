@@ -11,6 +11,10 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+<<<<<<< HEAD
 	<classpathentry kind="src" path="src"/>
+=======
+	<classpathentry including="**/*.java" kind="src" path="src"/>
+>>>>>>> branch 'AppForCommandLine3' of https://github.com/Lucas-Andrade/Grupo-3-EHL.git
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

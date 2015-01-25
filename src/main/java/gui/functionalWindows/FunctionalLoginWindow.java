@@ -1,67 +1,73 @@
 package main.java.gui.functionalWindows;
 
+import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.domain.model.users.User;
-import main.java.gui.MainWindow;
-import main.java.gui.fromDG_to_P.windows.LogInWindow;
+import main.java.gui.To_be_eliminated.windows.LogInWindow;
+import main.java.gui.designWindows.windows.MainWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
 
-public class FunctionalLoginWindow extends FunctionalWindow<Void> {
-	
-	// Fields
-	
-	private InMemoryUsersDatabase usersDatabase;
-	
+/**
+ * 
+ * 
+ *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
+public class FunctionalLoginWindow
+	extends FunctionalWindow< User >
+{
 	private LogInWindow functionalWindow;
-	
-	// Constructor
-	
-	public FunctionalLoginWindow(LogInWindow nonFunctionalWindow,
-		InMemoryUsersDatabase usersDatabase) {
-	
-		super(nonFunctionalWindow);
-		
+
+	private InMemoryUsersDatabase usersDatabase;
+	private InMemoryAirshipsDatabase airshipdatabase;
+
+	public FunctionalLoginWindow( LogInWindow nonFunctionalWindow, InMemoryUsersDatabase usersDatabase,
+			InMemoryAirshipsDatabase airshipdatabase )
+	{
+		super( nonFunctionalWindow );
+
 		this.functionalWindow = nonFunctionalWindow;
-		
+
 		this.usersDatabase = usersDatabase;
+		this.airshipdatabase = airshipdatabase;
 	}
-	
-	// Implementation of the method inherited from the FunctionalWindow class
-	
+
 	@Override
-	protected FunctionalWindow<Void>.FunctionalWindowSwingWorker getSwingWorker() {
-	
-		return new FunctionalWindowSwingWorker() {
-			
+	protected FunctionalWindowSwingWorker getSwingWorker()
+	{
+		return new FunctionalWindowSwingWorker()
+		{
 			String username = functionalWindow.getUserPanel().getTextField().getText();
 			String password = functionalWindow.getPasswordPanel().getTextField().getText();
-			
+
 			@Override
-			protected Void doInBackground() throws Exception {
-			
-				// TODO
-				User user = usersDatabase.getElementByIdentification(username).get();
-				
-				if (usersDatabase.getElementByIdentification(username).get()
-					.authenticatePassword(password)) {
-					
-					new MainWindow(null, usersDatabase, user);
-					
-					functionalWindow.dispose();
-					
-				} else {
-					throw new InvalidArgumentException("Wrong Password!");
+			protected User doInBackground() throws Exception
+			{
+				User user = usersDatabase.getElementByIdentification( username ).get();
+				if( user.authenticatePassword( password ) )
+				{
+					return user;
 				}
-				
-				return null;
+				else
+				{
+					throw new InvalidArgumentException( "Wrong Password!" );
+				}
 			}
 		};
 	}
-	
+
 	@Override
-	protected void functionalWindowDone(Void resultOfDoInBackGround) {
-	
-		// TODO Auto-generated method stub
-		
+	protected void functionalWindowDone( User resultOfDoInBackGround )
+	{
+		try
+		{
+			new MainWindow( airshipdatabase, usersDatabase, resultOfDoInBackGround );
+		}
+		catch( Exception e )
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		functionalWindow.dispose();
 	}
 }

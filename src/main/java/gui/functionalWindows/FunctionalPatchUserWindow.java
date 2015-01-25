@@ -4,9 +4,9 @@ import java.awt.Color;
 
 import main.java.domain.commands.patchcommands.PatchUserPasswordCommand;
 import main.java.domain.model.users.InMemoryUsersDatabase;
-import main.java.gui.MainWindow;
-import main.java.gui.fromDG_to_P.windows.PatchUserWindow;
-import main.java.gui.fromDG_to_P.windows.popup.SuccessfulActionWindow;
+import main.java.gui.To_be_eliminated.windows.PatchUserWindow;
+import main.java.gui.To_be_eliminated.windows.popup.SuccessfulActionWindow;
+import main.java.gui.designWindows.windows.MainWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 public class FunctionalPatchUserWindow extends FunctionalWindow {

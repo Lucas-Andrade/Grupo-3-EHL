@@ -25,7 +25,10 @@ public class AppForUI {
 			@Override
 			public void run() {
 				new FunctionalLoginWindow(new LogInWindow(360, 370), usersDatabase, airshipsDatabase);
-
+				new SuccessfulActionWindow("We are the champions!!!", Color.GREEN);
+				new FailedActionWindow("You Moron!!!", Color.RED);
+				new FunctionalPatchUserWindow(new PatchUserWindow(400, 600), usersDatabase);
+				new PostAirshipsWindow();
 			}
 		});
 	}

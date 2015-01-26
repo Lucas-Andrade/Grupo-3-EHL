@@ -6,7 +6,7 @@ import main.java.gui.designWindows.jPanels.forAll.JPanelImage;
 import main.java.gui.designWindows.windows.WindowBase;
 
 @SuppressWarnings("serial")
-public class JUnderConstrutionPanel  extends WindowBase{
+public class JUnderConstrutionPanel extends WindowBase{
 
 	
 	public JUnderConstrutionPanel() {

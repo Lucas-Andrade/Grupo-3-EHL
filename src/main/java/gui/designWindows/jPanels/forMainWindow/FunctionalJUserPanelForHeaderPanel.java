@@ -11,18 +11,17 @@ import main.java.gui.designWindows.windows.userWindows.PostUserWindow;
 import main.java.gui.functionalWindows.functionalUserWindows.FunctionalPatchUserWindow;
 import main.java.gui.functionalWindows.functionalUserWindows.FunctionalPostUserWindow;
 
-public class FunctionalJUserPanelForHeaderPanel
-{
+public class FunctionalJUserPanelForHeaderPanel {
+	
 	private JUserPanelForHeaderPanel headerPanel;
 	
-
-	private Database< User > usersDatabase;
-
-
+	private Database<User> usersDatabase;
+	
 	private User user;
-
-	public FunctionalJUserPanelForHeaderPanel(JUserPanelForHeaderPanel j, Database< User > usersDatabase, User user )
-	{
+	
+	public FunctionalJUserPanelForHeaderPanel(JUserPanelForHeaderPanel j,
+		Database<User> usersDatabase, User user) {
+	
 		this.headerPanel = j;
 		this.usersDatabase = usersDatabase;
 		this.user = user;
@@ -32,66 +31,65 @@ public class FunctionalJUserPanelForHeaderPanel
 		addInfoAllUsersButtonAction();
 	}
 	
-	private void addChangePasswordButtonAction()
-	{
-		headerPanel.getChangePasswordButton().addActionListener( new ActionListener()
-		{
+	private void addChangePasswordButtonAction() {
+	
+		headerPanel.getChangePasswordButton().addActionListener(new ActionListener() {
+			
 			@Override
-			public void actionPerformed( ActionEvent e )
-			{
-				new FunctionalPatchUserWindow( new PatchUserWindow(), usersDatabase );
+			public void actionPerformed(ActionEvent e) {
+			
+				new FunctionalPatchUserWindow(new PatchUserWindow(), usersDatabase);
 				
 			}
-		} );
+		});
 	}
 	
+	private void addAddUserButtonAction() {
 	
-
-	private void addAddUserButtonAction()
-	{
-		headerPanel.getAddUserButton().addActionListener( new ActionListener()
-		{
+		headerPanel.getAddUserButton().addActionListener(new ActionListener() {
+			
 			@Override
-			public void actionPerformed( ActionEvent e )
-			{
-				new FunctionalPostUserWindow( new PostUserWindow(), usersDatabase, user );
+			public void actionPerformed(ActionEvent e) {
+			
+				new FunctionalPostUserWindow(new PostUserWindow(), usersDatabase, user);
 				
 			}
-		} );;
+		});
+		;
 	}
-
-
-	private void addRemoveUserButtonAction()
-	{
-		headerPanel.getRemoveUserButton().addActionListener( new ActionListener()
-		{
+	
+	private void addRemoveUserButtonAction() {
+	
+		headerPanel.getRemoveUserButton().addActionListener(new ActionListener() {
+			
 			@Override
-			public void actionPerformed( ActionEvent e )
-			{
+			public void actionPerformed(ActionEvent e) {
+			
 				new UnderConstrutionWindow();
 			}
-		} );;
+		});
+		;
 	}
 	
-	private void addInfoAllUsersButtonAction()
-	{
-		headerPanel.getInfoAllUsersButton().addActionListener( new ActionListener()
-		{
+	private void addInfoAllUsersButtonAction() {
+	
+		headerPanel.getInfoAllUsersButton().addActionListener(new ActionListener() {
+			
 			@Override
-			public void actionPerformed( ActionEvent e )
-			{
-				//TODO
+			public void actionPerformed(ActionEvent e) {
+			
+				// TODO
 			}
-		} );;
+		});
+		;
 	}
 	
 	/**
 	 * @return the headerPanel
 	 */
-	public JUserPanelForHeaderPanel getHeaderPanel()
-	{
+	public JUserPanelForHeaderPanel getHeaderPanel() {
+	
 		return headerPanel;
 	}
 	
-
 }

@@ -8,13 +8,13 @@ import main.java.gui.designWindows.jPanels.forPostAirshipWindow.JGeographicalCoo
 import main.java.gui.designWindows.windows.WindowBase;
 
 @SuppressWarnings("serial")
-public class PatchGeographicalCoordinatesWindow extends WindowBase{
+public class PatchAirshipsWindow extends WindowBase{
 
 	private JGeographicalCoordinatesPanel geoPanel;
 	private GridBagConstraints constraints = GridBagUtils.createGridBagConstraints();
 	private JAirCorridorPanel corridorPanel;
 	
-	public PatchGeographicalCoordinatesWindow() {
+	public PatchAirshipsWindow() {
 		super(400, 400,"src/main/resources/images/edit.png","src/main/resources/images/civil.png");
 		
 		initial();

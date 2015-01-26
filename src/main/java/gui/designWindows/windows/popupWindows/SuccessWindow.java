@@ -2,6 +2,7 @@ package main.java.gui.designWindows.windows.popupWindows;
 
 import javax.swing.ImageIcon;
 
+@SuppressWarnings( "serial" )
 public class SuccessWindow extends PopupWindow
 {
 	public SuccessWindow( String message )

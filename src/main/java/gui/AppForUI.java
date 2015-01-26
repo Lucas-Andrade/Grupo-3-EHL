@@ -11,6 +11,12 @@ import main.java.gui.designWindows.windows.userWindows.LogInWindow;
 import main.java.gui.functionalWindows.functionalUserWindows.FunctionalLoginWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
 
+/**
+ * 
+ * 
+ *
+ *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
 public class AppForUI {
 	
 	private static Database< User > usersDatabase;

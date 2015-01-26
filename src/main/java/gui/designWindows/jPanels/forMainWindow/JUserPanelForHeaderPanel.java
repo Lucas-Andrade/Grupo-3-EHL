@@ -62,7 +62,6 @@ public class JUserPanelForHeaderPanel extends JPanel{
 		userOptions.setLayout(new GridLayout(3,0));
 		this.add(userOptions);
 		
-		//TODO qual é a ordem?!!?
 		addUserButton = new JButton(new ImageIcon("src/main/resources/images/addUser.png"));
 		userOptions.add(addUserButton);
 		removeUserButton = new JButton(new ImageIcon("src/main/resources/images/removeUser.png"));

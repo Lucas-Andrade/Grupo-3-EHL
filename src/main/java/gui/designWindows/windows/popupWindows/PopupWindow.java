@@ -1,6 +1,10 @@
 package main.java.gui.designWindows.windows.popupWindows;
 
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,56 +13,87 @@ import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.UIManager;
+import javax.swing.JPanel;
+
+import main.java.gui.designWindows.GridBagUtils;
 
 
 /**
  * 
  * 
  *
- *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
+@SuppressWarnings( "serial" )
 public abstract class PopupWindow
+	extends JDialog
 {
-	private JDialog dialog;
-	private JButton okButton;
+	private GridBagConstraints constraints = GridBagUtils.createGridBagConstraints();
 
 	public PopupWindow( String message, Icon image )
 	{
-		Color backGroundColor = new Color( 65, 72, 78 );
-		UIManager.put( "Panel.background", backGroundColor );
+		setLayout( new GridBagLayout() );
+		add( getLabel( message, image ), GridBagUtils.updateGridBagConstraints( constraints, 0 ) );
 
-		createButton();
-		JOptionPane optionPane =
-				new JOptionPane( getLabelPanel(message), JOptionPane.INFORMATION_MESSAGE,
-						JOptionPane.DEFAULT_OPTION, image, new Object[]{ okButton }, okButton );
-		optionPane.setBackground( backGroundColor );
+		defaultSettings();
+	}
+	
+	public PopupWindow( Component component  )
+	{
+		setLayout( new GridBagLayout() );
+		add( component, GridBagUtils.updateGridBagConstraints( constraints, 0 ) );
 
-		dialog = optionPane.createDialog( "Air Traffic Controll" );
-		dialog.setIconImage( Toolkit.getDefaultToolkit().getImage( "src/main/resources/images/radar.png" ) );
-		dialog.setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
-		dialog.setVisible( true );
+		defaultSettings();
+	}
+
+	private void defaultSettings()
+	{
+		add( createButton(), GridBagUtils.updateGridBagConstraints( constraints, 1 ) );
+		getContentPane().setBackground( new Color( 65, 72, 78 ) );
+		setTitle( "Air Traffic Controll" );
+		setIconImage( Toolkit.getDefaultToolkit().getImage( "src/main/resources/images/radar.png" ) );
+		setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
+		setSize( 400, 10 );
+		pack();
+		setLocationRelativeTo( null );
+		setResizable( false );
+		setVisible( true );
 	}
 
 
-	private JLabel getLabelPanel( String message )
+
+	private JPanel getLabel( String message, Icon image )
 	{
-		JLabel messageLabel= new JLabel( message, JLabel.CENTER );
+		
+		JLabel imageLabel = new JLabel( image );
+		JLabel messageLabel = new JLabel( message, JLabel.CENTER );
 		messageLabel.setForeground( Color.WHITE );
-		return messageLabel;
+		JPanel c = new JPanel();
+		c.setLayout( new FlowLayout( FlowLayout.LEADING, 50, 50 ));
+		c.add( imageLabel );
+		c.add( messageLabel );
+		c.setBackground( new Color( 65, 72, 78 ) );
+		return c;
 	}
 
-	private void createButton()
+
+
+	private JPanel createButton()
 	{
-		okButton = new JButton( "Ok" );
+		JPanel buttonPanel = new JPanel();
+		// panel.setSize( 400, 10 );
+		buttonPanel.setBackground( new Color( 65, 72, 78 ) );
+		JButton okButton = new JButton( "Ok" );
 		okButton.addActionListener( new ActionListener()
 		{
 			@Override
 			public void actionPerformed( ActionEvent e )
 			{
-				dialog.dispose();
+				dispose();
 			}
 		} );
+		buttonPanel.add( okButton );
+		getRootPane().setDefaultButton( okButton );
+		return buttonPanel;
 	}
 }

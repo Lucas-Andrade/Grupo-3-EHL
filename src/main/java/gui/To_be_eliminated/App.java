@@ -12,7 +12,6 @@ import main.java.gui.designWindows.jPanels.forPostAirshipWindow.JCommonPostAirsh
 import main.java.gui.designWindows.jPanels.forPostAirshipWindow.JPanelWithSpecificCivilAirhipParameters;
 import main.java.gui.designWindows.jPanels.forPostAirshipWindow.JPanelWithSpecificMilitaryAirhipParameters;
 import main.java.gui.designWindows.windows.airshipWindows.PostAirshipsWindow;
-import main.java.gui.designWindows.windows.popupWindows.JUnderConstrutionPanel;
 import main.java.gui.designWindows.windows.userWindows.GetUsersWindow;
 import main.java.gui.designWindows.windows.userWindows.LogInWindow;
 import main.java.gui.designWindows.windows.userWindows.PostUserWindow;

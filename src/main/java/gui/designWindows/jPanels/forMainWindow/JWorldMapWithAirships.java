@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.gui.designWindows.jPanels.JScrollPanelForElements;
 import main.java.gui.designWindows.jPanels.forAll.JPanelImage;
@@ -23,7 +22,7 @@ public class JWorldMapWithAirships extends JScrollPanelForElements<Airship>{
 	private final double ORIGINPOSITIONYLATITUDE=167;
 	
 	
-	public JPanel createAJPanelWithWorldMapAndAirships(Database<Airship> database) {
+	public JPanel createAJPanelWithWorldMapAndAirships(Iterable<Airship> database) {
 		
 
 		JPanelImage.createImage worldMap = new JPanelImage.createImage("src/main/resources/images/planisphere.png");
@@ -32,7 +31,7 @@ public class JWorldMapWithAirships extends JScrollPanelForElements<Airship>{
 			
 			
 			try {
-				for(Airship airship:database.getAllElements().get()){
+				for(Airship airship:database){
 					
 					
 					 Double latitude =  ORIGINPOSITIONYLATITUDE-IMAGESCALEFACTOR*(airship.getCoordinates().getLatitude().getValue());

@@ -15,12 +15,12 @@ public class JBodyPanelForMainWindow extends JPanel{
 	
 	private JPanel airshipsScrollPane;
 
-	public JBodyPanelForMainWindow(Database<Airship> airshipdatabase) {
+	public JBodyPanelForMainWindow(Iterable<Airship> airships, Database< Airship > dataBase) {
 		
 		this.setLayout(new FlowLayout());
 		
-		airshipsScrollPane = new JWorldMapWithAirships().produceAJScrollPaneWithAllElements(airshipdatabase);
-		this.add(new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships(airshipdatabase));
+		airshipsScrollPane = new JWorldMapWithAirships().produceAJScrollPaneWithAllElements(dataBase, airships);
+		this.add(new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships(airships));
 		this.add(airshipsScrollPane);
 		this.setBackground(new Color(65,72,78));
 		this.setBorder(new TextRoundBorder(Color.WHITE,6,12,0) );	

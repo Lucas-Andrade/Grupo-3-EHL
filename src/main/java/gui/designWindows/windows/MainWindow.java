@@ -6,6 +6,7 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,6 +29,8 @@ public class MainWindow extends JFrame {
 	private GridBagConstraints constraints = GridBagUtils.createGridBagConstraints();
 	
 	private User user;
+	
+	private JHeaderForMainWindowPanel headerPanel;
 
 	public MainWindow(Database<Airship> airshipsDatabase, Database<User> usersDatabase, User user) {
 		
@@ -49,7 +52,7 @@ public class MainWindow extends JFrame {
 		contentPane.setLayout(gridBagLayout);
 		
 		
-		JHeaderForMainWindowPanel headerPanel = new JHeaderForMainWindowPanel(usersDatabase, user);
+		headerPanel = new JHeaderForMainWindowPanel(usersDatabase, user);
 		headerPanel.getUserPanel().getLogoutButton().addActionListener( new ActionListener()
 		{
 			
@@ -68,7 +71,7 @@ public class MainWindow extends JFrame {
 			@Override
 			public void actionPerformed( ActionEvent e )
 			{
-				dispose();
+				System.exit( EXIT_ON_CLOSE );
 			}
 		} );
 		contentPane.add(headerPanel,GridBagUtils.updateGridBagConstraints(constraints, 0));
@@ -82,7 +85,7 @@ public class MainWindow extends JFrame {
 //		line0.setPreferredSize(new Dimension(0,1));	
 //		contentPane.add(line0,GridBagUtils.updateGridBagConstraints(constraints, 1));
 				
-		JBodyPanelForMainWindow bodyPanel = new JBodyPanelForMainWindow(airshipsDatabase);	
+		JBodyPanelForMainWindow bodyPanel = new JBodyPanelForMainWindow( new ArrayList< Airship >(), airshipsDatabase);	
 		contentPane.add(bodyPanel,GridBagUtils.updateGridBagConstraints(constraints, 2));
 		
 		JFooterPanelForMainWindow footerPanel = new JFooterPanelForMainWindow();
@@ -101,6 +104,17 @@ public class MainWindow extends JFrame {
 	}
 	
 	
+
+
+	/**
+	 * @return the headerPanel
+	 */
+	public JHeaderForMainWindowPanel getHeaderPanel()
+	{
+		return headerPanel;
+	}
+
+
 
 
 	public User getUser() {

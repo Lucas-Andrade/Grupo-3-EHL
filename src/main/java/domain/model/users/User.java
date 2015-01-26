@@ -156,12 +156,12 @@ public class User implements Element {
         
         StringBuilder result = new StringBuilder( "username: " );
         
-        result.append( username ).append( ", password: " ).append( password ).append( ", email: " )
+        result.append( username ).append( ",\n\rpassword: " ).append( password ).append( ",\r\nemail: " )
               .append( email );
         
         return fullName.equals( "" )
                                     ? result.append( "\n" ).toString()
-                                    : result.append( ", fullName: " ).append( fullName )
+                                    : result.append( ",\r\nfullName: " ).append( fullName )
                                             .append( "\n" ).toString();
     }
     

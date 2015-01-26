@@ -39,11 +39,11 @@ public class LogInWindow extends WindowBase{
 		
 	}
 
-	public JLablePlusJTextField getGetUserPanel() {
+	public JLablePlusJTextField getUserPanel() {
 		return getUserPanel;
 	}
 
-	public JLablePlusJTextField getGetPasswordPanel() {
+	public JLablePlusJTextField getPasswordPanel() {
 		return getPasswordPanel;
 	}
 }

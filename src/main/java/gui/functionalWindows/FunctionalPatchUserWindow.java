@@ -4,7 +4,7 @@ import java.awt.Color;
 
 import main.java.domain.commands.patchcommands.PatchUserPasswordCommand;
 import main.java.domain.model.users.InMemoryUsersDatabase;
-import main.java.gui.To_be_eliminated.windows.PatchUserWindow;
+import main.java.gui.designWindows.windows.PatchUserWindow;
 import main.java.gui.To_be_eliminated.windows.popup.SuccessfulActionWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
 
@@ -34,7 +34,7 @@ public class FunctionalPatchUserWindow extends FunctionalWindow<String> {
 	private boolean newPasswordConfirmation(String newPassword) {
 	
 		String newPasswordToConfirm = functionalWindow.getNewPasswordConfirmationPanel()
-			.getTextField().getText();
+			.getJTextField().getText();
 		
 		if (newPassword.equals(newPasswordToConfirm))
 			return true;
@@ -47,9 +47,9 @@ public class FunctionalPatchUserWindow extends FunctionalWindow<String> {
 
 		return new FunctionalWindowSwingWorker()
 		{
-			String username = functionalWindow.getUserPanel().getTextField().getText();
-			String oldPassword = functionalWindow.getOldPasswordPanel().getTextField().getText();
-			String newPassword = functionalWindow.getNewPasswordPanel().getTextField().getText();
+			String username = functionalWindow.getUserPanel().getJTextField().getText();
+			String oldPassword = functionalWindow.getOldPasswordPanel().getJTextField().getText();
+			String newPassword = functionalWindow.getNewPasswordPanel().getJTextField().getText();
 
 			@Override
 			protected String doInBackground() throws Exception

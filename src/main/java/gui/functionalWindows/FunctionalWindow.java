@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 
 import javax.swing.SwingWorker;
 
-import main.java.gui.To_be_eliminated.windows.WindowBase;
+import main.java.gui.designWindows.windows.WindowBase;
 
 /**
  * Abstract swing window, that have the responsibility to add the

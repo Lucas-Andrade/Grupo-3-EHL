@@ -79,7 +79,7 @@ public abstract class WindowBase
 		setSize( width, height );
 		getContentPane().setBackground( new Color( 65, 72, 78 ) );
 
-		setIconImage( Toolkit.getDefaultToolkit().getImage( "" ) );//TODO
+		setIconImage( Toolkit.getDefaultToolkit().getImage( "src/main/resources/images/radar.png" ) );
 
 		setTitle( "Air Traffic Controll" );
 		setLocationRelativeTo( null );

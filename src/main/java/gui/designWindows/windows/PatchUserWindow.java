@@ -52,7 +52,7 @@ public class PatchUserWindow extends WindowBase{
 		return newPasswordPanel;
 	}
 
-	public JLablePlusJTextField getGetNewPasswordConfirmationPanel() {
+	public JLablePlusJTextField getNewPasswordConfirmationPanel() {
 		return getNewPasswordConfirmationPanel;
 	}
 

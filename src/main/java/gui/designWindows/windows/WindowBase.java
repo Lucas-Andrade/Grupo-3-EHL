@@ -12,8 +12,8 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 
 import main.java.gui.designWindows.GridBagUtils;
-import main.java.gui.designWindows.JPanels.ForAll.JPanelImage;
-import main.java.gui.designWindows.JPanels.ForAll.JTwoButtonsPanel;
+import main.java.gui.designWindows.jPanels.forAll.JPanelImage;
+import main.java.gui.designWindows.jPanels.forAll.JTwoButtonsPanel;
 
 
 

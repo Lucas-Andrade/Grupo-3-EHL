@@ -1,36 +1,20 @@
 package test.java.cli.outputformatters;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import main.java.cli.outputformatters.totranslatableconversors.ToTranslatableConversor;
 import main.java.cli.outputformatters.translators.ToPlainTextTranslator;
-import main.java.domain.model.airships.Airship;
-import main.java.domain.model.airships.CivilAirship;
-import main.java.domain.model.airships.MilitaryAirship;
-import main.java.domain.model.users.User;
-import main.java.utils.Optional;
-import main.java.utils.OptionsList;
-import main.java.utils.exceptions.InvalidArgumentException;
-import main.java.utils.exceptions.formattersexceptions.UnknownTranslatableException;
-import main.java.utils.exceptions.formattersexceptions.UnknownTypeException;
-import org.junit.Test;
 
 
 /**
- * Tests to target {@link ToPlainTextTranslator}. These are
- * not unitary-tests, are visual tests meant to be seen on console.
+ * Tests to target {@link ToPlainTextTranslator}. These are not unitary-tests, are visual tests
+ * meant to be seen on console.
  * 
- * Due the maven building, the class is commented,
- * to see the tests uncomment the class.
+ * Due the maven building, the class is commented, to see the tests uncomment the class.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 @SuppressWarnings( "unused" )
-public class ToPlainTextTranslatorTest
-{
-	
+public class ToPlainTextTranslatorTest {
+    
 //	@Test
 //	public void test() throws InvalidArgumentException, UnknownTypeException,
 //			UnknownTranslatableException {
@@ -183,6 +167,6 @@ public class ToPlainTextTranslatorTest
 //		
 //		
 //	}
-	
-	
+    
+    
 }

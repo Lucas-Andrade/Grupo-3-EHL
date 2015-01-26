@@ -3,7 +3,7 @@ package main.java.gui.To_be_eliminated.windows;
 import java.awt.Color;
 
 import main.java.gui.To_be_eliminated.panelsandutils.LabelPlusTextFieldPanel;
-import main.java.gui.designWindows.JPanels.JPanelImage;
+import main.java.gui.designWindows.jPanels.forAll.JPanelImage;
 
 @SuppressWarnings ("serial")
 public class PostUserWindow extends WindowBase {

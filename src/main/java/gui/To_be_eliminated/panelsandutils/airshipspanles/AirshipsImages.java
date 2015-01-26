@@ -4,7 +4,10 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 
-import main.java.gui.designWindows.JPanels.JPanelImage;
+import main.java.gui.designWindows.jPanels.forAll.JPanelImage;
+
+
+
 
 @SuppressWarnings ("serial")
 public class AirshipsImages extends JPanel {

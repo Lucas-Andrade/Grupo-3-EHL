@@ -2,7 +2,7 @@ package main.java.gui.To_be_eliminated.windows.popup;
 
 import java.awt.Color;
 
-import main.java.gui.designWindows.JPanels.ForAll.JPanelImage;
+import main.java.gui.designWindows.jPanels.forAll.JPanelImage;
 
 //import main.java.gui.designWindows.JPanels.JPanelImage;
 

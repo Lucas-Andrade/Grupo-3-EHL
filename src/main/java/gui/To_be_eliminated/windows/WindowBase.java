@@ -12,7 +12,7 @@ import javax.swing.JLabel;
 
 import main.java.gui.To_be_eliminated.panelsandutils.ButtonsPanel;
 import main.java.gui.To_be_eliminated.panelsandutils.GridBagUtils;
-import main.java.gui.designWindows.JPanels.JPanelImage;
+import main.java.gui.designWindows.jPanels.forAll.JPanelImage;
 
 /**
  * 

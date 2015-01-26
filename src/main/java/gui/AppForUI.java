@@ -7,8 +7,8 @@ import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.domain.model.users.User;
-import main.java.gui.designWindows.windows.LogInWindow;
-import main.java.gui.functionalWindows.FunctionalLoginWindow;
+import main.java.gui.designWindows.windows.userWindows.LogInWindow;
+import main.java.gui.functionalWindows.functionalUserWindows.FunctionalLoginWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 public class AppForUI {

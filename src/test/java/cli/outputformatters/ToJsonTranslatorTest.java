@@ -1,30 +1,20 @@
 package test.java.cli.outputformatters;
 
-import java.util.HashMap;
-import java.util.Map;
 
-import main.java.cli.outputformatters.Translatable;
 import main.java.cli.outputformatters.translators.ToJsonTranslator;
-import main.java.utils.exceptions.InvalidArgumentException;
-import main.java.utils.exceptions.formattersexceptions.UnknownTranslatableException;
 
-import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests to target {@link ToJsonTranslator}.
  * 
- * THIS IS NOT A UNITARY CLASS TEST,
- * call it a "lock and behold" class test.
+ * THIS IS NOT A UNITARY CLASS TEST, call it a "lock and behold" class test.
  * 
- * Due the maven building, the class is commented,
- * to see the tests uncomment the class.
+ * Due the maven building, the class is commented, to see the tests uncomment the class.
  *
- *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 @SuppressWarnings( "unused" )
-public class ToJsonTranslatorTest
-{
+public class ToJsonTranslatorTest {
 //	private static Map< String, Object > propertiesBag;
 //	private static ToJsonTranslator json;
 //

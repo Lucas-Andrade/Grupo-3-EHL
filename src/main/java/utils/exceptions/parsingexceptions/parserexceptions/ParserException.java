@@ -1,32 +1,34 @@
 package main.java.utils.exceptions.parsingexceptions.parserexceptions;
 
+
 import main.java.cli.parsingtools.Parser;
 import main.java.utils.exceptions.parsingexceptions.ParsingException;
+
 
 /**
  * Superclass for all {@link Parser} exceptions.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-@SuppressWarnings ("serial")
+@SuppressWarnings( "serial" )
 public class ParserException extends ParsingException {
-
-	/**
-	 * Constructs a {@link ParserException} with no detail message.
-	 */
-	public ParserException() {
-
-	}
-
-	/**
-	 * Constructs a {@link ParserException} with the specified detail message.
-	 * 
-	 * @param message
-	 *            The detail message.
-	 */
-	public ParserException(String message) {
-
-		super(message);
-	}
-
+    
+    /**
+     * Constructs a {@link ParserException} with no detail message.
+     */
+    public ParserException() {
+        
+    }
+    
+    /**
+     * Constructs a {@link ParserException} with the specified detail message.
+     * 
+     * @param message
+     *            The detail message.
+     */
+    public ParserException( String message ) {
+        
+        super( message );
+    }
+    
 }

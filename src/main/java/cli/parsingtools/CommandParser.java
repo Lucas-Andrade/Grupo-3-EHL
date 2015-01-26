@@ -8,13 +8,13 @@ import java.util.concurrent.Callable;
 import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.InvalidParameterValueException;
+import main.java.utils.exceptions.MissingRequiredParameterException;
+import main.java.utils.exceptions.WrongLoginPasswordException;
 import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 import main.java.utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
-import main.java.utils.exceptions.parsingexceptions.InvalidParameterValueException;
 import main.java.utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import main.java.utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
-import main.java.utils.exceptions.parsingexceptions.factoriesexceptions.MissingRequiredParameterException;
-import main.java.utils.exceptions.parsingexceptions.factoriesexceptions.WrongLoginPasswordException;
 
 
 /**

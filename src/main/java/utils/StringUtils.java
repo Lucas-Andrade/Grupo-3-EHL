@@ -1,8 +1,8 @@
 package main.java.utils;
 
 
-import main.java.utils.exceptions.parsingexceptions.InvalidParameterValueException;
-import main.java.utils.exceptions.parsingexceptions.factoriesexceptions.MissingRequiredParameterException;
+import main.java.utils.exceptions.InvalidParameterValueException;
+import main.java.utils.exceptions.MissingRequiredParameterException;
 
 
 /**

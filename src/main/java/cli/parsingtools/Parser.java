@@ -3,7 +3,6 @@ package main.java.cli.parsingtools;
 
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -14,12 +13,12 @@ import main.java.cli.outputformatters.translators.ToPlainTextTranslator;
 import main.java.cli.outputformatters.translators.Translator;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.InvalidParameterValueException;
+import main.java.utils.exceptions.MissingRequiredParameterException;
+import main.java.utils.exceptions.WrongLoginPasswordException;
 import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 import main.java.utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
-import main.java.utils.exceptions.parsingexceptions.InvalidParameterValueException;
 import main.java.utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
-import main.java.utils.exceptions.parsingexceptions.factoriesexceptions.MissingRequiredParameterException;
-import main.java.utils.exceptions.parsingexceptions.factoriesexceptions.WrongLoginPasswordException;
 import main.java.utils.exceptions.parsingexceptions.parserexceptions.DuplicateParametersException;
 import main.java.utils.exceptions.parsingexceptions.parserexceptions.InvalidCommandParametersSyntaxException;
 

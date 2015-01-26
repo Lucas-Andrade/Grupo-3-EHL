@@ -3,8 +3,8 @@ package test.java.utils;
 
 import static org.junit.Assert.assertEquals;
 import main.java.utils.StringUtils;
-import main.java.utils.exceptions.parsingexceptions.InvalidParameterValueException;
-import main.java.utils.exceptions.parsingexceptions.factoriesexceptions.MissingRequiredParameterException;
+import main.java.utils.exceptions.InvalidParameterValueException;
+import main.java.utils.exceptions.MissingRequiredParameterException;
 import org.junit.Test;
 
 
@@ -39,7 +39,7 @@ public class StringUtilsTest {
         assertEquals( new Double( 0.12d ), StringUtils.parameterToDouble( "name", ".12" ) );
         assertEquals( new Double( -12.01d ), StringUtils.parameterToDouble( "name", "-12.01" ) );
     }
-
+    
     @Test
     public void parameterToIntegerShouldReturnCorrectInteger()
         throws InvalidParameterValueException, MissingRequiredParameterException {
@@ -94,7 +94,7 @@ public class StringUtilsTest {
         
         StringUtils.parameterToDouble( "name", "value" );
     }
-
+    
     @Test( expected = InvalidParameterValueException.class )
     public void parameterToDoubleShouldThrowExceptionIfInvalidStringValueIsGiven2()
         throws InvalidParameterValueException, MissingRequiredParameterException {
@@ -123,7 +123,7 @@ public class StringUtilsTest {
         
         StringUtils.parameterToInteger( "name", "value" );
     }
-
+    
     @Test( expected = InvalidParameterValueException.class )
     public void parameterToIntegerShouldThrowExceptionIfInvalidStringValueIsGiven2()
         throws InvalidParameterValueException, MissingRequiredParameterException {

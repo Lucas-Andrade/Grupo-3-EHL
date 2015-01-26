@@ -34,9 +34,7 @@ public class MainWindow extends JFrame {
 		this.user = user;
 		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setBounds(100, 100, 1350, 850);
-		this.setResizable(true);
-		this.setLocationRelativeTo(null);
+	
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage("src/main/resources/images/radar.png"));
 		this.setTitle("Air Traffic Control");
 		
@@ -45,8 +43,8 @@ public class MainWindow extends JFrame {
 		getContentPane().add(contentPane);
 		
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{1300, 0};
-		gridBagLayout.rowHeights = new int[]{100, 10, 420, 50,	20, 0};
+		gridBagLayout.columnWidths = new int[]{0, 0};
+		gridBagLayout.rowHeights = new int[]{0, 0, 0, 0, 0, 0};
 		gridBagLayout.columnWeights = new double[]{0.0, 0.0};
 		gridBagLayout.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gridBagLayout);
@@ -57,7 +55,7 @@ public class MainWindow extends JFrame {
 		
 		JSeparator line0 = new JSeparator(SwingConstants.HORIZONTAL);
 		line0.setForeground(Color.WHITE);
-		line0.setPreferredSize(new Dimension(1330,1));	
+		line0.setPreferredSize(new Dimension(0,1));	
 		contentPane.add(line0,GridBagUtils.updateGridBagConstraints(constraints, 1));
 				
 		JBodyPanelForMainWindow bodyPanel = new JBodyPanelForMainWindow(airshipdatabase);	
@@ -73,9 +71,9 @@ public class MainWindow extends JFrame {
 		contentPane.add(errorLabel,GridBagUtils.updateGridBagConstraints(constraints, 4));
 		
 		pack();
+		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
-		
 		
 	}
 

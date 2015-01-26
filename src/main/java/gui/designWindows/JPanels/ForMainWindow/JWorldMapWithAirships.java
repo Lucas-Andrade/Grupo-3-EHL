@@ -2,7 +2,6 @@ package main.java.gui.designWindows.JPanels.ForMainWindow;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -22,13 +21,6 @@ public class JWorldMapWithAirships extends JScrollPanelForElements<Airship>{
 	private final double IMAGESCALEFACTOR=1.86;
 	private final double ORIGINPOSITIONLONGITUDE=25;
 	private final double ORIGINPOSITIONYLATITUDE=167;
-	
-	public JWorldMapWithAirships() {  
-		
-		this.setLayout(new FlowLayout());
-		
-		
-		}
 	
 	
 	public JPanel createAJPanelWithWorldMapAndAirships(Database<Airship> database) {

@@ -9,12 +9,12 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class JFooterPanelForMainWindow extends JPanel{
 
-	JButton getNearestAirships;
-	JButton getTransgressinips;
-	JButton getAirshipsWithLessPassengerThan;
-	JButton patchAirship;
-	JButton postAirship;
-	JButton deleteAirship;
+	private JButton getNearestAirships;
+	private JButton getTransgressingAirships;
+	private JButton getAirshipsWithLessPassengerThan;
+	private JButton patchAirship;
+	private JButton postAirship;
+	private JButton deleteAirship;
 
 	
 	public JFooterPanelForMainWindow(){
@@ -23,29 +23,29 @@ public class JFooterPanelForMainWindow extends JPanel{
 		this.setBackground(new Color(65,72,78));
 		
 		getNearestAirships = new JButton("Get Nearest Airship of Geographical Coordinate");
-		getTransgressinips = new JButton("Get Transgressing Airships");
+		getTransgressingAirships = new JButton("Get Transgressing Airships");
 		getAirshipsWithLessPassengerThan = new JButton("Get Airships with less Passengers");
 		patchAirship = new JButton("Change Airship");
 		postAirship = new JButton("Post Airship");
 		deleteAirship = new JButton("Delete Airship");
 		
 		this.add(getNearestAirships);
-		this.add(getTransgressinips);
+		this.add(getTransgressingAirships);
 		this.add(getAirshipsWithLessPassengerThan);
 		this.add(patchAirship);
 		this.add(postAirship);
 		this.add(deleteAirship);
 	}
 
-	public JButton getGetNearestAirships() {
+	public JButton getNearestAirships() {
 		return getNearestAirships;
 	}
 
-	public JButton getGetTransgressinips() {
-		return getTransgressinips;
+	public JButton getTransgressingAirships() {
+		return getTransgressingAirships;
 	}
 
-	public JButton getGetAirshipsWithLessPassengerThan() {
+	public JButton getAirshipsWithLessPassengerThan() {
 		return getAirshipsWithLessPassengerThan;
 	}
 
@@ -60,6 +60,4 @@ public class JFooterPanelForMainWindow extends JPanel{
 	public JButton getDeleteAirship() {
 		return deleteAirship;
 	}
-	
-	
 }

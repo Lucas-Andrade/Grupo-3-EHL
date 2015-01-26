@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
+import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionListener;
 import java.util.concurrent.Callable;
 
@@ -61,7 +62,6 @@ public abstract class WindowBase
 		createButtonsAndErrorLabel();		
 
 		getRootPane().setDefaultButton( buttonsPanel.getLeftButton() );
-		
 	}
 
 	
@@ -80,13 +80,13 @@ public abstract class WindowBase
 		getContentPane().setBackground( new Color( 65, 72, 78 ) );
 
 		setIconImage( Toolkit.getDefaultToolkit().getImage( "src/main/resources/images/radar.png" ) );
-
+		
 		setTitle( "Air Traffic Controll" );
 		setLocationRelativeTo( null );
 		setResizable( false );
 		setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
 	}
-
+	
 	/**
 	 * 
 	 */

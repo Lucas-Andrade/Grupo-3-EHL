@@ -11,14 +11,9 @@ import main.java.gui.designWindows.windows.popupWindows.PopupWindow;
 public class GetUsersWindow
 	extends PopupWindow
 {
-
-	private Iterable< User > database;
-
 	public GetUsersWindow( Database<User> dataBase, Iterable< User > users )
 	{
 		super(new JScrollPanelForUsers().produceAJScrollPaneWithAllElements( dataBase, users ));
 		setPreferredSize( new Dimension( 500, 300 ));
-		this.database = users;
 	}
-
 }

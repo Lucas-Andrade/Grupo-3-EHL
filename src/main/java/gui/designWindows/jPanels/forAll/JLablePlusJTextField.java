@@ -35,13 +35,13 @@ public class JLablePlusJTextField extends JPanel {
 	
 	public JLablePlusJTextField(String JLabelText, int JTextFieldSize, Color JLabelcolor, boolean isJPasswordField) {
 		
-		this(JLabelText, JTextFieldSize, JLabelcolor, isJPasswordField, null);
+		this(JLabelText, JTextFieldSize, JLabelcolor, isJPasswordField, "");
 
 	}
 	
 	public JLablePlusJTextField(String JLabelText, int JTextFieldSize, Color JLabelcolor) {
 
-		this(JLabelText, JTextFieldSize, JLabelcolor, false, null);
+		this(JLabelText, JTextFieldSize, JLabelcolor, false, "");
 
 	}
 

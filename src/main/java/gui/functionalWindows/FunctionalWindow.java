@@ -1,5 +1,7 @@
 package main.java.gui.functionalWindows;
 
+import java.awt.Dialog;
+import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.ExecutionException;
@@ -36,7 +38,12 @@ public abstract class FunctionalWindow<T> {
 		addRightButtonAction();
 		addLeftButtonAction();
 		
-		functionalWindow.setVisible( true );
+		functionalWindow.setModalityType( Dialog.ModalityType.TOOLKIT_MODAL );
+
+		System.out.println(functionalWindow.getModalityType());
+//		functionalWindow.setModalityType( ModalityType.APPLICATION_MODAL );
+		System.out.println(functionalWindow.getModalityType());
+//		functionalWindow.setVisible( true );
 	}
 	
 	// Private Methods
@@ -76,58 +83,55 @@ public abstract class FunctionalWindow<T> {
 			}
 		});
 	}
-
-
+	
 	// Protected Abstract Method
-
+	
 	/**
-	 * Contract for subclasses to return a {@link SwingWorker} with its
-	 * {@code doInBackground()} method.
+	 * Contract for subclasses to return a {@link SwingWorker} with its {@code doInBackground()}
+	 * method.
 	 * 
 	 * @return a {@link FunctionalWindowSwingWorker}
 	 */
 	protected abstract FunctionalWindowSwingWorker getSwingWorker();
-
+	
 	/**
-	 * Contract for subclasses where the {@code doInBackground()} method result
-	 * will be treated. Implementations decisions: The treatment of
-	 * {@link Exception}s are caught in the
+	 * Contract for subclasses where the {@code doInBackground()} method result will be treated.
+	 * Implementations decisions: The treatment of {@link Exception}s are caught in the
 	 * {@link FunctionalWindowSwingWorker#done()} method.
 	 * 
 	 * @param resultOfDoInBackGround
 	 */
-	protected abstract void functionalWindowDone( T resultOfDoInBackGround ) throws Exception;
-
-
+	protected abstract void functionalWindowDone(T resultOfDoInBackGround) throws Exception;
+	
 	// InnerClass
 	/**
-	 * Abstract SwingWorker Class that implements the {@code done()} method,
-	 * where the {@link Exception}s are caught.
+	 * Abstract SwingWorker Class that implements the {@code done()} method, where the
+	 * {@link Exception}s are caught.
 	 */
-	protected abstract class FunctionalWindowSwingWorker
-		extends SwingWorker< T, Void >
-	{
-
+	protected abstract class FunctionalWindowSwingWorker extends SwingWorker<T, Void> {
+		
 		@Override
-		final protected void done()
-		{
-			try
-			{
-				functionalWindowDone( get() );
-			}
-			catch( ExecutionException e )
-			{
-				functionalWindow.getErrorLabel().setText( e.getCause().getMessage() );
-				functionalWindow.getErrorLabel().setVisible( true );
-			}
-			catch( Exception e )
-			{
-				functionalWindow.getErrorLabel().setText( e.getMessage() );
-				functionalWindow.getErrorLabel().setVisible( true );
+		final protected void done() {
+		
+			try {
+				functionalWindowDone(get());
+				functionalWindow.getErrorLabel().setVisible(false);
+				
+			} catch (NumberFormatException e) {
+				functionalWindow.getErrorLabel().setText(e.getCause().getMessage());
+				functionalWindow.getErrorLabel().setVisible(true);
+				
+			} catch (ExecutionException e) {
+				functionalWindow.getErrorLabel().setText(e.getCause().getMessage());
+				functionalWindow.getErrorLabel().setVisible(true);
+				
+			} catch (Exception e) {
+				functionalWindow.getErrorLabel().setText(e.getMessage());
+				functionalWindow.getErrorLabel().setVisible(true);
 			}
 		}
 	}
-
+	
 	/**
 	 * @return the window
 	 */

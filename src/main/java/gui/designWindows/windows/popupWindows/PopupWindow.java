@@ -54,6 +54,7 @@ public abstract class PopupWindow
 		setIconImage( Toolkit.getDefaultToolkit().getImage( "src/main/resources/images/radar.png" ) );
 		setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
 		setSize( 400, 10 );
+		setModalityType( ModalityType.TOOLKIT_MODAL);
 		pack();
 		setLocationRelativeTo( null );
 		setResizable( false );
@@ -81,7 +82,6 @@ public abstract class PopupWindow
 	private JPanel createButton()
 	{
 		JPanel buttonPanel = new JPanel();
-		// panel.setSize( 400, 10 );
 		buttonPanel.setBackground( new Color( 65, 72, 78 ) );
 		JButton okButton = new JButton( "Ok" );
 		okButton.addActionListener( new ActionListener()

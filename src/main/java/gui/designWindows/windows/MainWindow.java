@@ -4,37 +4,32 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
-import main.java.domain.model.users.User;
 import main.java.gui.designWindows.GridBagUtils;
 import main.java.gui.designWindows.jPanels.forMainWindow.JBodyPanelForMainWindow;
 import main.java.gui.designWindows.jPanels.forMainWindow.JFooterPanelForMainWindow;
 import main.java.gui.designWindows.jPanels.forMainWindow.JHeaderForMainWindowPanel;
-import main.java.gui.designWindows.windows.userWindows.LogInWindow;
-import main.java.gui.functionalWindows.functionalUserWindows.FunctionalLoginWindow;
 
 @SuppressWarnings ("serial")
 public class MainWindow extends JFrame {
 	
-	private GridBagConstraints constraints = GridBagUtils.createGridBagConstraints();
+	// Fields
 	
-	private User user;
+	private GridBagConstraints constraints = GridBagUtils.createGridBagConstraints();
 	
 	private JHeaderForMainWindowPanel headerPanel;
 	private JBodyPanelForMainWindow bodyPanel;
-	JFooterPanelForMainWindow footerPanel;
+	private JFooterPanelForMainWindow footerPanel;
 	
-	public MainWindow(Database<Airship> airshipsDatabase, Database<User> usersDatabase, User user) {
+	// Constructor
 	
-		this.user = user;
-		
+	public MainWindow(Database<Airship> airshipsDatabase) {
+	
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(
 			"src/main/resources/images/radar.png"));
@@ -51,27 +46,9 @@ public class MainWindow extends JFrame {
 		gridBagLayout.rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPane.setLayout(gridBagLayout);
 		
-		headerPanel = new JHeaderForMainWindowPanel(usersDatabase, user);
-		headerPanel.getUserPanel().getLogoutButton().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			
-				new FunctionalLoginWindow(new LogInWindow(), usersDatabase, airshipsDatabase);
-				dispose();
-			}
-		});
+		headerPanel = new JHeaderForMainWindowPanel();
 		
 		contentPane.add(headerPanel, GridBagUtils.updateGridBagConstraints(constraints, 0));
-		
-		headerPanel.getUserPanel().getTurnOffButton().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			
-				dispose();
-			}
-		});
 		
 		contentPane.add(headerPanel, GridBagUtils.updateGridBagConstraints(constraints, 0));
 		
@@ -99,10 +76,7 @@ public class MainWindow extends JFrame {
 		setVisible(true);
 	}
 	
-	public User getUser() {
-	
-		return user;
-	}
+	// Public Get Methods
 	
 	public JHeaderForMainWindowPanel getHeaderPanel() {
 	
@@ -118,6 +92,8 @@ public class MainWindow extends JFrame {
 	
 		return footerPanel;
 	}
+	
+	// Public Set Methods
 	
 	public void setHeaderPanel(JHeaderForMainWindowPanel headerPanel) {
 	

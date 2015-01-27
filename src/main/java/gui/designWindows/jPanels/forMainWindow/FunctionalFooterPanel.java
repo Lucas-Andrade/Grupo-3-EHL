@@ -110,7 +110,8 @@ public class FunctionalFooterPanel {
 			}
 		});
 	}
-
+	
+	// Public Get Methods
 	
 	public JFooterPanelForMainWindow getFooterPanel() {
 	

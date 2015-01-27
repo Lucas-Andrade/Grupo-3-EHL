@@ -23,11 +23,13 @@ public class FunctionalHeaderPanel {
 	
 	// Constructor
 	
-	public FunctionalHeaderPanel(JHeaderForMainWindowPanel j, Database<User> usersDatabase,
-		User user) {
+	public FunctionalHeaderPanel(JHeaderForMainWindowPanel headerPanel,
+		Database<User> usersDatabase, User user) {
 	
-		this.headerPanel = j;
+		this.headerPanel = headerPanel;
+		
 		this.usersDatabase = usersDatabase;
+		
 		this.user = user;
 		
 		addChangePasswordButtonAction();
@@ -63,7 +65,6 @@ public class FunctionalHeaderPanel {
 				
 			}
 		});
-		;
 	}
 	
 	private void addRemoveUserButtonAction() {
@@ -76,7 +77,6 @@ public class FunctionalHeaderPanel {
 				new UnderConstrutionWindow();
 			}
 		});
-		;
 	}
 	
 	private void addInfoAllUsersButtonAction() {
@@ -89,7 +89,6 @@ public class FunctionalHeaderPanel {
 				new UnderConstrutionWindow();
 			}
 		});
-		;
 	}
 	
 	// Public Get Methods

@@ -52,8 +52,8 @@ public class FunctionalLoginWindow extends FunctionalWindow<User> {
 	@Override
 	protected void functionalWindowDone(User resultOfDoInBackGround) throws Exception {
 	
-		new FunctionalMainWindow(new MainWindow(airshipsDatabase), usersDatabase, airshipsDatabase,
-			resultOfDoInBackGround);
+		new FunctionalMainWindow(new MainWindow(airshipsDatabase, airshipsDatabase.getAllElements()
+			.get()), usersDatabase, airshipsDatabase, resultOfDoInBackGround);
 		
 		functionalWindow.dispose();
 	}

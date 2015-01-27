@@ -39,18 +39,13 @@ public class MainWindow extends JFrame {
 		contentPane.setBackground(new Color(65, 72, 78));
 		getContentPane().add(contentPane);
 		
-		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[] {0, 0};
-		gridBagLayout.rowHeights = new int[] {0, 0, 0, 0, 0, 0};
-		gridBagLayout.columnWeights = new double[] {0.0, 0.0};
-		gridBagLayout.rowWeights = new double[] {0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		contentPane.setLayout(gridBagLayout);
+		contentPane.setLayout(new GridBagLayout());
 		
 		headerPanel = new JHeaderForMainWindowPanel();
 		
-		contentPane.add(headerPanel, GridBagUtils.updateGridBagConstraints(constraints, 0));
+		contentPane.add(headerPanel, constraints);
 		
-		contentPane.add(headerPanel, GridBagUtils.updateGridBagConstraints(constraints, 0));
+		contentPane.add(headerPanel, constraints);
 		
 // TODO
 // JSeparator line0 = new JSeparator(SwingConstants.HORIZONTAL);
@@ -59,10 +54,10 @@ public class MainWindow extends JFrame {
 // contentPane.add(line0,GridBagUtils.updateGridBagConstraints(constraints, 1));
 		
 		bodyPanel = new JBodyPanelForMainWindow(airshipsDatabase, airshipsFound);
-		contentPane.add(bodyPanel, GridBagUtils.updateGridBagConstraints(constraints, 2));
+		contentPane.add(bodyPanel, GridBagUtils.updateGridBagConstraints(constraints, 1));
 		
 		footerPanel = new JFooterPanelForMainWindow();
-		contentPane.add(footerPanel, GridBagUtils.updateGridBagConstraints(constraints, 3));
+		contentPane.add(footerPanel, GridBagUtils.updateGridBagConstraints(constraints, 2));
 		
 // JLabel errorLabel = new JLabel("ERROROROROROROROOROR");
 // errorLabel.setForeground(Color.RED);
@@ -74,6 +69,18 @@ public class MainWindow extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		setVisible(true);
+	}
+	
+	// Public Set Methods
+	
+	public void setHeaderPanel(JHeaderForMainWindowPanel headerPanel) {
+	
+		this.headerPanel = headerPanel;
+	}
+	
+	public void setFooterPanel(JFooterPanelForMainWindow footerPanel) {
+	
+		this.footerPanel = footerPanel;
 	}
 	
 	// Public Get Methods
@@ -91,17 +98,5 @@ public class MainWindow extends JFrame {
 	public JFooterPanelForMainWindow getFooterPanel() {
 	
 		return footerPanel;
-	}
-	
-	// Public Set Methods
-	
-	public void setHeaderPanel(JHeaderForMainWindowPanel headerPanel) {
-	
-		this.headerPanel = headerPanel;
-	}
-	
-	public void setFooterPanel(JFooterPanelForMainWindow footerPanel) {
-	
-		this.footerPanel = footerPanel;
 	}
 }

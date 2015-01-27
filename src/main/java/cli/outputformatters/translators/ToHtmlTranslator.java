@@ -2,6 +2,7 @@ package main.java.cli.outputformatters.translators;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 import main.java.cli.outputformatters.Translatable;
 import main.java.utils.exceptions.InvalidArgumentException;
@@ -12,25 +13,24 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTranslatableExcept
  * Class whose instances have the task of translating {@link Translatable} instances into formatted
  * strings.
  * <p>
- * <b>ATTENTION:</b>
+ * <b>ATTENTION:</b> trying to encode {@link Translatable} instances that do not follow the
+ * conventions established in the {@link Translatable} class documentation may produce unexpected
+ * results.
  * </p>
  * <p>
- * It is advised to only try to encode {@link Translatable} instances that follow the conventions on
- * the {@link Translatable} documentation.
- * </p>
- * <p>
- * <b>Documentation notes:</b>
- * </p>
- * <p>
- * This documentation was written using the technical terms as defined in <a href
- * ="http://en.wikipedia.org/wiki/HTML_element#Syntax">this weblink</a>.
+ * <b>Documentation notes:</b> this class's documentation was written using the technical terms as
+ * defined in <a href ="http://en.wikipedia.org/wiki/HTML_element#Syntax">this weblink</a>.
  * </p>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class ToHtmlTranslator implements Translator {
     
+    
     // INSTANCE FIELD
+    /**
+     * A string composed by spaces, as many as told in the constructor.
+     */
     private final String indentationSpaces;
     
     
@@ -53,9 +53,12 @@ public class ToHtmlTranslator implements Translator {
     
     // PUBLIC METHOD
     /**
-     * Returns a string representation of {@code translatable} in HTML. <b>It is advised to only try
-     * to encode {@link Translatable} instances that follow the conventions on the
-     * {@link Translatable} documentation.</b>
+     * Returns a string representation of {@code translatable} in HTML.
+     * <p>
+     * <b>Attention!</b> Trying to encode {@link Translatable} instances that do not follow the
+     * conventions established in the {@link Translatable} class documentation may produce
+     * unexpected results.
+     * </p>
      * 
      * @param translatable
      *            The {@link Translatable} to be translated to HMTL.
@@ -67,8 +70,9 @@ public class ToHtmlTranslator implements Translator {
     @Override
     public String encode( Translatable translatable ) throws UnknownTranslatableException {
         
-        // ATTENTION: the order of the if statements on this method must not be
-        // changed unless you thought really well about what you're about to do!
+        /* the order of the if statements on this method must not be changed unless you
+        * thought really well about what you're about to do! */
+        
         
         // if translatable represents a String
         if( translatable.getTag() == null )
@@ -83,8 +87,7 @@ public class ToHtmlTranslator implements Translator {
     
     
     
-    // AUXILIARY PRIVATE METHOD
-    
+    // AUXILIARY PRIVATE METHODS
     
     
     // used in the constructor
@@ -122,13 +125,13 @@ public class ToHtmlTranslator implements Translator {
      * .
      * 
      * @param t
-     *            The translatable whose properties bag is to be converted in an {@link ArrayList}
+     *            The translatable whose properties bag is to be converted into an {@link ArrayList}
      *            of HTML raw text elements.
      * @return An {@link ArrayList} whose strings are HTML raw text elements.
      */
-    private ArrayList< String > getPropertiesAsRawTextElements( Translatable t ) {
+    private List< String > getPropertiesAsRawTextElements( Translatable t ) {
         
-        ArrayList< String > al = new ArrayList<>();
+        List< String > al = new ArrayList<>();
         for( Entry< String, Object > entry : t.getPropertiesBag().entrySet() )
             al.add( createRawTextElement( entry.getKey(), entry.getValue().toString() ) );
         return al;
@@ -147,11 +150,11 @@ public class ToHtmlTranslator implements Translator {
      *             If {@code translatable} does not follow the conventions specified in the
      *             {@link Translatable} documentation.
      */
-    private ArrayList< String > encodeInSeparateLines( Translatable translatable )
+    private List< String > encodeInSeparateLines( Translatable translatable )
         throws UnknownTranslatableException {
         
-        // ATTENTION: the order of the if statements on this method must not be
-        // changed unless you thought really well about what you're about to do!
+        /* the order of the if statements on this method must not be changed unless you
+        * thought really well about what you're about to do! */
         
         
         // if translatable represents a simple instance
@@ -177,7 +180,7 @@ public class ToHtmlTranslator implements Translator {
      * <li>has the string <code>{@literal <}elementName{@literal >}</code> in the first entry,</li>
      * <li>the next entries result of indenting all the strings of {@code internalLines} (assumes
      * each of them is a line) and</li>
-     * <li>has the string <code>{@literal <}elementName{@literal >}</code> in the last entry of the
+     * <li>has the string <code>{@literal </}elementName{@literal >}</code> in the last entry of the
      * list.</li>
      * </ul>
      * </p>
@@ -188,33 +191,29 @@ public class ToHtmlTranslator implements Translator {
      *            The content of the element.
      * @return An {@link ArrayList} whose entries are the described above.
      */
-    private ArrayList< String > createNormalElements( String elementName,
-                                                      ArrayList< String > internalLines ) {
+    private List< String > createNormalElements( String elementName, List< String > internalLines ) {
         
-        ArrayList< String > lines = new ArrayList< String >();
+        List< String > lines = new ArrayList< String >();
         
         lines.add( createStartTag( elementName ) );
-        
-        internalLines = indent( internalLines );
-        for( String line : internalLines )
-            lines.add( line );
-        
+        lines.addAll( indent( internalLines ) );
         lines.add( createEndTag( elementName ) );
         
         return lines;
     }
     
-    // used in the method encode(Translatable)
+    // used in the method encode
     /**
      * Returns the string that contains all the entries of {@code list} separated by the
-     * paragraph-character ({@code \n}). It is assumed that each entry represents a line. This
+     * paragraph-character ({@code \r\n}). It is assumed that each entry represents a line. This
      * string starts and ends with a paragraph-character.
      * 
      * @param list
      *            The lines to be concatenated.
-     * @return
+     * @return The string that concatenates all the entries of {@code list} separated by the
+     *         paragraph-character ({@code \r\n}).
      */
-    private String arrayListToString( ArrayList< String > list ) {
+    private String arrayListToString( List< String > list ) {
         
         StringBuilder sb = new StringBuilder( "\r\n" );
         for( String line : list )
@@ -226,8 +225,8 @@ public class ToHtmlTranslator implements Translator {
     
     // used in method encodeInSeparateLines
     /**
-     * Returns a string representation of {@code t}, which is assumed to represent an
-     * {@link Iterable}, where each line is contained in a different entry of an {@link ArrayList}.
+     * Returns a string representation in HTML of {@code t}, which is assumed to represent an
+     * {@link Iterable}.
      * 
      * @param t
      *            The {@link Translatable} to be translated to HMTL.
@@ -237,17 +236,17 @@ public class ToHtmlTranslator implements Translator {
      *             If {@code t} does not follow the conventions specified in the
      *             {@link Translatable} documentation.
      */
-    private ArrayList< String > encodeIterable( Translatable t )
-        throws UnknownTranslatableException {
+    private List< String > encodeIterable( Translatable t ) throws UnknownTranslatableException {
         
-        ArrayList< String > internalLines = new ArrayList< String >();
+        List< String > internalLines = new ArrayList< String >();
         try {
             for( Object element : t.getPropertiesBag().values() )
                 internalLines.addAll( encodeInSeparateLines( (Translatable)element ) );
         }
         catch( ClassCastException e ) {
             throw new UnknownTranslatableException(
-                                                    "Translatable representing iterable has non-translatable values in the properties bag." );
+                                                    "Translatable representing iterable has non-translatable values in the properties bag.",
+                                                    e );
         }
         
         return createNormalElements( t.getTag(), internalLines );
@@ -263,9 +262,9 @@ public class ToHtmlTranslator implements Translator {
      * @return A string representation of {@code t} in HTML where each line is contained in a
      *         different entry of the {@link ArrayList}.
      */
-    private ArrayList< String > encodeMap( Translatable t ) {
+    private List< String > encodeMap( Translatable t ) {
         
-        ArrayList< String > internalLines = new ArrayList< String >();
+        List< String > internalLines = new ArrayList< String >();
         
         for( Entry< String, Object > entry : t.getPropertiesBag().entrySet() ) {
             ArrayList< String > codedEntry = new ArrayList< String >();
@@ -289,9 +288,9 @@ public class ToHtmlTranslator implements Translator {
      *            The list of lines to be indent.
      * @return The indented lines in a new list of strings.
      */
-    private ArrayList< String > indent( ArrayList< String > list ) {
+    private List< String > indent( List< String > list ) {
         
-        ArrayList< String > al = new ArrayList<>();
+        List< String > al = new ArrayList<>();
         for( String line : list )
             al.add( indentationSpaces + line );
         return al;

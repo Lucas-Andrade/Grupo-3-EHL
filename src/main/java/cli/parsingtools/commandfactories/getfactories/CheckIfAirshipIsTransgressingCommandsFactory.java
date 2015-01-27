@@ -9,6 +9,7 @@ import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.
 import main.java.domain.commands.getcommands.CheckIfAirshipIsTransgressingCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 
@@ -82,8 +83,10 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends StringsToComma
             return new CheckIfAirshipIsTransgressingCommand( airshipsDatabase, flightId );
             
         }
-        catch( InvalidArgumentException e ) { // never happens because database is not null
-            return null;
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException(
+                                              "UNEXPECTED EXCEPTION IN CheckIfAirshipIsTransgressingCommandsFactory!" );
+            // never happens cause database is not null
         }
     }
     

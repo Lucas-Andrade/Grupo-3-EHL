@@ -42,18 +42,18 @@ public class StringUtils {
     public static Integer parameterToInteger( String parameterName, String parameterValue )
         throws InvalidParameterValueException, MissingRequiredParameterException {
         
+        
+        if( parameterValue.equals( "" ) )
+            throw new MissingRequiredParameterException( parameterName );
+        
         try {
-            
-            if( parameterValue.equals( "" ) )
-                throw new MissingRequiredParameterException( parameterName );
-            
-            return Integer.parseInt( parameterValue );
+            return Integer.valueOf( parameterValue );
         }
         catch( NullPointerException e ) {
-            throw new MissingRequiredParameterException( parameterName );
+            throw new MissingRequiredParameterException( parameterName, e );
         }
         catch( NumberFormatException e ) {
-            throw new InvalidParameterValueException( parameterName, parameterValue );
+            throw new InvalidParameterValueException( parameterName, parameterValue, e );
         }
     }
     
@@ -85,13 +85,13 @@ public class StringUtils {
             if( parameterValue.equals( "" ) )
                 throw new MissingRequiredParameterException( parameterName );
             
-            return Double.parseDouble( parameterValue );
+            return Double.valueOf( parameterValue );
         }
         catch( NullPointerException e ) {
-            throw new MissingRequiredParameterException( parameterName );
+            throw new MissingRequiredParameterException( parameterName, e );
         }
         catch( NumberFormatException e ) {
-            throw new InvalidParameterValueException( parameterName, parameterValue );
+            throw new InvalidParameterValueException( parameterName, parameterValue, e );
         }
     }
     

@@ -10,6 +10,7 @@ import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
 import main.java.domain.model.airships.MilitaryAirship;
 import main.java.domain.model.users.User;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.databaseexceptions.DatabaseException;
 
@@ -23,6 +24,8 @@ import main.java.utils.exceptions.databaseexceptions.DatabaseException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class PatchAirshipCommand implements Callable< String > {
+    
+    
     
     // INSTANCE FIELDS
     
@@ -52,6 +55,8 @@ public class PatchAirshipCommand implements Callable< String > {
     
     private Airship airship;
     private String type;
+    
+    
     
     // CONSTRUCTOR
     
@@ -153,15 +158,14 @@ public class PatchAirshipCommand implements Callable< String > {
             
             try {
                 Method creatorMethod = c.getDeclaredMethod( methodName, u );
-                creatorMethod.invoke( this, originalAirship );
-                
+                creatorMethod.invoke( this, originalAirship );                
             }
             catch( InvocationTargetException e ) {
-                throw new InvalidArgumentException( e.getMessage() );
-                
+                throw new InvalidArgumentException( e.getMessage(), e );                
             }
             catch( NoSuchMethodException | SecurityException | IllegalAccessException e ) {
-                return "UPS"; // Never Supposed To Happen!
+                throw new InternalErrorException("UNEXPECTED ERROR IN PatchAirshipCommand!", e);
+                // Never Supposed To Happen!
             }
             
             airshipDatabase.add( airship, user );
@@ -190,4 +194,5 @@ public class PatchAirshipCommand implements Callable< String > {
                 new MilitaryAirship( latitude, longitude, altitude, maxAltitude, minAltitude,
                                      originalAirship.hasWeapons(), identification );
     }
+
 }

@@ -28,6 +28,10 @@ import org.junit.Test;
 
 /**
  * Test case which targets the class {@link ToTranslatableConverter}.
+ * <p>
+ * <b>Implementation notes:</b>
+ * </p>
+ * <ul><li>This class makes use of the static fields in {@link CLIStringsDictionary}.</li></ul>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -306,7 +310,7 @@ public class ToTranslatableConverterTest {
         
         // Arrange
         Collection< Integer > objectThatCantBeConverted = new TreeSet<>();
-        objectThatCantBeConverted.add( new Integer( 1 ) );
+        objectThatCantBeConverted.add( 1 );
         
         // Act & Assert
         try {

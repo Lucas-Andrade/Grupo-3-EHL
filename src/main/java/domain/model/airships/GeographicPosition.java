@@ -52,7 +52,7 @@ public class GeographicPosition {
             
         }
         catch( InvalidArgumentException e ) {
-            throw new InvalidArgumentException( e.getMessage() + " for latitude." );
+            throw new InvalidArgumentException( e.getMessage() + " for latitude.", e );
         }
         
         try {
@@ -60,7 +60,7 @@ public class GeographicPosition {
             
         }
         catch( InvalidArgumentException e ) {
-            throw new InvalidArgumentException( e.getMessage() + " for longitude." );
+            throw new InvalidArgumentException( e.getMessage() + " for longitude.", e );
         }
         
         try {
@@ -68,7 +68,7 @@ public class GeographicPosition {
             
         }
         catch( InvalidArgumentException e ) {
-            throw new InvalidArgumentException( e.getMessage() + " for altitude." );
+            throw new InvalidArgumentException( e.getMessage() + " for altitude.", e );
         }
     }
     

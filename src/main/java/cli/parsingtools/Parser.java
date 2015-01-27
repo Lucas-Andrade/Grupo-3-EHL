@@ -1,9 +1,11 @@
 package main.java.cli.parsingtools;
 
 
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
@@ -27,9 +29,9 @@ import main.java.utils.exceptions.parsingexceptions.parserexceptions.InvalidComm
  * Class whose instances are responsible for interpreting string-commands.
  * <p>
  * Each instance is bound to a concrete string-command and to a {@link CommandParser} instance. The
- * public methods of this class allow getting the objects {@link Callable command},
- * {@link Translator output translator} and {@link PrintStream stream} coded in the string-command.
- * The register of the received command parser should contain the given string-command.
+ * public methods of this class allow getting the {@link Callable command}, {@link Translator output
+ * translator} and {@link PrintStream stream} coded in the string-command. The register of the
+ * received {@link CommandParser} should contain the given string-command.
  * </p>
  * <p>
  * <b>Implementation notes:</b>
@@ -38,7 +40,7 @@ import main.java.utils.exceptions.parsingexceptions.parserexceptions.InvalidComm
  * <li>This class will break the Open-Closed Principle (see SOLID principles); every time a new
  * {@link Translator} is created, a new entry has to be added to the static field
  * {@link #TRANSLATORS}.</li>
- * <li>This class makes use of the static fields in {@link CLIStringsDictionary}.
+ * <li>This class makes use of the static fields in {@link CLIStringsDictionary}.</li>
  * </ul>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -51,18 +53,39 @@ public class Parser {
     
     
     // CLASS FIELD AND CONSTRUCTOR
+    
     /**
      * The mapping between strings that may be contained in the string-command and the
      * {@link Translator} instance they correspond to (uses the {@link CLIStringsDictionary}).
      */
     public static final Map< String, Translator > TRANSLATORS = new HashMap< String, Translator >();
+    
+    /**
+     * The list of the methods ({@code args[0]}) of string-commands that support the output
+     * customization settings coded in the parameters with names {@link CLIStringsDictionary#ACCEPT}
+     * and {@link CLIStringsDictionary#STREAM}.
+     */
+    public static final List< String > methodsThatSupportOutputCustomization = new ArrayList<>();
+    
+    /**
+     * Initializes the fields {@link #TRANSLATORS} and {@link #methodsThatSupportAcceptAndStream} .
+     */
     static {
+        
+        /*TRANSLATORS*/
         try {
             TRANSLATORS.put( CLIStringsDictionary.HTML, new ToHtmlTranslator( 5 ) );
         }
-        catch( InvalidArgumentException e ) {} // never happens because argument 5 is bigger than 1
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException( "UNEXPECTED ERROR IN Parser!" );
+            // never happens because argument 5 is bigger than 1
+        }
         TRANSLATORS.put( CLIStringsDictionary.TEXT, new ToPlainTextTranslator() );
         TRANSLATORS.put( CLIStringsDictionary.JSON, new ToJsonTranslator() );
+        
+        /*methodsThatSupportOutputCustomization*/
+        methodsThatSupportOutputCustomization.add( "GET" );
+        methodsThatSupportOutputCustomization.add( "OPTION" );
     }
     
     
@@ -121,9 +144,7 @@ public class Parser {
      *             If {@code args}' length is smaller than 2 or bigger than 3.
      * @throws InvalidCommandParametersSyntaxException
      *             If the parameters in {@code args[2]} (if existent) are not correctly separated by
-     *             '{@code &}' or a certain parameter has not the format
-     *             <code>{@literal <}name>={@literal <}value>
-     *             </code>.
+     *             '{@code &}' or a certain parameter has not the format {@code name=value}.
      * @throws DuplicateParametersException
      *             If several values for the same parameter have been received in the
      *             parameters-list.
@@ -179,7 +200,7 @@ public class Parser {
     public Callable< ? > getCommand()
         throws WrongLoginPasswordException, MissingRequiredParameterException,
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
-        InvalidParameterValueException, InvalidArgumentException, InternalErrorException {
+        InvalidParameterValueException, InvalidArgumentException {
         
         return cmdParser.getCommand( parametersMap, args );
     }
@@ -199,7 +220,7 @@ public class Parser {
     public Translator getTranslator() throws InvalidParameterValueException {
         
         String translator = findValueOf( CLIStringsDictionary.ACCEPT );
-        if( translator == null )
+        if( translator == null || !supportsOutputCustomization() )
             translator = CLIStringsDictionary.TEXT;
         
         Translator t = TRANSLATORS.get( translator );
@@ -223,14 +244,15 @@ public class Parser {
     public PrintStream getStream() throws InvalidParameterValueException {
         
         String filePath = findValueOf( CLIStringsDictionary.STREAM );
-        if( filePath == null )
+        if( filePath == null || !supportsOutputCustomization() )
             return System.out;
+        
         try {
             return new PrintStream( filePath );
         }
-        catch( FileNotFoundException e ) {
+        catch( IOException e ) {
             throw new InvalidParameterValueException( CLIStringsDictionary.STREAM, filePath,
-                                                      e.getMessage() );
+                                                      e.getMessage(), e );
         }
     }
     
@@ -280,6 +302,21 @@ public class Parser {
             parametersMap.put( parameterName, parameterValue );
         }
         return parametersMap;
+    }
+    
+    // used in the methods getTranslator and getStream
+    /**
+     * Checks whether the string-command bound to this instance of {@link Parser} supports the
+     * functionalities coded in the parameters with names {@link CLIStringsDictionary#ACCEPT} and
+     * {@link CLIStringsDictionary#STREAM} (these are related with output formatting and printing).
+     * 
+     * @return {@code true} if the command supports custom output formatting and printing; <br/>
+     *         {@code false} if the results can only be printed in plain text to the
+     *         {@link System#out}.
+     */
+    private boolean supportsOutputCustomization() {
+        
+        return methodsThatSupportOutputCustomization.contains( args[0] );
     }
     
     // used in the methods getTranslator and getStream

@@ -4,6 +4,7 @@ package main.java.domain.commands;
 import java.util.concurrent.Callable;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.databaseexceptions.DatabaseException;
 
@@ -63,13 +64,17 @@ public class DeleteAirshipCommand implements Callable< String > {
      */
     @Override
     public String call() throws DatabaseException {
+        
         try {
             if( airshipDatabase.removeByIdentification( identification ) )
                 return "Airship successfully removed";
         }
-        catch( InvalidArgumentException e ) {// never happens because identification is non null
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException( "UNEXPECTED EXCEPTION IN DeleteAirshipCommand!", e );
+            // never happens because identification is non null
         }
         
         return "Airship doesn't exist in the database";
     }
+    
 }

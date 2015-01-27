@@ -34,18 +34,18 @@ public class StringUtilsTest {
     public void parameterToDoubleShouldReturnCorrectDouble()
         throws InvalidParameterValueException, MissingRequiredParameterException {
         
-        assertEquals( new Double( 12.0d ), StringUtils.parameterToDouble( "name", "12" ) );
-        assertEquals( new Double( 12.0d ), StringUtils.parameterToDouble( "name", "12.0" ) );
-        assertEquals( new Double( 0.12d ), StringUtils.parameterToDouble( "name", ".12" ) );
-        assertEquals( new Double( -12.01d ), StringUtils.parameterToDouble( "name", "-12.01" ) );
+        assertEquals( Double.valueOf( 12.0d ), StringUtils.parameterToDouble( "name", "12" ) );
+        assertEquals( Double.valueOf( 12.0d ), StringUtils.parameterToDouble( "name", "12.0" ) );
+        assertEquals( Double.valueOf( 0.12d ), StringUtils.parameterToDouble( "name", ".12" ) );
+        assertEquals( Double.valueOf( -12.01d ), StringUtils.parameterToDouble( "name", "-12.01" ) );
     }
     
     @Test
     public void parameterToIntegerShouldReturnCorrectInteger()
         throws InvalidParameterValueException, MissingRequiredParameterException {
         
-        assertEquals( new Integer( 12 ), StringUtils.parameterToInteger( "name", "12" ) );
-        assertEquals( new Integer( -12 ), StringUtils.parameterToInteger( "name", "-12" ) );
+        assertEquals( Integer.valueOf( 12 ), StringUtils.parameterToInteger( "name", "12" ) );
+        assertEquals( Integer.valueOf( -12 ), StringUtils.parameterToInteger( "name", "-12" ) );
     }
     
     

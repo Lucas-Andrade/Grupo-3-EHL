@@ -34,6 +34,8 @@ import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseExce
 public abstract class UserAuthenticatingFactory< E extends Element, R > extends
         StringsToCommandsFactory< R > {
     
+    
+    
     // INSTANCE FIELDS
     
     /**
@@ -56,6 +58,8 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
      * {@code loginPassword} - The use's login password received in the parameters map.
      */
     private String loginPassword;
+    
+    
     
     // CONSTRUCTOR
     
@@ -87,6 +91,8 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
         this.usersDatabase = usersDatabase;
         this.databaseToChange = databaseToChange;
     }
+    
+    
     
     // IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
     
@@ -151,13 +157,15 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
     protected final String[] getRequiredParametersNames() {
         
         String[] requiredParams =
-                copyToNewArrayWith2MorePositions( getSpecificRequiredParameters() );
+                copyToNewArrayWith2MorePositions( getSpecificRequiredParametersNames() );
         requiredParams[requiredParams.length - 2] = "loginName";
         requiredParams[requiredParams.length - 1] = "loginPassword";
         return requiredParams;
     }
     
-    // UNIMPLEMENTED AUXILIAR METHODS - to be implemented by the child classes.
+    
+    
+    // UNIMPLEMENTED AUXILIARY METHODS
     
     /**
      * Produces a command (returns it to the method {@link StringsToCommandsFactory#newInstance()
@@ -189,9 +197,11 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
      * @return An array of {@link String}s that has the names of the parameters needed for producing
      *         a command (returns it to the {@link #getRequiredParametersNames()}).
      */
-    protected abstract String[] getSpecificRequiredParameters();
+    protected abstract String[] getSpecificRequiredParametersNames();
     
-    // PRIVATE AUXILIAR METHODS
+    
+    
+    // AUXILIARY PRIVATE METHODS
     
     // used in the method getRequiredParameters
     /**
@@ -219,4 +229,5 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
         
         return result;
     }
+
 }

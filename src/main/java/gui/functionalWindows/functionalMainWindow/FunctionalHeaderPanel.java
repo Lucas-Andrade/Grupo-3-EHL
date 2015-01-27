@@ -1,11 +1,14 @@
-package main.java.gui.designWindows.jPanels.forMainWindow;
+package main.java.gui.functionalWindows.functionalMainWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.users.User;
+import main.java.gui.designWindows.jPanels.forMainWindow.JHeaderForMainWindowPanel;
 import main.java.gui.designWindows.windows.popupWindows.UnderConstrutionWindow;
+import main.java.gui.designWindows.windows.userWindows.GetUsersWindow;
 import main.java.gui.designWindows.windows.userWindows.PatchUserWindow;
 import main.java.gui.designWindows.windows.userWindows.PostUserWindow;
 import main.java.gui.functionalWindows.functionalUserWindows.FunctionalPatchUserWindow;
@@ -23,11 +26,13 @@ public class FunctionalHeaderPanel {
 	
 	// Constructor
 	
-	public FunctionalHeaderPanel(JHeaderForMainWindowPanel j, Database<User> usersDatabase,
-		User user) {
+	public FunctionalHeaderPanel(JHeaderForMainWindowPanel headerPanel,
+		Database<User> usersDatabase, User user) {
 	
-		this.headerPanel = j;
+		this.headerPanel = headerPanel;
+		
 		this.usersDatabase = usersDatabase;
+		
 		this.user = user;
 		
 		addChangePasswordButtonAction();
@@ -63,7 +68,6 @@ public class FunctionalHeaderPanel {
 				
 			}
 		});
-		;
 	}
 	
 	private void addRemoveUserButtonAction() {
@@ -76,7 +80,6 @@ public class FunctionalHeaderPanel {
 				new UnderConstrutionWindow();
 			}
 		});
-		;
 	}
 	
 	private void addInfoAllUsersButtonAction() {
@@ -84,12 +87,19 @@ public class FunctionalHeaderPanel {
 		headerPanel.getUserPanel().getInfoAllUsersButton().addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent ae) {
 			
-				new UnderConstrutionWindow();
+				try
+				{
+					new GetUsersWindow(usersDatabase, new GetAllElementsInADatabaseCommand< User >( usersDatabase ).call().get());
+				}
+				catch( Exception e )
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		});
-		;
 	}
 	
 	// Public Get Methods

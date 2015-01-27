@@ -33,7 +33,7 @@ public class PostAirshipsWindow extends WindowBase{
 	
 	public PostAirshipsWindow() {
 	
-		super(860, 310);
+		super(550, 700);
 		initialize();
 		this.setVisible(true);
 		

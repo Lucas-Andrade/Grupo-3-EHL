@@ -1,4 +1,4 @@
-package main.java.gui.functionalWindows.functionalUserWindows;
+package main.java.gui.functionalWindows.functionalMainWindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +11,8 @@ import main.java.gui.designWindows.windows.popupWindows.UnderConstrutionWindow;
 import main.java.gui.designWindows.windows.userWindows.GetUsersWindow;
 import main.java.gui.designWindows.windows.userWindows.PatchUserWindow;
 import main.java.gui.designWindows.windows.userWindows.PostUserWindow;
+import main.java.gui.functionalWindows.functionalUserWindows.FunctionalPatchUserWindow;
+import main.java.gui.functionalWindows.functionalUserWindows.FunctionalPostUserWindow;
 
 public class FunctionalJUserPanelForHeaderPanel
 {
@@ -81,15 +83,7 @@ public class FunctionalJUserPanelForHeaderPanel
 			@Override
 			public void actionPerformed( ActionEvent ae )
 			{
-				try
-				{
-					new GetUsersWindow(usersDatabase, new GetAllElementsInADatabaseCommand< User >( usersDatabase ).call().get());
-				}
-				catch( Exception e )
-				{
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				
 			}
 		} );;
 	}

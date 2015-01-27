@@ -85,7 +85,7 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<excludes>
-						<exclude>**/To_be_eliminated/**</exclude>
+						<exclude>**/gui/**</exclude>
 					</excludes>
 				</configuration>
 			</plugin>

@@ -20,6 +20,10 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTranslatableExcept
  */
 public class ToJsonTranslator implements Translator {
     
+    
+    private static int IndentationLength = 0;
+    
+    
     /**
      * Translate a {@link Translatable} to a string with the {@code Json} representation.
      * 
@@ -84,7 +88,8 @@ public class ToJsonTranslator implements Translator {
         }
         catch( ClassCastException e ) {
             throw new UnknownTranslatableException(
-                                                    "Translatable representing iterable has non-translatable values in the properties bag." );
+                                                    "Translatable representing iterable has non-translatable values in the properties bag.",
+                                                    e );
         }
         
         IndentationLength-- ;
@@ -193,8 +198,6 @@ public class ToJsonTranslator implements Translator {
         return strB;
     }
     
-    // Indentation
-    private static int IndentationLength = 0;
     
     /**
      * Create a StringBuilder for a indentation with the specified length

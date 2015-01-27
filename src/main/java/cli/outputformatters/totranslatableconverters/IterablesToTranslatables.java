@@ -40,7 +40,7 @@ class IterablesToTranslatables {
             }
             catch( ClassCastException e ) {
                 throw new UnknownTypeException( iterableOfUsers
-                                                + " could not be converted into a translatable." );
+                                                + " could not be converted into a translatable.", e );
             }
             
             Map< String, Object > propertiesBag = new LinkedHashMap< String, Object >();

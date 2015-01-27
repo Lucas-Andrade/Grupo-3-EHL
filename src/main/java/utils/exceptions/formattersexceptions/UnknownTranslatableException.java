@@ -16,6 +16,7 @@ import main.java.cli.outputformatters.translators.Translator;
 @SuppressWarnings( "serial" )
 public class UnknownTranslatableException extends Exception {
     
+    
     /**
      * Constructs an {@link UnknownTranslatableException} with the specified detail message.
      * 
@@ -24,6 +25,23 @@ public class UnknownTranslatableException extends Exception {
      */
     public UnknownTranslatableException( String message ) {
         super( message );
+    }
+    
+    
+    /**
+     * Constructs an {@link UnknownTranslatableException} with the specified detail message and the
+     * specified cause.
+     * 
+     * @param message
+     *            The detail message.
+     * @param cause
+     *            The cause (saved for later retrieval by the {@link #getCause()} method).
+     *            {@code null} values are allowed and indicate that the cause is nonexistent or
+     *            unknown.
+     */
+    public UnknownTranslatableException( String message, Throwable cause ) {
+        
+        super( message, cause );
     }
     
 }

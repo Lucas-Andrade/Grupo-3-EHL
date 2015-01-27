@@ -3,6 +3,7 @@ package main.java.domain.model.users;
 
 import main.java.domain.model.Database;
 import main.java.domain.model.InMemoryDatabase;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.databaseexceptions.DatabaseException;
 
@@ -47,9 +48,11 @@ public class InMemoryUsersDatabase extends InMemoryDatabase< User > {
             User master = new User( "MASTER", "master", "master@master" );
             this.add( master, master );
         }
-        catch( InvalidArgumentException e ) {}
-        // this never happens cause user's constructor wasn't given null nor empty-string arguments
-        // and method add of InMemoryDatabase was called with non-null arguments
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException( "UNEXPECTED ERROR IN InMemoryUsersDatabase! (1)", e );
+            // this never happens cause user's constructor wasn't given null nor empty-string
+            // arguments and method add of InMemoryDatabase was called with non-null arguments
+        }
         
     }
     
@@ -83,9 +86,11 @@ public class InMemoryUsersDatabase extends InMemoryDatabase< User > {
                     return false;
             
         }
-        catch( Exception e ) {}
-        // never happens because getAllElements never returns null optionals so the get() method
-        // never throws the exception!
+        catch( Exception e ) {
+            throw new InternalErrorException( "UNEXPECTED ERROR IN InMemoryUsersDatabase! (2)", e );
+            // never happens because getAllElements never returns null optionals so the get() method
+            // never throws the exception!
+        }
         
         return super.add( userToAdd, userWhoIsPosting );
     }
@@ -115,4 +120,5 @@ public class InMemoryUsersDatabase extends InMemoryDatabase< User > {
         
         return super.removeByIdentification( username );
     }
+    
 }

@@ -11,6 +11,7 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTranslatableExcept
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
+@FunctionalInterface
 public interface Translator {
     
     /**

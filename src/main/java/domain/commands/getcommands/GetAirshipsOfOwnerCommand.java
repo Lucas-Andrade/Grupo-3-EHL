@@ -51,7 +51,7 @@ public class GetAirshipsOfOwnerCommand implements Callable< Optional< Iterable< 
         
         if( airshipDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
-        if( ownerUsername == null || ownerUsername == "" )
+        if( ownerUsername == null || ownerUsername.equals( "" ) )
             throw new InvalidArgumentException( "Cannot instantiate command with a null username." );
         
         this.airshipDatabase = airshipDatabase;

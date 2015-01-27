@@ -23,6 +23,8 @@ import main.java.utils.exceptions.InvalidArgumentException;
  */
 public class PatchUserPasswordCommandsFactory extends StringsToCommandsFactory< String > {
     
+    
+    
     // INSTANCE FIELDS
     
     /**
@@ -41,17 +43,19 @@ public class PatchUserPasswordCommandsFactory extends StringsToCommandsFactory< 
      */
     private String username;
     
-    /*
+    /**
      * {@code oldPassword} - The old password needed to confirm if its the rightfull user who's
      * changing the password.
      */
     private String oldPassword;
     
-    /*
+    /**
      * {@code newPawwsord} - The new user password that will be atributed to the user if the command
      * is successful.
      */
     private String newPassword;
+    
+    
     
     // CONSTRUCTOR
     
@@ -78,6 +82,8 @@ public class PatchUserPasswordCommandsFactory extends StringsToCommandsFactory< 
                 new String[]{ CLIStringsDictionary.USERNAME, CLIStringsDictionary.OLDPASSWORD,
                              CLIStringsDictionary.NEWPASSWORD };
     }
+    
+    
     
     // IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
     
@@ -112,6 +118,8 @@ public class PatchUserPasswordCommandsFactory extends StringsToCommandsFactory< 
         
         return requiredParametersNames;
     }
+    
+    
     
     // PRIVATE AUXILIAR METHODS
     
@@ -150,4 +158,5 @@ public class PatchUserPasswordCommandsFactory extends StringsToCommandsFactory< 
         
         newPassword = getParameterAsString( requiredParametersNames[2] );
     }
+
 }

@@ -56,7 +56,7 @@ public class GetElementFromADatabaseByIdCommand< E extends Element > implements
         if( database == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
-        if( identification == null || identification == "" )
+        if( identification == null || identification.equals( "" ) )
             throw new InvalidArgumentException(
                                                 "Cannot instantiate command with null identification." );
         

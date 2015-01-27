@@ -37,7 +37,7 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTypeException;
  * <p>
  * This class will break the Open-Closed Principle (see SOLID principles); every time a new
  * {@link Converter} is created, a new entry has to be added to the static field
- * {@link #CONVERSORSbyTYPE}.
+ * {@link #CONVERSORS_BY_TYPE}.
  * </p>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -58,21 +58,21 @@ public class ToTranslatableConverter {
      * </ul>
      */
     /* non-generic types */
-    private static final String civilType = CivilAirship.class.getSimpleName(); // CivilAirship
-    private static final String militaryType = MilitaryAirship.class.getSimpleName(); // MilitaryAirship
-    private static final String optionsListType = OptionsList.class.getSimpleName(); // OptionsList
-    private static final String stringType = String.class.getSimpleName(); // String
-    private static final String userType = User.class.getSimpleName(); // User
+    private static final String CIVIL_TYPE = CivilAirship.class.getSimpleName(); // CivilAirship
+    private static final String MILITARY_TYPE = MilitaryAirship.class.getSimpleName(); // MilitaryAirship
+    private static final String OPTIONSLIST_TYPE = OptionsList.class.getSimpleName(); // OptionsList
+    private static final String STRING_TYPE = String.class.getSimpleName(); // String
+    private static final String USER_TYPE = User.class.getSimpleName(); // User
     /* iterables */
-    private static final String iterableCivilType = "it" + civilType; // Iterable<CivilAirship>
-    private static final String iterableMilitaryType = "it" + militaryType; // Iterable<MilitaryAirship>
-    private static final String iterableUserType = "it" + userType; // Iterable<User>
+    private static final String ITERABLE_CIVIL_TYPE = "it" + CIVIL_TYPE; // Iterable<CivilAirship>
+    private static final String ITERABLE_MILITARY_TYPE = "it" + MILITARY_TYPE; // Iterable<MilitaryAirship>
+    private static final String ITERABLE_USER_TYPE = "it" + USER_TYPE; // Iterable<User>
     
     /**
      * The mapping between string representations of some types and the {@link Converter} instances
      * capable of converting instances of those types into {@link Translatables}.
      */
-    private static final Map< String, Converter > CONVERSORSbyTYPE =
+    private static final Map< String, Converter > CONVERSORS_BY_TYPE =
             new HashMap< String, Converter >();
     
     
@@ -83,18 +83,18 @@ public class ToTranslatableConverter {
      */
     static {
         
-        CONVERSORSbyTYPE.put( userType, new SimpleInstancesToTranslatables.UserConversor() );
-        CONVERSORSbyTYPE.put( civilType, new SimpleInstancesToTranslatables.CivilAirshipConverter() );
-        CONVERSORSbyTYPE.put( militaryType,
+        CONVERSORS_BY_TYPE.put( USER_TYPE, new SimpleInstancesToTranslatables.UserConversor() );
+        CONVERSORS_BY_TYPE.put( CIVIL_TYPE, new SimpleInstancesToTranslatables.CivilAirshipConverter() );
+        CONVERSORS_BY_TYPE.put( MILITARY_TYPE,
                               new SimpleInstancesToTranslatables.MilitaryAirshipConverter() );
-        CONVERSORSbyTYPE.put( stringType, new StringToTranslatableConverter() );
-        CONVERSORSbyTYPE.put( iterableUserType,
+        CONVERSORS_BY_TYPE.put( STRING_TYPE, new StringToTranslatableConverter() );
+        CONVERSORS_BY_TYPE.put( ITERABLE_USER_TYPE,
                               new IterablesToTranslatables.IterableUserConverter() );
-        CONVERSORSbyTYPE.put( iterableCivilType,
+        CONVERSORS_BY_TYPE.put( ITERABLE_CIVIL_TYPE,
                               new IterablesToTranslatables.IterableAirshipConverter() );
-        CONVERSORSbyTYPE.put( iterableMilitaryType,
+        CONVERSORS_BY_TYPE.put( ITERABLE_MILITARY_TYPE,
                               new IterablesToTranslatables.IterableAirshipConverter() );
-        CONVERSORSbyTYPE.put( optionsListType, new MapsToTranslatables.OptionsListConverter() );
+        CONVERSORS_BY_TYPE.put( OPTIONSLIST_TYPE, new MapsToTranslatables.OptionsListConverter() );
     }
     
     
@@ -153,14 +153,16 @@ public class ToTranslatableConverter {
         try {
             
             obj = optional.get();
-            if( optional.isEmpty() ) // empty collection or empty map
-                return getConversor( stringType ).convert( optional.toString() );
+            
+            // empty collection or empty map
+            if( optional.isEmpty() )
+                return getConversor( STRING_TYPE ).convert( optional.toString() );
             return getTranslatableOfValue( obj );
             
         }
         catch( Exception e ) {
-            // this is caught if value is null, its message is sent to the strings' conversor
-            return getConversor( stringType ).convert( e.getMessage() );
+            // this is caught if value is null
+            return getConversor( STRING_TYPE ).convert( e.getMessage() );
         }
     }
     
@@ -189,7 +191,7 @@ public class ToTranslatableConverter {
             }
             
             // if empty iterable
-            else return getConversor( stringType ).convert( "no result found" );
+            else return getConversor( STRING_TYPE ).convert( "no result found" );
         }
         
         else return getConversor( obj.getClass().getSimpleName() ).convert( obj );
@@ -210,7 +212,7 @@ public class ToTranslatableConverter {
      */
     private static Converter getConversor( String type ) throws UnknownTypeException {
         
-        Converter c = CONVERSORSbyTYPE.get( type );
+        Converter c = CONVERSORS_BY_TYPE.get( type );
         
         if( c == null )
             throw new UnknownTypeException( "Cannot convert instances of type " + type );

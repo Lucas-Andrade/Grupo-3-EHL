@@ -10,6 +10,7 @@ import main.java.domain.commands.postcommands.PostUserCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.users.User;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 
@@ -83,10 +84,10 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
         try {
             return new PostUserCommand( username, password, email, fullName, databaseToChange,
                                         userWhoIsPosting );
-            
         }
-        catch( InvalidArgumentException e ) {// never happens cause databaseWhereToPost is not null
-            return null;
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException( "UNEXPECTED EXCEPTION IN PostUserCommandsFactory!" );
+            // never happens cause databaseWhereToPost is not null
         }
         
     }
@@ -98,7 +99,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
      * @return An array of strings with the name of the required parameters.
      */
     @Override
-    protected String[] getSpecificRequiredParameters() {
+    protected String[] getSpecificRequiredParametersNames() {
         
         return requiredParametersNames;
     }

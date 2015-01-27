@@ -29,6 +29,8 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  */
 public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airship, String > {
     
+    
+    
     // INSTANCE FIELDS
     
     /**
@@ -52,6 +54,8 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
     private double maxAltitude;
     private int numberOfPassengers; // not null only if Civil
     private boolean hasArmour; // not null only if Military
+    
+    
     
     // CONSTRUCTOR
     
@@ -80,8 +84,11 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
                              CLIStringsDictionary.AIRCORRIDOR_MAXALTITUDE };
     }
     
+    
+    
     // IMPLEMENTATION OF METHODS INHERITED FROM UserAuthenticatingFactory
     
+    @SuppressWarnings( "unchecked" )
     /**
      * Returns a command of type {@link PostCivilAirshipCommand} or
      * {@link PostMilitaryAirshipCommand} after getting the necessary {@code required parameters}
@@ -101,11 +108,9 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      * @throws InternalErrorException
      *             Should never happen!
      */
-    @SuppressWarnings( "unchecked" )
     @Override
     protected Callable< String > internalInternalNewInstance( User userWhoIsPosting )
-        throws InternalErrorException, MissingRequiredParameterException,
-        InvalidParameterValueException {
+        throws MissingRequiredParameterException, InvalidParameterValueException {
         
         setValuesOfTheParametersMap();
         
@@ -120,26 +125,20 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
         }
         catch( InvocationTargetException e ) {
             
-            try {
-                throw e.getTargetException();
-                
-            }
-            catch( MissingRequiredParameterException e1 ) {
-                throw (MissingRequiredParameterException)e1;
-                
-            }
-            catch( InvalidParameterValueException e1 ) {
-                throw (InvalidParameterValueException)e1;
-                
-            }
-            catch( Throwable e1 ) {// If this happen make a call to the God of Java
-                throw new InternalErrorException();
-            }
+            Throwable actualException = e.getTargetException();
+            if( actualException instanceof MissingRequiredParameterException )
+                throw (MissingRequiredParameterException)actualException;
+            if( actualException instanceof InvalidParameterValueException )
+                throw (InvalidParameterValueException)actualException;
+            else throw new InternalErrorException(
+                                                   "UNEXPECTED ERROR IN PostAirshipCommandsFactory! (1)",
+                                                   e );
             
         }
         catch( NoSuchMethodException | SecurityException | IllegalAccessException
                | IllegalArgumentException e ) {
-            throw new InvalidParameterValueException( CLIStringsDictionary.AIRSHIP_TYPE, type );
+            
+            throw new InvalidParameterValueException( CLIStringsDictionary.AIRSHIP_TYPE, type, e );
         }
         
     }
@@ -152,10 +151,12 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      * @return An array of strings with the name of the required parameters.
      */
     @Override
-    protected String[] getSpecificRequiredParameters() {
+    protected String[] getSpecificRequiredParametersNames() {
         
         return requiredParametersNames;
     }
+    
+    
     
     // PRIVATE AUXILIAR METHOD - used in the method postsInternalNewInstance()
     
@@ -185,7 +186,9 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
         maxAltitude = getParameterAsDouble( CLIStringsDictionary.AIRCORRIDOR_MAXALTITUDE );
     }
     
-    // Methods Used With Reflection
+    
+    
+    // PRIVATE METHODS INVOKED USING REFLECTION
     
     /**
      * Private method that is invoked using reflection inside the
@@ -205,11 +208,8 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      *             Should not happen.
      */
     @SuppressWarnings( "unused" )
-    // used with reflection
-            private
-            Callable< String > postCivilAirship( User userWhoIsPosting )
-                throws MissingRequiredParameterException, InvalidParameterValueException,
-                InternalErrorException {
+    private Callable< String > postCivilAirship( User userWhoIsPosting )
+        throws MissingRequiredParameterException, InvalidParameterValueException {
         
         if( !parametersMap.containsKey( CLIStringsDictionary.NUMBEROFPASSENGERS ) )
             throw new MissingRequiredParameterException( CLIStringsDictionary.NUMBEROFPASSENGERS );
@@ -221,8 +221,11 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
                                                 minAltitude, numberOfPassengers, databaseToChange,
                                                 userWhoIsPosting );
         }
-        catch( InvalidArgumentException e ) {// never happens for databaseWhereToPost is not null
-            throw new InternalErrorException();
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException(
+                                              "UNEXPECTED ERROR IN PostAirshipCommandsFactory! (2)",
+                                              e );
+            // never happens for databaseWhereToPost is not null
         }
     }
     
@@ -245,8 +248,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      */
     @SuppressWarnings( "unused" )
     private Callable< String > postMilitaryAirship( User userWhoIsPosting )
-        throws MissingRequiredParameterException, InvalidParameterValueException,
-        InternalErrorException {
+        throws MissingRequiredParameterException, InvalidParameterValueException {
         
         if( !parametersMap.containsKey( CLIStringsDictionary.HASARMOUR ) )
             throw new MissingRequiredParameterException( CLIStringsDictionary.HASARMOUR );
@@ -258,8 +260,11 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
                                                    minAltitude, hasArmour, databaseToChange,
                                                    userWhoIsPosting );
         }
-        catch( InvalidArgumentException e ) {// never happens for databaseWhereToPost is not null
-            throw new InternalErrorException();
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException(
+                                              "UNEXPECTED ERROR IN PostAirshipCommandsFactory! (3)",
+                                              e );
+            // never happens for databaseWhereToPost is not null
         }
     }
 }

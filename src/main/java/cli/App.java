@@ -89,22 +89,31 @@ import main.java.utils.exceptions.parsingexceptions.commandparserexceptions.Inva
  */
 public class App {
     
+    
+    // STATIC FIELDS
+    
     private static final CommandParser cmdParser = new CommandParser();
-    private static final Scanner scanner = new Scanner( System.in );
+    private static final Scanner SCANNER = new Scanner( System.in );
     
     private static InMemoryUsersDatabase usersDatabase;
     private static InMemoryAirshipsDatabase airshipsDatabase;
-    static {// static block needed to catch exceptions while initializing databases
+    
+    // STATIC CONSTRUCTOR
+    
+    static {
         try {
             usersDatabase = new InMemoryUsersDatabase( "users database" );
             airshipsDatabase = new InMemoryAirshipsDatabase( "airships database" );
         }
-        catch( InvalidArgumentException e ) {// never happens cause the strings given as arguments
-                                             // are non-null
+        catch( InvalidArgumentException e ) {
             System.out.println( e.getMessage() );
+            // never happens cause the strings given as arguments are non-null
         }
     }
     
+    
+    
+    // METHODS
     
     /**
      * Execute the inputed {@code args} or {@code input}, see {@link #execute(String[])}.
@@ -126,12 +135,12 @@ public class App {
         // App's behavior if app starts with no arguments
         else {
             System.out.print( "> " );
-            String input = scanner.nextLine();
+            String input = SCANNER.nextLine();
             
             while( !input.equals( "EXIT" ) ) {
                 execute( input.split( " " ) );
                 System.out.print( "\n> " );
-                input = scanner.nextLine();
+                input = SCANNER.nextLine();
             }
         }
     }
@@ -215,9 +224,9 @@ public class App {
         catch( InvalidRegisterException e ) {
             System.out.println( e.getMessage() );
         }
-        catch( InvalidArgumentException e ) {// never happens cause usersDatabase and
-                                             // airshipsDatabase are not null
+        catch( InvalidArgumentException e ) {
             System.out.println( e.getMessage() );
+            // never happens cause usersDatabase and airshipsDatabase are not null
         }
     }
     
@@ -259,4 +268,5 @@ public class App {
             System.out.println( e.getMessage() );
         }
     }
+    
 }

@@ -7,6 +7,7 @@ import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.Element;
 import main.java.utils.Optional;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 
@@ -69,10 +70,11 @@ public abstract class GetAllElementsInADatabaseCommandsFactory< E extends Elemen
         
         try {
             return new GetAllElementsInADatabaseCommand< E >( database );
-            
         }
-        catch( InvalidArgumentException e ) { // never happens because database is not null
-            return null;
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException(
+                                              "UNEXPECTED EXCEPTION IN GetAllElementsInADatabaseCommandsFactory!" );
+            // never happens cause database is not null
         }
     }
     

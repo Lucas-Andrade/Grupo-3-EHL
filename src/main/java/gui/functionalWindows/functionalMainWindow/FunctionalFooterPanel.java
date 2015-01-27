@@ -13,6 +13,7 @@ import main.java.gui.designWindows.jPanels.forMainWindow.JFooterPanelForMainWind
 import main.java.gui.designWindows.windows.airshipWindows.PostAirshipsWindow;
 import main.java.gui.designWindows.windows.popupWindows.UnderConstrutionWindow;
 import main.java.gui.functionalWindows.functionalAirshipWindows.FunctionalPostAirshipWindow;
+import main.java.utils.exceptions.InternalErrorException;
 
 public class FunctionalFooterPanel {
 	
@@ -52,10 +53,15 @@ public class FunctionalFooterPanel {
 		footerPanel.getShowAllAirships().addActionListener(new ActionListener() {
 			
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent click) {
 			
-				updateBodyPanel(airshipsDatabase, new GetAllElementsInADatabaseCommand<Airship>(
-					airshipsDatabase).call().get());
+				try {
+					updateBodyPanel(airshipsDatabase, new GetAllElementsInADatabaseCommand<Airship>(
+						airshipsDatabase).call().get());
+					
+				} catch (Exception exception) {
+					throw new InternalErrorException(exception);
+				}
 			}
 		});
 	}

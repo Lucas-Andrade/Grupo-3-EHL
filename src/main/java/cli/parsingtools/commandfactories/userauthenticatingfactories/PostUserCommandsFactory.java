@@ -1,11 +1,10 @@
-package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.postfactories;
+package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories;
 
 
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
-import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.UserAuthenticatingFactory;
 import main.java.domain.commands.postcommands.PostUserCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;

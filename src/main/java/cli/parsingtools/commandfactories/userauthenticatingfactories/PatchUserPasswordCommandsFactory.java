@@ -1,10 +1,9 @@
-package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.patchfactories;
+package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories;
 
 
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
-import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.UserAuthenticatingFactory;
 import main.java.domain.commands.patchcommands.PatchUserPasswordCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;

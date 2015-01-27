@@ -72,8 +72,8 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow<String> {
 					
 					int specificComponent = (int) Double.parseDouble(this.specificComponent);
 					
-					return new PostCivilAirshipCommand(latitude, longitude, altitude, minAltitude,
-						maxAltitude, specificComponent, airshipsDatabase, userWhoIsPosting).call();
+					return new PostCivilAirshipCommand(latitude, longitude, altitude, 
+						maxAltitude, minAltitude, specificComponent, airshipsDatabase, userWhoIsPosting).call();
 					
 				} else {
 					
@@ -102,7 +102,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow<String> {
 					boolean specificComponent = Boolean.parseBoolean(this.specificComponent);
 					
 					return new PostMilitaryAirshipCommand(latitude, longitude, altitude,
-						minAltitude, maxAltitude, specificComponent, airshipsDatabase,
+							maxAltitude, minAltitude, specificComponent, airshipsDatabase,
 						userWhoIsPosting).call();
 				}
 			}

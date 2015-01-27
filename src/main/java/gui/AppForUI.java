@@ -12,6 +12,13 @@ import main.java.gui.functionalWindows.functionalUserWindows.FunctionalLoginWind
 import main.java.utils.exceptions.InvalidArgumentException;
 
 /**
+ * User Interface - Swing
+ * 
+ * Who to use, first login user:
+ * <ul>
+ * <li> Username: MASTER
+ * <li> Password: master
+ * <ul>
  * 
  * 
  *

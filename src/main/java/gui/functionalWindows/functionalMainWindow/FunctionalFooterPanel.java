@@ -3,7 +3,6 @@ package main.java.gui.functionalWindows.functionalMainWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllAirshipsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;

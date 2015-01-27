@@ -114,6 +114,8 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow<String> {
 	
 		new SuccessWindow("Airship Successfully Posted -> " + resultOfDoInBackGround);
 		
+		
 		functionalWindow.dispose();
+		
 	}
 }

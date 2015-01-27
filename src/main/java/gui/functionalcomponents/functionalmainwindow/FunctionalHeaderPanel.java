@@ -13,100 +13,132 @@ import main.java.gui.design.windows.userwindows.PatchUserWindow;
 import main.java.gui.design.windows.userwindows.PostUserWindow;
 import main.java.gui.functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import main.java.gui.functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
+import main.java.utils.exceptions.InternalErrorException;
 
-public class FunctionalHeaderPanel {
-	
+
+/**
+ * Class whose instances have the responsibility to add the
+ * {@link ActionListener}s to the given {@link JHeaderPanelForMainWindow}
+ * buttons, i.e., All {@link User}s commands: POST, GET, PATCH, DELETE
+ * 
+ *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
+public class FunctionalHeaderPanel
+{
+
 	// Field
-	
+
 	private JHeaderPanelForMainWindow headerPanel;
-	
-	private Database<User> usersDatabase;
-	
+	private Database< User > usersDatabase;
 	private User user;
-	
+
 	// Constructor
-	
-	public FunctionalHeaderPanel(JHeaderPanelForMainWindow headerPanel,
-		Database<User> usersDatabase, User user) {
-	
+
+	/**
+	 * Give an {@link ActionListener}s to the given
+	 * {@link JHeaderPanelForMainWindow} buttons. To return the functional
+	 * {@code FunctionalHeaderPanel} use the
+	 * {@link FunctionalHeaderPanel#getHeaderPanel()} method.
+	 * 
+	 * @param headerPanel
+	 * @param usersDatabase
+	 * @param user
+	 */
+	public FunctionalHeaderPanel( JHeaderPanelForMainWindow headerPanel, Database< User > usersDatabase,
+			User user )
+	{
 		this.headerPanel = headerPanel;
-		
 		this.usersDatabase = usersDatabase;
-		
 		this.user = user;
-		
-		addChangePasswordButtonAction();
+
 		addAddUserButtonAction();
-		addRemoveUserButtonAction();
+		addChangePasswordButtonAction();
 		addInfoAllUsersButtonAction();
+		addRemoveUserButtonAction();
 	}
-	
-	// Private Auxiliar Method
-	
-	private void addChangePasswordButtonAction() {
-	
-		headerPanel.getUserPanel().getChangePasswordButton()
-			.addActionListener(new ActionListener() {
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-				
-					new FunctionalPatchUserWindow(new PatchUserWindow(), usersDatabase);
-					
-				}
-			});
-	}
-	
-	private void addAddUserButtonAction() {
-	
-		headerPanel.getUserPanel().getAddUserButton().addActionListener(new ActionListener() {
-			
+
+	// Private Method
+
+	/**
+	 * POST
+	 */
+	private void addAddUserButtonAction()
+	{
+
+		headerPanel.getUserPanel().getAddUserButton().addActionListener( new ActionListener()
+		{
+
 			@Override
-			public void actionPerformed(ActionEvent e) {
-			
-				new FunctionalPostUserWindow(new PostUserWindow(), usersDatabase, user);
-				
+			public void actionPerformed( ActionEvent e )
+			{
+				new FunctionalPostUserWindow( new PostUserWindow(), usersDatabase, user );
 			}
-		});
+		} );
 	}
-	
-	private void addRemoveUserButtonAction() {
-	
-		headerPanel.getUserPanel().getRemoveUserButton().addActionListener(new ActionListener() {
-			
+
+	/**
+	 * PATCH
+	 */
+	private void addChangePasswordButtonAction()
+	{
+		headerPanel.getUserPanel().getChangePasswordButton().addActionListener( new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent e) {
-			
+			public void actionPerformed( ActionEvent e )
+			{
+				new FunctionalPatchUserWindow( new PatchUserWindow(), usersDatabase );
+			}
+		} );
+	}
+
+
+
+	/**
+	 * DELETE
+	 */
+	private void addRemoveUserButtonAction()
+	{
+		headerPanel.getUserPanel().getRemoveUserButton().addActionListener( new ActionListener()
+		{
+			@Override
+			public void actionPerformed( ActionEvent e )
+			{
 				new UnderConstrutionWindow();
 			}
-		});
+		} );
 	}
-	
-	private void addInfoAllUsersButtonAction() {
-	
-		headerPanel.getUserPanel().getInfoAllUsersButton().addActionListener(new ActionListener() {
-			
+
+	/**
+	 * GET all
+	 */
+	private void addInfoAllUsersButtonAction()
+	{
+		headerPanel.getUserPanel().getInfoAllUsersButton().addActionListener( new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent ae) {
-			
-				try {
-					new GetUsersWindow(usersDatabase, new GetAllElementsInADatabaseCommand<User>(
-						usersDatabase).call().get());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+			public void actionPerformed( ActionEvent ae )
+			{
+				try
+				{
+					new GetUsersWindow( usersDatabase, new GetAllElementsInADatabaseCommand< User >(
+							usersDatabase ).call().get() );
+				}
+				catch( Exception e )
+				{
+					throw new InternalErrorException(e);
 				}
 			}
-		});
+		} );
 	}
-	
+
 	// Public Get Methods
-	
+
 	/**
 	 * @return the headerPanel
 	 */
-	public JHeaderPanelForMainWindow getHeaderPanel() {
-	
+	public JHeaderPanelForMainWindow getHeaderPanel()
+	{
 		return headerPanel;
 	}
 }

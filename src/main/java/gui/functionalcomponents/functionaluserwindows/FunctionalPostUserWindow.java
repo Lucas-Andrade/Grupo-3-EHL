@@ -16,17 +16,22 @@ import main.java.utils.exceptions.InvalidArgumentException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class FunctionalPostUserWindow extends FunctionalWindow<String> {
-	
+public class FunctionalPostUserWindow
+	extends FunctionalWindow< String >
+{
+
 	private PostUserWindow postUserWindow;
-	
+
 	/**
 	 * users database
 	 */
 	private Database< User > usersDatabase;
 	private User userWhoIsPosting;
-	
+
 	/**
+	 * Give an {@link ActionListener}s to the given {@link PostUserWindow}
+	 * buttons. To return the functional {@code PostUserWindow} use the
+	 * {@link FunctionalWindow#getFunctionalWindow()} method.
 	 * 
 	 * @param postUserWindow
 	 * @param usersDatabase
@@ -41,11 +46,12 @@ public class FunctionalPostUserWindow extends FunctionalWindow<String> {
 		this.userWhoIsPosting = userWhoIsPosting;
 
 	}
-	
+
 	/**
-	 * Get a {@link FunctionalWindowSwingWorker}, with all necessary info retrieved from {@code postUserWindow}.
-	 * The {@code doInBackground} method is {@code override}, to call the {@link PostUserCommand}.
-	 *  
+	 * Get a {@link FunctionalWindowSwingWorker}, with all necessary info
+	 * retrieved from {@code postUserWindow}. The {@code doInBackground} method
+	 * is {@code override}, to call the {@link PostUserCommand}.
+	 * 
 	 */
 	@Override
 	protected FunctionalWindowSwingWorker getSwingWorker()
@@ -61,21 +67,21 @@ public class FunctionalPostUserWindow extends FunctionalWindow<String> {
 			@Override
 			protected String doInBackground() throws Exception
 			{
-				if(!password.equals( confirmPassword ))
-					throw new InvalidArgumentException(	"The Passwords Don't Match" ); 
+				if( !password.equals( confirmPassword ) )
+					throw new InvalidArgumentException( "The Passwords Don't Match" );
 				return new PostUserCommand( username, password, email, fullName, usersDatabase,
 						userWhoIsPosting ).call();
 			}
 		};
 	}
-	
+
 	/**
 	 * Open the {@link SuccessWindow} {@code pop-up}
 	 */
 	@Override
-	public void functionalWindowDone(String resultOfDoInBackGround)
+	public void functionalWindowDone( String resultOfDoInBackGround )
 	{
-		new SuccessWindow(resultOfDoInBackGround);
+		new SuccessWindow( resultOfDoInBackGround );
 		postUserWindow.dispose();
 	}
 }

@@ -58,7 +58,8 @@ public class GetElementButton< E extends Element >
 	 * @param identification
 	 * @param textArea
 	 * @param database
-	 * @return
+	 * 
+	 * @return the swingWorker
 	 */
 	private SwingWorker< E, Void > getSwingWorker( String identification, JTextArea textArea,
 			Database< E > database )

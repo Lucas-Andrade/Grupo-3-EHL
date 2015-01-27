@@ -89,12 +89,10 @@ public class FunctionalHeaderPanel {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 			
-				try
-				{
-					new GetUsersWindow(usersDatabase, new GetAllElementsInADatabaseCommand< User >( usersDatabase ).call().get());
-				}
-				catch( Exception e )
-				{
+				try {
+					new GetUsersWindow(usersDatabase, new GetAllElementsInADatabaseCommand<User>(
+						usersDatabase).call().get());
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}

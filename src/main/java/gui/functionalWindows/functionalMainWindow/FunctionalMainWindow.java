@@ -37,6 +37,7 @@ public class FunctionalMainWindow {
 		functionalFooterPanel();
 		functionalLogOutButton();
 		functionalTurnOffButton();
+		funtionalShowAllAirshipsButtons();
 	}
 	
 	// Private Auxiliar Methods
@@ -55,7 +56,8 @@ public class FunctionalMainWindow {
 	private void functionalFooterPanel() {
 	
 		functionalMainWindow.setFooterPanel((new FunctionalFooterPanel(functionalMainWindow
-			.getFooterPanel(), airshipsDatabase, user)).getFooterPanel());
+			.getFooterPanel(), functionalMainWindow.getBodyPanel(), airshipsDatabase, user))
+			.getFooterPanel());
 	}
 	
 	private void functionalLogOutButton() {
@@ -83,6 +85,11 @@ public class FunctionalMainWindow {
 					functionalMainWindow.dispose();
 				}
 			});
+	}
+	
+	private void funtionalShowAllAirshipsButtons() {
+	
+		// TODO Auto-generated method stub
 	}
 	
 	// Public Get Methods

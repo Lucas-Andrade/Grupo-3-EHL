@@ -19,10 +19,10 @@ import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.
 import main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.DeleteAirshipCommandsFactory;
-import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.patchfactories.PatchAirshipCommandsFactory;
-import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.patchfactories.PatchUserPasswordCommandsFactory;
-import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.postfactories.PostAirshipCommandsFactory;
-import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.postfactories.PostUserCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.PatchAirshipCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.PostAirshipCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.PostUserCommandsFactory;
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.utils.exceptions.InternalErrorException;

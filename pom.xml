@@ -125,7 +125,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<mainClass>main.java.cli.App</mainClass>
+					<mainClass>main.java.gui.App</mainClass>
 					<systemProperties>
 						<systemProperty>
 							<key>myproperty</key>

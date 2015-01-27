@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.patchfactories.PatchAirshipCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.PatchAirshipCommandsFactory;
 import main.java.domain.commands.patchcommands.PatchAirshipCommand;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;

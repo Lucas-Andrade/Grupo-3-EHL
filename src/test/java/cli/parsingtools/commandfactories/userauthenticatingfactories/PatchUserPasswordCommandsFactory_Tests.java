@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.patchfactories.PatchUserPasswordCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
 import main.java.domain.commands.patchcommands.PatchUserPasswordCommand;
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.domain.model.users.User;

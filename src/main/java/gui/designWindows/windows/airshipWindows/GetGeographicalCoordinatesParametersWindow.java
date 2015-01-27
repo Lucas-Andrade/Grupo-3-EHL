@@ -1,4 +1,4 @@
-package main.java.gui.designWindows.windows.airshipWindows.getNearestAirships;
+package main.java.gui.designWindows.windows.airshipWindows;
 
 import java.awt.Color;
 import java.awt.GridBagConstraints;

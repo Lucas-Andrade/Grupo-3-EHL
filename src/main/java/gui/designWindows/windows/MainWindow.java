@@ -86,6 +86,11 @@ public class MainWindow extends JFrame {
 	
 		this.footerPanel = footerPanel;
 	}
+	
+	public void setBodyPanel(JBodyPanelForMainWindow bodyPanel) {
+		
+		this.bodyPanel = bodyPanel;
+	}
 
 	
 	// Public Get Methods

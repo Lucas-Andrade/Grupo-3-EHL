@@ -3,12 +3,15 @@ package main.java.gui.functionalWindows.functionalMainWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.users.User;
+import main.java.gui.designWindows.jPanels.forMainWindow.JBodyPanelForMainWindow;
 import main.java.gui.designWindows.windows.MainWindow;
 import main.java.gui.designWindows.windows.userWindows.LogInWindow;
 import main.java.gui.functionalWindows.functionalUserWindows.FunctionalLoginWindow;
+import main.java.utils.exceptions.InternalErrorException;
 
 public class FunctionalMainWindow {
 	
@@ -38,6 +41,7 @@ public class FunctionalMainWindow {
 		functionalLogOutButton();
 		functionalTurnOffButton();
 		funtionalShowAllAirshipsButtons();
+		addGetAllAirshipsButtonAction();
 	}
 	
 	// Private Auxiliar Methods
@@ -87,6 +91,43 @@ public class FunctionalMainWindow {
 			});
 	}
 	
+	
+	
+	private void addGetAllAirshipsButtonAction() {
+		
+		functionalMainWindow.getFooterPanel().getShowAllAirships().addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent click) {
+			
+				try {
+//					updateBodyPanel(airshipsDatabase, new GetAllElementsInADatabaseCommand<Airship>(
+//						airshipsDatabase).call().get());
+					updateBodyPanel(airshipsDatabase, airshipsDatabase.getAllElements().get());
+					
+				} catch (Exception exception) {
+					throw new InternalErrorException(exception);
+				}
+			}
+		});
+	}
+	
+	
+	private void updateBodyPanel(Database<Airship> airshipsDatabase, Iterable<Airship> airshipsFound) throws Exception {
+		
+//		functionalMainWindow.dispose();
+//		new FunctionalMainWindow(new MainWindow(airshipsDatabase, airshipsDatabase.getAllElements()
+//				.get()), usersDatabase, airshipsDatabase, user);
+		functionalMainWindow.setBodyPanel( new JBodyPanelForMainWindow( airshipsDatabase, airshipsFound ));
+		functionalMainWindow.getBodyPanel().setWorldMapWithAirships(airshipsFound);
+		functionalMainWindow.revalidate();
+		functionalMainWindow.repaint();
+		functionalMainWindow.getBodyPanel().getWorldMapWithAirships().repaint();
+	}
+	
+	
+	
+	
 	private void funtionalShowAllAirshipsButtons() {
 	
 		// TODO Auto-generated method stub
@@ -98,4 +139,7 @@ public class FunctionalMainWindow {
 	
 		return functionalMainWindow;
 	}
+	
+	
+	
 }

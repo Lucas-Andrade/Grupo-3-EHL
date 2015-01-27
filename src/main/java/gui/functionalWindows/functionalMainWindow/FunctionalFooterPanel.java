@@ -36,7 +36,7 @@ public class FunctionalFooterPanel {
 		this.airshipsDatabase = airshipsDatabase;
 		this.user = user;
 		
-		addGetAllAirshipsButtonAction();
+//		addGetAllAirshipsButtonAction();
 		addGetNearestAirshipsButtonAction();
 		addGetTransgressingAirshipsButtonAction();
 		addGetAirshipsWithLessPassengerThanButtonAction();
@@ -47,23 +47,23 @@ public class FunctionalFooterPanel {
 	
 	// Private Auxiliar Methods
 	
-	private void addGetAllAirshipsButtonAction() {
-	
-		footerPanel.getShowAllAirships().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent click) {
-			
-				try {
-					updateBodyPanel(airshipsDatabase, new GetAllElementsInADatabaseCommand<Airship>(
-						airshipsDatabase).call().get());
-					
-				} catch (Exception exception) {
-					throw new InternalErrorException(exception);
-				}
-			}
-		});
-	}
+//	private void addGetAllAirshipsButtonAction() {
+//	
+//		footerPanel.getShowAllAirships().addActionListener(new ActionListener() {
+//			
+//			@Override
+//			public void actionPerformed(ActionEvent click) {
+//			
+//				try {
+//					updateBodyPanel(airshipsDatabase, new GetAllElementsInADatabaseCommand<Airship>(
+//						airshipsDatabase).call().get());
+//					
+//				} catch (Exception exception) {
+//					throw new InternalErrorException(exception);
+//				}
+//			}
+//		});
+//	}
 	
 	private void addGetNearestAirshipsButtonAction() {
 	
@@ -137,11 +137,12 @@ public class FunctionalFooterPanel {
 		});
 	}
 	
-	private void updateBodyPanel(Database<Airship> airshipsDatabase, Iterable<Airship> airshipsFound) {
-	
-		bodyPanel.setAirshipsScrollPane(airshipsDatabase, airshipsFound);
-		bodyPanel.setWorldMapWithAirships(airshipsFound);
-	}
+//	private void updateBodyPanel(Database<Airship> airshipsDatabase, Iterable<Airship> airshipsFound) {
+//	
+//		bodyPanel.setAirshipsScrollPane(airshipsDatabase, airshipsFound);
+//		bodyPanel.setWorldMapWithAirships(airshipsFound);
+//		bodyPanel.repaint();
+//	}
 	
 	// Public Get Methods
 	

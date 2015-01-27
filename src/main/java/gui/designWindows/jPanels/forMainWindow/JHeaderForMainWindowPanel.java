@@ -9,7 +9,6 @@ import javax.swing.JPanel;
 import main.java.domain.model.Database;
 import main.java.domain.model.users.User;
 import main.java.gui.designWindows.jPanels.forAll.JPanelImage;
-import main.java.gui.functionalWindows.functionalUserWindows.FunctionalJUserPanelForHeaderPanel;
 
 
 
@@ -34,7 +33,7 @@ public class JHeaderForMainWindowPanel extends JPanel {
 		this.add(oneColorPanel);
 		
 		
-		userPanel = new FunctionalJUserPanelForHeaderPanel(new JUserPanelForHeaderPanel(), userdatabase, user).getHeaderPanel();
+		userPanel = new JUserPanelForHeaderPanel();
 		this.add(userPanel);
 	
 	}

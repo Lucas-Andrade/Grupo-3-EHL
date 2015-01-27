@@ -6,6 +6,7 @@ import main.java.domain.model.Database;
 import main.java.domain.model.InMemoryDatabase;
 import main.java.domain.model.users.User;
 import main.java.utils.Optional;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.databaseexceptions.DatabaseException;
 import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
@@ -142,7 +143,7 @@ public class PatchUserPasswordCommand implements Callable< String > {
              * arguments username, newPassword, originalUser.getEmail(), originalUser.getFullName()
              * and user are non-null. as so getElementByIdentification, removeByIdentification,
              * new User and add will never throw this exception */
-            return "INTERNAL ERROR IN PatchUserPasswordCommand THAT WASN'T SUPPOSED TO HAPPEN (1)";
+            throw new InternalErrorException( "INTERNAL ERROR IN PatchUserPasswordCommand! (1)", e );
         }
         catch( NoSuchElementInDatabaseException e ) {
             /* thrown by method getElementByIdentification().get() */
@@ -154,8 +155,9 @@ public class PatchUserPasswordCommand implements Callable< String > {
         }
         catch( Exception e ) {
             /* no other Exceptions are expected */
-            return "INTERNAL ERROR IN PatchUserPasswordCommand THAT WASN'T SUPPOSED TO HAPPEN (2)";
+            throw new InternalErrorException( "INTERNAL ERROR IN PatchUserPasswordCommand! (2)", e );
         }
         
     }
+    
 }

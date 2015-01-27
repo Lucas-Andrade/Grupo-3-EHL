@@ -25,4 +25,20 @@ public class MissingRequiredParameterException extends Exception {
         super( MessageFormat.format( "Required parameter with name {0} missing.", parameterName ) );
     }
     
+    
+    /**
+     * Constructs an {@link MissingRequiredParameterException} with the message <i>«Required
+     * parameter with name {@code parameterName} missing.»</i> and the specified cause.
+     * 
+     * @param parameterName
+     *            The missing parameter's name.
+     * @param cause
+     *            The cause (saved for later retrieval by the {@link #getCause()} method).
+     *            {@code null} values are allowed and indicate that the cause is nonexistent or
+     *            unknown.
+     */
+    public MissingRequiredParameterException( String parameterName, Exception e ) {
+        // TODO Auto-generated constructor stub
+    }
+    
 }

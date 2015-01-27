@@ -25,4 +25,21 @@ public class InvalidArgumentException extends Exception {
         
         super( message );
     }
+    
+    /**
+     * Constructs an {@link InvalidArgumentException} with the specified detail message and the
+     * specified cause.
+     * 
+     * @param message
+     *            The detail message.
+     * @param cause
+     *            The cause (saved for later retrieval by the {@link #getCause()} method).
+     *            {@code null} values are allowed and indicate that the cause is nonexistent or
+     *            unknown.
+     */
+    public InvalidArgumentException( String message, Throwable cause ) {
+        
+        super( message, cause );
+    }
+    
 }

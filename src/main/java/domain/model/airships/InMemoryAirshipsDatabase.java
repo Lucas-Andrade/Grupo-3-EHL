@@ -23,7 +23,9 @@ import main.java.utils.exceptions.databaseexceptions.DatabaseException;
  */
 public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
     
-    // Instance Field
+    
+    
+    // INSTANCE FIELD
     
     /**
      * The container {@link Map} where all the {@link Airship}s will be stored by {@link User}:
@@ -35,7 +37,9 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
      */
     private Map< String, List< Airship >> flightsByUserRegister;
     
-    // Constructor
+    
+    
+    // CONSTRUCTOR
     
     /**
      * Creates an empty {@link InMemoryAirshipDatabase} with the name {@code databaseName}.
@@ -52,6 +56,8 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
         
         flightsByUserRegister = new HashMap< String, List< Airship >>();
     }
+    
+    
     
     // OVERRIDE OF METHODS InMemoryDatabase
     
@@ -110,6 +116,8 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
         
         return false;
     }
+    
+    
     
     // OTHER PUBLIC METHODS
     
@@ -181,10 +189,10 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
         
         try {
             airshipsList.addAll( getAll().get().values() );
-            
         }
-        catch( Exception e ) { // This never happens because getAll() never has null values!
-            System.out.println( "ERROR in getAirshipsCloserTo()" );
+        catch( Exception e ) {
+            throw new InternalErrorException( "UNEXPECTED ERROR IN InMemoryAirshipsDatabase!", e );
+            // never happens because getAll() never returns null!
         }
         
         airshipsList.sort( new AirshipComparators.ComparatorByDistance( reference ) );
@@ -195,6 +203,8 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
         return new Optional< Iterable< Airship >>( airshipsList, getDatabaseName() + " is empty." );
         
     }
+    
+    
     
     // PRIVATE AUXILIAR METHODS
     

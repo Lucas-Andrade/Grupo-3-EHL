@@ -9,6 +9,7 @@ import main.java.domain.commands.DeleteAirshipCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.users.User;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 
@@ -89,10 +90,11 @@ public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Air
         
         try {
             return new DeleteAirshipCommand( airshipDatabase, flightId );
-            
         }
-        catch( InvalidArgumentException e ) {// never happens for databaseWhereToPost is not null
-            return null;
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException(
+                                              "UNEXPECTED EXCEPTION IN DeleteAirshipCommandsFactory!" );
+            // never happens cause airshipDatabase is not null
         }
     }
     
@@ -103,7 +105,7 @@ public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Air
      * @return An array of strings with the name of the required parameters.
      */
     @Override
-    protected String[] getSpecificRequiredParameters() {
+    protected String[] getSpecificRequiredParametersNames() {
         
         return requiredParametersNames;
     }
@@ -123,4 +125,5 @@ public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Air
         
         flightId = getParameterAsString( requiredParametersNames[0] );
     }
+    
 }

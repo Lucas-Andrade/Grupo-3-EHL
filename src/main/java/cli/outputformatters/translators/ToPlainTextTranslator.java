@@ -68,7 +68,7 @@ public class ToPlainTextTranslator implements Translator {
         
         StringBuilder sb =
                 new StringBuilder( "__/" ).append( translatable.getTag() ).append( "\\__" )
-                                          .append( entryDelimiter ); // prints "---tag---"
+                                          .append( entryDelimiter );
         
         for( Entry< String, Object > entry : translatable.getPropertiesBag().entrySet() )
             sb.append( "  " ).append( entry.getKey() ).append( "\r\n" ).append( entry.getValue() )
@@ -95,7 +95,7 @@ public class ToPlainTextTranslator implements Translator {
         
         StringBuilder sb =
                 new StringBuilder( "__/" ).append( translatable.getTag() ).append( "\\__" )
-                                          .append( entryDelimiter ); // prints "---tag---"
+                                          .append( entryDelimiter );
         
         try {
             for( Object element : translatable.getPropertiesBag().values() )
@@ -103,7 +103,8 @@ public class ToPlainTextTranslator implements Translator {
         }
         catch( ClassCastException e ) {
             throw new UnknownTranslatableException(
-                                                    "Translatable representing iterable has non-translatable values in the properties bag." );
+                                                    "Translatable representing iterable has non-translatable values in the properties bag.",
+                                                    e );
         }
         
         return sb.append( "\\__" ).append( translatable.getTag() ).append( "__/" ).toString();

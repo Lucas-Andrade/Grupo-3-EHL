@@ -8,6 +8,7 @@ import main.java.domain.commands.getcommands.GetAllTransgressingAirshipsCommand;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.utils.Optional;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 
@@ -67,8 +68,11 @@ public class GetAllTransgressingAirshipsCommandsFactory extends
             return new GetAllTransgressingAirshipsCommand( airshipsDatabase );
             
         }
-        catch( InvalidArgumentException e ) { // Never happens because database is not null!
-            return null;
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException(
+                                              "UNEXPECTED EXCEPTION IN GetAllTransgressingAirshipsCommandsFactory!",
+                                              e );
+            // never happens because database is not null
         }
     }
     

@@ -112,8 +112,9 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory< Airs
                                             latitude, longitude, altitude, maxAltitude, minAltitude );
             
         }
-        catch( InvalidArgumentException e ) {// never happens for databaseWhereToPost is not null
-            return null;
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException( "UNEXPECTED ERROR IN PatchAirshipCommandsFactory!", e );
+            // never happens for databaseWhereToPost is not null
         }
     }
     
@@ -125,7 +126,7 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory< Airs
      * @return An array of strings with the name of the required parameters.
      */
     @Override
-    protected String[] getSpecificRequiredParameters() {
+    protected String[] getSpecificRequiredParametersNames() {
         
         return requiredParametersNames;
     }
@@ -159,43 +160,39 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory< Airs
         identification = getParameterAsString( CLIStringsDictionary.FLIGHTID );
         
         try {
-            latitude = getParameterAsDouble( CLIStringsDictionary.LATITUDE );
-            
+            latitude = getParameterAsDouble( CLIStringsDictionary.LATITUDE );            
         }
         catch( MissingRequiredParameterException e ) {
             latitude = null;
         }
         
         try {
-            longitude = getParameterAsDouble( CLIStringsDictionary.LONGITUDE );
-            
+            longitude = getParameterAsDouble( CLIStringsDictionary.LONGITUDE );            
         }
         catch( MissingRequiredParameterException e ) {
             longitude = null;
         }
         
         try {
-            altitude = getParameterAsDouble( CLIStringsDictionary.ALTITUDE );
-            
+            altitude = getParameterAsDouble( CLIStringsDictionary.ALTITUDE );            
         }
         catch( MissingRequiredParameterException e ) {
             altitude = null;
         }
         
         try {
-            maxAltitude = getParameterAsDouble( CLIStringsDictionary.AIRCORRIDOR_MAXALTITUDE );
-            
+            maxAltitude = getParameterAsDouble( CLIStringsDictionary.AIRCORRIDOR_MAXALTITUDE );            
         }
         catch( MissingRequiredParameterException e ) {
             maxAltitude = null;
         }
         
         try {
-            minAltitude = getParameterAsDouble( CLIStringsDictionary.AIRCORRIDOR_MINALTITUDE );
-            
+            minAltitude = getParameterAsDouble( CLIStringsDictionary.AIRCORRIDOR_MINALTITUDE );            
         }
         catch( MissingRequiredParameterException e ) {
             minAltitude = null;
         }
     }
+
 }

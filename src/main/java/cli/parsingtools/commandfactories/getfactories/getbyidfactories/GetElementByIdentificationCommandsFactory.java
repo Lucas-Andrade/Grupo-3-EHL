@@ -8,6 +8,7 @@ import main.java.domain.commands.getcommands.GetElementFromADatabaseByIdCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.Element;
 import main.java.utils.Optional;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 
@@ -97,10 +98,12 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
         
         try {
             return new GetElementFromADatabaseByIdCommand< E >( database, identification );
-            
         }
-        catch( InvalidArgumentException e ) { // never happens because database is not null
-            return null;
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException(
+                                              "UNEXPECTED EXCEPTION IN GetElementByIdentificationCommandsFactory!",
+                                              e );
+            // never happens cause database is not null
         }
     }
     

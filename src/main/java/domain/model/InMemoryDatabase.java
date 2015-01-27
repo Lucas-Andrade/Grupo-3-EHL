@@ -197,6 +197,8 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
                                              getDatabaseName() + " is empty." );
     }
     
+    
+    
     // OTHER PUBLIC METHODS
     
     /**
@@ -255,11 +257,13 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
             for( T element : getAllElements().get() )
                 if( criteria.test( element ) )
                     selectedElements.add( element );
-            
         }
-        catch( Exception e ) { // never happens because getAll() is never null
+        catch( Exception e ) {
+            throw new InternalErrorException( "UNEXPECTED EXCEPTION IN InMemoryDatabase!", e );
+            // never happens because getAll() is never null
         }
         
         return new Optional< Iterable< T >>( selectedElements, "No such element in " + databaseName );
     }
+    
 }

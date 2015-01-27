@@ -26,6 +26,17 @@ public class ParsingException extends Exception {
     public ParsingException( String message ) {
         
         super( message );
+    }    
+
+    /**
+     * Constructs a {@link ParsingException} with the specified detail message and cause.
+     * 
+     * @param message
+     *            The detail message.
+     */
+    public ParsingException( String message, Throwable cause ) {
+        
+        super( message, cause );
     }
     
 }

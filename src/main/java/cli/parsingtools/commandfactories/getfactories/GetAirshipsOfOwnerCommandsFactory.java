@@ -10,6 +10,7 @@ import main.java.domain.commands.getcommands.GetAirshipsOfOwnerCommand;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.utils.Optional;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 
@@ -85,8 +86,9 @@ public class GetAirshipsOfOwnerCommandsFactory extends
         try {
             return new GetAirshipsOfOwnerCommand( airshipsDatabase, ownerUsername );
         }
-        catch( InvalidArgumentException e ) { // never happens because database is not null
-            return null;
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException( "UNEXPECTED EXCEPTION IN GetAirshipsOfOwnerCommandsFactory!", e );
+            // never happens because database is not null
         }
     }
     

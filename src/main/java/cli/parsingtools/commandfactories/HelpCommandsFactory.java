@@ -5,6 +5,7 @@ import java.util.concurrent.Callable;
 import main.java.cli.parsingtools.CommandParser;
 import main.java.domain.commands.HelpCommand;
 import main.java.utils.OptionsList;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 
@@ -58,10 +59,10 @@ public class HelpCommandsFactory extends StringsToCommandsFactory< OptionsList >
         
         try {
             return new HelpCommand( cmdParser );
-            
         }
-        catch( InvalidArgumentException e ) {// Never happens cause cmdParser is not null!
-            return null;
+        catch( InvalidArgumentException e ) {
+            throw new InternalErrorException( "UNEXPECTED EXCEPTION IN HelpCommandsFactory!" );
+            // never happens cause cmdParser is not null
         }
     }
     

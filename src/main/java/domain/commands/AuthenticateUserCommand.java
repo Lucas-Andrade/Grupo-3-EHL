@@ -72,4 +72,5 @@ public class AuthenticateUserCommand implements Callable< Optional< User > > {
             user = null;
         return new Optional< User >( user, new WrongLoginPasswordException( username, password ) );
     }
+    
 }

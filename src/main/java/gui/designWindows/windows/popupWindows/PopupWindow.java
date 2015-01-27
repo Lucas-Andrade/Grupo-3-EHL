@@ -19,7 +19,8 @@ import main.java.gui.designWindows.GridBagUtils;
 
 
 /**
- * 
+ * Abstract class, whose instances are {@link JDialog} with a {@code Ok} button,
+ * that dispose this window.
  * 
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -30,31 +31,50 @@ public abstract class PopupWindow
 {
 	private GridBagConstraints constraints = GridBagUtils.createGridBagConstraints();
 
+	/**
+	 * Creates a Pop-up window with a {@code image}, a {@code message}, and a
+	 * {@code ok-button}.
+	 * 
+	 * @param message
+	 * @param image
+	 */
 	public PopupWindow( String message, Icon image )
 	{
 		setLayout( new GridBagLayout() );
 		add( getLabel( message, image ), GridBagUtils.updateGridBagConstraints( constraints, 0 ) );
 
-		defaultSettings();
+		setDefaultSettings();
 	}
-	
-	public PopupWindow( Component component  )
+
+	/**
+	 * Creates a Pop-up window with a {@code component} and a {@code ok-button}.
+	 * 
+	 * @param component
+	 */
+	public PopupWindow( Component component )
 	{
 		setLayout( new GridBagLayout() );
 		add( component, GridBagUtils.updateGridBagConstraints( constraints, 0 ) );
 
-		defaultSettings();
+		setDefaultSettings();
 	}
 
-	private void defaultSettings()
+	/**
+	 * Set all shared Settings: Title, Color, Icon, size, ... Also is added the
+	 * {@code ok-button}
+	 */
+	private void setDefaultSettings()
 	{
-		add( createButton(), GridBagUtils.updateGridBagConstraints( constraints, 1 ) );
-		getContentPane().setBackground( new Color( 65, 72, 78 ) );
 		setTitle( "Air Traffic Controll" );
-		setIconImage( Toolkit.getDefaultToolkit().getImage( "src/main/resources/images/radar.png" ) );
-		setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
+		getContentPane().setBackground( new Color( 65, 72, 78 ) );
 		setSize( 400, 10 );
-		setModalityType( ModalityType.TOOLKIT_MODAL);
+		setIconImage( Toolkit.getDefaultToolkit().getImage( "src/main/resources/images/radar.png" ) );
+
+		add( createButton(), GridBagUtils.updateGridBagConstraints( constraints, 1 ) );
+
+		setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );
+		setModalityType( ModalityType.TOOLKIT_MODAL );
+
 		pack();
 		setLocationRelativeTo( null );
 		setResizable( false );
@@ -63,22 +83,30 @@ public abstract class PopupWindow
 
 
 
+	/**
+	 * @param message
+	 * @param image
+	 * @return the Label with a {@code image} and a {@code message}
+	 */
 	private JPanel getLabel( String message, Icon image )
 	{
-		
 		JLabel imageLabel = new JLabel( image );
 		JLabel messageLabel = new JLabel( message, JLabel.CENTER );
 		messageLabel.setForeground( Color.WHITE );
-		JPanel c = new JPanel();
-		c.setLayout( new FlowLayout( FlowLayout.LEADING, 50, 50 ));
-		c.add( imageLabel );
-		c.add( messageLabel );
-		c.setBackground( new Color( 65, 72, 78 ) );
-		return c;
+
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout( new FlowLayout( FlowLayout.LEADING, 50, 50 ) );
+		mainPanel.setBackground( new Color( 65, 72, 78 ) );
+		mainPanel.add( imageLabel );
+		mainPanel.add( messageLabel );
+		return mainPanel;
 	}
 
 
 
+	/**
+	 * @return the buttonPanel, that contains the button
+	 */
 	private JPanel createButton()
 	{
 		JPanel buttonPanel = new JPanel();

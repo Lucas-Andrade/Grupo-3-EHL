@@ -26,6 +26,7 @@ public class FunctionalPatchUserWindow extends FunctionalWindow<String> {
 		this.functionalWindow = nonFunctionalWindow;
 		
 		this.usersDatabase = usersDatabase;
+		
 	}
 
 	// Implementation of the methods inherited from the FunctionalWindow class

@@ -1,7 +1,5 @@
 package main.java.gui.functionalWindows;
 
-import java.awt.Dialog;
-import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.concurrent.ExecutionException;
@@ -37,13 +35,8 @@ public abstract class FunctionalWindow<T> {
 		
 		addRightButtonAction();
 		addLeftButtonAction();
-		
-		functionalWindow.setModalityType( Dialog.ModalityType.TOOLKIT_MODAL );
 
-		System.out.println(functionalWindow.getModalityType());
-//		functionalWindow.setModalityType( ModalityType.APPLICATION_MODAL );
-		System.out.println(functionalWindow.getModalityType());
-//		functionalWindow.setVisible( true );
+		functionalWindow.setVisible( true );
 	}
 	
 	// Private Methods
@@ -105,8 +98,8 @@ public abstract class FunctionalWindow<T> {
 	
 	// InnerClass
 	/**
-	 * Abstract SwingWorker Class that implements the {@code done()} method, where the
-	 * {@link Exception}s are caught.
+	 * Abstract SwingWorker Class that {@code Override} the {@code done()} method, where the
+	 * {@link Exception}s thrown in the doInBackground() are caught.
 	 */
 	protected abstract class FunctionalWindowSwingWorker extends SwingWorker<T, Void> {
 		
@@ -116,11 +109,7 @@ public abstract class FunctionalWindow<T> {
 			try {
 				functionalWindowDone(get());
 				functionalWindow.getErrorLabel().setVisible(false);
-				
-			} catch (NumberFormatException e) {
-				functionalWindow.getErrorLabel().setText(e.getCause().getMessage());
-				functionalWindow.getErrorLabel().setVisible(true);
-				
+
 			} catch (ExecutionException e) {
 				functionalWindow.getErrorLabel().setText(e.getCause().getMessage());
 				functionalWindow.getErrorLabel().setVisible(true);

@@ -1,5 +1,7 @@
 package main.java.gui.functionalWindows.functionalUserWindows;
 
+import java.awt.event.ActionListener;
+
 import main.java.domain.commands.postcommands.PostUserCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.users.User;
@@ -9,8 +11,8 @@ import main.java.gui.functionalWindows.FunctionalWindow;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 /**
- * 
- * 
+ * Class whose instances have the responsibility to add the
+ * {@link ActionListener}s to the given {@link PostUserWindow} buttons.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -40,6 +42,11 @@ public class FunctionalPostUserWindow extends FunctionalWindow<String> {
 
 	}
 	
+	/**
+	 * Get a {@link FunctionalWindowSwingWorker}, with all necessary info retrieved from {@code postUserWindow}.
+	 * The {@code doInBackground} method is {@code override}, to call the {@link PostUserCommand}.
+	 *  
+	 */
 	@Override
 	protected FunctionalWindowSwingWorker getSwingWorker()
 	{
@@ -60,9 +67,11 @@ public class FunctionalPostUserWindow extends FunctionalWindow<String> {
 						userWhoIsPosting ).call();
 			}
 		};
-
 	}
 	
+	/**
+	 * Open the {@link SuccessWindow} {@code pop-up}
+	 */
 	@Override
 	public void functionalWindowDone(String resultOfDoInBackGround)
 	{

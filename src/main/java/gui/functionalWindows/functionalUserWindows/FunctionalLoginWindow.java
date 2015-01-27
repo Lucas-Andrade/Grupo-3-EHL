@@ -1,5 +1,7 @@
 package main.java.gui.functionalWindows.functionalUserWindows;
 
+import java.awt.Dialog;
+
 import main.java.domain.commands.AuthenticateUserCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -31,6 +33,7 @@ public class FunctionalLoginWindow
 
 		this.usersDatabase = usersDatabase;
 		this.airshipsDatabase = airshipsDatabase;
+		functionalWindow.setModalityType( Dialog.ModalityType.TOOLKIT_MODAL );
 	}
 
 	@Override

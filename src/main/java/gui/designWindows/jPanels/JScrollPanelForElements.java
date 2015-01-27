@@ -82,7 +82,6 @@ public class JScrollPanelForElements<E extends Element > extends JPanel {
 		textArea.setBorder(new TextRoundBorder(Color.WHITE,6,12,0));
 		textArea.setBackground(new Color(65,72,78));
 		textArea.setPreferredSize(new Dimension(200, 200));
-		textArea.setForeground( Color.WHITE );
 		this.add(textArea, BorderLayout.CENTER);
 		
 		

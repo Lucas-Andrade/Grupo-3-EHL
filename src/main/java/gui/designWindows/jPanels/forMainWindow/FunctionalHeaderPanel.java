@@ -11,42 +11,50 @@ import main.java.gui.designWindows.windows.userWindows.PostUserWindow;
 import main.java.gui.functionalWindows.functionalUserWindows.FunctionalPatchUserWindow;
 import main.java.gui.functionalWindows.functionalUserWindows.FunctionalPostUserWindow;
 
-public class FunctionalJUserPanelForHeaderPanel {
+public class FunctionalHeaderPanel {
 	
-	private JUserPanelForHeaderPanel headerPanel;
+	// Field
+	
+	private JHeaderForMainWindowPanel headerPanel;
 	
 	private Database<User> usersDatabase;
 	
 	private User user;
 	
-	public FunctionalJUserPanelForHeaderPanel(JUserPanelForHeaderPanel j,
-		Database<User> usersDatabase, User user) {
+	// Constructor
+	
+	public FunctionalHeaderPanel(JHeaderForMainWindowPanel j, Database<User> usersDatabase,
+		User user) {
 	
 		this.headerPanel = j;
 		this.usersDatabase = usersDatabase;
 		this.user = user;
+		
 		addChangePasswordButtonAction();
 		addAddUserButtonAction();
 		addRemoveUserButtonAction();
 		addInfoAllUsersButtonAction();
 	}
 	
+	// Private Auxiliar Method
+	
 	private void addChangePasswordButtonAction() {
 	
-		headerPanel.getChangePasswordButton().addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			
-				new FunctionalPatchUserWindow(new PatchUserWindow(), usersDatabase);
+		headerPanel.getUserPanel().getChangePasswordButton()
+			.addActionListener(new ActionListener() {
 				
-			}
-		});
+				@Override
+				public void actionPerformed(ActionEvent e) {
+				
+					new FunctionalPatchUserWindow(new PatchUserWindow(), usersDatabase);
+					
+				}
+			});
 	}
 	
 	private void addAddUserButtonAction() {
 	
-		headerPanel.getAddUserButton().addActionListener(new ActionListener() {
+		headerPanel.getUserPanel().getAddUserButton().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -60,7 +68,7 @@ public class FunctionalJUserPanelForHeaderPanel {
 	
 	private void addRemoveUserButtonAction() {
 	
-		headerPanel.getRemoveUserButton().addActionListener(new ActionListener() {
+		headerPanel.getUserPanel().getRemoveUserButton().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -73,23 +81,24 @@ public class FunctionalJUserPanelForHeaderPanel {
 	
 	private void addInfoAllUsersButtonAction() {
 	
-		headerPanel.getInfoAllUsersButton().addActionListener(new ActionListener() {
+		headerPanel.getUserPanel().getInfoAllUsersButton().addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 			
-				// TODO
+				new UnderConstrutionWindow();
 			}
 		});
 		;
 	}
 	
+	// Public Get Methods
+	
 	/**
 	 * @return the headerPanel
 	 */
-	public JUserPanelForHeaderPanel getHeaderPanel() {
+	public JHeaderForMainWindowPanel getHeaderPanel() {
 	
 		return headerPanel;
 	}
-	
 }

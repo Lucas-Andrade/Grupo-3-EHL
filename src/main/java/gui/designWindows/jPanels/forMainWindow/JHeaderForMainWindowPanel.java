@@ -33,7 +33,7 @@ public class JHeaderForMainWindowPanel extends JPanel {
 		this.add(oneColorPanel);
 		
 		
-		userPanel = new FunctionalJUserPanelForHeaderPanel(new JUserPanelForHeaderPanel(), userdatabase, user).getHeaderPanel() ;
+		userPanel = new JUserPanelForHeaderPanel();
 		this.add(userPanel);
 	
 	}

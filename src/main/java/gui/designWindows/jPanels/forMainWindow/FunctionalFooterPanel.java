@@ -10,7 +10,7 @@ import main.java.gui.designWindows.windows.airshipWindows.PostAirshipsWindow;
 import main.java.gui.designWindows.windows.popupWindows.JUnderConstrutionPanel;
 import main.java.gui.functionalWindows.functionalAirshipWindows.FunctionalPostAirshipWindow;
 
-public class FunctionalJFooterPanelForMainWindow {
+public class FunctionalFooterPanel {
 	
 	// Fields
 	
@@ -22,7 +22,7 @@ public class FunctionalJFooterPanelForMainWindow {
 	
 	// Constructor
 	
-	public FunctionalJFooterPanelForMainWindow(JFooterPanelForMainWindow footerPanel,
+	public FunctionalFooterPanel(JFooterPanelForMainWindow footerPanel,
 		Database<Airship> airshipsDatabase, User user) {
 	
 		this.footerPanel = footerPanel;
@@ -109,5 +109,11 @@ public class FunctionalJFooterPanelForMainWindow {
 				new JUnderConstrutionPanel();
 			}
 		});
+	}
+
+	
+	public JFooterPanelForMainWindow getFooterPanel() {
+	
+		return footerPanel;
 	}
 }

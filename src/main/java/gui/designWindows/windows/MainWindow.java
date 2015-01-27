@@ -28,7 +28,7 @@ public class MainWindow extends JFrame {
 	
 	// Constructor
 	
-	public MainWindow(Database<Airship> airshipsDatabase) {
+	public MainWindow(Database<Airship> airshipsDatabase, Iterable<Airship> airshipsFound) {
 	
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(
@@ -58,7 +58,7 @@ public class MainWindow extends JFrame {
 // line0.setPreferredSize(new Dimension(0,1));
 // contentPane.add(line0,GridBagUtils.updateGridBagConstraints(constraints, 1));
 		
-		bodyPanel = new JBodyPanelForMainWindow(airshipsDatabase);
+		bodyPanel = new JBodyPanelForMainWindow(airshipsDatabase, airshipsFound);
 		contentPane.add(bodyPanel, GridBagUtils.updateGridBagConstraints(constraints, 2));
 		
 		footerPanel = new JFooterPanelForMainWindow();
@@ -98,11 +98,6 @@ public class MainWindow extends JFrame {
 	public void setHeaderPanel(JHeaderForMainWindowPanel headerPanel) {
 	
 		this.headerPanel = headerPanel;
-	}
-	
-	public void setBodyPanel(JBodyPanelForMainWindow bodyPanel) {
-	
-		this.bodyPanel = bodyPanel;
 	}
 	
 	public void setFooterPanel(JFooterPanelForMainWindow footerPanel) {

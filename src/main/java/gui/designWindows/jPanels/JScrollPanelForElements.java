@@ -15,27 +15,27 @@ import javax.swing.JScrollPane;
 
 import main.java.domain.model.Database;
 import main.java.domain.model.Element;
+import main.java.domain.model.airships.Airship;
 import main.java.gui.designWindows.borders.TextRoundBorder;
 
 @SuppressWarnings ("serial")
 public class JScrollPanelForElements<E extends Element> extends JPanel {
 	
 	// Fields
-
+	
 	protected Map<JButton, String> infoContainer = new HashMap<JButton, String>();
-
+	
 	// Constructor
 	
 	public JScrollPanelForElements() {
 	
 		this.setLayout(new FlowLayout());
 		this.setBackground(new Color(65, 72, 78));
-		
 	}
 	
 	// Public Methods
 	
-	public JPanel produceAJScrollPaneWithAllElements(Database<E> database) {
+	public JPanel produceAJScrollPaneWithAllElements(Database<E> database, Iterable<Airship> airshipsFound) {
 	
 		JPanel listPanel = new JPanel();
 		int counter = 0;
@@ -56,6 +56,7 @@ public class JScrollPanelForElements<E extends Element> extends JPanel {
 				++counter;
 				
 			}
+			
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -85,6 +86,6 @@ public class JScrollPanelForElements<E extends Element> extends JPanel {
 	
 	protected String getString(E element) {
 	
-		return element.toString();	
-	}	
+		return element.toString();
+	}
 }

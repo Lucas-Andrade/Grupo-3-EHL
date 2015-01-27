@@ -7,7 +7,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.gui.designWindows.jPanels.JScrollPanelForElements;
 import main.java.gui.designWindows.jPanels.forAll.JPanelImage;
@@ -24,36 +23,16 @@ public class JWorldMapWithAirships extends JScrollPanelForElements<Airship> {
 	// Public Methods
 	
 
-	public JPanel createAJPanelWithWorldMapAndAirships(Database<Airship> database) {
+	public JPanel createAJPanelWithWorldMapAndAirships(Iterable<Airship> airshipsFound) {
 	
 		JPanelImage.createImage worldMap = new JPanelImage.createImage(
 			"src/main/resources/images/planisphere.png");
 		worldMap.setLayout(null);
-//	    this.add(worldMap);
-//			
-//			
-//			try {
-//				for(Airship airship:database){
-//					
-//					
-//					 Double latitude =  ORIGINPOSITIONYLATITUDE-IMAGESCALEFACTOR*(airship.getCoordinates().getLatitude().getValue());
-//					 Double longitude = IMAGESCALEFACTOR*(airship.getCoordinates().getLongitude().getValue())-ORIGINPOSITIONLONGITUDE;
-//					
-//					JLabel labelairship ;
-//					labelairship =new JLabel(new ImageIcon("src/main/resources/images/militaryAirship.png"));   
-//					labelairship.setBounds(longitude.intValue(), latitude.intValue(),50,50); 
-//				    worldMap.add(labelairship);
-//								
-//							
-//				}
-//			} catch (Exception e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
+
 		this.add(worldMap);
 		
 		try {
-			for (Airship airship : database.getAllElements().get()) {
+			for (Airship airship : airshipsFound) {
 				
 				Double latitude = ORIGINPOSITIONYLATITUDE - IMAGESCALEFACTOR
 					* (airship.getCoordinates().getLatitude().getValue());

@@ -23,19 +23,19 @@ public class JScrollPanelForElements<E extends Element > extends JPanel {
 	private JScrollPane scrollPane;
 	private JTextArea textArea;
 
+
 	// Constructor
 	
 	public JScrollPanelForElements() {
 	
 		this.setLayout(new FlowLayout());
 		this.setBackground(new Color(65, 72, 78));
+
 		scrollPane = new JScrollPane();
 		textArea = new JTextArea();
 		textArea.setEditable(false);
 		textArea.setLineWrap(true);
 		textArea.setOpaque(false);
-		
-		
 	}
 	
 	// Public Methods
@@ -44,7 +44,7 @@ public class JScrollPanelForElements<E extends Element > extends JPanel {
 			
 		JPanel listPanel = new JPanel();	
 		int counter=0;
-				
+
 		try {
 			for(E element:iterable){
 				JButton button = new GetElementButton<E>( element.getIdentification(), textArea, dataBase );		
@@ -59,6 +59,7 @@ public class JScrollPanelForElements<E extends Element > extends JPanel {
 				++counter;
 				
 			}
+			
 		} catch (Exception e) {
 			
 			e.printStackTrace();
@@ -92,7 +93,7 @@ public class JScrollPanelForElements<E extends Element > extends JPanel {
 	// Protected Methods
 	
 	protected String getString(E element) {
-	
 		return element.toString();	
 	}	
 }
+

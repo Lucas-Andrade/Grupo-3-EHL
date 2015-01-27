@@ -13,22 +13,47 @@ import main.java.gui.designWindows.borders.TextRoundBorder;
 public class JBodyPanelForMainWindow extends JPanel {
 	
 	private JPanel airshipsScrollPane;
-
-	public JBodyPanelForMainWindow(Iterable<Airship> airships, Database< Airship > dataBase) {
+	private JPanel worldMapWithAirships;
+	
+	public JBodyPanelForMainWindow(Database<Airship> airshipdatabase,
+		Iterable<Airship> airshipsFound) {
+	
 		this.setLayout(new FlowLayout());
+
+		airshipsScrollPane = new JWorldMapWithAirships().produceAJScrollPaneWithAllElements(
+			airshipdatabase, airshipsFound);
 		
-
-//		airshipsScrollPane = new JWorldMapWithAirships().produceAJScrollPaneWithAllElements(dataBase, airships);
-//		this.add(new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships(airships));
-
+		worldMapWithAirships = new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships( airshipsFound);
+		
+		this.add(worldMapWithAirships);
 		this.add(airshipsScrollPane);
+		
 		this.setBackground(new Color(65, 72, 78));
 		this.setBorder(new TextRoundBorder(Color.WHITE, 6, 12, 0));
-		
 	}
 	
 	public JPanel getAirshipsScrollPane() {
 	
 		return airshipsScrollPane;
-	}	
+
+	}
+	
+	public void setAirshipsScrollPane(Database<Airship> airshipdatabase,
+		Iterable<Airship> airshipsFound) {
+	
+		this.airshipsScrollPane = new JWorldMapWithAirships().produceAJScrollPaneWithAllElements(
+			airshipdatabase, airshipsFound);
+	}
+	
+	public JPanel getWorldMapWithAirships() {
+	
+		return worldMapWithAirships;
+	}
+	
+	public void setWorldMapWithAirships(Database<Airship> airshipdatabase,
+		Iterable<Airship> airshipsFound) {
+	
+		this.worldMapWithAirships = new JWorldMapWithAirships()
+			.createAJPanelWithWorldMapAndAirships( airshipsFound);
+	}
 }

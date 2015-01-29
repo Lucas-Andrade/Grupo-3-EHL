@@ -32,7 +32,7 @@ public class ParserTest {
         
         Parser parser = new Parser( cmdparser, "GET", "/users" );
         
-        Assert.assertEquals( "[username: MASTER, password: master, email: master@master\n]",
+        Assert.assertEquals( "[username: MASTER,\r\npassword: master,\r\nemail: master@master\r\n]",
                              parser.getCommand().call().toString() );
         
     }

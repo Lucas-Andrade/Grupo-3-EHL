@@ -76,11 +76,11 @@ public class ToHtmlTranslator implements Translator {
         
         // if translatable represents a String
         if( translatable.getTag() == null )
-            return arrayListToString( createNormalElements( "html",
+            return listToString( createNormalElements( "html",
                                                             getPropertiesAsRawTextElements( translatable ) ) );
         
         // if translatable represents simple elements, iterable or map<str,str>
-        return arrayListToString( createNormalElements( "html",
+        return listToString( createNormalElements( "html",
                                                         encodeInSeparateLines( translatable ) ) );
         
     }
@@ -213,7 +213,7 @@ public class ToHtmlTranslator implements Translator {
      * @return The string that concatenates all the entries of {@code list} separated by the
      *         paragraph-character ({@code \r\n}).
      */
-    private String arrayListToString( List< String > list ) {
+    private String listToString( List< String > list ) {
         
         StringBuilder sb = new StringBuilder( "\r\n" );
         for( String line : list )

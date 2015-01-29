@@ -134,12 +134,11 @@ public class User implements Element {
         
         StringBuilder result = new StringBuilder( "username: " );
         
-        result.append( username ).append( ", email: " ).append( email );
+        result.append( username ).append( ", \r\nemail: " ).append( email );
         
-        return fullName.equals( "" )
-                                    ? result.append( "\n" ).toString()
-                                    : result.append( ", fullName: " ).append( fullName )
-                                            .append( "\n" ).toString();
+        return fullName.equals( "" ) ? result.append( "\r\n" ).toString()
+                                    : result.append( ",\r\nfullName: " ).append( fullName )
+                                            .append( "\r\n" ).toString();
     }
     
     // Overrides
@@ -156,13 +155,12 @@ public class User implements Element {
         
         StringBuilder result = new StringBuilder( "username: " );
         
-        result.append( username ).append( ",\n\rpassword: " ).append( password ).append( ",\r\nemail: " )
-              .append( email );
+        result.append( username ).append( ",\r\npassword: " ).append( password )
+              .append( ",\r\nemail: " ).append( email );
         
-        return fullName.equals( "" )
-                                    ? result.append( "\n" ).toString()
+        return fullName.equals( "" ) ? result.append( "\r\n" ).toString()
                                     : result.append( ",\r\nfullName: " ).append( fullName )
-                                            .append( "\n" ).toString();
+                                            .append( "\r\n" ).toString();
     }
     
     /**

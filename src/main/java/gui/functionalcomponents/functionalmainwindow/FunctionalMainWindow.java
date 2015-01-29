@@ -72,7 +72,7 @@ public class FunctionalMainWindow {
 	private void functionalFooterPanel() {
 	
 		functionalMainWindow.setFooterPanel((new FunctionalFooterPanel(functionalMainWindow
-			.getFooterPanel(), functionalMainWindow.getBodyPanel(), airshipsDatabase, user))
+			.getFooterPanel(), functionalMainWindow.getBodyPanel(), airshipsDatabase, user, functionalMainWindow.getErrorLabel() ))
 			.getFooterPanel());
 	}
 	

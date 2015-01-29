@@ -8,6 +8,7 @@ import main.java.domain.model.users.User;
 import main.java.gui.design.windows.popupwindows.SuccessWindow;
 import main.java.gui.design.windows.userwindows.PostUserWindow;
 import main.java.gui.functionalcomponents.FunctionalWindow;
+import main.java.gui.functionalcomponents.FunctionalWindowSwingWorker;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 /**
@@ -54,15 +55,25 @@ public class FunctionalPostUserWindow
 	 * 
 	 */
 	@Override
-	protected FunctionalWindowSwingWorker getSwingWorker()
+	protected FunctionalWindowSwingWorker< String > getSwingWorker()
 	{
-		return new FunctionalWindowSwingWorker()
+		return new FunctionalWindowSwingWorker< String >( postUserWindow.getErrorLabel() )
 		{
 			String username = postUserWindow.getUsername().getJTextField().getText();
 			String password = postUserWindow.getPassword().getJTextField().getText();
 			String confirmPassword = postUserWindow.getConfirmPassword().getJTextField().getText();
 			String email = postUserWindow.getEmail().getJTextField().getText();
 			String fullName = postUserWindow.getFullname().getJTextField().getText();
+
+			/**
+			 * Open the {@link SuccessWindow} {@code pop-up}
+			 */
+			@Override
+			public void functionalDone( String resultOfDoInBackGround ) throws Exception
+			{
+				new SuccessWindow( resultOfDoInBackGround );
+				postUserWindow.dispose();
+			}
 
 			@Override
 			protected String doInBackground() throws Exception
@@ -73,15 +84,5 @@ public class FunctionalPostUserWindow
 						userWhoIsPosting ).call();
 			}
 		};
-	}
-
-	/**
-	 * Open the {@link SuccessWindow} {@code pop-up}
-	 */
-	@Override
-	public void functionalWindowDone( String resultOfDoInBackGround )
-	{
-		new SuccessWindow( resultOfDoInBackGround );
-		postUserWindow.dispose();
 	}
 }

@@ -40,18 +40,24 @@ public class JBodyPanelForMainWindow extends JPanel {
 
 	// Public Set Methods
 	
-	public void setAirshipsScrollPane(Database<Airship> airshipsDatabase,
+	public void setBodyPanel(Database<Airship> airshipsDatabase,
 		Iterable<Airship> airshipsFound) {
 	
-		this.airshipsScrollPane = new JWorldMapWithAirships().produceAJScrollPaneWithAllElements(
-			airshipsDatabase, airshipsFound);
-	}
-	
-	public void setWorldMapWithAirships(Iterable<Airship> airshipsFound) {
-	
+		this.remove( worldMapWithAirships );
+		this.remove( airshipsScrollPane );
+		
 		this.worldMapWithAirships = new JWorldMapWithAirships()
-			.createAJPanelWithWorldMapAndAirships(airshipsFound);
+		.createAJPanelWithWorldMapAndAirships(airshipsFound);
+		this.airshipsScrollPane = new JWorldMapWithAirships().produceAJScrollPaneWithAllElements(
+				airshipsDatabase, airshipsFound);
+		
+		this.add(worldMapWithAirships);
+		this.add(airshipsScrollPane);
+		
+		this.revalidate();
+		this.repaint();
 	}
+	
 	
 	// Public Get Methods
 	

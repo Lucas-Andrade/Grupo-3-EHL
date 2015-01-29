@@ -10,6 +10,7 @@ import main.java.domain.model.users.User;
 import main.java.gui.design.windows.MainWindow;
 import main.java.gui.design.windows.userwindows.LogInWindow;
 import main.java.gui.functionalcomponents.FunctionalWindow;
+import main.java.gui.functionalcomponents.FunctionalWindowSwingWorker;
 import main.java.gui.functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 
 /**
@@ -51,12 +52,10 @@ public class FunctionalLoginWindow
 	}
 
 	@Override
-	protected FunctionalWindowSwingWorker getSwingWorker()
+	protected FunctionalWindowSwingWorker<User> getSwingWorker()
 	{
-
-		return new FunctionalWindowSwingWorker()
+		return new FunctionalWindowSwingWorker< User >(functionalWindow.getErrorLabel())
 		{
-
 			String username = functionalWindow.getUserPanel().getJTextField().getText();
 			String password = functionalWindow.getPasswordPanel().getJTextField().getText();
 
@@ -66,17 +65,16 @@ public class FunctionalLoginWindow
 
 				return new AuthenticateUserCommand( username, password, usersDatabase ).call().get();
 			}
+
+			@Override
+			public void functionalDone( User resultOfDoInBackGround ) throws Exception
+			{
+				new FunctionalMainWindow(
+						new MainWindow( airshipsDatabase, airshipsDatabase.getAllElements().get() ), usersDatabase,
+						airshipsDatabase, resultOfDoInBackGround );
+
+				functionalWindow.dispose();
+			}
 		};
-	}
-
-	@Override
-	protected void functionalWindowDone( User resultOfDoInBackGround ) throws Exception
-	{
-
-		new FunctionalMainWindow(
-				new MainWindow( airshipsDatabase, airshipsDatabase.getAllElements().get() ), usersDatabase,
-				airshipsDatabase, resultOfDoInBackGround );
-
-		functionalWindow.dispose();
 	}
 }

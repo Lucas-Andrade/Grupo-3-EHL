@@ -6,70 +6,80 @@ import main.java.domain.model.users.User;
 import main.java.gui.design.windows.popupwindows.SuccessWindow;
 import main.java.gui.design.windows.userwindows.PatchUserWindow;
 import main.java.gui.functionalcomponents.FunctionalWindow;
+import main.java.gui.functionalcomponents.FunctionalWindowSwingWorker;
 import main.java.utils.exceptions.InvalidArgumentException;
 
-public class FunctionalPatchUserWindow extends FunctionalWindow<String> {
-	
-	// Fields
-	
-	private Database<User> usersDatabase;
-	
+public class FunctionalPatchUserWindow
+	extends FunctionalWindow< String >
+{
+	private Database< User > usersDatabase;
 	private PatchUserWindow functionalWindow;
-	
-	// Constructor
-	
-	public FunctionalPatchUserWindow(PatchUserWindow nonFunctionalWindow,
-		Database<User> usersDatabase) {
-	
-		super(nonFunctionalWindow);
-		
+
+	public FunctionalPatchUserWindow( PatchUserWindow nonFunctionalWindow, Database< User > usersDatabase )
+	{
+		super( nonFunctionalWindow );
+
 		this.functionalWindow = nonFunctionalWindow;
-		
 		this.usersDatabase = usersDatabase;
-		
 	}
 
-	// Implementation of the methods inherited from the FunctionalWindow class
-	
 	@Override
-	protected FunctionalWindowSwingWorker getSwingWorker() {
-	
-		return new FunctionalWindowSwingWorker() {
-			
+	protected FunctionalWindowSwingWorker< String > getSwingWorker()
+	{
+		return new FunctionalWindowSwingWorker< String >( functionalWindow.getErrorLabel() )
+		{
 			String username = functionalWindow.getUserPanel().getJTextField().getText();
 			String oldPassword = functionalWindow.getOldPasswordPanel().getJTextField().getText();
 			String newPassword = functionalWindow.getNewPasswordPanel().getJTextField().getText();
 			String newPasswordToConfirm = functionalWindow.getNewPasswordConfirmationPanel()
-				.getJTextField().getText();
-			
+															.getJTextField()
+															.getText();
+
 			@Override
-			protected String doInBackground() throws Exception {
-			
-				if (newPassword.equals(""))
-					throw new InvalidArgumentException("Please Insert a New Password");
-				
-				if (!newPasswordToConfirm.equals(newPassword)) {
-					throw new InvalidArgumentException("The Passwords Don't Match");
+			protected String doInBackground() throws Exception
+			{
+				if( newPassword.equals( "" ) )
+					throw new InvalidArgumentException( "Please Insert a New Password" );
+
+				if( !newPasswordToConfirm.equals( newPassword ) ){ throw new InvalidArgumentException(
+						"The Passwords Don't Match" ); }
+
+				return new PatchUserPasswordCommand( usersDatabase, username, oldPassword, newPassword ).call();
+			}
+
+			@Override
+			public void functionalDone( String resultOfDoInBackGround ) throws Exception
+			{
+				if( resultOfDoInBackGround.equals( "User password successfully changed" ) )
+				{
+					new SuccessWindow( resultOfDoInBackGround );
+					functionalWindow.dispose();
 				}
-				
-				return new PatchUserPasswordCommand(usersDatabase, username, oldPassword,
-					newPassword).call();
+				else
+				{
+					throw new InvalidArgumentException( resultOfDoInBackGround );
+				}
 			}
 		};
 	}
-	
-	@Override
-	protected void functionalWindowDone(String resultOfDoInBackGround)
-		throws InvalidArgumentException, Exception {
-	
-		if (resultOfDoInBackGround.equals("User password successfully changed")) {
-			
-			new SuccessWindow(resultOfDoInBackGround);
-			
-			functionalWindow.dispose();
-			
-		} else {
-			throw new InvalidArgumentException(resultOfDoInBackGround);
-		}
-	}
 }
+
+	// // Implementation of the methods inherited from the FunctionalWindow
+	// class
+	//
+	//
+	//
+	// @Override
+	// protected String doInBackground() throws Exception {
+	//
+	//
+	// }
+	// };
+	// }
+	//
+	// @Override
+	// protected void functionalWindowDone(String resultOfDoInBackGround)
+	// throws InvalidArgumentException, Exception {
+
+
+

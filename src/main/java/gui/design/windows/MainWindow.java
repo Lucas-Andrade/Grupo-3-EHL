@@ -27,10 +27,9 @@ public class MainWindow
 	private GridBagConstraints constraints = GridBagUtils.createGridBagConstraints();
 
 	private JHeaderPanelForMainWindow headerPanel;
-
 	private JBodyPanelForMainWindow bodyPanel;
-
 	private JFooterPanelForMainWindow footerPanel;
+	private JLabel errorLabel;
 
 	// Constructor
 
@@ -61,9 +60,9 @@ public class MainWindow
 		footerPanel = new JFooterPanelForMainWindow();
 		contentPane.add( footerPanel, GridBagUtils.updateGridBagConstraints( constraints, 2 ) );
 
-		JLabel errorLabel = new JLabel( " " );
-		errorLabel.setForeground( Color.RED );
+		errorLabel = new JLabel( " " );
 		errorLabel.setFont( errorLabel.getFont().deriveFont( 20f ) );
+		errorLabel.setForeground( Color.RED );
 		contentPane.add( errorLabel, GridBagUtils.updateGridBagConstraints( constraints, 3 ) );
 
 		pack();
@@ -111,5 +110,13 @@ public class MainWindow
 	{
 
 		return footerPanel;
+	}
+
+	/**
+	 * @return the errorLabel
+	 */
+	public JLabel getErrorLabel()
+	{
+		return errorLabel;
 	}
 }

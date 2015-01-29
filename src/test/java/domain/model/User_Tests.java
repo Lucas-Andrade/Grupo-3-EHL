@@ -41,15 +41,15 @@ public class User_Tests {
     @Test
     public void ShouldReturnAStringWithAllTheInformation() {
         
-        Assert.assertTrue( user1.toString()
-                                .equals( "username: Pedro, password: pass, email: pedro@gmail.com, fullName: Pedro Antunes\n" ) );
+        Assert.assertEquals( "username: Pedro,\r\npassword: pass,\r\nemail: pedro@gmail.com,\r\nfullName: Pedro Antunes\r\n",
+                             user1.toString() );
     }
     
     @Test
     public void ShouldReturnAStringWithAllTheInformationExceptFullname() {
         
-        Assert.assertTrue( user2.toString()
-                                .equals( "username: Gonçalo, password: pass2, email: Gonçalo@gmail.com\n" ) );
+        Assert.assertEquals( "username: Gonçalo,\r\npassword: pass2,\r\nemail: Gonçalo@gmail.com\r\n",
+                             user2.toString() );
     }
     
     @Test
@@ -103,14 +103,14 @@ public class User_Tests {
     @Test
     public void ShouldReturnAStringWithoutPasswordButWithAnFullname() {
         
-        Assert.assertEquals( "username: Pedro, email: pedro@gmail.com, fullName: Pedro Antunes\n",
+        Assert.assertEquals( "username: Pedro,\r\nemail: pedro@gmail.com,\r\nfullName: Pedro Antunes\r\n",
                              user1.toStringWithoutPassword() );
     }
     
     @Test
     public void ShouldReturnAStringWithoutPasswordButWithoutAnFullname() {
         
-        Assert.assertEquals( "username: Gonçalo, email: Gonçalo@gmail.com\n",
+        Assert.assertEquals( "username: Gonçalo,\r\nemail: Gonçalo@gmail.com\r\n",
                              user2.toStringWithoutPassword() );
     }
     

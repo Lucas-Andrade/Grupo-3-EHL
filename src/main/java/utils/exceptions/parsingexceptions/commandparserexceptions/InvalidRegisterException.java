@@ -28,21 +28,21 @@ public class InvalidRegisterException extends CommandParserException {
     }
     
     /**
-     * Constructs an {@link InvalidRegisterException} with the message <i>«"A path has been
+     * Constructs an {@link InvalidRegisterException} with the message <i>«A path has been
      * registered with the placeholder {@code existingPlaceholder} in this position. Cannot register
      * new command with placeholder {@code placeholderToAdd} in this position.»</i>.
      * 
-     * @param parameterName
-     *            The parameter's name.
+     * @param placeholderToAdd
+     *            The placeholder contained in the string-command that failed registration.
+     * @param existingPlaceholder
+     *            The existing placeholder.
      */
     public InvalidRegisterException( String placeholderToAdd, String existingPlaceholder ) {
         
-        super(
-               new StringBuilder( "A path has been registered with the placeholder " ).append( existingPlaceholder )
-                                                                                      .append( " in this position." )
-                                                                                      .append( "\nCannot register new command with placeholder " )
-                                                                                      .append( placeholderToAdd )
-                                                                                      .append( " in this position." )
-                                                                                      .toString() );
+        super( new StringBuilder().append( "A path has been registered with the placeholder " )
+                                  .append( existingPlaceholder ).append( " in this position." )
+                                  .append( "\nCannot register new command with placeholder " )
+                                  .append( placeholderToAdd ).append( " in this position." )
+                                  .toString() );
     }
 }

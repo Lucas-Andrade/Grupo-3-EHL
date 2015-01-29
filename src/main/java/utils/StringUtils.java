@@ -42,11 +42,9 @@ public class StringUtils {
     public static Integer parameterToInteger( String parameterName, String parameterValue )
         throws InvalidParameterValueException, MissingRequiredParameterException {
         
-        
-        if( parameterValue.equals( "" ) )
-            throw new MissingRequiredParameterException( parameterName );
-        
-        try {
+        try {            
+            if( parameterValue.equals( "" ) )
+                throw new MissingRequiredParameterException( parameterName );
             return Integer.valueOf( parameterValue );
         }
         catch( NullPointerException e ) {

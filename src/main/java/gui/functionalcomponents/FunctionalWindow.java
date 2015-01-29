@@ -85,41 +85,7 @@ public abstract class FunctionalWindow<T> {
 	 * @return a {@link FunctionalWindowSwingWorker}
 	 */
 	protected abstract FunctionalWindowSwingWorker<T> getSwingWorker();
-	
-//	/**
-//	 * Contract for subclasses where the {@code doInBackground()} method result will be treated.
-//	 * Implementations decisions: The treatment of {@link Exception}s are caught in the
-//	 * {@link FunctionalWindowSwingWorker#done()} method.
-//	 * 
-//	 * @param resultOfDoInBackGround
-//	 */
-//	protected abstract void functionalWindowDone(T resultOfDoInBackGround) throws Exception;
-//	
-//	// InnerClass
-//	/**
-//	 * Abstract SwingWorker Class that {@code Override} the {@code done()} method, where the
-//	 * {@link Exception}s thrown in the doInBackground() are caught.
-//	 */
-//	protected abstract class FunctionalWindowSwingWorker extends SwingWorker<T, Void> {
-//		
-//		@Override
-//		final protected void done() {
-//		
-//			try {
-//				functionalWindowDone(get());
-//				functionalWindow.getErrorLabel().setVisible(false);
-//
-//			} catch (ExecutionException e) {
-//				functionalWindow.getErrorLabel().setText(e.getCause().getMessage());
-//				functionalWindow.getErrorLabel().setVisible(true);
-//				
-//			} catch (Exception e) {
-//				functionalWindow.getErrorLabel().setText(e.getMessage());
-//				functionalWindow.getErrorLabel().setVisible(true);
-//			}
-//		}
-//	}
-	
+
 	/**
 	 * @return the window
 	 */

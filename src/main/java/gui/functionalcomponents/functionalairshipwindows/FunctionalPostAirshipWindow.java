@@ -29,7 +29,7 @@ public class FunctionalPostAirshipWindow
 		this.userWhoIsPosting = userWhoIsPosting;
 		this.airshipsDatabase = airshipsDatabase;
 	}
-	
+
 	@Override
 	protected FunctionalWindowSwingWorker< String > getSwingWorker()
 	{
@@ -44,12 +44,7 @@ public class FunctionalPostAirshipWindow
 
 			String specificComponent;
 
-			@Override
-			public void functionalDone( String resultOfDoInBackGround )
-			{
-				new SuccessWindow( "Airship Successfully Posted -> " + resultOfDoInBackGround );
-				functionalWindow.dispose();
-			}
+
 
 			@Override
 			protected String doInBackground() throws Exception
@@ -156,6 +151,14 @@ public class FunctionalPostAirshipWindow
 							minAltitude, specificComponent, airshipsDatabase, userWhoIsPosting ).call();
 				}
 			}
+
+			@Override
+			public void functionalDone( String resultOfDoInBackGround )
+			{
+				new SuccessWindow( "Airship Successfully Posted -> " + resultOfDoInBackGround );
+				functionalWindow.dispose();
+			}
+
 		};
 	}
 }

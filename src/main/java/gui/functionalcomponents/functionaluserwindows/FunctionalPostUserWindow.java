@@ -65,15 +65,6 @@ public class FunctionalPostUserWindow
 			String email = postUserWindow.getEmail().getJTextField().getText();
 			String fullName = postUserWindow.getFullname().getJTextField().getText();
 
-			/**
-			 * Open the {@link SuccessWindow} {@code pop-up}
-			 */
-			@Override
-			public void functionalDone( String resultOfDoInBackGround ) throws Exception
-			{
-				new SuccessWindow( resultOfDoInBackGround );
-				postUserWindow.dispose();
-			}
 
 			@Override
 			protected String doInBackground() throws Exception
@@ -82,6 +73,16 @@ public class FunctionalPostUserWindow
 					throw new InvalidArgumentException( "The Passwords Don't Match" );
 				return new PostUserCommand( username, password, email, fullName, usersDatabase,
 						userWhoIsPosting ).call();
+			}
+			
+			/**
+			 * Open the {@link SuccessWindow} {@code pop-up}
+			 */
+			@Override
+			public void functionalDone( String resultOfDoInBackGround ) throws Exception
+			{
+				new SuccessWindow( resultOfDoInBackGround );
+				postUserWindow.dispose();
 			}
 		};
 	}

@@ -6,14 +6,20 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 
 import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
+import main.java.domain.commands.getcommands.GetAllTransgressingAirshipsCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
+import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.domain.model.users.User;
 import main.java.gui.design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import main.java.gui.design.panels.mainwindowpanels.JFooterPanelForMainWindow;
+import main.java.gui.design.windows.airshipwindows.GetAirshipsWithLessPassengerThanWindow;
+import main.java.gui.design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
 import main.java.gui.design.windows.airshipwindows.PostAirshipsWindow;
 import main.java.gui.design.windows.popupwindows.UnderConstrutionWindow;
-import main.java.gui.functionalcomponents.FunctionalWindowSwingWorker;
+import main.java.gui.functionalcomponents.FunctionalGetSwingWorker;
+import main.java.gui.functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
+import main.java.gui.functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
 import main.java.gui.functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
 
 public class FunctionalFooterPanel
@@ -59,22 +65,18 @@ public class FunctionalFooterPanel
 			@Override
 			public void actionPerformed( ActionEvent e )
 			{
-				new FunctionalWindowSwingWorker<  Iterable<Airship>  >(errorLabel)
+				new FunctionalGetSwingWorker( airshipsDatabase, bodyPanel, errorLabel )
 				{
 					@Override
 					protected Iterable< Airship > doInBackground() throws Exception
 					{
-						return new GetAllElementsInADatabaseCommand< Airship >(
-								airshipsDatabase ).call().get();
-					}
-					@Override
-					public void functionalDone( Iterable< Airship > resultOfDoInBackGround )
-					{
-						updateBodyPanel( airshipsDatabase, resultOfDoInBackGround );
+						return new GetAllElementsInADatabaseCommand< Airship >( airshipsDatabase ).call()
+																									.get();
 					}
 				}.run();
 			}
-		});
+
+		} );
 	}
 
 
@@ -85,7 +87,9 @@ public class FunctionalFooterPanel
 			@Override
 			public void actionPerformed( ActionEvent e )
 			{
-				new UnderConstrutionWindow();
+				new FunctionalGetGeographicalCoordinatesParametersWindow(
+						new GetGeographicalCoordinatesParametersWindow(), airshipsDatabase, bodyPanel,
+						errorLabel );
 			}
 		} );
 	}
@@ -97,7 +101,15 @@ public class FunctionalFooterPanel
 			@Override
 			public void actionPerformed( ActionEvent e )
 			{
-				new UnderConstrutionWindow();
+				new FunctionalGetSwingWorker( airshipsDatabase, bodyPanel, errorLabel )
+				{
+					@Override
+					protected Iterable< Airship > doInBackground() throws Exception
+					{
+						return new GetAllTransgressingAirshipsCommand(
+								( InMemoryAirshipsDatabase )airshipsDatabase ).call().get();
+					}
+				}.run();
 			}
 		} );
 	}
@@ -109,11 +121,15 @@ public class FunctionalFooterPanel
 			@Override
 			public void actionPerformed( ActionEvent e )
 			{
-				new UnderConstrutionWindow();
+				new FunctionalGetAirshipsWithLessPassengerThanWindow(
+						new GetAirshipsWithLessPassengerThanWindow(), airshipsDatabase, bodyPanel, errorLabel );
 			}
 		} );
 	}
 
+	/**
+	 * PATCH
+	 */
 	private void addPatchAirshipButtonAction()
 	{
 		footerPanel.getPatchAirship().addActionListener( new ActionListener()
@@ -126,6 +142,9 @@ public class FunctionalFooterPanel
 		} );
 	}
 
+	/**
+	 * POST
+	 */
 	private void addPostAirshipButtonAction()
 	{
 		footerPanel.getPostAirship().addActionListener( new ActionListener()
@@ -138,6 +157,9 @@ public class FunctionalFooterPanel
 		} );
 	}
 
+	/**
+	 * DELETE
+	 */
 	private void addDeleteAirshipButtonAction()
 	{
 		footerPanel.getDeleteAirship().addActionListener( new ActionListener()
@@ -149,13 +171,6 @@ public class FunctionalFooterPanel
 			}
 		} );
 	}
-
-	private void updateBodyPanel( Database< Airship > airshipsDatabase, Iterable< Airship > airshipsFound )
-	{
-		bodyPanel.setBodyPanel( airshipsDatabase, airshipsFound );
-	}
-
-	// Public Get Methods
 
 	public JFooterPanelForMainWindow getFooterPanel()
 	{

@@ -9,15 +9,15 @@ import main.java.gui.design.panels.JLablePlusJTextField;
 import main.java.gui.design.windows.WindowBase;
 
 @SuppressWarnings("serial")
-public class GetAirshipsWithLessPassengerThenWindow extends WindowBase{
+public class GetAirshipsWithLessPassengerThanWindow extends WindowBase{
 
 	
 	private GridBagConstraints constraints = GridBagUtils.createGridBagConstraints();
 	private JLablePlusJTextField numberOfPassengers;
 	
 	
-	public GetAirshipsWithLessPassengerThenWindow() {
-		super(350, 350,"src/main/resources/images/passengers.png");
+	public GetAirshipsWithLessPassengerThanWindow() {
+		super(550, 550,"src/main/resources/images/passengers.png");
 		
 		initial();
 	}
@@ -30,7 +30,7 @@ public class GetAirshipsWithLessPassengerThenWindow extends WindowBase{
 		
 	}
 
-	public JLablePlusJTextField getLatitude() {
+	public JLablePlusJTextField getNumberOfPassengers() {
 		return numberOfPassengers;
 	}
 

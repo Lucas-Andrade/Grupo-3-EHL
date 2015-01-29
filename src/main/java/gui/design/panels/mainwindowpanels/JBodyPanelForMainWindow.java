@@ -40,7 +40,7 @@ public class JBodyPanelForMainWindow extends JPanel {
 
 	// Public Set Methods
 	
-	public void setBodyPanel(Database<Airship> airshipsDatabase,
+	public void updateBodyPanel(Database<Airship> airshipsDatabase,
 		Iterable<Airship> airshipsFound) {
 	
 		this.remove( worldMapWithAirships );

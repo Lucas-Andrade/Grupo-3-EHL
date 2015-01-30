@@ -37,8 +37,8 @@ public class MissingRequiredParameterException extends Exception {
      *            {@code null} values are allowed and indicate that the cause is nonexistent or
      *            unknown.
      */
-    public MissingRequiredParameterException( String parameterName, Exception e ) {
-        // TODO Auto-generated constructor stub
+    public MissingRequiredParameterException( String parameterName, Throwable cause ) {
+        super( parameterName, cause );
     }
     
 }

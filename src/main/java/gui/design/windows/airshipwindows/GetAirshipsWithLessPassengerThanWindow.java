@@ -17,7 +17,7 @@ public class GetAirshipsWithLessPassengerThanWindow extends WindowBase{
 	
 	
 	public GetAirshipsWithLessPassengerThanWindow() {
-		super(550, 550,"src/main/resources/images/passengers.png");
+		super(550, 550,"/images/passengers.png");
 		
 		initial();
 	}

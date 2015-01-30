@@ -8,8 +8,10 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
-import javax.swing.Icon;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -38,7 +40,7 @@ public abstract class PopupWindow
 	 * @param message
 	 * @param image
 	 */
-	public PopupWindow( String message, Icon image )
+	public PopupWindow( String message, String image )
 	{
 		setLayout( new GridBagLayout() );
 		add( getLabel( message, image ), GridBagUtils.updateGridBagConstraints( constraints, 0 ) );
@@ -68,7 +70,7 @@ public abstract class PopupWindow
 		setTitle( "Air Traffic Controll" );
 		getContentPane().setBackground( new Color( 65, 72, 78 ) );
 		setSize( 400, 10 );
-		setIconImage( Toolkit.getDefaultToolkit().getImage( "src/main/resources/images/radar.png" ) );
+		setIconImage( Toolkit.getDefaultToolkit().getImage( "/images/radar.png" ) );
 
 		add( createButton(), GridBagUtils.updateGridBagConstraints( constraints, 1 ) );
 
@@ -88,17 +90,24 @@ public abstract class PopupWindow
 	 * @param image
 	 * @return the Label with a {@code image} and a {@code message}
 	 */
-	private JPanel getLabel( String message, Icon image )
+	private JPanel getLabel( String message, String image )
 	{
-		JLabel imageLabel = new JLabel( image );
+		JPanel mainPanel = new JPanel();
+		JLabel imageLabel;
+		try {
+			imageLabel = new JLabel(new ImageIcon(ImageIO.read(getClass().getResourceAsStream(image))));
+	
 		JLabel messageLabel = new JLabel( message, JLabel.CENTER );
 		messageLabel.setForeground( Color.WHITE );
 
-		JPanel mainPanel = new JPanel();
+		
 		mainPanel.setLayout( new FlowLayout( FlowLayout.LEADING, 50, 50 ) );
 		mainPanel.setBackground( new Color( 65, 72, 78 ) );
 		mainPanel.add( imageLabel );
 		mainPanel.add( messageLabel );
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		return mainPanel;
 	}
 

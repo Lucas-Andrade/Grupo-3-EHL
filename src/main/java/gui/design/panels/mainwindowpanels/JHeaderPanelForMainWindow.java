@@ -18,8 +18,8 @@ public class JHeaderPanelForMainWindow extends JPanel {
 		this.setLayout(new FlowLayout());
 		this.setBackground(new Color(65, 72, 78));
 		
-		JPanelImage logopanel = new JPanelImage("src/main/resources/images/radar.png",
-			"src/main/resources/images/logo.png");
+		JPanelImage logopanel = new JPanelImage("/images/radar.png",
+			"/images/logo.png");
 		this.add(logopanel);
 		
 		JPanel oneColorPanel = new JPanel();

@@ -3,7 +3,9 @@ package main.java.gui.design.panels.mainwindowpanels;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -36,7 +38,7 @@ public class JUserPanelForHeaderPanel extends JPanel{
 		this.setLayout(new FlowLayout());
 		this.setBackground(new Color(65, 72, 78));
 		
-		JPanelImage userImage = new JPanelImage("src/main/resources/images/users/chuck_norris.jpg");
+		JPanelImage userImage = new JPanelImage("/images/users/chuck_norris.jpg");
 		userImage.setBorder( new TextRoundBorder(Color.WHITE,5,4,0));
 		this.add(userImage);	
 
@@ -62,13 +64,16 @@ public class JUserPanelForHeaderPanel extends JPanel{
 		userOptions.setLayout(new GridLayout(3,0));
 		this.add(userOptions);
 		
-		addUserButton = new JButton(new ImageIcon("src/main/resources/images/addUser.png"));
-		userOptions.add(addUserButton);
-		removeUserButton = new JButton(new ImageIcon("src/main/resources/images/removeUser.png"));
-		userOptions.add(removeUserButton);
-		infoAllUsersButton = new JButton(new ImageIcon("src/main/resources/images/infoUser.png"));
-		userOptions.add(infoAllUsersButton);
-		
+		try {
+			addUserButton = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/images/addUser.png"))));
+			userOptions.add(addUserButton);
+			removeUserButton = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/images/removeUser.png"))));
+			userOptions.add(removeUserButton);
+			infoAllUsersButton = new JButton(new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/images/infoUser.png"))));
+			userOptions.add(infoAllUsersButton);			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 

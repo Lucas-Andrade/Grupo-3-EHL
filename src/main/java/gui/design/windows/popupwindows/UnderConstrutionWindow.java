@@ -2,7 +2,6 @@ package main.java.gui.design.windows.popupwindows;
 
 import java.awt.event.ActionListener;
 
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 
 /**
@@ -23,6 +22,6 @@ public class UnderConstrutionWindow
 	 */
 	public UnderConstrutionWindow()
 	{
-		super( null, new ImageIcon( "src/main/resources/images/UnderConstruction.png" ) );
+		super( null,  "/images/UnderConstruction.png"  );
 	}
 }

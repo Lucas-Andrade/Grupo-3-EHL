@@ -6,11 +6,11 @@ import java.awt.GridBagLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.util.concurrent.Callable;
-
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-
+import javax.swing.JPanel;
+import javax.swing.text.JTextComponent;
 import main.java.gui.design.GridBagUtils;
 import main.java.gui.design.panels.JPanelImage;
 import main.java.gui.design.panels.JTwoButtonsPanel;
@@ -94,9 +94,11 @@ public abstract class WindowBase
 		buttonsPanel = new JTwoButtonsPanel();
 		buttonsPanel.setBackground(new Color(0,0,0,0));
 		addComponent( buttonsPanel, GridBagConstraints.BASELINE_TRAILING );
-		
+			
 		errorLabel = new JLabel( " " );
 		errorLabel.setForeground( Color.RED );
+		
+	
 		addComponent( errorLabel, GridBagConstraints.BELOW_BASELINE );
 	}
 

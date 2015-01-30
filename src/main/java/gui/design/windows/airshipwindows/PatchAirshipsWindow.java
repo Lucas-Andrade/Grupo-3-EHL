@@ -15,7 +15,7 @@ public class PatchAirshipsWindow extends WindowBase{
 	private JAirCorridorPanel corridorPanel;
 	
 	public PatchAirshipsWindow() {
-		super(400, 400,"src/main/resources/images/edit.png","src/main/resources/images/civil.png");
+		super(400, 400,"/images/edit.png","src/main/resources/images/civil.png");
 		
 		initial();
 	}

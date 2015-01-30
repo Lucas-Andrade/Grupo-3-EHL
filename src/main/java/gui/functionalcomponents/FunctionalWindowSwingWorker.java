@@ -8,8 +8,9 @@ import javax.swing.SwingWorker;
 
 /**
  * Abstract SwingWorker Class that {@code Override} the {@code done()} method,
- * where the {@link Exception}s thrown in the doInBackground() are caught and
- * write on the {@code errorLabel}.
+ * where the {@link Exception}s thrown by the
+ * {@link SwingWorker#doInBackground()} method are caught and write on the
+ * {@code errorLabel}.
  */
 public abstract class FunctionalWindowSwingWorker< T >
 	extends SwingWorker< T, Void >
@@ -21,6 +22,12 @@ public abstract class FunctionalWindowSwingWorker< T >
 		this.errorLabel = errorLabel;
 	}
 
+	/**
+	 * Caught and write the thrown {@link Exception}s by the
+	 * {@link SwingWorker#doInBackground()} or
+	 * {@link FunctionalWindowSwingWorker#functionalDone} methods to the
+	 * {@code errorLabel}.
+	 */
 	@Override
 	final protected void done()
 	{
@@ -40,8 +47,8 @@ public abstract class FunctionalWindowSwingWorker< T >
 	}
 
 	/**
-	 * Contract for subclasses where the result of the {@code doInBackground()} method 
-	 * will be treated. Implementations decisions: The treatment of
+	 * Contract for subclasses where the result of the {@code doInBackground()}
+	 * method will be treated. Implementations decisions: The treatment of
 	 * {@link Exception}s are caught in the
 	 * {@link FunctionalWindowSwingWorker#done()} method.
 	 * 

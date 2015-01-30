@@ -36,10 +36,10 @@ class MapsToTranslatables {
             }
             
             Map< String, Object > options = new TreeMap<>();
-            for( Map.Entry< String, String > option : optList.options.entrySet() )
+            for( Map.Entry< String, String > option : optList.getOptions().entrySet() )
                 options.put( option.getKey(), option.getValue() );
             return new Translatable( "options", "option", "command", "description", options,
-                                     optList.options.toString() );
+                                     optList.getOptions().toString() );
         }
         
     }

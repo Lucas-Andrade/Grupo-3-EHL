@@ -1,5 +1,6 @@
 package main.java.domain.commands.getcommands;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
@@ -98,7 +99,6 @@ public class GetTheNearestAirshipsToGeographicPositionCommand implements
 	 * </p>
 	 * 
 	 */
-	@SuppressWarnings ("null")
 	@Override
 	public Optional<Iterable<Airship>> call() throws Exception {
 	
@@ -109,7 +109,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommand implements
 			new AirshipComparators.ComparatorByDistance(new GeographicPosition(latitude, longitude,
 				0))).get();
 		
-		List<Airship> finalList = null;
+		List<Airship> finalList = new ArrayList<Airship>();
 		
 		long counter = 0;
 		

@@ -23,7 +23,7 @@ public class JCommonPostAirshipPanel extends JPanel {
 	}
 
 	private void initial() {
-
+	    
 		this.setBackground(new Color(0, 0, 0, 0));
 		this.setLayout(new GridLayout(2, 1));
 

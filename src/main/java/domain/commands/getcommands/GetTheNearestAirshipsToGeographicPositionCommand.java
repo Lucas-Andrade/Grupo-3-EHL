@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import main.java.domain.model.Database;
 import main.java.domain.model.InMemoryDatabase;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.AirshipComparators;
 import main.java.domain.model.airships.GeographicPosition;
-import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.utils.Optional;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
@@ -30,7 +30,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommand implements
 	/**
 	 * The airships database.
 	 */
-	private final InMemoryAirshipsDatabase airshipsDatabase;
+	private final Database<Airship> airshipsDatabase;
 	
 	/**
 	 * The number of airships to get that are nearest to the geographic coordinates.
@@ -67,7 +67,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommand implements
 	 *             latitude it's not between -90 and 90 and longitude it's not between 360 and 0.
 	 */
 	public GetTheNearestAirshipsToGeographicPositionCommand(
-		InMemoryAirshipsDatabase airshipsDatabase, int airshipsNumber, double latitude,
+		Database<Airship> airshipsDatabase, int airshipsNumber, double latitude,
 		double longitude) throws InvalidArgumentException {
 	
 		if (airshipsDatabase == null)

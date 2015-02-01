@@ -12,12 +12,35 @@ import java.util.Map;
  */
 public class OptionsList {
     
-    public final Map< String, String > options;
+    /**
+     * The container of the options and their descriptions.
+     */
+    private final Map< String, String > options;
     
+    /**
+     * Creates a new {@link OptionList} whose names of the options are the keys of {@code options}
+     * and whose descriptions are the values of {@code options}.
+     * 
+     * @param options
+     *            The {@link Map} whose keys are the names of the options and whose values are the
+     *            descriptions.
+     */
     public OptionsList( Map< String, String > options ) {
         this.options = options;
     }
     
+    /**
+     * Returns the list of options.
+     * @return The list of options.
+     */
+    public Map< String, String > getOptions() {
+        return options;
+    }
+
+    /**
+     * Returns the string representation of this list of options.
+     */
+    @Override
     public String toString() {
         return options.toString();
     }

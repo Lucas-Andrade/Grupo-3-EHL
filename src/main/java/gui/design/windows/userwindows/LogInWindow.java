@@ -19,7 +19,7 @@ public class LogInWindow extends WindowBase{
 
 	public LogInWindow() {
 		
-		super(380, 380,"src/main/resources/images/radar.png","src/main/resources/images/logo.png");
+		super(380, 380,"/images/radar.png","/images/logo.png");
 		
 		initialize();
 
@@ -30,7 +30,7 @@ public class LogInWindow extends WindowBase{
 
 		getUserPanel=  new JLablePlusJTextField("Username", 20, Color.WHITE);		
 		this.getContentPane().add(getUserPanel,GridBagUtils.updateGridBagConstraints(constraints ,0,1, new Insets(5, 0, 0, 0)));
-		getPasswordPanel = new JLablePlusJTextField("Password", 20, Color.WHITE,true,"src/main/resources/images/locker.png");
+		getPasswordPanel = new JLablePlusJTextField("Password", 20, Color.WHITE,true,"/images/locker.png");
 		this.getContentPane().add( getPasswordPanel , GridBagUtils.updateGridBagConstraints(constraints,0,2, new Insets(5, 0, 15, 0)));
 		
 

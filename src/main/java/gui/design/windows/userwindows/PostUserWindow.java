@@ -21,7 +21,7 @@ public class PostUserWindow extends WindowBase{
 	
 	public PostUserWindow()   {
 		
-		super(400, 600,"src/main/resources/images/User.png");
+		super(400, 600,"/images/User.png");
 		initialize();
 		
 	}

@@ -25,7 +25,7 @@ public class JWorldMapWithAirships extends JScrollPanelForElements<Airship> {
 	public JPanel createAJPanelWithWorldMapAndAirships(Iterable<Airship> airshipsFound) {
 	
 		JPanelImage.createImage worldMap = new JPanelImage.createImage(
-			"src/main/resources/images/planisphere.png");
+			"/images/planisphere.png");
 		worldMap.setLayout(null);
 
 		this.add(worldMap);

@@ -20,7 +20,7 @@ public class PatchUserWindow extends WindowBase{
 	private GridBagConstraints constraints = GridBagUtils.createGridBagConstraints();
 
 	public PatchUserWindow() {
-		super(400, 600,"src/main/resources/images/pacthUser.png");
+		super(400, 600,"/images/pacthUser.png");
 		initialize();
 	}
 

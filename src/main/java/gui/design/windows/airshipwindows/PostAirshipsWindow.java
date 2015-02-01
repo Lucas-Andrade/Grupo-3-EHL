@@ -55,10 +55,10 @@ public class PostAirshipsWindow extends WindowBase{
 		
 		this.add(typeAirshipTabbedPane, 0);
 		
-		civilPanel.add(new JPanelImage("src/main/resources/images/civil.png",
-			"src/main/resources/images/add.png"));
-		militaryPanel.add(new JPanelImage("src/main/resources/images/military.png",
-			"src/main/resources/images/add.png"));
+		civilPanel.add(new JPanelImage("/images/civil.png",
+			"/images/add.png"));
+		militaryPanel.add(new JPanelImage("/images/military.png",
+			"/images/add.png"));
 		
 		civilAirshipCommonPainel = new JCommonPostAirshipPanel();
 		civilPanel.add(civilAirshipCommonPainel);

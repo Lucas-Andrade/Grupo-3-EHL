@@ -37,7 +37,7 @@ public class MainWindow
 	{
 
 		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-		this.setIconImage( Toolkit.getDefaultToolkit().getImage( "src/main/resources/images/radar.png" ) );
+		this.setIconImage( Toolkit.getDefaultToolkit().getImage( "/images/radar.png" ) );
 		this.setTitle( "Air Traffic Control" );
 
 		JPanel contentPane = new JPanel();

@@ -1,6 +1,5 @@
 package main.java.gui.design.windows.popupwindows;
 
-import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 
 /**
@@ -22,6 +21,6 @@ public class SuccessWindow
 	 */
 	public SuccessWindow( String message )
 	{
-		super( message, new ImageIcon( "src/main/resources/images/successIcon.png" ) );
+		super( message,  "/images/successIcon.png"  );
 	}
 }

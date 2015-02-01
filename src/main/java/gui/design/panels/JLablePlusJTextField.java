@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -47,7 +49,16 @@ public class JLablePlusJTextField extends JPanel {
 
 	private void createJlabel(String JLabelText, Color JLabelcolor,String iconPath) {
 		 
-		this.label = new JLabel(JLabelText, new ImageIcon(iconPath), JLabel.CENTER);
+		
+		try {
+			
+			this.label = (iconPath != "") ? 
+					new JLabel(JLabelText,new ImageIcon(ImageIO.read(getClass().getResourceAsStream(iconPath))), JLabel.CENTER)				
+					: new JLabel(JLabelText,JLabel.CENTER);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}					
+		
 		label.setForeground(JLabelcolor);
 		this.add(label,GridBagUtils.updateGridBagConstraints(constraints,0,1, new Insets(10, 0, 0, 0)));
 	}

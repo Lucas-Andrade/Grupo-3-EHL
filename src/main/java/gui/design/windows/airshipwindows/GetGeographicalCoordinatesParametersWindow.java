@@ -21,7 +21,7 @@ public class GetGeographicalCoordinatesParametersWindow
 
 	public GetGeographicalCoordinatesParametersWindow()
 	{
-		super( 550, 550, "src/main/resources/images/map-icon.png" );
+		super( 370, 550, "/images/map-icon.png" );
 
 		initial();
 	}

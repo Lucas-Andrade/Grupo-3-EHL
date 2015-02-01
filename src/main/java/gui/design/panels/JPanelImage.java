@@ -4,8 +4,9 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.io.IOException;
 
-import javax.swing.ImageIcon;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 public class JPanelImage extends JPanel {
@@ -30,9 +31,13 @@ public class JPanelImage extends JPanel {
 
 		public createImage(String path) { 
 			
-			
+			try {
+				image = ImageIO.read(getClass().getResourceAsStream(path));
+			} catch (IOException e) {
 
-			image = new ImageIcon(path).getImage();
+				e.printStackTrace();
+			}
+		
 			setOpaque(false);
 			setPreferredSize(new Dimension(image.getWidth(this),
 					image.getHeight(this)));

@@ -17,7 +17,7 @@ import main.java.gui.design.windows.airshipwindows.GetAirshipsWithLessPassengerT
 import main.java.gui.design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
 import main.java.gui.design.windows.airshipwindows.PostAirshipsWindow;
 import main.java.gui.design.windows.popupwindows.UnderConstrutionWindow;
-import main.java.gui.functionalcomponents.FunctionalGetSwingWorker;
+import main.java.gui.functionalcomponents.FunctionalGetWindowSwingWorker;
 import main.java.gui.functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
 import main.java.gui.functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
 import main.java.gui.functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
@@ -65,7 +65,7 @@ public class FunctionalFooterPanel
 			@Override
 			public void actionPerformed( ActionEvent e )
 			{
-				new FunctionalGetSwingWorker( airshipsDatabase, bodyPanel, errorLabel )
+				new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorLabel )
 				{
 					@Override
 					protected Iterable< Airship > doInBackground() throws Exception
@@ -101,7 +101,7 @@ public class FunctionalFooterPanel
 			@Override
 			public void actionPerformed( ActionEvent e )
 			{
-				new FunctionalGetSwingWorker( airshipsDatabase, bodyPanel, errorLabel )
+				new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorLabel )
 				{
 					@Override
 					protected Iterable< Airship > doInBackground() throws Exception

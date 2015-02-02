@@ -13,10 +13,9 @@ import main.java.domain.model.Database;
 import main.java.domain.model.Element;
 
 /**
- * Instances of this class are {@link JButton}s, to call
- * {@link GetElementFromADatabaseByIdCommand} and write the result on the given
- * {@code textArea}
- * 
+ * Instances of this class are {@link JButton}s, where the
+ * {@link ActionListener} call the {@link GetElementFromADatabaseByIdCommand}
+ * and write the result in the given {@code textArea}
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  * @param <E>
@@ -66,12 +65,20 @@ public class GetElementButton< E extends Element >
 	{
 		return new SwingWorker< E, Void >()
 		{
+			/**
+			 * GET the element
+			 */
 			@Override
 			protected E doInBackground() throws Exception
 			{
 				return new GetElementFromADatabaseByIdCommand< E >( database, identification ).call().get();
 			}
 
+			/**
+			 * After the {@link SwingWorker#doInBackground} method, it is write
+			 * the element info on the {@code textArea}. The method
+			 * {@link SwingWorker#get()} should not throw an {@code Exception}
+			 */
 			protected void done()
 			{
 				try

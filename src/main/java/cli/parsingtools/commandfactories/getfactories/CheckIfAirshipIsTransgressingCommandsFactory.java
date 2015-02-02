@@ -4,7 +4,7 @@ package main.java.cli.parsingtools.commandfactories.getfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.CheckIfAirshipIsTransgressingCommand;
 import main.java.domain.model.Database;
@@ -14,14 +14,14 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands of
+ * Class whose instances are {@link ParsingCommand factories} that produce commands of
  * type {@link CheckIfAirshipIsTransgressingCommand}. Commands are {@link Callable} instances.
  * 
  * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link Airship Airships}.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class CheckIfAirshipIsTransgressingCommandsFactory extends StringsToCommandsFactory< String > {
+public class CheckIfAirshipIsTransgressingCommandsFactory extends ParsingCommand< String > {
     
     // INSTANCE FIELDS
     
@@ -75,7 +75,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends StringsToComma
      * @return A command of type {@link CheckIfAirshipIsTransgressingCommand}.
      */
     @Override
-    protected Callable< String > internalNewInstance() {
+    protected Callable< String > internalNewCommand() {
         
         setFlightIdValueOfTheParametersMap();
         
@@ -108,7 +108,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends StringsToComma
      * Sets the value of the field {@link #flightId} with the value received in the parameters map.
      * <p>
      * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-     * last one is called inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed
+     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
      * that the field {@link #flightId} is non-{@code null} after this method finishes its job.
      * </p>
      */

@@ -4,7 +4,7 @@ package main.java.cli.parsingtools.commandfactories.getfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.GetAirshipsOfOwnerCommand;
 import main.java.domain.model.airships.Airship;
@@ -15,7 +15,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands of
+ * Class whose instances are {@link ParsingCommand factories} that produce commands of
  * type {@link GetAirshipsByOwnerCommand}. Commands are {@link Callable} instances.
  * 
  * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link Optional} {@link Iterable
@@ -24,7 +24,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes.
  */
 public class GetAirshipsOfOwnerCommandsFactory extends
-        StringsToCommandsFactory< Optional< Iterable< Airship >>> {
+        ParsingCommand< Optional< Iterable< Airship >>> {
     
     // INSTANCE FIELDS
     
@@ -79,7 +79,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
      * @return A command of type {@link GetAirshipsByOwnerCommand}.
      */
     @Override
-    protected Callable< Optional< Iterable< Airship >>> internalNewInstance() {
+    protected Callable< Optional< Iterable< Airship >>> internalNewCommand() {
         
         setOwnersUsernameValueOfTheParametersMap();
         
@@ -111,7 +111,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
      * map needed to {@link GetAirshipsOfOwnerCommand}.
      * <p>
      * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-     * last one is called inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed
+     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
      * that the field {@link #ownerUsername} is non-{@code null} after this method finishes its job.
      * </p>
      */

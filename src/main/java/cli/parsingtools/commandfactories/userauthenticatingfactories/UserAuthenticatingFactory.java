@@ -4,7 +4,7 @@ package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.AuthenticateUserCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.Element;
@@ -27,12 +27,12 @@ import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseExce
  *            - The type of the elements contained in the database which will be changed.
  * @param <R>
  *            - The {@link Callable} instance type of the command returned by the
- *            {@link #internalNewInstance()} method.
+ *            {@link #internalNewCommand()} method.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public abstract class UserAuthenticatingFactory< E extends Element, R > extends
-        StringsToCommandsFactory< R > {
+        ParsingCommand< R > {
     
     
     
@@ -103,7 +103,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
      * Sets the values of the fields {@link #loginName} and {@link #loginPassword} with the values
      * received in the parameters map (if this method is called inside
      * {@link #internalNewInstance(Map)} and this one is called inside
-     * {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed that these fields are
+     * {@link ParsingCommand#newCommand(Map)}, it is guaranteed that these fields are
      * non-{@code null}). </p></li>
      * <li>Checks whether the login user and login password received match.</li>
      * </ul>
@@ -121,7 +121,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
      * @see {@link #internalInternalNewInstance(User)} for more information on the exceptions
      *      thrown.
      */
-    protected final Callable< R > internalNewInstance()
+    protected final Callable< R > internalNewCommand()
         throws MissingRequiredParameterException, InvalidParameterValueException,
         InternalErrorException, NoSuchElementInDatabaseException, WrongLoginPasswordException,
         InvalidArgumentException {
@@ -168,7 +168,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends
     // UNIMPLEMENTED AUXILIARY METHODS
     
     /**
-     * Produces a command (returns it to the method {@link StringsToCommandsFactory#newInstance()
+     * Produces a command (returns it to the method {@link ParsingCommand#newInstance()
      * newInstance()}).
      * 
      * @param userWhoIsPosting

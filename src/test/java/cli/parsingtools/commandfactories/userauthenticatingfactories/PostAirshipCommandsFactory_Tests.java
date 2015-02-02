@@ -89,13 +89,13 @@ public class PostAirshipCommandsFactory_Tests {
         parameters.put( CLIStringsDictionary.NUMBEROFPASSENGERS, "20" );
         
         Callable< ? > postCivilAirshipCommand =
-                (new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase )).newInstance( parameters );
+                (new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase )).newCommand( parameters );
         
         parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Military" );
         parameters.put( CLIStringsDictionary.HASARMOUR, "yes" );
         
         Callable< ? > postMilitaryAirshipCommand =
-                (new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase )).newInstance( parameters );
+                (new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase )).newCommand( parameters );
         
         Assert.assertTrue( postCivilAirshipCommand instanceof PostCivilAirshipCommand );
         Assert.assertTrue( postMilitaryAirshipCommand instanceof PostMilitaryAirshipCommand );
@@ -114,7 +114,7 @@ public class PostAirshipCommandsFactory_Tests {
         parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
         parameters.put( CLIStringsDictionary.LOGINNAME, "Daniel" );
         
-        new PostAirshipCommandsFactory( null, airshipsDatabase ).newInstance( parameters );
+        new PostAirshipCommandsFactory( null, airshipsDatabase ).newCommand( parameters );
     }
     
     @Test( expected = InvalidArgumentException.class )
@@ -128,7 +128,7 @@ public class PostAirshipCommandsFactory_Tests {
         parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
         parameters.put( CLIStringsDictionary.LOGINNAME, "Daniel" );
         
-        new PostAirshipCommandsFactory( usersDatabase, null ).newInstance( parameters );
+        new PostAirshipCommandsFactory( usersDatabase, null ).newCommand( parameters );
     }
     
     @Test( expected = NoSuchElementInDatabaseException.class )
@@ -142,7 +142,7 @@ public class PostAirshipCommandsFactory_Tests {
         parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
         parameters.put( CLIStringsDictionary.LOGINNAME, "Pedro" );
         
-        new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newInstance( parameters );
+        new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newCommand( parameters );
     }
     
     @Test( expected = WrongLoginPasswordException.class )
@@ -156,7 +156,7 @@ public class PostAirshipCommandsFactory_Tests {
         parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
         parameters.put( CLIStringsDictionary.LOGINPASSWORD, "ola" );
         
-        new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newInstance( parameters );
+        new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newCommand( parameters );
     }
     
     @Test( expected = MissingRequiredParameterException.class )
@@ -169,7 +169,7 @@ public class PostAirshipCommandsFactory_Tests {
         
         parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
         
-        new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newInstance( parameters );
+        new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newCommand( parameters );
     }
     
     @Test( expected = MissingRequiredParameterException.class )
@@ -182,7 +182,7 @@ public class PostAirshipCommandsFactory_Tests {
         
         parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Military" );
         
-        new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newInstance( parameters );
+        new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newCommand( parameters );
     }
     
     @Test( expected = InvalidParameterValueException.class )
@@ -196,7 +196,7 @@ public class PostAirshipCommandsFactory_Tests {
         parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
         parameters.put( CLIStringsDictionary.NUMBEROFPASSENGERS, "ola" );
         
-        new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newInstance( parameters );
+        new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newCommand( parameters );
     }
     
     @Test( expected = InvalidParameterValueException.class )
@@ -210,6 +210,6 @@ public class PostAirshipCommandsFactory_Tests {
         parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "ola" );
         parameters.put( CLIStringsDictionary.NUMBEROFPASSENGERS, "20" );
         
-        new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newInstance( parameters );
+        new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newCommand( parameters );
     }
 }

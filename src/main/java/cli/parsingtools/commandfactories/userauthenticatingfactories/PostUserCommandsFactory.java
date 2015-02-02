@@ -4,7 +4,7 @@ package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.postcommands.PostUserCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -14,7 +14,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands of
+ * Class whose instances are {@link ParsingCommand factories} that produce commands of
  * type {@link PostUserPasswordCommands}. Commands are {@link Callable} instances.
  * 
  * Extends {@link UserAuthenticatingFactory} of {@link Airship Airships} and {@link User user}.
@@ -110,7 +110,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
      * map.
      * <p>
      * If this method is called inside {@link #internalNewInstance(Map)} and this one is called
-     * inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed that the fields
+     * inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed that the fields
      * {@link #username}, {@link #password} and {@link #email} are non-{@code null} after this
      * method finishes its job.
      * </p>

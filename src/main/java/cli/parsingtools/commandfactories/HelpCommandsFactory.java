@@ -15,7 +15,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class HelpCommandsFactory extends StringsToCommandsFactory< OptionsList > {
+public class HelpCommandsFactory extends ParsingCommand< OptionsList > {
     
     // INSTANCE FIELD
     
@@ -55,7 +55,7 @@ public class HelpCommandsFactory extends StringsToCommandsFactory< OptionsList >
      * @return A command of type {@link HelpCommand}.
      */
     @Override
-    public final Callable< OptionsList > internalNewInstance() {
+    public final Callable< OptionsList > internalNewCommand() {
         
         try {
             return new HelpCommand( cmdParser );

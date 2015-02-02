@@ -5,7 +5,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.CommandFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.InvalidParameterValueException;
@@ -43,7 +44,7 @@ import main.java.utils.exceptions.parsingexceptions.commandparserexceptions.Unkn
  * perform some action through their method {@link Callable#call()}.
  * <p>
  * String-commands are registered through method
- * {@link #registerCommand(String, String, StringsToCommandsFactory) registerCommand}; this method
+ * {@link #registerCommand(String, String, ParsingCommand) registerCommand}; this method
  * must be given the string {@code method}, the string {@code path} (in the formats given above) and
  * a factory that is able to produce a {@link Callable} instance. The {@code path-component}s with
  * format <code>{{@literal<}string>}</code> are placeholders; the placeholder means that, in a
@@ -51,9 +52,9 @@ import main.java.utils.exceptions.parsingexceptions.commandparserexceptions.Unkn
  * {@link CommandRegisterException register exception} will be thrown if one of the following two
  * cases happen:
  * <ol>
- * <li>one calls {@link #registerCommand(String, String, StringsToCommandsFactory) registerCommand}
+ * <li>one calls {@link #registerCommand(String, String, ParsingCommand) registerCommand}
  * twice with the same string arguments {@code method} and {@code path} or
- * <li>one makes two calls of {@link #registerCommand(String, String, StringsToCommandsFactory)
+ * <li>one makes two calls of {@link #registerCommand(String, String, ParsingCommand)
  * registerCommand} that share the same {@code method} argument and whose {@code path} arguments are
  * equal until a certain component, and their next components are both placeholders but are
  * different (e.g. by trying to register two ' {@code GET}'commands with path arguments "
@@ -114,7 +115,7 @@ public class CommandParser {
      * The tree's origin is the {@link Node node} {@link CommandParser#root}; a new branch is added
      * to this tree every time a new string-command is registered. The factory given as the last
      * argument in the
-     * {@link CommandParser#registerCommand(String, String, StringsToCommandsFactory)
+     * {@link CommandParser#registerCommand(String, String, ParsingCommand)
      * registerCommand} method is stored in the last nodes of the tree-branch corresponding to the
      * string-command being registered.
      * </p>
@@ -126,7 +127,7 @@ public class CommandParser {
         public final String content;
         public final Map< String, Node > fixedChilds;
         public Node placeholderChild;
-        public StringsToCommandsFactory< ? > factory;
+        public CommandFactory< ? > factory;
         
         public Node( String content ) {
             this.content = content;
@@ -203,7 +204,7 @@ public class CommandParser {
     
     /**
      * Method used to register an association between a string-command and its associated
-     * {@link StringsToCommandsFactory factory}. This method must be given the string {@code method}
+     * {@link ParsingCommand factory}. This method must be given the string {@code method}
      * with the syntax
      * <p>
      * <code>{@literal<}method> -> GET | POST</code>
@@ -229,11 +230,11 @@ public class CommandParser {
      * @throws InvalidRegisterException
      *             It will be thrown if one of the following two cases happen:
      *             <ol>
-     *             <li>one calls {@link #registerCommand(String, String, StringsToCommandsFactory)
+     *             <li>one calls {@link #registerCommand(String, String, ParsingCommand)
      *             registerCommand} twice with the same string arguments {@code method} and
      *             {@code path} or
      *             <li>one makes two calls of
-     *             {@link #registerCommand(String, String, StringsToCommandsFactory)
+     *             {@link #registerCommand(String, String, ParsingCommand)
      *             registerCommand} that share the same {@code method} argument and whose
      *             {@code path} arguments are equal until a certain component, and their next
      *             components are both placeholders but are different (e.g. by trying to register
@@ -246,7 +247,7 @@ public class CommandParser {
      *             </ol>
      */
     public void registerCommand( String method, String path,
-                                 StringsToCommandsFactory< ? > cmdFactory )
+                                 CommandFactory< ? > cmdFactory )
         throws InvalidRegisterException {
         
         String[] treePathElementsArray = (method.trim() + path).split( "/" );
@@ -335,14 +336,14 @@ public class CommandParser {
      * @param pathStartIndex
      *            The start index of the array {@code pathElements} (to enable recursion).
      * @param cmdFactory
-     *            The {@link StringsToCommandsFactory} instance to be stored in the last node of the
+     *            The {@link ParsingCommand} instance to be stored in the last node of the
      *            new branch.
      * @throws InvalidRegisterException
      *             If the given command cannot be registered (i.e. perhaps the grammar is not
      *             correct)
      */
     private void updateSubtree( Node rootNode, String[] methodAndPathElements, int pathStartIndex,
-                                StringsToCommandsFactory< ? > cmdFactory )
+                                CommandFactory< ? > cmdFactory )
         throws InvalidRegisterException {
         
         // stopping condition
@@ -419,7 +420,7 @@ public class CommandParser {
             if( rootNode.factory == null )
                 throw new UnknownCommandException( "Unknown command!" );
             
-            return rootNode.factory.newInstance( Collections.unmodifiableMap( parameters ) );
+            return rootNode.factory.newCommand( Collections.unmodifiableMap( parameters ) );
         }
         
         String currentContent = methodAndPathElements[pathStartIndex];

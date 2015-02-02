@@ -3,7 +3,7 @@ package main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactorie
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.getcommands.GetElementFromADatabaseByIdCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.Element;
@@ -13,11 +13,11 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * Abstract class whose subclasses' instances are {@link StringsToCommandsFactory factories} that
+ * Abstract class whose subclasses' instances are {@link ParsingCommand factories} that
  * produce commands of type {@link GetElementFromADatabaseByIdCommand}. Commands are
  * {@link Callable} instances.
  * 
- * Extends {@link StringsToCommandsFactory} of {@link Optional Optional<E>}
+ * Extends {@link ParsingCommand} of {@link Optional Optional<E>}
  * 
  * @param <E>
  *            - The type of elements that a database can contain.
@@ -25,7 +25,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public abstract class GetElementByIdentificationCommandsFactory< E extends Element > extends
-        StringsToCommandsFactory< Optional< E >> {
+        ParsingCommand< Optional< E >> {
     
     // INSTANCE FIELDS
     
@@ -56,7 +56,7 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
      * @param identificationParameterName
      *            - The name of the parameter (whose value is the element's identification) to look
      *            for in the key-set of the {@link Map} of parameters received in the method
-     *            {@link #newInstance(Map)} .
+     *            {@link #newCommand(Map)} .
      * @param database
      *            - The database where to get the elements from.
      * 
@@ -92,7 +92,7 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
      * @return A command of type {@link GetElementFromADatabaseByIdCommand}.
      */
     @Override
-    protected Callable< Optional< E >> internalNewInstance() {
+    protected Callable< Optional< E >> internalNewCommand() {
         
         setIdValueOfTheParametersMap();
         
@@ -126,7 +126,7 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
      * map.
      * <p>
      * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-     * last one is called inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed
+     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
      * that the field {@link #identification} is non-{@code null} after this method finishes its
      * job.
      * </p>

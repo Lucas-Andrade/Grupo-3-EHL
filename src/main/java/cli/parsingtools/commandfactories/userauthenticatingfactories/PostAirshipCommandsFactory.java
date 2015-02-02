@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.postcommands.PostCivilAirshipCommand;
 import main.java.domain.commands.postcommands.PostMilitaryAirshipCommand;
 import main.java.domain.model.Database;
@@ -19,7 +19,7 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
 
 
 /**
- * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands that
+ * Class whose instances are {@link ParsingCommand factories} that produce commands that
  * post airships. Commands are {@link Callable} instances.
  * 
  * Extends {@link UserAuthenticatingFactory} of {@link Airship Airships} and {@link String Strings}.
@@ -164,7 +164,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      * parameters map.
      * <p>
      * If this method is called inside {@link #internalNewInstance(Map)} and this one is called
-     * inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed that the fields
+     * inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed that the fields
      * {@link #type}, {@link #latitude}, {@link #longitude}, {@link #altitude}, {@link #minAltitude}
      * and {@link #maxAltitude} are non- {@code null} after this method finishes its job.
      * </p>

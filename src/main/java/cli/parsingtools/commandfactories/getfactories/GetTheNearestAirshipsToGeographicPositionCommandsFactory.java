@@ -4,7 +4,7 @@ package main.java.cli.parsingtools.commandfactories.getfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.GetTheNearestAirshipsToGeographicPositionCommand;
 import main.java.domain.model.airships.Airship;
@@ -17,7 +17,7 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
 
 
 /**
- * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands of
+ * Class whose instances are {@link ParsingCommand factories} that produce commands of
  * type {@link GetTheNearestAirshipsOfTheGeograficCoordinateCommand}. Commands are {@link Callable}
  * instances.
  * 
@@ -27,7 +27,7 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
-        StringsToCommandsFactory< Optional< Iterable< Airship >>> {
+        ParsingCommand< Optional< Iterable< Airship >>> {
     
     // INSTANCE FIELDS
     
@@ -105,7 +105,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
      *             If {@link #parametersMap} does not contain a parameter with name {@code name}.
      */
     @Override
-    protected Callable< Optional< Iterable< Airship >>> internalNewInstance()
+    protected Callable< Optional< Iterable< Airship >>> internalNewCommand()
         throws InvalidParameterValueException, InvalidArgumentException,
         MissingRequiredParameterException {
         
@@ -137,12 +137,12 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
      * Sets the value of the field {@link #Latitude} with the value received in the parameters map
      * needed to {@link GetTheNearestAirshipsToGeographicPositionCommand}.
      * 
-     * This method calls the {@link StringsToCommandsFactory#getParameterAsDouble(String)} where it
+     * This method calls the {@link ParsingCommand#getParameterAsDouble(String)} where it
      * searches on the Map the value of the airships latitude.
      * 
      * <p>
      * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-     * last one is called inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed
+     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
      * that the field {@link #latitude} is non-{@code null} after this method finishes its job.
      * </p>
      * 
@@ -164,12 +164,12 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
      * Sets the value of the field {@link #longitude} with the value received in the parameters map
      * needed to {@link GetTheNearestAirshipsToGeographicPositionCommand}.
      * 
-     * This method calls the {@link StringsToCommandsFactory#getParameterAsDouble(String)} where it
+     * This method calls the {@link ParsingCommand#getParameterAsDouble(String)} where it
      * searches on the Map the value for the airships longitude.
      * 
      * <p>
      * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-     * last one is called inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed
+     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
      * that the field {@link #longitude} is non-{@code null} after this method finishes its job.
      * </p>
      * 
@@ -190,12 +190,12 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
      * Method responsible to set the number of airships to get field needed to
      * {@link GetTheNearestAirshipsToGeographicPositionCommand}.
      * 
-     * * This method calls the {@link StringsToCommandsFactory#getParameterAsInt(String)} where it
+     * * This method calls the {@link ParsingCommand#getParameterAsInt(String)} where it
      * searches on the Map the value for the airships longitude.
      * 
      * <p>
      * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-     * last one is called inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed
+     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
      * that the field {@link #numberOfAirshipsToGet} is non-{@code null} after this method finishes
      * its job.
      * </p>

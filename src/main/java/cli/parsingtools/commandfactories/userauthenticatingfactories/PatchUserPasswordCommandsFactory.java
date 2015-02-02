@@ -3,7 +3,7 @@ package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories;
 
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.patchcommands.PatchUserPasswordCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -14,13 +14,13 @@ import main.java.utils.exceptions.InvalidArgumentException;
 /**
  * Class whose instances are {@link CallablesFactory factories} that produce a command of type
  * {@link PatchUserPasswordCommands}. Commands are {@link Callable} instances. This class extends
- * {@link StringsToCommandsFactory}
+ * {@link ParsingCommand}
  *
  * Extends {@link UserAuthenticatingFactory} of {@link Airship Airships} and {@link User user}.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PatchUserPasswordCommandsFactory extends StringsToCommandsFactory< String > {
+public class PatchUserPasswordCommandsFactory extends ParsingCommand< String > {
     
     
     
@@ -97,7 +97,7 @@ public class PatchUserPasswordCommandsFactory extends StringsToCommandsFactory< 
      *             If the value received in the parameters map for a required parameter is invalid.
      */
     @Override
-    protected Callable< String > internalNewInstance() throws InvalidArgumentException {
+    protected Callable< String > internalNewCommand() throws InvalidArgumentException {
         
         setUsername();
         setOldPassword();
@@ -126,7 +126,7 @@ public class PatchUserPasswordCommandsFactory extends StringsToCommandsFactory< 
      * Method responsible to set the username field needed to {@code PatchUserPasswordCommands}
      * command.
      * 
-     * This method calls the {@link StringsToCommandsFactory#getParameterAsString(String)} where
+     * This method calls the {@link ParsingCommand#getParameterAsString(String)} where
      * searches on the Map, with all the parameters, the value of the username.
      */
     private void setUsername() {
@@ -138,7 +138,7 @@ public class PatchUserPasswordCommandsFactory extends StringsToCommandsFactory< 
      * Method responsible to set the OldPassword field needed to {@code PatchUserPasswordCommands}
      * command.
      * 
-     * This method calls the {@link StringsToCommandsFactory#getParameterAsString(String)} where
+     * This method calls the {@link ParsingCommand#getParameterAsString(String)} where
      * searches on the Map, with all the parameters, the value of the OldPassword.
      */
     private void setOldPassword() {
@@ -150,7 +150,7 @@ public class PatchUserPasswordCommandsFactory extends StringsToCommandsFactory< 
      * Method responsible to set the NewPassword field needed to {@code PatchUserPasswordCommands}
      * command.
      * 
-     * This method calls the {@link StringsToCommandsFactory#getParameterAsString(String)} where
+     * This method calls the {@link ParsingCommand#getParameterAsString(String)} where
      * searches on the Map, with all the parameters, the value of the NewPassword.
      */
     private void setNewPassword() {

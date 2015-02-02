@@ -4,7 +4,7 @@ package main.java.cli.parsingtools.commandfactories.getfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.GetAirshipsWithLessPassengersThanCommand;
 import main.java.domain.model.airships.Airship;
@@ -16,7 +16,7 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
 
 
 /**
- * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands of
+ * Class whose instances are {@link ParsingCommand factories} that produce commands of
  * type {@link GetAirshipsWithLessPassengersThanCommand}. Commands are {@link Callable} instances.
  * 
  * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link Optional} {@link Iterable
@@ -25,7 +25,7 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class GetAirshipsWithLessPassengersThanCommandsFactory extends
-        StringsToCommandsFactory< Optional< Iterable< Airship >>> {
+        ParsingCommand< Optional< Iterable< Airship >>> {
     
     // INSTANCE FIELDS
     
@@ -89,7 +89,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
      *             If {@link #parametersMap} does not contain a parameter with name {@code name}
      */
     @Override
-    protected Callable< Optional< Iterable< Airship >>> internalNewInstance()
+    protected Callable< Optional< Iterable< Airship >>> internalNewCommand()
         throws InvalidParameterValueException, InvalidArgumentException,
         MissingRequiredParameterException {
         
@@ -118,7 +118,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
      * parameters map.
      * <p>
      * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-     * last one is called inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed
+     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
      * that the field {@link #maximumNumberOfPassengers} is non-{@code null} after this method
      * finishes its job.
      * </p>
@@ -129,7 +129,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
      * @throws MissingRequiredParameterException
      *             If {@link #parametersMap} does not contain a parameter with name {@code name}.
      * 
-     * @see {@link StringsToCommandsFactory#getParameterAsInt() getParameterAsInt()}.
+     * @see {@link ParsingCommand#getParameterAsInt() getParameterAsInt()}.
      */
     private void setMaxOfPassengersValueOfTheParametersMap()
         throws InvalidParameterValueException, MissingRequiredParameterException {

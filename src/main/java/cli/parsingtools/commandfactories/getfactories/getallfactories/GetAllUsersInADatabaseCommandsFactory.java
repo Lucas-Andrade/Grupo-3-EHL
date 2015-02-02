@@ -2,14 +2,14 @@ package main.java.cli.parsingtools.commandfactories.getfactories.getallfactories
 
 
 import java.util.concurrent.Callable;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * A {@link StringsToCommandsFactory factory} that creates commands to get all the users in an users
+ * A {@link ParsingCommand factory} that creates commands to get all the users in an users
  * database. Commands are {@link Callable} instances.
  * 
  * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link User Users}.
@@ -33,6 +33,11 @@ public class GetAllUsersInADatabaseCommandsFactory extends
     public GetAllUsersInADatabaseCommandsFactory( Database< User > usersDatabase )
         throws InvalidArgumentException {
         
-        super( "Gets the list of all users.", usersDatabase );
+        super( usersDatabase );
+    }
+
+    @Override
+    public String getCommandsDescription() {
+        return "Gets the list of all users.";
     }
 }

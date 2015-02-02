@@ -2,8 +2,8 @@ package main.java.domain.commands.getcommands;
 
 
 import java.util.concurrent.Callable;
+import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
-import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.utils.Optional;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
@@ -25,7 +25,7 @@ public class GetAirshipsOfOwnerCommand implements Callable< Optional< Iterable< 
     /**
      * The database where to search.
      */
-    private final InMemoryAirshipsDatabase airshipDatabase;
+    private final Database< Airship > airshipDatabase;
     
     /**
      * The username of the user whose airships are to get from {@link #airshipDatabase}.
@@ -46,7 +46,7 @@ public class GetAirshipsOfOwnerCommand implements Callable< Optional< Iterable< 
      * @throws InvalidArgumentException
      *             If either {@code airshipDatabase} or {@code ownerUsername} are {@code null}.
      */
-    public GetAirshipsOfOwnerCommand( InMemoryAirshipsDatabase airshipDatabase, String ownerUsername )
+    public GetAirshipsOfOwnerCommand( Database< Airship > airshipDatabase, String ownerUsername )
         throws InvalidArgumentException {
         
         if( airshipDatabase == null )
@@ -79,6 +79,6 @@ public class GetAirshipsOfOwnerCommand implements Callable< Optional< Iterable< 
     @Override
     public Optional< Iterable< Airship >> call() throws Exception {
         
-        return airshipDatabase.getAirshipsOfUser( username );
+        return airshipDatabase.getElementsByUser( username );
     }
 }

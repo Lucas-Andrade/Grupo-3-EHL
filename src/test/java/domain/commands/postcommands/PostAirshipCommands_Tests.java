@@ -56,7 +56,7 @@ public class PostAirshipCommands_Tests {
         // Assert
         Assert.assertEquals( testedInformation,
                              "Flight Id: "
-                                     + airshipsDatabase.getAirshipsOfUser( user1.getIdentification() )
+                                     + airshipsDatabase.getElementsByUser( user1.getIdentification() )
                                                        .get().iterator().next().getIdentification() );
     }
     
@@ -72,7 +72,7 @@ public class PostAirshipCommands_Tests {
         // Assert
         Assert.assertEquals( testedInformation,
                              "Flight Id: "
-                                     + airshipsDatabase.getAirshipsOfUser( user1.getIdentification() )
+                                     + airshipsDatabase.getElementsByUser( user1.getIdentification() )
                                                        .get().iterator().next().getIdentification() );
     }
     

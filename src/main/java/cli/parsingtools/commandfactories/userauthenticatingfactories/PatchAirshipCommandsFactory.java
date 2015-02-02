@@ -8,7 +8,6 @@ import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
 import main.java.domain.commands.patchcommands.PatchAirshipCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
-import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
@@ -29,7 +28,7 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory< Airs
     
     // Instance Fields
     
-    private final InMemoryAirshipsDatabase airshipsDatabase;
+    private final Database<Airship> airshipsDatabase;
     
     /**
      * {@code identification} - The identification of the airship we will
@@ -66,7 +65,7 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory< Airs
      *             If either {@code usersDatabase} or {@code airshipDatabase} are {@code null}.
      */
     public PatchAirshipCommandsFactory( Database< User > usersDatabase,
-                                        InMemoryAirshipsDatabase airshipsDatabase )
+                                        Database<Airship> airshipsDatabase )
         throws InvalidArgumentException {
         
         super( "Change an Airship Coordinates and/or AirCorridor", usersDatabase, airshipsDatabase );

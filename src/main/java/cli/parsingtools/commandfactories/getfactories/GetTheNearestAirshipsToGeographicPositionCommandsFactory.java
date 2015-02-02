@@ -7,9 +7,9 @@ import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.GetTheNearestAirshipsToGeographicPositionCommand;
+import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.GeographicPosition;
-import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.utils.Optional;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.InvalidParameterValueException;
@@ -34,7 +34,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
     /**
      * {@code airshipsDatabase} - The database where to search the elements from.
      */
-    private final InMemoryAirshipsDatabase airshipsDatabase;
+    private final Database<Airship> airshipsDatabase;
     
     /**
      * {@code requiredParametersNames} - The array of strings with the names of the parameters
@@ -70,7 +70,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
      * @throws InvalidArgumentException
      *             If the {@code airshipsDatabase} is null.
      */
-    public GetTheNearestAirshipsToGeographicPositionCommandsFactory( InMemoryAirshipsDatabase airshipsDatabase )
+    public GetTheNearestAirshipsToGeographicPositionCommandsFactory( Database<Airship> airshipsDatabase )
         throws InvalidArgumentException {
         
         super( "Get the nearest aircrafts of Geographic coordinates" );

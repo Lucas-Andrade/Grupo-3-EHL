@@ -5,8 +5,8 @@ import java.util.concurrent.Callable;
 import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.GetAllTransgressingAirshipsCommand;
+import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
-import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.utils.Optional;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
@@ -29,7 +29,7 @@ public class GetAllTransgressingAirshipsCommandsFactory extends
     /**
      * {@code airshipsDatabase} - The database where to search the elements from.
      */
-    private final InMemoryAirshipsDatabase airshipsDatabase;
+    private final Database<Airship> airshipsDatabase;
     
     // CONSTRUCTOR
     
@@ -43,7 +43,7 @@ public class GetAllTransgressingAirshipsCommandsFactory extends
      * @throws InvalidArgumentException
      *             If the {@code airshipsDatabase} is null.
      */
-    public GetAllTransgressingAirshipsCommandsFactory( InMemoryAirshipsDatabase airshipsDatabase )
+    public GetAllTransgressingAirshipsCommandsFactory( Database<Airship> airshipsDatabase )
         throws InvalidArgumentException {
         
         super( "Gets all airships that are transgressing their air corridors." );

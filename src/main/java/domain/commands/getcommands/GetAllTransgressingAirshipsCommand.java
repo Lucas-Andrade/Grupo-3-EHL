@@ -2,10 +2,10 @@ package main.java.domain.commands.getcommands;
 
 
 import java.util.concurrent.Callable;
+import main.java.domain.model.Database;
 import main.java.domain.model.InMemoryDatabase;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.AirshipPredicates;
-import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.utils.Optional;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
@@ -27,7 +27,7 @@ public class GetAllTransgressingAirshipsCommand implements Callable< Optional< I
     /**
      * The database where to search.
      */
-    private final InMemoryAirshipsDatabase airshipsDatabase;
+    private final Database<Airship> airshipsDatabase;
     
     // CONSTRUCTOR
     
@@ -41,7 +41,7 @@ public class GetAllTransgressingAirshipsCommand implements Callable< Optional< I
      * @throws InvalidArgumentException
      *             If the {@code airshipsDatabase} is null.
      */
-    public GetAllTransgressingAirshipsCommand( InMemoryAirshipsDatabase airshipsDatabase )
+    public GetAllTransgressingAirshipsCommand( Database<Airship> airshipsDatabase )
         throws InvalidArgumentException {
         
         if( airshipsDatabase == null )

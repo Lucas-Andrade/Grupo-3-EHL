@@ -1,10 +1,11 @@
-package main.java.gui.functionalcomponents;
+package main.java.gui.functionalcomponents.functionalmainwindow;
 
 
 import javax.swing.JLabel;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.gui.design.panels.mainwindowpanels.JBodyPanelForMainWindow;
+import main.java.gui.functionalcomponents.FunctionalWindowSwingWorker;
 
 
 /**

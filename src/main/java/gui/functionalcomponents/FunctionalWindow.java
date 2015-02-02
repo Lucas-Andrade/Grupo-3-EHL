@@ -2,7 +2,6 @@ package main.java.gui.functionalcomponents;
 
 
 import java.awt.Cursor;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
 import main.java.gui.design.windows.WindowBase;
@@ -22,7 +21,7 @@ public abstract class FunctionalWindow< T > {
     /**
      * The {@code WindowBase} where will be added its functionality
      */
-    private WindowBase functionalWindow;
+    private WindowBase theFunctionalWindow;
     
     /**
      * Add the {@link ActionListener}s to the {@code window buttons}
@@ -31,12 +30,12 @@ public abstract class FunctionalWindow< T > {
      */
     public FunctionalWindow( WindowBase nonFunctionalWindow ) {
         
-        functionalWindow = nonFunctionalWindow;
+        theFunctionalWindow = nonFunctionalWindow;
         
         addRightButtonAction();
         addLeftButtonAction();
         
-        functionalWindow.setVisible( true );
+        theFunctionalWindow.setVisible( true );
     }
     
     // Private Methods
@@ -46,15 +45,8 @@ public abstract class FunctionalWindow< T > {
      */
     private void addRightButtonAction() {
         
-        functionalWindow.getButtonsPanel().getRightButton()
-                        .addActionListener( new ActionListener() {
-                            
-                            @Override
-                            public void actionPerformed( ActionEvent click ) {
-                                
-                                functionalWindow.dispose();
-                            }
-                        } );
+        theFunctionalWindow.getButtonsPanel().getRightButton()
+                           .addActionListener( Action -> theFunctionalWindow.dispose() );
     }
     
     /**
@@ -67,14 +59,13 @@ public abstract class FunctionalWindow< T > {
      */
     private void addLeftButtonAction() {
         
-        functionalWindow.getButtonsPanel().getLeftButton().addActionListener( new ActionListener() {
+        theFunctionalWindow.getButtonsPanel().getLeftButton().addActionListener(
+        
+        Action -> {
             
-            @Override
-            public void actionPerformed( ActionEvent click ) {
-                functionalWindow.setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
-                getSwingWorker().run();
-                functionalWindow.setCursor( Cursor.getPredefinedCursor( Cursor.DEFAULT_CURSOR ) );
-            }
+            theFunctionalWindow.setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
+            getSwingWorker().run();
+            theFunctionalWindow.setCursor( Cursor.getPredefinedCursor( Cursor.DEFAULT_CURSOR ) );
         } );
     }
     
@@ -93,6 +84,6 @@ public abstract class FunctionalWindow< T > {
      */
     public WindowBase getFunctionalWindow() {
         
-        return functionalWindow;
+        return theFunctionalWindow;
     }
 }

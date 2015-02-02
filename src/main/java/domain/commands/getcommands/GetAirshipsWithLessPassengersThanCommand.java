@@ -2,9 +2,10 @@ package main.java.domain.commands.getcommands;
 
 
 import java.util.concurrent.Callable;
+import main.java.domain.model.Database;
+import main.java.domain.model.InMemoryDatabase;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.AirshipPredicates;
-import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.utils.Optional;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
@@ -27,7 +28,7 @@ public class GetAirshipsWithLessPassengersThanCommand implements
     /**
      * The database where to search.
      */
-    private final InMemoryAirshipsDatabase airshipDatabase;
+    private final Database< Airship > airshipDatabase;
     
     /**
      * The maximum number of passengers allowed.
@@ -46,7 +47,7 @@ public class GetAirshipsWithLessPassengersThanCommand implements
      * @throws InvalidArgumentException
      *             If the {@code airshipDatabase} is null.
      */
-    public GetAirshipsWithLessPassengersThanCommand( InMemoryAirshipsDatabase airshipDatabase,
+    public GetAirshipsWithLessPassengersThanCommand( Database< Airship > airshipDatabase,
                                                      int maximumNumberOfPassengers )
         throws InvalidArgumentException {
         

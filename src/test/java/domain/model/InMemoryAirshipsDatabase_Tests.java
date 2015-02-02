@@ -122,7 +122,7 @@ public class InMemoryAirshipsDatabase_Tests {
 			airships.add(airship2);
 			
 			// Assert
-			Assert.assertEquals(airshipDatabase.getAirshipsOfUser("X").toString(),
+			Assert.assertEquals(airshipDatabase.getElementsByUser("X").toString(),
 				airships.toString());
 		} catch (InvalidArgumentException e) {
 			e.printStackTrace();
@@ -134,7 +134,7 @@ public class InMemoryAirshipsDatabase_Tests {
 	public void shouldReceiveAMessageConfirmingThatAnyAirshipWasAddedByANullUser()
 		throws InvalidArgumentException {
 	
-		Assert.assertEquals("No airship added by null", airshipDatabase.getAirshipsOfUser(null)
+		Assert.assertEquals("No airship added by null", airshipDatabase.getElementsByUser(null)
 			.toString());
 	}
 	

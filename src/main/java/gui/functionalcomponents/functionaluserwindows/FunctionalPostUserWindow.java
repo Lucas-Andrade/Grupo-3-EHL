@@ -11,6 +11,7 @@ import main.java.gui.functionalcomponents.FunctionalWindow;
 import main.java.gui.functionalcomponents.FunctionalWindowSwingWorker;
 import main.java.utils.exceptions.InvalidArgumentException;
 
+
 /**
  * Class whose instances have the responsibility to add the {@link ActionListener}s to the given
  * {@link PostUserWindow} buttons.

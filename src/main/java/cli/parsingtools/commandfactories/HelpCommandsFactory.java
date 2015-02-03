@@ -1,8 +1,8 @@
 package main.java.cli.parsingtools.commandfactories;
 
 
+import java.util.Map;
 import java.util.concurrent.Callable;
-import main.java.cli.parsingtools.CommandParser;
 import main.java.domain.commands.HelpCommand;
 import main.java.utils.OptionsList;
 import main.java.utils.exceptions.InternalErrorException;
@@ -15,36 +15,33 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class HelpCommandsFactory extends ParsingCommand< OptionsList > {
-    
-    // INSTANCE FIELD
+public class HelpCommandsFactory extends CommandFactory< OptionsList > {
     
     /**
-     * {@code cmdParser} - The command parser that contains a registry of the commands whose
-     * descriptions are to be returned by the command created by this factory.
+     * The Map that contains a registry of the commands whose descriptions are to be returned by the
+     * command created by this factory.
      */
-    private CommandParser cmdParser;
+    private Map< String, String > commandsDescription;
     
     // CONSTRUCTOR
     
     /**
      * Creates a new {@link HelpCommandsFactory} that produces commands of type {@link HelpCommand}.
      * 
-     * @param cmdParser
-     *            - The command parser with the registry of the commands whose descriptions are to
-     *            be returned by the {@link HelpCommand} produced by this factory.
+     * @param commandsDescription
+     *            - The Map with the registry of the commands whose descriptions are to be returned
+     *            by the {@link HelpCommand} produced by this factory.
      * 
      * @throws InvalidArgumentException
-     *             If the {@code cmdParser} is null.
+     *             If the {@code commandsDescription} is null.
      */
-    public HelpCommandsFactory( CommandParser cmdParser ) throws InvalidArgumentException {
+    public HelpCommandsFactory( Map< String, String > commandsDescription )
+        throws InvalidArgumentException {
         
-        super( "Returns the descriptions of known commands." );
-        
-        if( cmdParser == null )
+        if( commandsDescription == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null parser." );
         
-        this.cmdParser = cmdParser;
+        this.commandsDescription = commandsDescription;
     }
     
     // IMPLEMENTED METHOD OF StringsToCommandsFactory ABSTRACT CLASS
@@ -55,14 +52,14 @@ public class HelpCommandsFactory extends ParsingCommand< OptionsList > {
      * @return A command of type {@link HelpCommand}.
      */
     @Override
-    public final Callable< OptionsList > internalNewCommand() {
+    public final Callable< OptionsList > internalNewCommand( Map< String, String > parametersMap ) {
         
         try {
-            return new HelpCommand( cmdParser );
+            return new HelpCommand( commandsDescription );
         }
         catch( InvalidArgumentException e ) {
             throw new InternalErrorException( "UNEXPECTED EXCEPTION IN HelpCommandsFactory!" );
-            // never happens cause cmdParser is not null
+            // never happens cause commandsDescription is not null
         }
     }
     
@@ -77,5 +74,11 @@ public class HelpCommandsFactory extends ParsingCommand< OptionsList > {
     protected String[] getRequiredParametersNames() {
         
         return null;
+    }
+    
+    @Override
+    public String getCommandsDescription() {
+        
+        return "Returns the descriptions of known commands.";
     }
 }

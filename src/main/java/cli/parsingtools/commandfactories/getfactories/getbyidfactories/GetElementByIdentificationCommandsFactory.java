@@ -11,14 +11,16 @@ import main.java.domain.model.Element;
 import main.java.utils.Optional;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.MissingRequiredParameterException;
 
 
 /**
- * Abstract class whose subclasses' instances are {@link ParsingCommand factories} that
- * produce commands of type {@link GetElementFromADatabaseByIdCommand}. Commands are
- * {@link Callable} instances.
+ * Abstract class whose subclasses' instances are {@link CommandFactory factories} that produce
+ * commands of type {@link GetElementFromADatabaseByIdCommand}. To ensure that the factory is
+ * immutable, first is produced a {@link ParsingCommand} that will parse all necessary
+ * {@code required parameters}. Commands are {@link Callable} instances.
  * 
- * Extends {@link ParsingCommand} of {@link Optional Optional<E>}
+ * Extends {@link CommandFactory} of {@link Optional Optional<E>}
  * 
  * @param <E>
  *            - The type of elements that a database can contain.
@@ -41,7 +43,7 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
      */
     private final Database< E > database;
     
-
+    
     
     // CONSTRUCTOR
     
@@ -49,8 +51,6 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
      * Creates a new {@link GetElementByIdentificationCommandFactory} that produces commands of type
      * {@link GetElementFromADatabaseByIdCommand}.
      * 
-     * @param commandsDescription
-     *            - A short description of the command produced by this factory.
      * @param identificationParameterName
      *            - The name of the parameter (whose value is the element's identification) to look
      *            for in the key-set of the {@link Map} of parameters received in the method
@@ -59,13 +59,12 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
      *            - The database where to get the elements from.
      * 
      * @throws InvalidArgumentException
-     *             If either {@code commandsDescription}, {@code identificationParameterName} or
-     *             {@code database} are {@code null}.
+     *             If either {@code identificationParameterName} or {@code database} are
+     *             {@code null}.
      */
     public GetElementByIdentificationCommandsFactory( String identificationParameterName,
                                                       Database< E > database )
         throws InvalidArgumentException {
-        
         
         if( identificationParameterName == null )
             throw new InvalidArgumentException(
@@ -78,19 +77,20 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
         this.database = database;
     }
     
-    // IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
     
     /**
-     * Returns a command of type {@link GetElementFromADatabaseByIdCommand} after getting the
-     * necessary {@code required parameters} using the private auxiliar method
-     * {@link #setIdValueOfTheParametersMap()}.
+     * Returns a command of type {@link GetElementFromADatabaseByIdCommand} after produced a
+     * {@link ParsingCommand} that will parse necessary {@code required parameters}.
      * 
      * @return A command of type {@link GetElementFromADatabaseByIdCommand}.
+     * @throws MissingRequiredParameterException
+     *             If any of the required parameters is missing.
      */
     @Override
-    protected Callable< Optional< E >> internalNewCommand(Map< String, String > parametersMap) {
+    protected Callable< Optional< E >> internalNewCommand( Map< String, String > parametersMap )
+        throws MissingRequiredParameterException {
         
-        return new GETParsingCommand( parametersMap ).newCommand();
+        return new GetEBIC_ParsingCommand( parametersMap ).newCommand();
     }
     
     /**
@@ -105,35 +105,37 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
         return requiredParametersNames;
     }
     
-    // PRIVATE AUXILIAR METHOD
-    
-//    /**
-//     * Sets the value of the field {@link #identification} with the value received in the parameters
-//     * map.
-//     * <p>
-//     * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-//     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
-//     * that the field {@link #identification} is non-{@code null} after this method finishes its
-//     * job.
-//     * </p>
-//     */
-//    private void setIdValueOfTheParametersMap() {
-//        
-//        
-//    }
-    
-    private class GETParsingCommand extends ParsingCommand< Optional< E >>
-    {
+    //INNER CLASS
+    /**
+     * Class that extends {@link ParsingCommand}, whose instances will parse the
+     * {@code required parameters} and will create a {@link GetElementFromADatabaseByIdCommand}
+     */
+    private class GetEBIC_ParsingCommand extends ParsingCommand< Optional< E >> {
+        
         /**
          * {@code identification} - The identification of the element to get from {@link #database}.
          */
         private String identification;
-
-        public GETParsingCommand( Map< String, String > parametersMap ) {
+        
+        /**
+         * Create the {@code ParsingCommand}
+         * 
+         * @param parametersMap
+         * @throws MissingRequiredParameterException
+         *             If any of the required parameters is missing.
+         */
+        public GetEBIC_ParsingCommand( Map< String, String > parametersMap )
+            throws MissingRequiredParameterException {
+            
             super( parametersMap );
             identification = getParameterAsString( requiredParametersNames[0] );
         }
-
+        
+        /**
+         * Returns a command of type {@link GetElementFromADatabaseByIdCommand}.
+         * 
+         * @return A command of type {@link GetElementFromADatabaseByIdCommand}.
+         */
         @Override
         public Callable< Optional< E >> newCommand() {
             try {

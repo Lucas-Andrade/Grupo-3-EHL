@@ -1,6 +1,7 @@
 package main.java.domain.commands;
 
 
+import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.parsingtools.CommandParser;
 import main.java.utils.OptionsList;
@@ -18,38 +19,38 @@ public class HelpCommand implements Callable< OptionsList > {
     
     // INSTANCE FIELD
     /**
-     * The command parser that contains a registry of the commands whose descriptions are to be
-     * returned by the command created by this factory.
+     * The Map that contains a registry of the commands whose descriptions are to be returned by
+     * this.
      */
-    private CommandParser cmdParser;
+    private Map< String, String > commandsDescription;
     
     /**
      * Creates a new instance of this command that gets an {@link OptionsList} whose options are the
-     * string-commands registered in {@code cmdParser}.
+     * string-commands registered in {@code commandsDescription}.
      * 
-     * @param cmdParser
-     *            The command parser that contains a registry of the commands whose descriptions are
-     *            to be returned by the command created by this factory.
+     * @param commandsDescription
+     *            The Map that contains a registry of the commands whose descriptions are to be
+     *            returned by this command.
      * @throws InvalidArgumentException
-     *             If {@code cmdParser==null}.
+     *             If {@code commandsDescription==null}.
      */
-    public HelpCommand( CommandParser cmdParser ) throws InvalidArgumentException {
+    public HelpCommand( Map< String, String > commandsDescription ) throws InvalidArgumentException {
         
-        if( cmdParser == null )
-            throw new InvalidArgumentException( "Cannot instantiate factory with null parser." );
-        this.cmdParser = cmdParser;
+        if( commandsDescription == null )
+            throw new InvalidArgumentException(
+                                                "Cannot instantiate command with null commandsDescription." );
+        this.commandsDescription = commandsDescription;
     }
     
     /**
      * Returns an {@link OptionsList} whose options are the string-commands registered in
-     * {@code cmdParser} (given in the constructor).
+     * {@code commandsDescription} (given in the constructor).
      * 
-     * @return A {@link OptionsList} with the commands registered in {@code cmdParser} and their
-     *         descriptions.
+     * @return A {@link OptionsList} with the commands registered in {@code commandsDescription} and
+     *         their descriptions.
      */
     public OptionsList call() {
         
-        return new OptionsList( cmdParser.getRegisteredCommands() );
+        return new OptionsList( commandsDescription );
     }
-    
 }

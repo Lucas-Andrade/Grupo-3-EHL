@@ -6,7 +6,6 @@ import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.CommandFactory;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
-import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.GetAirshipsWithLessPassengersThanCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -15,16 +14,13 @@ import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.InvalidParameterValueException;
 import main.java.utils.exceptions.MissingRequiredParameterException;
-import main.java.utils.exceptions.WrongLoginPasswordException;
-import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
 /**
- * Class whose instances are {@link ParsingCommand factories} that produce commands of type
+ * Class whose instances are {@link CommandFactory factories} that produce commands of type
  * {@link GetAirshipsWithLessPassengersThanCommand}. Commands are {@link Callable} instances.
  * 
- * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link Optional} {@link Iterable
- * Iterables} of {@link Airship}.
+ * Extends {@link CommandFactory} of {@link Optional} {@link Iterable Iterables} of {@link Airship}.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -43,8 +39,6 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
      * {@code airshipsDatabase} - The database where to search the elements from.
      */
     private final Database< Airship > airshipsDatabase;
-    
-    
     
     // CONSTRUCTOR
     
@@ -90,11 +84,9 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
     @Override
     protected Callable< Optional< Iterable< Airship >>>
             internalNewCommand( Map< String, String > parametersMap )
-                throws InvalidParameterValueException, WrongLoginPasswordException,
-                NoSuchElementInDatabaseException, InternalErrorException,
-                MissingRequiredParameterException, InvalidArgumentException {
+                throws InvalidParameterValueException, MissingRequiredParameterException {
         
-        return new Get( parametersMap ).newCommand();
+        return new GetAWLPT_ParsingCommand( parametersMap ).newCommand();
     }
     
     /**
@@ -108,53 +100,50 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
         
         return requiredParametersNames;
     }
-    
-    // PRIVATE AUXILIAR METHOD
-    
-//    /**
-//     * Sets the value of the field {@link #maximumNumberOfPassengers} with the value received in the
-//     * parameters map.
-//     * <p>
-//     * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-//     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
-//     * that the field {@link #maximumNumberOfPassengers} is non-{@code null} after this method
-//     * finishes its job.
-//     * </p>
-//     * 
-//     * @throws InvalidParameterValueException
-//     *             If the value received to be interpreted as the maximum number of passengers is
-//     *             not convertible to integer.
-//     * @throws MissingRequiredParameterException
-//     *             If {@link #parametersMap} does not contain a parameter with name {@code name}.
-//     * 
-//     * @see {@link ParsingCommand#getParameterAsInt() getParameterAsInt()}.
-//     */
-//    private void setMaxOfPassengersValueOfTheParametersMap()
-//        throws InvalidParameterValueException, MissingRequiredParameterException {
-//        
-//        
-//    }
-    
+
+    /**
+     * Returns a short description of the command produced by this factory.
+     * 
+     * @return a short description of the command produced by this factory.
+     */
     @Override
     public String getCommandsDescription() {
         return "Gets all airships that are transgressing their air corridors.";
     }
-    
-    
-    
-    private class Get extends ParsingCommand< Optional< Iterable< Airship >> > {
+
+    // INNER CLASS
+    /**
+     * Class that extends {@link ParsingCommand}, whose instances will parse the
+     * {@code required parameters} and will create a
+     * {@link GetAirshipsWithLessPassengersThanCommand}
+     */
+    private class GetAWLPT_ParsingCommand extends ParsingCommand< Optional< Iterable< Airship >> > {
         
         /**
          * {@code maximumNumberOfPassengers} - The maximum number of passengers allowed.
          */
         private int maximumNumberOfPassengers;
         
-        public Get( Map< String, String > parametersMap )
+        /**
+         * Create the {@code ParsingCommand}
+         * 
+         * @param parametersMap
+         * 
+         * @throws InvalidParameterValueException
+         *             If the value received to be interpreted as the maximum number of passengers
+         *             is not convertible to integer.
+         * @throws MissingRequiredParameterException
+         *             If {@link #parametersMap} does not contain a parameter with name {@code name}
+         */
+        public GetAWLPT_ParsingCommand( Map< String, String > parametersMap )
             throws InvalidParameterValueException, MissingRequiredParameterException {
             super( parametersMap );
             maximumNumberOfPassengers = getParameterAsInt( requiredParametersNames[0] );
         }
         
+        /**
+         * @return A command of type {@link GetAirshipsWithLessPassengersThanCommand}.
+         */
         @Override
         public Callable< Optional< Iterable< Airship >>> newCommand() {
             try {

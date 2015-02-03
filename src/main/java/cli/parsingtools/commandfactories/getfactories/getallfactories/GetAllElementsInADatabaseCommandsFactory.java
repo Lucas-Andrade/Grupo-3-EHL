@@ -4,7 +4,6 @@ package main.java.cli.parsingtools.commandfactories.getfactories.getallfactories
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.parsingtools.commandfactories.CommandFactory;
-import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.Element;
@@ -14,10 +13,10 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * Abstract class whose subclasses instances are {@link ParsingCommand factories} that produce
+ * Abstract class whose subclasses instances are {@link CommandFactory factories} that produce
  * commands of type {@link GetAllElementsInADatabaseCommand}.
  * 
- * Extends {@link ParsingCommand} of {@link Optional} {@link Iterable Iterables<E>}.
+ * Extends {@link CommandFactory} of {@link Optional} {@link Iterable Iterables<E>}.
  * 
  * @param <E>
  *            - The type of elements that a database can contain.
@@ -26,8 +25,6 @@ import main.java.utils.exceptions.InvalidArgumentException;
  */
 public abstract class GetAllElementsInADatabaseCommandsFactory< E extends Element > extends
         CommandFactory< Optional< Iterable< E >>> {
-    
-    // INSTANCE FIELDS
     
     /**
      * {@code database} - The database where to get the elements from.
@@ -57,8 +54,6 @@ public abstract class GetAllElementsInADatabaseCommandsFactory< E extends Elemen
         
         this.database = database;
     }
-    
-    // IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
     
     /**
      * Returns a command of type {@link GetAllElementsInADatabaseCommand}.

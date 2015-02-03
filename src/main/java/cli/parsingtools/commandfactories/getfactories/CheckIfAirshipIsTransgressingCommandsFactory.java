@@ -12,14 +12,11 @@ import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
-import main.java.utils.exceptions.InvalidParameterValueException;
 import main.java.utils.exceptions.MissingRequiredParameterException;
-import main.java.utils.exceptions.WrongLoginPasswordException;
-import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
 /**
- * Class whose instances are {@link ParsingCommand factories} that produce commands of type
+ * Class whose instances are {@link CommandFactory factories} that produce commands of type
  * {@link CheckIfAirshipIsTransgressingCommand}. Commands are {@link Callable} instances.
  * 
  * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link Airship Airships}.
@@ -40,7 +37,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
      * {@code airshipsDatabase} - The database where to search the elements from.
      */
     private final Database< Airship > airshipsDatabase;
-        
+    
     // CONSTRUCTOR
     
     /**
@@ -63,23 +60,32 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
         this.airshipsDatabase = airshipsDatabase;
     }
     
-    // IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
-    
     /**
      * Returns a command of type {@link CheckIfAirshipIsTransgressingCommand} after getting the
      * necessary {@code required parameters} using the private auxiliar method
      * {@link #setFlightIdValueOfTheParametersMap()}.
      * 
      * @return A command of type {@link CheckIfAirshipIsTransgressingCommand}.
+     * @throws MissingRequiredParameterException
+     *             If any of the required parameters is missing.
      */
     @Override
     protected Callable< String > internalNewCommand( Map< String, String > parametersMap )
-        throws InvalidParameterValueException, WrongLoginPasswordException,
-        NoSuchElementInDatabaseException, InternalErrorException,
-        MissingRequiredParameterException, InvalidArgumentException {
-        return new Get(parametersMap).newCommand();
+        throws MissingRequiredParameterException {
+        
+        return new CheckIAIT_ParsingCommand( parametersMap ).newCommand();
     }
     
+    /**
+     * Returns a short description of the command produced by this factory.
+     * 
+     * @return a short description of the command produced by this factory.
+     */
+    @Override
+    public String getCommandsDescription() {
+        return "Checks whether an airship is transgressing its air corridor.";
+    }
+
     /**
      * Returns an array of strings with name of the parameters needed to produce the command - in
      * this case the name of the parameter that contains the airships's flightId.
@@ -92,45 +98,41 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
         return requiredParametersNames;
     }
     
-    // PRIVATE AUXILIAR METHOD
+
     
-//    /**
-//     * Sets the value of the field {@link #flightId} with the value received in the parameters map.
-//     * <p>
-//     * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-//     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed that the
-//     * field {@link #flightId} is non-{@code null} after this method finishes its job.
-//     * </p>
-//     */
-//    private void setFlightIdValueOfTheParametersMap() {
-//        
-//        
-//    }
-    
-    @Override
-    public String getCommandsDescription() {
-        return "Checks whether an airship is transgressing its air corridor.";
-    }
-   
-    
-    private class Get extends ParsingCommand< String > {
+    // INNER CLASS
+    /**
+     * Class that extends {@link ParsingCommand}, whose instances will parse the
+     * {@code required parameters} and will create a {@link CheckIfAirshipIsTransgressingCommand}
+     */
+    private class CheckIAIT_ParsingCommand extends ParsingCommand< String > {
         
         /**
          * {@code flightId} - The flightId of the airships to be evaluated.
          */
         private String flightId;
         
-        public Get( Map< String, String > parametersMap ) {
+        /**
+         * Create the {@code ParsingCommand}
+         * 
+         * @param parametersMap
+         * @throws MissingRequiredParameterException
+         *             If any of the required parameters is missing.
+         */
+        public CheckIAIT_ParsingCommand( Map< String, String > parametersMap )
+            throws MissingRequiredParameterException {
             super( parametersMap );
             flightId = getParameterAsString( requiredParametersNames[0] );
         }
         
+        /**
+         * @return A command of type {@link CheckIfAirshipIsTransgressingCommand}.
+         */
         @Override
         public Callable< String > newCommand() {
             
             try {
                 return new CheckIfAirshipIsTransgressingCommand( airshipsDatabase, flightId );
-                
             }
             catch( InvalidArgumentException e ) {
                 throw new InternalErrorException(

@@ -6,7 +6,6 @@ import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.CommandFactory;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
-import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.GetTheNearestAirshipsToGeographicPositionCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -16,17 +15,14 @@ import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.InvalidParameterValueException;
 import main.java.utils.exceptions.MissingRequiredParameterException;
-import main.java.utils.exceptions.WrongLoginPasswordException;
-import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
 /**
- * Class whose instances are {@link ParsingCommand factories} that produce commands of type
+ * Class whose instances are {@link CommandFactory factories} that produce commands of type
  * {@link GetTheNearestAirshipsOfTheGeograficCoordinateCommand}. Commands are {@link Callable}
  * instances.
  * 
- * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link Optional} {@link Iterable
- * Iterables} of {@link Airship}.
+ * Extends {@link CommandFactory} of {@link Optional} {@link Iterable Iterables} of {@link Airship}.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -63,7 +59,6 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
     public GetTheNearestAirshipsToGeographicPositionCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
         
-        
         if( airshipsDatabase == null )
             throw new InvalidArgumentException(
                                                 "It's not allow instantiate a factory with null airships database" );
@@ -85,22 +80,17 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
      * @return a command of type {@link GetTheNearestAirshipsOfTheGeograficCoordinateCommand}.
      * 
      * @throws InvalidParameterValueException
-     *             If the value received to be interpreted as the maximum number of passengers is
-     *             not convertible to integer.
-     * @throws InvalidArgumentException
-     *             If the {@code database} is null or the {@code maximumNumberOfPassengers} is less
-     *             than 0.
+     *             If a received value (altitude, longitude or maximum number of passengers) is not
+     *             convertible to double/integer.
      * @throws MissingRequiredParameterException
-     *             If {@link #parametersMap} does not contain a parameter with name {@code name}.
+     *             If one of the {@link #parametersMap} does not contain a parameter.
      */
     @Override
     protected Callable< Optional< Iterable< Airship >>>
             internalNewCommand( Map< String, String > parametersMap )
-                throws InvalidParameterValueException, WrongLoginPasswordException,
-                NoSuchElementInDatabaseException, InternalErrorException,
-                MissingRequiredParameterException, InvalidArgumentException {
+                throws InvalidParameterValueException, MissingRequiredParameterException {
         
-        return new Get( parametersMap ).newCommand();
+        return new GetTNATGP_ParsingCommand( parametersMap ).newCommand();
     }
     
     /**
@@ -115,17 +105,25 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
         return requiredParametersNames;
     }
     
-    
-    
+    /**
+     * Returns a short description of the command produced by this factory.
+     * 
+     * @return a short description of the command produced by this factory.
+     */
     @Override
     public String getCommandsDescription() {
         
         return "Get the nearest aircrafts of Geographic coordinates";
     }
+
     
-    
-    
-    private class Get extends ParsingCommand< Optional< Iterable< Airship >> > {
+    // INNER CLASS
+    /**
+     * Class that extends {@link ParsingCommand}, whose instances will parse the
+     * {@code required parameters} and will create a
+     * {@link GetTheNearestAirshipsToGeographicPositionCommand}
+     */
+    private class GetTNATGP_ParsingCommand extends ParsingCommand< Optional< Iterable< Airship >> > {
         
         /**
          * {@code numberOfAirshipsToGet} - The numbers of airships closer to a specific
@@ -143,15 +141,29 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
          */
         private double latitude;
         
-        public Get( Map< String, String > parametersMap ) throws InvalidParameterValueException, MissingRequiredParameterException {
+        /**TODO
+         * Create the {@code ParsingCommand}
+         * 
+         * @param parametersMap
+         * 
+         * @throws InvalidParameterValueException
+         *             If the value received to be interpreted as the maximum number of passengers
+         *             is not convertible to integer.
+         * @throws MissingRequiredParameterException
+         *             If {@link #parametersMap} does not contain a parameter with name {@code name}
+         */
+        public GetTNATGP_ParsingCommand( Map< String, String > parametersMap )
+            throws InvalidParameterValueException, MissingRequiredParameterException {
+            
             super( parametersMap );
             setLatitude();
             setLongitude();
             setNumberOfAirshipsTofind();
-            
-            
         }
         
+        /**
+         * @return A command of type {@link GetTheNearestAirshipsToGeographicPositionCommand}.
+         */
         @Override
         public Callable< Optional< Iterable< Airship >>> newCommand() {
             
@@ -162,16 +174,16 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
             }
             catch( InvalidArgumentException e ) {
                 throw new InternalErrorException(
-                                                 "UNEXPECTED EXCEPTION IN GetAirshipsOfOwnerCommandsFactory!",
-                                                 e );
-               // never happens because database is not null
+                                                  "UNEXPECTED EXCEPTION IN GetAirshipsOfOwnerCommandsFactory!",
+                                                  e );
+                // never happens because database is not null
             }
         }
         
         // PRIVATE AUXILIAR METHODS
         
         /**
-         * Sets the value of the field {@link #Latitude} with the value received in the parameters
+         * Sets the value of the field {@link #latitude} with the value received in the parameters
          * map needed to {@link GetTheNearestAirshipsToGeographicPositionCommand}.
          * 
          * This method calls the {@link ParsingCommand#getParameterAsDouble(String)} where it
@@ -184,12 +196,11 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
          * </p>
          * 
          * @throws InvalidParameterValueException
-         *             If the value received to be interpreted as the maximum number of passengers
-         *             is not convertible to a double.
+         *             If the value received to be interpreted as the latitude is not convertible to
+         *             a double.
          * @throws MissingRequiredParameterException
          *             If the {@link #parametersMap} does not contain a parameter with name
-         *             {@code name} .
-         * 
+         *             {@code latitude}.
          */
         private void setLatitude()
             throws InvalidParameterValueException, MissingRequiredParameterException {
@@ -211,11 +222,11 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
          * </p>
          * 
          * @throws InvalidParameterValueException
-         *             If the value received to be interpreted as the maximum number of passengers
-         *             is not convertible to a double.
+         *             If the value received to be interpreted as the longitude is not convertible
+         *             to a double.
          * @throws MissingRequiredParameterException
          *             If the {@link #parametersMap} does not contain a parameter with name
-         *             {@code name}
+         *             {@code longitude}
          */
         private void setLongitude()
             throws InvalidParameterValueException, MissingRequiredParameterException {
@@ -243,13 +254,12 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
          *             is not convertible to a int.
          * @throws MissingRequiredParameterException
          *             If the {@link #parametersMap} does not contain a parameter with name
-         *             {@code name}
+         *             {@code nbPassengers}
          */
         private void setNumberOfAirshipsTofind()
             throws InvalidParameterValueException, MissingRequiredParameterException {
             
             numberOfAirshipsToGet = getParameterAsInt( requiredParametersNames[2] );
         }
-        
     }
 }

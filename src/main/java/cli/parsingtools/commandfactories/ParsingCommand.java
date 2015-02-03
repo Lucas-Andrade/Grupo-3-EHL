@@ -9,24 +9,9 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
 
 
 /**
- * TODO Class whose subclasses' instances are commands factories. A commands factory interprets
+ * Class whose subclasses' instances are parsing commands factories, that interprets
  * string-parameters needed to create commands and creates the commands (through method
- * {@link #newCommand(Map)}). It also provides a short description of the commands produced (through
- * method {@link #getCommandsDescription()}).
- * <p>
- * Subclasses must implement:
- * <ul>
- * <li>a constructor which provides a string description of the commands that the factory produces;</li>
- * <li>the method {@link #internalNewCommand()} which returns a command;</li>
- * <li>the method {@link #getRequiredParametersNames()} which returns a {@code String[]} whose
- * entries are the names of the parameters without whom the {@link #internalNewCommand()} method
- * cannot create a specific {@link Callable} command instance.</li>
- * </ul>
- * Method {@link #newCommand(Map)} receives a {@code Map<String,String>}, which is supposed to
- * contain the parameters needed to create the command: each map-entry represents a parameter, the
- * key is the parameter's name and the value is the parameter's value. This method confirms if the
- * Map contains the parameters returned by {@link #getRequiredParametersNames()}
- * </p>
+ * {@link #newCommand(Map)}).
  * 
  * @param <R>
  *            The {@link Callable} instance type of the command returned by the
@@ -39,25 +24,31 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  */
 public abstract class ParsingCommand< R > {
     
-    
-    
-    // INSTANCE FIELDS
-    
     /**
      * {@code parametersMap} - {@link Map} containing all the name-value pairs of parameters
      * received to create and execute a specific command.
      */
     protected Map< String, String > parametersMap;
     
-    // CONSTRUCTOR
+    /**
+     * Creates a {@code parsing command}, that interprets string-parameters needed to create
+     * commands and creates the commands (through method {@link #newCommand(Map)}).
+     * 
+     * @param parametersMap
+     */
     public ParsingCommand( Map< String, String > parametersMap ) {
         this.parametersMap = parametersMap;
     }
     
-    // PUBLIC ABSTRACT METHOD
+    // ABSTRACT METHOD
+    /**
+     * Returns a {@link Callable}.
+     * 
+     * @return A {@link Callable}.
+     */
     public abstract Callable< R > newCommand();
     
-    // PROTECTED AUXILIARY METHODS - tools for the factories!
+    // PROTECTED METHODS
     
     /**
      * Returns the string-value of the entry in {@link #parametersMap} with key
@@ -68,10 +59,21 @@ public abstract class ParsingCommand< R > {
      * 
      * @return The string-value of the entry in {@link #parametersMap} with key
      *         {@code parameterName}.
+     * @throws MissingRequiredParameterException
+     *             If {@code parameterName} is {@code null} or the empty string. This exception's
+     *             message is <i>«Required parameter with name {@code parameterName} missing.»</i>).
      */
-    protected String getParameterAsString( String parameterName ) {
-        
-        return parametersMap.get( parameterName );
+    protected String getParameterAsString( String parameterName )
+        throws MissingRequiredParameterException {
+        try {
+            String parameterValue = parametersMap.get( parameterName );
+            if( parameterValue.equals( "" ) )
+                throw new MissingRequiredParameterException( parameterName );
+            return parameterValue;
+        }
+        catch( NullPointerException e ) {
+            throw new MissingRequiredParameterException( parameterName, e );
+        }
     }
     
     /**

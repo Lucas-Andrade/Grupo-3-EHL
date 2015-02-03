@@ -13,19 +13,39 @@ import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseExce
 
 /**TODO
  * 
+ * Class whose subclasses' instances are commands factories. A commands factory interprets
+ * string-parameters needed to create commands and creates the commands (through method
+ * {@link #newCommand(Map)}). It also provides a short description of the commands produced (through
+ * method {@link #getCommandsDescription()}).
+ * <p>
+ * Subclasses must implement:
+ * <ul>
+ * <li>a constructor which provides a string description of the commands that the factory produces;</li>
+ * <li>the method {@link #internalNewCommand()} which returns a command;</li>
+ * <li>the method {@link #getRequiredParametersNames()} which returns a {@code String[]} whose
+ * entries are the names of the parameters without whom the {@link #internalNewCommand()} method
+ * cannot create a specific {@link Callable} command instance.</li>
+ * </ul>
+ * Method {@link #newCommand(Map)} receives a {@code Map<String,String>}, which is supposed to
+ * contain the parameters needed to create the command: each map-entry represents a parameter, the
+ * key is the parameter's name and the value is the parameter's value. This method confirms if the
+ * Map contains the parameters returned by {@link #getRequiredParametersNames()}
+ * </p>
+ * 
+ * @param <R>
+ *            The {@link Callable} instance type of the command returned by the
+ *            {@link #newCommand(Map)} method.
+ * 
+ * @see Callable
+ * @see Map
+ * 
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ * 
  * 
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public abstract class CommandFactory< T > {
-    
-    /**
-     * Returns a short description of the command produced by this factory.
-     * @return a short description of the command produced by this factory.
-     */
-    public abstract String getCommandsDescription();
-    
-
     
     /**
      * Method responsible for producing a command. It starts by performing validating the received
@@ -68,37 +88,14 @@ public abstract class CommandFactory< T > {
         return internalNewCommand(parametersMap);
     }
     
-    
-    
-    // AUXILIARY PRIVATE METHOD - used in the newCommand method!
+    //ABSTRACT METHOD
     
     /**
-     * Checks whether the required parameters for performing the {@link #newInstance()} method
-     * (known through the method {@link #getRequiredParametersNames()}) are contained in the
-     * received {@link Map}. If all required parameters were found in the map or there are no
-     * required parameters, this method returns nothing. If a required parameter is missing, an
-     * exception is thrown indicating in its message the name of the first required parameter not
-     * found.
+     * Returns a short description of the command produced by this factory.
      * 
-     * @param requiredParameterNames
-     *            - The names(that correspond to the {@code parametersMap} keys) of the required
-     *            parameters.
-     * @throws MissingRequiredParameterException
-     *             If a required parameter is missing.
+     * @return a short description of the command produced by this factory.
      */
-    private void checkIfAllRequiredParametersAreInTheParametersMap(Map< String, String > parametersMap)
-        throws MissingRequiredParameterException {
-        
-        String[] requiredParameterNames = getRequiredParametersNames();
-        if( requiredParameterNames == null )
-            return;
-        
-        for( String name : requiredParameterNames )
-            if( !parametersMap.containsKey( name ) )
-                throw new MissingRequiredParameterException( name );
-    }
-
-    // UNIMPLEMENTED AUXILIARY METHODS - to be implemented by the factories!
+    public abstract String getCommandsDescription();
     
     /**
      * Method responsible for produces a command and returns it to the {@link #newInstance()}
@@ -134,5 +131,33 @@ public abstract class CommandFactory< T > {
      *         method cannot create a specific {@link Callable} command instance.
      */
     protected abstract String[] getRequiredParametersNames();
+    
+    // AUXILIARY PRIVATE METHOD - used in the newCommand method!
+    
+    /**
+     * Checks whether the required parameters for performing the {@link #newInstance()} method
+     * (known through the method {@link #getRequiredParametersNames()}) are contained in the
+     * received {@link Map}. If all required parameters were found in the map or there are no
+     * required parameters, this method returns nothing. If a required parameter is missing, an
+     * exception is thrown indicating in its message the name of the first required parameter not
+     * found.
+     * 
+     * @param requiredParameterNames
+     *            - The names(that correspond to the {@code parametersMap} keys) of the required
+     *            parameters.
+     * @throws MissingRequiredParameterException
+     *             If a required parameter is missing.
+     */
+    private void checkIfAllRequiredParametersAreInTheParametersMap(Map< String, String > parametersMap)
+        throws MissingRequiredParameterException {
+        
+        String[] requiredParameterNames = getRequiredParametersNames();
+        if( requiredParameterNames == null )
+            return;
+        
+        for( String name : requiredParameterNames )
+            if( !parametersMap.containsKey( name ) )
+                throw new MissingRequiredParameterException( name );
+    }
 }
 

@@ -65,7 +65,7 @@ public abstract class CommandFactory< T > {
         
         checkIfAllRequiredParametersAreInTheParametersMap(parametersMap);
         
-        return internalNewCommand();
+        return internalNewCommand(parametersMap);
     }
     
     
@@ -121,7 +121,7 @@ public abstract class CommandFactory< T > {
      * @throws InvalidArgumentException
      *             If the value received in the parameters map for a required parameter is invalid.
      */
-    protected abstract Callable< T > internalNewCommand()
+    protected abstract Callable< T > internalNewCommand(Map< String, String > parametersMap)
         throws InvalidParameterValueException, WrongLoginPasswordException,
         NoSuchElementInDatabaseException, InternalErrorException,
         MissingRequiredParameterException, InvalidArgumentException;

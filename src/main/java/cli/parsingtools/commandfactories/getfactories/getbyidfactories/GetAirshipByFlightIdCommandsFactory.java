@@ -37,7 +37,25 @@ public class GetAirshipByFlightIdCommandsFactory extends
     public GetAirshipByFlightIdCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
         
-        super( "Gets an airship with a certain flightId.", CLIStringsDictionary.FLIGHTID,
+        super( CLIStringsDictionary.FLIGHTID,
                airshipsDatabase );
     }
+
+    @Override
+    public String getCommandsDescription() {
+        return "Gets an airship with a certain flightId.";
+    }
+    
+    
+//    /**
+//     * Returns an array of strings with name of the parameter needed to produce the command- in this
+//     * case the name of the parameter that contains the desired element's identification.
+//     * 
+//     * @return An array of strings with the name of the required parameters.
+//     */
+//    @Override
+//    protected String[] getRequiredParametersNames() {
+//        
+//        return new String[]{CLIStringsDictionary.FLIGHTID};
+//    }
 }

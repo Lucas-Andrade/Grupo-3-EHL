@@ -4,6 +4,7 @@ package main.java.cli.parsingtools.commandfactories.getfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
+import main.java.cli.parsingtools.commandfactories.CommandFactory;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.GetAirshipsOfOwnerCommand;
@@ -12,6 +13,10 @@ import main.java.domain.model.airships.Airship;
 import main.java.utils.Optional;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.InvalidParameterValueException;
+import main.java.utils.exceptions.MissingRequiredParameterException;
+import main.java.utils.exceptions.WrongLoginPasswordException;
+import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
 /**
@@ -24,7 +29,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes.
  */
 public class GetAirshipsOfOwnerCommandsFactory extends
-        ParsingCommand< Optional< Iterable< Airship >>> {
+        CommandFactory< Optional< Iterable< Airship >>> {
     
     // INSTANCE FIELDS
     
@@ -39,11 +44,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
      */
     private final Database<Airship> airshipsDatabase;
     
-    /**
-     * {@code ownerUsername} - The username of the user whose airships are to get from
-     * {@link #airshipsDatabase}
-     */
-    private String ownerUsername;
+
     
     // CONSTRUCTOR
     
@@ -60,7 +61,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
     public GetAirshipsOfOwnerCommandsFactory( Database<Airship> airshipsDatabase )
         throws InvalidArgumentException {
         
-        super( "Gets all airships added by a certain user." );
+        super( );
         
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
@@ -79,17 +80,13 @@ public class GetAirshipsOfOwnerCommandsFactory extends
      * @return A command of type {@link GetAirshipsByOwnerCommand}.
      */
     @Override
-    protected Callable< Optional< Iterable< Airship >>> internalNewCommand() {
+    protected Callable< Optional< Iterable< Airship >>>
+            internalNewCommand( Map< String, String > parametersMap )
+                throws InvalidParameterValueException, WrongLoginPasswordException,
+                NoSuchElementInDatabaseException, InternalErrorException,
+                MissingRequiredParameterException, InvalidArgumentException {
         
-        setOwnersUsernameValueOfTheParametersMap();
-        
-        try {
-            return new GetAirshipsOfOwnerCommand( airshipsDatabase, ownerUsername );
-        }
-        catch( InvalidArgumentException e ) {
-            throw new InternalErrorException( "UNEXPECTED EXCEPTION IN GetAirshipsOfOwnerCommandsFactory!", e );
-            // never happens because database is not null
-        }
+        return new Get( parametersMap ).newCommand();
     }
     
     /**
@@ -106,17 +103,49 @@ public class GetAirshipsOfOwnerCommandsFactory extends
     
     // PRIVATE AUXILIAR METHOD
     
-    /**
-     * Sets the value of the field {@link #ownerUsername} with the value received in the parameters
-     * map needed to {@link GetAirshipsOfOwnerCommand}.
-     * <p>
-     * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
-     * that the field {@link #ownerUsername} is non-{@code null} after this method finishes its job.
-     * </p>
-     */
-    private void setOwnersUsernameValueOfTheParametersMap() {
+//    /**
+//     * Sets the value of the field {@link #ownerUsername} with the value received in the parameters
+//     * map needed to {@link GetAirshipsOfOwnerCommand}.
+//     * <p>
+//     * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
+//     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
+//     * that the field {@link #ownerUsername} is non-{@code null} after this method finishes its job.
+//     * </p>
+//     */
+//    private void setOwnersUsernameValueOfTheParametersMap() {
+//        
+//        
+//    }
+
+    @Override
+    public String getCommandsDescription() {
+        return "Gets all airships added by a certain user." ;
+    }
+
+
+    
+    private class Get extends ParsingCommand< Optional< Iterable< Airship >> > {
         
-        ownerUsername = getParameterAsString( requiredParametersNames[0] );
+        /**
+         * {@code ownerUsername} - The username of the user whose airships are to get from
+         * {@link #airshipsDatabase}
+         */
+        private String ownerUsername;
+
+        public Get( Map< String, String > parametersMap ) {
+            super( parametersMap );
+            ownerUsername = getParameterAsString( requiredParametersNames[0] );
+        }
+
+        @Override
+        public Callable< Optional< Iterable< Airship >>> newCommand() {
+            try {
+                return new GetAirshipsOfOwnerCommand( airshipsDatabase, ownerUsername );
+            }
+            catch( InvalidArgumentException e ) {
+                throw new InternalErrorException( "UNEXPECTED EXCEPTION IN GetAirshipsOfOwnerCommandsFactory!", e );
+                // never happens because database is not null
+            }
+        }
     }
 }

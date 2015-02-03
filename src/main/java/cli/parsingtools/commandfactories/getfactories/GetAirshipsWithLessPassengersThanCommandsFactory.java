@@ -4,20 +4,24 @@ package main.java.cli.parsingtools.commandfactories.getfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
+import main.java.cli.parsingtools.commandfactories.CommandFactory;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.GetAirshipsWithLessPassengersThanCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.utils.Optional;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.InvalidParameterValueException;
 import main.java.utils.exceptions.MissingRequiredParameterException;
+import main.java.utils.exceptions.WrongLoginPasswordException;
+import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
 /**
- * Class whose instances are {@link ParsingCommand factories} that produce commands of
- * type {@link GetAirshipsWithLessPassengersThanCommand}. Commands are {@link Callable} instances.
+ * Class whose instances are {@link ParsingCommand factories} that produce commands of type
+ * {@link GetAirshipsWithLessPassengersThanCommand}. Commands are {@link Callable} instances.
  * 
  * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link Optional} {@link Iterable
  * Iterables} of {@link Airship}.
@@ -25,7 +29,7 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class GetAirshipsWithLessPassengersThanCommandsFactory extends
-        ParsingCommand< Optional< Iterable< Airship >>> {
+        CommandFactory< Optional< Iterable< Airship >>> {
     
     // INSTANCE FIELDS
     
@@ -38,12 +42,9 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
     /**
      * {@code airshipsDatabase} - The database where to search the elements from.
      */
-    private final Database<Airship> airshipsDatabase;
+    private final Database< Airship > airshipsDatabase;
     
-    /**
-     * {@code maximumNumberOfPassengers} - The maximum number of passengers allowed.
-     */
-    private int maximumNumberOfPassengers;
+    
     
     // CONSTRUCTOR
     
@@ -57,10 +58,8 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
      * @throws InvalidArgumentException
      *             If the {@code airshipsDatabase} is null.
      */
-    public GetAirshipsWithLessPassengersThanCommandsFactory( Database<Airship> airshipsDatabase )
+    public GetAirshipsWithLessPassengersThanCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-        
-        super( "Gets all airships that are transgressing their air corridors." );
         
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
@@ -89,14 +88,13 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
      *             If {@link #parametersMap} does not contain a parameter with name {@code name}
      */
     @Override
-    protected Callable< Optional< Iterable< Airship >>> internalNewCommand()
-        throws InvalidParameterValueException, InvalidArgumentException,
-        MissingRequiredParameterException {
+    protected Callable< Optional< Iterable< Airship >>>
+            internalNewCommand( Map< String, String > parametersMap )
+                throws InvalidParameterValueException, WrongLoginPasswordException,
+                NoSuchElementInDatabaseException, InternalErrorException,
+                MissingRequiredParameterException, InvalidArgumentException {
         
-        setMaxOfPassengersValueOfTheParametersMap();
-        
-        return new GetAirshipsWithLessPassengersThanCommand( airshipsDatabase,
-                                                             maximumNumberOfPassengers );
+        return new Get( parametersMap ).newCommand();
     }
     
     /**
@@ -113,27 +111,62 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
     
     // PRIVATE AUXILIAR METHOD
     
-    /**
-     * Sets the value of the field {@link #maximumNumberOfPassengers} with the value received in the
-     * parameters map.
-     * <p>
-     * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
-     * that the field {@link #maximumNumberOfPassengers} is non-{@code null} after this method
-     * finishes its job.
-     * </p>
-     * 
-     * @throws InvalidParameterValueException
-     *             If the value received to be interpreted as the maximum number of passengers is
-     *             not convertible to integer.
-     * @throws MissingRequiredParameterException
-     *             If {@link #parametersMap} does not contain a parameter with name {@code name}.
-     * 
-     * @see {@link ParsingCommand#getParameterAsInt() getParameterAsInt()}.
-     */
-    private void setMaxOfPassengersValueOfTheParametersMap()
-        throws InvalidParameterValueException, MissingRequiredParameterException {
+//    /**
+//     * Sets the value of the field {@link #maximumNumberOfPassengers} with the value received in the
+//     * parameters map.
+//     * <p>
+//     * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
+//     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
+//     * that the field {@link #maximumNumberOfPassengers} is non-{@code null} after this method
+//     * finishes its job.
+//     * </p>
+//     * 
+//     * @throws InvalidParameterValueException
+//     *             If the value received to be interpreted as the maximum number of passengers is
+//     *             not convertible to integer.
+//     * @throws MissingRequiredParameterException
+//     *             If {@link #parametersMap} does not contain a parameter with name {@code name}.
+//     * 
+//     * @see {@link ParsingCommand#getParameterAsInt() getParameterAsInt()}.
+//     */
+//    private void setMaxOfPassengersValueOfTheParametersMap()
+//        throws InvalidParameterValueException, MissingRequiredParameterException {
+//        
+//        
+//    }
+    
+    @Override
+    public String getCommandsDescription() {
+        return "Gets all airships that are transgressing their air corridors.";
+    }
+    
+    
+    
+    private class Get extends ParsingCommand< Optional< Iterable< Airship >> > {
         
-        maximumNumberOfPassengers = getParameterAsInt( requiredParametersNames[0] );
+        /**
+         * {@code maximumNumberOfPassengers} - The maximum number of passengers allowed.
+         */
+        private int maximumNumberOfPassengers;
+        
+        public Get( Map< String, String > parametersMap )
+            throws InvalidParameterValueException, MissingRequiredParameterException {
+            super( parametersMap );
+            maximumNumberOfPassengers = getParameterAsInt( requiredParametersNames[0] );
+        }
+        
+        @Override
+        public Callable< Optional< Iterable< Airship >>> newCommand() {
+            try {
+                return new GetAirshipsWithLessPassengersThanCommand( airshipsDatabase,
+                                                                     maximumNumberOfPassengers );
+            }
+            catch( InvalidArgumentException e ) {
+                throw new InternalErrorException(
+                                                  "UNEXPECTED EXCEPTION IN GetAirshipsOfOwnerCommandsFactory!",
+                                                  e );
+                // never happens because database is not null
+            }
+        }
     }
 }

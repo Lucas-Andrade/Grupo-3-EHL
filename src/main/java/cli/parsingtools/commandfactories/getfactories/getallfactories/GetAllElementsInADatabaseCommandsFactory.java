@@ -1,6 +1,7 @@
 package main.java.cli.parsingtools.commandfactories.getfactories.getallfactories;
 
 
+import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.parsingtools.commandfactories.CommandFactory;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
@@ -65,7 +66,7 @@ public abstract class GetAllElementsInADatabaseCommandsFactory< E extends Elemen
      * @return A command of type {@link GetAllElementsInADatabaseCommand}.
      */
     @Override
-    protected Callable< Optional< Iterable< E >>> internalNewCommand() {
+    protected Callable< Optional< Iterable< E >>> internalNewCommand(Map< String, String > parametersMap) {
         
         try {
             return new GetAllElementsInADatabaseCommand< E >( database );

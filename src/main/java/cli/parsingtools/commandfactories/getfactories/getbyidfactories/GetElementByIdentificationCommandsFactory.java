@@ -3,6 +3,7 @@ package main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactorie
 
 import java.util.Map;
 import java.util.concurrent.Callable;
+import main.java.cli.parsingtools.commandfactories.CommandFactory;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.getcommands.GetElementFromADatabaseByIdCommand;
 import main.java.domain.model.Database;
@@ -25,7 +26,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public abstract class GetElementByIdentificationCommandsFactory< E extends Element > extends
-        ParsingCommand< Optional< E >> {
+        CommandFactory< Optional< E >> {
     
     // INSTANCE FIELDS
     
@@ -40,10 +41,7 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
      */
     private final Database< E > database;
     
-    /**
-     * {@code identification} - The identification of the element to get from {@link #database}.
-     */
-    private String identification;
+
     
     // CONSTRUCTOR
     
@@ -64,12 +62,10 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
      *             If either {@code commandsDescription}, {@code identificationParameterName} or
      *             {@code database} are {@code null}.
      */
-    public GetElementByIdentificationCommandsFactory( String commandsDescription,
-                                                      String identificationParameterName,
+    public GetElementByIdentificationCommandsFactory( String identificationParameterName,
                                                       Database< E > database )
         throws InvalidArgumentException {
         
-        super( commandsDescription );
         
         if( identificationParameterName == null )
             throw new InvalidArgumentException(
@@ -92,19 +88,9 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
      * @return A command of type {@link GetElementFromADatabaseByIdCommand}.
      */
     @Override
-    protected Callable< Optional< E >> internalNewCommand() {
+    protected Callable< Optional< E >> internalNewCommand(Map< String, String > parametersMap) {
         
-        setIdValueOfTheParametersMap();
-        
-        try {
-            return new GetElementFromADatabaseByIdCommand< E >( database, identification );
-        }
-        catch( InvalidArgumentException e ) {
-            throw new InternalErrorException(
-                                              "UNEXPECTED EXCEPTION IN GetElementByIdentificationCommandsFactory!",
-                                              e );
-            // never happens cause database is not null
-        }
+        return new GETParsingCommand( parametersMap ).newCommand();
     }
     
     /**
@@ -121,18 +107,44 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
     
     // PRIVATE AUXILIAR METHOD
     
-    /**
-     * Sets the value of the field {@link #identification} with the value received in the parameters
-     * map.
-     * <p>
-     * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
-     * that the field {@link #identification} is non-{@code null} after this method finishes its
-     * job.
-     * </p>
-     */
-    private void setIdValueOfTheParametersMap() {
-        
-        identification = getParameterAsString( requiredParametersNames[0] );
+//    /**
+//     * Sets the value of the field {@link #identification} with the value received in the parameters
+//     * map.
+//     * <p>
+//     * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
+//     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
+//     * that the field {@link #identification} is non-{@code null} after this method finishes its
+//     * job.
+//     * </p>
+//     */
+//    private void setIdValueOfTheParametersMap() {
+//        
+//        
+//    }
+    
+    private class GETParsingCommand extends ParsingCommand< Optional< E >>
+    {
+        /**
+         * {@code identification} - The identification of the element to get from {@link #database}.
+         */
+        private String identification;
+
+        public GETParsingCommand( Map< String, String > parametersMap ) {
+            super( parametersMap );
+            identification = getParameterAsString( requiredParametersNames[0] );
+        }
+
+        @Override
+        public Callable< Optional< E >> newCommand() {
+            try {
+                return new GetElementFromADatabaseByIdCommand< E >( database, identification );
+            }
+            catch( InvalidArgumentException e ) {
+                throw new InternalErrorException(
+                                                  "UNEXPECTED EXCEPTION IN GetElementByIdentificationCommandsFactory!",
+                                                  e );
+                // never happens cause database is not null
+            }
+        }
     }
 }

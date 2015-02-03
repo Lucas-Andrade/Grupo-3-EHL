@@ -36,6 +36,11 @@ public class GetUserByUsernameCommandsFactory extends
     public GetUserByUsernameCommandsFactory( Database< User > usersDatabase )
         throws InvalidArgumentException {
         
-        super( "Gets a user with a certain username.", CLIStringsDictionary.USERNAME, usersDatabase );
+        super( CLIStringsDictionary.USERNAME, usersDatabase );
+    }
+
+    @Override
+    public String getCommandsDescription() {
+        return "Gets a user with a certain username.";
     }
 }

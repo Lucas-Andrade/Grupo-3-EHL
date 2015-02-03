@@ -1,7 +1,9 @@
 package main.java.cli.parsingtools.commandfactories.getfactories;
 
 
+import java.util.Map;
 import java.util.concurrent.Callable;
+import main.java.cli.parsingtools.commandfactories.CommandFactory;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import main.java.domain.commands.getcommands.GetAllTransgressingAirshipsCommand;
@@ -10,11 +12,15 @@ import main.java.domain.model.airships.Airship;
 import main.java.utils.Optional;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.InvalidParameterValueException;
+import main.java.utils.exceptions.MissingRequiredParameterException;
+import main.java.utils.exceptions.WrongLoginPasswordException;
+import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
 /**
- * Class whose instances are {@link ParsingCommand factories} that produce commands of
- * type {@link GetAllTransgressingAirshipsCommand}. Commands are {@link Callable} instances.
+ * Class whose instances are {@link ParsingCommand factories} that produce commands of type
+ * {@link GetAllTransgressingAirshipsCommand}. Commands are {@link Callable} instances.
  * 
  * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link Optional} {@link Iterable
  * Iterables} of {@link Airship}.
@@ -22,14 +28,14 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class GetAllTransgressingAirshipsCommandsFactory extends
-        ParsingCommand< Optional< Iterable< Airship >>> {
+        CommandFactory< Optional< Iterable< Airship >>> {
     
     // INSTANCE FIELDS
     
     /**
      * {@code airshipsDatabase} - The database where to search the elements from.
      */
-    private final Database<Airship> airshipsDatabase;
+    private final Database< Airship > airshipsDatabase;
     
     // CONSTRUCTOR
     
@@ -43,10 +49,8 @@ public class GetAllTransgressingAirshipsCommandsFactory extends
      * @throws InvalidArgumentException
      *             If the {@code airshipsDatabase} is null.
      */
-    public GetAllTransgressingAirshipsCommandsFactory( Database<Airship> airshipsDatabase )
+    public GetAllTransgressingAirshipsCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-        
-        super( "Gets all airships that are transgressing their air corridors." );
         
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
@@ -62,7 +66,11 @@ public class GetAllTransgressingAirshipsCommandsFactory extends
      * @return A command of type {@link GetAllTransgressingAirshipsCommand}.
      */
     @Override
-    protected Callable< Optional< Iterable< Airship >>> internalNewCommand() {
+    protected Callable< Optional< Iterable< Airship >>>
+            internalNewCommand( Map< String, String > parametersMap )
+                throws InvalidParameterValueException, WrongLoginPasswordException,
+                NoSuchElementInDatabaseException, InternalErrorException,
+                MissingRequiredParameterException, InvalidArgumentException {
         
         try {
             return new GetAllTransgressingAirshipsCommand( airshipsDatabase );
@@ -72,8 +80,8 @@ public class GetAllTransgressingAirshipsCommandsFactory extends
             throw new InternalErrorException(
                                               "UNEXPECTED EXCEPTION IN GetAllTransgressingAirshipsCommandsFactory!",
                                               e );
-            // never happens because database is not null
         }
+        // never happens because database is not null
     }
     
     /**
@@ -87,5 +95,10 @@ public class GetAllTransgressingAirshipsCommandsFactory extends
     protected String[] getRequiredParametersNames() {
         
         return null;
+    }
+    
+    @Override
+    public String getCommandsDescription() {
+        return "Gets all airships that are transgressing their air corridors.";
     }
 }

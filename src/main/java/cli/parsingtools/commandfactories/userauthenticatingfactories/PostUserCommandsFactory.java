@@ -75,7 +75,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
      *             If one parameter is null or the empty string.
      */
     @Override
-    protected Callable< String > internalInternalNewInstance( Map< String, String > parametersMap,
+    protected Callable< String > internalInternalNewCommand( Map< String, String > parametersMap,
                                                               User userWhoIsPosting )
         throws MissingRequiredParameterException {
         

@@ -89,7 +89,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      *             If any of the parameters have an invalid value.
      */
     @Override
-    protected Callable< String > internalInternalNewInstance( Map< String, String > parametersMap,
+    protected Callable< String > internalInternalNewCommand( Map< String, String > parametersMap,
                                                               User userWhoIsPosting )
         throws MissingRequiredParameterException, InvalidParameterValueException {
         

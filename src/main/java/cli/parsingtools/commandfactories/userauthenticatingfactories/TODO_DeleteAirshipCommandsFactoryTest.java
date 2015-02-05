@@ -16,7 +16,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 
-public class DeleteAirshipCommandsFactoryTest {
+public class TODO_DeleteAirshipCommandsFactoryTest {
     
     @Test
     public void shouldSuccessfullyCreatTheCorrectCommand() throws Exception {

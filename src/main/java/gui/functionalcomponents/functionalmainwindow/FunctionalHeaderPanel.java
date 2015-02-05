@@ -1,12 +1,12 @@
 package main.java.gui.functionalcomponents.functionalmainwindow;
 
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.users.User;
 import main.java.gui.design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
+import main.java.gui.design.windows.MainWindow;
 import main.java.gui.design.windows.popupwindows.UnderConstrutionWindow;
 import main.java.gui.design.windows.userwindows.GetUsersWindow;
 import main.java.gui.design.windows.userwindows.PatchUserWindow;
@@ -17,10 +17,10 @@ import main.java.utils.exceptions.InternalErrorException;
 
 
 /**
- * Class whose instances have the responsibility to add the {@link ActionListener}s to the given
- * {@link JHeaderPanelForMainWindow} buttons, i.e., All {@link User}s commands: POST, GET, PATCH,
+ * Class whose instances have the purpose of adding functionality to a
+ * {@link JHeaderPanelForMainWindow}. Giving functionality to a panel means adding an
+ * {@link ActionListener} to all its buttons (i.e. {@link User Users} commands: POST, GET, PATCH,
  * DELETE
- * 
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -28,20 +28,33 @@ public class FunctionalHeaderPanel {
     
     // Field
     
+    /**
+     * {@code headerPanel} - The {@link MainWindow} header panel to which we will had functionality.
+     */
     private JHeaderPanelForMainWindow headerPanel;
+    
+    /**
+     * {@code usersDatabase} - The users database.
+     */
     private Database< User > usersDatabase;
+    
+    /**
+     * {@code user} - The user who is currently logged in.
+     */
     private User user;
     
     // Constructor
     
     /**
-     * Give an {@link ActionListener}s to the given {@link JHeaderPanelForMainWindow} buttons. To
-     * return the functional {@code FunctionalHeaderPanel} use the
-     * {@link FunctionalHeaderPanel#getHeaderPanel()} method.
+     * Public constructor that will add functionality to a given non functional
+     * {@link JHeaderPanelForMainWindow}.
      * 
      * @param headerPanel
+     *            - The {@link MainWindow} header panel to which we will had functionality.
      * @param usersDatabase
+     *            - The users database.
      * @param user
+     *            - The user who is currently logged in.
      */
     public FunctionalHeaderPanel( JHeaderPanelForMainWindow headerPanel,
                                   Database< User > usersDatabase, User user ) {
@@ -58,75 +71,75 @@ public class FunctionalHeaderPanel {
     // Private Method
     
     /**
-     * POST
+     * Method that will add functionality to the {@link JHeaderPanelForMainWindow#addUserButton
+     * addUserButton} button.
+     * 
+     * The given action will be to create a new {@link FunctionalPostUserWindow} with the objective
+     * of posting new {@link User} in the given database.
      */
     private void addAddUserButtonAction() {
         
-        headerPanel.getUserPanel().getAddUserButton().addActionListener( new ActionListener() {
-            
-            @Override
-            public void actionPerformed( ActionEvent e ) {
-                new FunctionalPostUserWindow( new PostUserWindow(), usersDatabase, user );
-            }
-        } );
+        headerPanel.getUserPanel()
+                   .getAddUserButton()
+                   .addActionListener( action -> new FunctionalPostUserWindow(
+                                                                               new PostUserWindow(),
+                                                                               usersDatabase, user ) );
     }
     
     /**
-     * PATCH
+     * Method that will add functionality to the
+     * {@link JHeaderPanelForMainWindow#changePasswordButton changePasswordButton} button.
+     * 
+     * The given action will be to create a new {@link FunctionalPatchUserWindow} with the objective
+     * of patching a {@link User} existing in the given database.
      */
     private void addChangePasswordButtonAction() {
-        headerPanel.getUserPanel().getChangePasswordButton()
-                   .addActionListener( new ActionListener() {
-                       
-                       @Override
-                       public void actionPerformed( ActionEvent e ) {
-                           new FunctionalPatchUserWindow( new PatchUserWindow(), usersDatabase );
-                       }
-                   } );
+        headerPanel.getUserPanel()
+                   .getChangePasswordButton()
+                   .addActionListener( action -> new FunctionalPatchUserWindow(
+                                                                                new PatchUserWindow(),
+                                                                                usersDatabase ) );
     }
     
-    
-    
     /**
-     * DELETE
+     * DELETE USER - Not Implemented!
      */
     private void addRemoveUserButtonAction() {
-        headerPanel.getUserPanel().getRemoveUserButton().addActionListener( new ActionListener() {
-            
-            @Override
-            public void actionPerformed( ActionEvent e ) {
-                new UnderConstrutionWindow();
-            }
-        } );
+        headerPanel.getUserPanel().getRemoveUserButton()
+                   .addActionListener( action -> new UnderConstrutionWindow() );
     }
     
     /**
-     * GET all
+     * Method that will add functionality to the
+     * {@link JHeaderPanelForMainWindow#infoAllUsersButton infoAllUsersButton} button.
+     * 
+     * The given action will be to create a new {@link GetUsersWindow} that will show a list of all
+     * the {@link User users} existing in the given database.
      */
     private void addInfoAllUsersButtonAction() {
-        headerPanel.getUserPanel().getInfoAllUsersButton().addActionListener( new ActionListener() {
-            
-            @Override
-            public void actionPerformed( ActionEvent ae ) {
-                try {
-                    new GetUsersWindow(
-                                        usersDatabase,
-                                        new GetAllElementsInADatabaseCommand< User >( usersDatabase ).call()
-                                                                                                     .get() );
-                }
-                catch( Exception e ) {
-                    throw new InternalErrorException( e );
-                }
-            }
-        } );
+        headerPanel.getUserPanel()
+                   .getInfoAllUsersButton()
+                   .addActionListener( action -> {
+                                           try {
+                                               new GetUsersWindow(
+                                                                   usersDatabase,
+                                                                   new GetAllElementsInADatabaseCommand< User >(
+                                                                                                                 usersDatabase ).call()
+                                                                                                                                .get() );
+                                           }
+                                           catch( Exception e ) {
+                                               throw new InternalErrorException( e );
+                                           }
+                                       } );
     }
     
-    // Public Get Methods
+    // Public Get Method
     
     /**
-     * @return the headerPanel
+     * @return the {@code headerPanel}.
      */
     public JHeaderPanelForMainWindow getHeaderPanel() {
+        
         return headerPanel;
     }
 }

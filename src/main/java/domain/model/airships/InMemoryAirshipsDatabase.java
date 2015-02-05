@@ -75,6 +75,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
     public boolean add( Airship airship, User user ) throws InvalidArgumentException {
         
         if( super.add( airship, user ) ) {
+            
             addAirshipToItsUsersListOfAirships( airship, user );
             return true;
         }

@@ -2,6 +2,7 @@ package main.java.domain.commands.patchcommands;
 
 
 import java.util.concurrent.Callable;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.model.Database;
 import main.java.domain.model.InMemoryDatabase;
 import main.java.domain.model.users.User;
@@ -20,9 +21,7 @@ import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseExce
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PatchUserPasswordCommand implements Callable< String > {
-    
-    
+public class PatchUserPasswordCommand implements Callable< CompletionStatus > {
     
     // INSTANCE FIELDS
     
@@ -71,7 +70,7 @@ public class PatchUserPasswordCommand implements Callable< String > {
     public PatchUserPasswordCommand( Database< User > usersDatabase, String username,
                                      String oldPassword, String newPassword )
         throws InvalidArgumentException {
-        
+    
         if( usersDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -116,7 +115,8 @@ public class PatchUserPasswordCommand implements Callable< String > {
      *         <code>"Failed authentication. <i>message</i>"</code>
      */
     @Override
-    public String call() {
+    public CompletionStatus call() {
+    
         /* Implementation notes: Users are immutable, changing a password requires removing the user
          * from the database, creating a new one and adding it to the database */
         
@@ -132,10 +132,10 @@ public class PatchUserPasswordCommand implements Callable< String > {
                                   originalUser.getFullName() );
                 userDatabase.add( user, user );
                 
-                return "User password successfully changed";
+                return new CompletionStatus( true, "User password successfully changed." );
             }
             
-            return "Failure. Old password is incorrect.";
+            return new CompletionStatus( false, "Failure. Old password is incorrect." );
             
         }
         catch( InvalidArgumentException e ) {
@@ -147,11 +147,11 @@ public class PatchUserPasswordCommand implements Callable< String > {
         }
         catch( NoSuchElementInDatabaseException e ) {
             /* thrown by method getElementByIdentification().get() */
-            return "Failure. " + e.getMessage();
+            return new CompletionStatus( false, "Failure. " + e.getMessage() );
         }
         catch( DatabaseException e ) {
             /* thrown by method removeByIdentification() */
-            return "Failure. Cannot change MASTER's password.";
+            return new CompletionStatus( false, "Failure. Cannot change MASTER's password." );
         }
         catch( Exception e ) {
             /* no other Exceptions are expected */

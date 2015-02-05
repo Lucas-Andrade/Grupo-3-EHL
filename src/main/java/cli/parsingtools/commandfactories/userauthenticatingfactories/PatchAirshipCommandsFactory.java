@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.commands.patchcommands.PatchAirshipCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -23,7 +24,7 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory< Airship, String > {
+public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory< Airship, CompletionStatus > {
     
     
     
@@ -66,7 +67,7 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory< Airs
      *      main.java.domain.model.users.User)
      */
     @Override
-    protected Callable< String > internalInternalNewCommand( Map< String, String > parametersMap,
+    protected Callable< CompletionStatus > internalInternalNewCommand( Map< String, String > parametersMap,
                                                              User authenticatedUser )
         throws InvalidParameterValueException {
     
@@ -92,7 +93,7 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory< Airs
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
-    private class PatchAirship_ParsingCommand extends ParsingCommand< String > {
+    private class PatchAirship_ParsingCommand extends ParsingCommand< CompletionStatus > {
         
         
         // INSTANCE FIELDS
@@ -148,7 +149,7 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory< Airs
          *             limits are invalid (cannot be converted into {@link Double}s).
          */
         @Override
-        protected Callable< String > newCommand() throws InvalidParameterValueException {
+        protected Callable< CompletionStatus > newCommand() throws InvalidParameterValueException {
         
             setFields();
             

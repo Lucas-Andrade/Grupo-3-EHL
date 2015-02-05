@@ -1,8 +1,6 @@
 package main.java.domain.commands.postcommands;
 
 
-import java.util.concurrent.Callable;
-import main.java.domain.commands.CompletionStatus;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
@@ -11,9 +9,8 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * Class whose instances are commands that post civil airships in a given database.
+ * Class whose instances are commands that post a {@link CivilAirship} in a given database.
  * 
- * Implements the Interface {@link Callable} of {@link String}.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -21,7 +18,7 @@ public class PostCivilAirshipCommand extends PostAirshipCommand {
     
     // INSTANCE FIELDS
     
-    private int numberOfPassengers;
+    private final int numberOfPassengers;
     
     // CONSTRUCTOR
     
@@ -50,49 +47,23 @@ public class PostCivilAirshipCommand extends PostAirshipCommand {
         
         super( latitude, longitude, altitude, maxAltitude, minAltitude, airshipsDatabase,
                userWhoIsPosting );
-        
-        if( airshipsDatabase == null )
-            throw new InvalidArgumentException( "Cannot instantiate command with null database." );
-        
-        if( userWhoIsPosting == null )
-            throw new InvalidArgumentException(
-                                                "Cannot instantiate command with null userWhoIsPosting." );
-        
-        this.userWhoIsPosting = userWhoIsPosting;
-        this.databaseWhereToPost = airshipsDatabase;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.altitude = altitude;
-        this.minAltitude = minAltitude;
-        this.maxAltitude = maxAltitude;
+
         this.numberOfPassengers = numberOfPassengers;
     }
     
     // IMPLEMENTATION OF METHOD call INHERITED FROM Callable INTERFACE
     
+
+
     /**
-     * Adds a new civil airship with the properties given in the constructor to the given
-     * {@link #databaseWhereToPost}.
+     * Create a CivilAirship
      * 
-     * This method will always be successfull (if the command is call the airship is always
-     * successfully added to the database) unless some of the parameters are missing, in which case
-     * the command constructor will throw an exception!
-     * 
-     * @return The airship's flight id if the airship was successfully posted;
-     * @throws InvalidArgumentException
-     * 
-     * @throws Exception
-     *             If the value given for some property is invalid.
+     * @see PostAirshipCommand#createAirship()
      */
     @Override
-    public CompletionStatus call() throws InvalidArgumentException {
-        
-        Airship theCivilAirship =
-                new CivilAirship( latitude, longitude, altitude, maxAltitude, minAltitude,
-                                  numberOfPassengers );
-        
-        databaseWhereToPost.add( theCivilAirship, userWhoIsPosting );
-        
-        return new CompletionStatus( true, "Flight Id: " + theCivilAirship.getIdentification() );
+    protected Airship createAirship() throws InvalidArgumentException {
+    
+        return new CivilAirship( latitude, longitude, altitude, maxAltitude, minAltitude,
+                                 numberOfPassengers );
     }
 }

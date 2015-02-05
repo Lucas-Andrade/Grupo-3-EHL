@@ -3,7 +3,7 @@ package main.java.domain.commands.patchcommands;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
-
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.model.Database;
 import main.java.domain.model.InMemoryDatabase;
 import main.java.domain.model.airships.Airship;
@@ -22,7 +22,7 @@ import main.java.utils.exceptions.databaseexceptions.DatabaseException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PatchAirshipCommand implements Callable<String> {
+public class PatchAirshipCommand implements Callable<CompletionStatus> {
 	
 	// INSTANCE FIELDS
 	
@@ -114,17 +114,17 @@ public class PatchAirshipCommand implements Callable<String> {
 	 * @return A string informing if the patching was successful or not.
 	 * 
 	 * @throws InvalidArgumentException
-	 *             If any of the given values for the airship's proprerties is invalid.
+	 *             If any of the given values for the airship's properties is invalid.
 	 * @throws DatabaseException
 	 *             If the {@code #identification} given does not match any of the airships existing
 	 *             in the {@code #airshipDatabase}.
 	 */
 	@Override
-	public String call() throws InvalidArgumentException, DatabaseException {
+	public CompletionStatus call() throws InvalidArgumentException, DatabaseException {
 	
 		if (latitude == null && longitude == null && altitude == null && maxAltitude == null
 			&& minAltitude == null)
-			return "Airship not patched beacause no new parameter was given";
+			return new CompletionStatus( false, "Airship not patched beacause no new parameter was given" );
 		
 		try {
 			
@@ -136,14 +136,14 @@ public class PatchAirshipCommand implements Callable<String> {
 			
 			airshipDatabase.add(airship, user);
 			
-			return "Airship successfully patched";
+			return new CompletionStatus( true, "Airship successfully patched");
 			
 		} catch (DatabaseException e) {
-			return "Airship does not exist in the database";
+			return new CompletionStatus( false, "Airship does not exist in the database" );
 		}
 	}
 	
-	// Private Auxiliar Methods
+	// Private Methods
 	
 	/**
 	 * Method that will verify if the given parameters to patch the airship's original fields are
@@ -192,7 +192,7 @@ public class PatchAirshipCommand implements Callable<String> {
 	 *            - The airship we want to patch.
 	 * 
 	 * @throws InvalidArgumentException
-	 *             If any of the given values for the airship's proprerties is invalid.
+	 *             If any of the given values for the airship's properties is invalid.
 	 */
 	private void chooseCorrectMethod(Airship originalAirship) throws InvalidArgumentException {
 	
@@ -225,7 +225,7 @@ public class PatchAirshipCommand implements Callable<String> {
 	 *            - The airship we want to patch
 	 * 
 	 * @throws InvalidArgumentException
-	 *             If any of the given values for the airship's proprerties is invalid.
+	 *             If any of the given values for the airship's properties is invalid.
 	 */
 	@SuppressWarnings ("unused")
 	private void createCivilAirship(CivilAirship originalAirship) throws InvalidArgumentException {
@@ -241,7 +241,7 @@ public class PatchAirshipCommand implements Callable<String> {
 	 *            - The airship we want to patch
 	 * 
 	 * @throws InvalidArgumentException
-	 *             If any of the given values for the airship's proprerties is invalid.
+	 *             If any of the given values for the airship's properties is invalid.
 	 */
 	@SuppressWarnings ("unused")
 	private void createMilitaryAirship(MilitaryAirship originalAirship)

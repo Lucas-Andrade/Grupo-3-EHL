@@ -1,11 +1,11 @@
 package test.java.domain.commands.postcommands;
 
 
+import static org.junit.Assert.assertEquals;
 import main.java.domain.commands.postcommands.PostUserCommand;
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,7 +31,7 @@ public class PostUserCommand_Tests {
     
     @Before
     public void createUserAndUserDatabaseWhereToPostTheNewUsers() throws InvalidArgumentException {
-        
+    
         // Arrange
         usersDatabase = new InMemoryUsersDatabase( "Users Database" );
         
@@ -43,49 +43,47 @@ public class PostUserCommand_Tests {
     @Test
     public void shouldPostAUserWithTheCorrectParametersIncludingFullNameInTheGivenDatabase()
         throws Exception {
-        
+    
         // Act
         postUser =
                 new PostUserCommand( "Pedro", "pass2", "@pedro", "Pedro Antunes", usersDatabase,
                                      user1 );
-        String testedInformation = postUser.call();
+        String testedInformation = postUser.call().getMessage();
         
         // Assert
-        Assert.assertEquals( testedInformation,
-                             "New user successfully added: "
-                                     + usersDatabase.getElementByIdentification( "Pedro" )
-                                                    .toString() );
+        assertEquals( "New user successfully added: "
+                              + usersDatabase.getElementByIdentification( "Pedro" ).toString(),
+                      testedInformation );
     }
     
     @Test
     public void shouldPostAUserWithTheCorrectParametersGivenANullFullNameInTheGivenDatabase()
         throws Exception {
-        
+    
         // Act
         postUser = new PostUserCommand( "Pedro", "pass2", "@pedro", null, usersDatabase, user1 );
-        String testedInformation = postUser.call();
+        String testedInformation = postUser.call().getMessage();
         
         // Assert
-        Assert.assertEquals( testedInformation,
-                             "New user successfully added: "
-                                     + usersDatabase.getElementByIdentification( "Pedro" )
-                                                    .toString() );
+        assertEquals( "New user successfully added: "
+                              + usersDatabase.getElementByIdentification( "Pedro" ).toString(),
+                      testedInformation );
     }
     
     @Test
     public void shouldNotPostAUserWithTheSameEmailHasAnotherExistingUserInTheDatabase()
         throws Exception {
-        
+    
         // Act
         postUser = new PostUserCommand( "Pedro", "pass2", "@pedro", null, usersDatabase, user1 );
         postUser.call();
         
         postUser = new PostUserCommand( "Daniel", "pass", "@pedro", null, usersDatabase, user1 );
-        String testedInformation = postUser.call();
+        String testedInformation = postUser.call().getMessage();
         
         // Assert
-        Assert.assertEquals( testedInformation,
-                             "User not added. Either the username «Daniel» or\nthe email «@pedro» already exist in Users Database" );
+        assertEquals( "User not added. Either the username «Daniel» or\nthe email «@pedro» already exist in Users Database",
+                      testedInformation );
     }
     
     // Test Exceptions
@@ -93,7 +91,7 @@ public class PostUserCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullDatabase()
         throws InvalidArgumentException {
-        
+    
         postUser = new PostUserCommand( "Pedro", "pass2", "@pedro", "Pedro Antunes", null, user1 );
     }
 }

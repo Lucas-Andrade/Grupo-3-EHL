@@ -52,7 +52,7 @@ public class HelpCommandsFactory extends CommandFactory< OptionsList > {
      * @return A command of type {@link HelpCommand}.
      */
     @Override
-    public final Callable< OptionsList > internalNewCommand( Map< String, String > parametersMap ) {
+    protected final Callable< OptionsList > internalNewCommand( Map< String, String > parametersMap ) {
         
         try {
             return new HelpCommand( commandsDescription );

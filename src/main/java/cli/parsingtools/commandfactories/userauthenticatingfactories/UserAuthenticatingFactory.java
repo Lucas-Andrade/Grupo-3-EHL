@@ -4,6 +4,7 @@ package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
+import main.java.cli.parsingtools.commandfactories.CommandFactory;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.AuthenticateUserCommand;
 import main.java.domain.model.Database;
@@ -32,7 +33,7 @@ import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseExce
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public abstract class UserAuthenticatingFactory< E extends Element, R > extends
-        ParsingCommand< R > {
+        CommandFactory< R > {
     
     
     

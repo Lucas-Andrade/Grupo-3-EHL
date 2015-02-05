@@ -104,6 +104,12 @@ public class App {
     private static final Map< String, String > commandsDescription =
             new HashMap< String, String >();
     
+    /**
+     * Unused private constructor
+     */
+    private App(){}
+    
+    
     // STATIC CONSTRUCTOR
     
     static {

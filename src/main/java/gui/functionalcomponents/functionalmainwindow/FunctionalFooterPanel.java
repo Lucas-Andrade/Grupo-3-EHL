@@ -3,7 +3,7 @@ package main.java.gui.functionalcomponents.functionalmainwindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
 import main.java.domain.commands.getcommands.GetAllTransgressingAirshipsCommand;
 import main.java.domain.model.Database;
@@ -56,9 +56,9 @@ public class FunctionalFooterPanel {
     private User user;
     
     /**
-     * {@code errorLabel} - The label where the error messages will be displayed.
+     * {@code errorTextArea} - The text area where the error messages will be displayed.
      */
-    private JLabel errorLabel;
+    private JTextArea errorTextArea;
     
     // Constructor
     
@@ -76,19 +76,19 @@ public class FunctionalFooterPanel {
      *            - The airships database.
      * @param user
      *            - The user who is currently logged in.
-     * @param errorLabel
-     *            - The label where the error messages will be displayed.
+     * @param errorTextArea
+     *            - The text area where the error messages will be displayed.
      */
     public FunctionalFooterPanel( JFooterPanelForMainWindow footerPanel,
                                   JBodyPanelForMainWindow bodyPanel,
-                                  Database< Airship > airshipsDatabase, User user, JLabel errorLabel ) {
+                                  Database< Airship > airshipsDatabase, User user, JTextArea errorTextArea ) {
         
         this.footerPanel = footerPanel;
         this.bodyPanel = bodyPanel;
         
         this.airshipsDatabase = airshipsDatabase;
         this.user = user;
-        this.errorLabel = errorLabel;
+        this.errorTextArea = errorTextArea;
         
         addGetAllAirshipsButtonAction();
         addGetNearestAirshipsButtonAction();
@@ -120,7 +120,7 @@ public class FunctionalFooterPanel {
             @Override
             public void actionPerformed( ActionEvent e ) {
                 
-                new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorLabel ) {
+                new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorTextArea ) {
                     
                     @Override
                     protected Iterable< Airship > doInBackground() throws Exception {
@@ -172,7 +172,7 @@ public class FunctionalFooterPanel {
             
             @Override
             public void actionPerformed( ActionEvent e ) {
-                new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorLabel ) {
+                new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorTextArea ) {
                     
                     @Override
                     protected Iterable< Airship > doInBackground() throws Exception {

@@ -78,6 +78,12 @@ public class ToTranslatableConverter {
     
     
     // CLASS CONSTRUCTOR
+    
+    /**
+     * Unused private constructor
+     */
+    private ToTranslatableConverter(){}
+    
     /**
      * Initializes the {@link #CONVERSORSbyTYPE} field.
      */

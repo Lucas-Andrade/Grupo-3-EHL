@@ -96,7 +96,7 @@ public class FunctionalMainWindow {
                                                                          functionalMainWindow.getBodyPanel(),
                                                                          airshipsDatabase,
                                                                          user,
-                                                                         functionalMainWindow.getErrorLabel() )).getFooterPanel() );
+                                                                         functionalMainWindow.getErrorJTextArea() )).getFooterPanel() );
     }
     
     /**

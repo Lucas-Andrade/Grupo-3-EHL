@@ -31,6 +31,11 @@ import main.java.cli.parsingtools.commandfactories.ParsingCommand;
  */
 public final class CLIStringsDictionary {
     
+    /**
+     * Unused private constructor
+     */
+    private CLIStringsDictionary(){}
+    
     // AIRSHIP RELATED. PLACEHOLDERS NAMES
     
     public static final String AIRSHIP_TYPE = "type";

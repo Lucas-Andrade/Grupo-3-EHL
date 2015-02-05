@@ -67,7 +67,7 @@ public class FunctionalLoginWindow extends FunctionalWindow< User > {
     @Override
     protected FunctionalWindowSwingWorker< User > getSwingWorker() {
         
-        return new FunctionalWindowSwingWorker< User >( functionalWindow.getErrorLabel() ) {
+        return new FunctionalWindowSwingWorker< User >( functionalWindow.getErrorJTextArea() ) {
             
             /**
              * String representation of the parameters to use in the commands and that are obtained

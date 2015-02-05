@@ -56,6 +56,9 @@ public class GetAllTransgressingAirshipsCommandsFactory extends
     /**
      * Returns a command of type {@link GetAllTransgressingAirshipsCommand}.
      * 
+     * @param parametersMap
+     *            The container of the parameters required to create the command.
+     * 
      * @return A command of type {@link GetAllTransgressingAirshipsCommand}.
      */
     @Override

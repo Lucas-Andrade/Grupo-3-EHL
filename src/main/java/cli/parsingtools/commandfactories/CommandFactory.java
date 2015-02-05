@@ -11,12 +11,11 @@ import main.java.utils.exceptions.WrongLoginPasswordException;
 import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
-/**TODO
+/**
+ * TODO
  * 
- * Class whose subclasses' instances are commands factories. A commands factory interprets
- * string-parameters needed to create commands and creates the commands (through method
- * {@link #newCommand(Map)}). It also provides a short description of the commands produced (through
- * method {@link #getCommandsDescription()}).
+ * Class whose subclasses' instances factories that produce commands. It also provides a short
+ * description of the commands produced (through method {@link #getCommandsDescription()}).
  * <p>
  * Subclasses must implement:
  * <ul>
@@ -32,9 +31,9 @@ import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseExce
  * Map contains the parameters returned by {@link #getRequiredParametersNames()}
  * </p>
  * 
- * @param <R>
- *            The {@link Callable} instance type of the command returned by the
- *            {@link #newCommand(Map)} method.
+ * @param <T>
+ *            The type of the results returned by the method {@link Callable#call()} of the commands
+ *            produced by this {@link CommandFactory}.
  * 
  * @see Callable
  * @see Map
@@ -46,6 +45,9 @@ import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseExce
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public abstract class CommandFactory< T > {
+    
+    
+    // PUBLIC METHOD
     
     /**
      * Method responsible for producing a command. It starts by performing validating the received
@@ -78,28 +80,29 @@ public abstract class CommandFactory< T > {
      * @throws InvalidParameterValueException
      *             If the value received in the parameters map for a required parameter is invalid.
      */
-    public final Callable< T > newCommand(Map< String, String > parametersMap)
+    public final Callable< T > newCommand( Map< String, String > parametersMap )
         throws NoSuchElementInDatabaseException, InternalErrorException, InvalidArgumentException,
         MissingRequiredParameterException, InvalidParameterValueException,
         WrongLoginPasswordException {
+        /* Uses TEMPLATE METHOD design pattern */
         
-        checkIfAllRequiredParametersAreInTheParametersMap(parametersMap);
-        
-        return internalNewCommand(parametersMap);
+        checkIfAllRequiredParametersAreInTheParametersMap( parametersMap );        
+        return internalNewCommand( parametersMap );
     }
     
-    //ABSTRACT METHOD
+    
+    
+    // ABSTRACT METHODS - to be implemented by concrete factories
     
     /**
-     * Returns a short description of the command produced by this factory.
+     * Returns a short description of the commands produced by this factory.
      * 
-     * @return a short description of the command produced by this factory.
+     * @return a short description of the commands produced by this factory.
      */
     public abstract String getCommandsDescription();
     
     /**
-     * Method responsible for produces a command and returns it to the {@link #newInstance()}
-     * method.
+     * Produces a command and returns it to the {@link #newInstance()} method.
      * 
      * @throws InvalidParameterValueException
      *             If the value received in the parameters map for a required parameter invalid
@@ -118,11 +121,11 @@ public abstract class CommandFactory< T > {
      * @throws InvalidArgumentException
      *             If the value received in the parameters map for a required parameter is invalid.
      */
-    protected abstract Callable< T > internalNewCommand(Map< String, String > parametersMap)
+    protected abstract Callable< T > internalNewCommand( Map< String, String > parametersMap )
         throws InvalidParameterValueException, WrongLoginPasswordException,
         NoSuchElementInDatabaseException, InternalErrorException,
         MissingRequiredParameterException, InvalidArgumentException;
-
+    
     /**
      * Returns an array of {@link String}s with the names of the parameters without whom the
      * {@link #newInstance()} method cannot create a specific {@link Callable} command instance.
@@ -132,15 +135,17 @@ public abstract class CommandFactory< T > {
      */
     protected abstract String[] getRequiredParametersNames();
     
+    
+    
     // AUXILIARY PRIVATE METHOD - used in the newCommand method!
     
     /**
      * Checks whether the required parameters for performing the {@link #newInstance()} method
      * (known through the method {@link #getRequiredParametersNames()}) are contained in the
-     * received {@link Map}. If all required parameters were found in the map or there are no
-     * required parameters, this method returns nothing. If a required parameter is missing, an
-     * exception is thrown indicating in its message the name of the first required parameter not
-     * found.
+     * {@link Map} received in the method {@link #newCommand(Map)}. If all required parameters were
+     * found in the map or there are no required parameters, this method returns nothing. If a
+     * required parameter is missing, an exception is thrown indicating in its message the name of
+     * the first required parameter not found.
      * 
      * @param requiredParameterNames
      *            - The names(that correspond to the {@code parametersMap} keys) of the required
@@ -148,8 +153,9 @@ public abstract class CommandFactory< T > {
      * @throws MissingRequiredParameterException
      *             If a required parameter is missing.
      */
-    private void checkIfAllRequiredParametersAreInTheParametersMap(Map< String, String > parametersMap)
-        throws MissingRequiredParameterException {
+    private void
+            checkIfAllRequiredParametersAreInTheParametersMap( Map< String, String > parametersMap )
+                throws MissingRequiredParameterException {
         
         String[] requiredParameterNames = getRequiredParametersNames();
         if( requiredParameterNames == null )
@@ -160,4 +166,3 @@ public abstract class CommandFactory< T > {
                 throw new MissingRequiredParameterException( name );
     }
 }
-

@@ -160,64 +160,63 @@ public class App {
      */
     private static void commandRegister() {
         
-//        try {
-        
-        // DELETE
-        
-        commandRegist( "DELETE", "/airships/{flightId}",
-                       new DeleteAirshipCommandsFactory( usersDatabase, airshipsDatabase ) );
-        
-        // GET /airships
-        
-        commandRegist( "GET", "/airships",
-                       new GetAllAirshipsInADatabaseCommandsFactory( airshipsDatabase ) );
-        commandRegist( "GET", "/airships/{flightId}",
-                       new GetAirshipByFlightIdCommandsFactory( airshipsDatabase ) );
-        commandRegist( "GET", "/airships/owner/{owner}",
-                       new GetAirshipsOfOwnerCommandsFactory( airshipsDatabase ) );
-        commandRegist( "GET", "/airships/nbPassengers/{nbP}/bellow",
-                       new GetAirshipsWithLessPassengersThanCommandsFactory( airshipsDatabase ) );
-        commandRegist( "GET", "/airships/reports",
-                       new GetAllTransgressingAirshipsCommandsFactory( airshipsDatabase ) );
-        commandRegist( "GET", "/airships/reports/{flightId}",
-                       new CheckIfAirshipIsTransgressingCommandsFactory( airshipsDatabase ) );
-        commandRegist( "GET",
-                       "/airships/find",
-                       new GetTheNearestAirshipsToGeographicPositionCommandsFactory(
-                                                                                     airshipsDatabase ) );
-        // GET /users
-        
-        commandRegist( "GET", "/users", new GetAllUsersInADatabaseCommandsFactory( usersDatabase ) );
-        commandRegist( "GET", "/users/{username}",
-                       new GetUserByUsernameCommandsFactory( usersDatabase ) );
-        
-        // OPTION
-        
-        commandRegist( "OPTION", "/", new HelpCommandsFactory( commandsDescription ) );
-        
-        // PATCH
-        
-        commandRegist( "PATCH", "/users/{username}",
-                       new PatchUserPasswordCommandsFactory( usersDatabase ) );
-        
-        commandRegist( "PATCH", "/airships/{flightId}",
-                       new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase ) );
-        
-        // POST
-        
-        commandRegist( "POST", "/users", new PostUserCommandsFactory( usersDatabase, usersDatabase ) );
-        
-        commandRegist( "POST", "/airships/{type}",
-                       new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ) );
-        
-//        }
-//        catch( InvalidRegisterException e ) {
-//            System.out.println( e.getMessage() );
-//        }
-//        catch( InvalidArgumentException e ) {
-//            System.out.println( e.getMessage() );
-//            // never happens cause usersDatabase and airshipsDatabase are not null
-//        }
+        try {
+            
+            // DELETE
+            
+            commandRegist( "DELETE", "/airships/{flightId}",
+                           new DeleteAirshipCommandsFactory( usersDatabase, airshipsDatabase ) );
+            
+            // GET /airships
+            
+            commandRegist( "GET", "/airships",
+                           new GetAllAirshipsInADatabaseCommandsFactory( airshipsDatabase ) );
+            commandRegist( "GET", "/airships/{flightId}",
+                           new GetAirshipByFlightIdCommandsFactory( airshipsDatabase ) );
+            commandRegist( "GET", "/airships/owner/{owner}",
+                           new GetAirshipsOfOwnerCommandsFactory( airshipsDatabase ) );
+            commandRegist( "GET", "/airships/nbPassengers/{nbP}/bellow",
+                           new GetAirshipsWithLessPassengersThanCommandsFactory( airshipsDatabase ) );
+            commandRegist( "GET", "/airships/reports",
+                           new GetAllTransgressingAirshipsCommandsFactory( airshipsDatabase ) );
+            commandRegist( "GET", "/airships/reports/{flightId}",
+                           new CheckIfAirshipIsTransgressingCommandsFactory( airshipsDatabase ) );
+            commandRegist( "GET",
+                           "/airships/find",
+                           new GetTheNearestAirshipsToGeographicPositionCommandsFactory(
+                                                                                         airshipsDatabase ) );
+            // GET /users
+            
+            commandRegist( "GET", "/users",
+                           new GetAllUsersInADatabaseCommandsFactory( usersDatabase ) );
+            commandRegist( "GET", "/users/{username}",
+                           new GetUserByUsernameCommandsFactory( usersDatabase ) );
+            
+            // OPTION
+            
+            commandRegist( "OPTION", "/", new HelpCommandsFactory( commandsDescription ) );
+            
+            // PATCH
+            
+            commandRegist( "PATCH", "/users/{username}",
+                           new PatchUserPasswordCommandsFactory( usersDatabase ) );
+            
+            commandRegist( "PATCH", "/airships/{flightId}",
+                           new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase ) );
+            
+            // POST
+            
+            commandRegist( "POST", "/users", new PostUserCommandsFactory( usersDatabase,
+                                                                          usersDatabase ) );
+            
+            commandRegist( "POST", "/airships/{type}",
+                           new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ) );
+            
+        }
+        catch( InvalidArgumentException e ) {
+            System.out.println( e.getMessage() );
+            // never happens cause usersDatabase and airshipsDatabase are not null
+        }
     }
     
     private static void commandRegist( String method, String path,

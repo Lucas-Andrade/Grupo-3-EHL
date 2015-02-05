@@ -11,10 +11,7 @@ import main.java.domain.model.airships.Airship;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
-import main.java.utils.exceptions.InvalidParameterValueException;
 import main.java.utils.exceptions.MissingRequiredParameterException;
-import main.java.utils.exceptions.WrongLoginPasswordException;
-import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
 /**
@@ -68,16 +65,21 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
      * {@code required parameters} using the private auxiliar method
      * {@link #setValuesOfTheParametersMap()}.
      *
+     * @param parametersMap
+     *            The container of the parameters required to create the command.
      * @param userWhoIsPosting
      *            - The user who is posting the other user.
      *
      * @return A {@link PostUserCommand}
+     * @throws MissingRequiredParameterException
+     *             If one parameter is null or the empty string.
      */
     @Override
     protected Callable< String > internalInternalNewInstance( Map< String, String > parametersMap,
-                                                              User userWhoIsPosting ) {
+                                                              User userWhoIsPosting )
+        throws MissingRequiredParameterException {
         
-        return new PostA( parametersMap, userWhoIsPosting ).newCommand();
+        return new PostU_ParsingCommand( parametersMap, userWhoIsPosting ).newCommand();
     }
     
     /**
@@ -92,45 +94,25 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
         return requiredParametersNames;
     }
     
-    // PRIVATE AUXILIAR METHOD - used in the method postsInternalNewInstance()
     
-//    /**
-//     * Sets the value of the user's properties fields with the values received in the parameters
-//     * map.
-//     * <p>
-//     * If this method is called inside {@link #internalNewInstance(Map)} and this one is called
-//     * inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed that the fields
-//     * {@link #username}, {@link #password} and {@link #email} are non-{@code null} after this
-//     * method finishes its job.
-//     * </p>
-//     */
-//    private void setValuesOfTheParametersMap() {
-//        
-//        
-//    }
-    
+    /**
+     * Returns a short description of the command produced by this factory.
+     * 
+     * @return a short description of the command produced by this factory.
+     */
     @Override
     public String getCommandsDescription() {
         
         return "Adds a new user.";
     }
     
-    // TO BE REMOVED - see internalInternalNewInstance
-//    @Override
-//    protected Callable< String > internalNewCommand( Map< String, String > parametersMap )
-//        throws InvalidParameterValueException, WrongLoginPasswordException,
-//        NoSuchElementInDatabaseException, InternalErrorException,
-//        MissingRequiredParameterException, InvalidArgumentException {
-//        // TODO Auto-generated method stub
-//        return null;
-//    }
     
+    // INNER CLASS
     /**
-     * 
-     * 
-     *
+     * Class that extends {@link ParsingCommand}, whose instances will parse the
+     * {@code required parameters} and will create a {@link PostUserCommand}
      */
-    private class PostA extends ParsingCommand< String > {
+    private class PostU_ParsingCommand extends ParsingCommand< String > {
         
         /**
          * The properties of the user to be added.
@@ -142,24 +124,26 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
         private User userWhoIsPosting;
         
         /**
+         * Create the {@code ParsingCommand}
          * 
          * @param parametersMap
+         *            The container of the parameters required to create the command.
          * @param userWhoIsPosting
+         *            - The user who is posting the airship.
          * @throws MissingRequiredParameterException
+         *             If one parameter is null or the empty string.
          */
-        public PostA( Map< String, String > parametersMap, User userWhoIsPosting )
+        public PostU_ParsingCommand( Map< String, String > parametersMap, User userWhoIsPosting )
             throws MissingRequiredParameterException {
+            
             super( parametersMap );
             this.userWhoIsPosting = userWhoIsPosting;
             
-            username = getParameterAsString( CLIStringsDictionary.USERNAME );
-            password = getParameterAsString( CLIStringsDictionary.PASSWORD );
-            email = getParameterAsString( CLIStringsDictionary.EMAIL );
-            fullName = getParameterAsString( CLIStringsDictionary.FULLNAME );
+            setParametersFields();
         }
         
         /**
-         * 
+         * @return A command of type {@link PostUserCommand}
          */
         @Override
         public Callable< String > newCommand() {
@@ -173,6 +157,20 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
                                                   "UNEXPECTED EXCEPTION IN PostUserCommandsFactory!" );
                 // never happens cause databaseWhereToPost is not null
             }
+        }
+        
+        /**
+         * Set the username, password and email, and fullname fields needed for
+         * {@code PostUserCommand} command.
+         * 
+         * @throws MissingRequiredParameterException
+         *             If one parameter is null or the empty string.
+         */
+        private void setParametersFields() throws MissingRequiredParameterException {
+            username = getParameterAsString( CLIStringsDictionary.USERNAME );
+            password = getParameterAsString( CLIStringsDictionary.PASSWORD );
+            email = getParameterAsString( CLIStringsDictionary.EMAIL );
+            fullName = getParameterAsString( CLIStringsDictionary.FULLNAME );
         }
         
     }

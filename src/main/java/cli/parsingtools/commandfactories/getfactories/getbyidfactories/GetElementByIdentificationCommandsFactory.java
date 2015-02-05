@@ -82,6 +82,9 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
      * Returns a command of type {@link GetElementFromADatabaseByIdCommand} after produced a
      * {@link ParsingCommand} that will parse necessary {@code required parameters}.
      * 
+     * @param parametersMap
+     *            The container of the parameters required to create the command.
+     * 
      * @return A command of type {@link GetElementFromADatabaseByIdCommand}.
      * @throws MissingRequiredParameterException
      *             If any of the required parameters is missing.
@@ -105,7 +108,7 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
         return requiredParametersNames;
     }
     
-    //INNER CLASS
+    // INNER CLASS
     /**
      * Class that extends {@link ParsingCommand}, whose instances will parse the
      * {@code required parameters} and will create a {@link GetElementFromADatabaseByIdCommand}
@@ -121,6 +124,8 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
          * Create the {@code ParsingCommand}
          * 
          * @param parametersMap
+         *            The container of the parameters required to create the command.
+         * 
          * @throws MissingRequiredParameterException
          *             If any of the required parameters is missing.
          */

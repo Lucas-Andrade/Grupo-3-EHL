@@ -1,14 +1,18 @@
 package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories;
 
 
+import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
+import main.java.cli.parsingtools.commandfactories.CommandFactory;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.patchcommands.PatchUserPasswordCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.users.User;
+import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.MissingRequiredParameterException;
 
 
 /**
@@ -20,40 +24,14 @@ import main.java.utils.exceptions.InvalidArgumentException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PatchUserPasswordCommandsFactory extends ParsingCommand< String > {
-    
-    
+public class PatchUserPasswordCommandsFactory extends CommandFactory< String > {
     
     // INSTANCE FIELDS
-    
-    /**
-     * {@code requiredParametersNames} - The array of strings with the names of the parameters
-     * needed to produce the command.
-     */
-    private String[] requiredParametersNames;
     
     /**
      * {@code usersDatabase} - The users database that contains the user.
      */
     private final Database< User > usersDatabase;
-    
-    /**
-     * {@code username} - The user's username.
-     */
-    private String username;
-    
-    /**
-     * {@code oldPassword} - The old password needed to confirm if its the rightfull user who's
-     * changing the password.
-     */
-    private String oldPassword;
-    
-    /**
-     * {@code newPawwsord} - The new user password that will be atributed to the user if the command
-     * is successful.
-     */
-    private String newPassword;
-    
     
     
     // CONSTRUCTOR
@@ -70,41 +48,33 @@ public class PatchUserPasswordCommandsFactory extends ParsingCommand< String > {
     public PatchUserPasswordCommandsFactory( Database< User > usersDatabase )
         throws InvalidArgumentException {
         
-        super( "Change An User Password" );
-        
         if( usersDatabase == null )
             throw new InvalidArgumentException(
                                                 "Cannot instantiate post factory with null databases." );
         
         this.usersDatabase = usersDatabase;
-        this.requiredParametersNames =
-                new String[]{ CLIStringsDictionary.USERNAME, CLIStringsDictionary.OLDPASSWORD,
-                             CLIStringsDictionary.NEWPASSWORD };
     }
-    
-    
-    
-    // IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
     
     /**
      * Method responsible for returning a command of the type {@link PatchUserPasswordCommand} after
-     * getting the necessary {@code required parameters} using the private auxiliar methods
-     * {@link #setUsername()}, {@link #setOldPassword()}, {@link #setNewPassword()}.
+     * getting the {@link PatchUP_ParsingCommand}.
+     * 
+     * @param parametersMap
+     *            The container of the parameters required to create the command.
      * 
      * @return A {@link PatchUserPasswordCommand}
-     *
-     * @throws InvalidArgumentException
-     *             If the value received in the parameters map for a required parameter is invalid.
+     * 
+     * @throws MissingRequiredParameterException
+     *             If one parameter is null or the empty string.
      */
     @Override
-    protected Callable< String > internalNewCommand() throws InvalidArgumentException {
+    protected Callable< String > internalNewCommand( Map< String, String > parametersMap )
+        throws MissingRequiredParameterException {
         
-        setUsername();
-        setOldPassword();
-        setNewPassword();
-        
-        return new PatchUserPasswordCommand( usersDatabase, username, oldPassword, newPassword );
+        return new PatchUP_ParsingCommand( parametersMap ).newCommand();
     }
+    
+    
     
     /**
      * Returns an array of strings with name of the parameters needed to produce the command: the
@@ -115,47 +85,93 @@ public class PatchUserPasswordCommandsFactory extends ParsingCommand< String > {
     @Override
     protected String[] getRequiredParametersNames() {
         
-        return requiredParametersNames;
+        return new String[]{ CLIStringsDictionary.USERNAME, CLIStringsDictionary.OLDPASSWORD,
+                            CLIStringsDictionary.NEWPASSWORD };
     }
     
     
-    
-    // PRIVATE AUXILIAR METHODS
     
     /**
-     * Method responsible to set the username field needed to {@code PatchUserPasswordCommands}
-     * command.
+     * Returns a short description of the command produced by this factory.
      * 
-     * This method calls the {@link ParsingCommand#getParameterAsString(String)} where
-     * searches on the Map, with all the parameters, the value of the username.
+     * @return a short description of the command produced by this factory.
      */
-    private void setUsername() {
+    @Override
+    public String getCommandsDescription() {
         
-        username = getParameterAsString( requiredParametersNames[0] );
+        return "Change An User Password";
     }
     
+    // INNER CLASS
     /**
-     * Method responsible to set the OldPassword field needed to {@code PatchUserPasswordCommands}
-     * command.
-     * 
-     * This method calls the {@link ParsingCommand#getParameterAsString(String)} where
-     * searches on the Map, with all the parameters, the value of the OldPassword.
+     * Class that extends {@link ParsingCommand}, whose instances will parse the
+     * {@code required parameters} and will create a {@link PatchUserPasswordCommand}
      */
-    private void setOldPassword() {
+    private class PatchUP_ParsingCommand extends ParsingCommand< String > {
         
-        oldPassword = getParameterAsString( requiredParametersNames[1] );
-    }
-    
-    /**
-     * Method responsible to set the NewPassword field needed to {@code PatchUserPasswordCommands}
-     * command.
-     * 
-     * This method calls the {@link ParsingCommand#getParameterAsString(String)} where
-     * searches on the Map, with all the parameters, the value of the NewPassword.
-     */
-    private void setNewPassword() {
+        /**
+         * The user's username.
+         */
+        private String username;
         
-        newPassword = getParameterAsString( requiredParametersNames[2] );
+        /**
+         * The old password (needed confirmation - {@code see PatchUserPasswordCommand} )
+         */
+        private String oldPassword;
+        
+        /**
+         * The new user password that will be attributed to the user if the command is successful.
+         */
+        private String newPassword;
+        
+        /**
+         * Create the {@code ParsingCommand}
+         * 
+         * @param parametersMap
+         *            The container of the parameters required to create the command.
+         * 
+         * @throws MissingRequiredParameterException
+         *             If one required parameter is null or the empty string.
+         */
+        public PatchUP_ParsingCommand( Map< String, String > parametersMap )
+            throws MissingRequiredParameterException {
+            
+            super( parametersMap );
+            
+            setParametersFields();
+        }
+        
+        
+        /**
+         * @return A command of type {@link PatchUserPasswordCommand}
+         */
+        @Override
+        public Callable< String > newCommand() {
+            
+            try {
+                return new PatchUserPasswordCommand( usersDatabase, username, oldPassword,
+                                                     newPassword );
+            }
+            catch( InvalidArgumentException e ) {
+                throw new InternalErrorException(
+                                                  "UNEXPECTED EXCEPTION IN PostUserCommandsFactory!" );
+                // never happens cause databaseWhereToPost is not null
+            }
+        }
+        
+        
+        /**
+         * Set the username, oldPassword and newPassword fields needed to
+         * {@code PatchUserPasswordCommands} command.
+         * 
+         * @throws MissingRequiredParameterException
+         *             If one parameter is null or the empty string.
+         */
+        private void setParametersFields() throws MissingRequiredParameterException {
+            
+            username = getParameterAsString( CLIStringsDictionary.USERNAME );
+            oldPassword = getParameterAsString( CLIStringsDictionary.OLDPASSWORD );
+            newPassword = getParameterAsString( CLIStringsDictionary.NEWPASSWORD );
+        }
     }
-
 }

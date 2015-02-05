@@ -29,17 +29,10 @@ public class GetAirshipsOfOwnerCommandsFactory extends
     // INSTANCE FIELDS
     
     /**
-     * {@code requiredParametersNames} - The array of strings with the names of the parameters
-     * needed to produce the command.
-     */
-    private final String[] requiredParametersNames;
-    
-    /**
-     * {@code airshipsDatabase} - The database where to search the elements from.
+     * The database where to search the elements from.
      */
     private final Database< Airship > airshipsDatabase;
     
-
     // CONSTRUCTOR
     
     /**
@@ -58,14 +51,13 @@ public class GetAirshipsOfOwnerCommandsFactory extends
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
         
-        this.requiredParametersNames = new String[]{ CLIStringsDictionary.OWNER };
         this.airshipsDatabase = airshipsDatabase;
     }
     
-
+    
     /**
      * Returns a command of type {@link GetAirshipsByOwnerCommand} after getting the necessary
-     * {@code required parameters} using the private auxiliar method
+     * {@code required parameters} using the private method
      * {@link #setOwnersUsernameValueOfTheParametersMap()}.
      * 
      * @return A command of type {@link GetAirshipsByOwnerCommand}.
@@ -99,10 +91,10 @@ public class GetAirshipsOfOwnerCommandsFactory extends
     @Override
     protected String[] getRequiredParametersNames() {
         
-        return requiredParametersNames;
+        return new String[]{ CLIStringsDictionary.OWNER };
     }
-
-    //INNER CLASS
+    
+    // INNER CLASS
     /**
      * Class that extends {@link ParsingCommand}, whose instances will parse the
      * {@code required parameters} and will create a {@link GetAirshipsOfOwnerCommand}
@@ -110,8 +102,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
     private class GetAOO_ParsingCommand extends ParsingCommand< Optional< Iterable< Airship >> > {
         
         /**
-         * {@code ownerUsername} - The username of the user whose airships are to get from
-         * {@link #airshipsDatabase}
+         * The username of the user whose airships are to get from {@link #airshipsDatabase}
          */
         private String ownerUsername;
         
@@ -119,6 +110,8 @@ public class GetAirshipsOfOwnerCommandsFactory extends
          * Create the {@code ParsingCommand}
          * 
          * @param parametersMap
+         *            The container of the parameters required to create the command.
+         * 
          * @throws MissingRequiredParameterException
          *             If any of the required parameters is missing.
          */
@@ -126,7 +119,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
             throws MissingRequiredParameterException {
             
             super( parametersMap );
-            ownerUsername = getParameterAsString( requiredParametersNames[0] );
+            ownerUsername = getParameterAsString( CLIStringsDictionary.OWNER );
         }
         
         /**

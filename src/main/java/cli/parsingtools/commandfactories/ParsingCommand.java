@@ -9,13 +9,12 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
 
 
 /**
- * Class whose subclasses' instances are parsing commands factories, that interprets
- * string-parameters needed to create commands and creates the commands (through method
- * {@link #newCommand(Map)}).
+ * Class whose subclasses' instances interpret string-parameters needed to create commands and
+ * create the commands (through method {@link #newCommand(Map)}).
  * 
  * @param <R>
- *            The {@link Callable} instance type of the command returned by the
- *            {@link #newCommand(Map)} method.
+ *            The type of the results returned by the method {@link Callable#call()} of the commands
+ *            produced by this {@link CommandFactory}.
  * 
  * @see Callable
  * @see Map
@@ -24,17 +23,21 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  */
 public abstract class ParsingCommand< R > {
     
+    
+    // INSTANCE FIELD
     /**
      * {@code parametersMap} - {@link Map} containing all the name-value pairs of parameters
      * received to create and execute a specific command.
      */
     protected Map< String, String > parametersMap;
     
+    // CONSTRUCTOR
     /**
      * Creates a {@code parsing command}, that interprets string-parameters needed to create
      * commands and creates the commands (through method {@link #newCommand(Map)}).
      * 
      * @param parametersMap
+     *            The container of the parameters required to create the command.
      */
     public ParsingCommand( Map< String, String > parametersMap ) {
         this.parametersMap = parametersMap;
@@ -45,8 +48,11 @@ public abstract class ParsingCommand< R > {
      * Returns a {@link Callable}.
      * 
      * @return A {@link Callable}.
+     * @throws MissingRequiredParameterException
+     * @throws InvalidParameterValueException
      */
-    public abstract Callable< R > newCommand();
+    public abstract Callable< R > newCommand()
+        throws MissingRequiredParameterException, InvalidParameterValueException;
     
     // PROTECTED METHODS
     
@@ -65,15 +71,8 @@ public abstract class ParsingCommand< R > {
      */
     protected String getParameterAsString( String parameterName )
         throws MissingRequiredParameterException {
-        try {
-            String parameterValue = parametersMap.get( parameterName );
-            if( parameterValue.equals( "" ) )
-                throw new MissingRequiredParameterException( parameterName );
-            return parameterValue;
-        }
-        catch( NullPointerException e ) {
-            throw new MissingRequiredParameterException( parameterName, e );
-        }
+        
+        return StringUtils.parameterToString( parameterName, parametersMap.get( parameterName ) );
     }
     
     /**

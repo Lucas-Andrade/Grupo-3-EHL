@@ -30,12 +30,6 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
     // INSTANCE FIELDS
     
     /**
-     * {@code requiredParametersNames} - The array of strings with the names of the parameters
-     * needed to produce the command.
-     */
-    private final String[] requiredParametersNames;
-    
-    /**
      * {@code airshipsDatabase} - The database where to search the elements from.
      */
     private final Database< Airship > airshipsDatabase;
@@ -58,8 +52,6 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
         
-        this.requiredParametersNames =
-                new String[]{ CLIStringsDictionary.NUMBEROFPASSENGERS_UPPERLIMIT };
         this.airshipsDatabase = airshipsDatabase;
     }
     
@@ -72,12 +64,12 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
      * 
      * @return A command of type {@link GetAirshipsWithLessPassengersThanCommand}.
      * 
+     * @param parametersMap
+     *            The container of the parameters required to create the command.
+     * 
      * @throws InvalidParameterValueException
      *             If the value received to be interpreted as the maximum number of passengers is
      *             not convertible to integer.
-     * @throws InvalidArgumentException
-     *             If the {@code database} is null or the {@code maximumNumberOfPassengers} is less
-     *             than 0.
      * @throws MissingRequiredParameterException
      *             If {@link #parametersMap} does not contain a parameter with name {@code name}
      */
@@ -98,9 +90,9 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
     @Override
     protected String[] getRequiredParametersNames() {
         
-        return requiredParametersNames;
+        return new String[]{ CLIStringsDictionary.NUMBEROFPASSENGERS_UPPERLIMIT };
     }
-
+    
     /**
      * Returns a short description of the command produced by this factory.
      * 
@@ -110,7 +102,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
     public String getCommandsDescription() {
         return "Gets all airships that are transgressing their air corridors.";
     }
-
+    
     // INNER CLASS
     /**
      * Class that extends {@link ParsingCommand}, whose instances will parse the
@@ -128,6 +120,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
          * Create the {@code ParsingCommand}
          * 
          * @param parametersMap
+         *            The container of the parameters required to create the command.
          * 
          * @throws InvalidParameterValueException
          *             If the value received to be interpreted as the maximum number of passengers
@@ -137,8 +130,10 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
          */
         public GetAWLPT_ParsingCommand( Map< String, String > parametersMap )
             throws InvalidParameterValueException, MissingRequiredParameterException {
+            
             super( parametersMap );
-            maximumNumberOfPassengers = getParameterAsInt( requiredParametersNames[0] );
+            maximumNumberOfPassengers =
+                    getParameterAsInt( CLIStringsDictionary.NUMBEROFPASSENGERS_UPPERLIMIT );
         }
         
         /**

@@ -58,10 +58,14 @@ public abstract class GetAllElementsInADatabaseCommandsFactory< E extends Elemen
     /**
      * Returns a command of type {@link GetAllElementsInADatabaseCommand}.
      * 
+     * @param parametersMap
+     *            The container of the parameters required to create the command.
+     * 
      * @return A command of type {@link GetAllElementsInADatabaseCommand}.
      */
     @Override
-    protected Callable< Optional< Iterable< E >>> internalNewCommand(Map< String, String > parametersMap) {
+    protected Callable< Optional< Iterable< E >>>
+            internalNewCommand( Map< String, String > parametersMap ) {
         
         try {
             return new GetAllElementsInADatabaseCommand< E >( database );

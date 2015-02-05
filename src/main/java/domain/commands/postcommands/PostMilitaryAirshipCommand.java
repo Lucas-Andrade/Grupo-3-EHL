@@ -2,6 +2,7 @@ package main.java.domain.commands.postcommands;
 
 
 import java.util.concurrent.Callable;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.MilitaryAirship;
@@ -16,7 +17,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PostMilitaryAirshipCommand implements Callable< String > {
+public class PostMilitaryAirshipCommand implements Callable< CompletionStatus > {
     
     // INSTANCE FIELDS
     
@@ -93,16 +94,14 @@ public class PostMilitaryAirshipCommand implements Callable< String > {
      *             If the value given for some property is invalid.
      */
     @Override
-    public String call() throws Exception {
+    public CompletionStatus call() throws Exception {
         
         Airship theMilitaryAirship =
                 new MilitaryAirship( latitude, longitude, altitude, maxAltitude, minAltitude,
                                      hasArmours );
         
-        String flightId = theMilitaryAirship.getIdentification();
-        
         databaseWhereToPost.add( theMilitaryAirship, userWhoIsPosting );
         
-        return "Flight Id: " + flightId;
+        return new CompletionStatus( true, "Flight Id: " + theMilitaryAirship.getIdentification() );
     }
 }

@@ -2,6 +2,7 @@ package main.java.domain.commands.postcommands;
 
 
 import java.util.concurrent.Callable;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
@@ -16,28 +17,10 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PostCivilAirshipCommand implements Callable< String > {
+public class PostCivilAirshipCommand extends PostAirshipCommand {
     
     // INSTANCE FIELDS
     
-    /**
-     * The users' database that stores the user who's posting the airship.
-     */
-    private User userWhoIsPosting;
-    
-    /**
-     * The database where to post the new civil airship.
-     */
-    private Database< Airship > databaseWhereToPost;
-    
-    /**
-     * The properties of the airship to be created and added to the airships database.
-     */
-    private double latitude;
-    private double longitude;
-    private double altitude;
-    private double minAltitude;
-    private double maxAltitude;
     private int numberOfPassengers;
     
     // CONSTRUCTOR
@@ -65,8 +48,15 @@ public class PostCivilAirshipCommand implements Callable< String > {
                                     Database< Airship > airshipsDatabase, User userWhoIsPosting )
         throws InvalidArgumentException {
         
+        super( latitude, longitude, altitude, maxAltitude, minAltitude, airshipsDatabase,
+               userWhoIsPosting );
+        
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
+        
+        if( userWhoIsPosting == null )
+            throw new InvalidArgumentException(
+                                                "Cannot instantiate command with null userWhoIsPosting." );
         
         this.userWhoIsPosting = userWhoIsPosting;
         this.databaseWhereToPost = airshipsDatabase;
@@ -86,24 +76,23 @@ public class PostCivilAirshipCommand implements Callable< String > {
      * 
      * This method will always be successfull (if the command is call the airship is always
      * successfully added to the database) unless some of the parameters are missing, in which case
-     * the command contructor will throw an exception!
+     * the command constructor will throw an exception!
      * 
      * @return The airship's flight id if the airship was successfully posted;
+     * @throws InvalidArgumentException
      * 
      * @throws Exception
      *             If the value given for some property is invalid.
      */
     @Override
-    public String call() throws Exception {
+    public CompletionStatus call() throws InvalidArgumentException {
         
         Airship theCivilAirship =
                 new CivilAirship( latitude, longitude, altitude, maxAltitude, minAltitude,
                                   numberOfPassengers );
         
-        String flightId = theCivilAirship.getIdentification();
-        
         databaseWhereToPost.add( theCivilAirship, userWhoIsPosting );
         
-        return "Flight Id: " + flightId;
+        return new CompletionStatus( true, "Flight Id: " + theCivilAirship.getIdentification() );
     }
 }

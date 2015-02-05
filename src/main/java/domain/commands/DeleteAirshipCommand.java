@@ -18,7 +18,7 @@ import main.java.utils.exceptions.databaseexceptions.DatabaseException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class DeleteAirshipCommand implements Callable< String > {
+public class DeleteAirshipCommand implements Callable< CompletionStatus > {
     
     /**
      * The database that contains the airship we want to delete.
@@ -63,18 +63,18 @@ public class DeleteAirshipCommand implements Callable< String > {
      *             - If performing a forbidden operation in a database.
      */
     @Override
-    public String call() throws DatabaseException {
+    public CompletionStatus call() throws DatabaseException {
         
         try {
             if( airshipDatabase.removeByIdentification( identification ) )
-                return "Airship successfully removed";
+                return new CompletionStatus( true, "Airship successfully removed");
         }
         catch( InvalidArgumentException e ) {
             throw new InternalErrorException( "UNEXPECTED EXCEPTION IN DeleteAirshipCommand!", e );
             // never happens because identification is non null
         }
         
-        return "Airship doesn't exist in the database";
+        return new CompletionStatus( false, "Airship doesn't exist in the database");
     }
     
 }

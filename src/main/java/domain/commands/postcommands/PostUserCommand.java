@@ -2,6 +2,7 @@ package main.java.domain.commands.postcommands;
 
 
 import java.util.concurrent.Callable;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.model.Database;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
@@ -14,7 +15,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PostUserCommand implements Callable< String > {
+public class PostUserCommand implements Callable< CompletionStatus > {
     
     // INSTANCE FIELDS
     
@@ -82,7 +83,7 @@ public class PostUserCommand implements Callable< String > {
      *             invalid.
      */
     @Override
-    public String call() throws Exception {
+    public CompletionStatus call() throws Exception {
         
         User theUser =
                 (fullName != null)
@@ -90,13 +91,13 @@ public class PostUserCommand implements Callable< String > {
                                   : new User( username, password, email );
         
         if( databaseWhereToPost.add( theUser, userWhoIsPosting ) )
-            return "New user successfully added: " + theUser.toString();
+            return new CompletionStatus( true, "New user successfully added: " + theUser.toString() );
         
-        return new StringBuilder( "User not added. Either the username «" ).append( username )
+        return new CompletionStatus( false, new StringBuilder( "User not added. Either the username «" ).append( username )
                                                                            .append( "» or\nthe email «" )
                                                                            .append( email )
                                                                            .append( "» already exist in " )
                                                                            .append( databaseWhereToPost.getDatabaseName() )
-                                                                           .toString();
+                                                                           .toString());
     }
 }

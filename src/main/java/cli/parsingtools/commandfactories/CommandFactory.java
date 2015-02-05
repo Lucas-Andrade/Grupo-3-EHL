@@ -3,7 +3,6 @@ package main.java.cli.parsingtools.commandfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
 import main.java.utils.exceptions.InvalidParameterValueException;
 import main.java.utils.exceptions.MissingRequiredParameterException;
@@ -12,23 +11,25 @@ import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseExce
 
 
 /**
- * TODO
- * 
- * Class whose subclasses' instances factories that produce commands. It also provides a short
- * description of the commands produced (through method {@link #getCommandsDescription()}).
+ * Abstract class whose subclasses' instances are factories that produce commands. Commands are
+ * instances of {@link Callable}.
  * <p>
- * Subclasses must implement:
+ * Method {@link #newCommand(Map)} receives a {@code Map<String,String>}, which is supposed to
+ * contain the parameters needed to create the command: each map-entry represents a parameter, the
+ * key is the parameter's name and the value is the parameter's value. This method confirms if the
+ * Map contains all the parameters whose names are returned by the method
+ * {@link #getRequiredParametersNames()} and then calls the method {@link #internalNewCommand(Map)}.
+ * </p>
+ * <p>
+ * Each concrete subclass must implement:
  * <ul>
- * <li>a constructor which provides a string description of the commands that the factory produces;</li>
+ * <li>the method {@link #getCommandsDescription()} which provides a short description of the
+ * commands produced by factories of its type;</li>
  * <li>the method {@link #internalNewCommand()} which returns a command;</li>
  * <li>the method {@link #getRequiredParametersNames()} which returns a {@code String[]} whose
  * entries are the names of the parameters without whom the {@link #internalNewCommand()} method
  * cannot create a specific {@link Callable} command instance.</li>
  * </ul>
- * Method {@link #newCommand(Map)} receives a {@code Map<String,String>}, which is supposed to
- * contain the parameters needed to create the command: each map-entry represents a parameter, the
- * key is the parameter's name and the value is the parameter's value. This method confirms if the
- * Map contains the parameters returned by {@link #getRequiredParametersNames()}
  * </p>
  * 
  * @param <T>
@@ -50,43 +51,44 @@ public abstract class CommandFactory< T > {
     // PUBLIC METHOD
     
     /**
-     * Method responsible for producing a command. It starts by performing validating the received
-     * parameters (seeing if there are required parameters missing in the map, interpreting the
-     * parameters into their correct type, authenticating users passwords, etc) and returns a
-     * {@link Callable} instance of the command ready to be executed (called).
+     * Produces a command.
+     * <p>
+     * It starts by validating the received parameters (seeing if there are required parameters
+     * missing in {@link parametersMap}, interpreting the parameters into their correct type,
+     * authenticating users passwords, etc) and returns a {@link Callable} instance ready to be
+     * executed (called).
+     * </p>
      * 
-     * @param parameters
-     *            - The {@link Map} containing all the name-value pairs of parameters needed to
-     *            create the {@link Callable} command instance.
-     * 
-     * @return An instance of {@code Callable<R>}.
+     * @param parametersMap
+     *            The container of the parameters required to create the command.
+     * @return A command.
      * 
      * @throws InvalidArgumentException
-     *             If the {@code parameters} Map is null or if one or more of the parameter received
-     *             is invalid. (e.g. is not convertible to the expected type).
+     *             If {@code parametersMap} is null.
+     * @throws InvalidParameterValueException
+     *             If the value received in the parameters map for a required parameter is invalid
+     *             (e.g. is not convertible to the expected type).
+     * @throws MissingRequiredParameterException
+     *             If the received map does not contain one of the required parameters for
+     *             instantiating the command.
      * @throws NoSuchElementInDatabaseException
      *             For the commands that need a user to be executed if there is no user in
      *             {@link #usersDatabase} whose username is the login name receive in the parameters
      *             map. The message of this exception is <i>«{login name} not found in
      *             {@code usersDatabase.getDatabaseName()}»</i>.
-     * @throws InternalErrorException
-     *             If an internal error occurred (not supposed to happen).
-     * @throws MissingRequiredParameterException
-     *             If the received map does not contain one of the required parameters for
-     *             instantiating the command.
      * @throws WrongLoginPasswordException
-     *             For the commands that need a user to be executed if the login password received
-     *             does not match the user's password corresponding to the login username received.
-     * @throws InvalidParameterValueException
-     *             If the value received in the parameters map for a required parameter is invalid.
+     *             If the login password received does not match the login username's password.
      */
     public final Callable< T > newCommand( Map< String, String > parametersMap )
-        throws NoSuchElementInDatabaseException, InternalErrorException, InvalidArgumentException,
+        throws NoSuchElementInDatabaseException, InvalidArgumentException,
         MissingRequiredParameterException, InvalidParameterValueException,
         WrongLoginPasswordException {
+    
         /* Uses TEMPLATE METHOD design pattern */
         
-        checkIfAllRequiredParametersAreInTheParametersMap( parametersMap );        
+        if( parametersMap == null )
+            throw new InvalidArgumentException( "parametersMap CANNOT BE NULL!" );
+        checkIfAllRequiredParametersAreInTheParametersMap( parametersMap );
         return internalNewCommand( parametersMap );
     }
     
@@ -102,36 +104,44 @@ public abstract class CommandFactory< T > {
     public abstract String getCommandsDescription();
     
     /**
-     * Produces a command and returns it to the {@link #newInstance()} method.
+     * Produces a command.
+     * <p>
+     * It starts by validating the received parameters (interpreting the parameters received in the
+     * {@link parametersMap} into their correct type, authenticating users passwords, etc) and
+     * returns a {@link Callable} instance ready to be executed (called).
+     * </p>
      * 
+     * @param parametersMap
+     *            The container of the parameters required to create the command. *
+     * @return A command.
+     * 
+     * @throws InvalidArgumentException
+     *             If {@code parametersMap} is null.
      * @throws InvalidParameterValueException
-     *             If the value received in the parameters map for a required parameter invalid
+     *             If the value received in the parameters map for a required parameter is invalid
      *             (e.g. is not convertible to the expected type).
-     * @throws WrongLoginPasswordException
-     *             If the login password received does not match the login username's password.
-     * @throws NoSuchElementInDatabaseException
-     *             If there is no user in {@link #usersDatabase} whose username is the login name
-     *             receive in the parameters map. The message of this exception is <i>«{login name}
-     *             not found in {@code usersDatabase.getDatabaseName()}»</i>.
-     * @throws InternalErrorException
-     *             If an internal error that wasn't supposed to happen happened.
      * @throws MissingRequiredParameterException
      *             If the received map does not contain one of the required parameters for
      *             instantiating the command.
-     * @throws InvalidArgumentException
-     *             If the value received in the parameters map for a required parameter is invalid.
+     * @throws NoSuchElementInDatabaseException
+     *             For the commands that need a user to be executed if there is no user in
+     *             {@link #usersDatabase} whose username is the login name receive in the parameters
+     *             map. The message of this exception is <i>«{login name} not found in
+     *             {@code usersDatabase.getDatabaseName()}»</i>.
+     * @throws WrongLoginPasswordException
+     *             If the login password received does not match the login username's password.
      */
     protected abstract Callable< T > internalNewCommand( Map< String, String > parametersMap )
-        throws InvalidParameterValueException, WrongLoginPasswordException,
-        NoSuchElementInDatabaseException, InternalErrorException,
-        MissingRequiredParameterException, InvalidArgumentException;
+        throws MissingRequiredParameterException, InvalidParameterValueException,
+        NoSuchElementInDatabaseException, WrongLoginPasswordException, InvalidArgumentException;
     
     /**
      * Returns an array of {@link String}s with the names of the parameters without whom the
-     * {@link #newInstance()} method cannot create a specific {@link Callable} command instance.
+     * {@link #newCommand(Map)} method cannot create a command. If no parameter is required to
+     * create the command, it is returned {@code null}.
      * 
      * @return An array with the names of the parameters without whose the {@link #newInstance()}
-     *         method cannot create a specific {@link Callable} command instance.
+     *         method cannot create a command.
      */
     protected abstract String[] getRequiredParametersNames();
     
@@ -143,20 +153,20 @@ public abstract class CommandFactory< T > {
      * Checks whether the required parameters for performing the {@link #newInstance()} method
      * (known through the method {@link #getRequiredParametersNames()}) are contained in the
      * {@link Map} received in the method {@link #newCommand(Map)}. If all required parameters were
-     * found in the map or there are no required parameters, this method returns nothing. If a
-     * required parameter is missing, an exception is thrown indicating in its message the name of
+     * found or there are no required parameters, this method returns nothing. If any of the
+     * required parameters is missing, an exception is thrown indicating in its message the name of
      * the first required parameter not found.
      * 
-     * @param requiredParameterNames
-     *            - The names(that correspond to the {@code parametersMap} keys) of the required
-     *            parameters.
+     * @param parametersMap
+     *            The container of the parameters required to create the command.
      * @throws MissingRequiredParameterException
-     *             If a required parameter is missing.
+     *             If the received map does not contain one of the required parameters for
+     *             instantiating the command.
      */
     private void
             checkIfAllRequiredParametersAreInTheParametersMap( Map< String, String > parametersMap )
                 throws MissingRequiredParameterException {
-        
+    
         String[] requiredParameterNames = getRequiredParametersNames();
         if( requiredParameterNames == null )
             return;

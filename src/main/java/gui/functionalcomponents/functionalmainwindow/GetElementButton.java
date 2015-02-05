@@ -2,7 +2,6 @@ package main.java.gui.functionalcomponents.functionalmainwindow;
 
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -10,67 +9,83 @@ import javax.swing.SwingWorker;
 import main.java.domain.commands.getcommands.GetElementFromADatabaseByIdCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.Element;
+import main.java.gui.functionalcomponents.FunctionalWindowSwingWorker;
+import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * Instances of this class are {@link JButton}s, where the {@link ActionListener} call the
- * {@link GetElementFromADatabaseByIdCommand} and write the result in the given {@code textArea}
+ * Instances of this class are {@link JButton buttons} to which an {@link ActionListener} was added
+ * that calls the {@link GetElementFromADatabaseByIdCommand} and displays the result in a given
+ * {@code textArea}
+ *
+ * @param <E>
+ *            - Any class that extends from Element.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
- * @param <E>
  */
 @SuppressWarnings( "serial" )
 public class GetElementButton< E extends Element > extends JButton {
     
     /**
-     * Creates an instances of {@code GetElementButton}, that when activated it calls
-     * {@link GetElementFromADatabaseByIdCommand} and write its info in {@code textArea}.
+     * Public constructor that creates an instance of {@code GetElementButton}.
      * 
      * @param identification
-     *            of the {@link Element}
+     *            - The element's identification.
      * @param textArea
-     *            to write the result
+     *            - The {@link JTextArea} where to display the result.
      * @param database
-     *            of {@link Element}s
+     *            - The element's database.
      */
     public GetElementButton( String identification, JTextArea textArea, Database< E > database ) {
-        addActionListener( new ActionListener() {
-            
-            @Override
-            public void actionPerformed( ActionEvent ae ) {
-                getSwingWorker( identification, textArea, database ).run();
-            }
-        } );
+        
+        this.addActionListener( action -> getSwingWorker( identification, textArea, database ).run() );
     }
     
     /**
-     * Creates a anonymous class of {@link SwingWorker} that will call in
-     * {@link SwingWorker#doInBackground} the command {@link GetElementFromADatabaseByIdCommand},
-     * and in {@link SwingWorker#done} write its info in {@code textArea}.
+     * Creates an anonymous {@link SwingWorker} class, with an override of the
+     * {@link SwingWorker#doInBackground() doInBackground()} method, that will call the
+     * {@link GetElementFromADatabaseByIdCommand} and write the information regarding the obtained
+     * element in given text area, using an implementation of the {@link SwingWorker#done() done()}
+     * method.
      * 
      * @param identification
+     *            - The element's identification.
      * @param textArea
+     *            - The {@link JTextArea} where to display the result.
      * @param database
+     *            - The element's database.
      * 
-     * @return the swingWorker
+     * @return the swingWorker.
      */
     private SwingWorker< E, Void > getSwingWorker( String identification, JTextArea textArea,
                                                    Database< E > database ) {
         return new SwingWorker< E, Void >() {
             
             /**
-             * GET the element
+             * Implementation of the {@link SwingWorker#doInBackground() doInBackground()} method
+             * with the purpose the purpose of executing a
+             * {@link GetElementFromADatabaseByIdCommand} and obtaining its result.
+             * 
+             * @return Returns an element from the given database that matches the given
+             *         identification.
+             * 
+             * @throws InvalidArgumentException
+             *             If any of the given parameters are invalid.
              */
             @Override
             protected E doInBackground() throws Exception {
+                
                 return new GetElementFromADatabaseByIdCommand< E >( database, identification ).call()
                                                                                               .get();
             }
             
             /**
-             * After the {@link SwingWorker#doInBackground} method, it is write the element info on
-             * the {@code textArea}. The method {@link SwingWorker#get()} should not throw an
-             * {@code Exception}
+             * Implementation of the {@link FunctionalWindowSwingWorker#done() done()} method.
+             * 
+             * After the {@link SwingWorker#doInBackground} method, this method will write the
+             * obtained element's info on the {@code textArea}.
+             * 
+             * The method {@link SwingWorker#get()} should not throw an {@code Exception}.
              */
             protected void done() {
                 try {

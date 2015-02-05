@@ -4,6 +4,8 @@ package main.java.cli.outputformatters.totranslatableconverters;
 import java.util.HashMap;
 import java.util.Map;
 import main.java.cli.outputformatters.Translatable;
+import main.java.domain.commands.CompletionStatus;
+import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
 import main.java.domain.model.airships.MilitaryAirship;
 import main.java.domain.model.users.User;
@@ -59,6 +61,7 @@ public class ToTranslatableConverter {
      */
     /* non-generic types */
     private static final String CIVIL_TYPE = CivilAirship.class.getSimpleName(); // CivilAirship
+    private static final String COMPLETIONSTATUS_TYPE = CompletionStatus.class.getSimpleName(); // CompletionStatus
     private static final String MILITARY_TYPE = MilitaryAirship.class.getSimpleName(); // MilitaryAirship
     private static final String OPTIONSLIST_TYPE = OptionsList.class.getSimpleName(); // OptionsList
     private static final String STRING_TYPE = String.class.getSimpleName(); // String
@@ -75,32 +78,35 @@ public class ToTranslatableConverter {
     private static final Map< String, Converter > CONVERSORS_BY_TYPE =
             new HashMap< String, Converter >();
     
-    
-    
     // CLASS CONSTRUCTOR
     
     /**
      * Unused private constructor
      */
-    private ToTranslatableConverter(){}
+    private ToTranslatableConverter() {
+    
+    }
     
     /**
      * Initializes the {@link #CONVERSORSbyTYPE} field.
      */
     static {
         
-        CONVERSORS_BY_TYPE.put( USER_TYPE, new SimpleInstancesToTranslatables.UserConversor() );
-        CONVERSORS_BY_TYPE.put( CIVIL_TYPE, new SimpleInstancesToTranslatables.CivilAirshipConverter() );
+        CONVERSORS_BY_TYPE.put( CIVIL_TYPE,
+                                new SimpleInstancesToTranslatables.CivilAirshipConverter() );
+        CONVERSORS_BY_TYPE.put( COMPLETIONSTATUS_TYPE,
+                                new StringsToTranslatables.CompletionStatusConverter() );
         CONVERSORS_BY_TYPE.put( MILITARY_TYPE,
-                              new SimpleInstancesToTranslatables.MilitaryAirshipConverter() );
-        CONVERSORS_BY_TYPE.put( STRING_TYPE, new StringToTranslatableConverter() );
-        CONVERSORS_BY_TYPE.put( ITERABLE_USER_TYPE,
-                              new IterablesToTranslatables.IterableUserConverter() );
-        CONVERSORS_BY_TYPE.put( ITERABLE_CIVIL_TYPE,
-                              new IterablesToTranslatables.IterableAirshipConverter() );
-        CONVERSORS_BY_TYPE.put( ITERABLE_MILITARY_TYPE,
-                              new IterablesToTranslatables.IterableAirshipConverter() );
+                                new SimpleInstancesToTranslatables.MilitaryAirshipConverter() );
         CONVERSORS_BY_TYPE.put( OPTIONSLIST_TYPE, new MapsToTranslatables.OptionsListConverter() );
+        CONVERSORS_BY_TYPE.put( STRING_TYPE, new StringsToTranslatables.StringConverter() );
+        CONVERSORS_BY_TYPE.put( USER_TYPE, new SimpleInstancesToTranslatables.UserConversor() );
+        CONVERSORS_BY_TYPE.put( ITERABLE_USER_TYPE,
+                                new IterablesToTranslatables.IterableUserConverter() );
+        CONVERSORS_BY_TYPE.put( ITERABLE_CIVIL_TYPE,
+                                new IterablesToTranslatables.IterableAirshipConverter() );
+        CONVERSORS_BY_TYPE.put( ITERABLE_MILITARY_TYPE,
+                                new IterablesToTranslatables.IterableAirshipConverter() );
     }
     
     
@@ -127,7 +133,7 @@ public class ToTranslatableConverter {
      *             If {@code object} is not an instance of the types enumerated above.
      */
     public static Translatable convert( Object object ) throws UnknownTypeException {
-        
+    
         if( object instanceof Optional )
             return getTranslatableOfValueContainedInOptional( (Optional< ? >)object );
         
@@ -154,7 +160,7 @@ public class ToTranslatableConverter {
      */
     private static Translatable getTranslatableOfValueContainedInOptional( Optional< ? > optional )
         throws UnknownTypeException {
-        
+    
         Object obj;
         try {
             
@@ -185,7 +191,7 @@ public class ToTranslatableConverter {
      *             documentation.
      */
     private static Translatable getTranslatableOfValue( Object obj ) throws UnknownTypeException {
-        
+    
         
         if( obj instanceof Iterable ) {
             
@@ -217,7 +223,7 @@ public class ToTranslatableConverter {
      *             {@link #convert(Object)} documentation.
      */
     private static Converter getConversor( String type ) throws UnknownTypeException {
-        
+    
         Converter c = CONVERSORS_BY_TYPE.get( type );
         
         if( c == null )

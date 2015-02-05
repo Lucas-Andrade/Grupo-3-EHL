@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.commands.DeleteAirshipCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -24,7 +25,7 @@ import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseExce
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Airship, String > {
+public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Airship, CompletionStatus > {
     
     
     
@@ -68,7 +69,7 @@ public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Air
      *      main.java.domain.model.users.User)
      */
     @Override
-    protected Callable< String > internalInternalNewCommand( Map< String, String > parametersMap,
+    protected Callable< CompletionStatus > internalInternalNewCommand( Map< String, String > parametersMap,
                                                              User userWhoIsDeleting )
         throws MissingRequiredParameterException, InvalidParameterValueException,
         NoSuchElementInDatabaseException, InvalidArgumentException {
@@ -96,7 +97,7 @@ public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Air
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
-    private class DeleteAirship_ParsingCommand extends ParsingCommand< String > {
+    private class DeleteAirship_ParsingCommand extends ParsingCommand< CompletionStatus > {
         
         /**
          * Creates a new {@link DeleteAirship_ParsingCommand} that creates a command of type
@@ -120,7 +121,7 @@ public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Air
          *             is {@code null} or an empty-string.
          */
         @Override
-        protected Callable< String > newCommand() throws MissingRequiredParameterException {
+        protected Callable< CompletionStatus > newCommand() throws MissingRequiredParameterException {
         
             String flightId = getParameterAsString( CLIStringsDictionary.FLIGHTID );
             try {

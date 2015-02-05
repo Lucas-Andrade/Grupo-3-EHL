@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.commands.postcommands.PostUserCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -22,7 +23,7 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, String > {
+public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, CompletionStatus > {
     
     // INSTANCE FIELDS
     
@@ -75,7 +76,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
      *             If one parameter is null or the empty string.
      */
     @Override
-    protected Callable< String > internalInternalNewCommand( Map< String, String > parametersMap,
+    protected Callable< CompletionStatus > internalInternalNewCommand( Map< String, String > parametersMap,
                                                               User userWhoIsPosting )
         throws MissingRequiredParameterException {
         
@@ -112,7 +113,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
      * Class that extends {@link ParsingCommand}, whose instances will parse the
      * {@code required parameters} and will create a {@link PostUserCommand}
      */
-    private class PostU_ParsingCommand extends ParsingCommand< String > {
+    private class PostU_ParsingCommand extends ParsingCommand< CompletionStatus > {
         
         /**
          * The properties of the user to be added.
@@ -146,7 +147,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
          * @return A command of type {@link PostUserCommand}
          */
         @Override
-        public Callable< String > newCommand() {
+        public Callable< CompletionStatus > newCommand() {
             
             try {
                 return new PostUserCommand( username, password, email, fullName, databaseToChange,

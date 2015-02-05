@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.commands.postcommands.PostCivilAirshipCommand;
 import main.java.domain.commands.postcommands.PostMilitaryAirshipCommand;
 import main.java.domain.model.Database;
@@ -26,7 +27,7 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airship, String > {
+public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airship, CompletionStatus > {
     
     // INSTANCE FIELDS
     
@@ -89,7 +90,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      *             If any of the parameters have an invalid value.
      */
     @Override
-    protected Callable< String > internalInternalNewCommand( Map< String, String > parametersMap,
+    protected Callable< CompletionStatus > internalInternalNewCommand( Map< String, String > parametersMap,
                                                               User userWhoIsPosting )
         throws MissingRequiredParameterException, InvalidParameterValueException {
         
@@ -127,7 +128,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      * {@code required parameters} and will create a {@link PostCivilAirshipCommand} or a
      * {@link PostMilitaryAirshipCommand}
      */
-    private class PostA_ParsingCommand extends ParsingCommand< String > {
+    private class PostA_ParsingCommand extends ParsingCommand< CompletionStatus > {
         
         /**
          * The string representation of the airship's concrete type.
@@ -175,7 +176,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
          */
         @SuppressWarnings( { "unchecked" } )
         @Override
-        public Callable< String > newCommand()
+        public Callable< CompletionStatus > newCommand()
             throws MissingRequiredParameterException, InvalidParameterValueException {
             
             String methodName = "post" + type + "Airship";
@@ -184,7 +185,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
             
             try {
                 Method creatorMethod = c.getDeclaredMethod( methodName, u );
-                return (Callable< String >)creatorMethod.invoke( this, userWhoIsPosting );
+                return (Callable< CompletionStatus >)creatorMethod.invoke( this, userWhoIsPosting );
                 
             }
             catch( InvocationTargetException e ) {
@@ -246,7 +247,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
          *             Should not happen.
          */
         @SuppressWarnings( "unused" )
-        private Callable< String > postCivilAirship( User userWhoIsPosting )
+        private Callable< CompletionStatus > postCivilAirship( User userWhoIsPosting )
             throws MissingRequiredParameterException, InvalidParameterValueException {
             
             if( !parametersMap.containsKey( CLIStringsDictionary.NUMBEROFPASSENGERS ) )
@@ -286,7 +287,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
          *             Should not happen.
          */
         @SuppressWarnings( "unused" )
-        private Callable< String > postMilitaryAirship( User userWhoIsPosting )
+        private Callable< CompletionStatus > postMilitaryAirship( User userWhoIsPosting )
             throws MissingRequiredParameterException, InvalidParameterValueException {
             
             if( !parametersMap.containsKey( CLIStringsDictionary.HASARMOUR ) )

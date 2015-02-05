@@ -3,6 +3,7 @@ package main.java.gui.functionalcomponents.functionaluserwindows;
 
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.commands.postcommands.PostUserCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.users.User;
@@ -22,7 +23,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class FunctionalPostUserWindow extends FunctionalWindow< String > {
+public class FunctionalPostUserWindow extends FunctionalWindow< CompletionStatus > {
     
     /**
      * {@code functionalWindow} - The {@code PatchUserWindow} we want to add functionality to.
@@ -52,7 +53,7 @@ public class FunctionalPostUserWindow extends FunctionalWindow< String > {
      */
     public FunctionalPostUserWindow( PostUserWindow nonFunctionalWindow,
                                      Database< User > usersDatabase, User userWhoIsPosting ) {
-        
+    
         super( nonFunctionalWindow );
         
         this.functionalWindow = nonFunctionalWindow;
@@ -70,9 +71,10 @@ public class FunctionalPostUserWindow extends FunctionalWindow< String > {
      *         methods.
      */
     @Override
-    protected FunctionalWindowSwingWorker< String > getSwingWorker() {
-        
-        return new FunctionalWindowSwingWorker< String >( functionalWindow.getErrorJTextArea() ) {
+    protected FunctionalWindowSwingWorker< CompletionStatus > getSwingWorker() {
+    
+        return new FunctionalWindowSwingWorker< CompletionStatus >(
+                                                                    functionalWindow.getErrorJTextArea() ) {
             
             /**
              * String representation of the parameters to use in the commands and that are obtained
@@ -99,8 +101,8 @@ public class FunctionalPostUserWindow extends FunctionalWindow< String > {
              *             value given for to the PostUserCommand are invalid.
              */
             @Override
-            protected String doInBackground() throws Exception {
-                
+            protected CompletionStatus doInBackground() throws Exception {
+            
                 if( !password.equals( confirmPassword ) )
                     throw new InvalidArgumentException( "The Passwords Don't Match" );
                 
@@ -119,10 +121,18 @@ public class FunctionalPostUserWindow extends FunctionalWindow< String > {
              *            method.
              */
             @Override
-            public void functionalDone( String resultOfDoInBackGround ) throws Exception {
+            public void functionalDone( CompletionStatus resultOfDoInBackGround ) throws Exception {
+            
                 
-                new SuccessWindow( resultOfDoInBackGround );
-                functionalWindow.dispose();
+                if( resultOfDoInBackGround.isCompletionStatus() ) {
+                    new SuccessWindow( resultOfDoInBackGround.getMessage() );
+                }
+                else {
+                    
+                    functionalWindow.getErrorJTextArea()
+                                    .setText( resultOfDoInBackGround.getMessage() );
+                    functionalWindow.dispose();
+                }
             }
         };
     }

@@ -107,6 +107,9 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
+					<includes>
+						<include>src/test/java/**/*Test*.java</include>
+					</includes>
 				</configuration>
 			</plugin>
 

@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.postcommands.PostCivilAirshipCommand;
 import main.java.domain.commands.postcommands.PostMilitaryAirshipCommand;
 import main.java.domain.model.Database;
@@ -19,16 +19,14 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
 
 
 /**
- * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands that
- * post airships. Commands are {@link Callable} instances.
+ * Class whose instances are {@link ParsingCommand factories} that produce commands that post
+ * airships. Commands are {@link Callable} instances.
  * 
  * Extends {@link UserAuthenticatingFactory} of {@link Airship Airships} and {@link String Strings}.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airship, String > {
-    
-    
     
     // INSTANCE FIELDS
     
@@ -37,23 +35,6 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      * needed to produce the command.
      */
     private final String[] requiredParametersNames;
-    
-    /**
-     * {@code type} - The string representation of the airship's concrete type.
-     */
-    private String type;
-    
-    /**
-     * The properties of the airship to be added.
-     */
-    private double latitude;
-    private double longitude;
-    private double altitude;
-    private double minAltitude;
-    private double maxAltitude;
-    private int numberOfPassengers; // not null only if Civil
-    private boolean hasArmour; // not null only if Military
-    
     
     
     // CONSTRUCTOR
@@ -74,7 +55,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
                                        Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
         
-        super( "Adds a new airship.", postingUsersDatabase, airshipsDatabase );
+        super( postingUsersDatabase, airshipsDatabase );
         
         this.requiredParametersNames =
                 new String[]{ CLIStringsDictionary.AIRSHIP_TYPE, CLIStringsDictionary.LATITUDE,
@@ -87,13 +68,15 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
     
     // IMPLEMENTATION OF METHODS INHERITED FROM UserAuthenticatingFactory
     
-    @SuppressWarnings( "unchecked" )
     /**
      * Returns a command of type {@link PostCivilAirshipCommand} or
      * {@link PostMilitaryAirshipCommand} after getting the necessary {@code required parameters}
      * using the private auxiliar method {@link #setValuesOfTheParametersMap()}.
      * 
      * The created command depends on the value of {@link #type} and its created using reflection.
+     * 
+     * @param parametersMap
+     *            The container of the parameters required to create the command.
      * 
      * @param userWhoIsPosting
      *            - The user who is posting the airship.
@@ -104,42 +87,13 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      *             If any of the required parameters is missing.
      * @throws InvalidParameterValueException
      *             If any of the parameters have an invalid value.
-     * @throws InternalErrorException
-     *             Should never happen!
      */
     @Override
-    protected Callable< String > internalInternalNewInstance( User userWhoIsPosting )
+    protected Callable< String > internalInternalNewCommand( Map< String, String > parametersMap,
+                                                              User userWhoIsPosting )
         throws MissingRequiredParameterException, InvalidParameterValueException {
         
-        setValuesOfTheParametersMap();
-        
-        String methodName = "post" + type + "Airship";
-        Class< ? extends PostAirshipCommandsFactory > c = this.getClass();
-        Class< ? extends User > u = userWhoIsPosting.getClass();
-        
-        try {
-            Method creatorMethod = c.getDeclaredMethod( methodName, u );
-            return (Callable< String >)creatorMethod.invoke( this, userWhoIsPosting );
-            
-        }
-        catch( InvocationTargetException e ) {
-            
-            Throwable actualException = e.getTargetException();
-            if( actualException instanceof MissingRequiredParameterException )
-                throw (MissingRequiredParameterException)actualException;
-            if( actualException instanceof InvalidParameterValueException )
-                throw (InvalidParameterValueException)actualException;
-            else throw new InternalErrorException(
-                                                   "UNEXPECTED ERROR IN PostAirshipCommandsFactory! (1)",
-                                                   e );
-            
-        }
-        catch( NoSuchMethodException | SecurityException | IllegalAccessException
-               | IllegalArgumentException e ) {
-            
-            throw new InvalidParameterValueException( CLIStringsDictionary.AIRSHIP_TYPE, type, e );
-        }
-        
+        return new PostA_ParsingCommand( parametersMap, userWhoIsPosting ).newCommand();
     }
     
     /**
@@ -155,115 +109,203 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
         return requiredParametersNames;
     }
     
-    
-    
-    // PRIVATE AUXILIAR METHOD - used in the method postsInternalNewInstance()
-    
     /**
-     * Sets the value of the airship's type and properties fields with the values received in the
-     * parameters map.
-     * <p>
-     * If this method is called inside {@link #internalNewInstance(Map)} and this one is called
-     * inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed that the fields
-     * {@link #type}, {@link #latitude}, {@link #longitude}, {@link #altitude}, {@link #minAltitude}
-     * and {@link #maxAltitude} are non- {@code null} after this method finishes its job.
-     * </p>
+     * Returns a short description of the command produced by this factory.
      * 
-     * @throws InvalidParameterValueException
-     *             If the value received for a certain parameter is not convertible to correct type.
-     * @throws MissingRequiredParameterException
-     *             If any of the required parameters is missing.
+     * @return a short description of the command produced by this factory.
      */
-    private void setValuesOfTheParametersMap()
-        throws InvalidParameterValueException, MissingRequiredParameterException {
+    @Override
+    public String getCommandsDescription() {
         
-        type = getParameterAsString( CLIStringsDictionary.AIRSHIP_TYPE );
-        latitude = getParameterAsDouble( CLIStringsDictionary.LATITUDE );
-        longitude = getParameterAsDouble( CLIStringsDictionary.LONGITUDE );
-        altitude = getParameterAsDouble( CLIStringsDictionary.ALTITUDE );
-        minAltitude = getParameterAsDouble( CLIStringsDictionary.AIRCORRIDOR_MINALTITUDE );
-        maxAltitude = getParameterAsDouble( CLIStringsDictionary.AIRCORRIDOR_MAXALTITUDE );
+        return "Adds a new airship.";
     }
     
     
-    
-    // PRIVATE METHODS INVOKED USING REFLECTION
-    
+    // INNER CLASS
     /**
-     * Private method that is invoked using reflection inside the
-     * {@link #postsInternalNewInstance()}.
-     * <p>
-     * <b> This method's name must be <i>postCivilAirship</i></b>.
-     * 
-     * @return A {@link PostCivilAirshipCommand}.
-     * 
-     * @throws MissingRequiredParameterException
-     *             If the parameter on the number of passengers carried by the airship was not
-     *             received.
-     * @throws InvalidParameterValueException
-     *             If the parameter on the number of passengers carried by the airship has an
-     *             invalid value.
-     * @throws InternalErrorException
-     *             Should not happen.
+     * Class that extends {@link ParsingCommand}, whose instances will parse the
+     * {@code required parameters} and will create a {@link PostCivilAirshipCommand} or a
+     * {@link PostMilitaryAirshipCommand}
      */
-    @SuppressWarnings( "unused" )
-    private Callable< String > postCivilAirship( User userWhoIsPosting )
-        throws MissingRequiredParameterException, InvalidParameterValueException {
+    private class PostA_ParsingCommand extends ParsingCommand< String > {
         
-        if( !parametersMap.containsKey( CLIStringsDictionary.NUMBEROFPASSENGERS ) )
-            throw new MissingRequiredParameterException( CLIStringsDictionary.NUMBEROFPASSENGERS );
+        /**
+         * The string representation of the airship's concrete type.
+         */
+        private String type;
         
-        numberOfPassengers = getParameterAsInt( CLIStringsDictionary.NUMBEROFPASSENGERS );
+        /**
+         * The properties of the airship to be added.
+         */
+        private double latitude;
+        private double longitude;
+        private double altitude;
+        private double minAltitude;
+        private double maxAltitude;
+        private int numberOfPassengers; // not null only if Civil
+        private boolean hasArmour; // not null only if Military
         
-        try {
-            return new PostCivilAirshipCommand( latitude, longitude, altitude, maxAltitude,
-                                                minAltitude, numberOfPassengers, databaseToChange,
-                                                userWhoIsPosting );
+        private User userWhoIsPosting;
+        
+        /**
+         * Create the {@code ParsingCommand}
+         *
+         * @param parametersMap
+         *            The container of the parameters required to create the command.
+         * @param userWhoIsPosting
+         *            The user who is posting the airship.
+         * 
+         * @throws MissingRequiredParameterException
+         *             If one parameter is null or the empty string.
+         * @throws InvalidParameterValueException
+         *             If one parameter value is not convertible into a {@code Double}
+         */
+        public PostA_ParsingCommand( Map< String, String > parametersMap, User userWhoIsPosting )
+            throws InvalidParameterValueException, MissingRequiredParameterException {
+            
+            super( parametersMap );
+            this.userWhoIsPosting = userWhoIsPosting;
+            
+            setParametersFields();
         }
-        catch( InvalidArgumentException e ) {
-            throw new InternalErrorException(
-                                              "UNEXPECTED ERROR IN PostAirshipCommandsFactory! (2)",
-                                              e );
-            // never happens for databaseWhereToPost is not null
-        }
-    }
-    
-    /**
-     * Private method that is invoked using reflection inside the
-     * {@link #postsInternalNewInstance()}.
-     * <p>
-     * <b>This method's name must be <i>postMilitaryAirship</i></b>.
-     * 
-     * @return A {@link PostMilitaryAirshipCommand}.
-     * 
-     * @throws MissingRequiredParameterException
-     *             If the parameter on whether the airship carries or does not carries armours was
-     *             not received.
-     * @throws InvalidParameterValueException
-     *             If the parameter on whether the airship carries or does not carries armours has
-     *             an invalid value.
-     * @throws InternalErrorException
-     *             Should not happen.
-     */
-    @SuppressWarnings( "unused" )
-    private Callable< String > postMilitaryAirship( User userWhoIsPosting )
-        throws MissingRequiredParameterException, InvalidParameterValueException {
         
-        if( !parametersMap.containsKey( CLIStringsDictionary.HASARMOUR ) )
-            throw new MissingRequiredParameterException( CLIStringsDictionary.HASARMOUR );
-        
-        hasArmour = getParameterAsBoolean( CLIStringsDictionary.HASARMOUR );
-        
-        try {
-            return new PostMilitaryAirshipCommand( latitude, longitude, altitude, maxAltitude,
-                                                   minAltitude, hasArmour, databaseToChange,
-                                                   userWhoIsPosting );
+        /**
+         * @return A command of type {@link PostCivilAirshipCommand} or
+         *         {@link PostMilitaryAirshipCommand}
+         */
+        @SuppressWarnings( { "unchecked" } )
+        @Override
+        public Callable< String > newCommand()
+            throws MissingRequiredParameterException, InvalidParameterValueException {
+            
+            String methodName = "post" + type + "Airship";
+            Class< ? extends ParsingCommand< ? > > c = this.getClass();
+            Class< ? extends User > u = userWhoIsPosting.getClass();
+            
+            try {
+                Method creatorMethod = c.getDeclaredMethod( methodName, u );
+                return (Callable< String >)creatorMethod.invoke( this, userWhoIsPosting );
+                
+            }
+            catch( InvocationTargetException e ) {
+                
+                Throwable actualException = e.getTargetException();
+                if( actualException instanceof MissingRequiredParameterException )
+                    throw (MissingRequiredParameterException)actualException;
+                if( actualException instanceof InvalidParameterValueException )
+                    throw (InvalidParameterValueException)actualException;
+                else throw new InternalErrorException(
+                                                       "UNEXPECTED ERROR IN PostAirshipCommandsFactory! (1)",
+                                                       e );
+                
+            }
+            catch( NoSuchMethodException | SecurityException | IllegalAccessException
+                   | IllegalArgumentException e ) {
+                
+                throw new InvalidParameterValueException( CLIStringsDictionary.AIRSHIP_TYPE, type,
+                                                          e );
+            }
         }
-        catch( InvalidArgumentException e ) {
-            throw new InternalErrorException(
-                                              "UNEXPECTED ERROR IN PostAirshipCommandsFactory! (3)",
-                                              e );
-            // never happens for databaseWhereToPost is not null
+        
+        /**
+         * Set the required parameters to create an Airships
+         * 
+         * @throws MissingRequiredParameterException
+         *             If one parameter is null or the empty string.
+         * @throws InvalidParameterValueException
+         *             If one parameter value is not convertible into a {@code Double}
+         */
+        private void setParametersFields()
+            throws MissingRequiredParameterException, InvalidParameterValueException {
+            
+            type = getParameterAsString( CLIStringsDictionary.AIRSHIP_TYPE );
+            latitude = getParameterAsDouble( CLIStringsDictionary.LATITUDE );
+            longitude = getParameterAsDouble( CLIStringsDictionary.LONGITUDE );
+            altitude = getParameterAsDouble( CLIStringsDictionary.ALTITUDE );
+            minAltitude = getParameterAsDouble( CLIStringsDictionary.AIRCORRIDOR_MINALTITUDE );
+            maxAltitude = getParameterAsDouble( CLIStringsDictionary.AIRCORRIDOR_MAXALTITUDE );
         }
+        
+        // PRIVATE METHODS INVOKED USING REFLECTION
+        
+        /**
+         * Private method that is invoked using reflection inside the
+         * {@link #postsInternalNewInstance()}.
+         * <p>
+         * <b> This method's name must be <i>postCivilAirship</i></b>.
+         * 
+         * @return A {@link PostCivilAirshipCommand}.
+         * 
+         * @throws MissingRequiredParameterException
+         *             If the parameter on the number of passengers carried by the airship was not
+         *             received.
+         * @throws InvalidParameterValueException
+         *             If the parameter on the number of passengers carried by the airship has an
+         *             invalid value.
+         * @throws InternalErrorException
+         *             Should not happen.
+         */
+        @SuppressWarnings( "unused" )
+        private Callable< String > postCivilAirship( User userWhoIsPosting )
+            throws MissingRequiredParameterException, InvalidParameterValueException {
+            
+            if( !parametersMap.containsKey( CLIStringsDictionary.NUMBEROFPASSENGERS ) )
+                throw new MissingRequiredParameterException(
+                                                             CLIStringsDictionary.NUMBEROFPASSENGERS );
+            
+            numberOfPassengers = getParameterAsInt( CLIStringsDictionary.NUMBEROFPASSENGERS );
+            
+            try {
+                return new PostCivilAirshipCommand( latitude, longitude, altitude, maxAltitude,
+                                                    minAltitude, numberOfPassengers,
+                                                    databaseToChange, userWhoIsPosting );
+            }
+            catch( InvalidArgumentException e ) {
+                throw new InternalErrorException(
+                                                  "UNEXPECTED ERROR IN PostAirshipCommandsFactory! (2)",
+                                                  e );
+                // never happens for databaseWhereToPost is not null
+            }
+        }
+        
+        /**
+         * Private method that is invoked using reflection inside the
+         * {@link #postsInternalNewInstance()}.
+         * <p>
+         * <b>This method's name must be <i>postMilitaryAirship</i></b>.
+         * 
+         * @return A {@link PostMilitaryAirshipCommand}.
+         * 
+         * @throws MissingRequiredParameterException
+         *             If the parameter on whether the airship carries or does not carries armours
+         *             was not received.
+         * @throws InvalidParameterValueException
+         *             If the parameter on whether the airship carries or does not carries armours
+         *             has an invalid value.
+         * @throws InternalErrorException
+         *             Should not happen.
+         */
+        @SuppressWarnings( "unused" )
+        private Callable< String > postMilitaryAirship( User userWhoIsPosting )
+            throws MissingRequiredParameterException, InvalidParameterValueException {
+            
+            if( !parametersMap.containsKey( CLIStringsDictionary.HASARMOUR ) )
+                throw new MissingRequiredParameterException( CLIStringsDictionary.HASARMOUR );
+            
+            hasArmour = getParameterAsBoolean( CLIStringsDictionary.HASARMOUR );
+            
+            try {
+                return new PostMilitaryAirshipCommand( latitude, longitude, altitude, maxAltitude,
+                                                       minAltitude, hasArmour, databaseToChange,
+                                                       userWhoIsPosting );
+            }
+            catch( InvalidArgumentException e ) {
+                throw new InternalErrorException(
+                                                  "UNEXPECTED ERROR IN PostAirshipCommandsFactory! (3)",
+                                                  e );
+                // never happens for databaseWhereToPost is not null
+            }
+        }
+        
     }
 }

@@ -4,18 +4,19 @@ package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.postcommands.PostUserCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.MissingRequiredParameterException;
 
 
 /**
- * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands of
- * type {@link PostUserPasswordCommands}. Commands are {@link Callable} instances.
+ * Class whose instances are {@link ParsingCommand factories} that produce commands of type
+ * {@link PostUserPasswordCommands}. Commands are {@link Callable} instances.
  * 
  * Extends {@link UserAuthenticatingFactory} of {@link Airship Airships} and {@link User user}.
  * 
@@ -31,13 +32,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
      */
     private final String[] requiredParametersNames;
     
-    /**
-     * The properties of the user to be added.
-     */
-    private String username;
-    private String password;
-    private String email;
-    private String fullName;
+    
     
     // CONSTRUCTOR
     
@@ -56,7 +51,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
                                     Database< User > postedUsersDatabase )
         throws InvalidArgumentException {
         
-        super( "Adds a new user.", postingUsersDatabase, postedUsersDatabase );
+        super( postingUsersDatabase, postedUsersDatabase );
         
         this.requiredParametersNames =
                 new String[]{ CLIStringsDictionary.USERNAME, CLIStringsDictionary.PASSWORD,
@@ -70,25 +65,21 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
      * {@code required parameters} using the private auxiliar method
      * {@link #setValuesOfTheParametersMap()}.
      *
+     * @param parametersMap
+     *            The container of the parameters required to create the command.
      * @param userWhoIsPosting
      *            - The user who is posting the other user.
      *
      * @return A {@link PostUserCommand}
+     * @throws MissingRequiredParameterException
+     *             If one parameter is null or the empty string.
      */
     @Override
-    protected Callable< String > internalInternalNewInstance( User userWhoIsPosting ) {
+    protected Callable< String > internalInternalNewCommand( Map< String, String > parametersMap,
+                                                              User userWhoIsPosting )
+        throws MissingRequiredParameterException {
         
-        setValuesOfTheParametersMap();
-        
-        try {
-            return new PostUserCommand( username, password, email, fullName, databaseToChange,
-                                        userWhoIsPosting );
-        }
-        catch( InvalidArgumentException e ) {
-            throw new InternalErrorException( "UNEXPECTED EXCEPTION IN PostUserCommandsFactory!" );
-            // never happens cause databaseWhereToPost is not null
-        }
-        
+        return new PostU_ParsingCommand( parametersMap, userWhoIsPosting ).newCommand();
     }
     
     /**
@@ -103,23 +94,84 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, St
         return requiredParametersNames;
     }
     
-    // PRIVATE AUXILIAR METHOD - used in the method postsInternalNewInstance()
     
     /**
-     * Sets the value of the user's properties fields with the values received in the parameters
-     * map.
-     * <p>
-     * If this method is called inside {@link #internalNewInstance(Map)} and this one is called
-     * inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed that the fields
-     * {@link #username}, {@link #password} and {@link #email} are non-{@code null} after this
-     * method finishes its job.
-     * </p>
+     * Returns a short description of the command produced by this factory.
+     * 
+     * @return a short description of the command produced by this factory.
      */
-    private void setValuesOfTheParametersMap() {
+    @Override
+    public String getCommandsDescription() {
         
-        username = getParameterAsString( CLIStringsDictionary.USERNAME );
-        password = getParameterAsString( CLIStringsDictionary.PASSWORD );
-        email = getParameterAsString( CLIStringsDictionary.EMAIL );
-        fullName = getParameterAsString( CLIStringsDictionary.FULLNAME );
+        return "Adds a new user.";
+    }
+    
+    
+    // INNER CLASS
+    /**
+     * Class that extends {@link ParsingCommand}, whose instances will parse the
+     * {@code required parameters} and will create a {@link PostUserCommand}
+     */
+    private class PostU_ParsingCommand extends ParsingCommand< String > {
+        
+        /**
+         * The properties of the user to be added.
+         */
+        private String username;
+        private String password;
+        private String email;
+        private String fullName;
+        private User userWhoIsPosting;
+        
+        /**
+         * Create the {@code ParsingCommand}
+         * 
+         * @param parametersMap
+         *            The container of the parameters required to create the command.
+         * @param userWhoIsPosting
+         *            - The user who is posting the airship.
+         * @throws MissingRequiredParameterException
+         *             If one parameter is null or the empty string.
+         */
+        public PostU_ParsingCommand( Map< String, String > parametersMap, User userWhoIsPosting )
+            throws MissingRequiredParameterException {
+            
+            super( parametersMap );
+            this.userWhoIsPosting = userWhoIsPosting;
+            
+            setParametersFields();
+        }
+        
+        /**
+         * @return A command of type {@link PostUserCommand}
+         */
+        @Override
+        public Callable< String > newCommand() {
+            
+            try {
+                return new PostUserCommand( username, password, email, fullName, databaseToChange,
+                                            userWhoIsPosting );
+            }
+            catch( InvalidArgumentException e ) {
+                throw new InternalErrorException(
+                                                  "UNEXPECTED EXCEPTION IN PostUserCommandsFactory!" );
+                // never happens cause databaseWhereToPost is not null
+            }
+        }
+        
+        /**
+         * Set the username, password and email, and fullname fields needed for
+         * {@code PostUserCommand} command.
+         * 
+         * @throws MissingRequiredParameterException
+         *             If one parameter is null or the empty string.
+         */
+        private void setParametersFields() throws MissingRequiredParameterException {
+            username = getParameterAsString( CLIStringsDictionary.USERNAME );
+            password = getParameterAsString( CLIStringsDictionary.PASSWORD );
+            email = getParameterAsString( CLIStringsDictionary.EMAIL );
+            fullName = getParameterAsString( CLIStringsDictionary.FULLNAME );
+        }
+        
     }
 }

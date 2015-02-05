@@ -21,85 +21,11 @@ public class StringUtils {
     // STATIC METHODS
     
     /**
-     * Converts the string {@code parameterValue} into an {@link Integer}. The string
-     * {@code parameterValue} is the value of a parameter with name {@code parameterName}.
-     * 
-     * @param parameterName
-     *            The name of the parameter, to appear in exception's messages if any occurs.
-     * @param parameterValue
-     *            The value of the parameter, the value to be converted.
-     * 
-     * @return The {@link Integer} in the string {@code parameterValue}.
-     * 
-     * @throws InvalidParameterValueException
-     *             If {@code parameterValue} is not convertible into an {@code Integer} (e.g. if it
-     *             contains letters). This exception's message is <i>«Required parameter with name
-     *             {@code parameterName} has invalid value {@code parameterValue}.»</i>.
-     * @throws MissingRequiredParameterException
-     *             If {@code parameterValue} is {@code null} or the empty string. This exception's
-     *             message is <i>«Required parameter with name {@code parameterName} missing.»</i>).
-     */
-    public static Integer parameterToInteger( String parameterName, String parameterValue )
-        throws InvalidParameterValueException, MissingRequiredParameterException {
-        
-        try {            
-            if( parameterValue.equals( "" ) )
-                throw new MissingRequiredParameterException( parameterName );
-            return Integer.valueOf( parameterValue );
-        }
-        catch( NullPointerException e ) {
-            throw new MissingRequiredParameterException( parameterName, e );
-        }
-        catch( NumberFormatException e ) {
-            throw new InvalidParameterValueException( parameterName, parameterValue, e );
-        }
-    }
-    
-    
-    /**
-     * Converts the string {@code parameterValue} into a {@link Double}. The string
-     * {@code parameterValue} is the value of a parameter with name {@code parameterName}.
-     * 
-     * @param parameterName
-     *            The name of the parameter, to appear in exception's messages if any occurs.
-     * @param parameterValue
-     *            The value of the parameter, the value to be converted.
-     * 
-     * @return The {@link Double} in the string {@code parameterValue}.
-     * 
-     * @throws InvalidParameterValueException
-     *             If {@code parameterValue} is not convertible into a {@code Double} (e.g. if it
-     *             contains letters). This exception's message is <i>«Required parameter with name
-     *             {@code parameterName} has invalid value {@code parameterValue}.»</i>.
-     * @throws MissingRequiredParameterException
-     *             If {@code parameterValue} is {@code null} or the empty string. This exception's
-     *             message is <i>«Required parameter with name {@code parameterName} missing.»</i>).
-     */
-    public static Double parameterToDouble( String parameterName, String parameterValue )
-        throws InvalidParameterValueException, MissingRequiredParameterException {
-        
-        try {
-            
-            if( parameterValue.equals( "" ) )
-                throw new MissingRequiredParameterException( parameterName );
-            
-            return Double.valueOf( parameterValue );
-        }
-        catch( NullPointerException e ) {
-            throw new MissingRequiredParameterException( parameterName, e );
-        }
-        catch( NumberFormatException e ) {
-            throw new InvalidParameterValueException( parameterName, parameterValue, e );
-        }
-    }
-    
-    
-    /**
      * Converts the string {@code parameterValue} into a {@code boolean}. The string
      * {@code parameterValue} is the value of a parameter with name {@code parameterName}.
      * 
      * @param parameterName
-     *            The name of the parameter, to appear in exception's messages if any occurs.
+     *            The name of the parameter, to appear in exceptions' messages if any occurs.
      * @param parameterValue
      *            The value of the parameter, the value to be converted.
      * 
@@ -134,4 +60,100 @@ public class StringUtils {
         throw new InvalidParameterValueException( parameterName, parameterValue );
     }
     
+    
+    /**
+     * Converts the string {@code parameterValue} into a {@link Double}. The string
+     * {@code parameterValue} is the value of a parameter with name {@code parameterName}.
+     * 
+     * @param parameterName
+     *            The name of the parameter, to appear in exceptions' messages if any occurs.
+     * @param parameterValue
+     *            The value of the parameter, the value to be converted.
+     * 
+     * @return The {@link Double} in the string {@code parameterValue}.
+     * 
+     * @throws InvalidParameterValueException
+     *             If {@code parameterValue} is not convertible into a {@code Double} (e.g. if it
+     *             contains letters). This exception's message is <i>«Required parameter with name
+     *             {@code parameterName} has invalid value {@code parameterValue}.»</i>.
+     * @throws MissingRequiredParameterException
+     *             If {@code parameterValue} is {@code null} or the empty string. This exception's
+     *             message is <i>«Required parameter with name {@code parameterName} missing.»</i>).
+     */
+    public static Double parameterToDouble( String parameterName, String parameterValue )
+        throws InvalidParameterValueException, MissingRequiredParameterException {
+        
+        try {
+            if( parameterValue.equals( "" ) )
+                throw new MissingRequiredParameterException( parameterName );
+            
+            return Double.valueOf( parameterValue );
+        }
+        catch( NullPointerException e ) {
+            throw new MissingRequiredParameterException( parameterName, e );
+        }
+        catch( NumberFormatException e ) {
+            throw new InvalidParameterValueException( parameterName, parameterValue, e );
+        }
+    }
+    
+    
+    /**
+     * Converts the string {@code parameterValue} into an {@link Integer}. The string
+     * {@code parameterValue} is the value of a parameter with name {@code parameterName}.
+     * 
+     * @param parameterName
+     *            The name of the parameter, to appear in exceptions' messages if any occurs.
+     * @param parameterValue
+     *            The value of the parameter, the value to be converted.
+     * 
+     * @return The {@link Integer} in the string {@code parameterValue}.
+     * 
+     * @throws InvalidParameterValueException
+     *             If {@code parameterValue} is not convertible into an {@code Integer} (e.g. if it
+     *             contains letters). This exception's message is <i>«Required parameter with name
+     *             {@code parameterName} has invalid value {@code parameterValue}.»</i>.
+     * @throws MissingRequiredParameterException
+     *             If {@code parameterValue} is {@code null} or the empty string. This exception's
+     *             message is <i>«Required parameter with name {@code parameterName} missing.»</i>).
+     */
+    public static Integer parameterToInteger( String parameterName, String parameterValue )
+        throws InvalidParameterValueException, MissingRequiredParameterException {
+        
+        if( parameterValue == null || parameterValue.equals( "" ) )
+            throw new MissingRequiredParameterException( parameterName );
+        
+        try {
+            return Integer.valueOf( parameterValue );
+        }
+        catch( NumberFormatException e ) {
+            throw new InvalidParameterValueException( parameterName, parameterValue, e );
+        }
+    }
+    
+    
+    /**
+     * Checks if the string {@code parameterValue} is non-{@code null} and non-empty. The string
+     * {@code parameterValue} is the value of a parameter with name {@code parameterName}.
+     * 
+     * @param parameterName
+     *            The name of the parameter, to appear in exceptions' messages if any occurs.
+     * @param parameterValue
+     *            The value of the parameter, the value to be evaluated.
+     * 
+     * @return The non-{@code null} and non-empty string {@code parameterValue}.
+     * 
+     * @throws MissingRequiredParameterException
+     *             If {@code parameterValue} is {@code null} or the empty string. This exception's
+     *             message is <i>«Required parameter with name {@code parameterName} missing.»</i>).
+     */
+    public static String parameterToString( String parameterName, String parameterValue )
+        throws MissingRequiredParameterException {
+        
+        if( parameterValue == null || parameterValue.equals( "" ) )
+            throw new MissingRequiredParameterException( parameterName );
+        
+        return parameterValue;
+    }
+
 }

@@ -4,7 +4,7 @@ package main.java.cli.parsingtools.commandfactories.userauthenticatingfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.DeleteAirshipCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -14,7 +14,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * Class whose instances are {@link StringsToCommandsFactory factories} that produce commands of
+ * Class whose instances are {@link ParsingCommand factories} that produce commands of
  * type {@link DeleteAirshipCommand}. Commands are {@link Callable} instances.
  * 
  * Extends {@link UserAuthenticatingFactory} of {@link Airship Airships} and {@link String Strings}.
@@ -74,8 +74,8 @@ public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Air
      * Returns a command of type {@link DeleteAirshipCommand} after getting the necessary
      * {@code required parameters} using the private auxiliar method {@link #setFlightId()}.
      * 
-     * This command will be in its turn returned to {@link StringsToCommandsFactory#newInstance()
-     * newInstance()} via the method {@link UserAuthenticatingFactory#internalNewInstance()
+     * This command will be in its turn returned to {@link ParsingCommand#newInstance()
+     * newInstance()} via the method {@link UserAuthenticatingFactory#internalNewCommand()
      * internalNewInstance()}
      * 
      * @param userWhoIsDeleting
@@ -117,7 +117,7 @@ public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Air
      * needed to {@link DeleteAirshipCommand}.
      * <p>
      * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-     * last one is called inside {@link StringsToCommandsFactory#newInstance(Map)}, it is guaranteed
+     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
      * that the field {@link #flightId} is non-{@code null} after this method finishes its job.
      * </p>
      */

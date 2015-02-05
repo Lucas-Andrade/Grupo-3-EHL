@@ -98,7 +98,7 @@ public class PatchAirshipsCommandFactory_Tests {
         parameters.put( CLIStringsDictionary.FLIGHTID, airship1.getIdentification() );
         
         Callable< ? > patchAirshipCommand =
-                (new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase )).newInstance( parameters );
+                (new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase )).newCommand( parameters );
         
         Assert.assertTrue( patchAirshipCommand instanceof PatchAirshipCommand );
     }
@@ -112,7 +112,7 @@ public class PatchAirshipsCommandFactory_Tests {
         onlyRequiredParameters.put( CLIStringsDictionary.FLIGHTID, airship1.getIdentification() );
         
         Callable< ? > patchAirshipCommand =
-                (new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase )).newInstance( onlyRequiredParameters );
+                (new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase )).newCommand( onlyRequiredParameters );
         
         Assert.assertTrue( patchAirshipCommand instanceof PatchAirshipCommand );
     }

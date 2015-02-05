@@ -1,8 +1,9 @@
 package main.java.cli.parsingtools.commandfactories.getfactories.getallfactories;
 
 
+import java.util.Map;
 import java.util.concurrent.Callable;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.CommandFactory;
 import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.Element;
@@ -12,10 +13,10 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * Abstract class whose subclasses instances are {@link StringsToCommandsFactory factories} that
- * produce commands of type {@link GetAllElementsInADatabaseCommand}.
+ * Abstract class whose subclasses instances are {@link CommandFactory factories} that produce
+ * commands of type {@link GetAllElementsInADatabaseCommand}.
  * 
- * Extends {@link StringsToCommandsFactory} of {@link Optional} {@link Iterable Iterables<E>}.
+ * Extends {@link CommandFactory} of {@link Optional} {@link Iterable Iterables<E>}.
  * 
  * @param <E>
  *            - The type of elements that a database can contain.
@@ -23,9 +24,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes.
  */
 public abstract class GetAllElementsInADatabaseCommandsFactory< E extends Element > extends
-        StringsToCommandsFactory< Optional< Iterable< E >>> {
-    
-    // INSTANCE FIELDS
+        CommandFactory< Optional< Iterable< E >>> {
     
     /**
      * {@code database} - The database where to get the elements from.
@@ -46,11 +45,9 @@ public abstract class GetAllElementsInADatabaseCommandsFactory< E extends Elemen
      * @throws InvalidArgumentException
      *             If either {@code commandsDescription} or {@code database} are {@code null}.
      */
-    public GetAllElementsInADatabaseCommandsFactory( String commandsDescription,
-                                                     Database< E > database )
+    public GetAllElementsInADatabaseCommandsFactory( Database< E > database )
         throws InvalidArgumentException {
         
-        super( commandsDescription );
         
         if( database == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
@@ -58,15 +55,17 @@ public abstract class GetAllElementsInADatabaseCommandsFactory< E extends Elemen
         this.database = database;
     }
     
-    // IMPLEMENTATION OF METHODS INHERITED FROM StringsToCommandsFactory
-    
     /**
      * Returns a command of type {@link GetAllElementsInADatabaseCommand}.
+     * 
+     * @param parametersMap
+     *            The container of the parameters required to create the command.
      * 
      * @return A command of type {@link GetAllElementsInADatabaseCommand}.
      */
     @Override
-    protected Callable< Optional< Iterable< E >>> internalNewInstance() {
+    protected Callable< Optional< Iterable< E >>>
+            internalNewCommand( Map< String, String > parametersMap ) {
         
         try {
             return new GetAllElementsInADatabaseCommand< E >( database );

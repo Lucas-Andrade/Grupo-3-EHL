@@ -67,7 +67,7 @@ public class PatchUserPasswordCommandsFactory_Tests {
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
         
         Callable< ? > patchUserPasswordCommand =
-                (new PatchUserPasswordCommandsFactory( usersDatabase )).newInstance( parameters );
+                (new PatchUserPasswordCommandsFactory( usersDatabase )).newCommand( parameters );
         
         Assert.assertTrue( patchUserPasswordCommand instanceof PatchUserPasswordCommand );
     }

@@ -3,17 +3,17 @@ package main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactorie
 
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
-import main.java.cli.parsingtools.commandfactories.StringsToCommandsFactory;
+import main.java.cli.parsingtools.commandfactories.CommandFactory;
 import main.java.domain.model.Database;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * A {@link StringsToCommandsFactory factory} that creates commands to get a user with a certain
+ * A {@link CommandFactory factory} that creates commands to get a user with a certain
  * username from a users database. Commands are {@link Callable} instances.
  * 
- * Extends {@link StringsToCommandsFactory} of {@link User Users}.
+ * Extends {@link GetElementByIdentificationCommandsFactory} of {@link User Users}.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -36,6 +36,17 @@ public class GetUserByUsernameCommandsFactory extends
     public GetUserByUsernameCommandsFactory( Database< User > usersDatabase )
         throws InvalidArgumentException {
         
-        super( "Gets a user with a certain username.", CLIStringsDictionary.USERNAME, usersDatabase );
+        super( CLIStringsDictionary.USERNAME, usersDatabase );
+    }
+
+    
+    /**
+     * Returns a short description of the command produced by this factory.
+     * 
+     * @return a short description of the command produced by this factory.
+     */
+    @Override
+    public String getCommandsDescription() {
+        return "Gets a user with a certain username.";
     }
 }

@@ -1,6 +1,7 @@
 package test.java.cli.parsingtools.commandfactories.getfactories;
 
 
+import static org.junit.Assert.*;
 import java.util.concurrent.Callable;
 import main.java.cli.parsingtools.CommandParser;
 import main.java.cli.parsingtools.Parser;
@@ -39,40 +40,46 @@ public class GetAirshipsOfOwnerCommandsFactory_Tests {
     
     // Before Class
     
-    @BeforeClass
-    public static void createTheCommandParserAndRegisterTheCommands()
-        throws InvalidRegisterException, InvalidArgumentException {
-        
-        cmdparser = new CommandParser();
-        
-        airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
-        
-        cmdparser.registerCommand( "GET", "/airships/owner/{owner}",
-                                   new GetAirshipsOfOwnerCommandsFactory( airshipsDatabase ) );
-    }
+//    @BeforeClass
+//    public static void createTheCommandParserAndRegisterTheCommands()
+//        throws InvalidRegisterException, InvalidArgumentException {
+//        
+//        cmdparser = new CommandParser();
+//        
+//        airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
+//        
+//        cmdparser.registerCommand( "GET", "/airships/owner/{owner}",
+//                                   new GetAirshipsOfOwnerCommandsFactory( airshipsDatabase ) );
+//    }
     
     // Test Normal Dinamic And Prerequisites
-    
     @Test
-    public void shouldSuccessfullyCreateTheCorrectCommand()
-        throws WrongLoginPasswordException, MissingRequiredParameterException,
-        InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
-        InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
-        
-        Callable< ? > getAirshipsOfOwnerCommands =
-                (new Parser( cmdparser, "GET", "/airships/owner/Daniel" )).getCommand();
-        
-        Assert.assertTrue( getAirshipsOfOwnerCommands instanceof GetAirshipsOfOwnerCommand );
+
+    public void a(){
+        assertFalse(true);
     }
     
-    // Test Exceptions
-    
-    @Test( expected = InvalidArgumentException.class )
-    public
-            void
-            shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAirshipsOfOwnerCommandsFactoryGivenANullDatabase()
-                throws InvalidArgumentException {
-        
-        new GetAirshipsOfOwnerCommandsFactory( null );
-    }
+//    @Test
+//    public void shouldSuccessfullyCreateTheCorrectCommand()
+//        throws WrongLoginPasswordException, MissingRequiredParameterException,
+//        InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
+//        InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
+//        
+//        
+//        Callable< ? > getAirshipsOfOwnerCommands =
+//                (new Parser( cmdparser, "GET", "/airships/owner/Daniel" )).getCommand();
+//        
+//        Assert.assertTrue( getAirshipsOfOwnerCommands instanceof GetAirshipsOfOwnerCommand );
+//    }
+//    
+//    // Test Exceptions
+//    
+//    @Test( expected = InvalidArgumentException.class )
+//    public
+//            void
+//            shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAirshipsOfOwnerCommandsFactoryGivenANullDatabase()
+//                throws InvalidArgumentException {
+//        
+//        new GetAirshipsOfOwnerCommandsFactory( null );
+//    }
 }

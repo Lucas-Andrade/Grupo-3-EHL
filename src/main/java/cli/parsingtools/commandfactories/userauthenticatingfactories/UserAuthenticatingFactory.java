@@ -114,7 +114,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
         
         User authenticatedUser = authenticateAndGetAuthenticatedUser( parametersMap );
         try {
-            return internalInternalNewInstance( parametersMap, authenticatedUser );
+            return internalInternalNewCommand( parametersMap, authenticatedUser );
         }
         catch( Exception e ) {
             throw (WrongLoginPasswordException)e;
@@ -139,9 +139,8 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
      * @throws NoSuchElementInDatabaseException
      *             If an element expected to be in a certain database was not found in it.
      */
-    protected abstract
-            Callable< R >
-            internalInternalNewInstance( Map< String, String > parametersMap, User userWhoIsPosting )
+    protected abstract Callable< R >
+            internalInternalNewCommand( Map< String, String > parametersMap, User userWhoIsPosting )
                 throws MissingRequiredParameterException, InvalidParameterValueException,
                 NoSuchElementInDatabaseException, InvalidArgumentException;
     

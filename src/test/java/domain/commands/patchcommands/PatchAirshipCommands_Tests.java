@@ -1,6 +1,5 @@
 package test.java.domain.commands.patchcommands;
-
-
+import static org.junit.Assert.assertEquals;
 import main.java.domain.commands.patchcommands.PatchAirshipCommand;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
@@ -36,7 +35,7 @@ public class PatchAirshipCommands_Tests {
     @Before
     public void createAirshipsAndUserAndAirshipDatabaseWithTheCreatedAirshipsToBePatched()
         throws InvalidArgumentException {
-        
+    
         // Arrange
         user1 = new User( "Daniel", "pass", "@daniel" );
         
@@ -54,88 +53,85 @@ public class PatchAirshipCommands_Tests {
     @Test
     public void shouldPatchACivilAirshipWithTheCorrectParametersInTheGivenDatabase()
         throws Exception {
-        
+    
         // Act
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, airship1.getIdentification(), user1,
                                          2.0, 4.0, 13.0, 100.0, 50.0 );
         
         // Assert
-        Assert.assertEquals( patchAirship.call(), "Airship successfully patched" );
-        Assert.assertEquals( airshipsDatabase.getElementByIdentification( airship1.getIdentification() )
-                                             .toString(),
-                             "Flight ID: "
-                                     + airship1.getIdentification()
-                                     + "\nLatitude: 2.0 Longitude: 4.0 Altitude: 13.0\n"
-                                     + "Maximum Altitude Permited: 100.0Minimum Altitude Permited: 50.0\n"
-                                     + "Is Outside The Given Corridor: true\n"
-                                     + "Number of Passengers: 20\n" );
+        assertEquals( "Airship successfully patched", patchAirship.call().getMessage() );
+        assertEquals( "Flight ID: " + airship1.getIdentification()
+                              + "\nLatitude: 2.0 Longitude: 4.0 Altitude: 13.0\n"
+                              + "Maximum Altitude Permited: 100.0Minimum Altitude Permited: 50.0\n"
+                              + "Is Outside The Given Corridor: true\n"
+                              + "Number of Passengers: 20\n",
+                      airshipsDatabase.getElementByIdentification( airship1.getIdentification() )
+                                      .toString() );
     }
     
     @Test
     public void shouldPatchAMilitaryAirshipWithTheCorrectParametersInTheGivenDatabase()
         throws Exception {
-        
+    
         // Act
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, airship2.getIdentification(), user1,
                                          20., 10., 30., 100., 50. );
         
         // Assert
-        Assert.assertEquals( patchAirship.call(), "Airship successfully patched" );
-        Assert.assertEquals( airshipsDatabase.getElementByIdentification( airship2.getIdentification() )
-                                             .toString(),
-                             "Flight ID: "
-                                     + airship2.getIdentification()
-                                     + "\nLatitude: 20.0 Longitude: 10.0 Altitude: 30.0\n"
-                                     + "Maximum Altitude Permited: 100.0Minimum Altitude Permited: 50.0\n"
-                                     + "Is Outside The Given Corridor: true\n"
-                                     + "Carries Weapons: false\n" );
+        assertEquals( "Airship successfully patched", patchAirship.call().getMessage() );
+        assertEquals( "Flight ID: " + airship2.getIdentification()
+                              + "\nLatitude: 20.0 Longitude: 10.0 Altitude: 30.0\n"
+                              + "Maximum Altitude Permited: 100.0Minimum Altitude Permited: 50.0\n"
+                              + "Is Outside The Given Corridor: true\n"
+                              + "Carries Weapons: false\n",
+                      airshipsDatabase.getElementByIdentification( airship2.getIdentification() )
+                                      .toString() );
     }
     
     @Test
     public void shouldPatchAnAirshipCorrectlyGivenNullParameters() throws Exception {
-        
+    
         // Act
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, airship2.getIdentification(), user1,
                                          null, null, null, null, 50. );
         
         // Assert
-        Assert.assertEquals( patchAirship.call(), "Airship successfully patched" );
-        Assert.assertEquals( airshipsDatabase.getElementByIdentification( airship2.getIdentification() )
-                                             .toString(),
-                             "Flight ID: "
-                                     + airship2.getIdentification()
-                                     + "\nLatitude: 0.0 Longitude: 0.0 Altitude: 30.0\n"
-                                     + "Maximum Altitude Permited: 100.0Minimum Altitude Permited: 50.0\n"
-                                     + "Is Outside The Given Corridor: true\n"
-                                     + "Carries Weapons: false\n" );
+        assertEquals( "Airship successfully patched", patchAirship.call().getMessage() );
+        assertEquals( "Flight ID: " + airship2.getIdentification()
+                              + "\nLatitude: 0.0 Longitude: 0.0 Altitude: 30.0\n"
+                              + "Maximum Altitude Permited: 100.0Minimum Altitude Permited: 50.0\n"
+                              + "Is Outside The Given Corridor: true\n"
+                              + "Carries Weapons: false\n",
+                      airshipsDatabase.getElementByIdentification( airship2.getIdentification() )
+                                      .toString() );
     }
     
     @Test
     public void shouldNotPatchAnAirshipIfNoneOfTheParametersWereGiven() throws Exception {
-        
+    
         // Act
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, "id20", user1, null, null, null, null,
                                          null );
         
         // Assert
-        Assert.assertEquals( patchAirship.call(),
-                             "Airship not patched beacause no new parameter was given" );
+        Assert.assertEquals( "Airship not patched beacause no new parameter was given",
+                             patchAirship.call().getMessage() );
     }
     
     @Test
     public void shouldNotPatchAnAirshipThatDoesNotExistInTheDatabase() throws Exception {
-        
+    
         // Act
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, "id20", user1, 0.0, 0.0, 0.0, 100.0,
                                          50.0 );
         
         // Assert
-        Assert.assertEquals( patchAirship.call(), "Airship does not exist in the database" );
+        assertEquals( "Airship does not exist in the database", patchAirship.call().getMessage() );
     }
     
     // Test Exceptions
@@ -145,7 +141,7 @@ public class PatchAirshipCommands_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateThePatchCivilAirshipCommandGivenANullDatabase()
                 throws InvalidArgumentException {
-        
+    
         patchAirship = new PatchAirshipCommand( null, "id20", user1, 0.0, 0.0, 0.0, 100.0, 50.0 );
     }
     
@@ -154,7 +150,7 @@ public class PatchAirshipCommands_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateThePatchCivilAirshipCommandGivenANullIdentification()
                 throws InvalidArgumentException {
-        
+    
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, null, user1, 0.0, 0.0, 0.0, 100.0, 50.0 );
     }
@@ -164,7 +160,7 @@ public class PatchAirshipCommands_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateThePatchAirshipCommandGivenANullUser()
                 throws InvalidArgumentException {
-        
+    
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, "id2", null, 0.0, 0.0, 0.0, 100.0, 50.0 );
     }
@@ -174,7 +170,7 @@ public class PatchAirshipCommands_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToPatchAnAirshipGivenInvalidParametersForItsFields()
                 throws Exception {
-        
+    
         new PatchAirshipCommand( airshipsDatabase, airship1.getIdentification(), user1, 360.0, 0.0,
                                  0.0, 100.0, null ).call();
     }

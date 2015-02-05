@@ -6,6 +6,7 @@ import main.java.cli.parsingtools.Parser;
 import main.java.cli.parsingtools.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
 import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.model.users.InMemoryUsersDatabase;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
@@ -56,8 +57,8 @@ public class ParserTest {
                 new Parser( cmdparser, "PATCH", "/users/pantunes",
                             "oldPassword=pass&newPassword=pass2&loginName=pantunes&loginPassword=pass" );
         
-        Assert.assertEquals( "User password successfully changed", parser.getCommand().call()
-                                                                         .toString() );
+        Assert.assertEquals( "User password successfully changed.", ((CompletionStatus)parser.getCommand().call())
+                                                                         .getMessage() );
         
     }
     

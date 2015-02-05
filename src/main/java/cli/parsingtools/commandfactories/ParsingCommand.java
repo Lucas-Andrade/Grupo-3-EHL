@@ -9,6 +9,8 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
 
 
 /**
+ * TODO
+ * 
  * Class whose subclasses' instances interpret string-parameters needed to create commands and
  * create the commands (through method {@link #newCommand(Map)}).
  * 

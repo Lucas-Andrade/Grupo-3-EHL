@@ -54,7 +54,7 @@ public class PostAirshipCommands_Tests {
         String testedInformation = postCivilAirship.call().getMessage();
         
         // Assert
-        assertEquals( "Flight Id: "
+        assertEquals( "Airship successfully posted with flightId: "
                       + airshipsDatabase.getElementsByUser( user1.getIdentification() ).get()
                                         .iterator().next().getIdentification(), testedInformation );
     }
@@ -69,7 +69,7 @@ public class PostAirshipCommands_Tests {
         String testedInformation = postMilitaryAirship.call().getMessage();
         
         // Assert
-        assertEquals( "Flight Id: "
+        assertEquals( "Airship successfully posted with flightId: "
                       + airshipsDatabase.getElementsByUser( user1.getIdentification() ).get()
                                         .iterator().next().getIdentification(), testedInformation );
     }

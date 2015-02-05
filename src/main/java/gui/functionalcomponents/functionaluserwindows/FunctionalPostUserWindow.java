@@ -124,7 +124,7 @@ public class FunctionalPostUserWindow extends FunctionalWindow< CompletionStatus
             public void functionalDone( CompletionStatus resultOfDoInBackGround ) throws Exception {
             
                 
-                if( resultOfDoInBackGround.isCompletionStatus() ) {
+                if( resultOfDoInBackGround.operationCompletedSuccessfully() ) {
                     new SuccessWindow( resultOfDoInBackGround.getMessage() );
                 }
                 else {

@@ -94,9 +94,6 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
-					<excludes>
-						<exclude>**/gui/**</exclude>
-					</excludes>
 				</configuration>
 			</plugin>
 
@@ -108,8 +105,8 @@
 					<source>${java.version}</source>
 					<target>${java.version}</target>
 					<includes>
-						<include>src/test/java/**/*Test*.java</include>
-						<include>src/test/java/**/*test*.java</include>
+						<include>**/*Test*.java</include>
+						<include>**/*test*.java</include>
 					</includes>
 				</configuration>
 			</plugin>

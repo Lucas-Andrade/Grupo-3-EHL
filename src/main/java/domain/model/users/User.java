@@ -134,7 +134,7 @@ public class User implements Element {
         
         StringBuilder result = new StringBuilder( "username: " );
         
-        result.append( username ).append( ", \r\nemail: " ).append( email );
+        result.append( username ).append( ",\r\nemail: " ).append( email );
         
         return fullName.equals( "" ) ? result.append( "\r\n" ).toString()
                                     : result.append( ",\r\nfullName: " ).append( fullName )

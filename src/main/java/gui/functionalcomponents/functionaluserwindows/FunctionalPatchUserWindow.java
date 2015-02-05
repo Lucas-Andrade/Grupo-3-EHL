@@ -45,6 +45,7 @@ public class FunctionalPatchUserWindow extends FunctionalWindow< CompletionStatu
      */
     public FunctionalPatchUserWindow( PatchUserWindow nonFunctionalWindow,
                                       Database< User > usersDatabase ) {
+    
         super( nonFunctionalWindow );
         
         this.functionalWindow = nonFunctionalWindow;
@@ -62,8 +63,9 @@ public class FunctionalPatchUserWindow extends FunctionalWindow< CompletionStatu
      */
     @Override
     protected FunctionalWindowSwingWorker< CompletionStatus > getSwingWorker() {
-        
-        return new FunctionalWindowSwingWorker< CompletionStatus >( functionalWindow.getErrorJTextArea() ) {
+    
+        return new FunctionalWindowSwingWorker< CompletionStatus >(
+                                                                    functionalWindow.getErrorJTextArea() ) {
             
             /**
              * String representation of the parameters to use in the commands and that are obtained
@@ -91,7 +93,7 @@ public class FunctionalPatchUserWindow extends FunctionalWindow< CompletionStatu
              */
             @Override
             protected CompletionStatus doInBackground() throws Exception {
-                
+            
                 if( newPassword.equals( "" ) )
                     throw new InvalidArgumentException( "Please Insert a New Password" );
                 
@@ -118,15 +120,15 @@ public class FunctionalPatchUserWindow extends FunctionalWindow< CompletionStatu
              */
             @Override
             public void functionalDone( CompletionStatus resultOfDoInBackGround ) throws Exception {
-                
-                if( resultOfDoInBackGround.isCompletionStatus() ) {
+            
+                if( resultOfDoInBackGround.operationCompletedSuccessfully() ) {
                     
                     new SuccessWindow( resultOfDoInBackGround.getMessage() );
                     functionalWindow.dispose();
                 }
                 else {
                     functionalWindow.getErrorJTextArea()
-                    .setText( resultOfDoInBackGround.getMessage() );
+                                    .setText( resultOfDoInBackGround.getMessage() );
                 }
             }
         };

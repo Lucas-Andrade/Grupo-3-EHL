@@ -4,6 +4,7 @@ package test.java.domain.commands;
 import main.java.cli.parsingtools.CommandParser;
 import main.java.cli.parsingtools.Parser;
 import main.java.cli.parsingtools.commandfactories.userauthenticatingfactories.DeleteAirshipCommandsFactory;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.commands.DeleteAirshipCommand;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
@@ -40,7 +41,7 @@ public class DeleteAirshipCommand_Tests {
     @Before
     public void createUserAndAirshipAndTheirDatabases()
         throws InvalidRegisterException, InvalidArgumentException {
-        
+    
         cmdParser = new CommandParser();
         
         airshipsDatabase = new InMemoryAirshipsDatabase( "airshipsDatabase" );
@@ -58,8 +59,8 @@ public class DeleteAirshipCommand_Tests {
     // Test Normal Dinamic And Prerequisites
     
     @Test
-    public void shoulDeleteAnAirhipsMemberOfInMemoryAirshipsDatabase() throws Exception {
-        
+    public void shouldDeleteAnAirhipsMemberOfInMemoryAirshipsDatabase() throws Exception {
+    
         Airship air1 = new CivilAirship( 30, 230, 10000, 20000, 0, 199 );
         
         airshipsDatabase.add( air1, user );
@@ -70,12 +71,13 @@ public class DeleteAirshipCommand_Tests {
                                                              .toString(),
                             "loginName=pantunes&loginPassword=pantunespassword" );
         
-        Assert.assertEquals( "Airship successfully removed", parser.getCommand().call().toString() );
+        Assert.assertEquals( "Airship successfully removed",
+                             ((CompletionStatus)parser.getCommand().call()).getMessage() );
     }
     
     @Test
     public void shouldNotDeleteAnAirshipBecauseAnInvalidLoginPassword() throws Exception {
-        
+    
         Airship air1 = new CivilAirship( 30, 230, 10000, 20000, 0, 199 );
         
         Parser parser =
@@ -84,8 +86,8 @@ public class DeleteAirshipCommand_Tests {
                                                              .toString(),
                             "loginName=pantunes&loginPassword=pantunespassword" );
         
-        Assert.assertEquals( "Airship doesn't exist in the database", parser.getCommand().call()
-                                                                            .toString() );
+        Assert.assertEquals( "Airship doesn't exist in the database",
+                             ((CompletionStatus)parser.getCommand().call()).getMessage() );
     }
     
     // Test Exceptions
@@ -93,7 +95,7 @@ public class DeleteAirshipCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenGiveAnNullInMemoryAirshipsDatabase()
         throws Exception {
-        
+    
         Airship air1 = new CivilAirship( 30, 230, 10000, 20000, 0, 199 );
         
         new DeleteAirshipCommand( null, air1.getIdentification() );
@@ -101,7 +103,7 @@ public class DeleteAirshipCommand_Tests {
     
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenGiveAnNullIdentification() throws Exception {
-        
+    
         new DeleteAirshipCommand( airshipsDatabase, null );
     }
 }

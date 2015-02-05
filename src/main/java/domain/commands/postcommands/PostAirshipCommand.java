@@ -103,7 +103,7 @@ public abstract class PostAirshipCommand implements Callable< CompletionStatus >
         
         databaseWhereToPost.add( theAirship, userWhoIsPosting );
         
-        return new CompletionStatus( true, "Airship succesfully posted with flightId: "
+        return new CompletionStatus( true, "Airship successfully posted with flightId: "
                                            + theAirship.getIdentification() );
     }
     

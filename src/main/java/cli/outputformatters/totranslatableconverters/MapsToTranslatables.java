@@ -9,7 +9,8 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTypeException;
 
 
 /**
- * Class whose instances convert instances of {@link OptionsList} into {@link Translatable}s.
+ * Class that contains all {@link Converter}s that convert instances into {@link Translatable}s
+ * representing {@link Map}s.
  * <p>
  * <b>The following conventions are advised:</b> translatables that represent
  * {@code Map<String,String>} have all tags with non-{@code null} values and several entries in the
@@ -21,11 +22,16 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTypeException;
 class MapsToTranslatables {
     
     
+    /**
+     * Class whose instances convert instances of {@link OptionsList} into {@link Translatable}s.
+     *
+     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+     */
     static class OptionsListConverter extends Converter {
         
         @Override
         Translatable convert( Object optionsList ) throws UnknownTypeException {
-            
+        
             OptionsList optList;
             try {
                 optList = (OptionsList)optionsList;
@@ -44,8 +50,13 @@ class MapsToTranslatables {
         
     }
     
+    
     /**
      * Unused private constructor
      */
-    private MapsToTranslatables(){}
+    private MapsToTranslatables() {
+    
+    }
+    
+    
 }

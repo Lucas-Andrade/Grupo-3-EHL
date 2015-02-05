@@ -13,6 +13,7 @@ import java.util.TreeSet;
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.outputformatters.Translatable;
 import main.java.cli.outputformatters.totranslatableconverters.ToTranslatableConverter;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
 import main.java.domain.model.airships.CivilAirship;
@@ -281,6 +282,43 @@ public class ToTranslatableConverterTest {
         assertNull( t.getKeyTag() );
         assertNull( t.getValueTag() );
         assertFalse( t.getPropertiesBag().isEmpty() );
+        assertTrue( t.getPropertiesBag().containsValue( "E o Sporting é o nosso grande amor!" ));
+    }
+
+    @Test
+    public void shouldConvertAFailureCompletionStatusIntoTranslatableOfString() throws UnknownTypeException {
+        
+        // Arrange
+        String str = "«Está tudo mal! (e vai estar sempre.)» by PP";
+        
+        // Act
+        Translatable t = ToTranslatableConverter.convert( str );
+        
+        // Assert
+        assertNull( t.getTag() );
+        assertNull( t.getEntryTag() );
+        assertNull( t.getKeyTag() );
+        assertNull( t.getValueTag() );
+        assertFalse( t.getPropertiesBag().isEmpty() );
+        assertTrue( t.getPropertiesBag().containsValue( "«Está tudo mal! (e vai estar sempre.)» by PP" ));
+    }
+
+    @Test
+    public void shouldConvertASuccessCompletionStatusIntoTranslatableOfString() throws UnknownTypeException {
+        
+        // Arrange
+        CompletionStatus status = new CompletionStatus( true, "Este teste vai estar green!" );
+        
+        // Act
+        Translatable t = ToTranslatableConverter.convert( status );
+        
+        // Assert
+        assertNull( t.getTag() );
+        assertNull( t.getEntryTag() );
+        assertNull( t.getKeyTag() );
+        assertNull( t.getValueTag() );
+        assertFalse( t.getPropertiesBag().isEmpty() );
+        assertTrue( t.getPropertiesBag().containsValue( "Este teste vai estar green!" ));
     }
     
     // Unconvertible Types

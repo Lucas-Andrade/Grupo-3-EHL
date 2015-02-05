@@ -33,7 +33,7 @@ public class CompletionStatus {
     /**
      * @return the completionStatus
      */
-    public boolean isCompletionStatus() {
+    public boolean operationCompletedSuccessfully() {
         return completionStatus;
     }
     

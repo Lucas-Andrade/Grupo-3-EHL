@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.CommandFactory;
-import main.java.cli.parsingtools.commandfactories.ParsingCommand;
 import main.java.domain.commands.AuthenticateUserCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.Element;
@@ -21,9 +20,9 @@ import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseExce
 
 
 /**
- * Abstract base class for all factories that produce commands which change databases and,
- * consequently, need to authenticate a user before creating a command (e.g. post, patch and delete
- * commands).
+ * Abstract base class whose subclasses' instances are factories that produce commands which change
+ * databases and, consequently, need to authenticate a user before creating a command (e.g. post,
+ * patch and delete commands).
  *
  * @param <E>
  *            The type of the elements contained in the database which will be changed.
@@ -41,13 +40,12 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
     // INSTANCE FIELDS
     
     /**
-     * The users database that contains the user who is making changes to the
-     * {@link #databaseToChange}.
+     * The database that contains the user who is making changes to {@link #databaseToChange}.
      */
     private final Database< User > usersDatabase;
     
     /**
-     * The database that will be change.
+     * The database that will be changed.
      */
     protected final Database< E > databaseToChange;
     
@@ -56,21 +54,20 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
     // CONSTRUCTOR
     
     /**
-     * Stores the {@code commandsDescription} and the databases {@code postingUsersDatabase} and
-     * {@code postedElementsDatabase}.
+     * Creates a new {@link UserAuthenticatingFactory}.
      * 
      * @param usersDatabase
-     *            The users database that stores the user who is making changes to
-     *            {@code databaseToChange}.
+     *            The database that contains the user who is making changes to
+     *            {@link #databaseToChange}.
      * @param databaseToChange
-     *            The database that is supposed to suffer changes.
+     *            The database that will be changed.
      * 
      * @throws InvalidArgumentException
      *             If either {@code usersDatabase} or {@code databaseToChange} are {@code null}.
      */
     public UserAuthenticatingFactory( Database< User > usersDatabase, Database< E > databaseToChange )
         throws InvalidArgumentException {
-        
+    
         if( usersDatabase == null || databaseToChange == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null databases." );
         
@@ -85,32 +82,35 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
     // inherited from CommandFactory abstract class
     /**
      * Produces a command that changes databases.
-     * <ul>
-     * <li>
-     * Sets the values of the fields {@link #loginName} and {@link #loginPassword} with the values
-     * received in the parameters map (if this method is called inside
-     * {@link #internalNewInstance(Map)} and this one is called inside
-     * {@link ParsingCommand#newCommand(Map)}, it is guaranteed that these fields are non-
-     * {@code null}). </p></li>
-     * <li>Checks whether the login user and login password received match.</li>
-     * </ul>
+     * <p>
      * It starts by authenticating the password of the user who is posting (both user and password
      * are expected in the parameters map) and returns a {@link Callable} instance ready to be
      * called.
      * 
-     * @throws InvalidParameterValueException
-     * @throws MissingRequiredParameterException
-     * @throws NoSuchElementInDatabaseException
-     * @throws WrongLoginPasswordException
-     * @throws InvalidArgumentException
+     * @param parametersMap
+     *            The container of the parameters required to create the command. *
+     * @return A command.
      * 
-     * @see {@link #internalInternalNewInstance(User)} for more information on the exceptions
-     *      thrown.
+     * @throws InvalidArgumentException
+     *             If {@code parametersMap} is null.
+     * @throws InvalidParameterValueException
+     *             If the value received in the parameters map for a required parameter is invalid
+     *             (e.g. is not convertible to the expected type).
+     * @throws MissingRequiredParameterException
+     *             If the received map does not contain one of the required parameters for
+     *             instantiating the command.
+     * @throws NoSuchElementInDatabaseException
+     *             For the commands that need a user to be executed if there is no user in
+     *             {@link #usersDatabase} whose username is the login name receive in the parameters
+     *             map. The message of this exception is <i>«{login name} not found in
+     *             {@code usersDatabase.getDatabaseName()}»</i>.
+     * @throws WrongLoginPasswordException
+     *             If the login password received does not match the login username's password.
      */
     protected final Callable< R > internalNewCommand( Map< String, String > parametersMap )
         throws MissingRequiredParameterException, InvalidParameterValueException,
-        InternalErrorException, NoSuchElementInDatabaseException, WrongLoginPasswordException,
-        InvalidArgumentException {
+        NoSuchElementInDatabaseException, WrongLoginPasswordException, InvalidArgumentException {
+    
         /* Uses the TEMPLATE METHOD design pattern */
         
         User authenticatedUser = authenticateAndGetAuthenticatedUser( parametersMap );
@@ -124,24 +124,31 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
     
     // to be implemented by each concrete UserAutheticatingFactory
     /**
-     * Produces a command (returns it to the method {@link ParsingCommand#newInstance()
-     * newInstance()}).
+     * Produces a command.
      * 
-     * @param userWhoIsPosting
-     *            The user whose username was received in the parameters map.
+     * @param authenticatedUser
+     *            The user who is making changes to {@link #databaseToChange}.
+     * @param parametersMap
+     *            The container of the parameters required to create the command.
+     * @return A command.
      * 
+     * @throws InvalidArgumentException
+     *             If {@code parametersMap} is null.
+     * @throws InvalidParameterValueException
+     *             If the value received in the parameters map for a required parameter is invalid
+     *             (e.g. is not convertible to the expected type).
      * @throws MissingRequiredParameterException
      *             If the received map does not contain one of the required parameters for
      *             instantiating the command.
-     * @throws InvalidParameterValueException
-     *             If the received value for a required parameter was invalid.
-     * @throws InvalidArgumentException
-     *             If the received value for a required parameter was invalid.
      * @throws NoSuchElementInDatabaseException
-     *             If an element expected to be in a certain database was not found in it.
+     *             For the commands that need a user to be executed if there is no user in
+     *             {@link #usersDatabase} whose username is the login name receive in the parameters
+     *             map. The message of this exception is <i>«{login name} not found in
+     *             {@code usersDatabase.getDatabaseName()}»</i>.
      */
-    protected abstract Callable< R >
-            internalInternalNewCommand( Map< String, String > parametersMap, User userWhoIsPosting )
+    protected abstract
+            Callable< R >
+            internalInternalNewCommand( Map< String, String > parametersMap, User authenticatedUser )
                 throws MissingRequiredParameterException, InvalidParameterValueException,
                 NoSuchElementInDatabaseException, InvalidArgumentException;
     
@@ -175,7 +182,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
     private User authenticateAndGetAuthenticatedUser( Map< String, String > parametersMap )
         throws NoSuchElementInDatabaseException, WrongLoginPasswordException,
         MissingRequiredParameterException {
-        
+    
         Callable< Optional< User > > authenticateUserCommand;
         try {
             
@@ -226,7 +233,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
      *         the command cannot execute.
      */
     protected final String[] getRequiredParametersNames() {
-        
+    
         String[] requiredParams =
                 copyToNewArrayWith2MorePositions( getSpecificRequiredParametersNames() );
         requiredParams[requiredParams.length - 2] = CLIStringsDictionary.LOGINNAME;
@@ -259,7 +266,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
      *         {@code arrayToBeCopied}.
      */
     private String[] copyToNewArrayWith2MorePositions( String[] arrayToBeCopied ) {
-        
+    
         if( arrayToBeCopied == null )
             return new String[2];
         

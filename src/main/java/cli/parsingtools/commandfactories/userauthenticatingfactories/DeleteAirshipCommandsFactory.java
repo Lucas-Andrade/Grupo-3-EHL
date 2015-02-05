@@ -11,11 +11,14 @@ import main.java.domain.model.airships.Airship;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InternalErrorException;
 import main.java.utils.exceptions.InvalidArgumentException;
+import main.java.utils.exceptions.InvalidParameterValueException;
+import main.java.utils.exceptions.MissingRequiredParameterException;
+import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseException;
 
 
 /**
- * Class whose instances are {@link ParsingCommand factories} that produce commands of
- * type {@link DeleteAirshipCommand}. Commands are {@link Callable} instances.
+ * Class whose instances are {@link ParsingCommand factories} that produce commands of type
+ * {@link DeleteAirshipCommand}. Commands are {@link Callable} instances.
  * 
  * Extends {@link UserAuthenticatingFactory} of {@link Airship Airships} and {@link String Strings}.
  * 
@@ -23,26 +26,9 @@ import main.java.utils.exceptions.InvalidArgumentException;
  */
 public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Airship, String > {
     
-    // Instance Fields
     
-    /**
-     * {@code airshipDatabase} - The airship database whose elements can be deleted.
-     */
-    private final Database< Airship > airshipDatabase;
     
-    /**
-     * {@code requiredParametersNames} - The array of strings with the names of the parameters
-     * needed to produce the command.
-     */
-    private final String[] requiredParametersNames;
-    
-    /**
-     * {@code flightId} - The flightId of the airship to delete from de {@link #airshipDatabase}.
-     */
-    private String flightId;
-    
-    // Constructor
-    
+    // CONSTRUCTOR
     /**
      * Creates a new {@link DeleteAirshipCommandsFactory} that produces commands of type
      * {@link DeleteAirshipCommand}.
@@ -60,70 +46,95 @@ public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Air
     public DeleteAirshipCommandsFactory( Database< User > usersDatabase,
                                          Database< Airship > airshipDatabase )
         throws InvalidArgumentException {
-        
-        super( "Delete An Airship", usersDatabase, airshipDatabase );
-        
-        this.airshipDatabase = airshipDatabase;
-        
-        this.requiredParametersNames = new String[]{ CLIStringsDictionary.FLIGHTID };
+    
+        super( usersDatabase, airshipDatabase );
     }
     
-    // IMPLEMENTATION OF METHODS INHERITED FROM UserAuthenticatingFactory
+    
+    
+    // IMPLEMENTATION OF METHODS INHERITED FROM CommandFactory AND UserAuthenticatingFactory
     
     /**
-     * Returns a command of type {@link DeleteAirshipCommand} after getting the necessary
-     * {@code required parameters} using the private auxiliar method {@link #setFlightId()}.
-     * 
-     * This command will be in its turn returned to {@link ParsingCommand#newInstance()
-     * newInstance()} via the method {@link UserAuthenticatingFactory#internalNewCommand()
-     * internalNewInstance()}
-     * 
-     * @param userWhoIsDeleting
-     *            - The user who is deleting the airship.
-     * 
-     * @return A command of type {@link DeleteAirshipCommand}.
+     * @see main.java.cli.parsingtools.commandfactories.CommandFactory#getCommandsDescription()
      */
     @Override
-    protected Callable< String > internalInternalNewInstance( User userWhoIsDeleting ) {
-        
-        setFlightId();
-        
-        try {
-            return new DeleteAirshipCommand( airshipDatabase, flightId );
-        }
-        catch( InvalidArgumentException e ) {
-            throw new InternalErrorException(
-                                              "UNEXPECTED EXCEPTION IN DeleteAirshipCommandsFactory!" );
-            // never happens cause airshipDatabase is not null
-        }
+    public String getCommandsDescription() {
+    
+        return "Delete an airship.";
     }
     
     /**
-     * Returns an array of strings with name of the parameter needed to produce the command - in
-     * this case the name of the parameter that contains the airship's {@code flightId}.
-     * 
-     * @return An array of strings with the name of the required parameters.
+     * @see UserAuthenticatingFactory#internalInternalNewCommand(java.util.Map,
+     *      main.java.domain.model.users.User)
+     */
+    @Override
+    protected Callable< String > internalInternalNewCommand( Map< String, String > parametersMap,
+                                                             User userWhoIsDeleting )
+        throws MissingRequiredParameterException, InvalidParameterValueException,
+        NoSuchElementInDatabaseException, InvalidArgumentException {
+    
+        return new DeleteAirship_ParsingCommand( parametersMap ).newCommand();
+        // to create this factory's commands, the userWhoIsDeleting is not needed
+    }
+    
+    /**
+     * @see UserAuthenticatingFactory#getSpecificRequiredParametersNames()
      */
     @Override
     protected String[] getSpecificRequiredParametersNames() {
-        
-        return requiredParametersNames;
+    
+        return new String[]{ CLIStringsDictionary.FLIGHTID };
     }
     
-    // PRIVATE AUXILIAR METHOD - used in the method postsInternalNewInstance()
     
+    
+    // INNER CLASS
     /**
-     * Sets the value of the field {@link #flightId} with the value received in the parameters map
-     * needed to {@link DeleteAirshipCommand}.
-     * <p>
-     * Since this method is called inside {@link #internalNewInstance(Map)} and, in its turn, this
-     * last one is called inside {@link ParsingCommand#newCommand(Map)}, it is guaranteed
-     * that the field {@link #flightId} is non-{@code null} after this method finishes its job.
-     * </p>
+     * Class whose instances are responsible for creating commands of type
+     * {@link DeleteAirshipCommand} after interpreting the string parameters received in the
+     * parameters map.
+     *
+     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
-    private void setFlightId() {
+    private class DeleteAirship_ParsingCommand extends ParsingCommand< String > {
         
-        flightId = getParameterAsString( requiredParametersNames[0] );
+        /**
+         * Creates a new {@link DeleteAirship_ParsingCommand} that creates a command of type
+         * {@link DeleteAirshipCommand}.
+         * 
+         * @param parametersMap
+         *            The container of the parameters required to create the command.
+         */
+        public DeleteAirship_ParsingCommand( Map< String, String > parametersMap ) {
+        
+            super( parametersMap );
+        }
+        
+        /**
+         * Returns a command of type {@link DeleteAirshipCommand} after extracting the value of the
+         * parameter with name {@link CLIStringsDictionary#FLIGHTID} from the {@code parametersMap}.
+         * 
+         * @return A command of type {@link DeleteAirshipCommand}.
+         * @throws MissingRequiredParameterException
+         *             If the value of the parameter with name {@link CLIStringsDictionary#FLIGHTID}
+         *             is {@code null} or an empty-string.
+         */
+        @Override
+        protected Callable< String > newCommand() throws MissingRequiredParameterException {
+        
+            String flightId = getParameterAsString( CLIStringsDictionary.FLIGHTID );
+            try {
+                return new DeleteAirshipCommand( databaseToChange, flightId );
+            }
+            catch( InvalidArgumentException e ) {
+                throw new InternalErrorException(
+                                                  "UNEXPECTED EXCEPTION IN DeleteAirship_ParsingCommand!" );
+                // never happens cause airshipDatabase is not null
+            }
+        }
+        
     }
+    
+    
     
 }

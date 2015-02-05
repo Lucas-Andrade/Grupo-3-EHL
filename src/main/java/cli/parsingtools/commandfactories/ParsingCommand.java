@@ -9,14 +9,19 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
 
 
 /**
- * TODO
- * 
- * Class whose subclasses' instances interpret string-parameters needed to create commands and
- * create the commands (through method {@link #newCommand(Map)}).
+ * Abstract class whose subclasses' instances interpret string-parameters needed to create commands
+ * and produce commands. Commands are instances of {@link Callable}.
+ * <p>
+ * Method {@link #newCommand()} uses the {@code Map<String,String>} received in the constructor,
+ * which is supposed to contain the parameters needed to create the command: each map-entry
+ * represents a parameter, the key is the parameter's name and the value is the parameter's value.
+ * This method starts by converting the string-parameters needed to create commands into
+ * strongly-typed parameters and creates a command with those parameters.
+ * </p>
  * 
  * @param <R>
  *            The type of the results returned by the method {@link Callable#call()} of the commands
- *            produced by this {@link CommandFactory}.
+ *            produced by this {@link ParsingCommand}.
  * 
  * @see Callable
  * @see Map
@@ -28,35 +33,41 @@ public abstract class ParsingCommand< R > {
     
     // INSTANCE FIELD
     /**
-     * {@code parametersMap} - {@link Map} containing all the name-value pairs of parameters
-     * received to create and execute a specific command.
+     * The container of the parameters required to create the command.
      */
     protected Map< String, String > parametersMap;
     
     // CONSTRUCTOR
     /**
-     * Creates a {@code parsing command}, that interprets string-parameters needed to create
-     * commands and creates the commands (through method {@link #newCommand(Map)}).
+     * Creates a new {@link ParsingCommand}.
      * 
      * @param parametersMap
      *            The container of the parameters required to create the command.
      */
     public ParsingCommand( Map< String, String > parametersMap ) {
+    
         this.parametersMap = parametersMap;
     }
     
     // ABSTRACT METHOD
     /**
-     * Returns a {@link Callable}.
+     * Produces a command.
      * 
-     * @return A {@link Callable}.
-     * @throws MissingRequiredParameterException
+     * @return A command.
+     * 
      * @throws InvalidParameterValueException
+     *             If the value received in the parameters map for a required parameter is invalid
+     *             (e.g. is not convertible to the expected type).
+     * @throws MissingRequiredParameterException
+     *             If the received map does not contain one of the required parameters for
+     *             instantiating the command.
      */
-    public abstract Callable< R > newCommand()
+    protected abstract Callable< R > newCommand()
         throws MissingRequiredParameterException, InvalidParameterValueException;
     
-    // PROTECTED METHODS
+    
+    
+    // PROTECTED METHODS - tools for getting parameters from the parametersMap
     
     /**
      * Returns the string-value of the entry in {@link #parametersMap} with key
@@ -73,7 +84,7 @@ public abstract class ParsingCommand< R > {
      */
     protected String getParameterAsString( String parameterName )
         throws MissingRequiredParameterException {
-        
+    
         return StringUtils.parameterToString( parameterName, parametersMap.get( parameterName ) );
     }
     
@@ -97,7 +108,7 @@ public abstract class ParsingCommand< R > {
      */
     protected int getParameterAsInt( String parameterName )
         throws InvalidParameterValueException, MissingRequiredParameterException {
-        
+    
         return StringUtils.parameterToInteger( parameterName, parametersMap.get( parameterName ) );
     }
     
@@ -121,7 +132,7 @@ public abstract class ParsingCommand< R > {
      */
     protected Double getParameterAsDouble( String parameterName )
         throws InvalidParameterValueException, MissingRequiredParameterException {
-        
+    
         return StringUtils.parameterToDouble( parameterName, parametersMap.get( parameterName ) );
     }
     
@@ -149,7 +160,7 @@ public abstract class ParsingCommand< R > {
      */
     protected boolean getParameterAsBoolean( String parameterName )
         throws InvalidParameterValueException, MissingRequiredParameterException {
-        
+    
         return StringUtils.parameterToBoolean( parameterName, parametersMap.get( parameterName ) );
     }
     

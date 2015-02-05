@@ -74,7 +74,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< String > {
      */
     @Override
     protected FunctionalWindowSwingWorker< String > getSwingWorker() {
-        return new FunctionalWindowSwingWorker< String >( functionalWindow.getErrorLabel() ) {
+        return new FunctionalWindowSwingWorker< String >( functionalWindow.getErrorJTextArea() ) {
             
             /**
              * String representation of the parameters to use in the commands and that are obtained

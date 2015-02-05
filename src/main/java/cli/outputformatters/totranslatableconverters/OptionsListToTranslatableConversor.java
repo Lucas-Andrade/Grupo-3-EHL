@@ -44,5 +44,8 @@ class MapsToTranslatables {
         
     }
     
-    
+    /**
+     * Unused private constructor
+     */
+    private MapsToTranslatables(){}
 }

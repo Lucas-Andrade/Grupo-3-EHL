@@ -83,5 +83,10 @@ class IterablesToTranslatables {
         }
     }
     
+    /**
+     * Unused private constructor
+     */
+    
+    private IterablesToTranslatables(){}
     
 }

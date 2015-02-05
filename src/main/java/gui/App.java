@@ -57,6 +57,12 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class App {
+	
+    /**
+     * Unused private constructor
+     */
+    
+    private App() {}
     
     public static void main( String[] args ) throws InvalidArgumentException {
         Database< User > usersDatabase = new InMemoryUsersDatabase( "Users Database" );

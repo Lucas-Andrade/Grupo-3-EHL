@@ -82,7 +82,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
     @Override
     protected FunctionalWindowSwingWorker< Iterable< Airship >> getSwingWorker() {
         return new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel,
-                                                   functionalWindow.getErrorLabel() ) {
+                                                   functionalWindow.getErrorJTextArea() ) {
             
             /**
              * String representation of the parameters to use in the commands and that are obtained

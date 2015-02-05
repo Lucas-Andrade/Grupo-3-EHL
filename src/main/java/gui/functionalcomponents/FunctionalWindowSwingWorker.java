@@ -2,8 +2,9 @@ package main.java.gui.functionalcomponents;
 
 
 import java.util.concurrent.ExecutionException;
-import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
+import main.java.utils.StringUtils;
 
 
 /**
@@ -18,7 +19,7 @@ public abstract class FunctionalWindowSwingWorker< T > extends SwingWorker< T, V
      * {@code errorLabel} - The error label where the error messages from the thrown exceptions will
      * be written.
      */
-    private final JLabel errorLabel;
+	private final JTextArea errorJtextArea;
     
     /**
      * Public constructor that will receive a window's error label as parameter where the error
@@ -27,8 +28,9 @@ public abstract class FunctionalWindowSwingWorker< T > extends SwingWorker< T, V
      * @param errorLabel
      *            - The window error label.
      */
-    public FunctionalWindowSwingWorker( JLabel errorLabel ) {
-        this.errorLabel = errorLabel;
+	public FunctionalWindowSwingWorker( JTextArea errorJTextArea )
+    {
+            this.errorJtextArea = errorJTextArea;
     }
     
     /**
@@ -41,13 +43,15 @@ public abstract class FunctionalWindowSwingWorker< T > extends SwingWorker< T, V
     final protected void done() {
         try {
             functionalDone( get() );
-            errorLabel.setText( " " );
+            errorJtextArea.setText( " " );
         }
-        catch( ExecutionException e ) {
-            errorLabel.setText( e.getCause().getMessage() );
+        catch( ExecutionException e )
+        {
+                errorJtextArea.setText( StringUtils.errorStringParser( e.getCause().getMessage(),50 ));
         }
-        catch( Exception e ) {
-            errorLabel.setText( e.getMessage() );
+        catch( Exception e )
+        {
+                errorJtextArea.setText(StringUtils.errorStringParser( e.getMessage(), 50) );
         }
     }
     

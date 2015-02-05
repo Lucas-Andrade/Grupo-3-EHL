@@ -1,82 +1,83 @@
 package main.java.gui.design.panels.postairshipwindowpanels;
 
+
 import java.awt.Color;
 import java.awt.event.KeyEvent;
-
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+
+@SuppressWarnings( "serial" )
 public class JPanelWithSpecificMilitaryAirhipParameters extends JPanel {
-
-	
-
-	private final static String YES = "Yes";
-	private final static String NO = "No";
-	private JRadioButton YesButton;
-	private JRadioButton NoButton;
-	private ButtonGroup groupButtons;
-	
-	
-	private static final long serialVersionUID = 1L;
-
-
-	public JPanelWithSpecificMilitaryAirhipParameters() {
-			initial();
-	} 
-
-
-	private void initial() {
-		 
-		this.setOpaque(false);
-	 	
-		 JLabel militaryArmorLabel = new JLabel("Has Armor?");
-		 militaryArmorLabel.setForeground(Color.WHITE);
-		 this.add(militaryArmorLabel);
-				
-		 YesButton = new JRadioButton(YES);
-		 YesButton.setForeground(Color.WHITE);
-		 YesButton.setMnemonic(KeyEvent.VK_B);
-		 YesButton.setActionCommand(YES);
-		 YesButton.setSelected(true);
-		 YesButton.setOpaque(false);
-		 this.add(YesButton);
-		
-		 
-		 NoButton = new JRadioButton(NO);
-		 NoButton.setForeground(Color.WHITE);
-		 NoButton.setMnemonic(KeyEvent.VK_B);
-		 NoButton.setActionCommand(NO);
-		 NoButton.setOpaque(false);
-		 this.add(NoButton);
-		 	 
-		 groupButtons = new ButtonGroup();
-		 groupButtons.add(YesButton);
-		 groupButtons.add(NoButton);
-		 
-		 this.setBorder(BorderFactory.createEmptyBorder(10, 0, 16, 100));
-		
-	}
-
-
-	public JRadioButton getYesButton() {
-		return YesButton;
-	}
-
-	public JRadioButton getNoButton() {
-		return NoButton;
-	}
-
-
-	public ButtonGroup getGroupButtons() {
-		return groupButtons;
-	}
-
-
-	
-	
-	
-
+    
+    private static final int TOPBORDER = 10;
+    private static final int LEFTBORDER = 0;
+    private static final int BOTTOMBORDER = 16;
+    private static final int RIGHTBORDER = 100;
+    
+    private static final String YES = "Yes";
+    private static final String NO = "No";
+    private JRadioButton yesButton;
+    private JRadioButton noButton;
+    private ButtonGroup groupButtons;
+    
+    
+    
+    
+    public JPanelWithSpecificMilitaryAirhipParameters() {
+        initial();
+    }
+    
+    
+    private void initial() {
+        
+        this.setOpaque( false );
+        
+        JLabel militaryArmorLabel = new JLabel( "Has Armor?" );
+        militaryArmorLabel.setForeground( Color.WHITE );
+        this.add( militaryArmorLabel );
+        
+        yesButton = new JRadioButton( YES );
+        yesButton.setForeground( Color.WHITE );
+        yesButton.setMnemonic( KeyEvent.VK_B );
+        yesButton.setActionCommand( YES );
+        yesButton.setSelected( true );
+        yesButton.setOpaque( false );
+        this.add( yesButton );
+        
+        
+        noButton = new JRadioButton( NO );
+        noButton.setForeground( Color.WHITE );
+        noButton.setMnemonic( KeyEvent.VK_B );
+        noButton.setActionCommand( NO );
+        noButton.setOpaque( false );
+        this.add( noButton );
+        
+        groupButtons = new ButtonGroup();
+        groupButtons.add( yesButton );
+        groupButtons.add( noButton );
+        
+        this.setBorder( BorderFactory.createEmptyBorder( TOPBORDER, LEFTBORDER, BOTTOMBORDER, RIGHTBORDER) );
+        
+    }
+    
+    
+    public JRadioButton getYesButton() {
+        return yesButton;
+    }
+    
+    public JRadioButton getNoButton() {
+        return noButton;
+    }
+    
+    
+    public ButtonGroup getGroupButtons() {
+        return groupButtons;
+    }
+    
+    
+    
 }

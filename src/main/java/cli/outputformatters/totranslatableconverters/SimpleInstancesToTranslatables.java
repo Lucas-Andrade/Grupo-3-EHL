@@ -145,5 +145,9 @@ class SimpleInstancesToTranslatables {
         }
     }
     
+    /**
+     * Unused private constructor
+     */
+    private SimpleInstancesToTranslatables(){}
     
 }

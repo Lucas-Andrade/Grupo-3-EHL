@@ -16,6 +16,10 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  */
 public class StringUtils {
     
+    /**
+     * Unused private constructor
+     */
+    private StringUtils(){};
     
     
     // STATIC METHODS
@@ -156,4 +160,15 @@ public class StringUtils {
         return parameterValue;
     }
 
+    
+    
+    public static  String errorStringParser(String string, int maxSize){
+
+        StringBuilder copy = new StringBuilder();
+        int i;
+        for ( i=0;i<string.length()-maxSize; i+=maxSize)
+        copy.append(string.substring(i, i+maxSize)).append("\n\r");        
+        copy.append(string.substring(i));
+        return copy.toString();
+}
 }

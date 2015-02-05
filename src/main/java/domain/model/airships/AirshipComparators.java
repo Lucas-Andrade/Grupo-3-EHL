@@ -61,4 +61,8 @@ public class AirshipComparators {
 				+ Math.pow(gp2.getLongitude().getValue() - gp1.getLongitude().getValue(), 2);
 		}
 	}
+	/**
+     * Unused private constructor 
+     */
+    private AirshipComparators() {}
 }

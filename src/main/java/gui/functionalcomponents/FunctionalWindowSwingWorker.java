@@ -42,8 +42,8 @@ public abstract class FunctionalWindowSwingWorker< T > extends SwingWorker< T, V
     @Override
     final protected void done() {
         try {
-            functionalDone( get() );
             errorJtextArea.setText( " " );
+            functionalDone( get() );
         }
         catch( ExecutionException e )
         {

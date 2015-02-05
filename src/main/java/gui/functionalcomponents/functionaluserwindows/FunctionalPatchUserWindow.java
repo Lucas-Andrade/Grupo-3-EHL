@@ -3,6 +3,7 @@ package main.java.gui.functionalcomponents.functionaluserwindows;
 
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.commands.patchcommands.PatchUserPasswordCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.users.User;
@@ -21,7 +22,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class FunctionalPatchUserWindow extends FunctionalWindow< String > {
+public class FunctionalPatchUserWindow extends FunctionalWindow< CompletionStatus > {
     
     /**
      * {@code functionalWindow} - The {@code PatchUserWindow} we want to add functionality to.
@@ -60,9 +61,9 @@ public class FunctionalPatchUserWindow extends FunctionalWindow< String > {
      *         methods.
      */
     @Override
-    protected FunctionalWindowSwingWorker< String > getSwingWorker() {
+    protected FunctionalWindowSwingWorker< CompletionStatus > getSwingWorker() {
         
-        return new FunctionalWindowSwingWorker< String >( functionalWindow.getErrorJTextArea() ) {
+        return new FunctionalWindowSwingWorker< CompletionStatus >( functionalWindow.getErrorJTextArea() ) {
             
             /**
              * String representation of the parameters to use in the commands and that are obtained
@@ -89,7 +90,7 @@ public class FunctionalPatchUserWindow extends FunctionalWindow< String > {
              *             the text appropriate text field.
              */
             @Override
-            protected String doInBackground() throws Exception {
+            protected CompletionStatus doInBackground() throws Exception {
                 
                 if( newPassword.equals( "" ) )
                     throw new InvalidArgumentException( "Please Insert a New Password" );
@@ -116,15 +117,16 @@ public class FunctionalPatchUserWindow extends FunctionalWindow< String > {
              *             If the result of the {@code doInBackground} method is not positive.
              */
             @Override
-            public void functionalDone( String resultOfDoInBackGround ) throws Exception {
+            public void functionalDone( CompletionStatus resultOfDoInBackGround ) throws Exception {
                 
-                if( resultOfDoInBackGround.equals( "User password successfully changed" ) ) {
+                if( resultOfDoInBackGround.isCompletionStatus() ) {
                     
-                    new SuccessWindow( resultOfDoInBackGround );
+                    new SuccessWindow( resultOfDoInBackGround.getMessage() );
                     functionalWindow.dispose();
                 }
                 else {
-                    throw new InvalidArgumentException( resultOfDoInBackGround );
+                    functionalWindow.getErrorJTextArea()
+                    .setText( resultOfDoInBackGround.getMessage() );
                 }
             }
         };

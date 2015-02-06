@@ -79,7 +79,7 @@ public class Translatable {
     
     public Translatable( String tag, String entryTag, String keyTag, String valueTag,
                          Map< String, Object > propertiesBag, String toString ) {
-        
+    
         this.tag = tag;
         this.entryTag = entryTag;
         this.keyTag = keyTag;
@@ -87,8 +87,7 @@ public class Translatable {
         
         this.propertiesBag = propertiesBag;
         
-        this.toString = (toString == null)
-                                          ? "" : toString;
+        this.toString = (toString == null) ? "" : toString;
     }
     
     
@@ -98,6 +97,7 @@ public class Translatable {
      * @return the propertiesBag
      */
     public Map< String, Object > getPropertiesBag() {
+    
         return propertiesBag;
     }
     
@@ -108,6 +108,7 @@ public class Translatable {
      * @return the tag
      */
     public String getTag() {
+    
         return tag;
     }
     
@@ -115,6 +116,7 @@ public class Translatable {
      * @return the entryTag
      */
     public String getEntryTag() {
+    
         return entryTag;
     }
     
@@ -122,6 +124,7 @@ public class Translatable {
      * @return the keyTag
      */
     public String getKeyTag() {
+    
         return keyTag;
     }
     
@@ -129,6 +132,7 @@ public class Translatable {
      * @return the valueTag
      */
     public String getValueTag() {
+    
         return valueTag;
     }
     
@@ -139,6 +143,7 @@ public class Translatable {
      * @return the toString
      */
     public String toString() {
+    
         return toString;
     }
     

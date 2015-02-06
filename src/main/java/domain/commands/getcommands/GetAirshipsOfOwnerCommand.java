@@ -48,7 +48,7 @@ public class GetAirshipsOfOwnerCommand implements Callable< Optional< Iterable< 
      */
     public GetAirshipsOfOwnerCommand( Database< Airship > airshipDatabase, String ownerUsername )
         throws InvalidArgumentException {
-        
+    
         if( airshipDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         if( ownerUsername == null || ownerUsername.equals( "" ) )
@@ -78,7 +78,7 @@ public class GetAirshipsOfOwnerCommand implements Callable< Optional< Iterable< 
      */
     @Override
     public Optional< Iterable< Airship >> call() throws Exception {
-        
+    
         return airshipDatabase.getElementsByUser( username );
     }
 }

@@ -42,7 +42,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory_Tests {
     @BeforeClass
     public static void createTheCommandParserAndRegisterTheCommands()
         throws InvalidRegisterException, InvalidArgumentException {
-        
+    
         cmdparser = new CommandParser();
         
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
@@ -60,7 +60,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory_Tests {
         throws WrongLoginPasswordException, MissingRequiredParameterException,
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
-        
+    
         Callable< ? > checkIfAirshipIsTransgressingCommand =
                 (new Parser( cmdparser, "GET", "/airships/reports/id20" )).getCommand();
         
@@ -74,7 +74,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateACheckIfAirshipIsTransgressingCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
-        
+    
         new CheckIfAirshipIsTransgressingCommandsFactory( null );
     }
 }

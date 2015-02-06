@@ -26,22 +26,26 @@ public class OptionsList {
      *            descriptions.
      */
     public OptionsList( Map< String, String > options ) {
+    
         this.options = options;
     }
     
     /**
      * Returns the list of options.
+     * 
      * @return The list of options.
      */
     public Map< String, String > getOptions() {
+    
         return options;
     }
-
+    
     /**
      * Returns the string representation of this list of options.
      */
     @Override
     public String toString() {
+    
         return options.toString();
     }
 }

@@ -17,7 +17,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public abstract class PostAirshipCommand implements Callable< CompletionStatus > {
-       
+    
     // INSTANCE FIELDS
     
     /**

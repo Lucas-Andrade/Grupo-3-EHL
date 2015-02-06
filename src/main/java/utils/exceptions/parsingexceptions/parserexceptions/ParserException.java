@@ -17,7 +17,7 @@ public class ParserException extends ParsingException {
      * Constructs a {@link ParserException} with no detail message.
      */
     public ParserException() {
-        
+    
     }
     
     /**
@@ -27,7 +27,7 @@ public class ParserException extends ParsingException {
      *            The detail message.
      */
     public ParserException( String message ) {
-        
+    
         super( message );
     }
     

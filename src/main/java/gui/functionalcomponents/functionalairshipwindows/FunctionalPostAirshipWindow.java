@@ -55,7 +55,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< CompletionSta
      */
     public FunctionalPostAirshipWindow( PostAirshipsWindow nonFunctionalWindow,
                                         Database< Airship > airshipsDatabase, User userWhoIsPosting ) {
-        
+    
         super( nonFunctionalWindow );
         
         this.functionalWindow = nonFunctionalWindow;
@@ -75,7 +75,9 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< CompletionSta
      */
     @Override
     protected FunctionalWindowSwingWorker< CompletionStatus > getSwingWorker() {
-        return new FunctionalWindowSwingWorker< CompletionStatus >( functionalWindow.getErrorJTextArea() ) {
+    
+        return new FunctionalWindowSwingWorker< CompletionStatus >(
+                                                                    functionalWindow.getErrorJTextArea() ) {
             
             /**
              * String representation of the parameters to use in the commands and that are obtained
@@ -106,7 +108,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< CompletionSta
              */
             @Override
             protected CompletionStatus doInBackground() throws Exception {
-                
+            
                 if( functionalWindow.getTypeAirshipTabbedPane().getSelectedIndex() == 0 ) {
                     
                     getCivilAirshipStringParameters();
@@ -146,7 +148,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< CompletionSta
              * to give to the {@link PostCivilAirshipCommand} from the window text fields.
              */
             private void getCivilAirshipStringParameters() {
-                
+            
                 latitude =
                         functionalWindow.getCivilAirshipCommonPainel().getGeoCoodinates()
                                         .getLatitude().getJTextField().getText();
@@ -174,7 +176,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< CompletionSta
              * to give to the {@link PostMilitaryAirshipCommand} from the window text fields.
              */
             private void getMilitaryAirshipStringParameters() {
-                
+            
                 latitude =
                         functionalWindow.getMilitaryAirshipCommonPainel().getGeoCoodinates()
                                         .getLatitude().getJTextField().getText();
@@ -209,11 +211,12 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< CompletionSta
              */
             @Override
             public void functionalDone( CompletionStatus resultOfDoInBackGround ) {
+            
                 new SuccessWindow( resultOfDoInBackGround.getMessage() );
                 functionalWindow.dispose();
             }
-
-      
+            
+            
         };
     }
 }

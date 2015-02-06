@@ -57,7 +57,7 @@ public class PostUserCommand implements Callable< CompletionStatus > {
     public PostUserCommand( String username, String password, String email, String fullname,
                             Database< User > databaseWhereToPost, User userWhoIsPosting )
         throws InvalidArgumentException {
-        
+    
         if( databaseWhereToPost == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -84,20 +84,21 @@ public class PostUserCommand implements Callable< CompletionStatus > {
      */
     @Override
     public CompletionStatus call() throws Exception {
-        
+    
         User theUser =
-                (fullName != null)
-                                  ? new User( username, password, email, fullName )
+                (fullName != null) ? new User( username, password, email, fullName )
                                   : new User( username, password, email );
         
         if( databaseWhereToPost.add( theUser, userWhoIsPosting ) )
             return new CompletionStatus( true, "New user successfully added: " + theUser.toString() );
         
-        return new CompletionStatus( false, new StringBuilder( "User not added. Either the username «" ).append( username )
-                                                                           .append( "» or\nthe email «" )
-                                                                           .append( email )
-                                                                           .append( "» already exist in " )
-                                                                           .append( databaseWhereToPost.getDatabaseName() )
-                                                                           .toString());
+        return new CompletionStatus(
+                                     false,
+                                     new StringBuilder( "User not added. Either the username «" ).append( username )
+                                                                                                 .append( "» or\nthe email «" )
+                                                                                                 .append( email )
+                                                                                                 .append( "» already exist in " )
+                                                                                                 .append( databaseWhereToPost.getDatabaseName() )
+                                                                                                 .toString() );
     }
 }

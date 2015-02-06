@@ -48,7 +48,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< Completion
      */
     public PatchUserPasswordCommandsFactory( Database< User > usersDatabase )
         throws InvalidArgumentException {
-        
+    
         if( usersDatabase == null )
             throw new InvalidArgumentException(
                                                 "Cannot instantiate post factory with null databases." );
@@ -71,7 +71,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< Completion
     @Override
     protected Callable< CompletionStatus > internalNewCommand( Map< String, String > parametersMap )
         throws MissingRequiredParameterException {
-        
+    
         return new PatchUP_ParsingCommand( parametersMap ).newCommand();
     }
     
@@ -85,7 +85,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< Completion
      */
     @Override
     protected String[] getRequiredParametersNames() {
-        
+    
         return new String[]{ CLIStringsDictionary.USERNAME, CLIStringsDictionary.OLDPASSWORD,
                             CLIStringsDictionary.NEWPASSWORD };
     }
@@ -99,7 +99,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< Completion
      */
     @Override
     public String getCommandsDescription() {
-        
+    
         return "Change An User Password";
     }
     
@@ -136,7 +136,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< Completion
          */
         public PatchUP_ParsingCommand( Map< String, String > parametersMap )
             throws MissingRequiredParameterException {
-            
+        
             super( parametersMap );
             
             setParametersFields();
@@ -148,7 +148,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< Completion
          */
         @Override
         public Callable< CompletionStatus > newCommand() {
-            
+        
             try {
                 return new PatchUserPasswordCommand( usersDatabase, username, oldPassword,
                                                      newPassword );
@@ -169,7 +169,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< Completion
          *             If one parameter is null or the empty string.
          */
         private void setParametersFields() throws MissingRequiredParameterException {
-            
+        
             username = getParameterAsString( CLIStringsDictionary.USERNAME );
             oldPassword = getParameterAsString( CLIStringsDictionary.OLDPASSWORD );
             newPassword = getParameterAsString( CLIStringsDictionary.NEWPASSWORD );

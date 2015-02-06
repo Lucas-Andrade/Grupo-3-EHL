@@ -44,7 +44,7 @@ public class GetAllTransgressingAirshipsCommandsFactory extends
      */
     public GetAllTransgressingAirshipsCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-        
+    
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
         
@@ -64,7 +64,7 @@ public class GetAllTransgressingAirshipsCommandsFactory extends
     @Override
     protected Callable< Optional< Iterable< Airship >>>
             internalNewCommand( Map< String, String > parametersMap ) {
-        
+    
         try {
             return new GetAllTransgressingAirshipsCommand( airshipsDatabase );
         }
@@ -85,7 +85,7 @@ public class GetAllTransgressingAirshipsCommandsFactory extends
      */
     @Override
     protected String[] getRequiredParametersNames() {
-        
+    
         return null;
     }
     
@@ -96,6 +96,7 @@ public class GetAllTransgressingAirshipsCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
+    
         return "Gets all airships that are transgressing their air corridors.";
     }
 }

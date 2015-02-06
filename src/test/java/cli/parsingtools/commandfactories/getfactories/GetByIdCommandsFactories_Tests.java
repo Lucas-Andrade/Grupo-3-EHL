@@ -48,7 +48,7 @@ public class GetByIdCommandsFactories_Tests {
     @BeforeClass
     public static void createTheCommandParserAndRegisterTheCommands()
         throws InvalidRegisterException, InvalidArgumentException {
-        
+    
         cmdparser = new CommandParser();
         
         userDatabase = new InMemoryUsersDatabase( "Users Database" );
@@ -68,7 +68,7 @@ public class GetByIdCommandsFactories_Tests {
         throws WrongLoginPasswordException, MissingRequiredParameterException,
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
-        
+    
         Callable< ? > getUserByUsernameCommand =
                 (new Parser( cmdparser, "GET", "/users/{username}" )).getCommand();
         
@@ -86,7 +86,7 @@ public class GetByIdCommandsFactories_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAirshipByFlightIdCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
-        
+    
         new GetAirshipByFlightIdCommandsFactory( null );
     }
     
@@ -95,7 +95,7 @@ public class GetByIdCommandsFactories_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetUserByUsernameCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
-        
+    
         new GetUserByUsernameCommandsFactory( null );
     }
 }

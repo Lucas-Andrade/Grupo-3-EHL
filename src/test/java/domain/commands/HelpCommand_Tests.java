@@ -26,18 +26,18 @@ public class HelpCommand_Tests {
     
     @Test
     public void shouldGetAllCommandsDescription() throws Exception {
-        
-        //Arrange
-        Map<String,String> commandsDescription = new HashMap< String, String >();
+    
+        // Arrange
+        Map< String, String > commandsDescription = new HashMap< String, String >();
         commandsDescription.put( "GET /airships", "Gets the list of all airships." );
         commandsDescription.put( "PATCH /users/{username}", "Change An User Password" );
         
         Callable< OptionsList > helpCommand = new HelpCommand( commandsDescription );
         
-        //Act
-        Map<String, String> descriptions = helpCommand.call().getOptions();
+        // Act
+        Map< String, String > descriptions = helpCommand.call().getOptions();
         
-        //Assert
+        // Assert
         assertEquals( descriptions.get( "GET /airships" ), "Gets the list of all airships." );
         assertEquals( descriptions.get( "PATCH /users/{username}" ), "Change An User Password" );
     }
@@ -46,7 +46,7 @@ public class HelpCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionGivingANullCommandParserInHelpCommand()
         throws Exception {
-        
+    
         new HelpCommand( null );
     }
 }

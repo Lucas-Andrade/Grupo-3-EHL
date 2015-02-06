@@ -39,7 +39,7 @@ public class GetAllElementsInADatabaseCommand_Tests {
     
     @Before
     public void createAirshipsAndUsersAndTheirDatabases() throws InvalidArgumentException {
-        
+    
         // Arrange
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         userDatabase = new InMemoryUsersDatabase( "Users Database" );
@@ -64,27 +64,28 @@ public class GetAllElementsInADatabaseCommand_Tests {
     @SuppressWarnings( { "rawtypes", "unchecked" } )
     @Test
     public void shouldSuccessfullyGetAllTheAirshipFromAnAirshipsDatabase() throws Exception {
+    
+        // Arrange
+        getAllElementsInADatabase = new GetAllElementsInADatabaseCommand( airshipsDatabase );
         
         // Act
-        getAllElementsInADatabase = new GetAllElementsInADatabaseCommand( airshipsDatabase );
-        Iterable< Airship > testedAirships =
-                (Iterable< Airship >)getAllElementsInADatabase.call().get();
-        
-        List< Airship > airships = new ArrayList< Airship >();
-        
-        // The Addition Order Matters??
-        airships.add( airship2 );
-        airships.add( airship1 );
-        airships.add( airship3 );
+        Iterable receivedAirships = getAllElementsInADatabase.call().get();
         
         // Assert
-        Assert.assertEquals( testedAirships.toString(), airships.toString() );
+        int counter = 0;
+        for( Object a : receivedAirships ) {
+            ++counter;
+            Assert.assertTrue( a instanceof Airship );
+            a = (Airship)a;
+            Assert.assertTrue( a.equals( airship1 ) || a.equals( airship2 ) || a.equals( airship3 ) );
+        }
+        Assert.assertTrue( counter == 3 );
     }
     
     @SuppressWarnings( { "rawtypes", "unchecked" } )
     @Test
     public void shouldSuccessfullyGetTheCorrectUserGivenItsIdentification() throws Exception {
-        
+    
         // Act
         getAllElementsInADatabase = new GetAllElementsInADatabaseCommand( userDatabase );
         Iterable< User > testedUsers = (Iterable< User >)getAllElementsInADatabase.call().get();
@@ -106,7 +107,7 @@ public class GetAllElementsInADatabaseCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullDatabase()
         throws InvalidArgumentException {
-        
+    
         getAllElementsInADatabase = new GetAllElementsInADatabaseCommand( null );
     }
 }

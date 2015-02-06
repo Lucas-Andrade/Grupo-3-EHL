@@ -153,7 +153,7 @@ public class Parser {
     public Parser( CommandParser cmdParser, String... args )
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidArgumentException, InvalidCommandSyntaxException {
-        
+    
         if( cmdParser == null )
             throw new InvalidArgumentException(
                                                 "Cannot instantiate parser with null command parser." );
@@ -201,7 +201,7 @@ public class Parser {
         throws WrongLoginPasswordException, MissingRequiredParameterException,
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException {
-        
+    
         return cmdParser.getCommand( parametersMap, args );
     }
     
@@ -218,7 +218,7 @@ public class Parser {
      *             If the value of the parameter accept is unknown.
      */
     public Translator getTranslator() throws InvalidParameterValueException {
-        
+    
         String translator = findValueOf( CLIStringsDictionary.ACCEPT );
         if( translator == null || !supportsOutputCustomization() )
             translator = CLIStringsDictionary.TEXT;
@@ -242,7 +242,7 @@ public class Parser {
      *             If the value of the parameter accept is unknown.
      */
     public PrintStream getStream() throws InvalidParameterValueException {
-        
+    
         String filePath = findValueOf( CLIStringsDictionary.STREAM );
         if( filePath == null || !supportsOutputCustomization() )
             return System.out;
@@ -283,7 +283,7 @@ public class Parser {
      */
     private Map< String, String > getParametersFromParametersList()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException {
-        
+    
         Map< String, String > parametersMap = new HashMap< String, String >();
         if( args.length == 2 )
             return parametersMap;
@@ -315,7 +315,7 @@ public class Parser {
      *         {@link System#out}.
      */
     private boolean supportsOutputCustomization() {
-        
+    
         return methodsThatSupportOutputCustomization.contains( args[0] );
     }
     
@@ -333,7 +333,7 @@ public class Parser {
      *         given list.
      */
     private String findValueOf( String parameterName ) {
-        
+    
         return parametersMap.get( parameterName );
     }
     

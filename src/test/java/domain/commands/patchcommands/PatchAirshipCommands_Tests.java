@@ -1,4 +1,6 @@
 package test.java.domain.commands.patchcommands;
+
+
 import static org.junit.Assert.assertEquals;
 import main.java.domain.commands.patchcommands.PatchAirshipCommand;
 import main.java.domain.model.airships.Airship;

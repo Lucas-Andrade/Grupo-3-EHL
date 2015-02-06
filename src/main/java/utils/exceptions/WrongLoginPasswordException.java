@@ -22,7 +22,7 @@ public class WrongLoginPasswordException extends Exception {
      *            The wrong password that was received.
      */
     public WrongLoginPasswordException( String loginName, String wrongPassword ) {
-        
+    
         super( MessageFormat.format( "Wrong password: {0}''s password is not {1}.", loginName,
                                      wrongPassword ) );
     }

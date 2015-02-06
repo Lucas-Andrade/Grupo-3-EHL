@@ -39,7 +39,7 @@ public class GetAirshipsOfOwnerCommand_Tests {
     
     @Before
     public void createAirshipsAndUsersAndTheirDatabases() throws InvalidArgumentException {
-        
+    
         // Arrange
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         userDatabase = new InMemoryUsersDatabase( "Users Database" );
@@ -64,7 +64,7 @@ public class GetAirshipsOfOwnerCommand_Tests {
     @Test
     public void shouldGetAllTheAirshipsRegisteredByTheUserCorrespondeingToTheGivenIdentification()
         throws Exception {
-        
+    
         // Act
         getAirshipsOfOwner = new GetAirshipsOfOwnerCommand( airshipsDatabase, "Daniel" );
         Iterable< Airship > testedAirships = getAirshipsOfOwner.call().get();
@@ -83,14 +83,14 @@ public class GetAirshipsOfOwnerCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullDatabase()
         throws InvalidArgumentException {
-        
+    
         getAirshipsOfOwner = new GetAirshipsOfOwnerCommand( null, "Daniel" );
     }
     
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullUsername()
         throws InvalidArgumentException {
-        
+    
         getAirshipsOfOwner = new GetAirshipsOfOwnerCommand( airshipsDatabase, null );
     }
     
@@ -99,7 +99,7 @@ public class GetAirshipsOfOwnerCommand_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenAEmptyStringAsUsername()
                 throws InvalidArgumentException {
-        
+    
         getAirshipsOfOwner = new GetAirshipsOfOwnerCommand( airshipsDatabase, "" );
     }
 }

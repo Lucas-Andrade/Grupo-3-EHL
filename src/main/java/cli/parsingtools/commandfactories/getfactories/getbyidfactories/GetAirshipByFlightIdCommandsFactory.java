@@ -10,8 +10,8 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * A {@link CommandFactory factory} that creates commands to get an airship with a certain
- * flightId from an airship database. Commands are {@link Callable} instances.
+ * A {@link CommandFactory factory} that creates commands to get an airship with a certain flightId
+ * from an airship database. Commands are {@link Callable} instances.
  * 
  * Extends {@link GetElementByIdentificationCommandsFactory} of {@link Airship Airships}.
  * 
@@ -21,7 +21,7 @@ public class GetAirshipByFlightIdCommandsFactory extends
         GetElementByIdentificationCommandsFactory< Airship > {
     
     // CONSTRUCTOR
-
+    
     /**
      * Creates a new {@link GetAirshipByFlightIdCommandFactory} that produces commands to get an
      * airship with a certain flightId from the {@code airshipsDatabase}. That flightId is the value
@@ -36,11 +36,10 @@ public class GetAirshipByFlightIdCommandsFactory extends
      */
     public GetAirshipByFlightIdCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-        
-        super( CLIStringsDictionary.FLIGHTID,
-               airshipsDatabase );
+    
+        super( CLIStringsDictionary.FLIGHTID, airshipsDatabase );
     }
-
+    
     /**
      * Returns a short description of the command produced by this factory.
      * 
@@ -48,6 +47,7 @@ public class GetAirshipByFlightIdCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
+    
         return "Gets an airship with a certain flightId.";
     }
 }

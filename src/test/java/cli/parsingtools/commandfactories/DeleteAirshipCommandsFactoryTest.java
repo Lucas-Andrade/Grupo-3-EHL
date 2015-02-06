@@ -23,12 +23,11 @@ public class DeleteAirshipCommandsFactoryTest {
     @Test
     public void shouldSuccessfullyCreatTheCorrectCommand() throws Exception {
     
-        Database< User > db = new InMemoryUsersDatabase( "");
+        Database< User > db = new InMemoryUsersDatabase( "" );
         User user = new User( "name", "pass", "@" );
         db.add( user, user );
         CommandFactory< CompletionStatus > a =
-                new DeleteAirshipCommandsFactory( db ,
-                                                  new InMemoryAirshipsDatabase( "" ) );
+                new DeleteAirshipCommandsFactory( db, new InMemoryAirshipsDatabase( "" ) );
         
         Map< String, String > map = new HashMap< String, String >();
         map.put( CLIStringsDictionary.FLIGHTID, "id" );

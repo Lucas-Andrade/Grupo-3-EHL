@@ -45,7 +45,7 @@ public class ToHtmlTranslator implements Translator {
      *             If {@code indentationNumberOfSpaces<1}.
      */
     public ToHtmlTranslator( int indentationNumberOfSpaces ) throws InvalidArgumentException {
-        
+    
         indentationSpaces = createIdentationSpaces( indentationNumberOfSpaces );
     }
     
@@ -69,7 +69,7 @@ public class ToHtmlTranslator implements Translator {
      */
     @Override
     public String encode( Translatable translatable ) throws UnknownTranslatableException {
-        
+    
         /* the order of the if statements on this method must not be changed unless you
         * thought really well about what you're about to do! */
         
@@ -77,11 +77,10 @@ public class ToHtmlTranslator implements Translator {
         // if translatable represents a String
         if( translatable.getTag() == null )
             return listToString( createNormalElements( "html",
-                                                            getPropertiesAsRawTextElements( translatable ) ) );
+                                                       getPropertiesAsRawTextElements( translatable ) ) );
         
         // if translatable represents simple elements, iterable or map<str,str>
-        return listToString( createNormalElements( "html",
-                                                        encodeInSeparateLines( translatable ) ) );
+        return listToString( createNormalElements( "html", encodeInSeparateLines( translatable ) ) );
         
     }
     
@@ -105,7 +104,7 @@ public class ToHtmlTranslator implements Translator {
      */
     private String createIdentationSpaces( int indentationNumberOfSpaces )
         throws InvalidArgumentException {
-        
+    
         if( indentationNumberOfSpaces < 1 )
             throw new InvalidArgumentException( "Invalid negative number of spaces for identation." );
         
@@ -130,7 +129,7 @@ public class ToHtmlTranslator implements Translator {
      * @return An {@link ArrayList} whose strings are HTML raw text elements.
      */
     private List< String > getPropertiesAsRawTextElements( Translatable t ) {
-        
+    
         List< String > al = new ArrayList<>();
         for( Entry< String, Object > entry : t.getPropertiesBag().entrySet() )
             al.add( createRawTextElement( entry.getKey(), entry.getValue().toString() ) );
@@ -152,7 +151,7 @@ public class ToHtmlTranslator implements Translator {
      */
     private List< String > encodeInSeparateLines( Translatable translatable )
         throws UnknownTranslatableException {
-        
+    
         /* the order of the if statements on this method must not be changed unless you
         * thought really well about what you're about to do! */
         
@@ -192,7 +191,7 @@ public class ToHtmlTranslator implements Translator {
      * @return An {@link ArrayList} whose entries are the described above.
      */
     private List< String > createNormalElements( String elementName, List< String > internalLines ) {
-        
+    
         List< String > lines = new ArrayList< String >();
         
         lines.add( createStartTag( elementName ) );
@@ -214,7 +213,7 @@ public class ToHtmlTranslator implements Translator {
      *         paragraph-character ({@code \r\n}).
      */
     private String listToString( List< String > list ) {
-        
+    
         StringBuilder sb = new StringBuilder( "\r\n" );
         for( String line : list )
             sb.append( line ).append( "\r\n" );
@@ -237,7 +236,7 @@ public class ToHtmlTranslator implements Translator {
      *             {@link Translatable} documentation.
      */
     private List< String > encodeIterable( Translatable t ) throws UnknownTranslatableException {
-        
+    
         List< String > internalLines = new ArrayList< String >();
         try {
             for( Object element : t.getPropertiesBag().values() )
@@ -263,7 +262,7 @@ public class ToHtmlTranslator implements Translator {
      *         different entry of the {@link ArrayList}.
      */
     private List< String > encodeMap( Translatable t ) {
-        
+    
         List< String > internalLines = new ArrayList< String >();
         
         for( Entry< String, Object > entry : t.getPropertiesBag().entrySet() ) {
@@ -289,7 +288,7 @@ public class ToHtmlTranslator implements Translator {
      * @return The indented lines in a new list of strings.
      */
     private List< String > indent( List< String > list ) {
-        
+    
         List< String > al = new ArrayList<>();
         for( String line : list )
             al.add( indentationSpaces + line );
@@ -308,7 +307,7 @@ public class ToHtmlTranslator implements Translator {
      *         {@literal <}/elementName{@literal >}</code>.
      */
     private String createRawTextElement( String elementName, String elementContent ) {
-        
+    
         return new StringBuilder( createStartTag( elementName ) ).append( elementContent )
                                                                  .append( createEndTag( elementName ) )
                                                                  .toString();
@@ -323,7 +322,7 @@ public class ToHtmlTranslator implements Translator {
      * @return The string <code>{@literal <}elementName{@literal >}</code>.
      */
     private String createStartTag( String elementName ) {
-        
+    
         return new StringBuilder( "<" ).append( elementName ).append( ">" ).toString();
     }
     
@@ -336,7 +335,7 @@ public class ToHtmlTranslator implements Translator {
      * @return The string <code>{@literal <}/elementName{@literal >}</code>.
      */
     private String createEndTag( String elementName ) {
-        
+    
         return new StringBuilder( "</" ).append( elementName ).append( ">" ).toString();
     }
     

@@ -13,7 +13,9 @@ public class InvalidArgumentException extends Exception {
     /**
      * Constructs an {@link InvalidArgumentException} with no detail message.
      */
-    public InvalidArgumentException() {}
+    public InvalidArgumentException() {
+    
+    }
     
     /**
      * Constructs an {@link InvalidArgumentException} with the specified detail message.
@@ -22,7 +24,7 @@ public class InvalidArgumentException extends Exception {
      *            The detail message.
      */
     public InvalidArgumentException( String message ) {
-        
+    
         super( message );
     }
     
@@ -38,7 +40,7 @@ public class InvalidArgumentException extends Exception {
      *            unknown.
      */
     public InvalidArgumentException( String message, Throwable cause ) {
-        
+    
         super( message, cause );
     }
     

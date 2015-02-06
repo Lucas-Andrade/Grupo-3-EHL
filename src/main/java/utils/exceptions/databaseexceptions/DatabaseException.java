@@ -16,7 +16,7 @@ public class DatabaseException extends Exception {
      * Constructs a {@link DatabaseException} with no detail message.
      */
     public DatabaseException() {
-        
+    
     }
     
     /**
@@ -26,7 +26,7 @@ public class DatabaseException extends Exception {
      *            The detail message.
      */
     public DatabaseException( String message ) {
-        
+    
         super( message );
     }
     

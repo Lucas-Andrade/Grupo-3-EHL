@@ -47,7 +47,7 @@ public abstract class GetAllElementsInADatabaseCommandsFactory< E extends Elemen
      */
     public GetAllElementsInADatabaseCommandsFactory( Database< E > database )
         throws InvalidArgumentException {
-        
+    
         
         if( database == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
@@ -66,7 +66,7 @@ public abstract class GetAllElementsInADatabaseCommandsFactory< E extends Elemen
     @Override
     protected Callable< Optional< Iterable< E >>>
             internalNewCommand( Map< String, String > parametersMap ) {
-        
+    
         try {
             return new GetAllElementsInADatabaseCommand< E >( database );
         }
@@ -86,7 +86,7 @@ public abstract class GetAllElementsInADatabaseCommandsFactory< E extends Elemen
      */
     @Override
     protected String[] getRequiredParametersNames() {
-        
+    
         return null;
     }
 }

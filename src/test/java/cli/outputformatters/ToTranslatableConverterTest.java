@@ -32,7 +32,9 @@ import org.junit.Test;
  * <p>
  * <b>Implementation notes:</b>
  * </p>
- * <ul><li>This class makes use of the static fields in {@link CLIStringsDictionary}.</li></ul>
+ * <ul>
+ * <li>This class makes use of the static fields in {@link CLIStringsDictionary}.</li>
+ * </ul>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -47,7 +49,7 @@ public class ToTranslatableConverterTest {
     @Test
     public void shouldConvertAnOptionalThatRepresentsNullIntoATranslatableOfString()
         throws UnknownTypeException {
-        
+    
         // Arrange
         String message = "optional has a null object";
         
@@ -66,7 +68,7 @@ public class ToTranslatableConverterTest {
     @Test
     public void shouldConvertAnOptionalThatRepresentsAnEmptyCollectionIntoATranslatableOfString()
         throws UnknownTypeException {
-        
+    
         // Arrange
         String message = "optional is empty";
         
@@ -85,7 +87,7 @@ public class ToTranslatableConverterTest {
     @Test
     public void shouldConvertAnOptionalThatRepresentsASimpleInstanceIntoTheCorrectTranslatable()
         throws InvalidArgumentException, UnknownTypeException {
-        
+    
         // Arrange
         Optional< User > user =
                 new Optional< User >( new User( "username", "password", "email@" ), new Exception() );
@@ -108,7 +110,7 @@ public class ToTranslatableConverterTest {
     
     @Test
     public void shouldConvertAnEmptyIterableIntoATranslatableOfString() throws UnknownTypeException {
-        
+    
         // Arrange & Act
         Translatable t = ToTranslatableConverter.convert( new ArrayList<>() );
         
@@ -123,7 +125,7 @@ public class ToTranslatableConverterTest {
     @Test
     public void shouldConvertAnIterableOfUsersIntoAnTranslatableOfIterableOfUsers()
         throws InvalidArgumentException, UnknownTypeException {
-        
+    
         // Arrange & Act
         User user1 = new User( "G", "password1", "G1@email" );
         User user2 = new User( "G2", "password2", "G2@email", "G2 full" );
@@ -154,7 +156,7 @@ public class ToTranslatableConverterTest {
     @Test
     public void shouldConvertAnIterableOfAirshipsIntoATranslatableOfIterableOfAirships()
         throws InvalidArgumentException, UnknownTypeException {
-        
+    
         // Arrange & Act
         Airship a1 = new CivilAirship( 0, 1, 2, 10, 3, 10 );
         Airship a2 = new MilitaryAirship( 4, 5, 6, 10, 7, true );
@@ -191,7 +193,7 @@ public class ToTranslatableConverterTest {
     @Test
     public void shouldConvertACivilAirshipIntoATranslatableOfCivilAirship()
         throws InvalidArgumentException, UnknownTypeException {
-        
+    
         // Arrange
         CivilAirship a = new CivilAirship( 0, 1, 2, 4, 3, 10 );
         Airship a0 = new CivilAirship( 0, 1, 2, 4, 3, 10 );
@@ -219,7 +221,7 @@ public class ToTranslatableConverterTest {
     @Test
     public void shouldConvertAnIterableOfAirshipsIntoAnTranslatableOfIterableOfAirships()
         throws InvalidArgumentException, UnknownTypeException {
-        
+    
         // Arrange
         Airship a = new MilitaryAirship( 4, 5, 6, 10, 7, true );
         
@@ -246,7 +248,7 @@ public class ToTranslatableConverterTest {
     
     @Test
     public void shouldConvertAOptionsListIntoATranslatableOfMap() throws UnknownTypeException {
-        
+    
         // Arrange
         Map< String, String > options = new HashMap< String, String >();
         options.put( "command1", "description1" );
@@ -269,7 +271,7 @@ public class ToTranslatableConverterTest {
     
     @Test
     public void shouldConvertStringIntoTranslatableOfString() throws UnknownTypeException {
-        
+    
         // Arrange
         String str = "E o Sporting é o nosso grande amor!";
         
@@ -282,12 +284,13 @@ public class ToTranslatableConverterTest {
         assertNull( t.getKeyTag() );
         assertNull( t.getValueTag() );
         assertFalse( t.getPropertiesBag().isEmpty() );
-        assertTrue( t.getPropertiesBag().containsValue( "E o Sporting é o nosso grande amor!" ));
+        assertTrue( t.getPropertiesBag().containsValue( "E o Sporting é o nosso grande amor!" ) );
     }
-
+    
     @Test
-    public void shouldConvertAFailureCompletionStatusIntoTranslatableOfString() throws UnknownTypeException {
-        
+    public void shouldConvertAFailureCompletionStatusIntoTranslatableOfString()
+        throws UnknownTypeException {
+    
         // Arrange
         String str = "«Está tudo mal! (e vai estar sempre.)» by PP";
         
@@ -300,12 +303,14 @@ public class ToTranslatableConverterTest {
         assertNull( t.getKeyTag() );
         assertNull( t.getValueTag() );
         assertFalse( t.getPropertiesBag().isEmpty() );
-        assertTrue( t.getPropertiesBag().containsValue( "«Está tudo mal! (e vai estar sempre.)» by PP" ));
+        assertTrue( t.getPropertiesBag()
+                     .containsValue( "«Está tudo mal! (e vai estar sempre.)» by PP" ) );
     }
-
+    
     @Test
-    public void shouldConvertASuccessCompletionStatusIntoTranslatableOfString() throws UnknownTypeException {
-        
+    public void shouldConvertASuccessCompletionStatusIntoTranslatableOfString()
+        throws UnknownTypeException {
+    
         // Arrange
         CompletionStatus status = new CompletionStatus( true, "Este teste vai estar green!" );
         
@@ -318,14 +323,14 @@ public class ToTranslatableConverterTest {
         assertNull( t.getKeyTag() );
         assertNull( t.getValueTag() );
         assertFalse( t.getPropertiesBag().isEmpty() );
-        assertTrue( t.getPropertiesBag().containsValue( "Este teste vai estar green!" ));
+        assertTrue( t.getPropertiesBag().containsValue( "Este teste vai estar green!" ) );
     }
     
     // Unconvertible Types
     
     @Test
     public void shouldThrowExceptionIfTryingToConvertUnknownType1() throws InvalidArgumentException {
-        
+    
         // Arrange
         Database< User > objectThatCantBeConverted = new InMemoryUsersDatabase( "database Name" );
         
@@ -345,7 +350,7 @@ public class ToTranslatableConverterTest {
     
     @Test
     public void shouldThrowExceptionIfTryingToConvertUnknownType2() throws InvalidArgumentException {
-        
+    
         // Arrange
         Collection< Integer > objectThatCantBeConverted = new TreeSet<>();
         objectThatCantBeConverted.add( 1 );
@@ -366,7 +371,7 @@ public class ToTranslatableConverterTest {
     
     @Test
     public void shouldThrowExceptionIfTryingToConvertUnknownType3() throws InvalidArgumentException {
-        
+    
         // Arrange
         Map< String, User > objectThatCantBeConverted = new HashMap<>();
         

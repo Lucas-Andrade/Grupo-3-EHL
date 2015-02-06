@@ -23,6 +23,7 @@ public class UnknownTypeException extends Exception {
      *            The detail message.
      */
     public UnknownTypeException( String message ) {
+    
         super( message );
     }
     
@@ -35,6 +36,7 @@ public class UnknownTypeException extends Exception {
      *            The {@link Throwable} that caused this exception.
      */
     public UnknownTypeException( String message, Throwable cause ) {
+    
         super( message, cause );
     }
     

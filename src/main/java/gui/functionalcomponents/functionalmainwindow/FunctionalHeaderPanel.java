@@ -58,6 +58,7 @@ public class FunctionalHeaderPanel {
      */
     public FunctionalHeaderPanel( JHeaderPanelForMainWindow headerPanel,
                                   Database< User > usersDatabase, User user ) {
+    
         this.headerPanel = headerPanel;
         this.usersDatabase = usersDatabase;
         this.user = user;
@@ -78,7 +79,7 @@ public class FunctionalHeaderPanel {
      * of posting new {@link User} in the given database.
      */
     private void addAddUserButtonAction() {
-        
+    
         headerPanel.getUserPanel()
                    .getAddUserButton()
                    .addActionListener( action -> new FunctionalPostUserWindow(
@@ -94,6 +95,7 @@ public class FunctionalHeaderPanel {
      * of patching a {@link User} existing in the given database.
      */
     private void addChangePasswordButtonAction() {
+    
         headerPanel.getUserPanel()
                    .getChangePasswordButton()
                    .addActionListener( action -> new FunctionalPatchUserWindow(
@@ -105,6 +107,7 @@ public class FunctionalHeaderPanel {
      * DELETE USER - Not Implemented!
      */
     private void addRemoveUserButtonAction() {
+    
         headerPanel.getUserPanel().getRemoveUserButton()
                    .addActionListener( action -> new UnderConstrutionWindow() );
     }
@@ -117,6 +120,7 @@ public class FunctionalHeaderPanel {
      * the {@link User users} existing in the given database.
      */
     private void addInfoAllUsersButtonAction() {
+    
         headerPanel.getUserPanel()
                    .getInfoAllUsersButton()
                    .addActionListener( action -> {
@@ -139,7 +143,7 @@ public class FunctionalHeaderPanel {
      * @return the {@code headerPanel}.
      */
     public JHeaderPanelForMainWindow getHeaderPanel() {
-        
+    
         return headerPanel;
     }
 }

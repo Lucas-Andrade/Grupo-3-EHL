@@ -55,7 +55,7 @@ public class User implements Element {
      */
     public User( String username, String password, String email, String fullName )
         throws InvalidArgumentException {
-        
+    
         if( username == null || username.equals( "" ) )
             throw new InvalidArgumentException( "Invalid username" );
         
@@ -89,7 +89,7 @@ public class User implements Element {
      *             empty string (""); if the given email has no '@' or has more than one '@'.
      */
     public User( String username, String password, String email ) throws InvalidArgumentException {
-        
+    
         this( username, password, email, "" );
     }
     
@@ -106,7 +106,7 @@ public class User implements Element {
      *         otherwhise.
      */
     private boolean hasOneAT( String email ) {
-        
+    
         int hasAt = email.indexOf( "@" );
         return hasAt != -1 && hasAt == email.lastIndexOf( "@" );
     }
@@ -123,7 +123,7 @@ public class User implements Element {
      *         {@code false} otherwise.
      */
     public boolean authenticatePassword( String introducedPassword ) {
-        
+    
         return this.password.equals( introducedPassword );
     }
     
@@ -131,7 +131,7 @@ public class User implements Element {
      * @return a String with the {@code User}'s username, password, email and fullname.
      */
     public String toStringWithoutPassword() {
-        
+    
         StringBuilder result = new StringBuilder( "username: " );
         
         result.append( username ).append( ",\r\nemail: " ).append( email );
@@ -152,7 +152,7 @@ public class User implements Element {
      */
     @Override
     public String toString() {
-        
+    
         StringBuilder result = new StringBuilder( "username: " );
         
         result.append( username ).append( ",\r\npassword: " ).append( password )
@@ -168,7 +168,7 @@ public class User implements Element {
      */
     @Override
     public boolean equals( Object obj ) {
-        
+    
         if( this == obj )
             return true;
         
@@ -192,6 +192,7 @@ public class User implements Element {
      */
     @Override
     public int hashCode() {
+    
         final int prime = 31;
         int result = prime + email.hashCode();
         result = prime * result + fullName.hashCode();
@@ -210,7 +211,7 @@ public class User implements Element {
      */
     @Override
     public String getIdentification() {
-        
+    
         return username;
     }
     
@@ -220,7 +221,7 @@ public class User implements Element {
      * @return a string with an email.
      */
     public String getEmail() {
-        
+    
         return email;
     }
     
@@ -228,7 +229,7 @@ public class User implements Element {
      * @return the fullName
      */
     public String getFullName() {
-        
+    
         return fullName;
     }
 }

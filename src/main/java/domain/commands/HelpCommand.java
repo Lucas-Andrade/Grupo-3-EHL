@@ -35,7 +35,7 @@ public class HelpCommand implements Callable< OptionsList > {
      *             If {@code commandsDescription==null}.
      */
     public HelpCommand( Map< String, String > commandsDescription ) throws InvalidArgumentException {
-        
+    
         if( commandsDescription == null )
             throw new InvalidArgumentException(
                                                 "Cannot instantiate command with null commandsDescription." );
@@ -50,7 +50,7 @@ public class HelpCommand implements Callable< OptionsList > {
      *         their descriptions.
      */
     public OptionsList call() {
-        
+    
         return new OptionsList( commandsDescription );
     }
 }

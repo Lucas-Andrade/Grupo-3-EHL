@@ -25,7 +25,8 @@ import main.java.utils.exceptions.databaseexceptions.NoSuchElementInDatabaseExce
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Airship, CompletionStatus > {
+public class DeleteAirshipCommandsFactory extends
+        UserAuthenticatingFactory< Airship, CompletionStatus > {
     
     
     
@@ -69,10 +70,11 @@ public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Air
      *      main.java.domain.model.users.User)
      */
     @Override
-    protected Callable< CompletionStatus > internalInternalNewCommand( Map< String, String > parametersMap,
-                                                             User userWhoIsDeleting )
-        throws MissingRequiredParameterException, InvalidParameterValueException,
-        NoSuchElementInDatabaseException, InvalidArgumentException {
+    protected
+            Callable< CompletionStatus >
+            internalInternalNewCommand( Map< String, String > parametersMap, User userWhoIsDeleting )
+                throws MissingRequiredParameterException, InvalidParameterValueException,
+                NoSuchElementInDatabaseException, InvalidArgumentException {
     
         return new DeleteAirship_ParsingCommand( parametersMap ).newCommand();
         // to create this factory's commands, the userWhoIsDeleting is not needed
@@ -121,7 +123,8 @@ public class DeleteAirshipCommandsFactory extends UserAuthenticatingFactory< Air
          *             is {@code null} or an empty-string.
          */
         @Override
-        protected Callable< CompletionStatus > newCommand() throws MissingRequiredParameterException {
+        protected Callable< CompletionStatus > newCommand()
+            throws MissingRequiredParameterException {
         
             String flightId = getParameterAsString( CLIStringsDictionary.FLIGHTID );
             try {

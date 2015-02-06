@@ -1,4 +1,6 @@
 package test.java.cli.parsingtools.commandfactories.userauthenticatingfactories;
+
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -206,7 +208,7 @@ public class PostAirshipCommandsFactory_Tests {
         parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "ola" );
         parameters.put( CLIStringsDictionary.NUMBEROFPASSENGERS, "20" );
         
-        CommandFactory<?> a = new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase );
+        CommandFactory< ? > a = new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase );
         a.newCommand( parameters );
     }
 }

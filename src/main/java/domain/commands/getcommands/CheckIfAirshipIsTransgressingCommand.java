@@ -46,7 +46,7 @@ public class CheckIfAirshipIsTransgressingCommand implements Callable< String > 
      */
     public CheckIfAirshipIsTransgressingCommand( Database< Airship > database, String flightId )
         throws InvalidArgumentException {
-        
+    
         if( database == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         if( flightId == null )
@@ -76,7 +76,7 @@ public class CheckIfAirshipIsTransgressingCommand implements Callable< String > 
      */
     @Override
     public String call() throws Exception {
-        
+    
         Airship theAirship = airshipDatabase.getElementByIdentification( flightId ).get();
         // method get throws exception if this flightId is not in db
         

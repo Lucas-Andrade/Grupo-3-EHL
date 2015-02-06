@@ -105,11 +105,10 @@ public class Optional< T > {
      *            {@code value==null}.
      */
     public Optional( T value, Exception toBeThrownIfNull ) {
-        
+    
         this.value = value;
         this.toBeThrownIfNull =
-                (toBeThrownIfNull == null)
-                                          ? new NullValueInOptionalException( "null" )
+                (toBeThrownIfNull == null) ? new NullValueInOptionalException( "null" )
                                           : toBeThrownIfNull;
         this.toStringIfEmpty = null;
     }
@@ -128,7 +127,7 @@ public class Optional< T > {
      *            {@code value.isEmpty()}.
      */
     public Optional( T value, String toStringIfEmpty ) {
-        
+    
         this.value = value;
         this.toBeThrownIfNull = null;
         this.toStringIfEmpty = toStringIfEmpty;
@@ -154,11 +153,10 @@ public class Optional< T > {
      */
     public Optional( T value, Exception toBeThrownIfNull, String toStringIfEmpty )
         throws InvalidArgumentException {
-        
+    
         this.value = value;
         this.toBeThrownIfNull =
-                (toBeThrownIfNull == null)
-                                          ? new NullValueInOptionalException( "null" )
+                (toBeThrownIfNull == null) ? new NullValueInOptionalException( "null" )
                                           : toBeThrownIfNull;
         this.toStringIfEmpty = toStringIfEmpty;
     }
@@ -173,7 +171,7 @@ public class Optional< T > {
      * @return {@code true} if the stored value is {@code null}; </br> {@code false} otherwise.
      */
     public boolean isNull() {
-        
+    
         return value == null;
     }
     
@@ -187,7 +185,7 @@ public class Optional< T > {
      */
     @SuppressWarnings( "rawtypes" )
     public boolean isEmpty() {
-        
+    
         boolean isEmptyCollection = (value instanceof Collection && ((Collection)value).isEmpty());
         boolean isEmptyMap = (value instanceof Map && ((Map)value).isEmpty());
         return isEmptyCollection || isEmptyMap;
@@ -203,7 +201,7 @@ public class Optional< T > {
      *         a string representation for empty values.
      */
     public boolean hasSpecificStringRepresentationIfEmpty() {
-        
+    
         return isEmpty() && toStringIfEmpty != null;
     }
     
@@ -217,7 +215,7 @@ public class Optional< T > {
      *             If the value represented by this {@link Optional} is {@code null}.
      */
     public T get() throws Exception {
-        
+    
         if( value == null ) {
             throw toBeThrownIfNull;
         }
@@ -244,7 +242,7 @@ public class Optional< T > {
      */
     @Override
     public boolean equals( Object obj ) {
-        
+    
         if( this == obj )
             return true;
         
@@ -263,6 +261,7 @@ public class Optional< T > {
      */
     @Override
     public int hashCode() {
+    
         return Objects.hashCode( value );
     }
     
@@ -282,7 +281,7 @@ public class Optional< T > {
      */
     @Override
     public String toString() {
-        
+    
         if( value == null ) {
             return toBeThrownIfNull.getMessage();
         }

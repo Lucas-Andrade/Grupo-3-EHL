@@ -37,7 +37,7 @@ public class GetElementFromADatabaseByIdCommand_Tests {
     
     @Before
     public void createAirshipsAndUsersAndTheirDatabases() throws InvalidArgumentException {
-        
+    
         // Arrange
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         userDatabase = new InMemoryUsersDatabase( "Users Database" );
@@ -62,7 +62,7 @@ public class GetElementFromADatabaseByIdCommand_Tests {
     @SuppressWarnings( { "rawtypes", "unchecked" } )
     @Test
     public void shouldSuccessfullyGetTheCorrectAirshipGivenItsIdentification() throws Exception {
-        
+    
         // Act
         getElementFromADatabaseById =
                 new GetElementFromADatabaseByIdCommand( airshipsDatabase,
@@ -76,7 +76,7 @@ public class GetElementFromADatabaseByIdCommand_Tests {
     @SuppressWarnings( { "rawtypes", "unchecked" } )
     @Test
     public void shouldSuccessfullyGetTheCorrectUserGivenItsIdentification() throws Exception {
-        
+    
         // Act
         getElementFromADatabaseById =
                 new GetElementFromADatabaseByIdCommand( userDatabase, "Daniel" );
@@ -92,7 +92,7 @@ public class GetElementFromADatabaseByIdCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullDatabase()
         throws InvalidArgumentException {
-        
+    
         getElementFromADatabaseById = new GetElementFromADatabaseByIdCommand( null, "Daniel" );
     }
     
@@ -102,7 +102,7 @@ public class GetElementFromADatabaseByIdCommand_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullIdentification()
                 throws InvalidArgumentException {
-        
+    
         getElementFromADatabaseById =
                 new GetElementFromADatabaseByIdCommand( airshipsDatabase, null );
     }
@@ -113,7 +113,7 @@ public class GetElementFromADatabaseByIdCommand_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenAnEmptyStringAsIdentification()
                 throws InvalidArgumentException {
-        
+    
         getElementFromADatabaseById = new GetElementFromADatabaseByIdCommand( airshipsDatabase, "" );
     }
 }

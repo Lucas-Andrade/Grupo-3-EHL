@@ -60,7 +60,7 @@ public class FunctionalGetAirshipsWithLessPassengerThanWindow extends
     public FunctionalGetAirshipsWithLessPassengerThanWindow( GetAirshipsWithLessPassengerThanWindow nonFunctionalWindow,
                                                              Database< Airship > airshipsDatabase,
                                                              JBodyPanelForMainWindow bodyPanel ) {
-        
+    
         super( nonFunctionalWindow );
         
         this.functionalWindow = nonFunctionalWindow;
@@ -79,7 +79,7 @@ public class FunctionalGetAirshipsWithLessPassengerThanWindow extends
      */
     @Override
     protected FunctionalWindowSwingWorker< Iterable< Airship >> getSwingWorker() {
-        
+    
         return new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel,
                                                    functionalWindow.getErrorJTextArea() ) {
             
@@ -103,7 +103,7 @@ public class FunctionalGetAirshipsWithLessPassengerThanWindow extends
              */
             @Override
             protected Iterable< Airship > doInBackground() throws Exception {
-                
+            
                 return new GetAirshipsWithLessPassengersThanCommand(
                                                                      (InMemoryAirshipsDatabase)airshipsDatabase,
                                                                      StringUtils.parameterToInteger( "Maximum Number of Passengers",
@@ -124,7 +124,7 @@ public class FunctionalGetAirshipsWithLessPassengerThanWindow extends
             @Override
             public final void functionalDone( Iterable< Airship > resultOfDoInBackGround )
                 throws Exception {
-                
+            
                 super.functionalDone( resultOfDoInBackGround );
                 functionalWindow.dispose();
             }

@@ -43,7 +43,7 @@ public class PatchUserPasswordCommandsFactory_Tests {
     
     @Before
     public void createUsersTheirDatabase() throws InvalidArgumentException {
-        
+    
         // Arrange
         user1 = new User( "Daniel", "pass", "@daniel" );
         
@@ -65,7 +65,7 @@ public class PatchUserPasswordCommandsFactory_Tests {
         throws WrongLoginPasswordException, MissingRequiredParameterException,
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
-        
+    
         Callable< ? > patchUserPasswordCommand =
                 (new PatchUserPasswordCommandsFactory( usersDatabase )).newCommand( parameters );
         
@@ -79,7 +79,7 @@ public class PatchUserPasswordCommandsFactory_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAPatchUserPasswordCommandsFactoryGivenANullUsersDatabase()
                 throws InvalidArgumentException {
-        
+    
         new PatchUserPasswordCommandsFactory( null );
     }
 }

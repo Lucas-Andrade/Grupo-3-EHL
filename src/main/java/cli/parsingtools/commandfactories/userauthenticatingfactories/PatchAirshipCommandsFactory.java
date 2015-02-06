@@ -24,7 +24,8 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory< Airship, CompletionStatus > {
+public class PatchAirshipCommandsFactory extends
+        UserAuthenticatingFactory< Airship, CompletionStatus > {
     
     
     
@@ -67,9 +68,10 @@ public class PatchAirshipCommandsFactory extends UserAuthenticatingFactory< Airs
      *      main.java.domain.model.users.User)
      */
     @Override
-    protected Callable< CompletionStatus > internalInternalNewCommand( Map< String, String > parametersMap,
-                                                             User authenticatedUser )
-        throws InvalidParameterValueException {
+    protected
+            Callable< CompletionStatus >
+            internalInternalNewCommand( Map< String, String > parametersMap, User authenticatedUser )
+                throws InvalidParameterValueException {
     
         return new PatchAirship_ParsingCommand( parametersMap, authenticatedUser ).newCommand();
     }

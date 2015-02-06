@@ -44,8 +44,9 @@ public abstract class FunctionalGetWindowSwingWorker extends
      *            written.
      */
     public FunctionalGetWindowSwingWorker( Database< Airship > airshipsDatabase,
-                                           JBodyPanelForMainWindow bodyPanel, JTextArea errorTextArea ) {
-        
+                                           JBodyPanelForMainWindow bodyPanel,
+                                           JTextArea errorTextArea ) {
+    
         super( errorTextArea );
         this.airshipsDatabase = airshipsDatabase;
         this.bodyPanel = bodyPanel;
@@ -68,7 +69,7 @@ public abstract class FunctionalGetWindowSwingWorker extends
      */
     @Override
     protected void functionalDone( Iterable< Airship > resultOfDoInBackGround ) throws Exception {
-        
+    
         bodyPanel.updateBodyPanel( airshipsDatabase, resultOfDoInBackGround );
     }
 }

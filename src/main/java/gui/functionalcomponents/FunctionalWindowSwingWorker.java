@@ -19,7 +19,7 @@ public abstract class FunctionalWindowSwingWorker< T > extends SwingWorker< T, V
      * {@code errorLabel} - The error label where the error messages from the thrown exceptions will
      * be written.
      */
-	private final JTextArea errorJtextArea;
+    private final JTextArea errorJtextArea;
     
     /**
      * Public constructor that will receive a window's error label as parameter where the error
@@ -28,9 +28,9 @@ public abstract class FunctionalWindowSwingWorker< T > extends SwingWorker< T, V
      * @param errorLabel
      *            - The window error label.
      */
-	public FunctionalWindowSwingWorker( JTextArea errorJTextArea )
-    {
-            this.errorJtextArea = errorJTextArea;
+    public FunctionalWindowSwingWorker( JTextArea errorJTextArea ) {
+    
+        this.errorJtextArea = errorJTextArea;
     }
     
     /**
@@ -41,17 +41,16 @@ public abstract class FunctionalWindowSwingWorker< T > extends SwingWorker< T, V
      */
     @Override
     final protected void done() {
+    
         try {
             errorJtextArea.setText( " " );
             functionalDone( get() );
         }
-        catch( ExecutionException e )
-        {
-                errorJtextArea.setText( StringUtils.errorStringParser( e.getCause().getMessage(),50 ));
+        catch( ExecutionException e ) {
+            errorJtextArea.setText( StringUtils.errorStringParser( e.getCause().getMessage(), 50 ) );
         }
-        catch( Exception e )
-        {
-                errorJtextArea.setText(StringUtils.errorStringParser( e.getMessage(), 50) );
+        catch( Exception e ) {
+            errorJtextArea.setText( StringUtils.errorStringParser( e.getMessage(), 50 ) );
         }
     }
     

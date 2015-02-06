@@ -42,7 +42,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory_Tests {
     @BeforeClass
     public static void createTheCommandParserAndRegisterTheCommands()
         throws InvalidRegisterException, InvalidArgumentException {
-        
+    
         cmdparser = new CommandParser();
         
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
@@ -60,7 +60,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory_Tests {
         throws WrongLoginPasswordException, MissingRequiredParameterException,
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
-        
+    
         Callable< ? > getAirshipsWithLessPassengersThanCommand =
                 (new Parser( cmdparser, "GET", "/airships/nbPassengers/30/bellow" )).getCommand();
         
@@ -74,7 +74,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAirshipsWithLessPassengersThanCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
-        
+    
         new GetAirshipsWithLessPassengersThanCommandsFactory( null );
     }
 }

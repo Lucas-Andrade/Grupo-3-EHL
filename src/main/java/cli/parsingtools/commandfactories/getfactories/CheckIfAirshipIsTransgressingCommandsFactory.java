@@ -52,7 +52,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
      */
     public CheckIfAirshipIsTransgressingCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-        
+    
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
         
@@ -72,7 +72,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
     @Override
     protected Callable< String > internalNewCommand( Map< String, String > parametersMap )
         throws MissingRequiredParameterException {
-        
+    
         return new CheckIAIT_ParsingCommand( parametersMap ).newCommand();
     }
     
@@ -83,9 +83,10 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
      */
     @Override
     public String getCommandsDescription() {
+    
         return "Checks whether an airship is transgressing its air corridor.";
     }
-
+    
     /**
      * Returns an array of strings with name of the parameters needed to produce the command - in
      * this case the name of the parameter that contains the airships's flightId.
@@ -94,11 +95,11 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
      */
     @Override
     protected String[] getRequiredParametersNames() {
-        
+    
         return requiredParametersNames;
     }
     
-
+    
     
     // INNER CLASS
     /**
@@ -121,6 +122,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
          */
         public CheckIAIT_ParsingCommand( Map< String, String > parametersMap )
             throws MissingRequiredParameterException {
+        
             super( parametersMap );
             flightId = getParameterAsString( requiredParametersNames[0] );
         }
@@ -130,7 +132,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
          */
         @Override
         public Callable< String > newCommand() {
-            
+        
             try {
                 return new CheckIfAirshipIsTransgressingCommand( airshipsDatabase, flightId );
             }

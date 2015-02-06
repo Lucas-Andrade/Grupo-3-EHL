@@ -21,7 +21,7 @@ public class MissingRequiredParameterException extends Exception {
      *            The missing parameter's name.
      */
     public MissingRequiredParameterException( String parameterName ) {
-        
+    
         super( MessageFormat.format( "Required parameter with name {0} missing.", parameterName ) );
     }
     
@@ -38,6 +38,7 @@ public class MissingRequiredParameterException extends Exception {
      *            unknown.
      */
     public MissingRequiredParameterException( String parameterName, Throwable cause ) {
+    
         super( parameterName, cause );
     }
     

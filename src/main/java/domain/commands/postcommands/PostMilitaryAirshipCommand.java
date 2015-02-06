@@ -38,7 +38,7 @@ public class PostMilitaryAirshipCommand extends PostAirshipCommand {
      *            - The database where to add the airship.
      * @param userWhoIsPosting
      *            - The user whose login name was given in the post command.
-     *            
+     * 
      * @throws InvalidArgumentException
      *             If the {@code airshipsDatabase} is null.
      */
@@ -46,15 +46,16 @@ public class PostMilitaryAirshipCommand extends PostAirshipCommand {
                                        double maxAltitude, double minAltitude, boolean hasArmours,
                                        Database< Airship > airshipsDatabase, User userWhoIsPosting )
         throws InvalidArgumentException {
-        
-        super( latitude, longitude, altitude, maxAltitude, minAltitude, airshipsDatabase, userWhoIsPosting );
+    
+        super( latitude, longitude, altitude, maxAltitude, minAltitude, airshipsDatabase,
+               userWhoIsPosting );
         
         this.hasArmours = hasArmours;
     }
     
     // IMPLEMENTATION OF METHOD call INHERITED FROM Callable INTERFACE
     
-
+    
     /**
      * Create a MilitaryAirship
      * 
@@ -64,6 +65,6 @@ public class PostMilitaryAirshipCommand extends PostAirshipCommand {
     protected Airship createAirship() throws InvalidArgumentException {
     
         return new MilitaryAirship( latitude, longitude, altitude, maxAltitude, minAltitude,
-                                     hasArmours );
+                                    hasArmours );
     }
 }

@@ -43,7 +43,7 @@ public class GetAllElementsInADatabaseCommand< E extends Element > implements
      */
     public GetAllElementsInADatabaseCommand( Database< E > database )
         throws InvalidArgumentException {
-        
+    
         if( database == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -69,7 +69,7 @@ public class GetAllElementsInADatabaseCommand< E extends Element > implements
      */
     @Override
     public Optional< Iterable< E >> call() throws Exception {
-        
+    
         return database.getAllElements();
     }
 }

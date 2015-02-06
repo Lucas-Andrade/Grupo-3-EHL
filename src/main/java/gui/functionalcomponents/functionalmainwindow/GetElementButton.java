@@ -37,7 +37,7 @@ public class GetElementButton< E extends Element > extends JButton {
      *            - The element's database.
      */
     public GetElementButton( String identification, JTextArea textArea, Database< E > database ) {
-        
+    
         this.addActionListener( action -> getSwingWorker( identification, textArea, database ).run() );
     }
     
@@ -59,6 +59,7 @@ public class GetElementButton< E extends Element > extends JButton {
      */
     private SwingWorker< E, Void > getSwingWorker( String identification, JTextArea textArea,
                                                    Database< E > database ) {
+    
         return new SwingWorker< E, Void >() {
             
             /**
@@ -74,7 +75,7 @@ public class GetElementButton< E extends Element > extends JButton {
              */
             @Override
             protected E doInBackground() throws Exception {
-                
+            
                 return new GetElementFromADatabaseByIdCommand< E >( database, identification ).call()
                                                                                               .get();
             }
@@ -88,6 +89,7 @@ public class GetElementButton< E extends Element > extends JButton {
              * The method {@link SwingWorker#get()} should not throw an {@code Exception}.
              */
             protected void done() {
+            
                 try {
                     textArea.setText( get().toString() );
                     textArea.setForeground( Color.WHITE );

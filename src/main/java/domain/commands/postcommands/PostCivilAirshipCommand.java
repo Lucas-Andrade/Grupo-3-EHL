@@ -44,17 +44,17 @@ public class PostCivilAirshipCommand extends PostAirshipCommand {
                                     double maxAltitude, double minAltitude, int numberOfPassengers,
                                     Database< Airship > airshipsDatabase, User userWhoIsPosting )
         throws InvalidArgumentException {
-        
+    
         super( latitude, longitude, altitude, maxAltitude, minAltitude, airshipsDatabase,
                userWhoIsPosting );
-
+        
         this.numberOfPassengers = numberOfPassengers;
     }
     
     // IMPLEMENTATION OF METHOD call INHERITED FROM Callable INTERFACE
     
-
-
+    
+    
     /**
      * Create a CivilAirship
      * 

@@ -25,15 +25,17 @@ public class CompletionStatus {
      *            A message representing the {@code completionStatus}
      */
     public CompletionStatus( boolean completionStatus, String message ) {
+    
         this.completionStatus = completionStatus;
         this.message = message;
         
     }
-
+    
     /**
      * @return the completionStatus
      */
     public boolean operationCompletedSuccessfully() {
+    
         return completionStatus;
     }
     
@@ -42,6 +44,7 @@ public class CompletionStatus {
      * @return the message
      */
     public String getMessage() {
+    
         return message;
     }
 }

@@ -81,8 +81,9 @@ public class FunctionalFooterPanel {
      */
     public FunctionalFooterPanel( JFooterPanelForMainWindow footerPanel,
                                   JBodyPanelForMainWindow bodyPanel,
-                                  Database< Airship > airshipsDatabase, User user, JTextArea errorTextArea ) {
-        
+                                  Database< Airship > airshipsDatabase, User user,
+                                  JTextArea errorTextArea ) {
+    
         this.footerPanel = footerPanel;
         this.bodyPanel = bodyPanel;
         
@@ -114,17 +115,17 @@ public class FunctionalFooterPanel {
      * existing in the {@link FunctionalGetWindowSwingWorker} class.
      */
     private void addGetAllAirshipsButtonAction() {
-        
+    
         footerPanel.getShowAllAirships().addActionListener( new ActionListener() {
             
             @Override
             public void actionPerformed( ActionEvent e ) {
-                
+            
                 new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorTextArea ) {
                     
                     @Override
                     protected Iterable< Airship > doInBackground() throws Exception {
-                        
+                    
                         return new GetAllElementsInADatabaseCommand< Airship >( airshipsDatabase ).call()
                                                                                                   .get();
                     }
@@ -145,7 +146,7 @@ public class FunctionalFooterPanel {
      * obtained airships.
      */
     private void addGetNearestAirshipsButtonAction() {
-        
+    
         footerPanel.getNearestAirships()
                    .addActionListener( action -> new FunctionalGetGeographicalCoordinatesParametersWindow(
                                                                                                            new GetGeographicalCoordinatesParametersWindow(),
@@ -167,15 +168,17 @@ public class FunctionalFooterPanel {
      * existing in the {@link FunctionalGetWindowSwingWorker} class.
      */
     private void addGetTransgressingAirshipsButtonAction() {
-        
+    
         footerPanel.getTransgressingAirships().addActionListener( new ActionListener() {
             
             @Override
             public void actionPerformed( ActionEvent e ) {
+            
                 new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorTextArea ) {
                     
                     @Override
                     protected Iterable< Airship > doInBackground() throws Exception {
+                    
                         return new GetAllTransgressingAirshipsCommand( airshipsDatabase ).call()
                                                                                          .get();
                     }
@@ -196,7 +199,7 @@ public class FunctionalFooterPanel {
      * obtained airships.
      */
     private void addGetAirshipsWithLessPassengerThanButtonAction() {
-        
+    
         footerPanel.getAirshipsWithLessPassengerThan()
                    .addActionListener( action -> new FunctionalGetAirshipsWithLessPassengerThanWindow(
                                                                                                        new GetAirshipsWithLessPassengerThanWindow(),
@@ -208,7 +211,7 @@ public class FunctionalFooterPanel {
      * PATCH -> Not Implemented!
      */
     private void addPatchAirshipButtonAction() {
-        
+    
         footerPanel.getPatchAirship().addActionListener( action -> new UnderConstrutionWindow() );
     }
     
@@ -220,7 +223,7 @@ public class FunctionalFooterPanel {
      * objective of posting new {@link Airship} in the given database.
      */
     private void addPostAirshipButtonAction() {
-        
+    
         footerPanel.getPostAirship()
                    .addActionListener( action -> new FunctionalPostAirshipWindow(
                                                                                   new PostAirshipsWindow(),
@@ -232,7 +235,7 @@ public class FunctionalFooterPanel {
      * DELETE AIRSHIP -> Not Implemented!
      */
     private void addDeleteAirshipButtonAction() {
-        
+    
         footerPanel.getDeleteAirship().addActionListener( action -> new UnderConstrutionWindow() );
     }
     
@@ -242,6 +245,7 @@ public class FunctionalFooterPanel {
      * @return {@code footerPanel}.
      */
     public JFooterPanelForMainWindow getFooterPanel() {
+    
         return footerPanel;
     }
 }

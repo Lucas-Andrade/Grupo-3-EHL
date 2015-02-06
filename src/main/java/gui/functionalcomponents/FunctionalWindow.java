@@ -33,7 +33,7 @@ public abstract class FunctionalWindow< T > {
      *            - The {@code WindowBase} to which functionality will be added.
      */
     public FunctionalWindow( WindowBase nonFunctionalWindow ) {
-        
+    
         theFunctionalWindow = nonFunctionalWindow;
         
         addRightButtonAction();
@@ -50,7 +50,7 @@ public abstract class FunctionalWindow< T > {
      * Right button -> dispose
      */
     private void addRightButtonAction() {
-        
+    
         theFunctionalWindow.getButtonsPanel().getRightButton()
                            .addActionListener( action -> theFunctionalWindow.dispose() );
     }
@@ -71,7 +71,7 @@ public abstract class FunctionalWindow< T > {
      * <ul>
      */
     private void addLeftButtonAction() {
-        
+    
         theFunctionalWindow.getButtonsPanel().getLeftButton().addActionListener(
         
         action -> {

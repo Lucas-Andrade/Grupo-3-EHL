@@ -51,7 +51,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, Co
     public PostUserCommandsFactory( Database< User > postingUsersDatabase,
                                     Database< User > postedUsersDatabase )
         throws InvalidArgumentException {
-        
+    
         super( postingUsersDatabase, postedUsersDatabase );
         
         this.requiredParametersNames =
@@ -76,10 +76,10 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, Co
      *             If one parameter is null or the empty string.
      */
     @Override
-    protected Callable< CompletionStatus > internalInternalNewCommand( Map< String, String > parametersMap,
-                                                              User userWhoIsPosting )
-        throws MissingRequiredParameterException {
-        
+    protected Callable< CompletionStatus >
+            internalInternalNewCommand( Map< String, String > parametersMap, User userWhoIsPosting )
+                throws MissingRequiredParameterException {
+    
         return new PostU_ParsingCommand( parametersMap, userWhoIsPosting ).newCommand();
     }
     
@@ -91,7 +91,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, Co
      */
     @Override
     protected String[] getSpecificRequiredParametersNames() {
-        
+    
         return requiredParametersNames;
     }
     
@@ -103,7 +103,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, Co
      */
     @Override
     public String getCommandsDescription() {
-        
+    
         return "Adds a new user.";
     }
     
@@ -136,7 +136,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, Co
          */
         public PostU_ParsingCommand( Map< String, String > parametersMap, User userWhoIsPosting )
             throws MissingRequiredParameterException {
-            
+        
             super( parametersMap );
             this.userWhoIsPosting = userWhoIsPosting;
             
@@ -148,7 +148,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, Co
          */
         @Override
         public Callable< CompletionStatus > newCommand() {
-            
+        
             try {
                 return new PostUserCommand( username, password, email, fullName, databaseToChange,
                                             userWhoIsPosting );
@@ -168,6 +168,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, Co
          *             If one parameter is null or the empty string.
          */
         private void setParametersFields() throws MissingRequiredParameterException {
+        
             username = getParameterAsString( CLIStringsDictionary.USERNAME );
             password = getParameterAsString( CLIStringsDictionary.PASSWORD );
             email = getParameterAsString( CLIStringsDictionary.EMAIL );

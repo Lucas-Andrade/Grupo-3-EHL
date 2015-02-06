@@ -2,7 +2,6 @@ package main.java.utils.exceptions;
 
 
 
-
 /**
  * Runtime exception thrown when an internal operation produces unexpected exceptions that interrupt
  * the request proccess.
@@ -20,7 +19,7 @@ public class InternalErrorException extends RuntimeException {
      *            The detail message.
      */
     public InternalErrorException() {
-        
+    
         super( "Sorry! An internal error that was supposed to never happen happened." );
     }
     
@@ -31,7 +30,7 @@ public class InternalErrorException extends RuntimeException {
      *            The detail message.
      */
     public InternalErrorException( String message ) {
-        
+    
         super( message );
     }
     
@@ -45,7 +44,7 @@ public class InternalErrorException extends RuntimeException {
      *            unknown.
      */
     public InternalErrorException( Throwable cause ) {
-        
+    
         super( "Sorry! An internal error that was supposed to never happen happened.", cause );
     }
     
@@ -61,7 +60,7 @@ public class InternalErrorException extends RuntimeException {
      *            unknown.
      */
     public InternalErrorException( String message, Throwable cause ) {
-        
+    
         super( message, cause );
     }
     

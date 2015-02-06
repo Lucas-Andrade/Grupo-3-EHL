@@ -17,7 +17,7 @@ public class InvalidCommandSyntaxException extends ParsingException {
      *            The detail message.
      */
     public InvalidCommandSyntaxException( String message ) {
-        
+    
         super( message );
     }
 }

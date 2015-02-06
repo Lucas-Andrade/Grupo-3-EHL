@@ -1,19 +1,28 @@
 package main.java.gui.design.panels;
 
+
 import main.java.domain.model.users.User;
 
-@SuppressWarnings("serial")
-public class  JScrollPanelForUsers extends JScrollPanelForElements<User>{
+    /**
+     * Class who's instances represents a ScroolPanel with User information. 
+     * This class extends {@link JScrollPanelForElements}.
+     * 
+     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+     */
 
-	
-	
-	@Override
-	protected String getString(User User){
-		
-		
-		return User.toStringWithoutPassword();
-		
-	}
-	
+@SuppressWarnings( "serial" )
+public class JScrollPanelForUsers extends JScrollPanelForElements< User > {
+    
+    /**
+     * An override of  {@link JScrollPanelForElements#getString(main.java.domain.model.Element)} 
+     * from {@link JScrollPanelForElements}.
+     */    
 
+    @Override
+    protected String getString( User user ) {
+
+        return user.toStringWithoutPassword();
+        
+    }
+        
 }

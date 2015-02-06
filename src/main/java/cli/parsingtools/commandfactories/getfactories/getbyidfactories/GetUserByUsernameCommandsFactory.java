@@ -10,8 +10,8 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * A {@link CommandFactory factory} that creates commands to get a user with a certain
- * username from a users database. Commands are {@link Callable} instances.
+ * A {@link CommandFactory factory} that creates commands to get a user with a certain username from
+ * a users database. Commands are {@link Callable} instances.
  * 
  * Extends {@link GetElementByIdentificationCommandsFactory} of {@link User Users}.
  * 
@@ -35,10 +35,10 @@ public class GetUserByUsernameCommandsFactory extends
      */
     public GetUserByUsernameCommandsFactory( Database< User > usersDatabase )
         throws InvalidArgumentException {
-        
+    
         super( CLIStringsDictionary.USERNAME, usersDatabase );
     }
-
+    
     
     /**
      * Returns a short description of the command produced by this factory.
@@ -47,6 +47,7 @@ public class GetUserByUsernameCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
+    
         return "Gets a user with a certain username.";
     }
 }

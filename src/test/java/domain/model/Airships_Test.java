@@ -28,7 +28,7 @@ public class Airships_Test {
     
     @Before
     public void createAirships() throws InvalidArgumentException {
-        
+    
         airship1 = new CivilAirship( 30, 40, 600, 3000, 300, 6 );
         airship2 = new MilitaryAirship( 30, 40, 5000, 4000, 200, false );
         airship3 = new MilitaryAirship( 30, 40, 20, 3000, 200, true );
@@ -38,7 +38,7 @@ public class Airships_Test {
     
     @Test
     public void shouldCreateCivilAirshipsWithASpecificFlightId() throws InvalidArgumentException {
-        
+    
         // Arrange
         airship4 = new CivilAirship( 0, 0, 0, 100, 50, 20, "id3" );
         
@@ -54,7 +54,7 @@ public class Airships_Test {
             void
             shouldCreateMilitaryAirshipsWithASpecificFlightIdUsingTheStaticMethodCreateANewAirshipWithAPreDefinedIdentification()
                 throws InvalidArgumentException {
-        
+    
         // Arrange
         airship4 = new MilitaryAirship( 0, 0, 60, 100, 50, false, "id3" );
         
@@ -68,7 +68,7 @@ public class Airships_Test {
     
     @Test
     public void shouldVerifyIfAnAirshipIsNotWhitinItsAirCorridor() {
-        
+    
         // Assert
         Assert.assertFalse( airship1.isTransgressing() );
         Assert.assertTrue( airship2.isTransgressing() );
@@ -82,20 +82,20 @@ public class Airships_Test {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateCivilAirshipsWithASpecificFlightIdGivenANegativeNumberOfPassengers()
                 throws InvalidArgumentException {
-        
+    
         new CivilAirship( 0, 0, 0, 100, 50, -3, "id3" );
     }
     
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionIfCivilAirshipHasLessThatZeroPassengers()
         throws InvalidArgumentException {
-        
+    
         new CivilAirship( 30, 40, 2000, 3000, 300, -3 );
     }
     
     @Test
     public void shouldThrowExceptionWithCorrectMessageIfLatitudeIsNotWhitinTheValidLimits() {
-        
+    
         try {
             new CivilAirship( 100, 40, 2000, 3000, 300, 20 );
         }
@@ -108,14 +108,14 @@ public class Airships_Test {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionIfLongitudeIsNotWhitinTheValidLimits()
         throws InvalidArgumentException {
-        
+    
         new CivilAirship( 10, -10, 2000, 3000, 300, 20 );
     }
     
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionIfAltitudeIsNotWhitinTheValidLimits()
         throws InvalidArgumentException {
-        
+    
         new CivilAirship( 10, 60, 300000, 3000, 300, 20 );
     }
     
@@ -123,14 +123,14 @@ public class Airships_Test {
     public void
             shouldThrowInvalidArgumentExceptionIfTheMaximumAltitudeIsLessThanTheMinimumAltitude()
                 throws InvalidArgumentException {
-        
+    
         new CivilAirship( 10, 60, 3000, 200, 3000, 20 );
     }
     
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionIfTheMinimumAltitudeIsLessThanZero()
         throws InvalidArgumentException {
-        
+    
         new CivilAirship( 10, 60, 3000, 200, -10, 20 );
     }
 }

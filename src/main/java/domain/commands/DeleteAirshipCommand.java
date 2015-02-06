@@ -43,6 +43,7 @@ public class DeleteAirshipCommand implements Callable< CompletionStatus > {
      */
     public DeleteAirshipCommand( Database< Airship > airshipDatabase, String identification )
         throws InvalidArgumentException {
+    
         if( airshipDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -64,17 +65,17 @@ public class DeleteAirshipCommand implements Callable< CompletionStatus > {
      */
     @Override
     public CompletionStatus call() throws DatabaseException {
-        
+    
         try {
             if( airshipDatabase.removeByIdentification( identification ) )
-                return new CompletionStatus( true, "Airship successfully removed");
+                return new CompletionStatus( true, "Airship successfully removed" );
         }
         catch( InvalidArgumentException e ) {
             throw new InternalErrorException( "UNEXPECTED EXCEPTION IN DeleteAirshipCommand!", e );
             // never happens because identification is non null
         }
         
-        return new CompletionStatus( false, "Airship doesn't exist in the database");
+        return new CompletionStatus( false, "Airship doesn't exist in the database" );
     }
     
 }

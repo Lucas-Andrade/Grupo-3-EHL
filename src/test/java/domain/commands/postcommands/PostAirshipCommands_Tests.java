@@ -1,12 +1,12 @@
 package test.java.domain.commands.postcommands;
 
 
+import static org.junit.Assert.assertEquals;
 import main.java.domain.commands.postcommands.PostCivilAirshipCommand;
 import main.java.domain.commands.postcommands.PostMilitaryAirshipCommand;
 import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 import main.java.domain.model.users.User;
 import main.java.utils.exceptions.InvalidArgumentException;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -35,7 +35,7 @@ public class PostAirshipCommands_Tests {
     @Before
     public void createUserAndAirshipDatabaseWhereToPostTheCreatedAirships()
         throws InvalidArgumentException {
-        
+    
         // Arrange
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         
@@ -47,33 +47,31 @@ public class PostAirshipCommands_Tests {
     @Test
     public void shouldPostACivilAirshipWithTheCorrectParametersInTheGivenDatabase()
         throws Exception {
-        
+    
         // Act
         postCivilAirship =
                 new PostCivilAirshipCommand( 0, 0, 0, 100, 50, 100, airshipsDatabase, user1 );
-        String testedInformation = postCivilAirship.call();
+        String testedInformation = postCivilAirship.call().getMessage();
         
         // Assert
-        Assert.assertEquals( testedInformation,
-                             "Flight Id: "
-                                     + airshipsDatabase.getElementsByUser( user1.getIdentification() )
-                                                       .get().iterator().next().getIdentification() );
+        assertEquals( "Airship successfully posted with flightId: "
+                      + airshipsDatabase.getElementsByUser( user1.getIdentification() ).get()
+                                        .iterator().next().getIdentification(), testedInformation );
     }
     
     @Test
     public void shouldPostAMilitaryAirshipWithTheCorrectParametersInTheGivenDatabase()
         throws Exception {
-        
+    
         // Act
         postMilitaryAirship =
                 new PostMilitaryAirshipCommand( 0, 0, 0, 100, 50, false, airshipsDatabase, user1 );
-        String testedInformation = postMilitaryAirship.call();
+        String testedInformation = postMilitaryAirship.call().getMessage();
         
         // Assert
-        Assert.assertEquals( testedInformation,
-                             "Flight Id: "
-                                     + airshipsDatabase.getElementsByUser( user1.getIdentification() )
-                                                       .get().iterator().next().getIdentification() );
+        assertEquals( "Airship successfully posted with flightId: "
+                      + airshipsDatabase.getElementsByUser( user1.getIdentification() ).get()
+                                        .iterator().next().getIdentification(), testedInformation );
     }
     
     // Test Exceptions
@@ -83,7 +81,7 @@ public class PostAirshipCommands_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateThePostCivilAirshipCommandGivenANullDatabase()
                 throws InvalidArgumentException {
-        
+    
         postCivilAirship = new PostCivilAirshipCommand( 0, 0, 0, 100, 50, 100, null, user1 );
     }
     
@@ -92,7 +90,7 @@ public class PostAirshipCommands_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateThePostMilitaryAirshipCommandGivenANullDatabase()
                 throws InvalidArgumentException {
-        
+    
         postMilitaryAirship = new PostMilitaryAirshipCommand( 0, 0, 0, 100, 50, false, null, user1 );
     }
 }

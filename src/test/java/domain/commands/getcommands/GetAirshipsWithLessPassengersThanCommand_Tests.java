@@ -39,7 +39,7 @@ public class GetAirshipsWithLessPassengersThanCommand_Tests {
     
     @Before
     public void createAirshipsAndUsersAndTheirDatabases() throws InvalidArgumentException {
-        
+    
         // Arrange
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         userDatabase = new InMemoryUsersDatabase( "Users Database" );
@@ -64,7 +64,7 @@ public class GetAirshipsWithLessPassengersThanCommand_Tests {
     @Test
     public void shouldGetAllTheAirshipsRegisteredByTheUserCorrespondeingToTheGivenIdentification()
         throws Exception {
-        
+    
         // Act
         getAirshipsWithLessPassengersThan =
                 new GetAirshipsWithLessPassengersThanCommand( airshipsDatabase, 25 );
@@ -83,7 +83,7 @@ public class GetAirshipsWithLessPassengersThanCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullDatabase()
         throws InvalidArgumentException {
-        
+    
         getAirshipsWithLessPassengersThan = new GetAirshipsWithLessPassengersThanCommand( null, 35 );
     }
     
@@ -92,7 +92,7 @@ public class GetAirshipsWithLessPassengersThanCommand_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANegativeNumberOfPassengers()
                 throws InvalidArgumentException {
-        
+    
         getAirshipsWithLessPassengersThan =
                 new GetAirshipsWithLessPassengersThanCommand( airshipsDatabase, -2 );
     }

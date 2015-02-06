@@ -51,7 +51,7 @@ public class PatchAirshipsCommandFactory_Tests {
     @BeforeClass
     public static void createUsersAndAirshipsAndTheirDatabases()
         throws InvalidRegisterException, InvalidArgumentException {
-        
+    
         usersDatabase = new InMemoryUsersDatabase( "Users Database" );
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         
@@ -69,7 +69,7 @@ public class PatchAirshipsCommandFactory_Tests {
     
     @Before
     public void createParametersMap() {
-        
+    
         parameters = new HashMap< String, String >();
         
         parameters.put( CLIStringsDictionary.LOGINNAME, "Daniel" );
@@ -94,7 +94,7 @@ public class PatchAirshipsCommandFactory_Tests {
         throws NoSuchElementInDatabaseException, MissingRequiredParameterException,
         InvalidParameterValueException, WrongLoginPasswordException, InternalErrorException,
         InvalidArgumentException {
-        
+    
         parameters.put( CLIStringsDictionary.FLIGHTID, airship1.getIdentification() );
         
         Callable< ? > patchAirshipCommand =
@@ -108,7 +108,7 @@ public class PatchAirshipsCommandFactory_Tests {
         throws NoSuchElementInDatabaseException, MissingRequiredParameterException,
         InvalidParameterValueException, WrongLoginPasswordException, InternalErrorException,
         InvalidArgumentException {
-        
+    
         onlyRequiredParameters.put( CLIStringsDictionary.FLIGHTID, airship1.getIdentification() );
         
         Callable< ? > patchAirshipCommand =

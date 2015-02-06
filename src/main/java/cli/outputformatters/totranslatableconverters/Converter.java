@@ -20,13 +20,13 @@ abstract class Converter {
     
     
     /**
-     * Converts {@link object} into a {@link Translatable}.
+     * Converts {@code instanceToBeConverted} into a {@link Translatable}.
      * 
      * @param instanceToBeConverted
      *            The instance to be converted into a {@link Translatable}.
      * @return The {@link Translatable}.
      * @throws UnknownTypeException
-     *             If {@code object} has not the expected concrete type.
+     *             If {@code instanceToBeConverted} has not the expected concrete type.
      */
     abstract Translatable convert( Object instanceToBeConverted ) throws UnknownTypeException;
     

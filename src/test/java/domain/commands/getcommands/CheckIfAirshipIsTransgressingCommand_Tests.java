@@ -37,7 +37,7 @@ public class CheckIfAirshipIsTransgressingCommand_Tests {
     
     @Before
     public void createAirshipsAndUsersAndTheirDatabases() throws InvalidArgumentException {
-        
+    
         // Arrange
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         userDatabase = new InMemoryUsersDatabase( "Users Database" );
@@ -63,7 +63,7 @@ public class CheckIfAirshipIsTransgressingCommand_Tests {
     public void
             shouldCheckCorrectlyIfAnAirshipCorrespondingToTheGivenIdentificationIsTransgressing()
                 throws Exception {
-        
+    
         // Act
         checkIfAirshipIsTransgressing =
                 new CheckIfAirshipIsTransgressingCommand( airshipsDatabase,
@@ -93,7 +93,7 @@ public class CheckIfAirshipIsTransgressingCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullDatabase()
         throws InvalidArgumentException {
-        
+    
         checkIfAirshipIsTransgressing = new CheckIfAirshipIsTransgressingCommand( null, "ola" );
     }
     
@@ -102,7 +102,7 @@ public class CheckIfAirshipIsTransgressingCommand_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullIdentification()
                 throws InvalidArgumentException {
-        
+    
         checkIfAirshipIsTransgressing =
                 new CheckIfAirshipIsTransgressingCommand( airshipsDatabase, null );
     }

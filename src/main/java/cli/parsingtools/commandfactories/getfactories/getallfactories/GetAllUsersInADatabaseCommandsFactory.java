@@ -9,8 +9,8 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * A {@link CommandFactory factory} that creates commands to get all the users in an users
- * database. Commands are {@link Callable} instances.
+ * A {@link CommandFactory factory} that creates commands to get all the users in an users database.
+ * Commands are {@link Callable} instances.
  * 
  * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link User Users}.
  * 
@@ -32,10 +32,10 @@ public class GetAllUsersInADatabaseCommandsFactory extends
      */
     public GetAllUsersInADatabaseCommandsFactory( Database< User > usersDatabase )
         throws InvalidArgumentException {
-        
+    
         super( usersDatabase );
     }
-
+    
     /**
      * Returns a short description of the command produced by this factory.
      * 
@@ -43,6 +43,7 @@ public class GetAllUsersInADatabaseCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
+    
         return "Gets the list of all users.";
     }
 }

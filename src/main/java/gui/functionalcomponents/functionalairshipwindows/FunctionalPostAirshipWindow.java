@@ -3,6 +3,7 @@ package main.java.gui.functionalcomponents.functionalairshipwindows;
 
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.commands.postcommands.PostCivilAirshipCommand;
 import main.java.domain.commands.postcommands.PostMilitaryAirshipCommand;
 import main.java.domain.model.Database;
@@ -24,7 +25,7 @@ import main.java.utils.exceptions.InvalidArgumentException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class FunctionalPostAirshipWindow extends FunctionalWindow< String > {
+public class FunctionalPostAirshipWindow extends FunctionalWindow< CompletionStatus > {
     
     /**
      * {@code functionalWindow} - The {@code PatchUserWindow} we want to add functionality to.
@@ -54,7 +55,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< String > {
      */
     public FunctionalPostAirshipWindow( PostAirshipsWindow nonFunctionalWindow,
                                         Database< Airship > airshipsDatabase, User userWhoIsPosting ) {
-        
+    
         super( nonFunctionalWindow );
         
         this.functionalWindow = nonFunctionalWindow;
@@ -73,8 +74,10 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< String > {
      *         methods.
      */
     @Override
-    protected FunctionalWindowSwingWorker< String > getSwingWorker() {
-        return new FunctionalWindowSwingWorker< String >( functionalWindow.getErrorLabel() ) {
+    protected FunctionalWindowSwingWorker< CompletionStatus > getSwingWorker() {
+    
+        return new FunctionalWindowSwingWorker< CompletionStatus >(
+                                                                    functionalWindow.getErrorJTextArea() ) {
             
             /**
              * String representation of the parameters to use in the commands and that are obtained
@@ -104,8 +107,8 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< String > {
              *             invalid.
              */
             @Override
-            protected String doInBackground() throws Exception {
-                
+            protected CompletionStatus doInBackground() throws Exception {
+            
                 if( functionalWindow.getTypeAirshipTabbedPane().getSelectedIndex() == 0 ) {
                     
                     getCivilAirshipStringParameters();
@@ -145,7 +148,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< String > {
              * to give to the {@link PostCivilAirshipCommand} from the window text fields.
              */
             private void getCivilAirshipStringParameters() {
-                
+            
                 latitude =
                         functionalWindow.getCivilAirshipCommonPainel().getGeoCoodinates()
                                         .getLatitude().getJTextField().getText();
@@ -173,7 +176,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< String > {
              * to give to the {@link PostMilitaryAirshipCommand} from the window text fields.
              */
             private void getMilitaryAirshipStringParameters() {
-                
+            
                 latitude =
                         functionalWindow.getMilitaryAirshipCommonPainel().getGeoCoodinates()
                                         .getLatitude().getJTextField().getText();
@@ -207,10 +210,12 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< String > {
              *            method.
              */
             @Override
-            public void functionalDone( String resultOfDoInBackGround ) {
-                new SuccessWindow( "Airship Successfully Posted -> " + resultOfDoInBackGround );
+            public void functionalDone( CompletionStatus resultOfDoInBackGround ) {
+            
+                new SuccessWindow( resultOfDoInBackGround.getMessage() );
                 functionalWindow.dispose();
             }
+            
             
         };
     }

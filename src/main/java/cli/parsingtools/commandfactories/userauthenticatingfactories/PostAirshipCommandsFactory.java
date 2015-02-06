@@ -27,7 +27,8 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airship, CompletionStatus > {
+public class PostAirshipCommandsFactory extends
+        UserAuthenticatingFactory< Airship, CompletionStatus > {
     
     // INSTANCE FIELDS
     
@@ -55,7 +56,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
     public PostAirshipCommandsFactory( Database< User > postingUsersDatabase,
                                        Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-        
+    
         super( postingUsersDatabase, airshipsDatabase );
         
         this.requiredParametersNames =
@@ -90,10 +91,10 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      *             If any of the parameters have an invalid value.
      */
     @Override
-    protected Callable< CompletionStatus > internalInternalNewCommand( Map< String, String > parametersMap,
-                                                              User userWhoIsPosting )
-        throws MissingRequiredParameterException, InvalidParameterValueException {
-        
+    protected Callable< CompletionStatus >
+            internalInternalNewCommand( Map< String, String > parametersMap, User userWhoIsPosting )
+                throws MissingRequiredParameterException, InvalidParameterValueException {
+    
         return new PostA_ParsingCommand( parametersMap, userWhoIsPosting ).newCommand();
     }
     
@@ -106,7 +107,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      */
     @Override
     protected String[] getSpecificRequiredParametersNames() {
-        
+    
         return requiredParametersNames;
     }
     
@@ -117,7 +118,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
      */
     @Override
     public String getCommandsDescription() {
-        
+    
         return "Adds a new airship.";
     }
     
@@ -163,7 +164,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
          */
         public PostA_ParsingCommand( Map< String, String > parametersMap, User userWhoIsPosting )
             throws InvalidParameterValueException, MissingRequiredParameterException {
-            
+        
             super( parametersMap );
             this.userWhoIsPosting = userWhoIsPosting;
             
@@ -178,7 +179,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
         @Override
         public Callable< CompletionStatus > newCommand()
             throws MissingRequiredParameterException, InvalidParameterValueException {
-            
+        
             String methodName = "post" + type + "Airship";
             Class< ? extends ParsingCommand< ? > > c = this.getClass();
             Class< ? extends User > u = userWhoIsPosting.getClass();
@@ -218,7 +219,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
          */
         private void setParametersFields()
             throws MissingRequiredParameterException, InvalidParameterValueException {
-            
+        
             type = getParameterAsString( CLIStringsDictionary.AIRSHIP_TYPE );
             latitude = getParameterAsDouble( CLIStringsDictionary.LATITUDE );
             longitude = getParameterAsDouble( CLIStringsDictionary.LONGITUDE );
@@ -249,7 +250,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
         @SuppressWarnings( "unused" )
         private Callable< CompletionStatus > postCivilAirship( User userWhoIsPosting )
             throws MissingRequiredParameterException, InvalidParameterValueException {
-            
+        
             if( !parametersMap.containsKey( CLIStringsDictionary.NUMBEROFPASSENGERS ) )
                 throw new MissingRequiredParameterException(
                                                              CLIStringsDictionary.NUMBEROFPASSENGERS );
@@ -289,7 +290,7 @@ public class PostAirshipCommandsFactory extends UserAuthenticatingFactory< Airsh
         @SuppressWarnings( "unused" )
         private Callable< CompletionStatus > postMilitaryAirship( User userWhoIsPosting )
             throws MissingRequiredParameterException, InvalidParameterValueException {
-            
+        
             if( !parametersMap.containsKey( CLIStringsDictionary.HASARMOUR ) )
                 throw new MissingRequiredParameterException( CLIStringsDictionary.HASARMOUR );
             

@@ -31,6 +31,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory_Test {
         InvalidCommandSyntaxException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidCommandParametersSyntaxException,
         DuplicateParametersException, InternalErrorException {
+    
         CommandParser cmdParser = new CommandParser();
         InMemoryAirshipsDatabase airshipsDatabase;
         airshipsDatabase = new InMemoryAirshipsDatabase( "FirstAirshipsDatabse" );
@@ -52,6 +53,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory_Test {
     public void
             shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullAirShipDatabaseInTheFactory()
                 throws Exception {
+    
         new GetTheNearestAirshipsToGeographicPositionCommandsFactory( null );
     }
 }

@@ -10,8 +10,8 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTypeException;
 
 
 /**
- * Class that contains all classes whose instances convert instances of {@code Iterable}s into
- * {@link Translatable}s.
+ * Class that contains all {@link Converter}s that convert {@code Iterable}s into
+ * {@link Translatable}s representing .
  * <p>
  * <b>The following conventions are advised:</b> translatables that represent {@link Iterable}s have
  * {@code null keyTag, null valueTag}, a non- {@code null tag}, a non-{@code null entryTag} (which
@@ -31,9 +31,13 @@ class IterablesToTranslatables {
      */
     static class IterableUserConverter extends Converter {
         
+        /**
+         * @see main.java.cli.outputformatters.totranslatableconverters.Converter#convert(java.lang.Object)
+         */
         @SuppressWarnings( "unchecked" )
         @Override
         Translatable convert( Object iterableOfUsers ) throws UnknownTypeException {
+        
             Iterable< User > it;
             try {
                 it = (Iterable< User >)iterableOfUsers;
@@ -61,10 +65,13 @@ class IterablesToTranslatables {
      */
     static class IterableAirshipConverter extends Converter {
         
+        /**
+         * @see main.java.cli.outputformatters.totranslatableconverters.Converter#convert(java.lang.Object)
+         */
         @SuppressWarnings( "unchecked" )
         @Override
         Translatable convert( Object iterableOfAirships ) throws UnknownTypeException {
-            
+        
             Iterable< Airship > it;
             try {
                 it = (Iterable< Airship >)iterableOfAirships;
@@ -83,5 +90,12 @@ class IterablesToTranslatables {
         }
     }
     
+    
+    /**
+     * Unused private constructor
+     */
+    private IterablesToTranslatables() {
+    
+    }
     
 }

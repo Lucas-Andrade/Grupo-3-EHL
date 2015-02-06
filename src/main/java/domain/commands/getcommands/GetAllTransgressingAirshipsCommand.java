@@ -27,7 +27,7 @@ public class GetAllTransgressingAirshipsCommand implements Callable< Optional< I
     /**
      * The database where to search.
      */
-    private final Database<Airship> airshipsDatabase;
+    private final Database< Airship > airshipsDatabase;
     
     // CONSTRUCTOR
     
@@ -41,9 +41,9 @@ public class GetAllTransgressingAirshipsCommand implements Callable< Optional< I
      * @throws InvalidArgumentException
      *             If the {@code airshipsDatabase} is null.
      */
-    public GetAllTransgressingAirshipsCommand( Database<Airship> airshipsDatabase )
+    public GetAllTransgressingAirshipsCommand( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-        
+    
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -71,7 +71,7 @@ public class GetAllTransgressingAirshipsCommand implements Callable< Optional< I
      */
     @Override
     public Optional< Iterable< Airship >> call() throws Exception {
-        
+    
         return airshipsDatabase.getAllElementsThat( new AirshipPredicates.IsTrangressingItsAirCorridor() );
     }
 }

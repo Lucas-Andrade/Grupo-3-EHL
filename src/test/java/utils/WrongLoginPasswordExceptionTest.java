@@ -15,6 +15,7 @@ public class WrongLoginPasswordExceptionTest {
     
     @Test
     public void shouldHaveTheExpectedMessage() {
+    
         assertEquals( "Wrong password: u1's password is not p1.",
                       new WrongLoginPasswordException( "u1", "p1" ).getMessage() );
     }

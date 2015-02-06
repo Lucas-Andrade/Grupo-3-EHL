@@ -23,7 +23,7 @@ public class InvalidParameterValueException extends ParsingException {
      *            The invalid parameter's value.
      */
     public InvalidParameterValueException( String parameterName, String parameterValue ) {
-        
+    
         super( MessageFormat.format( "Required parameter with name {0} has invalid value {1}.",
                                      parameterName, parameterValue ) );
     }
@@ -45,7 +45,7 @@ public class InvalidParameterValueException extends ParsingException {
      */
     public InvalidParameterValueException( String parameterName, String parameterValue,
                                            String extraInfo ) {
-        
+    
         super( MessageFormat.format( "Required parameter with name {0} has invalid value {1}."
                                      + "\n {2}", parameterName, parameterValue, extraInfo ) );
     }
@@ -66,7 +66,7 @@ public class InvalidParameterValueException extends ParsingException {
      */
     public InvalidParameterValueException( String parameterName, String parameterValue,
                                            Throwable cause ) {
-        
+    
         super( MessageFormat.format( "Required parameter with name {0} has invalid value {1}.",
                                      parameterName, parameterValue ), cause );
     }
@@ -91,7 +91,7 @@ public class InvalidParameterValueException extends ParsingException {
      */
     public InvalidParameterValueException( String parameterName, String parameterValue,
                                            String extraInfo, Throwable cause ) {
-        
+    
         super( MessageFormat.format( "Required parameter with name {0} has invalid value {1}."
                                      + "\n {2}", parameterName, parameterValue, extraInfo ), cause );
     }
@@ -108,7 +108,7 @@ public class InvalidParameterValueException extends ParsingException {
      *            unknown.
      */
     public InvalidParameterValueException( String message, Throwable cause ) {
-        
+    
         super( message, cause );
     }
     

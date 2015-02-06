@@ -114,12 +114,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
         /* Uses the TEMPLATE METHOD design pattern */
         
         User authenticatedUser = authenticateAndGetAuthenticatedUser( parametersMap );
-        try {
-            return internalInternalNewCommand( parametersMap, authenticatedUser );
-        }
-        catch( Exception e ) {
-            throw (WrongLoginPasswordException)e;
-        }
+        return internalInternalNewCommand( parametersMap, authenticatedUser );
     }
     
     // to be implemented by each concrete UserAutheticatingFactory

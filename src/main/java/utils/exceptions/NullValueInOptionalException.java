@@ -17,7 +17,7 @@ public class NullValueInOptionalException extends Exception {
      * Constructs an {@link NullValueInOptionalException}.
      */
     public NullValueInOptionalException() {
-        
+    
         super();
     }
     
@@ -28,7 +28,7 @@ public class NullValueInOptionalException extends Exception {
      *            The detail message.
      */
     public NullValueInOptionalException( String message ) {
-        
+    
         super( message );
     }
 }

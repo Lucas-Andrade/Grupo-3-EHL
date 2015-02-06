@@ -46,7 +46,7 @@ public class CivilAirship extends Airship {
      */
     public CivilAirship( double latitude, double longitude, double altitude, double maxAltitude,
                          double minAltitude, int passengers ) throws InvalidArgumentException {
-        
+    
         super( latitude, longitude, altitude, maxAltitude, minAltitude );
         
         if( passengers < 0 )
@@ -86,7 +86,7 @@ public class CivilAirship extends Airship {
     public CivilAirship( double latitude, double longitude, double altitude, double maxAltitude,
                          double minAltitude, int passengers, String flightId )
         throws InvalidArgumentException {
-        
+    
         super( latitude, longitude, altitude, maxAltitude, minAltitude, flightId );
         
         if( passengers < 0 )
@@ -102,7 +102,7 @@ public class CivilAirship extends Airship {
      */
     @Override
     public String toString() {
-        
+    
         return new StringBuilder( super.toString() ).append( "\nNumber of Passengers: " )
                                                     .append( passengers ).append( "\n" ).toString();
     }
@@ -113,7 +113,7 @@ public class CivilAirship extends Airship {
      * @return the {@code passengers}.
      */
     public int getPassengers() {
-        
+    
         return passengers;
     }
 }

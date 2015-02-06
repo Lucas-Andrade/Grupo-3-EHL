@@ -23,7 +23,7 @@ public class InvalidRegisterException extends CommandParserException {
      * the same method and path.»</i>.
      */
     public InvalidRegisterException() {
-        
+    
         super( "Several registers with the same method and path." );
     }
     
@@ -38,7 +38,7 @@ public class InvalidRegisterException extends CommandParserException {
      *            The existing placeholder.
      */
     public InvalidRegisterException( String placeholderToAdd, String existingPlaceholder ) {
-        
+    
         super( new StringBuilder().append( "A path has been registered with the placeholder " )
                                   .append( existingPlaceholder ).append( " in this position." )
                                   .append( "\nCannot register new command with placeholder " )

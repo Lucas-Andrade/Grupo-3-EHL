@@ -47,7 +47,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
      *             If {@code databaseName} is null.
      */
     public InMemoryAirshipsDatabase( String databaseName ) throws InvalidArgumentException {
-        
+    
         super( databaseName );
         
         flightsByUserRegister = new HashMap< String, List< Airship >>();
@@ -73,7 +73,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
      */
     @Override
     public boolean add( Airship airship, User user ) throws InvalidArgumentException {
-        
+    
         if( super.add( airship, user ) ) {
             
             addAirshipToItsUsersListOfAirships( airship, user );
@@ -102,7 +102,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
     @Override
     public boolean removeByIdentification( String flightId )
         throws InvalidArgumentException, DatabaseException {
-        
+    
         if( super.removeByIdentification( flightId ) ) {
             
             removeAirshipFromItsUsersListOfAirships( flightId );
@@ -135,7 +135,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
      * @see Optional
      */
     public Optional< Iterable< Airship >> getElementsByUser( String username ) {
-        
+    
         List< Airship > list = flightsByUserRegister.get( username );
         
         if( list == null )
@@ -158,7 +158,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
      *            - The user whose list is to be updated.
      */
     private void addAirshipToItsUsersListOfAirships( Airship airship, User user ) {
-        
+    
         if( flightsByUserRegister.containsKey( user.getIdentification() ) )
             flightsByUserRegister.get( user.getIdentification() ).add( airship );
         
@@ -180,7 +180,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
      *            - The flightId of the airship to be removed from its user's list of airships.
      */
     private void removeAirshipFromItsUsersListOfAirships( String flightId ) {
-        
+    
         for( Entry< String, List< Airship >> entry : flightsByUserRegister.entrySet() ) {
             
             List< Airship > list = entry.getValue();

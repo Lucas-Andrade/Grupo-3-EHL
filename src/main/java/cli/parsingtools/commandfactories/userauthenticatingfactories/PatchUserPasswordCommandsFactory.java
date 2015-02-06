@@ -6,6 +6,7 @@ import java.util.concurrent.Callable;
 import main.java.cli.CLIStringsDictionary;
 import main.java.cli.parsingtools.commandfactories.CommandFactory;
 import main.java.cli.parsingtools.commandfactories.ParsingCommand;
+import main.java.domain.commands.CompletionStatus;
 import main.java.domain.commands.patchcommands.PatchUserPasswordCommand;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -24,7 +25,7 @@ import main.java.utils.exceptions.MissingRequiredParameterException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PatchUserPasswordCommandsFactory extends CommandFactory< String > {
+public class PatchUserPasswordCommandsFactory extends CommandFactory< CompletionStatus > {
     
     // INSTANCE FIELDS
     
@@ -47,7 +48,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< String > {
      */
     public PatchUserPasswordCommandsFactory( Database< User > usersDatabase )
         throws InvalidArgumentException {
-        
+    
         if( usersDatabase == null )
             throw new InvalidArgumentException(
                                                 "Cannot instantiate post factory with null databases." );
@@ -68,9 +69,9 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< String > {
      *             If one parameter is null or the empty string.
      */
     @Override
-    protected Callable< String > internalNewCommand( Map< String, String > parametersMap )
+    protected Callable< CompletionStatus > internalNewCommand( Map< String, String > parametersMap )
         throws MissingRequiredParameterException {
-        
+    
         return new PatchUP_ParsingCommand( parametersMap ).newCommand();
     }
     
@@ -84,7 +85,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< String > {
      */
     @Override
     protected String[] getRequiredParametersNames() {
-        
+    
         return new String[]{ CLIStringsDictionary.USERNAME, CLIStringsDictionary.OLDPASSWORD,
                             CLIStringsDictionary.NEWPASSWORD };
     }
@@ -98,7 +99,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< String > {
      */
     @Override
     public String getCommandsDescription() {
-        
+    
         return "Change An User Password";
     }
     
@@ -107,7 +108,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< String > {
      * Class that extends {@link ParsingCommand}, whose instances will parse the
      * {@code required parameters} and will create a {@link PatchUserPasswordCommand}
      */
-    private class PatchUP_ParsingCommand extends ParsingCommand< String > {
+    private class PatchUP_ParsingCommand extends ParsingCommand< CompletionStatus > {
         
         /**
          * The user's username.
@@ -135,7 +136,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< String > {
          */
         public PatchUP_ParsingCommand( Map< String, String > parametersMap )
             throws MissingRequiredParameterException {
-            
+        
             super( parametersMap );
             
             setParametersFields();
@@ -146,8 +147,8 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< String > {
          * @return A command of type {@link PatchUserPasswordCommand}
          */
         @Override
-        public Callable< String > newCommand() {
-            
+        public Callable< CompletionStatus > newCommand() {
+        
             try {
                 return new PatchUserPasswordCommand( usersDatabase, username, oldPassword,
                                                      newPassword );
@@ -168,7 +169,7 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< String > {
          *             If one parameter is null or the empty string.
          */
         private void setParametersFields() throws MissingRequiredParameterException {
-            
+        
             username = getParameterAsString( CLIStringsDictionary.USERNAME );
             oldPassword = getParameterAsString( CLIStringsDictionary.OLDPASSWORD );
             newPassword = getParameterAsString( CLIStringsDictionary.NEWPASSWORD );

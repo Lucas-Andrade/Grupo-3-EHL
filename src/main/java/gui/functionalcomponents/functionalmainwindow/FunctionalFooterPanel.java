@@ -3,7 +3,7 @@ package main.java.gui.functionalcomponents.functionalmainwindow;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
 import main.java.domain.commands.getcommands.GetAllTransgressingAirshipsCommand;
 import main.java.domain.model.Database;
@@ -56,9 +56,9 @@ public class FunctionalFooterPanel {
     private User user;
     
     /**
-     * {@code errorLabel} - The label where the error messages will be displayed.
+     * {@code errorTextArea} - The text area where the error messages will be displayed.
      */
-    private JLabel errorLabel;
+    private JTextArea errorTextArea;
     
     // Constructor
     
@@ -76,19 +76,20 @@ public class FunctionalFooterPanel {
      *            - The airships database.
      * @param user
      *            - The user who is currently logged in.
-     * @param errorLabel
-     *            - The label where the error messages will be displayed.
+     * @param errorTextArea
+     *            - The text area where the error messages will be displayed.
      */
     public FunctionalFooterPanel( JFooterPanelForMainWindow footerPanel,
                                   JBodyPanelForMainWindow bodyPanel,
-                                  Database< Airship > airshipsDatabase, User user, JLabel errorLabel ) {
-        
+                                  Database< Airship > airshipsDatabase, User user,
+                                  JTextArea errorTextArea ) {
+    
         this.footerPanel = footerPanel;
         this.bodyPanel = bodyPanel;
         
         this.airshipsDatabase = airshipsDatabase;
         this.user = user;
-        this.errorLabel = errorLabel;
+        this.errorTextArea = errorTextArea;
         
         addGetAllAirshipsButtonAction();
         addGetNearestAirshipsButtonAction();
@@ -114,17 +115,17 @@ public class FunctionalFooterPanel {
      * existing in the {@link FunctionalGetWindowSwingWorker} class.
      */
     private void addGetAllAirshipsButtonAction() {
-        
+    
         footerPanel.getShowAllAirships().addActionListener( new ActionListener() {
             
             @Override
             public void actionPerformed( ActionEvent e ) {
-                
-                new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorLabel ) {
+            
+                new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorTextArea ) {
                     
                     @Override
                     protected Iterable< Airship > doInBackground() throws Exception {
-                        
+                    
                         return new GetAllElementsInADatabaseCommand< Airship >( airshipsDatabase ).call()
                                                                                                   .get();
                     }
@@ -145,7 +146,7 @@ public class FunctionalFooterPanel {
      * obtained airships.
      */
     private void addGetNearestAirshipsButtonAction() {
-        
+    
         footerPanel.getNearestAirships()
                    .addActionListener( action -> new FunctionalGetGeographicalCoordinatesParametersWindow(
                                                                                                            new GetGeographicalCoordinatesParametersWindow(),
@@ -167,15 +168,17 @@ public class FunctionalFooterPanel {
      * existing in the {@link FunctionalGetWindowSwingWorker} class.
      */
     private void addGetTransgressingAirshipsButtonAction() {
-        
+    
         footerPanel.getTransgressingAirships().addActionListener( new ActionListener() {
             
             @Override
             public void actionPerformed( ActionEvent e ) {
-                new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorLabel ) {
+            
+                new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorTextArea ) {
                     
                     @Override
                     protected Iterable< Airship > doInBackground() throws Exception {
+                    
                         return new GetAllTransgressingAirshipsCommand( airshipsDatabase ).call()
                                                                                          .get();
                     }
@@ -196,7 +199,7 @@ public class FunctionalFooterPanel {
      * obtained airships.
      */
     private void addGetAirshipsWithLessPassengerThanButtonAction() {
-        
+    
         footerPanel.getAirshipsWithLessPassengerThan()
                    .addActionListener( action -> new FunctionalGetAirshipsWithLessPassengerThanWindow(
                                                                                                        new GetAirshipsWithLessPassengerThanWindow(),
@@ -208,7 +211,7 @@ public class FunctionalFooterPanel {
      * PATCH -> Not Implemented!
      */
     private void addPatchAirshipButtonAction() {
-        
+    
         footerPanel.getPatchAirship().addActionListener( action -> new UnderConstrutionWindow() );
     }
     
@@ -220,7 +223,7 @@ public class FunctionalFooterPanel {
      * objective of posting new {@link Airship} in the given database.
      */
     private void addPostAirshipButtonAction() {
-        
+    
         footerPanel.getPostAirship()
                    .addActionListener( action -> new FunctionalPostAirshipWindow(
                                                                                   new PostAirshipsWindow(),
@@ -232,7 +235,7 @@ public class FunctionalFooterPanel {
      * DELETE AIRSHIP -> Not Implemented!
      */
     private void addDeleteAirshipButtonAction() {
-        
+    
         footerPanel.getDeleteAirship().addActionListener( action -> new UnderConstrutionWindow() );
     }
     
@@ -242,6 +245,7 @@ public class FunctionalFooterPanel {
      * @return {@code footerPanel}.
      */
     public JFooterPanelForMainWindow getFooterPanel() {
+    
         return footerPanel;
     }
 }

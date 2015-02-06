@@ -104,6 +104,14 @@ public class App {
     private static final Map< String, String > commandsDescription =
             new HashMap< String, String >();
     
+    /**
+     * Unused private constructor
+     */
+    private App() {
+    
+    }
+    
+    
     // STATIC CONSTRUCTOR
     
     static {
@@ -127,7 +135,7 @@ public class App {
      * @param args
      */
     public static void main( String[] args ) {
-        
+    
         // Register commands phase
         commandRegister();
         
@@ -159,7 +167,7 @@ public class App {
      * No {@code Exception} should be catch!
      */
     private static void commandRegister() {
-        
+    
         try {
             
             // DELETE
@@ -221,7 +229,7 @@ public class App {
     
     private static void commandRegist( String method, String path,
                                        CommandFactory< ? > commandFactory ) {
-        
+    
         try {
             cmdParser.registerCommand( method, path, commandFactory );
             commandsDescription.put( new StringBuilder( method ).append( " " ).append( path )
@@ -252,6 +260,7 @@ public class App {
      * @param args
      */
     private static void execute( String[] args ) {
+    
         try {
             Parser parser = new Parser( cmdParser, args );
             Callable< ? > command = parser.getCommand();

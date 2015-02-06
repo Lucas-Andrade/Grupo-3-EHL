@@ -1,7 +1,7 @@
 package main.java.gui.functionalcomponents.functionalmainwindow;
 
 
-import javax.swing.JLabel;
+import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import main.java.domain.model.Database;
 import main.java.domain.model.airships.Airship;
@@ -39,14 +39,15 @@ public abstract class FunctionalGetWindowSwingWorker extends
      *            - The {@link MainWindow} body panel that will be updated as part of the actions
      *            performed by any of the buttons bellonging to the {@link MainWindow MainWindow's}
      *            footer panel.
-     * @param errorLabel
-     *            - The error label where the error messages from the thrown exceptions will be
+     * @param errorTextArea
+     *            - The error text area where the error messages from the thrown exceptions will be
      *            written.
      */
     public FunctionalGetWindowSwingWorker( Database< Airship > airshipsDatabase,
-                                           JBodyPanelForMainWindow bodyPanel, JLabel errorLabel ) {
-        
-        super( errorLabel );
+                                           JBodyPanelForMainWindow bodyPanel,
+                                           JTextArea errorTextArea ) {
+    
+        super( errorTextArea );
         this.airshipsDatabase = airshipsDatabase;
         this.bodyPanel = bodyPanel;
     }
@@ -68,7 +69,7 @@ public abstract class FunctionalGetWindowSwingWorker extends
      */
     @Override
     protected void functionalDone( Iterable< Airship > resultOfDoInBackGround ) throws Exception {
-        
+    
         bodyPanel.updateBodyPanel( airshipsDatabase, resultOfDoInBackGround );
     }
 }

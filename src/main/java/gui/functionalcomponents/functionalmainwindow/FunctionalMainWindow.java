@@ -57,7 +57,7 @@ public class FunctionalMainWindow {
     public FunctionalMainWindow( MainWindow nonFunctionalMainWindow,
                                  Database< User > usersDatabase,
                                  Database< Airship > airshipsDatabase, User user ) {
-        
+    
         this.functionalMainWindow = nonFunctionalMainWindow;
         
         this.usersDatabase = usersDatabase;
@@ -78,7 +78,7 @@ public class FunctionalMainWindow {
      * setHeaderPanel(JHeaderPanelForMainWindow)}.
      */
     private void functionalHeaderPanel() {
-        
+    
         functionalMainWindow.setHeaderPanel( (new FunctionalHeaderPanel(
                                                                          functionalMainWindow.getHeaderPanel(),
                                                                          usersDatabase, user )).getHeaderPanel() );
@@ -90,13 +90,13 @@ public class FunctionalMainWindow {
      * setFooterPanel(JFooterPanelForMainWindow)}.
      */
     private void functionalFooterPanel() {
-        
+    
         functionalMainWindow.setFooterPanel( (new FunctionalFooterPanel(
                                                                          functionalMainWindow.getFooterPanel(),
                                                                          functionalMainWindow.getBodyPanel(),
                                                                          airshipsDatabase,
                                                                          user,
-                                                                         functionalMainWindow.getErrorLabel() )).getFooterPanel() );
+                                                                         functionalMainWindow.getErrorJTextArea() )).getFooterPanel() );
     }
     
     /**
@@ -107,7 +107,7 @@ public class FunctionalMainWindow {
      * {@link FunctionalLoginWindow} with the objective of allowing another user to logIn.
      */
     private void functionalLogOutButton() {
-        
+    
         functionalMainWindow.getHeaderPanel()
                             .getUserPanel()
                             .getLogoutButton()
@@ -127,7 +127,7 @@ public class FunctionalMainWindow {
      * The given action will dispose of the current MainWindow, closing the program.
      */
     private void functionalTurnOffButton() {
-        
+    
         functionalMainWindow.getHeaderPanel().getUserPanel().getTurnOffButton()
                             .addActionListener( action -> functionalMainWindow.dispose() );
     }
@@ -138,7 +138,7 @@ public class FunctionalMainWindow {
      * @return the {@code functionalMainWindow}.
      */
     public MainWindow getFunctionalMainWindow() {
-        
+    
         return functionalMainWindow;
     }
 }

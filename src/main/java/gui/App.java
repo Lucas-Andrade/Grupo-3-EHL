@@ -58,7 +58,16 @@ import main.java.utils.exceptions.InvalidArgumentException;
  */
 public class App {
     
+    /**
+     * Unused private constructor
+     */
+    
+    private App() {
+    
+    }
+    
     public static void main( String[] args ) throws InvalidArgumentException {
+    
         Database< User > usersDatabase = new InMemoryUsersDatabase( "Users Database" );
         Database< Airship > airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         
@@ -66,6 +75,7 @@ public class App {
             
             @Override
             public void run() {
+            
                 new FunctionalLoginWindow( new LogInWindow(), usersDatabase, airshipsDatabase );
             }
         } );

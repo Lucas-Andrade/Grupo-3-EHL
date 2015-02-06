@@ -9,8 +9,8 @@ import main.java.utils.exceptions.InvalidArgumentException;
 
 
 /**
- * A {@link CommandFactory factory} that creates commands to get all the airships in an
- * airships database. Commands are {@link Callable} instances.
+ * A {@link CommandFactory factory} that creates commands to get all the airships in an airships
+ * database. Commands are {@link Callable} instances.
  * 
  * Extends {@link GetAllElementsInADatabaseCommandsFactory} of {@link Airship Airships}.
  * 
@@ -33,10 +33,10 @@ public class GetAllAirshipsInADatabaseCommandsFactory extends
      */
     public GetAllAirshipsInADatabaseCommandsFactory( Database< Airship > airshipDatabase )
         throws InvalidArgumentException {
-        
+    
         super( airshipDatabase );
     }
-
+    
     /**
      * Returns a short description of the command produced by this factory.
      * 
@@ -44,6 +44,7 @@ public class GetAllAirshipsInADatabaseCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
-        return  "Gets the list of all airships.";
+    
+        return "Gets the list of all airships.";
     }
 }

@@ -39,7 +39,7 @@ public class GeographicCoordinate {
      */
     public GeographicCoordinate( double value, double maxValue, double minValue )
         throws InvalidArgumentException {
-        
+    
         if( value < minValue )
             throw new InvalidArgumentException(
                                                 MessageFormat.format( "Invalid value {0}"
@@ -61,7 +61,7 @@ public class GeographicCoordinate {
      * @return the {@code value} of the {@code GeographicCoordinate}.
      */
     public double getValue() {
-        
+    
         return value;
     }
 }

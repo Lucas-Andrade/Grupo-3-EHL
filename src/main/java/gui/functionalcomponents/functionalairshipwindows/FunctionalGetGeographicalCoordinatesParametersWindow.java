@@ -62,7 +62,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
     public FunctionalGetGeographicalCoordinatesParametersWindow( GetGeographicalCoordinatesParametersWindow nonFunctionalWindow,
                                                                  Database< Airship > airshipsDatabase,
                                                                  JBodyPanelForMainWindow bodyPanel ) {
-        
+    
         super( nonFunctionalWindow );
         
         this.functionalWindow = nonFunctionalWindow;
@@ -81,8 +81,9 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
      */
     @Override
     protected FunctionalWindowSwingWorker< Iterable< Airship >> getSwingWorker() {
+    
         return new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel,
-                                                   functionalWindow.getErrorLabel() ) {
+                                                   functionalWindow.getErrorJTextArea() ) {
             
             /**
              * String representation of the parameters to use in the commands and that are obtained
@@ -107,7 +108,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
              */
             @Override
             protected Iterable< Airship > doInBackground() throws Exception {
-                
+            
                 return new GetTheNearestAirshipsToGeographicPositionCommand(
                                                                              (InMemoryAirshipsDatabase)airshipsDatabase,
                                                                              StringUtils.parameterToInteger( "Airships Number",
@@ -132,6 +133,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
             @Override
             public final void functionalDone( Iterable< Airship > resultOfDoInBackGround )
                 throws Exception {
+            
                 super.functionalDone( resultOfDoInBackGround );
                 functionalWindow.dispose();
             }

@@ -15,10 +15,10 @@ import main.java.cli.parsingtools.commandfactories.ParsingCommand;
  * contain data needed to perform them. Therefore they must be recognizable and translatable into
  * instances by the app. <br />
  * This dictionary holds several static fields accessed throughout the app's parsing mechanism (the
- * app's {@link Parser}s, {@link CommandParser} and {@link ParsingCommand}s); each
- * variable of this dictionary is associated with a literal string that is either the name or the
- * value of a placeholder or parameter. Only names and values of placeholders and parameters
- * contained in this dictionary are recognized internally.
+ * app's {@link Parser}s, {@link CommandParser} and {@link ParsingCommand}s); each variable of this
+ * dictionary is associated with a literal string that is either the name or the value of a
+ * placeholder or parameter. Only names and values of placeholders and parameters contained in this
+ * dictionary are recognized internally.
  * </p>
  * <p>
  * <b>Implementation note:</b><br />
@@ -30,6 +30,13 @@ import main.java.cli.parsingtools.commandfactories.ParsingCommand;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public final class CLIStringsDictionary {
+    
+    /**
+     * Unused private constructor
+     */
+    private CLIStringsDictionary() {
+    
+    }
     
     // AIRSHIP RELATED. PLACEHOLDERS NAMES
     

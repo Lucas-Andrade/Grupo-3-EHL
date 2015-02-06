@@ -13,8 +13,8 @@ import main.java.utils.exceptions.formattersexceptions.UnknownTypeException;
 
 
 /**
- * Class that contains all classes whose instances convert instances of {@code simple} into
- * {@link Translatable}s.
+ * Class that contains {@link Converter}s that convert instances whose fields are simple name-value
+ * pairs into {@link Translatable}s.
  * <p>
  * <b>The following conventions are advised:</b> translatables that represent simple instances have
  * {@code null entryTag, null keyTag, null valueTag}, a non-{@code null tag} and several entries in
@@ -33,8 +33,12 @@ class SimpleInstancesToTranslatables {
      */
     static class UserConversor extends Converter {
         
+        /**
+         * @see main.java.cli.outputformatters.totranslatableconverters.Converter#convert(java.lang.Object)
+         */
         @Override
         Translatable convert( Object user ) throws UnknownTypeException {
+        
             User u;
             try {
                 u = (User)user;
@@ -64,13 +68,17 @@ class SimpleInstancesToTranslatables {
     static abstract class AirshipConverter extends Converter {
         
         /**
-         * Create the {@code propertiesBag} for all Airships
+         * Creates a properties bag for {@code airship} that contains the properties common to all
+         * {@link Airship}s: flightId, latitude, longitude, altitude and the air corridor's minimum
+         * and maximum values for altitude (it does not contain specific properties such as number
+         * of passengers or the flag indicating whether it is carrying weapons or not).
          * 
          * @param airship
-         * @return the {@code propertiesBag}
+         *            The airship whose properties bag is to be created.
+         * @return The properties bag.
          */
         Map< String, Object > createAirshipPropertiesBag( Airship airship ) {
-            
+        
             Map< String, Object > propertiesBag = new LinkedHashMap< String, Object >();
             propertiesBag.put( CLIStringsDictionary.FLIGHTID, airship.getIdentification() );
             propertiesBag.put( CLIStringsDictionary.LATITUDE, airship.getCoordinates()
@@ -96,8 +104,12 @@ class SimpleInstancesToTranslatables {
      */
     static class CivilAirshipConverter extends AirshipConverter {
         
+        /**
+         * @see main.java.cli.outputformatters.totranslatableconverters.Converter#convert(java.lang.Object)
+         */
         @Override
         Translatable convert( Object civilAirship ) throws UnknownTypeException {
+        
             CivilAirship ca;
             try {
                 ca = (CivilAirship)civilAirship;
@@ -124,9 +136,12 @@ class SimpleInstancesToTranslatables {
      */
     static class MilitaryAirshipConverter extends AirshipConverter {
         
+        /**
+         * @see main.java.cli.outputformatters.totranslatableconverters.Converter#convert(java.lang.Object)
+         */
         @Override
         Translatable convert( Object militaryAirship ) throws UnknownTypeException {
-            
+        
             MilitaryAirship ma;
             try {
                 ma = (MilitaryAirship)militaryAirship;
@@ -145,5 +160,12 @@ class SimpleInstancesToTranslatables {
         }
     }
     
+    
+    /**
+     * Unused private constructor
+     */
+    private SimpleInstancesToTranslatables() {
+    
+    }
     
 }

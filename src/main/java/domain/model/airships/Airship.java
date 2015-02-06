@@ -71,7 +71,7 @@ public abstract class Airship implements Element {
      */
     protected Airship( double latitude, double longitude, double altitude, double maxAltitude,
                        double minAltitude ) throws InvalidArgumentException {
-        
+    
         coordinates = new GeographicPosition( latitude, longitude, altitude );
         airCorridor = new AirCorridor( maxAltitude, minAltitude );
         flightId = flightIDGenerator();
@@ -112,7 +112,7 @@ public abstract class Airship implements Element {
      */
     protected Airship( double latitude, double longitude, double altitude, double maxAltitude,
                        double minAltitude, String flightId ) throws InvalidArgumentException {
-        
+    
         this.coordinates = new GeographicPosition( latitude, longitude, altitude );
         this.airCorridor = new AirCorridor( maxAltitude, minAltitude );
         this.flightId = flightId;
@@ -131,7 +131,7 @@ public abstract class Airship implements Element {
      * @return returns a string representing the airship's flightID.
      */
     private static String flightIDGenerator() {
-        
+    
         return "id" + Long.toString( ++ID );
     }
     
@@ -142,7 +142,7 @@ public abstract class Airship implements Element {
      */
     @Override
     public String toString() {
-        
+    
         return new StringBuilder( "Flight ID: " ).append( flightId ).append( coordinates )
                                                  .append( airCorridor )
                                                  .append( "Is Outside The Given Corridor: " )
@@ -157,7 +157,7 @@ public abstract class Airship implements Element {
      */
     @Override
     public String getIdentification() {
-        
+    
         return flightId;
     }
     
@@ -167,7 +167,7 @@ public abstract class Airship implements Element {
      * @return the {@code coordinates}.
      */
     public GeographicPosition getCoordinates() {
-        
+    
         return coordinates;
     }
     
@@ -175,7 +175,7 @@ public abstract class Airship implements Element {
      * @return the {@code airCorridor}.
      */
     public AirCorridor getAirCorridor() {
-        
+    
         return airCorridor;
     }
     
@@ -183,7 +183,7 @@ public abstract class Airship implements Element {
      * @return the boolean {@code isTransgressing}.
      */
     public boolean isTransgressing() {
-        
+    
         return isTransgressing;
     }
 }

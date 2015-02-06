@@ -18,7 +18,7 @@ public class OptionalTest {
     
     @Test
     public void test() throws InvalidArgumentException {
-        
+    
         new Optional< User >( new User( "pantunes", "pantunesPassword", "pantunes@gmail.com" ),
                               new InvalidArgumentException() );
         
@@ -26,14 +26,14 @@ public class OptionalTest {
     
     @Test
     public void test2() throws InvalidArgumentException {
-        
+    
         new Optional< User >( null, new InvalidArgumentException() );
         
     }
     
     @Test
     public void test3() throws InvalidArgumentException {
-        
+    
         InvalidArgumentException Test = null;
         
         new Optional< User >( new User( "pantunes", "pantunesPassword", "pantunes@gmail.com" ),
@@ -43,7 +43,7 @@ public class OptionalTest {
     
     @Test
     public void test4() throws InvalidArgumentException {
-        
+    
         new Optional< User >( new User( "pantunes", "pantunesPassword", "pantunes@gmail.com" ),
                               "TEST" );
         
@@ -51,7 +51,7 @@ public class OptionalTest {
     
     @Test
     public void test5() throws InvalidArgumentException {
-        
+    
         new Optional< User >( new User( "pantunes", "pantunesPassword", "pantunes@gmail.com" ),
                               new InvalidArgumentException(), "TEST" );
         
@@ -59,7 +59,7 @@ public class OptionalTest {
     
     @Test
     public void test6() throws InvalidArgumentException {
-        
+    
         new Optional< User >( new User( "pantunes", "pantunesPassword", "pantunes@gmail.com" ),
                               null, "TEST" );
         
@@ -67,7 +67,7 @@ public class OptionalTest {
     
     @Test
     public void test7() throws InvalidArgumentException {
-        
+    
         Optional< User > optional =
                 new Optional< User >( new User( "pantunes", "pantunesPassword",
                                                 "pantunes@gmail.com" ),
@@ -77,7 +77,7 @@ public class OptionalTest {
     
     @Test
     public void test8() throws InvalidArgumentException {
-        
+    
         Optional< User > optional =
                 new Optional< User >( null, new InvalidArgumentException(), "TEST" );
         
@@ -86,7 +86,7 @@ public class OptionalTest {
     
     @Test
     public void test9() throws InvalidArgumentException {
-        
+    
         Map< String, String > MapTester = new HashMap< String, String >();
         
         MapTester.put( "Tester", "OptionalTeser" );
@@ -100,7 +100,7 @@ public class OptionalTest {
     
     @Test
     public void test10() throws Exception {
-        
+    
         Map< String, String > MapTester = new HashMap< String, String >();
         
         Optional< Map< String, String >> optional =
@@ -113,7 +113,7 @@ public class OptionalTest {
     
     @Test
     public void test11() throws InvalidArgumentException {
-        
+    
         Collection< String > MapTester = new ArrayList< String >();
         
         MapTester.add( "Tester" );
@@ -127,7 +127,7 @@ public class OptionalTest {
     
     @Test
     public void test12() throws InvalidArgumentException {
-        
+    
         Collection< String > MapTester = new ArrayList< String >();
         
         Optional< Collection< String >> optional =
@@ -139,7 +139,7 @@ public class OptionalTest {
     
     @Test
     public void test13() throws InvalidArgumentException {
-        
+    
         Collection< String > MapTester = new ArrayList< String >();
         
         Optional< Collection< String >> optional =
@@ -151,7 +151,7 @@ public class OptionalTest {
     
     @Test
     public void test14() throws InvalidArgumentException {
-        
+    
         Collection< String > MapTester = new ArrayList< String >();
         
         Optional< Collection< String >> optional =
@@ -163,7 +163,7 @@ public class OptionalTest {
     
     @Test
     public void test15() throws InvalidArgumentException {
-        
+    
         Collection< String > MapTester = new ArrayList< String >();
         MapTester.add( "Tester" );
         
@@ -176,7 +176,7 @@ public class OptionalTest {
     
     @Test
     public void test16() throws InvalidArgumentException {
-        
+    
         Collection< String > MapTester = new ArrayList< String >();
         MapTester.add( "Tester" );
         
@@ -189,7 +189,7 @@ public class OptionalTest {
     
     @Test
     public void test17() throws Exception {
-        
+    
         String Test = "Tester";
         Collection< String > MapTester = new ArrayList< String >();
         MapTester.add( Test );
@@ -202,7 +202,7 @@ public class OptionalTest {
     
     @Test( expected = InvalidArgumentException.class )
     public void test18() throws Exception {
-        
+    
         Optional< Collection< String >> optional =
                 new Optional< Collection< String >>( null, new InvalidArgumentException(), null );
         Assert.assertNull( optional.get().iterator().next() );

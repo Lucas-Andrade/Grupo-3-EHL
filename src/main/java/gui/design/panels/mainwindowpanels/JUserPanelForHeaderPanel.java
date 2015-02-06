@@ -15,6 +15,14 @@ import main.java.gui.design.borders.TextRoundBorder;
 import main.java.gui.design.panels.JPanelImage;
 import main.java.utils.exceptions.InternalErrorException;
 
+/**
+ * 
+ * Class who's instances represents panel that contains {@link JButton} group and a {@link JPanelImage}.
+ * This class extends {@link JPanel}.
+ * 
+ *
+ *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
 
 @SuppressWarnings( "serial" )
 public class JUserPanelForHeaderPanel extends JPanel {

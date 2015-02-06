@@ -22,10 +22,12 @@ import main.java.utils.exceptions.InternalErrorException;
  * This panel extends {@link JPanel}. The panel has this configuration :
  * 
  * <pre>
- *       ----------------------
- *       |      JLabel        | 
- *       |    JTextField      | 
- *       ---------------------- 
+ *        ____________________
+ *       |                    |
+ *       |      JLabel        |  
+ *       |                    |
+ *       |     JTextField     |
+ *       |____________________| 
  * </pre>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -36,9 +38,9 @@ public class JLablePlusJTextField extends JPanel {
     
     // INSTANCE FIELD
     
-    // //////////////////////////////////////////////////
-    // Graphical Fields used only for design purposes //
-    // //////////////////////////////////////////////////
+      ////////////////////////////////////////////////////
+     // Graphical Fields used only for design purposes //
+    ////////////////////////////////////////////////////
     
     /**
      * {@code TRANSLUCENTCOMPONENT} int variable that represents panel Color (translucent Color).
@@ -81,9 +83,9 @@ public class JLablePlusJTextField extends JPanel {
      */
     private static final int GRIDYPOSITIONFORJTEXTFIELD = 2;
     
-    // //////////////////////////
-    // /// Components Fields ////
-    // //////////////////////////
+      ////////////////////////////
+     ///// Components Fields ////
+    ////////////////////////////
     
     /**
      * {@code label} variable that represents the {@link JLabel} that is part of this Panel.
@@ -171,9 +173,9 @@ public class JLablePlusJTextField extends JPanel {
     }
     
     
-    // ///////////////////
-    // Private Methods //
-    // ///////////////////
+      /////////////////////
+     // Private Methods //
+    /////////////////////
     
     /**
      * Method responsible to create the {@link JLabel} and insert it into
@@ -242,9 +244,9 @@ public class JLablePlusJTextField extends JPanel {
         
     }
     
-    // ///////////////
-    // Get Methods //
-    // ///////////////
+      /////////////////
+     // Get Methods //
+    /////////////////
     
     /**
      * @return the {@code label}.

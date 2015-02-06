@@ -7,11 +7,12 @@ import javax.swing.JPanel;
 /**
  *  Class who's instances represents panel who contains two {@link JButton}. 
  *  This panel extends {@link JPanel}. The panel has this configuration : 
- * 
- *   <p>    {@literal ------------------------------} </p>
- *   <p>   {@literal |}  Left Button {@literal |} Right Button {@literal |} </p> 
- *   <p>    {@literal ------------------------------} </p>
- *
+ * <pre>
+ *    ____________________________
+ *   |             |              |  
+ *   | Left Button | Right Button |
+ *   |_____________|______________|
+ *</pre>
  *  @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 

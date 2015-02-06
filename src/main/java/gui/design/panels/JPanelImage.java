@@ -14,11 +14,12 @@ import main.java.utils.exceptions.InternalErrorException;
     /**
      * Class who's instances represents panel who contains several images side to side
      *  This panel extends {@link JPanel}. The panel has this configuration: 
-     *  
-     *   <p>    {@literal -----------------------------------} </p>
-     *   <p>   {@literal |} Image 1 {@literal |} Image 2 {@literal |} ...  {@literal |} Image n {@literal |} </p> 
-     *   <p>    {@literal -----------------------------------} </p>
-     *   
+     *  <pre>  
+     *   ___________________________________
+     *  |         |         |     |         |
+     *  | Image 1 | Image 2 | ... | Image n | 
+     *  |_________|_________|_____|_________|
+     *   </pre>
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
 

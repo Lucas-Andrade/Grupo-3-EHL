@@ -7,6 +7,14 @@ import java.awt.FlowLayout;
 import javax.swing.JPanel;
 import main.java.gui.design.panels.JPanelImage;
 
+    /**
+     * 
+     * Class who's instances represents panel that contains a {@link JPanelImage}  and {@link JUserPanelForHeaderPanel}.
+     * This class extends {@link JPanel}.
+     * 
+     *
+     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+     */
 
 @SuppressWarnings( "serial" )
 public class JHeaderPanelForMainWindow extends JPanel {
@@ -40,7 +48,7 @@ public class JHeaderPanelForMainWindow extends JPanel {
      */
     private JUserPanelForHeaderPanel userPanel;
     
-    //////////////////////
+     //////////////////////
     //// Constructors ////
    //////////////////////
    

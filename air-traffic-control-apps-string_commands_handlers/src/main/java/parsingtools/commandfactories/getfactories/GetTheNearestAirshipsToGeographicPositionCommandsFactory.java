@@ -3,14 +3,11 @@ package parsingtools.commandfactories.getfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.ParsingCommand;
 import utils.CLIStringsDictionary;
 import utils.Optional;
-
 import commands.getcommands.GetTheNearestAirshipsToGeographicPositionCommand;
-
 import databases.Database;
 import elements.Airship;
 import elements.airships.GeographicPosition;
@@ -54,7 +51,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
      */
     public GetTheNearestAirshipsToGeographicPositionCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-    
+        
         if( airshipsDatabase == null )
             throw new InvalidArgumentException(
                                                 "It's not allow instantiate a factory with null airships database" );
@@ -85,7 +82,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
     protected Callable< Optional< Iterable< Airship >>>
             internalNewCommand( Map< String, String > parametersMap )
                 throws InvalidParameterValueException, MissingRequiredParameterException {
-    
+        
         return new GetTNATGP_ParsingCommand( parametersMap ).newCommand();
     }
     
@@ -97,7 +94,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
      */
     @Override
     protected String[] getRequiredParametersNames() {
-    
+        
         return new String[]{ CLIStringsDictionary.LATITUDE, CLIStringsDictionary.LONGITUDE,
                             CLIStringsDictionary.NUMBEROFAIRSHIPSTOFIND };
     }
@@ -109,7 +106,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
-    
+        
         return "Get the nearest aircrafts of Geographic coordinates";
     }
     
@@ -151,7 +148,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
          */
         public GetTNATGP_ParsingCommand( Map< String, String > parametersMap )
             throws InvalidParameterValueException, MissingRequiredParameterException {
-        
+            
             super( parametersMap );
             setParametersFields();
         }
@@ -161,7 +158,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
          */
         @Override
         public Callable< Optional< Iterable< Airship >>> newCommand() {
-        
+            
             try {
                 return new GetTheNearestAirshipsToGeographicPositionCommand( airshipsDatabase,
                                                                              numberOfAirshipsToGet,
@@ -186,7 +183,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
          */
         private void setParametersFields()
             throws InvalidParameterValueException, MissingRequiredParameterException {
-        
+            
             latitude = getParameterAsDouble( CLIStringsDictionary.LATITUDE );
             longitude = getParameterAsDouble( CLIStringsDictionary.LONGITUDE );
             numberOfAirshipsToGet = getParameterAsInt( CLIStringsDictionary.NUMBEROFAIRSHIPSTOFIND );

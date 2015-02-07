@@ -4,7 +4,6 @@ package databases;
 
 import java.util.Comparator;
 import java.util.function.Predicate;
-
 import utils.Optional;
 import elements.Element;
 import elements.User;

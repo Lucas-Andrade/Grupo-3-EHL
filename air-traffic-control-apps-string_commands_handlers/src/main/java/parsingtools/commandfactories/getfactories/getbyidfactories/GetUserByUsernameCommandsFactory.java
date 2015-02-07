@@ -2,7 +2,6 @@ package parsingtools.commandfactories.getfactories.getbyidfactories;
 
 
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.CommandFactory;
 import utils.CLIStringsDictionary;
 import databases.Database;
@@ -36,7 +35,7 @@ public class GetUserByUsernameCommandsFactory extends
      */
     public GetUserByUsernameCommandsFactory( Database< User > usersDatabase )
         throws InvalidArgumentException {
-    
+        
         super( CLIStringsDictionary.USERNAME, usersDatabase );
     }
     
@@ -48,7 +47,7 @@ public class GetUserByUsernameCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
-    
+        
         return "Gets a user with a certain username.";
     }
 }

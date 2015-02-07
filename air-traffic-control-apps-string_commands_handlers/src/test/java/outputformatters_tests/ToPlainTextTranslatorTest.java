@@ -4,9 +4,7 @@ package outputformatters_tests;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.Test;
-
 import outputformatters.totranslatableconverters.ToTranslatableConverter;
 import outputformatters.translators.ToPlainTextTranslator;
 import utils.Optional;

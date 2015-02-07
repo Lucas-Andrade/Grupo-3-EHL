@@ -21,7 +21,7 @@ public class InvalidCommandParametersSyntaxException extends ParsingException {
      *            The detail message.
      */
     public InvalidCommandParametersSyntaxException( String message ) {
-    
+        
         super( message );
     }
 }

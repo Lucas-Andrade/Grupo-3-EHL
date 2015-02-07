@@ -3,7 +3,6 @@ package outputformatters.totranslatableconverters;
 
 import java.util.Map;
 import java.util.TreeMap;
-
 import outputformatters.Translatable;
 import utils.OptionsList;
 import utils.exceptions.formattersexceptions.UnknownTypeException;
@@ -32,7 +31,7 @@ class MapsToTranslatables {
         
         @Override
         Translatable convert( Object optionsList ) throws UnknownTypeException {
-        
+            
             OptionsList optList;
             try {
                 optList = (OptionsList)optionsList;
@@ -56,7 +55,7 @@ class MapsToTranslatables {
      * Unused private constructor
      */
     private MapsToTranslatables() {
-    
+        
     }
     
     

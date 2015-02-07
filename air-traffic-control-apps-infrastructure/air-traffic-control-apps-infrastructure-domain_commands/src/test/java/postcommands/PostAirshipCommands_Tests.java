@@ -2,13 +2,10 @@ package postcommands;
 
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import commands.postcommands.PostCivilAirshipCommand;
 import commands.postcommands.PostMilitaryAirshipCommand;
-
 import databases.InMemoryAirshipsDatabase;
 import elements.User;
 import exceptions.InvalidArgumentException;
@@ -38,7 +35,7 @@ public class PostAirshipCommands_Tests {
     @Before
     public void createUserAndAirshipDatabaseWhereToPostTheCreatedAirships()
         throws InvalidArgumentException {
-    
+        
         // Arrange
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         
@@ -50,7 +47,7 @@ public class PostAirshipCommands_Tests {
     @Test
     public void shouldPostACivilAirshipWithTheCorrectParametersInTheGivenDatabase()
         throws Exception {
-    
+        
         // Act
         postCivilAirship =
                 new PostCivilAirshipCommand( 0, 0, 0, 100, 50, 100, airshipsDatabase, user1 );
@@ -65,7 +62,7 @@ public class PostAirshipCommands_Tests {
     @Test
     public void shouldPostAMilitaryAirshipWithTheCorrectParametersInTheGivenDatabase()
         throws Exception {
-    
+        
         // Act
         postMilitaryAirship =
                 new PostMilitaryAirshipCommand( 0, 0, 0, 100, 50, false, airshipsDatabase, user1 );
@@ -84,7 +81,7 @@ public class PostAirshipCommands_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateThePostCivilAirshipCommandGivenANullDatabase()
                 throws InvalidArgumentException {
-    
+        
         postCivilAirship = new PostCivilAirshipCommand( 0, 0, 0, 100, 50, 100, null, user1 );
     }
     
@@ -93,7 +90,7 @@ public class PostAirshipCommands_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateThePostMilitaryAirshipCommandGivenANullDatabase()
                 throws InvalidArgumentException {
-    
+        
         postMilitaryAirship = new PostMilitaryAirshipCommand( 0, 0, 0, 100, 50, false, null, user1 );
     }
 }

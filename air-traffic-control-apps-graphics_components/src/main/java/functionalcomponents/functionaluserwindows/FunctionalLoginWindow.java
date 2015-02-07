@@ -3,11 +3,8 @@ package functionalcomponents.functionaluserwindows;
 
 import Airship;
 import User;
-
 import java.awt.event.ActionListener;
-
 import javax.swing.SwingWorker;
-
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.FunctionalWindowSwingWorker;
 import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
@@ -49,7 +46,7 @@ public class FunctionalLoginWindow extends FunctionalWindow< User > {
      */
     public FunctionalLoginWindow( LogInWindow nonFunctionalWindow, Database< User > usersDatabase,
                                   Database< Airship > airshipsDatabase ) {
-    
+        
         super( nonFunctionalWindow );
         
         this.functionalWindow = nonFunctionalWindow;
@@ -69,7 +66,7 @@ public class FunctionalLoginWindow extends FunctionalWindow< User > {
      */
     @Override
     protected FunctionalWindowSwingWorker< User > getSwingWorker() {
-    
+        
         return new FunctionalWindowSwingWorker< User >( functionalWindow.getErrorJTextArea() ) {
             
             /**
@@ -88,7 +85,7 @@ public class FunctionalLoginWindow extends FunctionalWindow< User > {
              */
             @Override
             protected User doInBackground() throws Exception {
-            
+                
                 return new AuthenticateUserCommand( username, password, usersDatabase ).call()
                                                                                        .get();
             }
@@ -105,7 +102,7 @@ public class FunctionalLoginWindow extends FunctionalWindow< User > {
              */
             @Override
             protected void functionalDone( User resultOfDoInBackGround ) throws Exception {
-            
+                
                 new FunctionalMainWindow(
                                           new MainWindow( airshipsDatabase,
                                                           airshipsDatabase.getAllElements().get() ),

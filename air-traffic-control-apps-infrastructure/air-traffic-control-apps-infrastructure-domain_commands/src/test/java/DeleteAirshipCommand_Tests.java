@@ -1,14 +1,10 @@
-
-
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import utils.CompletionStatus;
 import commands.DeleteAirshipCommand;
+import databases.Database;
 import databases.InMemoryAirshipsDatabase;
-import databases.InMemoryUsersDatabase;
 import elements.Airship;
 import elements.User;
 import elements.airships.CivilAirship;
@@ -16,75 +12,48 @@ import exceptions.InvalidArgumentException;
 
 
 /**
- * This Test class tests the following classes:
+ * Test case that targets the class {@link DeleteAirshipCommand}.
  * 
- * <pre>
- * 
- * {@link DeleteAirshipCommand}
- * 
- * </pre>
- *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class DeleteAirshipCommand_Tests {
     
-    CommandParser cmdParser;
-    InMemoryAirshipsDatabase airshipsDatabase;
-    InMemoryUsersDatabase userDatabase;
-    User user;
-    
-    // Before
+    Database< Airship > airshipsDatabase;
     
     @Before
-    public void createUserAndAirshipAndTheirDatabases()
-        throws InvalidRegisterException, InvalidArgumentException {
-    
-        cmdParser = new CommandParser();
-        
+    public void initDatabase() throws InvalidArgumentException {
         airshipsDatabase = new InMemoryAirshipsDatabase( "airshipsDatabase" );
-        userDatabase = new InMemoryUsersDatabase( "userDatabase" );
-        
-        user = new User( "pantunes", "pantunespassword", "pantunes@gmail.com" );
-        userDatabase.add( user, user );
-        
-        cmdParser.registerCommand( "DELETE",
-                                   "/airships/{flightId}",
-                                   new DeleteAirshipCommandsFactory( userDatabase, airshipsDatabase ) );
-        
     }
     
-    // Test Normal Dinamic And Prerequisites
+    // Test Normal Dynamic And Prerequisites
     
     @Test
     public void shouldDeleteAnAirhipsMemberOfInMemoryAirshipsDatabase() throws Exception {
-    
+        
+        // Arrange
+        
+        Database< Airship > airshipsDatabase = new InMemoryAirshipsDatabase( "airshipsDatabase" );
         Airship air1 = new CivilAirship( 30, 230, 10000, 20000, 0, 199 );
-        
+        User user = new User( "pantunes", "pantunespassword", "pantunes@gmail.com" );
         airshipsDatabase.add( air1, user );
+        String air1_id = air1.getIdentification();
         
-        Parser parser =
-                new Parser( cmdParser, "DELETE",
-                            new StringBuilder( "/airships/" ).append( air1.getIdentification() )
-                                                             .toString(),
-                            "loginName=pantunes&loginPassword=pantunespassword" );
+        // Act
+        CompletionStatus status = new DeleteAirshipCommand( airshipsDatabase, air1_id ).call();
         
-        Assert.assertEquals( "Airship successfully removed",
-                             ((CompletionStatus)parser.getCommand().call()).getMessage() );
+        // Assert
+        Assert.assertTrue( status.operationCompletedSuccessfully() );
+        Assert.assertEquals( "Airship successfully removed", status.getMessage() );
     }
     
     @Test
-    public void shouldNotDeleteAnAirshipBecauseAnInvalidLoginPassword() throws Exception {
-    
-        Airship air1 = new CivilAirship( 30, 230, 10000, 20000, 0, 199 );
+    public void shouldFailToDeleteAnAirhipNotContainedInTheDatabase() throws Exception {
         
-        Parser parser =
-                new Parser( cmdParser, "DELETE",
-                            new StringBuilder( "/airships/" ).append( air1.getIdentification() )
-                                                             .toString(),
-                            "loginName=pantunes&loginPassword=pantunespassword" );
+        CompletionStatus status =
+                ((CompletionStatus)new DeleteAirshipCommand( airshipsDatabase, "inexistentID" ).call());
         
-        Assert.assertEquals( "Airship doesn't exist in the database",
-                             ((CompletionStatus)parser.getCommand().call()).getMessage() );
+        Assert.assertFalse( status.operationCompletedSuccessfully() );
+        Assert.assertEquals( "Airship doesn't exist in the database", status.getMessage() );
     }
     
     // Test Exceptions
@@ -92,15 +61,13 @@ public class DeleteAirshipCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenGiveAnNullInMemoryAirshipsDatabase()
         throws Exception {
-    
-        Airship air1 = new CivilAirship( 30, 230, 10000, 20000, 0, 199 );
         
-        new DeleteAirshipCommand( null, air1.getIdentification() );
+        new DeleteAirshipCommand( null, "aFlightId" );
     }
     
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenGiveAnNullIdentification() throws Exception {
-    
-        new DeleteAirshipCommand( airshipsDatabase, null );
+        
+        new DeleteAirshipCommand( new InMemoryAirshipsDatabase( "test" ), null );
     }
 }

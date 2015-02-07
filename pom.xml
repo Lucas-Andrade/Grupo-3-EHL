@@ -42,9 +42,7 @@
 		<module>air-traffic-control-apps-infrastructure</module>
 		<module>air-traffic-control-apps-utils</module>
 		<module>air-traffic-control-applications</module>
-		<module>
-			air-traffic-control-apps-string_commands_handlers
-		</module>
+		<module>air-traffic-control-apps-string_commands_handlers</module>
 		<module>air-traffic-control-apps-graphics_components</module>
 	</modules>
 
@@ -99,7 +97,12 @@
 
 
 	<build>
-		<defaultGoal>clean package sonar:sonar</defaultGoal>
+		<defaultGoal>
+			<!-- WHILE CLIENT, GUI AND GRAPHICS ARE NOT COMPILING, WRITE THE LINE
+			 mvn -pl !air-traffic-control-applications/air-traffic-control-applications-distributed/air-traffic-control-applications-distributed-client,!air-traffic-control-applications/air-traffic-control-applications-gui,!air-traffic-control-apps-graphics_components clean package sonar:sonar
+			TO THE COMMAND LINE -->
+			clean package sonar:sonar
+		</defaultGoal>
 
 		<plugins>
 
@@ -110,7 +113,6 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
-					<!-- excludes> <exclude>**/gui/**</exclude> </excludes -->
 				</configuration>
 			</plugin>
 
@@ -125,19 +127,6 @@
 						<include>**/*Test*.java</include>
 						<include>**/*test*.java</include>
 					</includes>
-				</configuration>
-			</plugin>
-
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-jar-plugin</artifactId>
-				<version>2.5</version>
-				<configuration>
-					<archive>
-						<manifest>
-							<mainClass>main.java.cli.App</mainClass>
-						</manifest>
-					</archive>
 				</configuration>
 			</plugin>
 

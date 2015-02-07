@@ -2,7 +2,6 @@ package commands.patchcommands;
 
 
 import java.util.concurrent.Callable;
-
 import utils.CompletionStatus;
 import utils.Optional;
 import databases.Database;
@@ -71,7 +70,7 @@ public class PatchUserPasswordCommand implements Callable< CompletionStatus > {
     public PatchUserPasswordCommand( Database< User > usersDatabase, String username,
                                      String oldPassword, String newPassword )
         throws InvalidArgumentException {
-    
+        
         if( usersDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -117,7 +116,7 @@ public class PatchUserPasswordCommand implements Callable< CompletionStatus > {
      */
     @Override
     public CompletionStatus call() {
-    
+        
         /* Implementation notes: Users are immutable, changing a password requires removing the user
          * from the database, creating a new one and adding it to the database */
         

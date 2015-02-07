@@ -17,7 +17,7 @@ public class CommandParserException extends ParsingException {
      * Constructs a {@link CommandParserException} with no detail message.
      */
     public CommandParserException() {
-    
+        
     }
     
     /**
@@ -27,7 +27,7 @@ public class CommandParserException extends ParsingException {
      *            The detail message.
      */
     public CommandParserException( String message ) {
-    
+        
         super( message );
     }
     

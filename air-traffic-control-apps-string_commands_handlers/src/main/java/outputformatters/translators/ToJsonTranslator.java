@@ -4,7 +4,6 @@ package outputformatters.translators;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.StringJoiner;
-
 import outputformatters.Translatable;
 import utils.exceptions.formattersexceptions.UnknownTranslatableException;
 
@@ -37,7 +36,7 @@ public class ToJsonTranslator implements Translator {
      */
     @Override
     public String encode( Translatable translatable ) throws UnknownTranslatableException {
-    
+        
         if( translatable.getTag() == null )
             return stringEnconde( translatable );
         
@@ -57,7 +56,7 @@ public class ToJsonTranslator implements Translator {
      * @return A string with Json representation of {@code translatable}.
      */
     private String stringEnconde( Translatable translatable ) {
-    
+        
         Entry< String, Object > entry =
                 translatable.getPropertiesBag().entrySet().iterator().next();
         return getSimpleJsonJoiner( entry.getKey(), entry.getValue() ).toString();
@@ -70,7 +69,7 @@ public class ToJsonTranslator implements Translator {
      * @return A string with Json representation of {@code translatable}.
      */
     private String simpleEncode( Translatable translatable ) {
-    
+        
         return getConposedJsonBuilder( translatable.getPropertiesBag().entrySet(),
                                        translatable.getTag() ).toString();
     }
@@ -83,7 +82,7 @@ public class ToJsonTranslator implements Translator {
      * @throws UnknownTranslatableException
      */
     private String iterableEnconde( Translatable translatable ) throws UnknownTranslatableException {
-    
+        
         StringBuilder indentation = getIndentation( ++IndentationLength );
         StringJoiner strJoinerList = new StringJoiner( ", " + indentation, "[ ", " ]" );
         try {
@@ -111,7 +110,7 @@ public class ToJsonTranslator implements Translator {
      * @throws UnknownTranslatableException
      */
     private String mapEncode( Translatable translatable ) {
-    
+        
         StringBuilder indentation = getIndentation( ++IndentationLength );
         StringJoiner strJoinerList = new StringJoiner( ", " + indentation, "[ ", " ]" );
         
@@ -140,7 +139,7 @@ public class ToJsonTranslator implements Translator {
      * @return a {@code StringJoiner} with the Json format
      */
     private StringJoiner getSimpleJsonJoiner( Object obj1, Object obj2 ) {
-    
+        
         StringBuilder str1 = new StringBuilder( "\"" ).append( obj1 ).append( "\"" );
         StringBuilder str2 = new StringBuilder();
         
@@ -163,7 +162,7 @@ public class ToJsonTranslator implements Translator {
      */
     private StringBuilder
             getConposedJsonBuilder( Set< Entry< String, Object > > entries, String tag ) {
-    
+        
         StringBuilder indentation = getIndentation( ++IndentationLength );
         
         StringJoiner strJoinerList = new StringJoiner( "," );
@@ -192,7 +191,7 @@ public class ToJsonTranslator implements Translator {
      */
     private StringBuilder getUnitaryConposedJsonBuilder( Entry< String, Object > entry, String tag,
                                                          String keyTag, String valueTag ) {
-    
+        
         StringBuilder indentation = getIndentation( ++IndentationLength );
         StringBuilder strB =
                 new StringBuilder( "{ \"" ).append( tag )
@@ -215,7 +214,7 @@ public class ToJsonTranslator implements Translator {
      * @return the indentation
      */
     private StringBuilder getIndentation( int indentationLength ) {
-    
+        
         StringBuilder indentation = new StringBuilder( "\r\n" );
         for( int i = 0; i < indentationLength; i++ ) {
             indentation.append( "   " );

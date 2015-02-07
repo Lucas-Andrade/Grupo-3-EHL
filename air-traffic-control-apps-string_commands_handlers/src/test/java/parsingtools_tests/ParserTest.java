@@ -1,14 +1,20 @@
 package parsingtools_tests;
 
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 import org.junit.Assert;
 import org.junit.Test;
-
 import parsingtools.CommandParser;
 import parsingtools.Parser;
 import parsingtools.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
 import parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
+import utils.CLIStringsDictionary;
 import utils.CompletionStatus;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
@@ -24,7 +30,7 @@ public class ParserTest {
     
     @Test
     public void shouldGetAllUsersToTestParserWithTwoArgsAndGetCommandMethod() throws Exception {
-    
+        
         InMemoryUsersDatabase usersDatabase = new InMemoryUsersDatabase( "firstUsersDatabse" );
         
         CommandParser cmdparser = new CommandParser();
@@ -42,7 +48,7 @@ public class ParserTest {
     @Test
     public void shouldPatchUserPasswordToTestParserWithThreeArgsAndGetCommandMethod()
         throws Exception {
-    
+        
         CommandParser cmdparser = new CommandParser();
         
         InMemoryUsersDatabase usersDatabase = new InMemoryUsersDatabase( "firstUsersDatabse" );
@@ -68,7 +74,7 @@ public class ParserTest {
         throws InvalidArgumentException, InvalidRegisterException,
         InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidParameterValueException {
-    
+        
         
         CommandParser cmdparser = new CommandParser();
         
@@ -93,7 +99,7 @@ public class ParserTest {
         throws InvalidArgumentException, InvalidRegisterException,
         InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidParameterValueException {
-    
+        
         
         CommandParser cmdparser = new CommandParser();
         
@@ -118,26 +124,33 @@ public class ParserTest {
     public void shouldGetAPrintStreamObjectAfterExecuteGetStreamMethod()
         throws InvalidArgumentException, InvalidCommandParametersSyntaxException,
         DuplicateParametersException, InvalidCommandSyntaxException, InvalidRegisterException,
-        InvalidParameterValueException {
-    
-        CommandParser cmdparser = new CommandParser();
+        InvalidParameterValueException, IOException {
         
         InMemoryUsersDatabase usersDatabase = new InMemoryUsersDatabase( "firstUsersDatabse" );
+        User user1 = new User( "pantunes", "pass", "Pantunes@gmail.com" );        
+        usersDatabase.add( user1, user1 );
         
+        CommandParser cmdparser = new CommandParser(); 
         cmdparser.registerCommand( "GET", "/users/{username}",
                                    new GetUserByUsernameCommandsFactory( usersDatabase ) );
         
-        User user1 = new User( "pantunes", "pass", "Pantunes@gmail.com" );
-        
-        usersDatabase.add( user1, user1 );
-        
         Parser parser =
                 new Parser( cmdparser, "GET", "/users/pantunes",
-                            "output-file=src/main/java/cli/TestFile.txt" );
+                            CLIStringsDictionary.STREAM + "=src/test/resources/ParserTest_TestFile.txt" );
         
-        Assert.assertEquals( "PrintStream", parser.getStream().getClass().getSimpleName() );
+        OutputStream ps = parser.getStream();
+        Assert.assertEquals( "PrintStream", ps.getClass().getSimpleName() );
         
-    }
+        ps.write( "OLA".getBytes() );
+        ps.flush();
+        BufferedReader br = new BufferedReader(new FileReader( "src/test/resources/ParserTest_TestFile.txt" ));
+        String fileContent = br.readLine();
+        Assert.assertEquals( "OLA", fileContent);
+        ps.close(); br.close();
+        
+        File f = new File("src/test/resources/ParserTest_TestFile.txt");
+        Assert.assertTrue( f.delete() );
+    } 
     
     @Test
     public
@@ -146,7 +159,7 @@ public class ParserTest {
                 throws InvalidArgumentException, InvalidCommandParametersSyntaxException,
                 DuplicateParametersException, InvalidCommandSyntaxException,
                 InvalidRegisterException, InvalidParameterValueException {
-    
+        
         CommandParser cmdparser = new CommandParser();
         
         InMemoryUsersDatabase usersDatabase = new InMemoryUsersDatabase( "firstUsersDatabse" );
@@ -191,7 +204,7 @@ public class ParserTest {
                 throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
                 InvalidCommandSyntaxException, InvalidArgumentException, InvalidRegisterException,
                 InvalidParameterValueException {
-    
+        
         
         CommandParser cmdparser = new CommandParser();
         
@@ -215,7 +228,7 @@ public class ParserTest {
     public void shouldThrowInvalidCommandSyntaxExceptionWhenIsGivingOneArgs()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
-    
+        
         CommandParser cmdparser = new CommandParser();
         new Parser( cmdparser, "GET" );
         
@@ -225,7 +238,7 @@ public class ParserTest {
     public void shouldThrowInvalidCommandSyntaxExceptionWhenIsGivingNullArgs()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
-    
+        
         CommandParser cmdparser = new CommandParser();
         String args = null;
         new Parser( cmdparser, args );
@@ -236,7 +249,7 @@ public class ParserTest {
     public void shouldthrowInvalidCommandSyntaxExceptionWhenIsGivingFourArgs()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
-    
+        
         CommandParser cmdparser = new CommandParser();
         new Parser( cmdparser, "GET", "/users", "/users", "/users" );
         
@@ -248,7 +261,7 @@ public class ParserTest {
     public void constructorShouldThrowInvalidArgumentExceptionIfCmdParserIsNull()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
-    
+        
         new Parser( null, "", "" );
     }
     
@@ -257,7 +270,7 @@ public class ParserTest {
     public void constructorShouldThrowInvalidCommandSyntaxExceptionIfNoArgsGiven()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
-    
+        
         new Parser( new CommandParser() );
     }
     
@@ -266,7 +279,7 @@ public class ParserTest {
     public void constructorShouldThrowInvalidCommandSyntaxExceptionIfOnly1ArgGiven()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
-    
+        
         new Parser( new CommandParser(), "arg[0]" );
     }
     
@@ -276,7 +289,7 @@ public class ParserTest {
         
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
-    
+        
         new Parser( new CommandParser(), "arg[0]", "arg[1]", "arg[2]", "arg[3]" );
     }
     
@@ -286,7 +299,7 @@ public class ParserTest {
         
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
-    
+        
         new Parser( new CommandParser(), "", "", "a" );
     }
     
@@ -296,7 +309,7 @@ public class ParserTest {
         
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
-    
+        
         new Parser( new CommandParser(), "", "", "a&b=c" );
     }
     
@@ -305,7 +318,7 @@ public class ParserTest {
     public void constructorShouldThrowDuplicateParametersException()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
-    
+        
         new Parser( new CommandParser(), "", "", "a=b&a=c" );
     }
     

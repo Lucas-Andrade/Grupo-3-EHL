@@ -24,7 +24,7 @@ public class UnknownTranslatableException extends Exception {
      *            The detail message.
      */
     public UnknownTranslatableException( String message ) {
-    
+        
         super( message );
     }
     
@@ -41,7 +41,7 @@ public class UnknownTranslatableException extends Exception {
      *            unknown.
      */
     public UnknownTranslatableException( String message, Throwable cause ) {
-    
+        
         super( message, cause );
     }
     

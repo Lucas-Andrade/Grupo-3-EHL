@@ -2,11 +2,9 @@ package parsingtools_tests.commandfactories.getfactories;
 
 
 import java.util.concurrent.Callable;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import parsingtools.CommandParser;
 import parsingtools.Parser;
 import parsingtools.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory;
@@ -15,9 +13,7 @@ import parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUser
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
-
 import commands.getcommands.GetElementFromADatabaseByIdCommand;
-
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
 import exceptions.InternalErrorException;
@@ -52,7 +48,7 @@ public class GetByIdCommandsFactories_Tests {
     @BeforeClass
     public static void createTheCommandParserAndRegisterTheCommands()
         throws InvalidRegisterException, InvalidArgumentException {
-    
+        
         cmdparser = new CommandParser();
         
         userDatabase = new InMemoryUsersDatabase( "Users Database" );
@@ -72,7 +68,7 @@ public class GetByIdCommandsFactories_Tests {
         throws WrongLoginPasswordException, MissingRequiredParameterException,
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
-    
+        
         Callable< ? > getUserByUsernameCommand =
                 (new Parser( cmdparser, "GET", "/users/{username}" )).getCommand();
         
@@ -90,7 +86,7 @@ public class GetByIdCommandsFactories_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAirshipByFlightIdCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
-    
+        
         new GetAirshipByFlightIdCommandsFactory( null );
     }
     
@@ -99,7 +95,7 @@ public class GetByIdCommandsFactories_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetUserByUsernameCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
-    
+        
         new GetUserByUsernameCommandsFactory( null );
     }
 }

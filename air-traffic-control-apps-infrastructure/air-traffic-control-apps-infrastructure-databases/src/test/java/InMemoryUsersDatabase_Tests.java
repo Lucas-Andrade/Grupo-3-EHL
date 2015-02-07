@@ -1,12 +1,9 @@
 
 
-
 import static org.junit.Assert.assertTrue;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
 import elements.Airship;
@@ -36,7 +33,7 @@ public class InMemoryUsersDatabase_Tests {
     
     @Before
     public void createUserAndAirshipAndTheirDatabases() {
-    
+        
         try {
             
             // Arrange
@@ -57,7 +54,7 @@ public class InMemoryUsersDatabase_Tests {
     
     @Test
     public void shouldAddAnElementToTheDatabase() {
-    
+        
         try {
             // Assert
             assertTrue( airshipDatabase.add( airship, user ) );
@@ -71,7 +68,7 @@ public class InMemoryUsersDatabase_Tests {
     
     @Test
     public void shouldNotAddTheSameUserIntoInMemoryUsersDatabase() throws InvalidArgumentException {
-    
+        
         Assert.assertTrue( userDatabase.add( user, user ) );
         Assert.assertFalse( userDatabase.add( user, user ) );
     }
@@ -79,7 +76,7 @@ public class InMemoryUsersDatabase_Tests {
     @Test
     public void shouldRemoveAnUserFromInMemoryUsersDatabase()
         throws InvalidArgumentException, DatabaseException {
-    
+        
         userDatabase.add( user, user );
         Assert.assertTrue( userDatabase.removeByIdentification( user.getIdentification() ) );
     }
@@ -89,7 +86,7 @@ public class InMemoryUsersDatabase_Tests {
     @Test( expected = DatabaseException.class )
     public void shouldThrowDatabaseExceptionWhenTryingToRemoveTheMasterUserFromAUserDatabase()
         throws DatabaseException, InvalidArgumentException {
-    
+        
         // Assert
         
         userDatabase.removeByIdentification( "MASTER" );

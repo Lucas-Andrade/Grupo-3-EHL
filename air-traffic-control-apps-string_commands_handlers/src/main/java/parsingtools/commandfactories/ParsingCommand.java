@@ -3,7 +3,6 @@ package parsingtools.commandfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import utils.StringUtils;
 import exceptions.InvalidParameterValueException;
 import exceptions.MissingRequiredParameterException;
@@ -46,7 +45,6 @@ public abstract class ParsingCommand< R > {
      *            The container of the parameters required to create the command.
      */
     public ParsingCommand( Map< String, String > parametersMap ) {
-    
         this.parametersMap = parametersMap;
     }
     
@@ -85,7 +83,7 @@ public abstract class ParsingCommand< R > {
      */
     protected String getParameterAsString( String parameterName )
         throws MissingRequiredParameterException {
-    
+        
         return StringUtils.parameterToString( parameterName, parametersMap.get( parameterName ) );
     }
     
@@ -109,7 +107,7 @@ public abstract class ParsingCommand< R > {
      */
     protected int getParameterAsInt( String parameterName )
         throws InvalidParameterValueException, MissingRequiredParameterException {
-    
+        
         return StringUtils.parameterToInteger( parameterName, parametersMap.get( parameterName ) );
     }
     
@@ -133,7 +131,7 @@ public abstract class ParsingCommand< R > {
      */
     protected Double getParameterAsDouble( String parameterName )
         throws InvalidParameterValueException, MissingRequiredParameterException {
-    
+        
         return StringUtils.parameterToDouble( parameterName, parametersMap.get( parameterName ) );
     }
     
@@ -161,7 +159,7 @@ public abstract class ParsingCommand< R > {
      */
     protected boolean getParameterAsBoolean( String parameterName )
         throws InvalidParameterValueException, MissingRequiredParameterException {
-    
+        
         return StringUtils.parameterToBoolean( parameterName, parametersMap.get( parameterName ) );
     }
     

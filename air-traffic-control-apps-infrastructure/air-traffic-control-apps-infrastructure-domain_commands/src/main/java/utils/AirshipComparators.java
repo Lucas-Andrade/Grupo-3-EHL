@@ -3,7 +3,6 @@ package utils;
 
 
 import java.util.Comparator;
-
 import elements.Airship;
 import elements.airships.GeographicCoordinate;
 import elements.airships.GeographicPosition;
@@ -31,7 +30,7 @@ public class AirshipComparators {
         private GeographicPosition GeographicPositionReference;
         
         public ComparatorByDistance( GeographicPosition GeographicPositionReference ) {
-        
+            
             this.GeographicPositionReference = GeographicPositionReference;
         }
         
@@ -47,7 +46,7 @@ public class AirshipComparators {
          */
         @Override
         public int compare( Airship airship1, Airship airship2 ) {
-        
+            
             double d1 = distanceSquared( GeographicPositionReference, airship1.getCoordinates() );
             double d2 = distanceSquared( GeographicPositionReference, airship2.getCoordinates() );
             
@@ -63,7 +62,7 @@ public class AirshipComparators {
          * @return the square of the distance from {@code gp1} to {@code gp2}
          */
         private double distanceSquared( GeographicPosition gp1, GeographicPosition gp2 ) {
-        
+            
             return Math.pow( gp2.getLatitude().getValue() - gp1.getLatitude().getValue(), 2 )
                    + Math.pow( gp2.getLongitude().getValue() - gp1.getLongitude().getValue(), 2 );
         }
@@ -73,6 +72,6 @@ public class AirshipComparators {
      * Unused private constructor
      */
     private AirshipComparators() {
-    
+        
     }
 }

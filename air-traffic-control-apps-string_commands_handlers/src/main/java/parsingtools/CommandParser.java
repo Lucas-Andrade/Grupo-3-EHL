@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.CommandFactory;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
@@ -273,7 +272,7 @@ public class CommandParser {
         
         // CONSTRUCTOR
         public Node( String content ) {
-        
+            
             this.content = content;
             this.fixedChildNodes = new HashMap<>();
         }
@@ -290,7 +289,7 @@ public class CommandParser {
          *         {@code false} otherwise.
          */
         public boolean hasPlaceholderChild( String currentContent ) {
-        
+            
             return placeholderChildNode != null
                    && !placeholderChildNode.content.equals( currentContent );
         }
@@ -306,7 +305,7 @@ public class CommandParser {
          *         {@code content}.
          */
         public Node getFixedChildWithThisContent( String content ) {
-        
+            
             Node node = fixedChildNodes.get( content );
             if( node == null )
                 node = addFixedChild( content );
@@ -323,7 +322,7 @@ public class CommandParser {
          * @return A placeholder node which is a child of {@code this} node.
          */
         public Node getPlaceholderChild( String content ) {
-        
+            
             if( placeholderChildNode == null )
                 placeholderChildNode = new Node( content );
             return placeholderChildNode;
@@ -343,7 +342,7 @@ public class CommandParser {
          *         {@code null}.
          */
         public Node getChildForContent( String content ) {
-        
+            
             Node n = fixedChildNodes.get( content );
             if( n == null )
                 n = placeholderChildNode;
@@ -361,7 +360,7 @@ public class CommandParser {
          * @return The newly added {@link Node}.
          */
         private Node addFixedChild( String currentContent ) {
-        
+            
             Node n = new Node( currentContent );
             fixedChildNodes.put( currentContent, n );
             return n;
@@ -409,7 +408,7 @@ public class CommandParser {
      */
     public void registerCommand( String method, String path, CommandFactory< ? > cmdFactory )
         throws InvalidRegisterException {
-    
+        
         String[] treePathElementsArray = (method.trim() + path).split( "/" );
         updateSubtree( root, treePathElementsArray, 0, cmdFactory );
     }
@@ -452,7 +451,7 @@ public class CommandParser {
         throws MissingRequiredParameterException, InvalidArgumentException,
         InvalidCommandSyntaxException, WrongLoginPasswordException, UnknownCommandException,
         NoSuchElementInDatabaseException, InvalidParameterValueException {
-    
+        
         if( args.length < 2 || args.length > 3 )
             throw new InvalidCommandSyntaxException(
                                                      "Commands must have either 1 or 2 space-characters." );
@@ -492,7 +491,7 @@ public class CommandParser {
      */
     private void updateSubtree( Node rootNode, String[] methodAndPathElements, int pathStartIndex,
                                 CommandFactory< ? > cmdFactory ) throws InvalidRegisterException {
-    
+        
         // stopping condition
         if( pathStartIndex == methodAndPathElements.length ) {
             if( rootNode.factory == null ) {
@@ -561,7 +560,7 @@ public class CommandParser {
         throws WrongLoginPasswordException, InvalidArgumentException,
         MissingRequiredParameterException, UnknownCommandException,
         NoSuchElementInDatabaseException, InvalidParameterValueException {
-    
+        
         if( pathStartIndex == methodAndPathElements.length ) {
             if( rootNode.factory == null )
                 throw new UnknownCommandException( "Unknown command!" );
@@ -591,7 +590,7 @@ public class CommandParser {
      *         <code>false</code> otherwise.
      */
     private boolean isPlaceholderString( String currentContent ) {
-    
+        
         return currentContent.startsWith( "{" ) && currentContent.endsWith( "}" );
     }
     

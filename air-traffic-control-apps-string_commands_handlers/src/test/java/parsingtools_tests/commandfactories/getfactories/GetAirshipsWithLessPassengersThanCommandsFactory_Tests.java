@@ -2,20 +2,16 @@ package parsingtools_tests.commandfactories.getfactories;
 
 
 import java.util.concurrent.Callable;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import parsingtools.CommandParser;
 import parsingtools.Parser;
 import parsingtools.commandfactories.getfactories.GetAirshipsWithLessPassengersThanCommandsFactory;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
-
 import commands.getcommands.GetAirshipsWithLessPassengersThanCommand;
-
 import databases.InMemoryAirshipsDatabase;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
@@ -46,7 +42,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory_Tests {
     @BeforeClass
     public static void createTheCommandParserAndRegisterTheCommands()
         throws InvalidRegisterException, InvalidArgumentException {
-    
+        
         cmdparser = new CommandParser();
         
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
@@ -64,7 +60,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory_Tests {
         throws WrongLoginPasswordException, MissingRequiredParameterException,
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
-    
+        
         Callable< ? > getAirshipsWithLessPassengersThanCommand =
                 (new Parser( cmdparser, "GET", "/airships/nbPassengers/30/bellow" )).getCommand();
         
@@ -78,7 +74,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAirshipsWithLessPassengersThanCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
-    
+        
         new GetAirshipsWithLessPassengersThanCommandsFactory( null );
     }
 }

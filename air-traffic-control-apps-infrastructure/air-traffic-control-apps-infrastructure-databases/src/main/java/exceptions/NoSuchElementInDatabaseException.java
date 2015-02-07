@@ -19,7 +19,7 @@ public class NoSuchElementInDatabaseException extends DatabaseException {
      *            The detail message.
      */
     public NoSuchElementInDatabaseException( String message ) {
-    
+        
         super( message );
     }
     
@@ -33,7 +33,7 @@ public class NoSuchElementInDatabaseException extends DatabaseException {
      *            The database where it was expected the element to be in.
      */
     public NoSuchElementInDatabaseException( String elementIdentification, String databaseName ) {
-    
+        
         super( MessageFormat.format( "{0} not found in {1}.", elementIdentification, databaseName ) );
     }
 }

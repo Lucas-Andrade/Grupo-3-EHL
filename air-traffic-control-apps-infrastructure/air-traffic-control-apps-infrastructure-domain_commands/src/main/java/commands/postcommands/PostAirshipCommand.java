@@ -2,7 +2,6 @@ package commands.postcommands;
 
 
 import java.util.concurrent.Callable;
-
 import utils.CompletionStatus;
 import databases.Database;
 import elements.Airship;
@@ -63,7 +62,7 @@ public abstract class PostAirshipCommand implements Callable< CompletionStatus >
                                double maxAltitude, double minAltitude,
                                Database< Airship > airshipsDatabase, User userWhoIsPosting )
         throws InvalidArgumentException {
-    
+        
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -99,7 +98,7 @@ public abstract class PostAirshipCommand implements Callable< CompletionStatus >
      */
     @Override
     public CompletionStatus call() throws InvalidArgumentException {
-    
+        
         Airship theAirship = createAirship();
         
         databaseWhereToPost.add( theAirship, userWhoIsPosting );

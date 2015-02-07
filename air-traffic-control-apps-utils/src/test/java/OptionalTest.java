@@ -1,23 +1,21 @@
 
-
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.Assert;
 import org.junit.Test;
-
 import utils.Optional;
 import exceptions.InvalidArgumentException;
 
+
 /**
  * TODO
+ * 
  * @author Gonçalo
  */
-public class OptionalTest
-{
-
+public class OptionalTest {
+    
     // CONSTRUCTORS
 //TODO
 //    @Test
@@ -90,130 +88,129 @@ public class OptionalTest
 //
 //        Assert.assertTrue( optional.isNull() );
 //    }
-
+    
     @Test
-    public void test9() throws InvalidArgumentException
-    {
-
+    public void test9() throws InvalidArgumentException {
+        
         Map< String, String > MapTester = new HashMap< String, String >();
-
+        
         MapTester.put( "Tester", "OptionalTeser" );
-
+        
         Optional< Map< String, String >> optional =
-                new Optional< Map< String, String >>( MapTester, new InvalidArgumentException(), "TEST" );
-
+                new Optional< Map< String, String >>( MapTester, new InvalidArgumentException(),
+                                                      "TEST" );
+        
         Assert.assertFalse( optional.isEmpty() );
     }
-
+    
     @Test
-    public void test10() throws Exception
-    {
-
+    public void test10() throws Exception {
+        
         Map< String, String > MapTester = new HashMap< String, String >();
-
+        
         Optional< Map< String, String >> optional =
-                new Optional< Map< String, String >>( MapTester, new InvalidArgumentException(), "TEST" );
-
+                new Optional< Map< String, String >>( MapTester, new InvalidArgumentException(),
+                                                      "TEST" );
+        
         Assert.assertTrue( optional.isEmpty() );
-
+        
     }
-
+    
     @Test
-    public void test11() throws InvalidArgumentException
-    {
-
+    public void test11() throws InvalidArgumentException {
+        
         Collection< String > MapTester = new ArrayList< String >();
-
+        
         MapTester.add( "Tester" );
-
+        
         Optional< Collection< String >> optional =
-                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(), "TEST" );
-
+                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(),
+                                                     "TEST" );
+        
         Assert.assertFalse( optional.isEmpty() );
     }
-
+    
     @Test
-    public void test12() throws InvalidArgumentException
-    {
-
+    public void test12() throws InvalidArgumentException {
+        
         Collection< String > MapTester = new ArrayList< String >();
-
+        
         Optional< Collection< String >> optional =
-                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(), "TEST" );
-
+                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(),
+                                                     "TEST" );
+        
         Assert.assertTrue( optional.isEmpty() );
     }
-
+    
     @Test
-    public void test13() throws InvalidArgumentException
-    {
-
+    public void test13() throws InvalidArgumentException {
+        
         Collection< String > MapTester = new ArrayList< String >();
-
+        
         Optional< Collection< String >> optional =
-                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(), "TEST" );
-
+                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(),
+                                                     "TEST" );
+        
         Assert.assertTrue( optional.hasSpecificStringRepresentationIfEmpty() );
     }
-
+    
     @Test
-    public void test14() throws InvalidArgumentException
-    {
-
+    public void test14() throws InvalidArgumentException {
+        
         Collection< String > MapTester = new ArrayList< String >();
-
+        
         Optional< Collection< String >> optional =
-                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(), null );
-
+                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(),
+                                                     null );
+        
         Assert.assertFalse( optional.hasSpecificStringRepresentationIfEmpty() );
     }
-
+    
     @Test
-    public void test15() throws InvalidArgumentException
-    {
-
-        Collection< String > MapTester = new ArrayList< String >();
-        MapTester.add( "Tester" );
-
-        Optional< Collection< String >> optional =
-                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(), "TEST" );
-
-        Assert.assertFalse( optional.hasSpecificStringRepresentationIfEmpty() );
-    }
-
-    @Test
-    public void test16() throws InvalidArgumentException
-    {
-
+    public void test15() throws InvalidArgumentException {
+        
         Collection< String > MapTester = new ArrayList< String >();
         MapTester.add( "Tester" );
-
+        
         Optional< Collection< String >> optional =
-                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(), null );
-
+                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(),
+                                                     "TEST" );
+        
         Assert.assertFalse( optional.hasSpecificStringRepresentationIfEmpty() );
     }
-
+    
     @Test
-    public void test17() throws Exception
-    {
-
+    public void test16() throws InvalidArgumentException {
+        
+        Collection< String > MapTester = new ArrayList< String >();
+        MapTester.add( "Tester" );
+        
+        Optional< Collection< String >> optional =
+                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(),
+                                                     null );
+        
+        Assert.assertFalse( optional.hasSpecificStringRepresentationIfEmpty() );
+    }
+    
+    @Test
+    public void test17() throws Exception {
+        
         String Test = "Tester";
         Collection< String > MapTester = new ArrayList< String >();
         MapTester.add( Test );
-
+        
         Optional< Collection< String >> optional =
-                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(), null );
+                new Optional< Collection< String >>( MapTester, new InvalidArgumentException(),
+                                                     null );
         Assert.assertEquals( Test, optional.get().iterator().next() );
     }
-
+    
     @Test( expected = InvalidArgumentException.class )
-    public void test18() throws Exception
-    {
-
+    public void test18() throws Exception {
+        
         Optional< Collection< String >> optional =
                 new Optional< Collection< String >>( null, new InvalidArgumentException(), null );
         Assert.assertNull( optional.get().iterator().next() );
-
+        
     }
 }

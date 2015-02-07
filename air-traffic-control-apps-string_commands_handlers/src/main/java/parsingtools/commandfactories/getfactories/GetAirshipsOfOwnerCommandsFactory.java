@@ -3,14 +3,11 @@ package parsingtools.commandfactories.getfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.ParsingCommand;
 import utils.CLIStringsDictionary;
 import utils.Optional;
-
 import commands.getcommands.GetAirshipsOfOwnerCommand;
-
 import databases.Database;
 import elements.Airship;
 import exceptions.InternalErrorException;
@@ -50,7 +47,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
      */
     public GetAirshipsOfOwnerCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-    
+        
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
         
@@ -71,7 +68,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
     protected Callable< Optional< Iterable< Airship >>>
             internalNewCommand( Map< String, String > parametersMap )
                 throws MissingRequiredParameterException {
-    
+        
         return new GetAOO_ParsingCommand( parametersMap ).newCommand();
     }
     
@@ -82,7 +79,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
-    
+        
         return "Gets all airships added by a certain user.";
     }
     
@@ -94,7 +91,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
      */
     @Override
     protected String[] getRequiredParametersNames() {
-    
+        
         return new String[]{ CLIStringsDictionary.OWNER };
     }
     
@@ -121,7 +118,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
          */
         public GetAOO_ParsingCommand( Map< String, String > parametersMap )
             throws MissingRequiredParameterException {
-        
+            
             super( parametersMap );
             ownerUsername = getParameterAsString( CLIStringsDictionary.OWNER );
         }
@@ -131,7 +128,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
          */
         @Override
         public Callable< Optional< Iterable< Airship >>> newCommand() {
-        
+            
             try {
                 return new GetAirshipsOfOwnerCommand( airshipsDatabase, ownerUsername );
             }

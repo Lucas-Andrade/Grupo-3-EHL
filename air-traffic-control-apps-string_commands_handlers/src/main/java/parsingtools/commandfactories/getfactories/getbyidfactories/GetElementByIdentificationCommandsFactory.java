@@ -3,13 +3,10 @@ package parsingtools.commandfactories.getfactories.getbyidfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.ParsingCommand;
 import utils.Optional;
-
 import commands.getcommands.GetElementFromADatabaseByIdCommand;
-
 import databases.Database;
 import elements.Element;
 import exceptions.InternalErrorException;
@@ -68,7 +65,7 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
     public GetElementByIdentificationCommandsFactory( String identificationParameterName,
                                                       Database< E > database )
         throws InvalidArgumentException {
-    
+        
         if( identificationParameterName == null )
             throw new InvalidArgumentException(
                                                 "Cannot instantiate factory with null parameter name!" );
@@ -95,7 +92,7 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
     @Override
     protected Callable< Optional< E >> internalNewCommand( Map< String, String > parametersMap )
         throws MissingRequiredParameterException {
-    
+        
         return new GetEBIC_ParsingCommand( parametersMap ).newCommand();
     }
     
@@ -107,7 +104,7 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
      */
     @Override
     protected String[] getRequiredParametersNames() {
-    
+        
         return requiredParametersNames;
     }
     
@@ -134,7 +131,7 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
          */
         public GetEBIC_ParsingCommand( Map< String, String > parametersMap )
             throws MissingRequiredParameterException {
-        
+            
             super( parametersMap );
             identification = getParameterAsString( requiredParametersNames[0] );
         }
@@ -146,7 +143,7 @@ public abstract class GetElementByIdentificationCommandsFactory< E extends Eleme
          */
         @Override
         public Callable< Optional< E >> newCommand() {
-        
+            
             try {
                 return new GetElementFromADatabaseByIdCommand< E >( database, identification );
             }

@@ -2,10 +2,8 @@ package functionalcomponents.functionalmainwindow;
 
 
 import Airship;
-
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
-
 import functionalcomponents.FunctionalWindowSwingWorker;
 import main.java.Database;
 import main.java.gui.design.panels.mainwindowpanels.JBodyPanelForMainWindow;
@@ -48,7 +46,7 @@ public abstract class FunctionalGetWindowSwingWorker extends
     public FunctionalGetWindowSwingWorker( Database< Airship > airshipsDatabase,
                                            JBodyPanelForMainWindow bodyPanel,
                                            JTextArea errorTextArea ) {
-    
+        
         super( errorTextArea );
         this.airshipsDatabase = airshipsDatabase;
         this.bodyPanel = bodyPanel;
@@ -71,7 +69,7 @@ public abstract class FunctionalGetWindowSwingWorker extends
      */
     @Override
     protected void functionalDone( Iterable< Airship > resultOfDoInBackGround ) throws Exception {
-    
+        
         bodyPanel.updateBodyPanel( airshipsDatabase, resultOfDoInBackGround );
     }
 }

@@ -3,14 +3,11 @@ package parsingtools.commandfactories.getfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.ParsingCommand;
 import parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import utils.CLIStringsDictionary;
-
 import commands.getcommands.CheckIfAirshipIsTransgressingCommand;
-
 import databases.Database;
 import elements.Airship;
 import exceptions.InternalErrorException;
@@ -55,7 +52,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
      */
     public CheckIfAirshipIsTransgressingCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-    
+        
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
         
@@ -75,7 +72,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
     @Override
     protected Callable< String > internalNewCommand( Map< String, String > parametersMap )
         throws MissingRequiredParameterException {
-    
+        
         return new CheckIAIT_ParsingCommand( parametersMap ).newCommand();
     }
     
@@ -86,7 +83,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
      */
     @Override
     public String getCommandsDescription() {
-    
+        
         return "Checks whether an airship is transgressing its air corridor.";
     }
     
@@ -98,7 +95,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
      */
     @Override
     protected String[] getRequiredParametersNames() {
-    
+        
         return requiredParametersNames;
     }
     
@@ -125,7 +122,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
          */
         public CheckIAIT_ParsingCommand( Map< String, String > parametersMap )
             throws MissingRequiredParameterException {
-        
+            
             super( parametersMap );
             flightId = getParameterAsString( requiredParametersNames[0] );
         }
@@ -135,7 +132,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
          */
         @Override
         public Callable< String > newCommand() {
-        
+            
             try {
                 return new CheckIfAirshipIsTransgressingCommand( airshipsDatabase, flightId );
             }

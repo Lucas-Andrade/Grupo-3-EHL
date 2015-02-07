@@ -5,14 +5,11 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.ParsingCommand;
 import utils.CLIStringsDictionary;
 import utils.CompletionStatus;
-
 import commands.postcommands.PostCivilAirshipCommand;
 import commands.postcommands.PostMilitaryAirshipCommand;
-
 import databases.Database;
 import elements.Airship;
 import elements.User;
@@ -59,7 +56,7 @@ public class PostAirshipCommandsFactory extends
     public PostAirshipCommandsFactory( Database< User > postingUsersDatabase,
                                        Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-    
+        
         super( postingUsersDatabase, airshipsDatabase );
         
         this.requiredParametersNames =
@@ -97,7 +94,7 @@ public class PostAirshipCommandsFactory extends
     protected Callable< CompletionStatus >
             internalInternalNewCommand( Map< String, String > parametersMap, User userWhoIsPosting )
                 throws MissingRequiredParameterException, InvalidParameterValueException {
-    
+        
         return new PostA_ParsingCommand( parametersMap, userWhoIsPosting ).newCommand();
     }
     
@@ -110,7 +107,7 @@ public class PostAirshipCommandsFactory extends
      */
     @Override
     protected String[] getSpecificRequiredParametersNames() {
-    
+        
         return requiredParametersNames;
     }
     
@@ -121,7 +118,7 @@ public class PostAirshipCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
-    
+        
         return "Adds a new airship.";
     }
     
@@ -167,7 +164,7 @@ public class PostAirshipCommandsFactory extends
          */
         public PostA_ParsingCommand( Map< String, String > parametersMap, User userWhoIsPosting )
             throws InvalidParameterValueException, MissingRequiredParameterException {
-        
+            
             super( parametersMap );
             this.userWhoIsPosting = userWhoIsPosting;
             
@@ -182,7 +179,7 @@ public class PostAirshipCommandsFactory extends
         @Override
         public Callable< CompletionStatus > newCommand()
             throws MissingRequiredParameterException, InvalidParameterValueException {
-        
+            
             String methodName = "post" + type + "Airship";
             Class< ? extends ParsingCommand< ? > > c = this.getClass();
             Class< ? extends User > u = userWhoIsPosting.getClass();
@@ -222,7 +219,7 @@ public class PostAirshipCommandsFactory extends
          */
         private void setParametersFields()
             throws MissingRequiredParameterException, InvalidParameterValueException {
-        
+            
             type = getParameterAsString( CLIStringsDictionary.AIRSHIP_TYPE );
             latitude = getParameterAsDouble( CLIStringsDictionary.LATITUDE );
             longitude = getParameterAsDouble( CLIStringsDictionary.LONGITUDE );
@@ -253,7 +250,7 @@ public class PostAirshipCommandsFactory extends
         @SuppressWarnings( "unused" )
         private Callable< CompletionStatus > postCivilAirship( User userWhoIsPosting )
             throws MissingRequiredParameterException, InvalidParameterValueException {
-        
+            
             if( !parametersMap.containsKey( CLIStringsDictionary.NUMBEROFPASSENGERS ) )
                 throw new MissingRequiredParameterException(
                                                              CLIStringsDictionary.NUMBEROFPASSENGERS );
@@ -293,7 +290,7 @@ public class PostAirshipCommandsFactory extends
         @SuppressWarnings( "unused" )
         private Callable< CompletionStatus > postMilitaryAirship( User userWhoIsPosting )
             throws MissingRequiredParameterException, InvalidParameterValueException {
-        
+            
             if( !parametersMap.containsKey( CLIStringsDictionary.HASARMOUR ) )
                 throw new MissingRequiredParameterException( CLIStringsDictionary.HASARMOUR );
             

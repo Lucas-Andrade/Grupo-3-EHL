@@ -2,11 +2,8 @@ package functionalcomponents.functionalairshipwindows;
 
 
 import Airship;
-
 import java.awt.event.ActionListener;
-
 import javax.swing.SwingWorker;
-
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.FunctionalWindowSwingWorker;
 import functionalcomponents.functionalmainwindow.FunctionalGetWindowSwingWorker;
@@ -65,7 +62,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
     public FunctionalGetGeographicalCoordinatesParametersWindow( GetGeographicalCoordinatesParametersWindow nonFunctionalWindow,
                                                                  Database< Airship > airshipsDatabase,
                                                                  JBodyPanelForMainWindow bodyPanel ) {
-    
+        
         super( nonFunctionalWindow );
         
         this.functionalWindow = nonFunctionalWindow;
@@ -84,7 +81,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
      */
     @Override
     protected FunctionalWindowSwingWorker< Iterable< Airship >> getSwingWorker() {
-    
+        
         return new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel,
                                                    functionalWindow.getErrorJTextArea() ) {
             
@@ -111,7 +108,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
              */
             @Override
             protected Iterable< Airship > doInBackground() throws Exception {
-            
+                
                 return new GetTheNearestAirshipsToGeographicPositionCommand(
                                                                              (InMemoryAirshipsDatabase)airshipsDatabase,
                                                                              StringUtils.parameterToInteger( "Airships Number",
@@ -136,7 +133,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
             @Override
             public final void functionalDone( Iterable< Airship > resultOfDoInBackGround )
                 throws Exception {
-            
+                
                 super.functionalDone( resultOfDoInBackGround );
                 functionalWindow.dispose();
             }

@@ -1,8 +1,6 @@
 
 
-
 import java.awt.EventQueue;
-
 import databases.Database;
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
@@ -63,11 +61,11 @@ public class App {
      */
     
     private App() {
-    
+        
     }
     
     public static void main( String[] args ) throws InvalidArgumentException {
-    
+        
         Database< User > usersDatabase = new InMemoryUsersDatabase( "Users Database" );
         Database< Airship > airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         
@@ -75,7 +73,7 @@ public class App {
             
             @Override
             public void run() {
-            
+                
                 new FunctionalLoginWindow( new LogInWindow(), usersDatabase, airshipsDatabase );
             }
         } );

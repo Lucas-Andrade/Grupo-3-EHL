@@ -3,7 +3,6 @@ package outputformatters.totranslatableconverters;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import outputformatters.Translatable;
 import utils.CLIStringsDictionary;
 import utils.exceptions.formattersexceptions.UnknownTypeException;
@@ -39,7 +38,7 @@ class SimpleInstancesToTranslatables {
          */
         @Override
         Translatable convert( Object user ) throws UnknownTypeException {
-        
+            
             User u;
             try {
                 u = (User)user;
@@ -79,7 +78,7 @@ class SimpleInstancesToTranslatables {
          * @return The properties bag.
          */
         Map< String, Object > createAirshipPropertiesBag( Airship airship ) {
-        
+            
             Map< String, Object > propertiesBag = new LinkedHashMap< String, Object >();
             propertiesBag.put( CLIStringsDictionary.FLIGHTID, airship.getIdentification() );
             propertiesBag.put( CLIStringsDictionary.LATITUDE, airship.getCoordinates()
@@ -110,7 +109,7 @@ class SimpleInstancesToTranslatables {
          */
         @Override
         Translatable convert( Object civilAirship ) throws UnknownTypeException {
-        
+            
             CivilAirship ca;
             try {
                 ca = (CivilAirship)civilAirship;
@@ -142,7 +141,7 @@ class SimpleInstancesToTranslatables {
          */
         @Override
         Translatable convert( Object militaryAirship ) throws UnknownTypeException {
-        
+            
             MilitaryAirship ma;
             try {
                 ma = (MilitaryAirship)militaryAirship;
@@ -166,7 +165,7 @@ class SimpleInstancesToTranslatables {
      * Unused private constructor
      */
     private SimpleInstancesToTranslatables() {
-    
+        
     }
     
 }

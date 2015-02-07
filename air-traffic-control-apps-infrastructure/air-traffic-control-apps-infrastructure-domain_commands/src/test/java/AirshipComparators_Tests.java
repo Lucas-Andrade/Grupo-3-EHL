@@ -1,13 +1,9 @@
 
 
-
 import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Test;
-
 import utils.AirshipComparators;
 import databases.InMemoryAirshipsDatabase;
 import elements.Airship;
@@ -28,7 +24,7 @@ public class AirshipComparators_Tests {
     
     @Test
     public void shouldGetTheAirshipsClosserToASpecificGeographicPosition() throws Exception {
-    
+        
         // Arrange
         List< Airship > expectedAirshipList = new ArrayList< Airship >();
         

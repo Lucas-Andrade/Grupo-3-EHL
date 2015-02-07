@@ -3,7 +3,6 @@ package outputformatters.totranslatableconverters;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import elements.Airship;
 import elements.User;
 import outputformatters.Translatable;
@@ -38,7 +37,7 @@ class IterablesToTranslatables {
         @SuppressWarnings( "unchecked" )
         @Override
         Translatable convert( Object iterableOfUsers ) throws UnknownTypeException {
-        
+            
             Iterable< User > it;
             try {
                 it = (Iterable< User >)iterableOfUsers;
@@ -72,7 +71,7 @@ class IterablesToTranslatables {
         @SuppressWarnings( "unchecked" )
         @Override
         Translatable convert( Object iterableOfAirships ) throws UnknownTypeException {
-        
+            
             Iterable< Airship > it;
             try {
                 it = (Iterable< Airship >)iterableOfAirships;
@@ -96,7 +95,7 @@ class IterablesToTranslatables {
      * Unused private constructor
      */
     private IterablesToTranslatables() {
-    
+        
     }
     
 }

@@ -2,20 +2,16 @@ package parsingtools_tests.commandfactories.getfactories;
 
 
 import java.util.concurrent.Callable;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import parsingtools.CommandParser;
 import parsingtools.Parser;
 import parsingtools.commandfactories.getfactories.GetAllTransgressingAirshipsCommandsFactory;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
-
 import commands.getcommands.GetAllTransgressingAirshipsCommand;
-
 import databases.InMemoryAirshipsDatabase;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
@@ -46,7 +42,7 @@ public class GetAllTransgressingAirshipsFactory_Tests {
     @BeforeClass
     public static void createTheCommandParserAndRegisterTheCommands()
         throws InvalidRegisterException, InvalidArgumentException {
-    
+        
         cmdparser = new CommandParser();
         
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
@@ -63,7 +59,7 @@ public class GetAllTransgressingAirshipsFactory_Tests {
         throws WrongLoginPasswordException, MissingRequiredParameterException,
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
-    
+        
         Callable< ? > getAllTransgressinAirshipsCommand =
                 (new Parser( cmdparser, "GET", "/airships/reports" )).getCommand();
         
@@ -77,7 +73,7 @@ public class GetAllTransgressingAirshipsFactory_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAllTransgressorAirshipsCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
-    
+        
         new GetAllTransgressingAirshipsCommandsFactory( null );
     }
 }

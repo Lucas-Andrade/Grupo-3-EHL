@@ -1,9 +1,9 @@
 package outputformatters_tests;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import outputformatters.totranslatableconverters.ToTranslatableConverter;
 import outputformatters.translators.ToHtmlTranslator;
 import utils.Optional;
@@ -15,6 +15,7 @@ import elements.User;
 import elements.airships.CivilAirship;
 import elements.airships.MilitaryAirship;
 import exceptions.InvalidArgumentException;
+
 
 /**
  * Tests class that targets the class {@link ToHtmlTranslatorTest}. These are not unitary-tests, are

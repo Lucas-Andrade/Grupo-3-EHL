@@ -4,18 +4,14 @@ package parsingtools_tests.commandfactories.userauthenticatingfactories;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import parsingtools.commandfactories.userauthenticatingfactories.PatchAirshipCommandsFactory;
 import utils.CLIStringsDictionary;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
-
 import commands.patchcommands.PatchAirshipCommand;
-
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
 import elements.Airship;
@@ -55,7 +51,7 @@ public class PatchAirshipsCommandFactory_Tests {
     @BeforeClass
     public static void createUsersAndAirshipsAndTheirDatabases()
         throws InvalidRegisterException, InvalidArgumentException {
-    
+        
         usersDatabase = new InMemoryUsersDatabase( "Users Database" );
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         
@@ -73,7 +69,7 @@ public class PatchAirshipsCommandFactory_Tests {
     
     @Before
     public void createParametersMap() {
-    
+        
         parameters = new HashMap< String, String >();
         
         parameters.put( CLIStringsDictionary.LOGINNAME, "Daniel" );
@@ -98,7 +94,7 @@ public class PatchAirshipsCommandFactory_Tests {
         throws NoSuchElementInDatabaseException, MissingRequiredParameterException,
         InvalidParameterValueException, WrongLoginPasswordException, InternalErrorException,
         InvalidArgumentException {
-    
+        
         parameters.put( CLIStringsDictionary.FLIGHTID, airship1.getIdentification() );
         
         Callable< ? > patchAirshipCommand =
@@ -112,7 +108,7 @@ public class PatchAirshipsCommandFactory_Tests {
         throws NoSuchElementInDatabaseException, MissingRequiredParameterException,
         InvalidParameterValueException, WrongLoginPasswordException, InternalErrorException,
         InvalidArgumentException {
-    
+        
         onlyRequiredParameters.put( CLIStringsDictionary.FLIGHTID, airship1.getIdentification() );
         
         Callable< ? > patchAirshipCommand =

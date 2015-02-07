@@ -2,7 +2,6 @@ package parsingtools.commandfactories.getfactories.getallfactories;
 
 
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.CommandFactory;
 import databases.Database;
 import elements.Airship;
@@ -34,7 +33,7 @@ public class GetAllAirshipsInADatabaseCommandsFactory extends
      */
     public GetAllAirshipsInADatabaseCommandsFactory( Database< Airship > airshipDatabase )
         throws InvalidArgumentException {
-    
+        
         super( airshipDatabase );
     }
     
@@ -45,7 +44,7 @@ public class GetAllAirshipsInADatabaseCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
-    
+        
         return "Gets the list of all airships.";
     }
 }

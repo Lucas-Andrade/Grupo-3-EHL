@@ -4,18 +4,14 @@ package parsingtools_tests.commandfactories.userauthenticatingfactories;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
 import utils.CLIStringsDictionary;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
-
 import commands.patchcommands.PatchUserPasswordCommand;
-
 import databases.InMemoryUsersDatabase;
 import elements.User;
 import exceptions.InternalErrorException;
@@ -47,7 +43,7 @@ public class PatchUserPasswordCommandsFactory_Tests {
     
     @Before
     public void createUsersTheirDatabase() throws InvalidArgumentException {
-    
+        
         // Arrange
         user1 = new User( "Daniel", "pass", "@daniel" );
         
@@ -69,7 +65,7 @@ public class PatchUserPasswordCommandsFactory_Tests {
         throws WrongLoginPasswordException, MissingRequiredParameterException,
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
-    
+        
         Callable< ? > patchUserPasswordCommand =
                 (new PatchUserPasswordCommandsFactory( usersDatabase )).newCommand( parameters );
         
@@ -83,7 +79,7 @@ public class PatchUserPasswordCommandsFactory_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAPatchUserPasswordCommandsFactoryGivenANullUsersDatabase()
                 throws InvalidArgumentException {
-    
+        
         new PatchUserPasswordCommandsFactory( null );
     }
 }

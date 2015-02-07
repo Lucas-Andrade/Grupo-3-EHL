@@ -2,7 +2,6 @@ package parsingtools.commandfactories.getfactories.getallfactories;
 
 
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.CommandFactory;
 import databases.Database;
 import elements.User;
@@ -33,7 +32,7 @@ public class GetAllUsersInADatabaseCommandsFactory extends
      */
     public GetAllUsersInADatabaseCommandsFactory( Database< User > usersDatabase )
         throws InvalidArgumentException {
-    
+        
         super( usersDatabase );
     }
     
@@ -44,7 +43,7 @@ public class GetAllUsersInADatabaseCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
-    
+        
         return "Gets the list of all users.";
     }
 }

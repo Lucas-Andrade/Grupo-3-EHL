@@ -2,7 +2,6 @@ package commands.getcommands;
 
 
 import java.util.concurrent.Callable;
-
 import utils.AirshipPredicates;
 import utils.Optional;
 import databases.Database;
@@ -44,7 +43,7 @@ public class GetAllTransgressingAirshipsCommand implements Callable< Optional< I
      */
     public GetAllTransgressingAirshipsCommand( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-    
+        
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -72,7 +71,7 @@ public class GetAllTransgressingAirshipsCommand implements Callable< Optional< I
      */
     @Override
     public Optional< Iterable< Airship >> call() throws Exception {
-    
+        
         return airshipsDatabase.getAllElementsThat( new AirshipPredicates.IsTrangressingItsAirCorridor() );
     }
 }

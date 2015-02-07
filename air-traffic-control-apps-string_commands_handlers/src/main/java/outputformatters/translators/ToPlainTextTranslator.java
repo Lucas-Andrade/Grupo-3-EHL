@@ -2,7 +2,6 @@ package outputformatters.translators;
 
 
 import java.util.Map.Entry;
-
 import outputformatters.Translatable;
 import utils.exceptions.formattersexceptions.UnknownTranslatableException;
 
@@ -35,7 +34,7 @@ public class ToPlainTextTranslator implements Translator {
      */
     @Override
     public String encode( Translatable translatable ) throws UnknownTranslatableException {
-    
+        
         // ATTENTION: the order of the if statements on this method must not be
         // changed unless you thought really well about what you're about to do!
         
@@ -64,7 +63,7 @@ public class ToPlainTextTranslator implements Translator {
      * @return A string representation of {@code translatable}.
      */
     private String encodeMap( Translatable translatable ) {
-    
+        
         String entryDelimiter = "\r\n\r\n";
         
         StringBuilder sb =
@@ -91,7 +90,7 @@ public class ToPlainTextTranslator implements Translator {
      *             {@link Translatable} documentation.
      */
     private String encodeIterable( Translatable translatable ) throws UnknownTranslatableException {
-    
+        
         String entryDelimiter = "\r\n\r\n";
         
         StringBuilder sb =

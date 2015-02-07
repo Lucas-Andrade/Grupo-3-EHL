@@ -3,13 +3,10 @@ package parsingtools.commandfactories.userauthenticatingfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.ParsingCommand;
 import utils.CLIStringsDictionary;
 import utils.CompletionStatus;
-
 import commands.patchcommands.PatchAirshipCommand;
-
 import databases.Database;
 import elements.Airship;
 import elements.User;
@@ -49,7 +46,7 @@ public class PatchAirshipCommandsFactory extends
     public PatchAirshipCommandsFactory( Database< User > usersDatabase,
                                         Database< Airship > airshipDatabase )
         throws InvalidArgumentException {
-    
+        
         super( usersDatabase, airshipDatabase );
     }
     
@@ -62,7 +59,7 @@ public class PatchAirshipCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
-    
+        
         return "Change an Airship Coordinates and/or AirCorridor";
     }
     
@@ -75,7 +72,7 @@ public class PatchAirshipCommandsFactory extends
             Callable< CompletionStatus >
             internalInternalNewCommand( Map< String, String > parametersMap, User authenticatedUser )
                 throws InvalidParameterValueException {
-    
+        
         return new PatchAirship_ParsingCommand( parametersMap, authenticatedUser ).newCommand();
     }
     
@@ -84,7 +81,7 @@ public class PatchAirshipCommandsFactory extends
      */
     @Override
     protected String[] getSpecificRequiredParametersNames() {
-    
+        
         return new String[]{ CLIStringsDictionary.FLIGHTID };
     }
     
@@ -135,7 +132,7 @@ public class PatchAirshipCommandsFactory extends
          */
         public PatchAirship_ParsingCommand( Map< String, String > parametersMap,
                                             User authenticatedUser ) {
-        
+            
             super( parametersMap );
             this.authenticatedUser = authenticatedUser;
         }
@@ -155,7 +152,7 @@ public class PatchAirshipCommandsFactory extends
          */
         @Override
         protected Callable< CompletionStatus > newCommand() throws InvalidParameterValueException {
-        
+            
             setFields();
             
             try {
@@ -182,7 +179,7 @@ public class PatchAirshipCommandsFactory extends
          *             limits are invalid (cannot be converted into {@link Double}s).
          */
         private void setFields() throws InvalidParameterValueException {
-        
+            
             try {
                 flightId = getParameterAsString( CLIStringsDictionary.FLIGHTID );
             }
@@ -212,7 +209,7 @@ public class PatchAirshipCommandsFactory extends
          */
         private Double getParameterValueOrNull( String parameterName )
             throws InvalidParameterValueException {
-        
+            
             try {
                 return getParameterAsDouble( parameterName );
             }

@@ -1,9 +1,8 @@
 package elements.airships;
+
+
 import elements.Airship;
 import exceptions.InvalidArgumentException;
-
-
-
 
 
 
@@ -49,7 +48,7 @@ public class GeographicPosition {
      */
     public GeographicPosition( double latitude, double longitude, double altitude )
         throws InvalidArgumentException {
-    
+        
         try {
             this.latitude = new GeographicCoordinate( latitude, 90, -90 );
             
@@ -82,7 +81,7 @@ public class GeographicPosition {
      */
     @Override
     public String toString() {
-    
+        
         return new StringBuilder( "\nLatitude: " ).append( latitude.getValue() )
                                                   .append( " Longitude: " )
                                                   .append( longitude.getValue() )
@@ -96,7 +95,7 @@ public class GeographicPosition {
      * @return the {@code latitude} of the {@code GeographicPosition}.
      */
     public GeographicCoordinate getLatitude() {
-    
+        
         return latitude;
     }
     
@@ -104,7 +103,7 @@ public class GeographicPosition {
      * @return the {@code longitude} of the {@code GeographicPosition}.
      */
     public GeographicCoordinate getLongitude() {
-    
+        
         return longitude;
     }
     
@@ -112,7 +111,7 @@ public class GeographicPosition {
      * @return the {@code altitude} of the {@code GeographicPosition}.
      */
     public GeographicCoordinate getAltitude() {
-    
+        
         return altitude;
     }
 }

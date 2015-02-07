@@ -3,7 +3,6 @@ package outputformatters.totranslatableconverters;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-
 import outputformatters.Translatable;
 import utils.CompletionStatus;
 import utils.exceptions.formattersexceptions.UnknownTypeException;
@@ -34,7 +33,7 @@ class StringsToTranslatables {
          */
         @Override
         Translatable convert( Object string ) throws UnknownTypeException {
-        
+            
             String str;
             try {
                 str = (String)string;
@@ -67,7 +66,7 @@ class StringsToTranslatables {
          */
         @Override
         Translatable convert( Object completionStatus ) throws UnknownTypeException {
-        
+            
             CompletionStatus status;
             try {
                 status = (CompletionStatus)completionStatus;
@@ -88,7 +87,7 @@ class StringsToTranslatables {
      * Unused private constructor
      */
     private StringsToTranslatables() {
-    
+        
     }
     
 }

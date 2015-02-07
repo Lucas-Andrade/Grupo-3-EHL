@@ -3,14 +3,11 @@ package parsingtools.commandfactories.getfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.ParsingCommand;
 import utils.CLIStringsDictionary;
 import utils.Optional;
-
 import commands.getcommands.GetAirshipsWithLessPassengersThanCommand;
-
 import databases.Database;
 import elements.Airship;
 import exceptions.InternalErrorException;
@@ -51,7 +48,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
      */
     public GetAirshipsWithLessPassengersThanCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-    
+        
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
         
@@ -80,7 +77,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
     protected Callable< Optional< Iterable< Airship >>>
             internalNewCommand( Map< String, String > parametersMap )
                 throws InvalidParameterValueException, MissingRequiredParameterException {
-    
+        
         return new GetAWLPT_ParsingCommand( parametersMap ).newCommand();
     }
     
@@ -92,7 +89,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
      */
     @Override
     protected String[] getRequiredParametersNames() {
-    
+        
         return new String[]{ CLIStringsDictionary.NUMBEROFPASSENGERS_UPPERLIMIT };
     }
     
@@ -103,7 +100,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
-    
+        
         return "Gets all airships that are transgressing their air corridors.";
     }
     
@@ -134,7 +131,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
          */
         public GetAWLPT_ParsingCommand( Map< String, String > parametersMap )
             throws InvalidParameterValueException, MissingRequiredParameterException {
-        
+            
             super( parametersMap );
             maximumNumberOfPassengers =
                     getParameterAsInt( CLIStringsDictionary.NUMBEROFPASSENGERS_UPPERLIMIT );
@@ -145,7 +142,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
          */
         @Override
         public Callable< Optional< Iterable< Airship >>> newCommand() {
-        
+            
             try {
                 return new GetAirshipsWithLessPassengersThanCommand( airshipsDatabase,
                                                                      maximumNumberOfPassengers );

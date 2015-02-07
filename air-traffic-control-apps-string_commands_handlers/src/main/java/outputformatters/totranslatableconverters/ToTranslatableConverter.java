@@ -3,7 +3,6 @@ package outputformatters.totranslatableconverters;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import outputformatters.Translatable;
 import utils.CompletionStatus;
 import utils.Optional;
@@ -85,7 +84,7 @@ public class ToTranslatableConverter {
      * Unused private constructor
      */
     private ToTranslatableConverter() {
-    
+        
     }
     
     /**
@@ -134,7 +133,7 @@ public class ToTranslatableConverter {
      *             If {@code object} is not an instance of the types enumerated above.
      */
     public static Translatable convert( Object object ) throws UnknownTypeException {
-    
+        
         if( object instanceof Optional )
             return getTranslatableOfValueContainedInOptional( (Optional< ? >)object );
         
@@ -161,7 +160,7 @@ public class ToTranslatableConverter {
      */
     private static Translatable getTranslatableOfValueContainedInOptional( Optional< ? > optional )
         throws UnknownTypeException {
-    
+        
         Object obj;
         try {
             
@@ -192,7 +191,7 @@ public class ToTranslatableConverter {
      *             documentation.
      */
     private static Translatable getTranslatableOfValue( Object obj ) throws UnknownTypeException {
-    
+        
         
         if( obj instanceof Iterable ) {
             
@@ -224,7 +223,7 @@ public class ToTranslatableConverter {
      *             {@link #convert(Object)} documentation.
      */
     private static Converter getConversor( String type ) throws UnknownTypeException {
-    
+        
         Converter c = CONVERSORS_BY_TYPE.get( type );
         
         if( c == null )

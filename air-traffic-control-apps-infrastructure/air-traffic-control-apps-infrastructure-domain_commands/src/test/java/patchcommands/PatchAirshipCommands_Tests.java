@@ -2,13 +2,10 @@ package patchcommands;
 
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import commands.patchcommands.PatchAirshipCommand;
-
 import databases.InMemoryAirshipsDatabase;
 import elements.Airship;
 import elements.User;
@@ -40,7 +37,7 @@ public class PatchAirshipCommands_Tests {
     @Before
     public void createAirshipsAndUserAndAirshipDatabaseWithTheCreatedAirshipsToBePatched()
         throws InvalidArgumentException {
-    
+        
         // Arrange
         user1 = new User( "Daniel", "pass", "@daniel" );
         
@@ -58,7 +55,7 @@ public class PatchAirshipCommands_Tests {
     @Test
     public void shouldPatchACivilAirshipWithTheCorrectParametersInTheGivenDatabase()
         throws Exception {
-    
+        
         // Act
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, airship1.getIdentification(), user1,
@@ -78,7 +75,7 @@ public class PatchAirshipCommands_Tests {
     @Test
     public void shouldPatchAMilitaryAirshipWithTheCorrectParametersInTheGivenDatabase()
         throws Exception {
-    
+        
         // Act
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, airship2.getIdentification(), user1,
@@ -97,7 +94,7 @@ public class PatchAirshipCommands_Tests {
     
     @Test
     public void shouldPatchAnAirshipCorrectlyGivenNullParameters() throws Exception {
-    
+        
         // Act
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, airship2.getIdentification(), user1,
@@ -116,7 +113,7 @@ public class PatchAirshipCommands_Tests {
     
     @Test
     public void shouldNotPatchAnAirshipIfNoneOfTheParametersWereGiven() throws Exception {
-    
+        
         // Act
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, "id20", user1, null, null, null, null,
@@ -129,7 +126,7 @@ public class PatchAirshipCommands_Tests {
     
     @Test
     public void shouldNotPatchAnAirshipThatDoesNotExistInTheDatabase() throws Exception {
-    
+        
         // Act
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, "id20", user1, 0.0, 0.0, 0.0, 100.0,
@@ -146,7 +143,7 @@ public class PatchAirshipCommands_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateThePatchCivilAirshipCommandGivenANullDatabase()
                 throws InvalidArgumentException {
-    
+        
         patchAirship = new PatchAirshipCommand( null, "id20", user1, 0.0, 0.0, 0.0, 100.0, 50.0 );
     }
     
@@ -155,7 +152,7 @@ public class PatchAirshipCommands_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateThePatchCivilAirshipCommandGivenANullIdentification()
                 throws InvalidArgumentException {
-    
+        
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, null, user1, 0.0, 0.0, 0.0, 100.0, 50.0 );
     }
@@ -165,7 +162,7 @@ public class PatchAirshipCommands_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateThePatchAirshipCommandGivenANullUser()
                 throws InvalidArgumentException {
-    
+        
         patchAirship =
                 new PatchAirshipCommand( airshipsDatabase, "id2", null, 0.0, 0.0, 0.0, 100.0, 50.0 );
     }
@@ -175,7 +172,7 @@ public class PatchAirshipCommands_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToPatchAnAirshipGivenInvalidParametersForItsFields()
                 throws Exception {
-    
+        
         new PatchAirshipCommand( airshipsDatabase, airship1.getIdentification(), user1, 360.0, 0.0,
                                  0.0, 100.0, null ).call();
     }

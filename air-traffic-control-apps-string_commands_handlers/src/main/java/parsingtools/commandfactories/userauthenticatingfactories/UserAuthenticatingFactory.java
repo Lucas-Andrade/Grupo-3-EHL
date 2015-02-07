@@ -3,14 +3,11 @@ package parsingtools.commandfactories.userauthenticatingfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.CommandFactory;
 import utils.CLIStringsDictionary;
 import utils.Optional;
 import utils.StringUtils;
-
 import commands.AuthenticateUserCommand;
-
 import databases.Database;
 import elements.Element;
 import elements.User;
@@ -70,7 +67,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
      */
     public UserAuthenticatingFactory( Database< User > usersDatabase, Database< E > databaseToChange )
         throws InvalidArgumentException {
-    
+        
         if( usersDatabase == null || databaseToChange == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null databases." );
         
@@ -113,7 +110,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
     protected final Callable< R > internalNewCommand( Map< String, String > parametersMap )
         throws MissingRequiredParameterException, InvalidParameterValueException,
         NoSuchElementInDatabaseException, WrongLoginPasswordException, InvalidArgumentException {
-    
+        
         /* Uses the TEMPLATE METHOD design pattern */
         
         User authenticatedUser = authenticateAndGetAuthenticatedUser( parametersMap );
@@ -180,7 +177,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
     private User authenticateAndGetAuthenticatedUser( Map< String, String > parametersMap )
         throws NoSuchElementInDatabaseException, WrongLoginPasswordException,
         MissingRequiredParameterException {
-    
+        
         Callable< Optional< User > > authenticateUserCommand;
         try {
             
@@ -231,7 +228,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
      *         the command cannot execute.
      */
     protected final String[] getRequiredParametersNames() {
-    
+        
         String[] requiredParams =
                 copyToNewArrayWith2MorePositions( getSpecificRequiredParametersNames() );
         requiredParams[requiredParams.length - 2] = CLIStringsDictionary.LOGINNAME;
@@ -264,7 +261,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
      *         {@code arrayToBeCopied}.
      */
     private String[] copyToNewArrayWith2MorePositions( String[] arrayToBeCopied ) {
-    
+        
         if( arrayToBeCopied == null )
             return new String[2];
         

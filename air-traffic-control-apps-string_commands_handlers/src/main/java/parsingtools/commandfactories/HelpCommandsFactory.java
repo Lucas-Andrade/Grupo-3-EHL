@@ -3,11 +3,8 @@ package parsingtools.commandfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import utils.OptionsList;
-
 import commands.HelpCommand;
-
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
 
@@ -40,7 +37,7 @@ public class HelpCommandsFactory extends CommandFactory< OptionsList > {
      */
     public HelpCommandsFactory( Map< String, String > commandsDescription )
         throws InvalidArgumentException {
-    
+        
         if( commandsDescription == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null parser." );
         
@@ -57,7 +54,7 @@ public class HelpCommandsFactory extends CommandFactory< OptionsList > {
     @Override
     protected final Callable< OptionsList >
             internalNewCommand( Map< String, String > parametersMap ) {
-    
+        
         try {
             return new HelpCommand( commandsDescription );
         }
@@ -76,13 +73,13 @@ public class HelpCommandsFactory extends CommandFactory< OptionsList > {
      */
     @Override
     protected String[] getRequiredParametersNames() {
-    
+        
         return null;
     }
     
     @Override
     public String getCommandsDescription() {
-    
+        
         return "Returns the descriptions of known commands.";
     }
 }

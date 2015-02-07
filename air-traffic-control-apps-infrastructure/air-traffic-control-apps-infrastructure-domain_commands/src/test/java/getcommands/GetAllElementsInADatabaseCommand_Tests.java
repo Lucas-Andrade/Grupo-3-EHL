@@ -3,13 +3,10 @@ package getcommands;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import commands.getcommands.GetAllElementsInADatabaseCommand;
-
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
 import elements.Airship;
@@ -42,7 +39,7 @@ public class GetAllElementsInADatabaseCommand_Tests {
     
     @Before
     public void createAirshipsAndUsersAndTheirDatabases() throws InvalidArgumentException {
-    
+        
         // Arrange
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         userDatabase = new InMemoryUsersDatabase( "Users Database" );
@@ -67,7 +64,7 @@ public class GetAllElementsInADatabaseCommand_Tests {
     @SuppressWarnings( { "rawtypes", "unchecked" } )
     @Test
     public void shouldSuccessfullyGetAllTheAirshipFromAnAirshipsDatabase() throws Exception {
-    
+        
         // Arrange
         getAllElementsInADatabase = new GetAllElementsInADatabaseCommand( airshipsDatabase );
         
@@ -88,7 +85,7 @@ public class GetAllElementsInADatabaseCommand_Tests {
     @SuppressWarnings( { "rawtypes", "unchecked" } )
     @Test
     public void shouldSuccessfullyGetTheCorrectUserGivenItsIdentification() throws Exception {
-    
+        
         // Act
         getAllElementsInADatabase = new GetAllElementsInADatabaseCommand( userDatabase );
         Iterable< User > testedUsers = (Iterable< User >)getAllElementsInADatabase.call().get();
@@ -110,7 +107,7 @@ public class GetAllElementsInADatabaseCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullDatabase()
         throws InvalidArgumentException {
-    
+        
         getAllElementsInADatabase = new GetAllElementsInADatabaseCommand( null );
     }
 }

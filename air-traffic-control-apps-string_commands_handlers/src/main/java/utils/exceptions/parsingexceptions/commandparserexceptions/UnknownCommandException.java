@@ -21,7 +21,7 @@ public class UnknownCommandException extends CommandParserException {
      *            The detail message.
      */
     public UnknownCommandException( String message ) {
-    
+        
         super( message );
     }
 }

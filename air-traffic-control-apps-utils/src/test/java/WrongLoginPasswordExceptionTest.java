@@ -1,9 +1,6 @@
 
-
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Test;
-
 import exceptions.WrongLoginPasswordException;
 
 
@@ -12,15 +9,13 @@ import exceptions.WrongLoginPasswordException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class WrongLoginPasswordExceptionTest
-{
-
+public class WrongLoginPasswordExceptionTest {
+    
     @Test
-    public void shouldHaveTheExpectedMessage()
-    {
-
+    public void shouldHaveTheExpectedMessage() {
+        
         assertEquals( "Wrong password: u1's password is not p1.",
                       new WrongLoginPasswordException( "u1", "p1" ).getMessage() );
     }
-
+    
 }

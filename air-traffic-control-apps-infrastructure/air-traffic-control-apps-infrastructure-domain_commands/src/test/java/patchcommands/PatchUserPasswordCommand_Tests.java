@@ -4,9 +4,7 @@ package patchcommands;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import commands.patchcommands.PatchUserPasswordCommand;
-
 import databases.InMemoryUsersDatabase;
 import elements.User;
 import exceptions.InvalidArgumentException;
@@ -27,7 +25,7 @@ public class PatchUserPasswordCommand_Tests {
     
     @Before
     public void createUsersTheirDatabase() throws InvalidArgumentException {
-    
+        
         // Arrange
         user1 = new User( "Daniel", "pass", "@daniel" );
         user2 = new User( "Pedro", "pass2", "@pedro" );
@@ -42,7 +40,7 @@ public class PatchUserPasswordCommand_Tests {
     
     @Test
     public void shouldPatchAUserWithTheCorrectPasswordInTheGivenDatabase() throws Exception {
-    
+        
         // Act
         patchUserPassword = new PatchUserPasswordCommand( usersDatabase, "Daniel", "pass", "dany" );
         
@@ -53,7 +51,7 @@ public class PatchUserPasswordCommand_Tests {
     
     @Test
     public void shouldNotPatchAnUserThatDoesNotExistInTheDatabaseOrTheMasterUser() throws Exception {
-    
+        
         // Act
         patchUserPassword = new PatchUserPasswordCommand( usersDatabase, "Gomes", "pass", "dany" );
         patchUserPassword2 =
@@ -69,7 +67,7 @@ public class PatchUserPasswordCommand_Tests {
     @Test
     public void shouldNotPatchAnExistingUserIfAWrongAuthenticationPasswordIsGiven()
         throws Exception {
-    
+        
         Assert.assertEquals( "Failure. Old password is incorrect.",
                              new PatchUserPasswordCommand( usersDatabase, "Daniel", "dany", "dany" ).call()
                                                                                                     .getMessage() );
@@ -80,28 +78,28 @@ public class PatchUserPasswordCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionIfCreatingInstantiatingWithNullDatabase()
         throws InvalidArgumentException {
-    
+        
         new PatchUserPasswordCommand( null, "Daniel", "pass", "dany" );
     }
     
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionIfCreatingInstantiatingWithNullUsername()
         throws InvalidArgumentException {
-    
+        
         new PatchUserPasswordCommand( usersDatabase, null, "pass", "dany" );
     }
     
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionIfCreatingInstantiatingWithNullOldPassword()
         throws InvalidArgumentException {
-    
+        
         new PatchUserPasswordCommand( usersDatabase, "Daniel", null, "dany" );
     }
     
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionIfCreatingInstantiatingWithNullNewPassword()
         throws InvalidArgumentException {
-    
+        
         new PatchUserPasswordCommand( usersDatabase, "Daniel", "pass", null );
     }
 }

@@ -2,11 +2,9 @@ package parsingtools_tests.commandfactories.getfactories;
 
 
 import java.util.concurrent.Callable;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import parsingtools.CommandParser;
 import parsingtools.Parser;
 import parsingtools.commandfactories.getfactories.getallfactories.GetAllAirshipsInADatabaseCommandsFactory;
@@ -15,9 +13,7 @@ import parsingtools.commandfactories.getfactories.getallfactories.GetAllUsersInA
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
-
 import commands.getcommands.GetAllElementsInADatabaseCommand;
-
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
 import exceptions.InternalErrorException;
@@ -52,7 +48,7 @@ public class GetAllCommandsFactories_Tests {
     @BeforeClass
     public static void createTheCommandParserAndRegisterTheCommands()
         throws InvalidRegisterException, InvalidArgumentException {
-    
+        
         cmdparser = new CommandParser();
         
         userDatabase = new InMemoryUsersDatabase( "Users Database" );
@@ -72,7 +68,7 @@ public class GetAllCommandsFactories_Tests {
         throws WrongLoginPasswordException, MissingRequiredParameterException,
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
-    
+        
         Callable< ? > getAllUsersCommand = (new Parser( cmdparser, "GET", "/users" )).getCommand();
         
         Callable< ? > getAllAirshipsCommand =
@@ -89,7 +85,7 @@ public class GetAllCommandsFactories_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAllAirshipsInADatabaseCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
-    
+        
         new GetAllAirshipsInADatabaseCommandsFactory( null );
     }
     
@@ -98,7 +94,7 @@ public class GetAllCommandsFactories_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAllUsersInADatabaseCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
-    
+        
         new GetAllUsersInADatabaseCommandsFactory( null );
     }
 }

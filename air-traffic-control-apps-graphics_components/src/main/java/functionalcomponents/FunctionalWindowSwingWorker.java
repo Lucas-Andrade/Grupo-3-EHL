@@ -2,7 +2,6 @@ package functionalcomponents;
 
 
 import java.util.concurrent.ExecutionException;
-
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 
@@ -29,7 +28,7 @@ public abstract class FunctionalWindowSwingWorker< T > extends SwingWorker< T, V
      *            - The window error label.
      */
     public FunctionalWindowSwingWorker( JTextArea errorJTextArea ) {
-    
+        
         this.errorJtextArea = errorJTextArea;
     }
     
@@ -41,7 +40,7 @@ public abstract class FunctionalWindowSwingWorker< T > extends SwingWorker< T, V
      */
     @Override
     final protected void done() {
-    
+        
         try {
             errorJtextArea.setText( " " );
             functionalDone( get() );

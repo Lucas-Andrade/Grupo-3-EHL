@@ -1,9 +1,8 @@
 package elements.airships;
+
+
 import elements.Airship;
 import exceptions.InvalidArgumentException;
-
-
-
 
 
 
@@ -52,7 +51,7 @@ public class MilitaryAirship extends Airship {
     public MilitaryAirship( double latitude, double longitude, double altitude, double maxAltitude,
                             double minAltitude, boolean hasWeapons )
         throws InvalidArgumentException {
-    
+        
         super( latitude, longitude, altitude, maxAltitude, minAltitude );
         
         this.hasWeapons = hasWeapons;
@@ -90,7 +89,7 @@ public class MilitaryAirship extends Airship {
     public MilitaryAirship( double latitude, double longitude, double altitude, double maxAltitude,
                             double minAltitude, boolean hasWeapons, String identification )
         throws InvalidArgumentException {
-    
+        
         super( latitude, longitude, altitude, maxAltitude, minAltitude, identification );
         
         this.hasWeapons = hasWeapons;
@@ -103,7 +102,7 @@ public class MilitaryAirship extends Airship {
      */
     @Override
     public String toString() {
-    
+        
         return new StringBuilder( super.toString() ).append( "\nCarries Weapons: " )
                                                     .append( hasWeapons ).append( "\n" ).toString();
     }
@@ -114,7 +113,7 @@ public class MilitaryAirship extends Airship {
      * @return the boolean {@code hasWeapons}.
      */
     public boolean hasWeapons() {
-    
+        
         return hasWeapons;
     }
 }

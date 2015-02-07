@@ -2,7 +2,6 @@ package utils.exceptions.parsingexceptions.parserexceptions;
 
 
 import java.text.MessageFormat;
-
 import utils.exceptions.parsingexceptions.ParsingException;
 
 
@@ -23,7 +22,7 @@ public class DuplicateParametersException extends ParsingException {
      *            The parameter's name.
      */
     public DuplicateParametersException( String parameterName ) {
-    
+        
         super( MessageFormat.format( "Parameter with name {0} was received more than once.",
                                      parameterName ) );
     }

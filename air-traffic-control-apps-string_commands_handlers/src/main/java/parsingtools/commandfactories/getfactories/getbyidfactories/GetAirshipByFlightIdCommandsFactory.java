@@ -2,7 +2,6 @@ package parsingtools.commandfactories.getfactories.getbyidfactories;
 
 
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.CommandFactory;
 import utils.CLIStringsDictionary;
 import databases.Database;
@@ -37,7 +36,7 @@ public class GetAirshipByFlightIdCommandsFactory extends
      */
     public GetAirshipByFlightIdCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-    
+        
         super( CLIStringsDictionary.FLIGHTID, airshipsDatabase );
     }
     
@@ -48,7 +47,7 @@ public class GetAirshipByFlightIdCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
-    
+        
         return "Gets an airship with a certain flightId.";
     }
 }

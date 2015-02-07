@@ -46,7 +46,7 @@ public class PostMilitaryAirshipCommand extends PostAirshipCommand {
                                        double maxAltitude, double minAltitude, boolean hasArmours,
                                        Database< Airship > airshipsDatabase, User userWhoIsPosting )
         throws InvalidArgumentException {
-    
+        
         super( latitude, longitude, altitude, maxAltitude, minAltitude, airshipsDatabase,
                userWhoIsPosting );
         
@@ -63,7 +63,7 @@ public class PostMilitaryAirshipCommand extends PostAirshipCommand {
      */
     @Override
     protected Airship createAirship() throws InvalidArgumentException {
-    
+        
         return new MilitaryAirship( latitude, longitude, altitude, maxAltitude, minAltitude,
                                     hasArmours );
     }

@@ -1,8 +1,7 @@
 package elements.airships;
+
+
 import exceptions.InvalidArgumentException;
-
-
-
 
 
 
@@ -41,7 +40,7 @@ public class AirCorridor {
      *             than the {@code minAltitude}.
      */
     public AirCorridor( double maxAltitude, double minAltitude ) throws InvalidArgumentException {
-    
+        
         if( minAltitude < 0 )
             throw new InvalidArgumentException(
                                                 "Minimum altitude of an air corridor must be greater than 0." );
@@ -61,7 +60,7 @@ public class AirCorridor {
      */
     @Override
     public String toString() {
-    
+        
         return new StringBuilder( "\nMaximum Altitude Permited: " ).append( maxAltitude )
                                                                    .append( "Minimum Altitude Permited: " )
                                                                    .append( minAltitude )
@@ -74,7 +73,7 @@ public class AirCorridor {
      * @return returns the {@code maxAltitude}.
      */
     public double getMaxAltitude() {
-    
+        
         return maxAltitude;
     }
     
@@ -82,7 +81,7 @@ public class AirCorridor {
      * @return returns the {@code minAltitude}.
      */
     public double getMinAltitude() {
-    
+        
         return minAltitude;
     }
 }

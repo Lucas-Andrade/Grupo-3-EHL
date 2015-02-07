@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
-
 import utils.Optional;
 import elements.Element;
 import elements.User;
@@ -53,7 +52,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
      *             If the {@code databaseName} is null.
      */
     public InMemoryDatabase( String databaseName ) throws InvalidArgumentException {
-    
+        
         if( databaseName == null )
             throw new InvalidArgumentException( "Cannot instantiate database with null name." );
         
@@ -87,7 +86,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
      */
     @Override
     public boolean add( T element, User user ) throws InvalidArgumentException {
-    
+        
         if( element == null )
             throw new InvalidArgumentException( "Cannot add null elements to database." );
         
@@ -121,7 +120,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
     @Override
     public boolean removeByIdentification( String identification )
         throws DatabaseException, InvalidArgumentException {
-    
+        
         if( identification == null )
             throw new InvalidArgumentException( "Cannot remove element with null identification." );
         
@@ -158,7 +157,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
     @Override
     public Optional< T > getElementByIdentification( String identification )
         throws InvalidArgumentException {
-    
+        
         if( identification == null )
             throw new InvalidArgumentException( "Cannot get element with null identification." );
         
@@ -183,7 +182,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
      * @see Optional
      */
     public Optional< Iterable< T >> getAllElements() {
-    
+        
         return new Optional< Iterable< T >>(
                                              Collections.unmodifiableCollection( database.values() ),
                                              getDatabaseName() + " is empty." );
@@ -211,7 +210,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
      */
     public Optional< Iterable< T >> getAllElementsThat( Predicate< T > criteria )
         throws InvalidArgumentException {
-    
+        
         if( criteria == null )
             throw new InvalidArgumentException( "Cannot use a null criteria to get elements from "
                                                 + databaseName );
@@ -238,7 +237,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
      * @return This database's name.
      */
     public String getDatabaseName() {
-    
+        
         return databaseName;
     }
     
@@ -266,7 +265,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
      */
     public Optional< Iterable< T >> sortBy( Comparator< T > criteria )
         throws InvalidArgumentException {
-    
+        
         if( criteria == null )
             throw new InvalidArgumentException(
                                                 "Cannot use a null criteria to sort the elements from "

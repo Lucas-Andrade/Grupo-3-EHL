@@ -3,10 +3,8 @@ package outputformatters_tests;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import org.junit.Before;
 import org.junit.Test;
-
 import outputformatters.Translatable;
 import outputformatters.translators.ToJsonTranslator;
 import utils.exceptions.formattersexceptions.UnknownTranslatableException;
@@ -24,9 +22,10 @@ import exceptions.InvalidArgumentException;
  */
 @SuppressWarnings( "unused" )
 public class ToJsonTranslatorTest {
-	private static Map< String, Object > propertiesBag;
-	private static ToJsonTranslator json;
-
+    
+    private static Map< String, Object > propertiesBag;
+    private static ToJsonTranslator json;
+    
 //	@Before
 //	public void before()
 //	{

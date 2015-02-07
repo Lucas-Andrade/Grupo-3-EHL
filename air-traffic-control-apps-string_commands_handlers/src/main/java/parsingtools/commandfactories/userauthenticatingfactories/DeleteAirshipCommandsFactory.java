@@ -3,13 +3,10 @@ package parsingtools.commandfactories.userauthenticatingfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import parsingtools.commandfactories.ParsingCommand;
 import utils.CLIStringsDictionary;
 import utils.CompletionStatus;
-
 import commands.DeleteAirshipCommand;
-
 import databases.Database;
 import elements.Airship;
 import elements.User;
@@ -17,7 +14,6 @@ import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
 import exceptions.InvalidParameterValueException;
 import exceptions.MissingRequiredParameterException;
-import exceptions.NoSuchElementInDatabaseException;
 
 
 /**
@@ -51,7 +47,7 @@ public class DeleteAirshipCommandsFactory extends
     public DeleteAirshipCommandsFactory( Database< User > usersDatabase,
                                          Database< Airship > airshipDatabase )
         throws InvalidArgumentException {
-    
+        
         super( usersDatabase, airshipDatabase );
     }
     
@@ -64,8 +60,8 @@ public class DeleteAirshipCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
-    
-        return "Delete an airship.";
+        
+        return "Deletes an airship.";
     }
     
     /**
@@ -76,11 +72,10 @@ public class DeleteAirshipCommandsFactory extends
     protected
             Callable< CompletionStatus >
             internalInternalNewCommand( Map< String, String > parametersMap, User userWhoIsDeleting )
-                throws MissingRequiredParameterException, InvalidParameterValueException,
-                NoSuchElementInDatabaseException, InvalidArgumentException {
-    
+                throws MissingRequiredParameterException, InvalidParameterValueException {
+        
         return new DeleteAirship_ParsingCommand( parametersMap ).newCommand();
-        // to create this factory's commands, the userWhoIsDeleting is not needed
+        // to create these factory's commands, the userWhoIsDeleting is not needed
     }
     
     /**
@@ -88,7 +83,7 @@ public class DeleteAirshipCommandsFactory extends
      */
     @Override
     protected String[] getSpecificRequiredParametersNames() {
-    
+        
         return new String[]{ CLIStringsDictionary.FLIGHTID };
     }
     
@@ -112,7 +107,6 @@ public class DeleteAirshipCommandsFactory extends
          *            The container of the parameters required to create the command.
          */
         public DeleteAirship_ParsingCommand( Map< String, String > parametersMap ) {
-        
             super( parametersMap );
         }
         
@@ -128,7 +122,7 @@ public class DeleteAirshipCommandsFactory extends
         @Override
         protected Callable< CompletionStatus > newCommand()
             throws MissingRequiredParameterException {
-        
+            
             String flightId = getParameterAsString( CLIStringsDictionary.FLIGHTID );
             try {
                 return new DeleteAirshipCommand( databaseToChange, flightId );

@@ -3,7 +3,6 @@ package parsingtools.commandfactories;
 
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import exceptions.InvalidArgumentException;
 import exceptions.InvalidParameterValueException;
 import exceptions.MissingRequiredParameterException;
@@ -84,7 +83,7 @@ public abstract class CommandFactory< T > {
         throws NoSuchElementInDatabaseException, InvalidArgumentException,
         MissingRequiredParameterException, InvalidParameterValueException,
         WrongLoginPasswordException {
-    
+        
         /* Uses TEMPLATE METHOD design pattern */
         
         if( parametersMap == null )
@@ -167,7 +166,7 @@ public abstract class CommandFactory< T > {
     private void
             checkIfAllRequiredParametersAreInTheParametersMap( Map< String, String > parametersMap )
                 throws MissingRequiredParameterException {
-    
+        
         String[] requiredParameterNames = getRequiredParametersNames();
         if( requiredParameterNames == null )
             return;

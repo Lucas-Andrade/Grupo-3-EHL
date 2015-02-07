@@ -2,20 +2,16 @@ package parsingtools_tests.commandfactories.getfactories;
 
 
 import java.util.concurrent.Callable;
-
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
 import parsingtools.CommandParser;
 import parsingtools.Parser;
 import parsingtools.commandfactories.getfactories.CheckIfAirshipIsTransgressingCommandsFactory;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
-
 import commands.getcommands.CheckIfAirshipIsTransgressingCommand;
-
 import databases.InMemoryAirshipsDatabase;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
@@ -46,7 +42,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory_Tests {
     @BeforeClass
     public static void createTheCommandParserAndRegisterTheCommands()
         throws InvalidRegisterException, InvalidArgumentException {
-    
+        
         cmdparser = new CommandParser();
         
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
@@ -64,7 +60,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory_Tests {
         throws WrongLoginPasswordException, MissingRequiredParameterException,
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
-    
+        
         Callable< ? > checkIfAirshipIsTransgressingCommand =
                 (new Parser( cmdparser, "GET", "/airships/reports/id20" )).getCommand();
         
@@ -78,7 +74,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory_Tests {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateACheckIfAirshipIsTransgressingCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
-    
+        
         new CheckIfAirshipIsTransgressingCommandsFactory( null );
     }
 }

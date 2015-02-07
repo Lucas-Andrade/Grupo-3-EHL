@@ -1,5 +1,6 @@
 package databases;
 
+
 import utils.Optional;
 import elements.User;
 import exceptions.DatabaseException;
@@ -38,7 +39,7 @@ public class InMemoryUsersDatabase extends InMemoryDatabase< User > {
      *             If {@code databaseName} is null.
      */
     public InMemoryUsersDatabase( String databaseName ) throws InvalidArgumentException {
-    
+        
         super( databaseName );
         
         try {
@@ -76,7 +77,7 @@ public class InMemoryUsersDatabase extends InMemoryDatabase< User > {
      */
     @Override
     public boolean add( User userToAdd, User userWhoIsPosting ) throws InvalidArgumentException {
-    
+        
         try {
             for( User user : getAllElements().get() )
                 if( user.getEmail().equals( userToAdd.getEmail() ) )
@@ -111,7 +112,7 @@ public class InMemoryUsersDatabase extends InMemoryDatabase< User > {
     @Override
     public boolean removeByIdentification( String username )
         throws DatabaseException, InvalidArgumentException {
-    
+        
         if( username.equals( "MASTER" ) )
             throw new DatabaseException( "Cannot remove the MASTER user." );
         
@@ -142,7 +143,7 @@ public class InMemoryUsersDatabase extends InMemoryDatabase< User > {
      */
     @Override
     public Optional< Iterable< User >> getElementsByUser( String username ) {
-    
+        
         throw new UnsupportedOperationException(
                                                  "InMemoryUsersDatabase does not suport this operation" );
     }

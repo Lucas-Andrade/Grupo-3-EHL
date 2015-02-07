@@ -2,11 +2,8 @@ package functionalcomponents.functionaluserwindows;
 
 
 import User;
-
 import java.awt.event.ActionListener;
-
 import javax.swing.SwingWorker;
-
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.FunctionalWindowSwingWorker;
 import main.java.Database;
@@ -48,7 +45,7 @@ public class FunctionalPatchUserWindow extends FunctionalWindow< CompletionStatu
      */
     public FunctionalPatchUserWindow( PatchUserWindow nonFunctionalWindow,
                                       Database< User > usersDatabase ) {
-    
+        
         super( nonFunctionalWindow );
         
         this.functionalWindow = nonFunctionalWindow;
@@ -66,7 +63,7 @@ public class FunctionalPatchUserWindow extends FunctionalWindow< CompletionStatu
      */
     @Override
     protected FunctionalWindowSwingWorker< CompletionStatus > getSwingWorker() {
-    
+        
         return new FunctionalWindowSwingWorker< CompletionStatus >(
                                                                     functionalWindow.getErrorJTextArea() ) {
             
@@ -96,7 +93,7 @@ public class FunctionalPatchUserWindow extends FunctionalWindow< CompletionStatu
              */
             @Override
             protected CompletionStatus doInBackground() throws Exception {
-            
+                
                 if( newPassword.equals( "" ) )
                     throw new InvalidArgumentException( "Please Insert a New Password" );
                 
@@ -123,7 +120,7 @@ public class FunctionalPatchUserWindow extends FunctionalWindow< CompletionStatu
              */
             @Override
             public void functionalDone( CompletionStatus resultOfDoInBackGround ) throws Exception {
-            
+                
                 if( resultOfDoInBackGround.operationCompletedSuccessfully() ) {
                     
                     new SuccessWindow( resultOfDoInBackGround.getMessage() );

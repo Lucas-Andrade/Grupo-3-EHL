@@ -4,7 +4,6 @@ package commands.patchcommands;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.concurrent.Callable;
-
 import utils.CompletionStatus;
 import databases.Database;
 import databases.InMemoryDatabase;
@@ -82,7 +81,7 @@ public class PatchAirshipCommand implements Callable< CompletionStatus > {
                                 User user, Double latitude, Double longitude, Double altitude,
                                 Double maxAltitude, Double minAltitude )
         throws InvalidArgumentException {
-    
+        
         if( airshipDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -125,7 +124,7 @@ public class PatchAirshipCommand implements Callable< CompletionStatus > {
      */
     @Override
     public CompletionStatus call() throws InvalidArgumentException, DatabaseException {
-    
+        
         if( latitude == null && longitude == null && altitude == null && maxAltitude == null
             && minAltitude == null )
             return new CompletionStatus( false,
@@ -162,7 +161,7 @@ public class PatchAirshipCommand implements Callable< CompletionStatus > {
      *             in the {@code #airshipDatabase}.
      */
     private Airship setAirshipParameters() throws DatabaseException {
-    
+        
         Airship originalAirship = null;
         
         try {
@@ -202,7 +201,7 @@ public class PatchAirshipCommand implements Callable< CompletionStatus > {
      *             If any of the given values for the airship's properties is invalid.
      */
     private void chooseCorrectMethod( Airship originalAirship ) throws InvalidArgumentException {
-    
+        
         String type = originalAirship.getClass().getSimpleName();
         
         String methodName = "create" + type;
@@ -238,7 +237,7 @@ public class PatchAirshipCommand implements Callable< CompletionStatus > {
      */
     @SuppressWarnings( "unused" )
     private void createCivilAirship( CivilAirship originalAirship ) throws InvalidArgumentException {
-    
+        
         airship =
                 new CivilAirship( latitude, longitude, altitude, maxAltitude, minAltitude,
                                   originalAirship.getPassengers(), identification );
@@ -256,7 +255,7 @@ public class PatchAirshipCommand implements Callable< CompletionStatus > {
     @SuppressWarnings( "unused" )
     private void createMilitaryAirship( MilitaryAirship originalAirship )
         throws InvalidArgumentException {
-    
+        
         airship =
                 new MilitaryAirship( latitude, longitude, altitude, maxAltitude, minAltitude,
                                      originalAirship.hasWeapons(), identification );

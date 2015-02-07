@@ -1,16 +1,11 @@
 
 
-
 import static org.junit.Assert.assertEquals;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
-
 import org.junit.Test;
-
 import commands.HelpCommand;
-
 import utils.OptionsList;
 import exceptions.InvalidArgumentException;
 
@@ -30,7 +25,7 @@ public class HelpCommand_Tests {
     
     @Test
     public void shouldGetAllCommandsDescription() throws Exception {
-    
+        
         // Arrange
         Map< String, String > commandsDescription = new HashMap< String, String >();
         commandsDescription.put( "GET /airships", "Gets the list of all airships." );
@@ -50,7 +45,7 @@ public class HelpCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionGivingANullCommandParserInHelpCommand()
         throws Exception {
-    
+        
         new HelpCommand( null );
     }
 }

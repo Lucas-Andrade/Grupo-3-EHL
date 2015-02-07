@@ -2,7 +2,6 @@ package commands.getcommands;
 
 
 import java.util.concurrent.Callable;
-
 import utils.Optional;
 import databases.Database;
 import databases.InMemoryDatabase;
@@ -53,7 +52,7 @@ public class GetElementFromADatabaseByIdCommand< E extends Element > implements
      */
     public GetElementFromADatabaseByIdCommand( Database< E > database, String identification )
         throws InvalidArgumentException {
-    
+        
         if( database == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -84,7 +83,7 @@ public class GetElementFromADatabaseByIdCommand< E extends Element > implements
      */
     @Override
     public Optional< E > call() throws Exception {
-    
+        
         return database.getElementByIdentification( identification );
     }
 }

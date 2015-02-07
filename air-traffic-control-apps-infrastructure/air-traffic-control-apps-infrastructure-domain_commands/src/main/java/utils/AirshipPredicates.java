@@ -3,7 +3,6 @@ package utils;
 
 
 import java.util.function.Predicate;
-
 import elements.Airship;
 import elements.airships.CivilAirship;
 
@@ -30,7 +29,7 @@ public class AirshipPredicates {
         // Constructor
         
         public HasPassagersNumberBelowAThreshold( int numberOfPassengers ) {
-        
+            
             this.numberOfPassengers = numberOfPassengers;
         }
         
@@ -42,7 +41,7 @@ public class AirshipPredicates {
          */
         @Override
         public boolean test( Airship airship ) {
-        
+            
             if( airship instanceof CivilAirship )
                 return ((CivilAirship)airship).getPassengers() < numberOfPassengers;
             else return false;
@@ -63,7 +62,7 @@ public class AirshipPredicates {
          */
         @Override
         public boolean test( Airship airship ) {
-        
+            
             return airship.isTransgressing();
         }
     }

@@ -3,13 +3,10 @@ package getcommands;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-
 import commands.getcommands.GetAllTransgressingAirshipsCommand;
-
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
 import elements.Airship;
@@ -42,7 +39,7 @@ public class GetAllTransgressingAirshipsCommand_Tests {
     
     @Before
     public void createAirshipsAndUsersAndTheirDatabases() throws InvalidArgumentException {
-    
+        
         // Arrange
         airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         userDatabase = new InMemoryUsersDatabase( "Users Database" );
@@ -67,7 +64,7 @@ public class GetAllTransgressingAirshipsCommand_Tests {
     @Test
     public void shouldGetAllTheAirshipsFromADatabaseThatAreTransgressingTheirAirCorridor()
         throws Exception {
-    
+        
         // Act
         getAllTransgressorAirships = new GetAllTransgressingAirshipsCommand( airshipsDatabase );
         Iterable< Airship > testedAirships = getAllTransgressorAirships.call().get();
@@ -86,7 +83,7 @@ public class GetAllTransgressingAirshipsCommand_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryingToCreateTheCommandGivenANullDatabase()
         throws InvalidArgumentException {
-    
+        
         getAllTransgressorAirships = new GetAllTransgressingAirshipsCommand( null );
     }
 }

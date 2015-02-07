@@ -2,11 +2,8 @@ package functionalcomponents.functionaluserwindows;
 
 
 import User;
-
 import java.awt.event.ActionListener;
-
 import javax.swing.SwingWorker;
-
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.FunctionalWindowSwingWorker;
 import main.java.Database;
@@ -56,7 +53,7 @@ public class FunctionalPostUserWindow extends FunctionalWindow< CompletionStatus
      */
     public FunctionalPostUserWindow( PostUserWindow nonFunctionalWindow,
                                      Database< User > usersDatabase, User userWhoIsPosting ) {
-    
+        
         super( nonFunctionalWindow );
         
         this.functionalWindow = nonFunctionalWindow;
@@ -75,7 +72,7 @@ public class FunctionalPostUserWindow extends FunctionalWindow< CompletionStatus
      */
     @Override
     protected FunctionalWindowSwingWorker< CompletionStatus > getSwingWorker() {
-    
+        
         return new FunctionalWindowSwingWorker< CompletionStatus >(
                                                                     functionalWindow.getErrorJTextArea() ) {
             
@@ -105,7 +102,7 @@ public class FunctionalPostUserWindow extends FunctionalWindow< CompletionStatus
              */
             @Override
             protected CompletionStatus doInBackground() throws Exception {
-            
+                
                 if( !password.equals( confirmPassword ) )
                     throw new InvalidArgumentException( "The Passwords Don't Match" );
                 
@@ -125,7 +122,7 @@ public class FunctionalPostUserWindow extends FunctionalWindow< CompletionStatus
              */
             @Override
             public void functionalDone( CompletionStatus resultOfDoInBackGround ) throws Exception {
-            
+                
                 
                 if( resultOfDoInBackGround.operationCompletedSuccessfully() ) {
                     new SuccessWindow( resultOfDoInBackGround.getMessage() );

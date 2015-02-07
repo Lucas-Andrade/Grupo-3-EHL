@@ -2,7 +2,6 @@ package patchcommands;
 
 
 import static org.junit.Assert.assertEquals;
-import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,6 +9,7 @@ import org.junit.Test;
 
 import commands.patchcommands.PatchAirshipCommand;
 
+import databases.InMemoryAirshipsDatabase;
 import elements.Airship;
 import elements.User;
 import elements.airships.CivilAirship;

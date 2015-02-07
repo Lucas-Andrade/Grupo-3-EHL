@@ -10,6 +10,8 @@ import org.junit.Test;
 
 import commands.getcommands.GetAllElementsInADatabaseCommand;
 
+import databases.InMemoryAirshipsDatabase;
+import databases.InMemoryUsersDatabase;
 import elements.Airship;
 import elements.User;
 import elements.airships.CivilAirship;

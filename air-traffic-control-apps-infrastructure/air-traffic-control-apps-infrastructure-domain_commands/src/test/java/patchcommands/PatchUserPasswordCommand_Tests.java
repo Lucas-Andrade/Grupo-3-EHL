@@ -1,14 +1,13 @@
 package patchcommands;
 
 
-import main.java.domain.model.users.InMemoryUsersDatabase;
-
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import commands.patchcommands.PatchUserPasswordCommand;
 
+import databases.InMemoryUsersDatabase;
 import elements.User;
 import exceptions.InvalidArgumentException;
 

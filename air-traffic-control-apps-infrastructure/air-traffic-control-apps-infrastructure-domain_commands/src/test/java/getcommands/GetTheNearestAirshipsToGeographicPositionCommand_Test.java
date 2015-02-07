@@ -8,6 +8,7 @@ import org.junit.Test;
 
 import commands.getcommands.GetTheNearestAirshipsToGeographicPositionCommand;
 
+import databases.InMemoryAirshipsDatabase;
 import elements.Airship;
 import elements.User;
 import elements.airships.CivilAirship;
@@ -35,7 +36,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommand_Test {
     // Before
     @Before
     public void createAirshipDatabaseUserAndCommandParser()
-        throws InvalidRegisterException, InvalidArgumentException {
+        throws InvalidArgumentException {
     
         // Arrange
         airshipsDatabase = new InMemoryAirshipsDatabase( "FirstAirshipsDatabse" );

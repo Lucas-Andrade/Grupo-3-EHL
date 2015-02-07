@@ -2,7 +2,6 @@ package postcommands;
 
 
 import static org.junit.Assert.assertEquals;
-import main.java.domain.model.airships.InMemoryAirshipsDatabase;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +9,7 @@ import org.junit.Test;
 import commands.postcommands.PostCivilAirshipCommand;
 import commands.postcommands.PostMilitaryAirshipCommand;
 
+import databases.InMemoryAirshipsDatabase;
 import elements.User;
 import exceptions.InvalidArgumentException;
 

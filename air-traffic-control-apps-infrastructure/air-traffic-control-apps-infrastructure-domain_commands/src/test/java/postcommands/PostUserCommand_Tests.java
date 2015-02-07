@@ -2,13 +2,13 @@ package postcommands;
 
 
 import static org.junit.Assert.assertEquals;
-import main.java.domain.model.users.InMemoryUsersDatabase;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import commands.postcommands.PostUserCommand;
 
+import databases.InMemoryUsersDatabase;
 import elements.User;
 import exceptions.InvalidArgumentException;
 

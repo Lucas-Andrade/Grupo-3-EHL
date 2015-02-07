@@ -1,9 +1,9 @@
 package main.java.gui.design.windows.userwindows;
 
 
+import User;
 import java.awt.Dimension;
-import main.java.domain.model.Database;
-import main.java.domain.model.users.User;
+import main.java.Database;
 import main.java.gui.design.panels.JScrollPanelForUsers;
 import main.java.gui.design.windows.popupwindows.PopupWindow;
 

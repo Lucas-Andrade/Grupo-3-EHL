@@ -1,6 +1,7 @@
 package main.java.gui.design.panels.mainwindowpanels;
 
 
+import Airship;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.io.IOException;
@@ -8,7 +9,6 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import main.java.domain.model.airships.Airship;
 import main.java.gui.design.panels.JPanelImage;
 import main.java.gui.design.panels.JScrollPanelForElements;
 import main.java.utils.exceptions.InternalErrorException;

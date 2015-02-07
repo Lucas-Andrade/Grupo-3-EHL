@@ -1,13 +1,13 @@
 package main.java.gui.design.panels.postairshipwindowpanels;
 
 
+import AirCorridor;
+import Airship;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import javax.swing.JPanel;
-import main.java.domain.model.airships.AirCorridor;
-import main.java.domain.model.airships.Airship;
 import main.java.gui.design.GridBagUtils;
     
     /**

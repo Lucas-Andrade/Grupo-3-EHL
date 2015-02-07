@@ -1,6 +1,7 @@
 package main.java.gui.design.panels;
 
 
+import Element;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -11,8 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import main.java.domain.model.Database;
-import main.java.domain.model.Element;
+import main.java.Database;
 import main.java.gui.design.borders.TextRoundBorder;
 import main.java.gui.functionalcomponents.functionalmainwindow.GetElementButton;
     

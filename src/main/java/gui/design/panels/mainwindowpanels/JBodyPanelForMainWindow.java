@@ -1,11 +1,11 @@
 package main.java.gui.design.panels.mainwindowpanels;
 
 
+import Airship;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import javax.swing.JPanel;
-import main.java.domain.model.Database;
-import main.java.domain.model.airships.Airship;
+import main.java.Database;
 import main.java.gui.design.borders.TextRoundBorder;
 import main.java.gui.design.panels.JScrollPanelForElements;
 

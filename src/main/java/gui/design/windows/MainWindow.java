@@ -1,6 +1,7 @@
 package main.java.gui.design.windows;
 
 
+import Airship;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -8,8 +9,7 @@ import java.awt.Toolkit;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import main.java.domain.model.Database;
-import main.java.domain.model.airships.Airship;
+import main.java.Database;
 import main.java.gui.design.GridBagUtils;
 import main.java.gui.design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import main.java.gui.design.panels.mainwindowpanels.JFooterPanelForMainWindow;

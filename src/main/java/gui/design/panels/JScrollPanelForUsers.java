@@ -1,7 +1,7 @@
 package main.java.gui.design.panels;
 
 
-import main.java.domain.model.users.User;
+import User;
 
     /**
      * Class who's instances represents a ScroolPanel with User information. 

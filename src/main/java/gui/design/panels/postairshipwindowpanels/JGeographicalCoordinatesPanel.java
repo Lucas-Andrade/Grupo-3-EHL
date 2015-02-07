@@ -1,13 +1,13 @@
 package main.java.gui.design.panels.postairshipwindowpanels;
 
 
+import Airship;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
-import main.java.domain.model.airships.Airship;
 import main.java.gui.design.borders.TextRoundBorder;
 import main.java.gui.design.panels.JLablePlusJTextField;
     /**

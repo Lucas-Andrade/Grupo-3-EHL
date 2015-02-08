@@ -1,12 +1,12 @@
 package utils.exceptions.parsingexceptions.parserexceptions;
 
 
-import parsingtools.Parser;
+import utils.StringCommands_Executor;
 import utils.exceptions.parsingexceptions.ParsingException;
 
 
 /**
- * Superclass for all {@link Parser} exceptions.
+ * Superclass for all {@link StringCommands_Executor} exceptions.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */

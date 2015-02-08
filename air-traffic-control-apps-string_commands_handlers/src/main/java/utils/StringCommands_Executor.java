@@ -1,4 +1,4 @@
-package parsingtools;
+package utils;
 
 
 import java.io.IOException;
@@ -9,11 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
+import com.google.gson.Gson;
+import outputformatters.Translatable;
+import outputformatters.totranslatableconverters.ToTranslatableConverter;
 import outputformatters.translators.ToHtmlTranslator;
 import outputformatters.translators.ToJsonTranslator;
 import outputformatters.translators.ToPlainTextTranslator;
 import outputformatters.translators.Translator;
-import utils.CLIStringsDictionary;
+import parsingtools.CommandParser;
+import utils.exceptions.formattersexceptions.UnknownTranslatableException;
+import utils.exceptions.formattersexceptions.UnknownTypeException;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
 import utils.exceptions.parsingexceptions.parserexceptions.DuplicateParametersException;
@@ -27,29 +32,30 @@ import exceptions.WrongLoginPasswordException;
 
 
 /**
- * Class whose instances are responsible for interpreting string-commands.
+ * Class whose instances are responsible for interpreting string-commands and returning its output
+ * and the stream where to write the output to.
  * <p>
  * Each instance is bound to a concrete string-command and to a {@link CommandParser} instance. The
  * public methods of this class allow getting the {@link Callable command}, {@link Translator output
  * translator} and {@link PrintStream stream} coded in the string-command. The register of the
  * received {@link CommandParser} should contain the given string-command.
  * </p>
- * <p>
- * <b>Implementation notes:</b>
- * </p>
- * <ul>
- * <li>This class will break the Open-Closed Principle (see SOLID principles); every time a new
- * {@link Translator} is created, a new entry has to be added to the static field
- * {@link #TRANSLATORS}.</li>
- * <li>This class makes use of the static fields in {@link CLIStringsDictionary}.</li>
- * </ul>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  * @see CommandParser
- * @see CLIStringsDictionary
+ * @see CommandStrings_Dictionary
  * @see Translator
  */
-public class Parser {
+public class StringCommands_Executor {
+    
+    /* Implementation notes:
+     * 
+     * - This class will break the Open-Closed Principle (see SOLID principles); every time a new
+     * Translator is created, a new entry has to be added to the static field
+     * TRANSLATORS.
+     * 
+     * -This class makes use of the static fields in CommandStrings_Dictionary. 
+     */
     
     
     
@@ -57,14 +63,14 @@ public class Parser {
     
     /**
      * The mapping between strings that may be contained in the string-command and the
-     * {@link Translator} instance they correspond to (uses the {@link CLIStringsDictionary}).
+     * {@link Translator} instance they correspond to (uses the {@link CommandStrings_Dictionary}).
      */
     public static final Map< String, Translator > TRANSLATORS = new HashMap< String, Translator >();
     
     /**
      * The list of the methods ({@code args[0]}) of string-commands that support the output
-     * customization settings coded in the parameters with names {@link CLIStringsDictionary#ACCEPT}
-     * and {@link CLIStringsDictionary#STREAM}.
+     * customization settings coded in the parameters with names
+     * {@link CommandStrings_Dictionary#ACCEPT} and {@link CommandStrings_Dictionary#STREAM}.
      */
     public static final List< String > methodsThatSupportOutputCustomization = new ArrayList<>();
     
@@ -75,14 +81,14 @@ public class Parser {
         
         /*TRANSLATORS*/
         try {
-            TRANSLATORS.put( CLIStringsDictionary.HTML, new ToHtmlTranslator( 5 ) );
+            TRANSLATORS.put( CommandStrings_Dictionary.HTML, new ToHtmlTranslator( 5 ) );
         }
         catch( InvalidArgumentException e ) {
             throw new InternalErrorException( "UNEXPECTED ERROR IN Parser!" );
             // never happens because argument 5 is bigger than 1
         }
-        TRANSLATORS.put( CLIStringsDictionary.TEXT, new ToPlainTextTranslator() );
-        TRANSLATORS.put( CLIStringsDictionary.JSON, new ToJsonTranslator() );
+        TRANSLATORS.put( CommandStrings_Dictionary.TEXT, new ToPlainTextTranslator() );
+        TRANSLATORS.put( CommandStrings_Dictionary.JSON, new ToJsonTranslator() );
         
         /*methodsThatSupportOutputCustomization*/
         methodsThatSupportOutputCustomization.add( "GET" );
@@ -122,10 +128,10 @@ public class Parser {
     
     // CONSTRUCTOR
     /**
-     * Creates a new instance of {@link Parser} bound to a concrete string-command and to a
-     * {@link CommandParser} instance. The method and path received in {@code args} (its first and
-     * second entries) should match the method and path of one of the commands registered in
-     * {@code cmdParser}.
+     * Creates a new instance of {@link StringCommands_Executor} bound to a concrete string-command
+     * and to a {@link CommandParser} instance. The method and path received in {@code args} (its
+     * first and second entries) should match the method and path of one of the commands registered
+     * in {@code cmdParser}.
      * <p>
      * To know more about string-commands correct syntax, see {@link CommandParser}'s documentation.
      * </p>
@@ -151,10 +157,10 @@ public class Parser {
      *             parameters-list.
      * @see CommandParser
      */
-    public Parser( CommandParser cmdParser, String... args )
+    public StringCommands_Executor( CommandParser cmdParser, String... args )
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidArgumentException, InvalidCommandSyntaxException {
-        
+    
         if( cmdParser == null )
             throw new InvalidArgumentException(
                                                 "Cannot instantiate parser with null command parser." );
@@ -172,79 +178,38 @@ public class Parser {
     // PUBLIC METHODS
     
     /**
-     * Returns the {@link Callable command} correspondent to the string-command received in the
-     * constructor.
+     * Returns the string-ouput of the string-command received in the constructor.
      * 
      * @return The corresponding {@link Callable} instance.
-     * @throws InvalidArgumentException
-     *             If {@code parameters==null}.
-     * @throws InvalidCommandSyntaxException
-     *             If {@code args.length} is not 2 or 3.
-     * @throws InvalidParameterValueException
-     *             If the value received in the parameters map for a required parameter is invalid.
-     * @throws InternalErrorException
-     *             If an internal error occurred (not supposed to happen).
-     * @throws MissingRequiredParameterException
-     *             If the received map does not contain one of the required parameters for
-     *             instantiating the command.
-     * @throws NoSuchElementInDatabaseException
-     *             If there is no user in {@link #postingUsersDatabase} whose username is the login
-     *             name receive in the parameters map. The message of this exception is <i>«{login
-     *             name} not found in {@code postingUsersDatabase.getDatabaseName()}»</i>.
-     * @throws RequiredParameterNotPresentException
-     *             If some parameters needed to create the new instance are missing.
-     * @throws UnknownCommandException
-     *             If the given string-command wasn't registered.
-     * @throws WrongLoginPasswordException
-     *             If the login password received does not match the login username's password.
+     * @throws Exception
+     *             If there was a problem with the data given for producing the command or in the
+     *             execution of the command.
      */
-    public Callable< ? > getCommand()
-        throws WrongLoginPasswordException, MissingRequiredParameterException,
-        InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
-        InvalidParameterValueException, InvalidArgumentException {
-        
-        return cmdParser.getCommand( parametersMap, args );
-    }
+    public String getOutput() throws Exception {
     
-    /**
-     * Returns the {@link Translator} correspondent to the value of the parameter with name
-     * {@link CLIStringsDictionary#ACCEPT} received in the parameters-list of the string-command; if
-     * this parameter wasn't in the parameters-list returns the translator correspondent to
-     * {@link CLIStringsDictionary#TEXT}.
-     * 
-     * @return The translator correspondent to the value of the parameter with name
-     *         {@link CLIStringsDictionary#ACCEPT} or<br/>
-     *         the translator {@link CLIStringsDictionary#TEXT} if no value was received.
-     * @throws InvalidParameterValueException
-     *             If the value of the parameter accept is unknown.
-     */
-    public Translator getTranslator() throws InvalidParameterValueException {
+        Callable< ? > command = getCommand();
         
-        String translator = findValueOf( CLIStringsDictionary.ACCEPT );
-        if( translator == null || !supportsOutputCustomization() )
-            translator = CLIStringsDictionary.TEXT;
+        if( findValueOf( CommandStrings_Dictionary.ACCEPT ).equals( CommandStrings_Dictionary.JSON ) )
+            return convertToGson( command );
         
-        Translator t = TRANSLATORS.get( translator );
-        if( t == null )
-            throw new InvalidParameterValueException( CLIStringsDictionary.ACCEPT, translator );
-        return t;
+        return convertUsingTranslators( command );
     }
     
     /**
      * Returns the stream correspondent to the value of the parameter with name
-     * {@link CLIStringsDictionary#STREAM} received in the parameters-list of the string-command; if
-     * this parameter wasn't in the parameters-list returns the {@link PrintStream}
-     * {@link System#out}.
+     * {@link CommandStrings_Dictionary#STREAM} received in the parameters-list of the
+     * string-command; if this parameter wasn't in the parameters-list returns the
+     * {@link PrintStream} {@link System#out}.
      * 
      * @return The stream correspondent to the value of the parameter with name
-     *         {@link CLIStringsDictionary#STREAM} or<br />
+     *         {@link CommandStrings_Dictionary#STREAM} or<br />
      *         the stream {@link System#out} if no value was received.
      * @throws InvalidParameterValueException
      *             If the value of the parameter accept is unknown.
      */
-    public PrintStream getStream() throws InvalidParameterValueException {
-        
-        String filePath = findValueOf( CLIStringsDictionary.STREAM );
+    public OutputStream getStream() throws InvalidParameterValueException {
+    
+        String filePath = findValueOf( CommandStrings_Dictionary.STREAM );
         if( filePath == null || !supportsOutputCustomization() )
             return System.out;
         
@@ -252,9 +217,24 @@ public class Parser {
             return new PrintStream( filePath );
         }
         catch( IOException e ) {
-            throw new InvalidParameterValueException( CLIStringsDictionary.STREAM, filePath,
+            throw new InvalidParameterValueException( CommandStrings_Dictionary.STREAM, filePath,
                                                       e.getMessage(), e );
         }
+    }
+    
+    /**
+     * Writes the string {@link #getOutput()} to the stream {@link #getStream()}.
+     * 
+     * @throws IOException
+     * @throws Exception
+     */
+    public void writeOutputToStream() throws IOException, Exception {
+    
+        OutputStream stream = getStream();
+        stream.write( getOutput().getBytes() );
+        stream.flush();
+        if( !stream.equals( System.out ) )
+            stream.close();
     }
     
     
@@ -284,7 +264,7 @@ public class Parser {
      */
     private Map< String, String > getParametersFromParametersList()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException {
-        
+    
         Map< String, String > parametersMap = new HashMap< String, String >();
         if( args.length == 2 )
             return parametersMap;
@@ -305,22 +285,128 @@ public class Parser {
         return parametersMap;
     }
     
+    // used in getOutput
+    /**
+     * Returns the {@link Callable command} correspondent to the string-command received in the
+     * constructor.
+     * 
+     * @return The corresponding {@link Callable} instance.
+     * @throws InvalidArgumentException
+     *             If {@code parameters==null}.
+     * @throws InvalidCommandSyntaxException
+     *             If {@code args.length} is not 2 or 3.
+     * @throws InvalidParameterValueException
+     *             If the value received in the parameters-list for a required parameter is invalid.
+     * @throws MissingRequiredParameterException
+     *             If the received parameters-list does not contain one of the required parameters
+     *             for instantiating the command.
+     * @throws NoSuchElementInDatabaseException
+     *             If there is no user in {@link #postingUsersDatabase} whose username is the login
+     *             name receive in the parameters map. The message of this exception is <i>«{login
+     *             name} not found in {@code postingUsersDatabase.getDatabaseName()}»</i>.
+     * @throws RequiredParameterNotPresentException
+     *             If some parameters needed to create the new instance are missing.
+     * @throws UnknownCommandException
+     *             If the given string-command wasn't registered.
+     * @throws WrongLoginPasswordException
+     *             If the login password received does not match the login username's password.
+     */
+    private Callable< ? > getCommand()
+        throws WrongLoginPasswordException, MissingRequiredParameterException,
+        InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
+        InvalidParameterValueException, InvalidArgumentException {
+    
+        return cmdParser.getCommand( parametersMap, args );
+    }
+    
+    // used in getOuput
+    /**
+     * Returns the result of {@code command.call()} in Json format.
+     * 
+     * @param command
+     *            The command whose output is to be converted.
+     * @return The result of {@code command.call()} in Json format.
+     * @throws Exception
+     *             If there was a problem in the execution of the command or there was received an
+     *             exception result.
+     */
+    private String convertToGson( Callable< ? > command ) throws Exception {
+    
+        Object result = command.call();
+        if( result instanceof Optional )
+            result = ((Optional< ? >)result).get();
+        return new Gson().toJson( result );
+    }
+    
+    // used in getOutput
+    /**
+     * Returns the result of {@code command.call()} in the format specified in the parameters-list
+     * of the string-command given in the constructor.
+     * 
+     * @param command
+     *            The command whose output is to be converted.
+     * @return The result of {@code command.call()} in the format specified in the parameters-list
+     *         of the string-command given in the constructor.
+     * @throws Exception
+     *             If there was a problem in the execution of the command or there was received an
+     *             exception result.
+     * @throws InvalidParameterValueException
+     *             If the value of the parameter accept is unknown.
+     */
+    private String convertUsingTranslators( Callable< ? > command )
+        throws Exception, InvalidParameterValueException {
+    
+        try {
+            Translatable intermediateRepr = ToTranslatableConverter.convert( command.call() );
+            return getTranslator().encode( intermediateRepr );
+        }
+        catch( UnknownTypeException | UnknownTranslatableException e ) {
+            throw new InternalErrorException( e.getMessage() );
+        }
+    }
+    
+    // used in convertUsingTranslators
+    /**
+     * Returns the {@link Translator} correspondent to the value of the parameter with name
+     * {@link CommandStrings_Dictionary#ACCEPT} received in the parameters-list of the
+     * string-command; if this parameter wasn't in the parameters-list returns the translator
+     * correspondent to {@link CommandStrings_Dictionary#TEXT}.
+     * 
+     * @return The translator correspondent to the value of the parameter with name
+     *         {@link CommandStrings_Dictionary#ACCEPT} or<br/>
+     *         the translator {@link CommandStrings_Dictionary#TEXT} if no value was received.
+     * @throws InvalidParameterValueException
+     *             If the value of the parameter accept is unknown.
+     */
+    private Translator getTranslator() throws InvalidParameterValueException {
+    
+        String translator = findValueOf( CommandStrings_Dictionary.ACCEPT );
+        if( translator == null || !supportsOutputCustomization() )
+            translator = CommandStrings_Dictionary.TEXT;
+        
+        Translator t = TRANSLATORS.get( translator );
+        if( t == null )
+            throw new InvalidParameterValueException( CommandStrings_Dictionary.ACCEPT, translator );
+        return t;
+    }
+    
     // used in the methods getTranslator and getStream
     /**
-     * Checks whether the string-command bound to this instance of {@link Parser} supports the
-     * functionalities coded in the parameters with names {@link CLIStringsDictionary#ACCEPT} and
-     * {@link CLIStringsDictionary#STREAM} (these are related with output formatting and printing).
+     * Checks whether the string-command bound to this instance of {@link StringCommands_Executor}
+     * supports the functionalities coded in the parameters with names
+     * {@link CommandStrings_Dictionary#ACCEPT} and {@link CommandStrings_Dictionary#STREAM} (these
+     * are related with output formatting and printing).
      * 
      * @return {@code true} if the command supports custom output formatting and printing; <br/>
      *         {@code false} if the results can only be printed in plain text to the
      *         {@link System#out}.
      */
     private boolean supportsOutputCustomization() {
-        
+    
         return methodsThatSupportOutputCustomization.contains( args[0] );
     }
     
-    // used in the methods getTranslator and getStream
+    // used in the methods getOutput, getTranslator and getStream
     /**
      * Returns the value of the parameter with name {@code parameterName} in the string-command's
      * parameters-list. If there is no parameters-list or there is no such parameter in the given
@@ -334,8 +420,8 @@ public class Parser {
      *         given list.
      */
     private String findValueOf( String parameterName ) {
-        
+    
         return parametersMap.get( parameterName );
     }
     
-}
+}    

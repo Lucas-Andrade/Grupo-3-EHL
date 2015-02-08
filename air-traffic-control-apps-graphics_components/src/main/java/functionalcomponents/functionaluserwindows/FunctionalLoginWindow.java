@@ -112,4 +112,11 @@ public class FunctionalLoginWindow extends FunctionalWindow< User > {
             }
         };
     }
+    
+    
+    public class LoginWindow_SwingWorker extends FunctionalWindowSwingWorker< User > {
+        
+    }
+    
+    
 }

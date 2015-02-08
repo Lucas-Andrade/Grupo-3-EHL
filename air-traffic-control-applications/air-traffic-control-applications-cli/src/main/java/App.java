@@ -1,5 +1,3 @@
-import java.io.OutputStream;
-import java.io.PrintStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -7,17 +5,27 @@ import java.util.concurrent.Callable;
 import outputformatters.Translatable;
 import outputformatters.totranslatableconverters.ToTranslatableConverter;
 import outputformatters.translators.Translator;
-import parsingtools.*;
-import parsingtools.commandfactories.*;
-import parsingtools.commandfactories.getfactories.*;
-import parsingtools.commandfactories.getfactories.getallfactories.*;
-import parsingtools.commandfactories.getfactories.getbyidfactories.*;
-import parsingtools.commandfactories.userauthenticatingfactories.*;
-import utils.exceptions.formattersexceptions.UnknownTranslatableException;
-import utils.exceptions.formattersexceptions.UnknownTypeException;
+import parsingtools.CommandParser;
+import parsingtools.commandfactories.CommandFactory;
+import parsingtools.commandfactories.HelpCommandsFactory;
+import parsingtools.commandfactories.getfactories.CheckIfAirshipIsTransgressingCommandsFactory;
+import parsingtools.commandfactories.getfactories.GetAirshipsOfOwnerCommandsFactory;
+import parsingtools.commandfactories.getfactories.GetAirshipsWithLessPassengersThanCommandsFactory;
+import parsingtools.commandfactories.getfactories.GetAllTransgressingAirshipsCommandsFactory;
+import parsingtools.commandfactories.getfactories.GetTheNearestAirshipsToGeographicPositionCommandsFactory;
+import parsingtools.commandfactories.getfactories.getallfactories.GetAllAirshipsInADatabaseCommandsFactory;
+import parsingtools.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
+import parsingtools.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory;
+import parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
+import parsingtools.commandfactories.userauthenticatingfactories.DeleteAirshipCommandsFactory;
+import parsingtools.commandfactories.userauthenticatingfactories.PatchAirshipCommandsFactory;
+import parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
+import parsingtools.commandfactories.userauthenticatingfactories.PostAirshipCommandsFactory;
+import parsingtools.commandfactories.userauthenticatingfactories.PostUserCommandsFactory;
+import utils.StringCommands_Executor;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
-import databases.*;
-import exceptions.InternalErrorException;
+import databases.InMemoryAirshipsDatabase;
+import databases.InMemoryUsersDatabase;
 import exceptions.InvalidArgumentException;
 
 
@@ -94,7 +102,7 @@ public class App {
      * Unused private constructor
      */
     private App() {
-        
+    
     }
     
     
@@ -121,7 +129,7 @@ public class App {
      * @param args
      */
     public static void main( String[] args ) {
-        
+    
         // Register commands phase
         commandRegister();
         
@@ -153,7 +161,7 @@ public class App {
      * No {@code Exception} should be catch!
      */
     private static void commandRegister() {
-        
+    
         try {
             
             // DELETE
@@ -216,7 +224,7 @@ public class App {
     
     private static void commandRegist( String method, String path,
                                        CommandFactory< ? > commandFactory ) {
-        
+    
         try {
             cmdParser.registerCommand( method, path, commandFactory );
             commandsDescription.put( new StringBuilder( method ).append( " " ).append( path )
@@ -232,44 +240,29 @@ public class App {
     /**
      * Execute phase:
      * <ul>
-     * <li>1 - {@link Parser#getCommand()}: Get the {@link Callable command} by the given
-     * {@code args}, and execute it.
+     * <li>1 - {@link StringCommands_Executor#getCommand()}: Get the {@link Callable command} by the
+     * given {@code args}, and execute it.
      * <li>2 - The received information by the {@code command} is
      * {@link ToTranslatableConverter#convert converted} to a {@link Translatable}.
-     * <li>3 - {@link Parser#getTranslator()}: Get the {@link Translator} specified in the
-     * {@code args}.Then the {@code Translatable} is {@link Translator#encode() encoded} (to plain
-     * text, json or html).
-     * <li>4 - {@link Parser#getStream()}: Get the path specified in the {@code args} where the
-     * received information by the command will be written. If no path is given then the info is
-     * written in the commandLine.
+     * <li>3 - {@link StringCommands_Executor#getTranslator()}: Get the {@link Translator} specified
+     * in the {@code args}.Then the {@code Translatable} is {@link Translator#encode() encoded} (to
+     * plain text, json or html).
+     * <li>4 - {@link StringCommands_Executor#getStream()}: Get the path specified in the
+     * {@code args} where the received information by the command will be written. If no path is
+     * given then the info is written in the commandLine.
      * </ul>
      * 
      * @param args
      */
     private static void execute( String[] args ) {
-        
+    
         try {
-            Parser parser = new Parser( cmdParser, args );
-            Callable< ? > command = parser.getCommand();
-            
-            String output;
-            try {
-                Translatable intermediateRepr = ToTranslatableConverter.convert( command.call() );
-                output = parser.getTranslator().encode( intermediateRepr );
-            }
-            catch( UnknownTypeException | UnknownTranslatableException e ) {
-                throw new InternalErrorException( e.getMessage() );
-            }
-            
-            OutputStream stream = parser.getStream();
-            stream.write( output.getBytes() );
-            stream.flush();
-            if( !stream.equals( System.out ) )
-                stream.close();
-            
+            StringCommands_Executor parser = new StringCommands_Executor( cmdParser, args );
+            parser.writeOutputToStream();
         }
         catch( Exception e ) {
             System.out.println( e.getMessage() );
         }
     }
+    
 }

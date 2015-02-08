@@ -4,7 +4,7 @@ package parsingtools.commandfactories.userauthenticatingfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.ParsingCommand;
-import utils.CLIStringsDictionary;
+import utils.CommandStrings_Dictionary;
 import utils.CompletionStatus;
 import commands.patchcommands.PatchAirshipCommand;
 import databases.Database;
@@ -82,7 +82,7 @@ public class PatchAirshipCommandsFactory extends
     @Override
     protected String[] getSpecificRequiredParametersNames() {
         
-        return new String[]{ CLIStringsDictionary.FLIGHTID };
+        return new String[]{ CommandStrings_Dictionary.FLIGHTID };
     }
     
     
@@ -181,17 +181,17 @@ public class PatchAirshipCommandsFactory extends
         private void setFields() throws InvalidParameterValueException {
             
             try {
-                flightId = getParameterAsString( CLIStringsDictionary.FLIGHTID );
+                flightId = getParameterAsString( CommandStrings_Dictionary.FLIGHTID );
             }
             catch( MissingRequiredParameterException e ) {
                 flightId = null;
             }
             
-            latitude = getParameterValueOrNull( CLIStringsDictionary.LATITUDE );
-            longitude = getParameterValueOrNull( CLIStringsDictionary.LONGITUDE );
-            altitude = getParameterValueOrNull( CLIStringsDictionary.ALTITUDE );
-            maxAltitude = getParameterValueOrNull( CLIStringsDictionary.AIRCORRIDOR_MAXALTITUDE );
-            minAltitude = getParameterValueOrNull( CLIStringsDictionary.AIRCORRIDOR_MINALTITUDE );
+            latitude = getParameterValueOrNull( CommandStrings_Dictionary.LATITUDE );
+            longitude = getParameterValueOrNull( CommandStrings_Dictionary.LONGITUDE );
+            altitude = getParameterValueOrNull( CommandStrings_Dictionary.ALTITUDE );
+            maxAltitude = getParameterValueOrNull( CommandStrings_Dictionary.AIRCORRIDOR_MAXALTITUDE );
+            minAltitude = getParameterValueOrNull( CommandStrings_Dictionary.AIRCORRIDOR_MINALTITUDE );
             
         }
         

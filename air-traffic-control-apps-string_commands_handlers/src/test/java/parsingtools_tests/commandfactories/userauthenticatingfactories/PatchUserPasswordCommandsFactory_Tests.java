@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
-import utils.CLIStringsDictionary;
+import utils.CommandStrings_Dictionary;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
 import commands.patchcommands.PatchUserPasswordCommand;
@@ -53,9 +53,9 @@ public class PatchUserPasswordCommandsFactory_Tests {
         
         parameters = new HashMap< String, String >();
         
-        parameters.put( CLIStringsDictionary.USERNAME, "Daniel" );
-        parameters.put( CLIStringsDictionary.OLDPASSWORD, "pass" );
-        parameters.put( CLIStringsDictionary.NEWPASSWORD, "dany" );
+        parameters.put( CommandStrings_Dictionary.USERNAME, "Daniel" );
+        parameters.put( CommandStrings_Dictionary.OLDPASSWORD, "pass" );
+        parameters.put( CommandStrings_Dictionary.NEWPASSWORD, "dany" );
     }
     
     // Test Normal Dinamic And Prerequisites

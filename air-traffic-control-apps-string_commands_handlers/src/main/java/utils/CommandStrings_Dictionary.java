@@ -2,7 +2,6 @@ package utils;
 
 
 import parsingtools.CommandParser;
-import parsingtools.Parser;
 import parsingtools.commandfactories.ParsingCommand;
 
 
@@ -15,7 +14,7 @@ import parsingtools.commandfactories.ParsingCommand;
  * contain data needed to perform them. Therefore they must be recognizable and translatable into
  * instances by the app. <br />
  * This dictionary holds several static fields accessed throughout the app's parsing mechanism (the
- * app's {@link Parser}s, {@link CommandParser} and {@link ParsingCommand}s); each variable of this
+ * app's {@link StringCommands_Executor}s, {@link CommandParser} and {@link ParsingCommand}s); each variable of this
  * dictionary is associated with a literal string that is either the name or the value of a
  * placeholder or parameter. Only names and values of placeholders and parameters contained in this
  * dictionary are recognized internally.
@@ -29,12 +28,12 @@ import parsingtools.commandfactories.ParsingCommand;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public final class CLIStringsDictionary {
+public final class CommandStrings_Dictionary {
     
     /**
      * Unused private constructor
      */
-    private CLIStringsDictionary() {
+    private CommandStrings_Dictionary() {
         
     }
     

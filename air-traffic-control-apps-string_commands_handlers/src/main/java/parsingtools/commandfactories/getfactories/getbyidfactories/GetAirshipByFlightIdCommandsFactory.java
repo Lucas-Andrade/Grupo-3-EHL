@@ -3,7 +3,7 @@ package parsingtools.commandfactories.getfactories.getbyidfactories;
 
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.CommandFactory;
-import utils.CLIStringsDictionary;
+import utils.CommandStrings_Dictionary;
 import databases.Database;
 import elements.Airship;
 import exceptions.InvalidArgumentException;
@@ -25,7 +25,7 @@ public class GetAirshipByFlightIdCommandsFactory extends
     /**
      * Creates a new {@link GetAirshipByFlightIdCommandFactory} that produces commands to get an
      * airship with a certain flightId from the {@code airshipsDatabase}. That flightId is the value
-     * of the parameter with key {@link CLIStringsDictionary#FLIGHTID} received in the parameters
+     * of the parameter with key {@link CommandStrings_Dictionary#FLIGHTID} received in the parameters
      * map.
      * 
      * @param airshipsDatabase
@@ -37,7 +37,7 @@ public class GetAirshipByFlightIdCommandsFactory extends
     public GetAirshipByFlightIdCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
         
-        super( CLIStringsDictionary.FLIGHTID, airshipsDatabase );
+        super( CommandStrings_Dictionary.FLIGHTID, airshipsDatabase );
     }
     
     /**

@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.ParsingCommand;
-import utils.CLIStringsDictionary;
+import utils.CommandStrings_Dictionary;
 import utils.Optional;
 import commands.getcommands.GetTheNearestAirshipsToGeographicPositionCommand;
 import databases.Database;
@@ -95,8 +95,8 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
     @Override
     protected String[] getRequiredParametersNames() {
         
-        return new String[]{ CLIStringsDictionary.LATITUDE, CLIStringsDictionary.LONGITUDE,
-                            CLIStringsDictionary.NUMBEROFAIRSHIPSTOFIND };
+        return new String[]{ CommandStrings_Dictionary.LATITUDE, CommandStrings_Dictionary.LONGITUDE,
+                            CommandStrings_Dictionary.NUMBEROFAIRSHIPSTOFIND };
     }
     
     /**
@@ -184,9 +184,9 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
         private void setParametersFields()
             throws InvalidParameterValueException, MissingRequiredParameterException {
             
-            latitude = getParameterAsDouble( CLIStringsDictionary.LATITUDE );
-            longitude = getParameterAsDouble( CLIStringsDictionary.LONGITUDE );
-            numberOfAirshipsToGet = getParameterAsInt( CLIStringsDictionary.NUMBEROFAIRSHIPSTOFIND );
+            latitude = getParameterAsDouble( CommandStrings_Dictionary.LATITUDE );
+            longitude = getParameterAsDouble( CommandStrings_Dictionary.LONGITUDE );
+            numberOfAirshipsToGet = getParameterAsInt( CommandStrings_Dictionary.NUMBEROFAIRSHIPSTOFIND );
         }
     }
 }

@@ -4,7 +4,7 @@ package parsingtools.commandfactories.userauthenticatingfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.CommandFactory;
-import utils.CLIStringsDictionary;
+import utils.CommandStrings_Dictionary;
 import utils.Optional;
 import utils.StringUtils;
 import commands.AuthenticateUserCommand;
@@ -150,29 +150,29 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
     // used in the method internalNewCommand(Map)
     /**
      * Checks whether the value of the parameter with name
-     * {@link CLIStringsDictionary#LOGINPASSWORD} contained in {@code parametersMap} is the correct
+     * {@link CommandStrings_Dictionary#LOGINPASSWORD} contained in {@code parametersMap} is the correct
      * password of the {@link User} stored in {@link #usersDatabase} whose username is the value of
-     * the parameter {@link CLIStringsDictionary#LOGINNAME} contained in the {@code parametersMap}.
+     * the parameter {@link CommandStrings_Dictionary#LOGINNAME} contained in the {@code parametersMap}.
      * Returns the {@link User} stored in {@link #usersDatabase} if the password is correct.
      * 
      * @param parametersMap
      *            The container of parameters that shall contain the keys
-     *            {@link CLIStringsDictionary#LOGINNAME} and
-     *            {@link CLIStringsDictionary#LOGINPASSWORD}.
+     *            {@link CommandStrings_Dictionary#LOGINNAME} and
+     *            {@link CommandStrings_Dictionary#LOGINPASSWORD}.
      * @return The authenticated {@link User}.
      * @throws MissingRequiredParameterException
      *             If either of the values of the parameters with names
-     *             {@link CLIStringsDictionary#LOGINNAME} and
-     *             {@link CLIStringsDictionary#LOGINPASSWORD} are {@code null} or the empty-string.
+     *             {@link CommandStrings_Dictionary#LOGINNAME} and
+     *             {@link CommandStrings_Dictionary#LOGINPASSWORD} are {@code null} or the empty-string.
      * 
      * @throws NoSuchElementInDatabaseException
      *             If {@link #usersDatabase} contains no {@link User} with a username that matches
-     *             the value of the parameter with name {@link CLIStringsDictionary#LOGINNAME}
+     *             the value of the parameter with name {@link CommandStrings_Dictionary#LOGINNAME}
      *             received in {@code parametersMap}.
      * @throws WrongLoginPasswordException
      *             If the given password does not match with user password. This exception's message
-     *             is <i>«Wrong password: {@link CLIStringsDictionary#LOGINNAME}'s password is not
-     *             {@link CLIStringsDictionary#LOGINPASSWORD}.»</i>
+     *             is <i>«Wrong password: {@link CommandStrings_Dictionary#LOGINNAME}'s password is not
+     *             {@link CommandStrings_Dictionary#LOGINPASSWORD}.»</i>
      */
     private User authenticateAndGetAuthenticatedUser( Map< String, String > parametersMap )
         throws NoSuchElementInDatabaseException, WrongLoginPasswordException,
@@ -182,11 +182,11 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
         try {
             
             String loginName =
-                    StringUtils.parameterToString( CLIStringsDictionary.LOGINNAME,
-                                                   parametersMap.get( CLIStringsDictionary.LOGINNAME ) );
+                    StringUtils.parameterToString( CommandStrings_Dictionary.LOGINNAME,
+                                                   parametersMap.get( CommandStrings_Dictionary.LOGINNAME ) );
             String loginPassword =
-                    StringUtils.parameterToString( CLIStringsDictionary.LOGINPASSWORD,
-                                                   parametersMap.get( CLIStringsDictionary.LOGINPASSWORD ) );
+                    StringUtils.parameterToString( CommandStrings_Dictionary.LOGINPASSWORD,
+                                                   parametersMap.get( CommandStrings_Dictionary.LOGINPASSWORD ) );
             // MissingRequiredParameterException
             
             
@@ -231,8 +231,8 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
         
         String[] requiredParams =
                 copyToNewArrayWith2MorePositions( getSpecificRequiredParametersNames() );
-        requiredParams[requiredParams.length - 2] = CLIStringsDictionary.LOGINNAME;
-        requiredParams[requiredParams.length - 1] = CLIStringsDictionary.LOGINPASSWORD;
+        requiredParams[requiredParams.length - 2] = CommandStrings_Dictionary.LOGINNAME;
+        requiredParams[requiredParams.length - 1] = CommandStrings_Dictionary.LOGINPASSWORD;
         return requiredParams;
     }
     

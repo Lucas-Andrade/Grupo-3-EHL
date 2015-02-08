@@ -6,8 +6,8 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import parsingtools.CommandParser;
-import parsingtools.Parser;
 import parsingtools.commandfactories.getfactories.GetAirshipsWithLessPassengersThanCommandsFactory;
+import utils.StringCommands_Executor;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
@@ -62,7 +62,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory_Tests {
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
         
         Callable< ? > getAirshipsWithLessPassengersThanCommand =
-                (new Parser( cmdparser, "GET", "/airships/nbPassengers/30/bellow" )).getCommand();
+                (new StringCommands_Executor( cmdparser, "GET", "/airships/nbPassengers/30/bellow" )).getCommand();
         
         Assert.assertTrue( getAirshipsWithLessPassengersThanCommand instanceof GetAirshipsWithLessPassengersThanCommand );
     }

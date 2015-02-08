@@ -4,6 +4,7 @@ package functionalcomponents;
 import java.util.concurrent.ExecutionException;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
+import utils.StringUtils;
 
 
 /**

@@ -11,7 +11,7 @@ import org.junit.Test;
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.PostAirshipCommandsFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.UserAuthenticatingFactory;
-import utils.CLIStringsDictionary;
+import utils.CommandStrings_Dictionary;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
@@ -68,14 +68,14 @@ public class PostAirshipCommandsFactory_Tests {
         
         parameters = new HashMap<>();
         
-        parameters.put( CLIStringsDictionary.LOGINNAME, "Daniel" );
-        parameters.put( CLIStringsDictionary.LOGINPASSWORD, "pass" );
+        parameters.put( CommandStrings_Dictionary.LOGINNAME, "Daniel" );
+        parameters.put( CommandStrings_Dictionary.LOGINPASSWORD, "pass" );
         
-        parameters.put( CLIStringsDictionary.LATITUDE, "0" );
-        parameters.put( CLIStringsDictionary.LONGITUDE, "0" );
-        parameters.put( CLIStringsDictionary.ALTITUDE, "0" );
-        parameters.put( CLIStringsDictionary.AIRCORRIDOR_MINALTITUDE, "10" );
-        parameters.put( CLIStringsDictionary.AIRCORRIDOR_MAXALTITUDE, "0" );
+        parameters.put( CommandStrings_Dictionary.LATITUDE, "0" );
+        parameters.put( CommandStrings_Dictionary.LONGITUDE, "0" );
+        parameters.put( CommandStrings_Dictionary.ALTITUDE, "0" );
+        parameters.put( CommandStrings_Dictionary.AIRCORRIDOR_MINALTITUDE, "10" );
+        parameters.put( CommandStrings_Dictionary.AIRCORRIDOR_MAXALTITUDE, "0" );
     }
     
     // Test Normal Dynamic And Prerequisites
@@ -86,14 +86,14 @@ public class PostAirshipCommandsFactory_Tests {
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
         
-        parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
-        parameters.put( CLIStringsDictionary.NUMBEROFPASSENGERS, "20" );
+        parameters.put( CommandStrings_Dictionary.AIRSHIP_TYPE, "Civil" );
+        parameters.put( CommandStrings_Dictionary.NUMBEROFPASSENGERS, "20" );
         
         Callable< ? > postCivilAirshipCommand =
                 (new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase )).newCommand( parameters );
         
-        parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Military" );
-        parameters.put( CLIStringsDictionary.HASARMOUR, "yes" );
+        parameters.put( CommandStrings_Dictionary.AIRSHIP_TYPE, "Military" );
+        parameters.put( CommandStrings_Dictionary.HASARMOUR, "yes" );
         
         Callable< ? > postMilitaryAirshipCommand =
                 (new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase )).newCommand( parameters );
@@ -112,8 +112,8 @@ public class PostAirshipCommandsFactory_Tests {
                 MissingRequiredParameterException, InvalidParameterValueException,
                 WrongLoginPasswordException, InternalErrorException {
         
-        parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
-        parameters.put( CLIStringsDictionary.LOGINNAME, "Daniel" );
+        parameters.put( CommandStrings_Dictionary.AIRSHIP_TYPE, "Civil" );
+        parameters.put( CommandStrings_Dictionary.LOGINNAME, "Daniel" );
         
         new PostAirshipCommandsFactory( null, airshipsDatabase ).newCommand( parameters );
     }
@@ -126,8 +126,8 @@ public class PostAirshipCommandsFactory_Tests {
                 MissingRequiredParameterException, InvalidParameterValueException,
                 WrongLoginPasswordException, InternalErrorException {
         
-        parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
-        parameters.put( CLIStringsDictionary.LOGINNAME, "Daniel" );
+        parameters.put( CommandStrings_Dictionary.AIRSHIP_TYPE, "Civil" );
+        parameters.put( CommandStrings_Dictionary.LOGINNAME, "Daniel" );
         
         new PostAirshipCommandsFactory( usersDatabase, null ).newCommand( parameters );
     }
@@ -140,8 +140,8 @@ public class PostAirshipCommandsFactory_Tests {
                 MissingRequiredParameterException, InvalidParameterValueException,
                 WrongLoginPasswordException, InternalErrorException {
         
-        parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
-        parameters.put( CLIStringsDictionary.LOGINNAME, "Pedro" );
+        parameters.put( CommandStrings_Dictionary.AIRSHIP_TYPE, "Civil" );
+        parameters.put( CommandStrings_Dictionary.LOGINNAME, "Pedro" );
         
         new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newCommand( parameters );
     }
@@ -154,8 +154,8 @@ public class PostAirshipCommandsFactory_Tests {
                 MissingRequiredParameterException, InvalidParameterValueException,
                 WrongLoginPasswordException, InternalErrorException {
         
-        parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
-        parameters.put( CLIStringsDictionary.LOGINPASSWORD, "ola" );
+        parameters.put( CommandStrings_Dictionary.AIRSHIP_TYPE, "Civil" );
+        parameters.put( CommandStrings_Dictionary.LOGINPASSWORD, "ola" );
         
         new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newCommand( parameters );
     }
@@ -168,7 +168,7 @@ public class PostAirshipCommandsFactory_Tests {
                 MissingRequiredParameterException, InvalidParameterValueException,
                 WrongLoginPasswordException, InternalErrorException {
         
-        parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
+        parameters.put( CommandStrings_Dictionary.AIRSHIP_TYPE, "Civil" );
         
         new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newCommand( parameters );
     }
@@ -181,7 +181,7 @@ public class PostAirshipCommandsFactory_Tests {
                 MissingRequiredParameterException, InvalidParameterValueException,
                 WrongLoginPasswordException, InternalErrorException {
         
-        parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Military" );
+        parameters.put( CommandStrings_Dictionary.AIRSHIP_TYPE, "Military" );
         
         new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newCommand( parameters );
     }
@@ -194,8 +194,8 @@ public class PostAirshipCommandsFactory_Tests {
                 MissingRequiredParameterException, InvalidParameterValueException,
                 WrongLoginPasswordException, InternalErrorException {
         
-        parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "Civil" );
-        parameters.put( CLIStringsDictionary.NUMBEROFPASSENGERS, "ola" );
+        parameters.put( CommandStrings_Dictionary.AIRSHIP_TYPE, "Civil" );
+        parameters.put( CommandStrings_Dictionary.NUMBEROFPASSENGERS, "ola" );
         
         new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).newCommand( parameters );
     }
@@ -205,8 +205,8 @@ public class PostAirshipCommandsFactory_Tests {
             shouldThrowInvalidParameterValueExceptionIfPostingAirshipWithAnInvalidTypeParameter()
                 throws Exception {
         
-        parameters.put( CLIStringsDictionary.AIRSHIP_TYPE, "ola" );
-        parameters.put( CLIStringsDictionary.NUMBEROFPASSENGERS, "20" );
+        parameters.put( CommandStrings_Dictionary.AIRSHIP_TYPE, "ola" );
+        parameters.put( CommandStrings_Dictionary.NUMBEROFPASSENGERS, "20" );
         
         CommandFactory< ? > a = new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase );
         a.newCommand( parameters );

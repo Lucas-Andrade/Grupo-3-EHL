@@ -4,7 +4,7 @@ package parsingtools.commandfactories.userauthenticatingfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.ParsingCommand;
-import utils.CLIStringsDictionary;
+import utils.CommandStrings_Dictionary;
 import utils.CompletionStatus;
 import commands.postcommands.PostUserCommand;
 import databases.Database;
@@ -55,8 +55,8 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, Co
         super( postingUsersDatabase, postedUsersDatabase );
         
         this.requiredParametersNames =
-                new String[]{ CLIStringsDictionary.USERNAME, CLIStringsDictionary.PASSWORD,
-                             CLIStringsDictionary.EMAIL };
+                new String[]{ CommandStrings_Dictionary.USERNAME, CommandStrings_Dictionary.PASSWORD,
+                             CommandStrings_Dictionary.EMAIL };
     }
     
     // IMPLEMENTATION OF METHODS INHERITED FROM PostCommandsFactory
@@ -169,10 +169,10 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, Co
          */
         private void setParametersFields() throws MissingRequiredParameterException {
             
-            username = getParameterAsString( CLIStringsDictionary.USERNAME );
-            password = getParameterAsString( CLIStringsDictionary.PASSWORD );
-            email = getParameterAsString( CLIStringsDictionary.EMAIL );
-            fullName = getParameterAsString( CLIStringsDictionary.FULLNAME );
+            username = getParameterAsString( CommandStrings_Dictionary.USERNAME );
+            password = getParameterAsString( CommandStrings_Dictionary.PASSWORD );
+            email = getParameterAsString( CommandStrings_Dictionary.EMAIL );
+            fullName = getParameterAsString( CommandStrings_Dictionary.FULLNAME );
         }
         
     }

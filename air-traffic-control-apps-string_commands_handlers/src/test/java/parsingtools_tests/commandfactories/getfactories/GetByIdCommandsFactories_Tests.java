@@ -6,10 +6,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import parsingtools.CommandParser;
-import parsingtools.Parser;
 import parsingtools.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory;
 import parsingtools.commandfactories.getfactories.getbyidfactories.GetElementByIdentificationCommandsFactory;
 import parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
+import utils.StringCommands_Executor;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
@@ -70,10 +70,10 @@ public class GetByIdCommandsFactories_Tests {
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
         
         Callable< ? > getUserByUsernameCommand =
-                (new Parser( cmdparser, "GET", "/users/{username}" )).getCommand();
+                (new StringCommands_Executor( cmdparser, "GET", "/users/{username}" )).getCommand();
         
         Callable< ? > getAirshipByFlightIdCommand =
-                (new Parser( cmdparser, "GET", "/airships/{flightId}" )).getCommand();
+                (new StringCommands_Executor( cmdparser, "GET", "/airships/{flightId}" )).getCommand();
         
         Assert.assertTrue( getUserByUsernameCommand instanceof GetElementFromADatabaseByIdCommand );
         Assert.assertTrue( getAirshipByFlightIdCommand instanceof GetElementFromADatabaseByIdCommand );

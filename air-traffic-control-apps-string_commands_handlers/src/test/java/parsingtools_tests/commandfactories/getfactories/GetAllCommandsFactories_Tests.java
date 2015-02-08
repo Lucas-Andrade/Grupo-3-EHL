@@ -6,10 +6,10 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import parsingtools.CommandParser;
-import parsingtools.Parser;
 import parsingtools.commandfactories.getfactories.getallfactories.GetAllAirshipsInADatabaseCommandsFactory;
 import parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
 import parsingtools.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
+import utils.StringCommands_Executor;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
@@ -69,10 +69,10 @@ public class GetAllCommandsFactories_Tests {
         InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
         
-        Callable< ? > getAllUsersCommand = (new Parser( cmdparser, "GET", "/users" )).getCommand();
+        Callable< ? > getAllUsersCommand = (new StringCommands_Executor( cmdparser, "GET", "/users" )).getCommand();
         
         Callable< ? > getAllAirshipsCommand =
-                (new Parser( cmdparser, "GET", "/airships" )).getCommand();
+                (new StringCommands_Executor( cmdparser, "GET", "/airships" )).getCommand();
         
         Assert.assertTrue( getAllUsersCommand instanceof GetAllElementsInADatabaseCommand );
         Assert.assertTrue( getAllAirshipsCommand instanceof GetAllElementsInADatabaseCommand );

@@ -4,6 +4,7 @@ package functionalcomponents;
 import java.awt.Cursor;
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
+import design.windows.WindowBase;
 
 
 /**

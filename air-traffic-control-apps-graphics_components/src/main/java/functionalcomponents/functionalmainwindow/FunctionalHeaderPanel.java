@@ -1,19 +1,11 @@
 package functionalcomponents.functionalmainwindow;
 
 
-import User;
+
 import java.awt.event.ActionListener;
+import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
-import main.java.Database;
-import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
-import main.java.gui.design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
-import main.java.gui.design.windows.MainWindow;
-import main.java.gui.design.windows.popupwindows.UnderConstrutionWindow;
-import main.java.gui.design.windows.userwindows.GetUsersWindow;
-import main.java.gui.design.windows.userwindows.PatchUserWindow;
-import main.java.gui.design.windows.userwindows.PostUserWindow;
-import main.java.utils.exceptions.InternalErrorException;
 
 
 /**

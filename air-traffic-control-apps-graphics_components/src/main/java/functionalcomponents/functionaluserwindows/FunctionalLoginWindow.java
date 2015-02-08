@@ -1,17 +1,14 @@
 package functionalcomponents.functionaluserwindows;
 
 
-import Airship;
-import User;
+
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
+import design.windows.userwindows.LogInWindow;
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.FunctionalWindowSwingWorker;
 import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
-import main.java.Database;
-import main.java.domain.commands.AuthenticateUserCommand;
-import main.java.gui.design.windows.MainWindow;
-import main.java.gui.design.windows.userwindows.LogInWindow;
+
 
 
 /**

@@ -1,20 +1,14 @@
 package functionalcomponents.functionalairshipwindows;
 
 
-import Airship;
-import User;
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
+import org.omg.CORBA.CompletionStatus;
+import design.windows.airshipwindows.PostAirshipsWindow;
+import design.windows.popupwindows.SuccessWindow;
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.FunctionalWindowSwingWorker;
-import main.java.Database;
-import main.java.domain.commands.CompletionStatus;
-import main.java.domain.commands.postcommands.PostCivilAirshipCommand;
-import main.java.domain.commands.postcommands.PostMilitaryAirshipCommand;
-import main.java.gui.design.windows.airshipwindows.PostAirshipsWindow;
-import main.java.gui.design.windows.popupwindows.SuccessWindow;
-import main.java.gui.design.windows.userwindows.PostUserWindow;
-import main.java.utils.exceptions.InvalidArgumentException;
+
 
 
 /**

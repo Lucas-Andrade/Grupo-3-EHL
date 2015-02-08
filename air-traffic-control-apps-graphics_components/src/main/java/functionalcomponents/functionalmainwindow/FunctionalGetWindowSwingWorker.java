@@ -1,13 +1,10 @@
 package functionalcomponents.functionalmainwindow;
 
 
-import Airship;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
+import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import functionalcomponents.FunctionalWindowSwingWorker;
-import main.java.Database;
-import main.java.gui.design.panels.mainwindowpanels.JBodyPanelForMainWindow;
-import main.java.gui.design.windows.MainWindow;
 
 
 /**

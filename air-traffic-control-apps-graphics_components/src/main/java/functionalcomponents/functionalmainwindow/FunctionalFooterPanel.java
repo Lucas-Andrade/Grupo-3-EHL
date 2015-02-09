@@ -1,26 +1,20 @@
 package functionalcomponents.functionalmainwindow;
 
 
-import AirCorridor;
-import Airship;
-import User;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextArea;
+import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
+import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
+import design.windows.airshipwindows.GetAirshipsWithLessPassengerThanWindow;
+import design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
+import design.windows.airshipwindows.PostAirshipsWindow;
 import functionalcomponents.FunctionalWindowSwingWorker;
 import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
-import main.java.Database;
-import main.java.domain.commands.getcommands.GetAllElementsInADatabaseCommand;
-import main.java.domain.commands.getcommands.GetAllTransgressingAirshipsCommand;
-import main.java.gui.design.panels.mainwindowpanels.JBodyPanelForMainWindow;
-import main.java.gui.design.panels.mainwindowpanels.JFooterPanelForMainWindow;
-import main.java.gui.design.windows.MainWindow;
-import main.java.gui.design.windows.airshipwindows.GetAirshipsWithLessPassengerThanWindow;
-import main.java.gui.design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
-import main.java.gui.design.windows.airshipwindows.PostAirshipsWindow;
-import main.java.gui.design.windows.popupwindows.UnderConstrutionWindow;
+
 
 
 /**

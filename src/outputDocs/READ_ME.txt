@@ -1,1 +1,0 @@
-Esta pasta é só para facilitar criar ficheiros de output sem ter que escrever caminhos absolutos.

@@ -4,18 +4,12 @@ package functionalcomponents.functionalairshipwindows;
 import Airship;
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
+import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
+import design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.FunctionalWindowSwingWorker;
 import functionalcomponents.functionalmainwindow.FunctionalGetWindowSwingWorker;
-import main.java.Database;
-import main.java.InMemoryAirshipsDatabase;
-import main.java.domain.commands.getcommands.GetTheNearestAirshipsToGeographicPositionCommand;
-import main.java.gui.design.panels.mainwindowpanels.JBodyPanelForMainWindow;
-import main.java.gui.design.windows.MainWindow;
-import main.java.gui.design.windows.airshipwindows.GetAirshipsWithLessPassengerThanWindow;
-import main.java.gui.design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
-import main.java.gui.design.windows.userwindows.PostUserWindow;
-import main.java.utils.StringUtils;
+
 
 
 /**

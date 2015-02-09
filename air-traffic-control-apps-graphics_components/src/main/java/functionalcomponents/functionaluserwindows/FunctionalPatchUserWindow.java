@@ -1,17 +1,15 @@
 package functionalcomponents.functionaluserwindows;
 
 
-import User;
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
+import org.omg.CORBA.CompletionStatus;
+import design.windows.popupwindows.SuccessWindow;
+import design.windows.userwindows.PatchUserWindow;
+import exceptions.InvalidArgumentException;
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.FunctionalWindowSwingWorker;
-import main.java.Database;
-import main.java.domain.commands.CompletionStatus;
-import main.java.domain.commands.patchcommands.PatchUserPasswordCommand;
-import main.java.gui.design.windows.popupwindows.SuccessWindow;
-import main.java.gui.design.windows.userwindows.PatchUserWindow;
-import main.java.utils.exceptions.InvalidArgumentException;
+
 
 
 /**

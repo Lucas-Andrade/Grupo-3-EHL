@@ -1,16 +1,13 @@
 package functionalcomponents.functionalmainwindow;
 
 
-import Element;
 import java.awt.Color;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import functionalcomponents.FunctionalWindowSwingWorker;
-import main.java.Database;
-import main.java.domain.commands.getcommands.GetElementFromADatabaseByIdCommand;
-import main.java.utils.exceptions.InvalidArgumentException;
+
 
 
 /**

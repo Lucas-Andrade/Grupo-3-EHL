@@ -59,7 +59,6 @@ public class App {
     /**
      * Unused private constructor
      */
-    
     private App() {
         
     }

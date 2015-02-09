@@ -4,24 +4,22 @@
 
 	<parent>
 		<groupId>degp.airtrafficcontrol</groupId>
-		<artifactId>air-traffic-control-applications</artifactId>
+		<artifactId>atc-applications</artifactId>
 		<version>${project-version}</version>
 	</parent>
 
-	<artifactId>air-traffic-control-applications-gui</artifactId>
+	<artifactId>atc-applications-gui</artifactId>
 
 	<dependencies>
 		<dependency>
 			<groupId>degp.airtrafficcontrol</groupId>
-			<artifactId> air-traffic-control-apps-graphics_components </artifactId>
+			<artifactId> atc-apps-graphics_components </artifactId>
 			<version>${project-version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>degp.airtrafficcontrol</groupId>
-			<artifactId>
-				air-traffic-control-apps-infrastructure-domain_commands
-			</artifactId>
+			<artifactId> atc-apps-infrastructure-domain_commands</artifactId>
 			<version>${project-version}</version>
 		</dependency>
 	</dependencies>
@@ -42,5 +40,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>

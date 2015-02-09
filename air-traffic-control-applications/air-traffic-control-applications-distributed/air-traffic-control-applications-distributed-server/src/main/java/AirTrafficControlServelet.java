@@ -12,9 +12,6 @@ import utils.exceptions.parsingexceptions.parserexceptions.InvalidCommandParamet
 
 
 
-
-
-
 @SuppressWarnings( "serial" )
 public class AirTrafficControlServelet extends HttpServlet {
     

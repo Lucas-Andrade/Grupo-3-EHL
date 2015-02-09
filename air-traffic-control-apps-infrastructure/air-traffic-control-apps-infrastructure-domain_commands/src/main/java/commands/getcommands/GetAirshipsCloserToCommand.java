@@ -4,7 +4,6 @@ package commands.getcommands;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Callable;
-
 import utils.AirshipComparators;
 import utils.Optional;
 import databases.Database;
@@ -24,7 +23,7 @@ import exceptions.InvalidArgumentException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetTheNearestAirshipsToGeographicPositionCommand implements
+public class GetAirshipsCloserToCommand implements
         Callable< Optional< Iterable< Airship >>> {
     
     // INSTANCE FIELDS
@@ -68,11 +67,11 @@ public class GetTheNearestAirshipsToGeographicPositionCommand implements
      *             if the {@code airshipsDatabase} is null or airshipsNumber lower than 0 or
      *             latitude it's not between -90 and 90 and longitude it's not between 360 and 0.
      */
-    public GetTheNearestAirshipsToGeographicPositionCommand( Database< Airship > airshipsDatabase,
+    public GetAirshipsCloserToCommand( Database< Airship > airshipsDatabase,
                                                              int airshipsNumber, double latitude,
                                                              double longitude )
         throws InvalidArgumentException {
-    
+        
         if( airshipsDatabase == null )
             throw new InvalidArgumentException(
                                                 "Cannot instantiate command with null airship database." );
@@ -104,7 +103,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommand implements
      */
     @Override
     public Optional< Iterable< Airship >> call() throws Exception {
-    
+        
         if( airshipsNumber < 0 )
             throw new InvalidArgumentException( "Number of airships cannot be negative." );
         

@@ -1,6 +1,6 @@
 eclipse.preferences.version=1
 extraProperties=sonar.exclusions\=src/main/java/gui/*
 lastAnalysisDate=1422361064000
-projectKey=degp.airtrafficcontrolapp\:air-traffic-control-app
+projectKey=degp.airtrafficcontrol\:air-traffic-control-apps-infrastructure-databases
 serverUrl=http\://localhost\:9000
 version=2

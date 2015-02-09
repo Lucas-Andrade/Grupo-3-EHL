@@ -7,7 +7,7 @@ import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.ParsingCommand;
 import utils.CommandStrings_Dictionary;
 import utils.Optional;
-import commands.getcommands.GetTheNearestAirshipsToGeographicPositionCommand;
+import commands.getcommands.GetAirshipsCloserToCommand;
 import databases.Database;
 import elements.Airship;
 import elements.airships.GeographicPosition;
@@ -115,7 +115,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
     /**
      * Class that extends {@link ParsingCommand}, whose instances will parse the
      * {@code required parameters} and will create a
-     * {@link GetTheNearestAirshipsToGeographicPositionCommand}
+     * {@link GetAirshipsCloserToCommand}
      */
     private class GetTNATGP_ParsingCommand extends ParsingCommand< Optional< Iterable< Airship >> > {
         
@@ -154,13 +154,13 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
         }
         
         /**
-         * @return A command of type {@link GetTheNearestAirshipsToGeographicPositionCommand}.
+         * @return A command of type {@link GetAirshipsCloserToCommand}.
          */
         @Override
         public Callable< Optional< Iterable< Airship >>> newCommand() {
             
             try {
-                return new GetTheNearestAirshipsToGeographicPositionCommand( airshipsDatabase,
+                return new GetAirshipsCloserToCommand( airshipsDatabase,
                                                                              numberOfAirshipsToGet,
                                                                              latitude, longitude );
             }
@@ -174,7 +174,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
         
         /**
          * Set the required parameters to create an
-         * {@link GetTheNearestAirshipsToGeographicPositionCommand}.
+         * {@link GetAirshipsCloserToCommand}.
          * 
          * @throws MissingRequiredParameterException
          *             If one parameter is null or the empty string.

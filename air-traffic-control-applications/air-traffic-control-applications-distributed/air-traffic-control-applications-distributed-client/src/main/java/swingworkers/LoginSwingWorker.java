@@ -1,4 +1,4 @@
-package asd;
+package swingworkers;
 
 import javax.swing.JTextArea;
 import functionalcomponents.FunctionalWindowSwingWorker;
@@ -11,5 +11,5 @@ public class LoginSwingWorker extends FunctionalWindowSwingWorker< T >{
         super( errorJTextArea );
         // TODO Auto-generated constructor stub
     }
-    
+     
 }

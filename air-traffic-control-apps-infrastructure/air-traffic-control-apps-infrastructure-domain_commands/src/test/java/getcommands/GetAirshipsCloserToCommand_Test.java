@@ -2,12 +2,9 @@ package getcommands;
 
 
 import static org.junit.Assert.assertEquals;
-
 import org.junit.Before;
 import org.junit.Test;
-
-import commands.getcommands.GetTheNearestAirshipsToGeographicPositionCommand;
-
+import commands.getcommands.GetAirshipsCloserToCommand;
 import databases.InMemoryAirshipsDatabase;
 import elements.Airship;
 import elements.User;
@@ -21,23 +18,22 @@ import exceptions.InvalidArgumentException;
  * 
  * <pre>
  * 
- * {@link GetTheNearestAirshipsToGeographicPositionCommand}
+ * {@link GetAirshipsCloserToCommand}
  * {@link GetTheNearestAirshipsToGeographicPositionCommandsFactory}
  * 
  * </pre>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetTheNearestAirshipsToGeographicPositionCommand_Test {
+public class GetAirshipsCloserToCommand_Test {
     
     InMemoryAirshipsDatabase airshipsDatabase;
     User user1;
     
     // Before
     @Before
-    public void createAirshipDatabaseUserAndCommandParser()
-        throws InvalidArgumentException {
-    
+    public void createAirshipDatabaseUserAndCommandParser() throws InvalidArgumentException {
+        
         // Arrange
         airshipsDatabase = new InMemoryAirshipsDatabase( "FirstAirshipsDatabse" );
         user1 = new User( "Pantunes", "pass", "Pantunes@gmail", "Pantunes" );
@@ -46,7 +42,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommand_Test {
     // Test Normal Dynamic And Prerequisites
     @Test
     public void shouldGiveAllTheAirshipsNearestOfTheGeograficCoordinate() throws Exception {
-    
+        
         // Act
         Airship air1 = new CivilAirship( 30, 225, 10000, 20000, 0, 100 );
         Airship air2 = new MilitaryAirship( 0, 315, 15000, 20000, 0, true );
@@ -65,7 +61,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommand_Test {
         airshipsDatabase.add( air7, user1 );
         
         String actualResult =
-                new GetTheNearestAirshipsToGeographicPositionCommand( airshipsDatabase, 2, 60, 225 ).call()
+                new GetAirshipsCloserToCommand( airshipsDatabase, 2, 60, 225 ).call()
                                                                                                     .toString();
         
         String expected =
@@ -81,8 +77,8 @@ public class GetTheNearestAirshipsToGeographicPositionCommand_Test {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullAirshipDatabase()
         throws Exception {
-    
-        new GetTheNearestAirshipsToGeographicPositionCommand( null, 3, 45, 100 );
+        
+        new GetAirshipsCloserToCommand( null, 3, 45, 100 );
     }
     
     @Test( expected = InvalidArgumentException.class )
@@ -90,21 +86,21 @@ public class GetTheNearestAirshipsToGeographicPositionCommand_Test {
             void
             shouldThrowInvalidArgumentExceptionWhenTryingToGiveANegativeValueToDesiredAirshipsNumber()
                 throws Exception {
-    
-        new GetTheNearestAirshipsToGeographicPositionCommand( airshipsDatabase, -4, 45, 100 ).call();
+        
+        new GetAirshipsCloserToCommand( airshipsDatabase, -4, 45, 100 ).call();
     }
     
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveAInvalidValueToLatitude()
         throws Exception {
-    
-        new GetTheNearestAirshipsToGeographicPositionCommand( airshipsDatabase, 2, -245, 100 ).call();
+        
+        new GetAirshipsCloserToCommand( airshipsDatabase, 2, -245, 100 ).call();
     }
     
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryingToGiveAInvalidValueToLongitude()
         throws Exception {
-    
-        new GetTheNearestAirshipsToGeographicPositionCommand( airshipsDatabase, 2, 45, 1000 ).call();
+        
+        new GetAirshipsCloserToCommand( airshipsDatabase, 2, 45, 1000 ).call();
     }
 }

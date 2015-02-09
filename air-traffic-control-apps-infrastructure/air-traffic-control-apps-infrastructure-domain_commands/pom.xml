@@ -4,18 +4,18 @@
 
 	<parent>
 		<groupId>degp.airtrafficcontrol</groupId>
-		<artifactId>air-traffic-control-apps-infrastructure</artifactId>
+		<artifactId>atc-apps-infrastructure</artifactId>
 		<version>${project-version}</version>
 	</parent>
 
-	<artifactId>air-traffic-control-apps-infrastructure-domain_commands</artifactId>
+	<artifactId>atc-apps-infrastructure-domain_commands</artifactId>
 	<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
 			<groupId>degp.airtrafficcontrol</groupId>
 			<artifactId>
-				air-traffic-control-apps-infrastructure-domain_entities
+				atc-apps-infrastructure-domain_entities
 			</artifactId>
 			<version>${project-version}</version>
 		</dependency>
@@ -23,14 +23,14 @@
 		<dependency>
 			<groupId>degp.airtrafficcontrol</groupId>
 			<artifactId>
-				air-traffic-control-apps-infrastructure-databases
+				atc-apps-infrastructure-databases
 			</artifactId>
 			<version>${project-version}</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>degp.airtrafficcontrol</groupId>
-			<artifactId>air-traffic-control-apps-utils</artifactId>
+			<artifactId>atc-apps-utils</artifactId>
 			<version>${project-version}</version>
 		</dependency>
 	</dependencies>

@@ -2,6 +2,7 @@ package utils;
 
 
 import java.io.OutputStream;
+import exceptions.InvalidParameterValueException;
 
 
 /**
@@ -16,14 +17,16 @@ public interface Executor {
      * Returns the string-output of a command.
      * 
      * @return The string-output of a command.
+     * @throws Exception 
      */
-    public String getOuput();
+    public String getOutput() throws Exception;
     
     /**
      * Returns the stream where to write the output to.
      * 
      * @return The stream where to write the output to.
+     * @throws InvalidParameterValueException 
      */
-    public OutputStream getStream();
+    public OutputStream getStream() throws InvalidParameterValueException;
     
 }

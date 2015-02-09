@@ -2,6 +2,10 @@ package parsingtools_tests.commandfactories.getfactories;
 
 
 import java.util.concurrent.Callable;
+<<<<<<< HEAD
+import javax.swing.text.html.parser.Parser;
+=======
+>>>>>>> branch 'AppForCommandLine3' of https://github.com/Lucas-Andrade/Grupo-3-EHL.git
 import org.junit.Assert;
 import org.junit.Test;
 import parsingtools.CommandParser;
@@ -12,7 +16,11 @@ import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegiste
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
 import utils.exceptions.parsingexceptions.parserexceptions.DuplicateParametersException;
 import utils.exceptions.parsingexceptions.parserexceptions.InvalidCommandParametersSyntaxException;
+<<<<<<< HEAD
+import commands.getcommands.GetTheNearestAirshipsToGeographicPositionCommand;
+=======
 import commands.getcommands.GetAirshipsCloserToCommand;
+>>>>>>> branch 'AppForCommandLine3' of https://github.com/Lucas-Andrade/Grupo-3-EHL.git
 import databases.InMemoryAirshipsDatabase;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;

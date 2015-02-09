@@ -4,24 +4,24 @@
 
 	<parent>
 		<groupId>degp.airtrafficcontrol</groupId>
-		<artifactId>air-traffic-control-apps</artifactId>
+		<artifactId>atc-apps</artifactId>
 		<version>${project-version}</version>
 		<relativePath>../pom.xml</relativePath>
 	</parent>
 
-	<artifactId>air-traffic-control-apps-infrastructure</artifactId>
+	<artifactId>atc-apps-infrastructure</artifactId>
 	<packaging>pom</packaging>
 	<description>commands, databases and entities.</description>
 
 	<modules>
 		<module>
-			air-traffic-control-apps-infrastructure-databases
+			atc-apps-infrastructure-databases
 		</module>
 		<module>
-			air-traffic-control-apps-infrastructure-domain_entities
+			atc-apps-infrastructure-domain_entities
 		</module>
 		<module>
-			air-traffic-control-apps-infrastructure-domain_commands
+			atc-apps-infrastructure-domain_commands
 		</module>
 	</modules>
 </project>

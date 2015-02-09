@@ -1,21 +1,7 @@
 package outputformatters_tests;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import org.junit.Test;
-import outputformatters.totranslatableconverters.ToTranslatableConverter;
 import outputformatters.translators.ToPlainTextTranslator;
-import utils.Optional;
-import utils.OptionsList;
-import utils.exceptions.formattersexceptions.UnknownTranslatableException;
-import utils.exceptions.formattersexceptions.UnknownTypeException;
-import elements.Airship;
-import elements.User;
-import elements.airships.CivilAirship;
-import elements.airships.MilitaryAirship;
-import exceptions.InvalidArgumentException;
 
 
 /**

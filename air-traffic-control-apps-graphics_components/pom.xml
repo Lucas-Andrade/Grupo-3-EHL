@@ -3,16 +3,16 @@
   
   <parent>
     <groupId>degp.airtrafficcontrol</groupId>
-    <artifactId>air-traffic-control-apps</artifactId>
+    <artifactId>atc-apps</artifactId>
     <version>${project-version}</version>
   </parent>
   
-  <artifactId>air-traffic-control-apps-graphics_components</artifactId>
+  <artifactId>atc-apps-graphics_components</artifactId>
   
   <dependencies>
   	<dependency>
   		<groupId>degp.airtrafficcontrol</groupId>
-  		<artifactId>air-traffic-control-apps-utils</artifactId>
+  		<artifactId>atc-apps-utils</artifactId>
   		<version>Teamwork3-Stage1-SNAPSHOT</version>
   	</dependency>
   </dependencies>

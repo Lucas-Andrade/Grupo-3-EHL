@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.PrintStream;
 import org.junit.Assert;
 import org.junit.Test;
 import parsingtools.CommandParser;

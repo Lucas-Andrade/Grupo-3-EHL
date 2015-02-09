@@ -2,21 +2,17 @@ package parsingtools_tests.commandfactories.getfactories;
 
 
 import java.util.concurrent.Callable;
-
+import javax.swing.text.html.parser.Parser;
 import org.junit.Assert;
 import org.junit.Test;
-
 import parsingtools.CommandParser;
-import parsingtools.Parser;
 import parsingtools.commandfactories.getfactories.GetTheNearestAirshipsToGeographicPositionCommandsFactory;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
 import utils.exceptions.parsingexceptions.parserexceptions.DuplicateParametersException;
 import utils.exceptions.parsingexceptions.parserexceptions.InvalidCommandParametersSyntaxException;
-
 import commands.getcommands.GetTheNearestAirshipsToGeographicPositionCommand;
-
 import databases.InMemoryAirshipsDatabase;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;

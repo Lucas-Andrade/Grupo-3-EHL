@@ -3,10 +3,10 @@ package outputformatters.totranslatableconverters;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
-import elements.Airship;
-import elements.User;
 import outputformatters.Translatable;
 import utils.exceptions.formattersexceptions.UnknownTypeException;
+import elements.Airship;
+import elements.User;
 
 
 /**

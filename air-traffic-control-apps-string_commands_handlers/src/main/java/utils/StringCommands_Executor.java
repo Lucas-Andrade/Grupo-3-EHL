@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Callable;
-import com.google.gson.Gson;
 import outputformatters.Translatable;
 import outputformatters.totranslatableconverters.ToTranslatableConverter;
 import outputformatters.translators.ToHtmlTranslator;
@@ -23,6 +22,7 @@ import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
 import utils.exceptions.parsingexceptions.parserexceptions.DuplicateParametersException;
 import utils.exceptions.parsingexceptions.parserexceptions.InvalidCommandParametersSyntaxException;
+import com.google.gson.Gson;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
 import exceptions.InvalidParameterValueException;
@@ -46,7 +46,7 @@ import exceptions.WrongLoginPasswordException;
  * @see CommandStrings_Dictionary
  * @see Translator
  */
-public class StringCommands_Executor {
+public class StringCommands_Executor implements Executor {
     
     /* Implementation notes:
      * 

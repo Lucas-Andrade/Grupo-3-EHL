@@ -14,25 +14,25 @@ import functionalcomponents.functionaluserwindows.FunctionalLoginWindow.SwingWor
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 @SuppressWarnings( "serial" )
-public class SwingWorkerFactoryMissing extends Exception {
+public class SwingWorkerFactoryMissingException extends Exception {
     
     
     /**
-     * Constructs an {@link SwingWorkerFactoryMissing} with the message <i>«Missing
+     * Constructs an {@link SwingWorkerFactoryMissingException} with the message <i>«Missing
      * SwingWorkerFactory in class {@code classWhereIsMissing}.»</i> and the specified cause.
      * 
      * @param nameOfTheClass
      *            The name of the class where someone forgot to set the {@link SwingWorkerFactory}
      *            before trying to get a {@link SwingWorker}.
      */
-    public SwingWorkerFactoryMissing( String nameOfTheClass ) {
+    public SwingWorkerFactoryMissingException( String nameOfTheClass ) {
     
         super( MessageFormat.format( "Missing SwingWorkerFactory in class {0}.", nameOfTheClass ) );
     }
     
     
     /**
-     * Constructs an {@link SwingWorkerFactoryMissing} with the message <i>«Missing
+     * Constructs an {@link SwingWorkerFactoryMissingException} with the message <i>«Missing
      * SwingWorkerFactory in class {@code classWhereIsMissing}.»</i> and the specified cause.
      * 
      * @param nameOfTheClass
@@ -43,7 +43,7 @@ public class SwingWorkerFactoryMissing extends Exception {
      *            {@code null} values are allowed and indicate that the cause is nonexistent or
      *            unknown.
      */
-    public SwingWorkerFactoryMissing( String nameOfTheClass, Throwable cause ) {
+    public SwingWorkerFactoryMissingException( String nameOfTheClass, Throwable cause ) {
     
         super( MessageFormat.format( "Missing SwingWorkerFactory in class {0}.", nameOfTheClass ),
                cause );

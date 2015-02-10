@@ -39,7 +39,7 @@ public class AuthenticateUserCommand implements Callable< Optional< User > > {
      */
     public AuthenticateUserCommand( String username, String password, Database< User > usersDatabase )
         throws NoSuchElementInDatabaseException, InvalidArgumentException {
-        
+    
         
         if( usersDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
@@ -67,7 +67,7 @@ public class AuthenticateUserCommand implements Callable< Optional< User > > {
      */
     @Override
     public Optional< User > call() {
-        
+    
         if( !user.authenticatePassword( password ) )
             user = null;
         return new Optional< User >( user, new WrongLoginPasswordException( username, password ) );

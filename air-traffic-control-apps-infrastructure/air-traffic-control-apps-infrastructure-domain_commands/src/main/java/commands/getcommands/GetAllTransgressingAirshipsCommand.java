@@ -43,7 +43,7 @@ public class GetAllTransgressingAirshipsCommand implements Callable< Optional< I
      */
     public GetAllTransgressingAirshipsCommand( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-        
+    
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -66,12 +66,14 @@ public class GetAllTransgressingAirshipsCommand implements Callable< Optional< I
      * @return The list of all elements in {@code database} that are transgressing their
      *         pre-established air corridors.
      * 
-     * @throws Exception
-     *             This method will not throw exceptions.
+     * @throws InvalidArgumentException
+     *             If the predicate given to the method
+     *             {@link Database#getAllElementsThat(Predicate) getAllElementsThat(Predicate)} is
+     *             null.
      */
     @Override
-    public Optional< Iterable< Airship >> call() throws Exception {
-        
+    public Optional< Iterable< Airship >> call() throws InvalidArgumentException {
+    
         return airshipsDatabase.getAllElementsThat( new AirshipPredicates.IsTrangressingItsAirCorridor() );
     }
 }

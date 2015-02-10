@@ -51,6 +51,7 @@ public class GetAirshipsOfOwnerCommand implements Callable< Optional< Iterable< 
         
         if( airshipDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
+        
         if( ownerUsername == null || ownerUsername.equals( "" ) )
             throw new InvalidArgumentException( "Cannot instantiate command with a null username." );
         
@@ -72,12 +73,9 @@ public class GetAirshipsOfOwnerCommand implements Callable< Optional< Iterable< 
      * 
      * @return The list of all airships in {@code database} which were added by the user with
      *         username {@code ownerUsername}.
-     * 
-     * @throws Exception
-     *             This method will not throw exceptions.
      */
     @Override
-    public Optional< Iterable< Airship >> call() throws Exception {
+    public Optional< Iterable< Airship >> call() {
         
         return airshipDatabase.getElementsByUser( username );
     }

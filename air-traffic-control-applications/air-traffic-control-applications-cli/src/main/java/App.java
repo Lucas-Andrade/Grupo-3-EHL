@@ -22,10 +22,13 @@ import parsingtools.commandfactories.userauthenticatingfactories.PatchAirshipCom
 import parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.PostAirshipCommandsFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.PostUserCommandsFactory;
-import utils.StringCommands_Executor;
+import utils.StringCommandsExecutor;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
+import databases.Database;
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
+import elements.Airship;
+import elements.User;
 import exceptions.InvalidArgumentException;
 
 
@@ -92,8 +95,8 @@ public class App {
     private static final CommandParser cmdParser = new CommandParser();
     private static final Scanner SCANNER = new Scanner( System.in );
     
-    private static InMemoryUsersDatabase usersDatabase;
-    private static InMemoryAirshipsDatabase airshipsDatabase;
+    private static Database< User > usersDatabase;
+    private static Database< Airship > airshipsDatabase;
     
     private static final Map< String, String > commandsDescription =
             new HashMap< String, String >();
@@ -240,14 +243,14 @@ public class App {
     /**
      * Execute phase:
      * <ul>
-     * <li>1 - {@link StringCommands_Executor#getCommand()}: Get the {@link Callable command} by the
+     * <li>1 - {@link StringCommandsExecutor#getCommand()}: Get the {@link Callable command} by the
      * given {@code args}, and execute it.
      * <li>2 - The received information by the {@code command} is
      * {@link ToTranslatableConverter#convert converted} to a {@link Translatable}.
-     * <li>3 - {@link StringCommands_Executor#getTranslator()}: Get the {@link Translator} specified
+     * <li>3 - {@link StringCommandsExecutor#getTranslator()}: Get the {@link Translator} specified
      * in the {@code args}.Then the {@code Translatable} is {@link Translator#encode() encoded} (to
      * plain text, json or html).
-     * <li>4 - {@link StringCommands_Executor#getStream()}: Get the path specified in the
+     * <li>4 - {@link StringCommandsExecutor#getStream()}: Get the path specified in the
      * {@code args} where the received information by the command will be written. If no path is
      * given then the info is written in the commandLine.
      * </ul>
@@ -257,7 +260,7 @@ public class App {
     private static void execute( String[] args ) {
     
         try {
-            StringCommands_Executor parser = new StringCommands_Executor( cmdParser, args );
+            StringCommandsExecutor parser = new StringCommandsExecutor( cmdParser, args );
             parser.writeOutputToStream();
         }
         catch( Exception e ) {

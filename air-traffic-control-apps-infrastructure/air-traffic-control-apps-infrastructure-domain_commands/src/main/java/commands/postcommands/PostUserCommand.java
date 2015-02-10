@@ -57,7 +57,7 @@ public class PostUserCommand implements Callable< CompletionStatus > {
     public PostUserCommand( String username, String password, String email, String fullname,
                             Database< User > databaseWhereToPost, User userWhoIsPosting )
         throws InvalidArgumentException {
-        
+    
         if( databaseWhereToPost == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -78,13 +78,13 @@ public class PostUserCommand implements Callable< CompletionStatus > {
      * @return A message of success if the user was successfully posted; </br>a message of failure
      *         if it wasn't.
      * 
-     * @throws Exception
-     *             If the value given for {@code username}, {@code password} or {@code email} is
-     *             invalid.
+     * @throws InvalidArgumentException
+     *             If the value given for {@code username}, {@code password}, {@code email} or
+     *             {@code fullName} are invalid.
      */
     @Override
-    public CompletionStatus call() throws Exception {
-        
+    public CompletionStatus call() throws InvalidArgumentException {
+    
         User theUser =
                 (fullName != null) ? new User( username, password, email, fullName )
                                   : new User( username, password, email );

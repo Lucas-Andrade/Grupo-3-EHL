@@ -2,6 +2,7 @@ package commands.getcommands;
 
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.Callable;
 import utils.AirshipComparators;
@@ -23,8 +24,7 @@ import exceptions.InvalidArgumentException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetAirshipsCloserToCommand implements
-        Callable< Optional< Iterable< Airship >>> {
+public class GetAirshipsCloserToCommand implements Callable< Optional< Iterable< Airship >>> {
     
     // INSTANCE FIELDS
     
@@ -67,11 +67,10 @@ public class GetAirshipsCloserToCommand implements
      *             if the {@code airshipsDatabase} is null or airshipsNumber lower than 0 or
      *             latitude it's not between -90 and 90 and longitude it's not between 360 and 0.
      */
-    public GetAirshipsCloserToCommand( Database< Airship > airshipsDatabase,
-                                                             int airshipsNumber, double latitude,
-                                                             double longitude )
+    public GetAirshipsCloserToCommand( Database< Airship > airshipsDatabase, int airshipsNumber,
+                                       double latitude, double longitude )
         throws InvalidArgumentException {
-        
+    
         if( airshipsDatabase == null )
             throw new InvalidArgumentException(
                                                 "Cannot instantiate command with null airship database." );
@@ -100,10 +99,13 @@ public class GetAirshipsCloserToCommand implements
      * in {@code getDatabaseName()}»</i> if the result is an empty list.
      * </p>
      * 
+     * @throws InvalidArgumentException
+     *             If the {@code airshipsNumber} is negative or the comparator given to the method
+     *             {@link Database#sortBy(Comparator) sortBy(Comparator)} is null.
      */
     @Override
     public Optional< Iterable< Airship >> call() throws Exception {
-        
+    
         if( airshipsNumber < 0 )
             throw new InvalidArgumentException( "Number of airships cannot be negative." );
         

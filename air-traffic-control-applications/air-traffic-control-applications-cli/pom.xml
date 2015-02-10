@@ -4,18 +4,16 @@
 
 	<parent>
 		<groupId>degp.airtrafficcontrol</groupId>
-		<artifactId>air-traffic-control-applications</artifactId>
+		<artifactId>atc-applications</artifactId>
 		<version>${project-version}</version>
 	</parent>
 
-	<artifactId>air-traffic-control-applications-cli</artifactId>
+	<artifactId>atc-applications-cli</artifactId>
 
 	<dependencies>
 		<dependency>
 			<groupId>degp.airtrafficcontrol</groupId>
-			<artifactId>
-				air-traffic-control-apps-string_commands_handlers
-			</artifactId>
+			<artifactId>atc-apps-string_commands_handlers</artifactId>
 			<version>${project-version}</version>
 		</dependency>
 	</dependencies>

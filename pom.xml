@@ -9,7 +9,7 @@
 	<!-- Maven Coordinates -->
 	<groupId> degp.airtrafficcontrol </groupId>
 	<version>${project-version}</version>
-	<artifactId> air-traffic-control-apps </artifactId>
+	<artifactId> atc-apps </artifactId>
 	<packaging>pom</packaging>
 
 
@@ -39,11 +39,11 @@
 	</prerequisites>
 
 	<modules>
-		<module>air-traffic-control-apps-infrastructure</module>
-		<module>air-traffic-control-apps-utils</module>
-		<module>air-traffic-control-applications</module>
-		<module>air-traffic-control-apps-string_commands_handlers</module>
-		<module>air-traffic-control-apps-graphics_components</module>
+		<module>atc-apps-infrastructure</module>
+		<module>atc-apps-utils</module>
+		<module>atc-applications</module>
+		<module>atc-apps-string_commands_handlers</module>
+		<module>atc-apps-graphics_components</module>
 	</modules>
 
 
@@ -99,7 +99,7 @@
 	<build>
 		<defaultGoal>
 			<!-- WHILE CLIENT, GUI AND GRAPHICS ARE NOT COMPILING, WRITE THE LINE
-			 mvn -pl !air-traffic-control-applications/air-traffic-control-applications-distributed/air-traffic-control-applications-distributed-client,!air-traffic-control-applications/air-traffic-control-applications-gui,!air-traffic-control-apps-graphics_components clean package sonar:sonar
+			 mvn -pl !atc-applications/atc-applications-distributed/atc-applications-distributed-client,!atc-applications/atc-applications-gui,!atc-apps-graphics_components clean package sonar:sonar
 			TO THE COMMAND LINE -->
 			clean package sonar:sonar
 		</defaultGoal>

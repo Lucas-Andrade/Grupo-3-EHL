@@ -1,3 +1,4 @@
+package app;
 
 
 import java.awt.EventQueue;
@@ -59,7 +60,6 @@ public class App {
     /**
      * Unused private constructor
      */
-    
     private App() {
         
     }

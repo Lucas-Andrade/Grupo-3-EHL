@@ -7,7 +7,7 @@ import javax.swing.SwingWorker;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.windows.airshipwindows.GetAirshipsWithLessPassengerThanWindow;
 import functionalcomponents.FunctionalWindow;
-import functionalcomponents.FunctionalWindowSwingWorker;
+import functionalcomponents.ExceptionHandlerSW;
 import functionalcomponents.functionalmainwindow.FunctionalGetWindowSwingWorker;
 
 
@@ -65,16 +65,16 @@ public class FunctionalGetAirshipsWithLessPassengerThanWindow extends
     }
     
     /**
-     * Method that will return a {@link FunctionalWindowSwingWorker} with an {@code Override}
+     * Method that will return a {@link ExceptionHandlerSW} with an {@code Override}
      * implementation of its {@link SwingWorker#doInBackground() doInBackground()} and
-     * {@link FunctionalWindowSwingWorker#functionalDone(Object) functionalDone(Object)} methods to
+     * {@link ExceptionHandlerSW#finalizeDone(Object) functionalDone(Object)} methods to
      * add the correct functionality to a {@link GetAirshipsWithLessPassengerThanWindow}.
      * 
-     * @return Returns a {@link FunctionalWindowSwingWorker} with an {@code Override} of its
+     * @return Returns a {@link ExceptionHandlerSW} with an {@code Override} of its
      *         methods.
      */
     @Override
-    protected FunctionalWindowSwingWorker< Iterable< Airship >> getSwingWorker() {
+    protected ExceptionHandlerSW< Iterable< Airship >> getSwingWorker() {
         
         return new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel,
                                                    functionalWindow.getErrorJTextArea() ) {
@@ -121,7 +121,7 @@ public class FunctionalGetAirshipsWithLessPassengerThanWindow extends
             public final void functionalDone( Iterable< Airship > resultOfDoInBackGround )
                 throws Exception {
                 
-                super.functionalDone( resultOfDoInBackGround );
+                super.finalizeDone( resultOfDoInBackGround );
                 functionalWindow.dispose();
             }
         };

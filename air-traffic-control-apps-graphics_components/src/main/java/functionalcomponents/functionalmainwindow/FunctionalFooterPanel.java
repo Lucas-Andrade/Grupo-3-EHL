@@ -10,7 +10,7 @@ import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
 import design.windows.airshipwindows.GetAirshipsWithLessPassengerThanWindow;
 import design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
 import design.windows.airshipwindows.PostAirshipsWindow;
-import functionalcomponents.FunctionalWindowSwingWorker;
+import functionalcomponents.ExceptionHandlerSW;
 import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
@@ -105,7 +105,7 @@ public class FunctionalFooterPanel {
      * the information regarding the obtained airships.
      * 
      * This is done due to the {@code Override} of the
-     * {@link FunctionalWindowSwingWorker#functionalDone(Iterable) functionalDone(Iterable)} method
+     * {@link ExceptionHandlerSW#finalizeDone(Iterable) functionalDone(Iterable)} method
      * existing in the {@link FunctionalGetWindowSwingWorker} class.
      */
     private void addGetAllAirshipsButtonAction() {
@@ -158,7 +158,7 @@ public class FunctionalFooterPanel {
      * airships.
      * 
      * This is done due to the {@code Override} of the
-     * {@link FunctionalWindowSwingWorker#functionalDone(Iterable) functionalDone(Iterable)} method
+     * {@link ExceptionHandlerSW#finalizeDone(Iterable) functionalDone(Iterable)} method
      * existing in the {@link FunctionalGetWindowSwingWorker} class.
      */
     private void addGetTransgressingAirshipsButtonAction() {

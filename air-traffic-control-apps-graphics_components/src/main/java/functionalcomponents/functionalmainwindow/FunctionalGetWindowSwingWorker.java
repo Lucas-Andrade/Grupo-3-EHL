@@ -4,6 +4,7 @@ package functionalcomponents.functionalmainwindow;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
+import entities.SimpleAirship;
 import functionalcomponents.ExceptionHandlerSW;
 
 
@@ -16,18 +17,13 @@ import functionalcomponents.ExceptionHandlerSW;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public abstract class FunctionalGetWindowSwingWorker extends
-        ExceptionHandlerSW< Iterable< Airship >> {
+        ExceptionHandlerSW< Iterable< SimpleAirship >> {
     
     /**
      * {@code bodyPanel} - The {@link MainWindow} body panel that will be updated as part of the
      * actions performed by any of the buttons bellonging to the {@link #footerPanel}.
      */
     private JBodyPanelForMainWindow bodyPanel;
-    
-    /**
-     * {@code airshipsDatabase} - The airships database.
-     */
-    private Database< Airship > airshipsDatabase;
     
     /**
      * @param airshipsDatabase
@@ -40,12 +36,11 @@ public abstract class FunctionalGetWindowSwingWorker extends
      *            - The error text area where the error messages from the thrown exceptions will be
      *            written.
      */
-    public FunctionalGetWindowSwingWorker( Database< Airship > airshipsDatabase,
-                                           JBodyPanelForMainWindow bodyPanel,
+    public FunctionalGetWindowSwingWorker( JBodyPanelForMainWindow bodyPanel,
                                            JTextArea errorTextArea ) {
         
         super( errorTextArea );
-        this.airshipsDatabase = airshipsDatabase;
+
         this.bodyPanel = bodyPanel;
     }
     
@@ -65,8 +60,8 @@ public abstract class FunctionalGetWindowSwingWorker extends
      *             Depending on the function the window its supposed to do.
      */
     @Override
-    protected void functionalDone( Iterable< Airship > resultOfDoInBackGround ) throws Exception {
+    protected void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround ) throws Exception {
         
-        bodyPanel.updateBodyPanel( airshipsDatabase, resultOfDoInBackGround );
+        bodyPanel.updateBodyPanel( resultOfDoInBackGround );
     }
 }

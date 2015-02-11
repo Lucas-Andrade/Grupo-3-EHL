@@ -115,16 +115,18 @@ public class FunctionalFooterPanel {
             @Override
             public void actionPerformed( ActionEvent e ) {
                 
-                new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorTextArea ) {
-                    
-                    @Override
-                    protected Iterable< Airship > doInBackground() throws Exception {
-                        
-                        return new GetAllElementsInADatabaseCommand< Airship >( airshipsDatabase ).call()
-                                                                                                  .get();
-                    }
-                    
-                }.run();
+                bodyPanel.updateBodyPanel();
+                
+//                new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorTextArea ) {
+//                    
+//                    @Override
+//                    protected Iterable< Airship > doInBackground() throws Exception {
+//                        
+//                        return new GetAllElementsInADatabaseCommand< Airship >( airshipsDatabase ).call()
+//                                                                                                  .get();
+//                    }
+//                    
+//                }.run();
             }
         } );
     }

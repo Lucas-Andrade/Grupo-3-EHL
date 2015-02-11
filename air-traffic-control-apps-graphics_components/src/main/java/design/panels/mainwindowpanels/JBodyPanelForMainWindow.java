@@ -89,28 +89,28 @@ public class JBodyPanelForMainWindow extends JPanel {
     
     /**
      *  Public method that is responsible for update {@link JBodyPanelForMainWindow} panel.
-     * 
+     * Founded
      * @param airshipsDatabase - {@link Database} variable with all {@link Airship}.
      * @param airshipsFound - {@link Iterable} variable with only the elements that satisfy the request.
      */
-    
-    public void updateBodyPanel( ) {
+    public void updateBodyPanel( Iterable<SimpleAirship>  airshipsFound) {
         
         this.remove( worldMapWithAirships );
         this.remove( airshipsScrollPane );
         
-        createWorldMapAndScrollPanel( );
+        createWorldMapAndScrollPanel( airshipsFound );
         
         this.revalidate();
         this.repaint();
     }
-
-
-    private void createWorldMapAndScrollPanel() {
-        
-        //TODO
-        Iterable< SimpleAirship > airshipsFound = null;
     
+    
+    
+    
+
+
+    private void createWorldMapAndScrollPanel( Iterable<SimpleAirship>  airshipsFound ) {
+        
         worldMapWithAirships =
                 new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships( airshipsFound );
         airshipsScrollPane =

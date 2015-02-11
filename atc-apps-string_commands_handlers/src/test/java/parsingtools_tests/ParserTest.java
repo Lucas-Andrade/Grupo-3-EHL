@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import org.junit.Assert;
 import org.junit.Test;
 import parsingtools.CommandParser;
@@ -159,13 +160,12 @@ public class ParserTest {
         cmdparser.registerCommand( "GET", "/users/{username}",
                                    new GetUserByUsernameCommandsFactory( usersDatabase ) );
         
-        StringCommandsExecutor parser =
-                new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes");      
-        
-        OutputStream ps = parser.getStream();
-        Assert.assertEquals( "PrintStream", ps.getClass().getSimpleName() ); 
+         OutputStream ps =
+                new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes").getStream();      
+       
+        Assert.assertTrue( ps instanceof PrintStream); 
     }  
-    
+     
     @Test
     public void shouldGetAPrintStreamObjectAfterExecuteGetStreamMethod()
             throws InvalidArgumentException, InvalidCommandParametersSyntaxException,

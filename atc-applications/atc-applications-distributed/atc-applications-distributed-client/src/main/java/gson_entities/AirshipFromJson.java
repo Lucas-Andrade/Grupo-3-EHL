@@ -87,16 +87,4 @@ public class AirshipFromJson {
             strBuiler.append( "\nCarries Weapons: " ).append( hasWeapons );
         return strBuiler;
     }
-    
-    
-// TODO - maybe will not be used
-//    /**
-//     * Returns the {@code SimpleAirship} info.
-//     * 
-//     * @see java.lang.Object#toString()
-//     */
-//    public String toString() {
-//    
-//        return info;
-//    }
 }

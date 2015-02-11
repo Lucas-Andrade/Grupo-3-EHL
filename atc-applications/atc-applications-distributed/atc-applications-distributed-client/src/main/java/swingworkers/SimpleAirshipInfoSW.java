@@ -1,31 +1,32 @@
-package GSwingWorkers;
+package swingworkers;
 
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
-import app.EntitiesConversor;
-import commands.getcommands.GetElementFromADatabaseByIdCommand;
-import databases.Database;
-import elements.Airship;
+import com.google.gson.Gson;
 import entities.SimpleAirship;
 import exceptions.InvalidArgumentException;
 import functionalcomponents.SwingWorkerForButtonFactory;
 import functionalcomponents.infobuttons.EntitiesInfoButton;
 import functionalcomponents.infobuttons.SimpleAirshipInfoButton;
+import gson_entities.AirshipFromJson;
 
 
 /**
- * Instances of this class are {@link SwingWorker}s associated to {@link SimpleAirshipInfoButton},
- * that will GET, in the {@link SwingWorker#doInBackground() doInBackground()} method, the
- * associated {@link SimpleAirship} info by its {@code identification}.
+ * TODO Instances of this class are {@link SwingWorker}s associated to
+ * {@link SimpleAirshipInfoButton}, that will GET, in the {@link SwingWorker#doInBackground()
+ * doInBackground()} method, the associated {@link SimpleAirship} info by its {@code identification}
+ * .
  * 
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GUISimpleAirshipInfoSW extends
-        EntitiesInfoButton.EntitiesInfoSwingWorker< SimpleAirship > {
+public class SimpleAirshipInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< SimpleAirship > {
     
-    private Database< Airship > database;
     private String identification;
     
     /**
@@ -39,13 +40,11 @@ public class GUISimpleAirshipInfoSW extends
      * @param database
      *            - The {@link Airship} {@link Database}.
      */
-    public GUISimpleAirshipInfoSW( String identification, JTextArea textArea,
-                                   Database< Airship > database ) {
+    public SimpleAirshipInfoSW( String identification, JTextArea textArea ) {
     
         super( textArea );
         
         this.identification = identification;
-        this.database = database;
     }
     
     /**
@@ -62,10 +61,25 @@ public class GUISimpleAirshipInfoSW extends
     @Override
     protected SimpleAirship doInBackground() throws Exception {
     
-        return new EntitiesConversor().toSimpleAirship( new GetElementFromADatabaseByIdCommand< Airship >(
-                                                                                                           database,
-                                                                                                           identification ).call()
-                                                                                                                           .get() );
+        String url = "http://localhost:9999/airships/" + identification;
+        HttpURLConnection connection = ( HttpURLConnection )new URL( url ).openConnection();
+
+        // 200 -> ok
+        connection.getResponseCode();
+
+        // message from the server
+        BufferedReader in = new BufferedReader( new InputStreamReader( connection.getInputStream() ) );
+        String inputLine;
+        String html = new String();
+
+        //TODO
+        while( ( inputLine = in.readLine() ) != null )
+        {
+            html += inputLine ;
+        }
+        in.close();
+
+        return new Gson().fromJson( html, AirshipFromJson.class ).convert();
     }
     
     
@@ -82,9 +96,8 @@ public class GUISimpleAirshipInfoSW extends
     public class SwFactory implements
             SwingWorkerForButtonFactory< SwingWorker< SimpleAirship, Void >, SimpleAirship > {
         
-        private Database< Airship > database;
         
-        /**
+        /**TODO
          * Creates a {@link SwingWorker} {@code factories}, that creates instances of
          * {@link GUISimpleAirshipInfoSW} using the {@link SwFactory#newInstance} that will be run
          * in {@link SimpleAirshipInfoButton}.
@@ -92,9 +105,8 @@ public class GUISimpleAirshipInfoSW extends
          * @param database
          *            - The {@code User} {@link Database}.
          */
-        public SwFactory( Database< Airship > database ) {
+        public SwFactory() {
         
-            this.database = database;
         }
         
         /**
@@ -106,7 +118,7 @@ public class GUISimpleAirshipInfoSW extends
         public SwingWorker< SimpleAirship, Void > newInstance( String identification,
                                                                JTextArea textArea ) {
         
-            return new GUISimpleAirshipInfoSW( identification, textArea, database );
+            return new SimpleAirshipInfoSW( identification, textArea );
         }
     }
 }

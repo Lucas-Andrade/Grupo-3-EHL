@@ -63,7 +63,7 @@ public abstract class EntitiesInfoButton< E extends Entity > extends JButton {
     // Inner class
     /**
      * Abstract class for {@link SwingWorker}s associated to {@link EntitiesInfoButton}, that will
-     * write the the result of the {@link SwingWorker#get() get()} on the given {@link JTextArea}.
+     * write the result of the {@link SwingWorker#get() get()} on the given {@link JTextArea}.
      *
      * @param <E>
      *            - The result of the {@code doInBackgorung} method.

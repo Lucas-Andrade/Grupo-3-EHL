@@ -4,6 +4,7 @@ package functionalcomponents.functionalmainwindow;
 
 import java.awt.event.ActionListener;
 import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
+import entities.SimpleUser;
 import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
@@ -25,15 +26,11 @@ public class FunctionalHeaderPanel {
      */
     private JHeaderPanelForMainWindow headerPanel;
     
-    /**
-     * {@code usersDatabase} - The users database.
-     */
-    private Database< User > usersDatabase;
     
     /**
      * {@code user} - The user who is currently logged in.
      */
-    private User user;
+    private SimpleUser user;
     
     // Constructor
     
@@ -48,11 +45,9 @@ public class FunctionalHeaderPanel {
      * @param user
      *            - The user who is currently logged in.
      */
-    public FunctionalHeaderPanel( JHeaderPanelForMainWindow headerPanel,
-                                  Database< User > usersDatabase, User user ) {
+    public FunctionalHeaderPanel( JHeaderPanelForMainWindow headerPanel, SimpleUser user ) {
         
         this.headerPanel = headerPanel;
-        this.usersDatabase = usersDatabase;
         this.user = user;
         
         addAddUserButtonAction();

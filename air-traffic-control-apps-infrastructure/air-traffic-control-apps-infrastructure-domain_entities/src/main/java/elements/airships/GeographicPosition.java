@@ -82,7 +82,7 @@ public class GeographicPosition {
     @Override
     public String toString() {
         
-        return new StringBuilder( "\nLatitude: " ).append( latitude.getValue() )
+        return new StringBuilder( "\r\nLatitude: " ).append( latitude.getValue() )
                                                   .append( " Longitude: " )
                                                   .append( longitude.getValue() )
                                                   .append( " Altitude: " )

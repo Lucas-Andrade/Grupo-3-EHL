@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.ParsingCommand;
-import utils.CommandStrings_Dictionary;
+import utils.StringCommandsDictionary;
 import utils.Optional;
 import commands.getcommands.GetAirshipsWithLessPassengersThanCommand;
 import databases.Database;
@@ -90,7 +90,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
     @Override
     protected String[] getRequiredParametersNames() {
         
-        return new String[]{ CommandStrings_Dictionary.NUMBEROFPASSENGERS_UPPERLIMIT };
+        return new String[]{ StringCommandsDictionary.NUMBEROFPASSENGERS_UPPERLIMIT };
     }
     
     /**
@@ -134,7 +134,7 @@ public class GetAirshipsWithLessPassengersThanCommandsFactory extends
             
             super( parametersMap );
             maximumNumberOfPassengers =
-                    getParameterAsInt( CommandStrings_Dictionary.NUMBEROFPASSENGERS_UPPERLIMIT );
+                    getParameterAsInt( StringCommandsDictionary.NUMBEROFPASSENGERS_UPPERLIMIT );
         }
         
         /**

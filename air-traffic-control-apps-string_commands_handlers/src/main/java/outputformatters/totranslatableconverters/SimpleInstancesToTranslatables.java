@@ -4,7 +4,7 @@ package outputformatters.totranslatableconverters;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import outputformatters.Translatable;
-import utils.CommandStrings_Dictionary;
+import utils.StringCommandsDictionary;
 import utils.exceptions.formattersexceptions.UnknownTypeException;
 import elements.Airship;
 import elements.User;
@@ -80,16 +80,16 @@ class SimpleInstancesToTranslatables {
         Map< String, Object > createAirshipPropertiesBag( Airship airship ) {
             
             Map< String, Object > propertiesBag = new LinkedHashMap< String, Object >();
-            propertiesBag.put( CommandStrings_Dictionary.FLIGHTID, airship.getIdentification() );
-            propertiesBag.put( CommandStrings_Dictionary.LATITUDE, airship.getCoordinates()
+            propertiesBag.put( StringCommandsDictionary.FLIGHTID, airship.getIdentification() );
+            propertiesBag.put( StringCommandsDictionary.LATITUDE, airship.getCoordinates()
                                                                      .getLatitude().getValue() );
-            propertiesBag.put( CommandStrings_Dictionary.LONGITUDE, airship.getCoordinates()
+            propertiesBag.put( StringCommandsDictionary.LONGITUDE, airship.getCoordinates()
                                                                       .getLongitude().getValue() );
-            propertiesBag.put( CommandStrings_Dictionary.ALTITUDE, airship.getCoordinates()
+            propertiesBag.put( StringCommandsDictionary.ALTITUDE, airship.getCoordinates()
                                                                      .getAltitude().getValue() );
-            propertiesBag.put( CommandStrings_Dictionary.AIRCORRIDOR_MINALTITUDE,
+            propertiesBag.put( StringCommandsDictionary.AIRCORRIDOR_MINALTITUDE,
                                airship.getAirCorridor().getMinAltitude() );
-            propertiesBag.put( CommandStrings_Dictionary.AIRCORRIDOR_MAXALTITUDE,
+            propertiesBag.put( StringCommandsDictionary.AIRCORRIDOR_MAXALTITUDE,
                                airship.getAirCorridor().getMaxAltitude() );
             
             return propertiesBag;
@@ -120,7 +120,7 @@ class SimpleInstancesToTranslatables {
             }
             
             Map< String, Object > propertiesBag = createAirshipPropertiesBag( ca );
-            propertiesBag.put( CommandStrings_Dictionary.NUMBEROFPASSENGERS, ca.getPassengers() );
+            propertiesBag.put( StringCommandsDictionary.NUMBEROFPASSENGERS, ca.getPassengers() );
             
             return new Translatable( "civilAirship", null, null, null, propertiesBag, ca.toString() );
             
@@ -152,7 +152,7 @@ class SimpleInstancesToTranslatables {
             }
             
             Map< String, Object > propertiesBag = createAirshipPropertiesBag( ma );
-            propertiesBag.put( CommandStrings_Dictionary.HASARMOUR, ma.hasWeapons() );
+            propertiesBag.put( StringCommandsDictionary.HASARMOUR, ma.hasWeapons() );
             
             return new Translatable( "militaryAirship", null, null, null, propertiesBag,
                                      ma.toString() );

@@ -28,12 +28,12 @@ import parsingtools.commandfactories.ParsingCommand;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public final class CommandStrings_Dictionary {
+public final class StringCommandsDictionary {
     
     /**
      * Unused private constructor
      */
-    private CommandStrings_Dictionary() {
+    private StringCommandsDictionary() {
         
     }
     

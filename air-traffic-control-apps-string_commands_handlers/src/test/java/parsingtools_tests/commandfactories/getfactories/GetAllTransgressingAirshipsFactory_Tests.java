@@ -1,24 +1,24 @@
 package parsingtools_tests.commandfactories.getfactories;
 
 
-import java.util.concurrent.Callable;
-import org.junit.Assert;
-import org.junit.BeforeClass;
+import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.Before;
 import org.junit.Test;
-import parsingtools.CommandParser;
+import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.getfactories.GetAllTransgressingAirshipsCommandsFactory;
-import utils.StringCommandsExecutor;
-import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
+import utils.Optional;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
-import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
-import commands.getcommands.GetAllTransgressingAirshipsCommand;
 import databases.InMemoryAirshipsDatabase;
-import exceptions.InternalErrorException;
+import databases.InMemoryUsersDatabase;
+import elements.Airship;
+import elements.User;
+import elements.airships.CivilAirship;
+import elements.airships.MilitaryAirship;
 import exceptions.InvalidArgumentException;
-import exceptions.InvalidParameterValueException;
-import exceptions.MissingRequiredParameterException;
-import exceptions.NoSuchElementInDatabaseException;
-import exceptions.WrongLoginPasswordException;
 
 
 /**
@@ -34,37 +34,58 @@ import exceptions.WrongLoginPasswordException;
  */
 public class GetAllTransgressingAirshipsFactory_Tests {
     
-    private static CommandParser cmdparser = new CommandParser();
-    private static InMemoryAirshipsDatabase airshipsDatabase;
+    InMemoryAirshipsDatabase airshipsDatabase;
+    InMemoryUsersDatabase userDatabase;
+    User user;
+    Airship airship;
+    Airship airship2;
+    CommandFactory< Optional< Iterable< Airship >> > getAllTransgressingAirship;
+    Map< String, String > parametersMap;    
+    String owner;
+    
     
     // Before Class
     
-    @BeforeClass
-    public static void createTheCommandParserAndRegisterTheCommands()
-        throws InvalidRegisterException, InvalidArgumentException {
+    @Before
+    public void createTheCommandParserAndRegisterTheCommands()
+        throws InvalidRegisterException, InvalidArgumentException {        
         
-        cmdparser = new CommandParser();
+        userDatabase = new InMemoryUsersDatabase( "first user database" );        
+        user = new User("pantunes","pantunespassword","pantunes@gmail.com");
+        userDatabase.add( user, user );
         
-        airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
+        airshipsDatabase = new InMemoryAirshipsDatabase( "first airship database" );
+        airship = new CivilAirship( 38, 171, 15000, 12000, 10000, 100 );  
+        airship2 = new MilitaryAirship( 38, 171, 15000, 12000, 10000, true );  
+        airshipsDatabase.add(airship,user);
+        airshipsDatabase.add( airship2, user );
+        getAllTransgressingAirship = new GetAllTransgressingAirshipsCommandsFactory( airshipsDatabase );
+        parametersMap = new HashMap<>();        
         
-        cmdparser.registerCommand( "GET",
-                                   "/airships/reports",
-                                   new GetAllTransgressingAirshipsCommandsFactory( airshipsDatabase ) );
+        parametersMap.put( owner, user.getIdentification() );
+               
     }
     
     // Test Normal Dinamic And Prerequisites
     
     @Test
-    public void shouldSuccessfullyCreateTheCorrectCommands()
-        throws WrongLoginPasswordException, MissingRequiredParameterException,
-        InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
-        InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
+    public void shouldGetCorrectCommandsDescription()
+        throws  Exception {
         
-        Callable< ? > getAllTransgressinAirshipsCommand =
-                (new StringCommandsExecutor( cmdparser, "GET", "/airships/reports" )).getCommand();
-        
-        Assert.assertTrue( getAllTransgressinAirshipsCommand instanceof GetAllTransgressingAirshipsCommand );
+      assertEquals("Gets all airships that are transgressing their air corridors.",
+                   getAllTransgressingAirship.getCommandsDescription());        
     }
+    
+    @Test
+    public void shouldGetAllTransgressorsAirships() throws  Exception{
+        
+        Collection<Airship> expectedAirshipContainer = new ArrayList<>();
+        expectedAirshipContainer.add(airship2);
+        expectedAirshipContainer.add(airship);
+                
+        assertEquals(expectedAirshipContainer.toString(),
+                     getAllTransgressingAirship.newCommand( parametersMap ).call().get().toString());
+    }  
     
     // Test Exceptions
     

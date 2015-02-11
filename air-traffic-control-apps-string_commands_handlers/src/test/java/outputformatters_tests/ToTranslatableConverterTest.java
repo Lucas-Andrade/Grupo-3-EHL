@@ -13,7 +13,7 @@ import java.util.TreeSet;
 import org.junit.Test;
 import outputformatters.Translatable;
 import outputformatters.totranslatableconverters.ToTranslatableConverter;
-import utils.CommandStrings_Dictionary;
+import utils.StringCommandsDictionary;
 import utils.CompletionStatus;
 import utils.Optional;
 import utils.OptionsList;
@@ -33,7 +33,7 @@ import exceptions.InvalidArgumentException;
  * <b>Implementation notes:</b>
  * </p>
  * <ul>
- * <li>This class makes use of the static fields in {@link CommandStrings_Dictionary}.</li>
+ * <li>This class makes use of the static fields in {@link StringCommandsDictionary}.</li>
  * </ul>
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -100,10 +100,10 @@ public class ToTranslatableConverterTest {
         assertNull( t.getEntryTag() );
         assertNull( t.getKeyTag() );
         assertNull( t.getValueTag() );
-        assertEquals( "username", t.getPropertiesBag().get( CommandStrings_Dictionary.USERNAME ) );
-        assertNull( t.getPropertiesBag().get( CommandStrings_Dictionary.PASSWORD ) );
-        assertEquals( "email@", t.getPropertiesBag().get( CommandStrings_Dictionary.EMAIL ) );
-        assertEquals( "", t.getPropertiesBag().get( CommandStrings_Dictionary.FULLNAME ) );
+        assertEquals( "username", t.getPropertiesBag().get( StringCommandsDictionary.USERNAME ) );
+        assertNull( t.getPropertiesBag().get( StringCommandsDictionary.PASSWORD ) );
+        assertEquals( "email@", t.getPropertiesBag().get( StringCommandsDictionary.EMAIL ) );
+        assertEquals( "", t.getPropertiesBag().get( StringCommandsDictionary.FULLNAME ) );
     }
     
     // Conversion of Iterables and Simple Types
@@ -145,11 +145,11 @@ public class ToTranslatableConverterTest {
         Translatable g = ((Translatable)itUsersTransl.getPropertiesBag().get( "G" ));
         Translatable g2 = ((Translatable)itUsersTransl.getPropertiesBag().get( "G2" ));
         
-        assertEquals( "G", g.getPropertiesBag().get( CommandStrings_Dictionary.USERNAME ) );
-        assertEquals( "G1@email", g.getPropertiesBag().get( CommandStrings_Dictionary.EMAIL ) );
-        assertNull( g2.getPropertiesBag().get( CommandStrings_Dictionary.PASSWORD ) );
-        assertEquals( "", g.getPropertiesBag().get( CommandStrings_Dictionary.FULLNAME ) );
-        assertEquals( "G2 full", g2.getPropertiesBag().get( CommandStrings_Dictionary.FULLNAME ) );
+        assertEquals( "G", g.getPropertiesBag().get( StringCommandsDictionary.USERNAME ) );
+        assertEquals( "G1@email", g.getPropertiesBag().get( StringCommandsDictionary.EMAIL ) );
+        assertNull( g2.getPropertiesBag().get( StringCommandsDictionary.PASSWORD ) );
+        assertEquals( "", g.getPropertiesBag().get( StringCommandsDictionary.FULLNAME ) );
+        assertEquals( "G2 full", g2.getPropertiesBag().get( StringCommandsDictionary.FULLNAME ) );
         
     }
     
@@ -180,13 +180,13 @@ public class ToTranslatableConverterTest {
         
         assertEquals( ((Translatable)bag.get( a1.getIdentification() )).getTag(), "civilAirship" );
         assertEquals( a1.getIdentification(),
-                      t1.getPropertiesBag().get( CommandStrings_Dictionary.FLIGHTID ) );
+                      t1.getPropertiesBag().get( StringCommandsDictionary.FLIGHTID ) );
         
         Translatable t2 = ((Translatable)bag.get( a2.getIdentification() ));
         
         assertEquals( ((Translatable)bag.get( a2.getIdentification() )).getTag(), "militaryAirship" );
         assertEquals( a2.getIdentification(),
-                      t2.getPropertiesBag().get( CommandStrings_Dictionary.FLIGHTID ) );
+                      t2.getPropertiesBag().get( StringCommandsDictionary.FLIGHTID ) );
         
     }
     
@@ -208,14 +208,14 @@ public class ToTranslatableConverterTest {
         assertNull( t.getEntryTag() );
         assertNull( t.getKeyTag() );
         assertNull( t.getValueTag() );
-        assertEquals( a.getIdentification(), bag.get( CommandStrings_Dictionary.FLIGHTID ) );
-        assertEquals( 0.0, bag.get( CommandStrings_Dictionary.LATITUDE ) );
-        assertEquals( 1.0, bag.get( CommandStrings_Dictionary.LONGITUDE ) );
-        assertEquals( 2.0, bag.get( CommandStrings_Dictionary.ALTITUDE ) );
-        assertEquals( 4.0, bag.get( CommandStrings_Dictionary.AIRCORRIDOR_MAXALTITUDE ) );
-        assertEquals( 3.0, bag.get( CommandStrings_Dictionary.AIRCORRIDOR_MINALTITUDE ) );
-        assertEquals( 10, bag.get( CommandStrings_Dictionary.NUMBEROFPASSENGERS ) );
-        assertNull( bag.get( CommandStrings_Dictionary.HASARMOUR ) );
+        assertEquals( a.getIdentification(), bag.get( StringCommandsDictionary.FLIGHTID ) );
+        assertEquals( 0.0, bag.get( StringCommandsDictionary.LATITUDE ) );
+        assertEquals( 1.0, bag.get( StringCommandsDictionary.LONGITUDE ) );
+        assertEquals( 2.0, bag.get( StringCommandsDictionary.ALTITUDE ) );
+        assertEquals( 4.0, bag.get( StringCommandsDictionary.AIRCORRIDOR_MAXALTITUDE ) );
+        assertEquals( 3.0, bag.get( StringCommandsDictionary.AIRCORRIDOR_MINALTITUDE ) );
+        assertEquals( 10, bag.get( StringCommandsDictionary.NUMBEROFPASSENGERS ) );
+        assertNull( bag.get( StringCommandsDictionary.HASARMOUR ) );
     }
     
     @Test
@@ -233,14 +233,14 @@ public class ToTranslatableConverterTest {
         assertNull( t.getEntryTag() );
         assertNull( t.getKeyTag() );
         assertNull( t.getValueTag() );
-        assertEquals( a.getIdentification(), bag.get( CommandStrings_Dictionary.FLIGHTID ) );
-        assertEquals( 4.0, bag.get( CommandStrings_Dictionary.LATITUDE ) );
-        assertEquals( 5.0, bag.get( CommandStrings_Dictionary.LONGITUDE ) );
-        assertEquals( 6.0, bag.get( CommandStrings_Dictionary.ALTITUDE ) );
-        assertEquals( 10.0, bag.get( CommandStrings_Dictionary.AIRCORRIDOR_MAXALTITUDE ) );
-        assertEquals( 7.0, bag.get( CommandStrings_Dictionary.AIRCORRIDOR_MINALTITUDE ) );
-        assertNull( bag.get( CommandStrings_Dictionary.NUMBEROFPASSENGERS ) );
-        assertEquals( true, bag.get( CommandStrings_Dictionary.HASARMOUR ) );
+        assertEquals( a.getIdentification(), bag.get( StringCommandsDictionary.FLIGHTID ) );
+        assertEquals( 4.0, bag.get( StringCommandsDictionary.LATITUDE ) );
+        assertEquals( 5.0, bag.get( StringCommandsDictionary.LONGITUDE ) );
+        assertEquals( 6.0, bag.get( StringCommandsDictionary.ALTITUDE ) );
+        assertEquals( 10.0, bag.get( StringCommandsDictionary.AIRCORRIDOR_MAXALTITUDE ) );
+        assertEquals( 7.0, bag.get( StringCommandsDictionary.AIRCORRIDOR_MINALTITUDE ) );
+        assertNull( bag.get( StringCommandsDictionary.NUMBEROFPASSENGERS ) );
+        assertEquals( true, bag.get( StringCommandsDictionary.HASARMOUR ) );
         
     }
     

@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.DeleteAirshipCommandsFactory;
-import utils.CommandStrings_Dictionary;
+import utils.StringCommandsDictionary;
 import utils.CompletionStatus;
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
@@ -56,9 +56,9 @@ public class DeleteAirshipCommandsFactoryTest {
         deleteFactory = new DeleteAirshipCommandsFactory( userDatabase, airshipsDatabase );
         
         parametersMap = new HashMap<>();
-        flightId_ParameterName = CommandStrings_Dictionary.FLIGHTID;
-        loginName_ParameterName = CommandStrings_Dictionary.LOGINNAME;
-        loginPassword_ParameterName = CommandStrings_Dictionary.LOGINPASSWORD;
+        flightId_ParameterName = StringCommandsDictionary.FLIGHTID;
+        loginName_ParameterName = StringCommandsDictionary.LOGINNAME;
+        loginPassword_ParameterName = StringCommandsDictionary.LOGINPASSWORD;
         
     }
     

@@ -9,7 +9,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import parsingtools.commandfactories.userauthenticatingfactories.PatchAirshipCommandsFactory;
-import utils.CommandStrings_Dictionary;
+import utils.StringCommandsDictionary;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import commands.patchcommands.PatchAirshipCommand;
 import databases.InMemoryAirshipsDatabase;
@@ -72,19 +72,19 @@ public class PatchAirshipsCommandFactory_Tests {
         
         parameters = new HashMap< String, String >();
         
-        parameters.put( CommandStrings_Dictionary.LOGINNAME, "Daniel" );
-        parameters.put( CommandStrings_Dictionary.LOGINPASSWORD, "pass" );
+        parameters.put( StringCommandsDictionary.LOGINNAME, "Daniel" );
+        parameters.put( StringCommandsDictionary.LOGINPASSWORD, "pass" );
         
-        parameters.put( CommandStrings_Dictionary.LATITUDE, "0" );
-        parameters.put( CommandStrings_Dictionary.LONGITUDE, "0" );
-        parameters.put( CommandStrings_Dictionary.ALTITUDE, "0" );
-        parameters.put( CommandStrings_Dictionary.AIRCORRIDOR_MINALTITUDE, "10" );
-        parameters.put( CommandStrings_Dictionary.AIRCORRIDOR_MAXALTITUDE, "0" );
+        parameters.put( StringCommandsDictionary.LATITUDE, "0" );
+        parameters.put( StringCommandsDictionary.LONGITUDE, "0" );
+        parameters.put( StringCommandsDictionary.ALTITUDE, "0" );
+        parameters.put( StringCommandsDictionary.AIRCORRIDOR_MINALTITUDE, "10" );
+        parameters.put( StringCommandsDictionary.AIRCORRIDOR_MAXALTITUDE, "0" );
         
         onlyRequiredParameters = new HashMap< String, String >();
         
-        onlyRequiredParameters.put( CommandStrings_Dictionary.LOGINNAME, "Daniel" );
-        onlyRequiredParameters.put( CommandStrings_Dictionary.LOGINPASSWORD, "pass" );
+        onlyRequiredParameters.put( StringCommandsDictionary.LOGINNAME, "Daniel" );
+        onlyRequiredParameters.put( StringCommandsDictionary.LOGINPASSWORD, "pass" );
     }
     
     // Test Normal Dinamic And Prerequisites
@@ -95,7 +95,7 @@ public class PatchAirshipsCommandFactory_Tests {
         InvalidParameterValueException, WrongLoginPasswordException, InternalErrorException,
         InvalidArgumentException {
         
-        parameters.put( CommandStrings_Dictionary.FLIGHTID, airship1.getIdentification() );
+        parameters.put( StringCommandsDictionary.FLIGHTID, airship1.getIdentification() );
         
         Callable< ? > patchAirshipCommand =
                 (new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase )).newCommand( parameters );
@@ -109,7 +109,7 @@ public class PatchAirshipsCommandFactory_Tests {
         InvalidParameterValueException, WrongLoginPasswordException, InternalErrorException,
         InvalidArgumentException {
         
-        onlyRequiredParameters.put( CommandStrings_Dictionary.FLIGHTID, airship1.getIdentification() );
+        onlyRequiredParameters.put( StringCommandsDictionary.FLIGHTID, airship1.getIdentification() );
         
         Callable< ? > patchAirshipCommand =
                 (new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase )).newCommand( onlyRequiredParameters );

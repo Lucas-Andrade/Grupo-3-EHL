@@ -16,6 +16,7 @@ import parsingtools.commandfactories.getfactories.getallfactories.GetAllAirships
 import parsingtools.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
 import parsingtools.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory;
 import parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
+import parsingtools.commandfactories.userauthenticatingfactories.AuthenticateCommandFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.DeleteAirshipCommandsFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.PatchAirshipCommandsFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
@@ -181,24 +182,34 @@ public class AirTrafficControlServer {
             
             registCommand( "GET", "/airships",
                            new GetAllAirshipsInADatabaseCommandsFactory( airshipsDatabase ) );
+            
             registCommand( "GET", "/airships/{flightId}",
                            new GetAirshipByFlightIdCommandsFactory( airshipsDatabase ) );
+            
             registCommand( "GET", "/airships/owner/{owner}",
                            new GetAirshipsOfOwnerCommandsFactory( airshipsDatabase ) );
+            
             registCommand( "GET", "/airships/nbPassengers/{nbP}/bellow",
                            new GetAirshipsWithLessPassengersThanCommandsFactory( airshipsDatabase ) );
+            
             registCommand( "GET", "/airships/reports",
                            new GetAllTransgressingAirshipsCommandsFactory( airshipsDatabase ) );
+            
             registCommand( "GET", "/airships/reports/{flightId}",
                            new CheckIfAirshipIsTransgressingCommandsFactory( airshipsDatabase ) );
+            
             registCommand( "GET",
                            "/airships/find",
                            new GetTheNearestAirshipsToGeographicPositionCommandsFactory(
                                                                                          airshipsDatabase ) );
             // GET /users
             
+            registCommand( "GET", "/users/authenticate",
+                           new AuthenticateCommandFactory( usersDatabase, usersDatabase ) );
+            
             registCommand( "GET", "/users",
                            new GetAllUsersInADatabaseCommandsFactory( usersDatabase ) );
+            
             registCommand( "GET", "/users/{username}",
                            new GetUserByUsernameCommandsFactory( usersDatabase ) );
             
@@ -273,6 +284,7 @@ public class AirTrafficControlServer {
         
         try {
             server.start();
+            System.out.println("Server Started!!! YEY!!!");
         }
         catch( Exception e ) {
             // TODO Auto-generated catch block

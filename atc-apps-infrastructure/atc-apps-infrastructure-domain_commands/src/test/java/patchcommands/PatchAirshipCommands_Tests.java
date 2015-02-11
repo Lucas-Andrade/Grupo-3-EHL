@@ -63,11 +63,10 @@ public class PatchAirshipCommands_Tests {
         
         // Assert
         assertEquals( "Airship successfully patched", patchAirship.call().getMessage() );
-        assertEquals( "Flight ID: " + airship1.getIdentification()
-                              + "\nLatitude: 2.0 Longitude: 4.0 Altitude: 13.0\n"
-                              + "Maximum Altitude Permited: 100.0Minimum Altitude Permited: 50.0\n"
-                              + "Is Outside The Given Corridor: true\n"
-                              + "Number of Passengers: 20\n",
+        assertEquals( "Flight ID: " + airship1.getIdentification()+"\r\n"
+                              + "Latitude: 2.0 Longitude: 4.0 Altitude: 13.0\r\n"
+                              + "Maximum Altitude Permited: 100.0 Minimum Altitude Permited: 50.0\r\n"
+                              + "Is Outside The Given Corridor: true\r\nNumber of Passengers: 20\r\n",
                       airshipsDatabase.getElementByIdentification( airship1.getIdentification() )
                                       .toString() );
     }
@@ -83,11 +82,10 @@ public class PatchAirshipCommands_Tests {
         
         // Assert
         assertEquals( "Airship successfully patched", patchAirship.call().getMessage() );
-        assertEquals( "Flight ID: " + airship2.getIdentification()
-                              + "\nLatitude: 20.0 Longitude: 10.0 Altitude: 30.0\n"
-                              + "Maximum Altitude Permited: 100.0Minimum Altitude Permited: 50.0\n"
-                              + "Is Outside The Given Corridor: true\n"
-                              + "Carries Weapons: false\n",
+        assertEquals( "Flight ID: " + airship2.getIdentification()+"\r\n"
+                              + "Latitude: 20.0 Longitude: 10.0 Altitude: 30.0\r\n"
+                              + "Maximum Altitude Permited: 100.0 Minimum Altitude Permited: 50.0\r\n"
+                              + "Is Outside The Given Corridor: true\nCarries Weapons: false\n",
                       airshipsDatabase.getElementByIdentification( airship2.getIdentification() )
                                       .toString() );
     }
@@ -102,11 +100,10 @@ public class PatchAirshipCommands_Tests {
         
         // Assert
         assertEquals( "Airship successfully patched", patchAirship.call().getMessage() );
-        assertEquals( "Flight ID: " + airship2.getIdentification()
-                              + "\nLatitude: 0.0 Longitude: 0.0 Altitude: 30.0\n"
-                              + "Maximum Altitude Permited: 100.0Minimum Altitude Permited: 50.0\n"
-                              + "Is Outside The Given Corridor: true\n"
-                              + "Carries Weapons: false\n",
+        assertEquals( "Flight ID: " + airship2.getIdentification()+"\r\n"
+                              + "Latitude: 0.0 Longitude: 0.0 Altitude: 30.0\r\n"
+                              + "Maximum Altitude Permited: 100.0 Minimum Altitude Permited: 50.0\r\n"
+                              + "Is Outside The Given Corridor: true\nCarries Weapons: false\n",
                       airshipsDatabase.getElementByIdentification( airship2.getIdentification() )
                                       .toString() );
     }

@@ -71,8 +71,8 @@ public class GetAllTransgressingAirshipsCommand_Tests {
         
         List< Airship > airships = new ArrayList< Airship >();
         
-        airships.add( airship1 );
         airships.add( airship3 );
+        airships.add( airship1 );
         
         // Assert
         Assert.assertEquals( testedAirships.toString(), airships.toString() );

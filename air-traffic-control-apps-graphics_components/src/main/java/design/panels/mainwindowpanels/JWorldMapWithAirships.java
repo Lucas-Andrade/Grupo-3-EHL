@@ -6,11 +6,15 @@ import java.awt.Dimension;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import design.panels.JPanelImage;
-import design.panels.JScrollPanelForElements;
+import design.panels.ScrollPanelForEntities;
+import entities.SimpleAirship;
 import exceptions.InternalErrorException;
+import functionalcomponents.infobuttons.SimpleAirshipInfoButton;
 
     /**
      * 
@@ -20,7 +24,7 @@ import exceptions.InternalErrorException;
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
 @SuppressWarnings( "serial" )
-public class JWorldMapWithAirships extends JScrollPanelForElements< Airship > {
+public class JWorldMapWithAirships extends ScrollPanelForEntities< SimpleAirship > {
     
     
     // //////////////////////////////////////////////////
@@ -86,7 +90,7 @@ public class JWorldMapWithAirships extends JScrollPanelForElements< Airship > {
      * @return a Panel that contains a world map and {@link JLabel} image for each {@link Airship}.
      */
     
-    public JPanel createAJPanelWithWorldMapAndAirships( Iterable< Airship > airshipsFound ) {
+    public JPanel createAJPanelWithWorldMapAndAirships( Iterable< SimpleAirship > airshipsFound ) {
         
         JPanelImage.CreateImage worldMap = new JPanelImage.CreateImage( "/images/planisphere.png" );
         worldMap.setLayout( null );
@@ -94,13 +98,13 @@ public class JWorldMapWithAirships extends JScrollPanelForElements< Airship > {
         this.add( worldMap );
         
         try {
-            for( Airship airship : airshipsFound ) {
+            for( SimpleAirship airship : airshipsFound ) {
                 
                 Double latitude =
                         ORIGINPOSITIONLATITUDE - IMAGESCALEFACTOR
-                                * (airship.getCoordinates().getLatitude().getValue());
+                                * (airship.latitude);
                 Double longitude =
-                        IMAGESCALEFACTOR * (airship.getCoordinates().getLongitude().getValue())
+                        IMAGESCALEFACTOR * (airship.longitude)
                                 - ORIGINPOSITIONLONGITUDE;
                 
                 JLabel labelAirship;
@@ -125,5 +129,11 @@ public class JWorldMapWithAirships extends JScrollPanelForElements< Airship > {
         this.setBackground( new Color( REDCOMPONENT, GREENCOMPONENT, BLUECOMPONENT ) );
         
         return this;
+    }
+
+    @Override
+    protected JButton newButton( String identification, JTextArea textArea ) {
+    
+        return new SimpleAirshipInfoButton( identification, textArea );
     }
 }

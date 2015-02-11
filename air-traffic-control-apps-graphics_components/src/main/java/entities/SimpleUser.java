@@ -9,12 +9,8 @@ package entities;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class SimpleUser extends Entity {
-    
-    /**
-     * The user identification
-     */
-    public final String username;
-    
+
+
     /**
      * 
      * @param username
@@ -25,8 +21,6 @@ public class SimpleUser extends Entity {
      */
     public SimpleUser( String username, String toString ) {
     
-        super( toString );
-        this.username = username;
+        super( toString,  username);
     }
-    
 }

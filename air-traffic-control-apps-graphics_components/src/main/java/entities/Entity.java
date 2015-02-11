@@ -15,15 +15,27 @@ public abstract class Entity {
      */
     public final String toString;
     
+    private final String identification;
+
     /**
      * Create a new {@code Entity} with a String-info Field.
      * 
      * @param toString
      *            The string with the {@code Entity} info.
      */
-    public Entity( String toString ) {
+    public Entity( String toString, String identification ) {
     
         this.toString = toString;
+        this.identification = identification;
+    }
+    
+    
+    /**
+     * @return the identification
+     */
+    public String getIdentification() {
+    
+        return identification;
     }
     
     /**
@@ -35,4 +47,5 @@ public abstract class Entity {
     {
         return toString;
     }
+
 }

@@ -13,7 +13,7 @@ public class SimpleAirship extends Entity {
     /**
      * Fields needed to use a {@code SimpleAirship} in the graphics components.
      */
-    public final String flightId;
+   
     public final double latitude;
     public final double longitude;
     
@@ -32,8 +32,7 @@ public class SimpleAirship extends Entity {
      */
     public SimpleAirship( String flightId, double latitude, double longitude, String info ) {
     
-        super( info );
-        this.flightId = flightId;
+        super( info, flightId );
         this.latitude = latitude;
         this.longitude = longitude;
     }

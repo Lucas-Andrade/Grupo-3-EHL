@@ -24,7 +24,7 @@ public class EntitiesConversor {
      *            - The {@code User} to be converted.
      * @return a {@link SimpleUser}
      */
-    public SimpleUser toSimpleUser( User user ) {
+    public static SimpleUser toSimpleUser( User user ) {
     
         return new SimpleUser( user.getIdentification(), user.toStringWithoutPassword() );
     }
@@ -37,7 +37,7 @@ public class EntitiesConversor {
      *            - The {@code Airship} to be converted.
      * @return a {@link SimpleAirship}
      */
-    public SimpleAirship toSimpleUser( Airship airship ) {
+    public static SimpleAirship toSimpleAirship( Airship airship ) {
     
         return new SimpleAirship( airship.getIdentification(), airship.getCoordinates()
                                                                       .getLatitude().getValue(),

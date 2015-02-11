@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import javax.swing.JPanel;
 import design.borders.TextRoundBorder;
+import entities.SimpleAirship;
 
     /**
      * 
@@ -75,20 +76,11 @@ public class JBodyPanelForMainWindow extends JPanel {
      * the two panels that is part of it. 
      */
     
-    public JBodyPanelForMainWindow( Database< Airship > airshipsDatabase,
-                                    Iterable< Airship > airshipsFound ) {
+    public JBodyPanelForMainWindow( Iterable< SimpleAirship > airshipsFound ) {
         
         this.setLayout( new FlowLayout() );
         
-        airshipsScrollPane =
-                new JWorldMapWithAirships().produceAJScrollPaneWithAllElements( airshipsDatabase,
-                                                                                airshipsFound );
-        
-        worldMapWithAirships =
-                new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships( airshipsFound );
-        
-        this.add( worldMapWithAirships );
-        this.add( airshipsScrollPane );
+        createWorldMapAndScrollPanel( airshipsFound );
         
         this.setBackground( new Color( REDCOMPONENT, GREENCOMPONENT, BLUECOMPONENT ) );
         this.setBorder( new TextRoundBorder( Color.WHITE, ROUNDBORDERTHICKNESS, ROUNDBORDERRAD, ROUNDBORDERPOINTERSIZE ) );
@@ -102,23 +94,27 @@ public class JBodyPanelForMainWindow extends JPanel {
      * @param airshipsFound - {@link Iterable} variable with only the elements that satisfy the request.
      */
     
-    public void updateBodyPanel( Database< Airship > airshipsDatabase,
-                                 Iterable< Airship > airshipsFound ) {
+    public void updateBodyPanel( Iterable< SimpleAirship > airshipsFound ) {
         
         this.remove( worldMapWithAirships );
         this.remove( airshipsScrollPane );
         
-        this.worldMapWithAirships =
-                new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships( airshipsFound );
-        this.airshipsScrollPane =
-                new JWorldMapWithAirships().produceAJScrollPaneWithAllElements( airshipsDatabase,
-                                                                                airshipsFound );
-        
-        this.add( worldMapWithAirships );
-        this.add( airshipsScrollPane );
+        createWorldMapAndScrollPanel( airshipsFound );
         
         this.revalidate();
         this.repaint();
+    }
+
+
+    private void createWorldMapAndScrollPanel( Iterable< SimpleAirship > airshipsFound ) {
+    
+        worldMapWithAirships =
+                new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships( airshipsFound );
+        airshipsScrollPane =
+                new JWorldMapWithAirships().produceAJScrollPaneWithAllEntities( airshipsFound );
+        
+        add( worldMapWithAirships );
+        add( airshipsScrollPane );
     }
     
       /////////////////

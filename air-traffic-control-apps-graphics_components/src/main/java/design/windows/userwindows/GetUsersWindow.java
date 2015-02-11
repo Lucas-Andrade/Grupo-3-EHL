@@ -4,15 +4,16 @@ package design.windows.userwindows;
 import java.awt.Dimension;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import design.panels.JScrollPanelForUsers;
+import design.panels.ScrollPanelForUsers;
 import design.windows.popupwindows.PopupWindow;
+import entities.SimpleUser;
 
 
 
     /**
      *   Class who's instances represents panel that extends {@link PopupWindow},  
      *   so it inherits a {@link JPanel} with a {@link JButton}.
-     *   This instance also add a {@link JScrollPanelForUsers#produceAJScrollPaneWithAllElements} 
+     *   This instance also add a {@link ScrollPanelForUsers#produceAJScrollPaneWithAllElements} 
      *   and has this configuration: 
      *   
      *  <pre>
@@ -55,11 +56,11 @@ public class GetUsersWindow extends PopupWindow {
     
     /**
      * Public constructor that creates a new {@link GetUsersWindow} 
-     * adding {@link JScrollPanelForUsers#produceAJScrollPaneWithAllElements}.
+     * adding {@link ScrollPanelForUsers#produceAJScrollPaneWithAllElements}.
      */    
-    public GetUsersWindow( Database< User > dataBase, Iterable< User > users ) {
+    public GetUsersWindow( Iterable< SimpleUser > users ) {
         
-        super( new JScrollPanelForUsers().produceAJScrollPaneWithAllElements( dataBase, users ) );
+        super( new ScrollPanelForUsers().produceAJScrollPaneWithAllEntities( users ) );
         
         setPreferredSize( new Dimension( WINDOWWIDTH, WINDOWHEIGHT ) );
     }

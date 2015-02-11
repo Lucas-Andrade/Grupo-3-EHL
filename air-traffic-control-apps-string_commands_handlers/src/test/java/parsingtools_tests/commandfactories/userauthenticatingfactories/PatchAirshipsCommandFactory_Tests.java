@@ -1,6 +1,7 @@
 package parsingtools_tests.commandfactories.userauthenticatingfactories;
 
 
+import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -89,6 +90,16 @@ public class PatchAirshipsCommandFactory_Tests {
     
     // Test Normal Dinamic And Prerequisites
     
+    
+    @Test 
+    public void shouldGetCorrectCommandsDescription() throws InvalidArgumentException{
+               
+        
+        assertEquals( "Change an Airship Coordinates and/or AirCorridor",
+                      new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase ).getCommandsDescription());
+        
+    }
+    
     @Test
     public void shouldSuccessfullyCreateTheCorrectCommandGivenAllOfTheOptionalParameters()
         throws NoSuchElementInDatabaseException, MissingRequiredParameterException,
@@ -117,5 +128,4 @@ public class PatchAirshipsCommandFactory_Tests {
         Assert.assertTrue( patchAirshipCommand instanceof PatchAirshipCommand );
     }
     
-    // Test Exceptions
 }

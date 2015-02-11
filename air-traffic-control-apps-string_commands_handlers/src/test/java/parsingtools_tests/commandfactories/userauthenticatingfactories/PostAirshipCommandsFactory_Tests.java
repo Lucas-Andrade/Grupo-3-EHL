@@ -1,6 +1,7 @@
 package parsingtools_tests.commandfactories.userauthenticatingfactories;
 
 
+import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -79,6 +80,14 @@ public class PostAirshipCommandsFactory_Tests {
     }
     
     // Test Normal Dynamic And Prerequisites
+    @Test 
+    public void shouldGetCorrectCommandsDescription() throws InvalidArgumentException{
+               
+        
+        assertEquals( "Adds a new airship.",
+                      new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ).getCommandsDescription());
+        
+    }
     
     @Test
     public void shouldSuccessfullyCreateTheCorrectCommands()

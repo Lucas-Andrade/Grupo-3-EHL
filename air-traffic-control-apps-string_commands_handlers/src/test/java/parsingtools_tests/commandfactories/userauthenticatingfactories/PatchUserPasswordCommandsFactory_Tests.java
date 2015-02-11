@@ -1,6 +1,7 @@
 package parsingtools_tests.commandfactories.userauthenticatingfactories;
 
 
+import static org.junit.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Callable;
@@ -59,6 +60,13 @@ public class PatchUserPasswordCommandsFactory_Tests {
     }
     
     // Test Normal Dinamic And Prerequisites
+    
+    @Test 
+    public void shouldGetCorrectCommandsDescription() throws InvalidArgumentException{
+               
+        assertEquals( "Change An User Password", 
+                      new PatchUserPasswordCommandsFactory( usersDatabase ).getCommandsDescription());    
+    }
     
     @Test
     public void shouldSuccessfullyCreateTheCorrectCommand()

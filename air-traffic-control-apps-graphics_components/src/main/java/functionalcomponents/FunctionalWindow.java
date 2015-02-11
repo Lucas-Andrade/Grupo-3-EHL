@@ -5,36 +5,58 @@ import java.awt.Cursor;
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
 import design.windows.WindowBase;
+import design.windows.popupwindows.UnderConstrutionWindow;
+import exceptions.InternalErrorException;
+import exceptions.SwingWorkerFactoryMissingException;
 
 
 /**
- * Abstract class to be extended by the classes that have the purpose of adding functionality to a
- * given {@link WindowBase}. Adding functionality to a window means adding an {@link ActionListener}
- * to all its buttons.
+ * Abstract class to be extended by the classes that add functionality to a certain
+ * {@link WindowBase}. Adding functionality to a window means adding an {@link ActionListener} to
+ * all its buttons; all the {@link ActionListener}s of the left buttons of these
+ * {@code FunctionalWindow}s depend on concrete classes that extend {@link ExceptionHandlerSW}.
+ * <b>Note: method {@link #set
  * 
- * @param <T>
- *            The return of the {@link SwingWorker#doInBackground() doInBackground()} method that
- *            will depend on the command called.
+ * @param <S>
+ *            The type of the {@link ExceptionHandlerSW} that add functionality to the left button
+ *            of this {@code FunctionalWindow}.
+ * @param <R>
+ *            The type of the results returned of the {@link SwingWorker#doInBackground()
+ *            doInBackground()} method that will depend on the command called.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public abstract class FunctionalWindow< T > {
+public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
     
+    
+    // INSTANCE FIELD
     /**
-     * {@code theFunctionalWindow} - the {@link WindowBase} to which functionality will be given.
+     * The {@link WindowBase} to which functionality will be given.
      */
-    private WindowBase theFunctionalWindow;
+    private final WindowBase theFunctionalWindow;
     
+    
+    
+    // CONSTRUCTOR
     /**
-     * Public constructor that will add functionality to a given non functional {@link WindowBase}
-     * and will display it.
+     * Adds functionality to the {@link WindowBase} {@code nonFunctionalWindow} and will displays
+     * it.
      * 
      * @param nonFunctionalWindow
-     *            - The {@code WindowBase} to which functionality will be added.
+     *            The {@code WindowBase} to which functionality will be added.
+     * @param swFactory
+     *            The {@link SwingWorkerFactory} responsible for producing the
+     *            {@link ExceptionHandlerSW}s that add functionality to the left button of
+     *            {@code nonFunctionalWindow}.
+     * @throws InternalErrorException
+     *             If either {@code nonFunctionalWindow} or {@code swFactory} are {@code null}.
      */
     public FunctionalWindow( WindowBase nonFunctionalWindow ) {
-        
-        theFunctionalWindow = nonFunctionalWindow;
+    
+        if( nonFunctionalWindow == null )
+            throw new InternalErrorException( "UNEXPECTED ERROR!\nCannot use FunctionalWindow's"
+                                              + " constructor with null nonFunctionalWindow!" );
+        this.theFunctionalWindow = nonFunctionalWindow;
         
         addRightButtonAction();
         addLeftButtonAction();
@@ -42,15 +64,16 @@ public abstract class FunctionalWindow< T > {
         theFunctionalWindow.setVisible( true );
     }
     
-    // Private Methods
+    
+    
+    // PRIVATE METHODS
     
     /**
-     * Method that will add functionality to the right button of all the {@code WindowBase} windows.
-     * 
-     * Right button -> dispose
+     * Adds the function of disposing the {@link WindowBase} received in the constructor to its
+     * right button.
      */
     private void addRightButtonAction() {
-        
+    
         theFunctionalWindow.getButtonsPanel().getRightButton()
                            .addActionListener( action -> theFunctionalWindow.dispose() );
     }
@@ -71,27 +94,36 @@ public abstract class FunctionalWindow< T > {
      * <ul>
      */
     private void addLeftButtonAction() {
-        
+    
         theFunctionalWindow.getButtonsPanel().getLeftButton().addActionListener(
         
         action -> {
-            
             theFunctionalWindow.setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
-            getSwingWorker().run();
+            
+            try {
+                getSwingWorker().run();
+            }
+            catch( SwingWorkerFactoryMissingException e ) {
+                new UnderConstrutionWindow();
+            }
+            
             theFunctionalWindow.setCursor( Cursor.getPredefinedCursor( Cursor.DEFAULT_CURSOR ) );
-        } );
+        }
+        
+        );
     }
     
-    // Protected Abstract Method
     
+    
+    // UNIMPLEMENTED METHOD
     /**
-     * Protected method to be implemented by the subclasses of this class. This method will return a
-     * {@link FunctionalWindowSwingWorker} with an {@code Override} implementation of its
-     * {@link SwingWorker#doInBackground() doInBackground()} and
-     * {@link FunctionalWindowSwingWorker#functionalDone(Object) functionalDone(Object)} methods.
+     * Returns a new {@link ExceptionHandlerSW}.
      * 
-     * @return Returns a {@link FunctionalWindowSwingWorker} with an {@code Override} of its
-     *         methods.
+     * @return A new {@link ExceptionHandlerSW}.
+     * @throws SwingWorkerFactoryMissingException
+     *             If there is no {@link SwingWorkerFactory} set in {@code this}'s class.
      */
-    protected abstract FunctionalWindowSwingWorker< T > getSwingWorker();
+    protected abstract S getSwingWorker() throws SwingWorkerFactoryMissingException;
+    
+    
 }

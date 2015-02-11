@@ -46,7 +46,7 @@ import exceptions.WrongLoginPasswordException;
  * @see CommandStrings_Dictionary
  * @see Translator
  */
-public class StringCommands_Executor implements Executor {
+public class StringCommandsExecutor implements Executor {
     
     /* Implementation notes:
      * 
@@ -128,7 +128,7 @@ public class StringCommands_Executor implements Executor {
     
     // CONSTRUCTOR
     /**
-     * Creates a new instance of {@link StringCommands_Executor} bound to a concrete string-command
+     * Creates a new instance of {@link StringCommandsExecutor} bound to a concrete string-command
      * and to a {@link CommandParser} instance. The method and path received in {@code args} (its
      * first and second entries) should match the method and path of one of the commands registered
      * in {@code cmdParser}.
@@ -157,7 +157,7 @@ public class StringCommands_Executor implements Executor {
      *             parameters-list.
      * @see CommandParser
      */
-    public StringCommands_Executor( CommandParser cmdParser, String... args )
+    public StringCommandsExecutor( CommandParser cmdParser, String... args )
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidArgumentException, InvalidCommandSyntaxException {
     
@@ -392,7 +392,7 @@ public class StringCommands_Executor implements Executor {
     
     // used in the methods getTranslator and getStream
     /**
-     * Checks whether the string-command bound to this instance of {@link StringCommands_Executor}
+     * Checks whether the string-command bound to this instance of {@link StringCommandsExecutor}
      * supports the functionalities coded in the parameters with names
      * {@link CommandStrings_Dictionary#ACCEPT} and {@link CommandStrings_Dictionary#STREAM} (these
      * are related with output formatting and printing).
@@ -424,4 +424,4 @@ public class StringCommands_Executor implements Executor {
         return parametersMap.get( parameterName );
     }
     
-}    
+}

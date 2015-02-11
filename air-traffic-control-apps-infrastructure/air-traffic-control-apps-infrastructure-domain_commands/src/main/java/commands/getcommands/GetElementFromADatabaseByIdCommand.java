@@ -52,7 +52,7 @@ public class GetElementFromADatabaseByIdCommand< E extends Element > implements
      */
     public GetElementFromADatabaseByIdCommand( Database< E > database, String identification )
         throws InvalidArgumentException {
-        
+    
         if( database == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -78,12 +78,12 @@ public class GetElementFromADatabaseByIdCommand< E extends Element > implements
      * 
      * @return The element of {@code database} which has the identification {@code identification}.
      * 
-     * @throws Exception
-     *             This method will not throw exceptions.
+     * @throws InvalidArgumentException
+     *             If the the {@code identification} is invalid.
      */
     @Override
-    public Optional< E > call() throws Exception {
-        
+    public Optional< E > call() throws InvalidArgumentException {
+    
         return database.getElementByIdentification( identification );
     }
 }

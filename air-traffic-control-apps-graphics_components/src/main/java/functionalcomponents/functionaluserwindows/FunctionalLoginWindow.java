@@ -1,17 +1,16 @@
 package functionalcomponents.functionaluserwindows;
 
 
-import Airship;
-import User;
 import java.awt.event.ActionListener;
-import javax.swing.SwingWorker;
+import org.eclipse.jetty.server.Authentication.User;
+import design.windows.popupwindows.UnderConstrutionWindow;
+import design.windows.userwindows.LogInWindow;
+import entities.SimpleUser;
+import exceptions.SwingWorkerFactoryMissingException;
+import functionalcomponents.ExceptionHandlerSW;
 import functionalcomponents.FunctionalWindow;
-import functionalcomponents.FunctionalWindowSwingWorker;
+import functionalcomponents.SwingWorkerFactory;
 import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
-import main.java.Database;
-import main.java.domain.commands.AuthenticateUserCommand;
-import main.java.gui.design.windows.MainWindow;
-import main.java.gui.design.windows.userwindows.LogInWindow;
 
 
 /**
@@ -22,99 +21,143 @@ import main.java.gui.design.windows.userwindows.LogInWindow;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class FunctionalLoginWindow extends FunctionalWindow< User > {
+public class FunctionalLoginWindow extends
+        FunctionalWindow< FunctionalLoginWindow.SwingWorker, SimpleUser > {
+    
+    
+    
+    // STATIC FIELDS
     
     /**
-     * {@code functionalWindow} - The {@code LoginWindow} we want to add functionality to.
+     * The {@link LogInWindow} we want to add functionality to.
      */
-    private LogInWindow functionalWindow;
+    public static final LogInWindow baseWindow = new LogInWindow();
     
     /**
-     * The {@code User} and {@code Airship}'s databases
+     * The {@link SwingWorkerFactory} that produces {@link FunctionalLoginWindow.SwingWorker}s for
+     * the {@link FunctionalLoginWindow}s.
      */
-    private Database< User > usersDatabase;
-    private Database< Airship > airshipsDatabase;
+    private static SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > swFactory;
     
     /**
-     * Public constructor that will add functionality to a given non functional {@link LoginWindow}
-     * and will display it.
+     * A lock for the {@link #swFactory}.
+     */
+    private static Object factoryLock = new Object();
+    
+    // STATIC METHOD
+    /**
+     * Sets the {@link SwingWorkerFactory} that produces {@link FunctionalLoginWindow.SwingWorker}s
+     * for the {@link FunctionalLoginWindow}s.
      * 
-     * @param nonFunctionalWindow
-     *            - The {@code LoginWindow} we want to add functionality to.
-     * @param usersDatabase
-     * @param airshipsDatabase
+     * @param factory
+     *            The {@link SwingWorkerFactory} that produces
+     *            {@link FunctionalLoginWindow.SwingWorker}s for the {@link FunctionalLoginWindow}s.
+     * @return {@code true} if {@code factory} was set as the factory that produces swingworkers for
+     *         the {@link FunctionalLoginWindow}s; <br/>
+     *         {@code false} if there was a factory already set.
      */
-    public FunctionalLoginWindow( LogInWindow nonFunctionalWindow, Database< User > usersDatabase,
-                                  Database< Airship > airshipsDatabase ) {
-        
-        super( nonFunctionalWindow );
-        
-        this.functionalWindow = nonFunctionalWindow;
-        
-        this.usersDatabase = usersDatabase;
-        this.airshipsDatabase = airshipsDatabase;
+    public static
+            boolean
+            setSwingWorkerFactory( SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > factory ) {
+    
+        synchronized (factoryLock) {
+            if( swFactory == null ) {
+                swFactory = factory;
+                return true;
+            }
+            return false;
+        }
     }
     
+    
+    
+    // CONSTRUCTOR
     /**
-     * Method that will return a {@link FunctionalWindowSwingWorker} with an {@code Override}
-     * implementation of its {@link SwingWorker#doInBackground() doInBackground()} and
-     * {@link FunctionalWindowSwingWorker#functionalDone(Object) functionalDone(Object)} methods to
-     * add the correct functionality to a {@link LogInWindow}.
-     * 
-     * @return Returns a {@link FunctionalWindowSwingWorker} with an {@code Override} of its
-     *         methods.
+     * Adds functionality to a {@link LoginWindow} and displays it.
+     */
+    public FunctionalLoginWindow() {
+    
+        super( baseWindow );
+    }
+    
+    
+    
+    // PUBLIC METHOD
+    /**
+     * @see functionalcomponents.FunctionalWindow#getSwingWorker()
      */
     @Override
-    protected FunctionalWindowSwingWorker< User > getSwingWorker() {
-        
-        return new FunctionalWindowSwingWorker< User >( functionalWindow.getErrorJTextArea() ) {
-            
-            /**
-             * String representation of the parameters to use in the commands and that are obtained
-             * from the window's text fields.
-             */
-            String username = functionalWindow.getUserPanel().getJTextField().getText();
-            String password = functionalWindow.getPasswordPanel().getJTextField().getText();
-            
-            /**
-             * Implementation of the {@link SwingWorker#doInBackground() doInBackground()} method
-             * with the purpose of executing a {@link AuthenticateUserCommand} and obtaining its
-             * result.
-             * 
-             * @return Returns a {@link User}
-             */
-            @Override
-            protected User doInBackground() throws Exception {
-                
-                return new AuthenticateUserCommand( username, password, usersDatabase ).call()
-                                                                                       .get();
-            }
-            
-            /**
-             * Implementation of the {@link FunctionalWindowSwingWorker#functionalDone()
-             * functionalDone()}. This method will receive the result of the
-             * {@link SwingWorker#doInBackground() doInBackground()} method and open a new
-             * {@link FunctionalMainWindow}, closing this window.
-             * 
-             * @param resultOfDoInBackGround
-             *            - The result of the {@link SwingWorker#doInBackground() doInBackground()}
-             *            method.
-             */
-            @Override
-            protected void functionalDone( User resultOfDoInBackGround ) throws Exception {
-                
-                new FunctionalMainWindow(
-                                          new MainWindow( airshipsDatabase,
-                                                          airshipsDatabase.getAllElements().get() ),
-                                          usersDatabase, airshipsDatabase, resultOfDoInBackGround );
-                
-                functionalWindow.dispose();
-            }
-        };
+    protected SwingWorker getSwingWorker() throws SwingWorkerFactoryMissingException {
+    
+        if( swFactory == null )
+            throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
+        return swFactory.newInstance();
     }
     
     
-    public class SwingWorker extends FunctionalWindowSwingWorker< User > {
+    
+    // INNER CLASS
+    /**
+     * Class whose instances are {@link ExceptionHandlerSW} able to add funcitonality to a
+     * {@link LogInWindow}.
+     *
+     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+     */
+    public static abstract class SwingWorker extends ExceptionHandlerSW< SimpleUser > {
+        
+        
+        
+        // INSTANCE FIELDS
+        
+        protected LogInWindow window;
+        
+        /**
+         * String representation of the parameters to use in the commands and that are obtained from
+         * the window's text fields.
+         */
+        protected String usernameLabel;
+        protected String passwordLabel;
+        
+        protected String username;
+        protected String password;
+        
+        
+        
+        // CONSTRUCTOR
+        public SwingWorker( LogInWindow window ) {
+        
+            super( window.getErrorJTextArea() );
+            this.window = window;
+            
+            this.usernameLabel = window.getUserPanel().getJLabel().getText();
+            this.passwordLabel = window.getPasswordPanel().getJLabel().getText();
+            
+            this.username = window.getUserPanel().getJTextField().getText();
+            this.password = window.getPasswordPanel().getJTextField().getText();
+        }
+        
+        
+        
+        // IMPLEMENTATION OF METHODS INHERITED FROM SwingWorker and FunctionalWindowSwingWorker
+        /**
+         * Implementation of the {@link FunctionalWindowSwingWorker#functionalDone()
+         * functionalDone()}. This method will receive the result of the
+         * {@link SwingWorker#doInBackground() doInBackground()} method and open a new
+         * {@link FunctionalMainWindow}, closing this window.
+         * 
+         * @param resultOfDoInBackGround
+         *            - The result of the {@link SwingWorker#doInBackground() doInBackground()}
+         *            method.
+         */
+        @Override
+        protected void finalizeDone( SimpleUser resultOfDoInBackGround ) throws Exception {
+        
+//            new FunctionalMainWindow( new MainWindow( airshipsDatabase,
+//                                                      airshipsDatabase.getAllElements().get() ),
+//                                      usersDatabase, airshipsDatabase, resultOfDoInBackGround );
+            new UnderConstrutionWindow();
+            baseWindow.dispose();
+        }
         
         
     }

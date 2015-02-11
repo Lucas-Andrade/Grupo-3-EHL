@@ -31,7 +31,7 @@ public class SimpleAirshipInfoButton extends EntitiesInfoButton< SimpleAirship >
      * The {@link SwingWorker} factory, it HAVE be initialized one and only one time with the
      * {@link SimpleAirshipInfoButton#setSwingWorkerFactory setSwingWorkerFactory}.
      */
-    private static SwingWorkerForButtonFactory< SwingWorker< SimpleAirship, Void >, SimpleAirship > factory;
+    private static SwingWorkerForButtonFactory< SwingWorker< SimpleAirship, Void >, SimpleAirship > swFactory;
     private static final Object lock = new Object();
 
 
@@ -69,7 +69,7 @@ public class SimpleAirshipInfoButton extends EntitiesInfoButton< SimpleAirship >
             if( swFactory == null )
                 return false;
             
-            SimpleAirshipInfoButton.factory = swFactory;
+            SimpleAirshipInfoButton.swFactory = swFactory;
             return true;
         }
     }
@@ -84,6 +84,8 @@ public class SimpleAirshipInfoButton extends EntitiesInfoButton< SimpleAirship >
     protected SwingWorker< SimpleAirship, Void > newSwingWorker( String identification,
                                                                  JTextArea textArea ) {
     
-        return factory.newInstance( identification, textArea );
+//        if( swFactory == null )
+//            throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
+        return swFactory.newInstance( identification, textArea );
     }
 }

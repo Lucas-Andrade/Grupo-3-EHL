@@ -50,7 +50,7 @@ public class GetAirshipsWithLessPassengersThanCommand implements
     public GetAirshipsWithLessPassengersThanCommand( Database< Airship > airshipDatabase,
                                                      int maximumNumberOfPassengers )
         throws InvalidArgumentException {
-        
+    
         if( airshipDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate command with null database." );
         
@@ -78,12 +78,14 @@ public class GetAirshipsWithLessPassengersThanCommand implements
      * @return The list of all elements in {@code database} that are transgressing their
      *         pre-established air corridors.
      * 
-     * @throws Exception
-     *             This method will not throw exceptions.
+     * @throws InvalidArgumentException
+     *             If the predicate given to the method
+     *             {@link Database#getAllElementsThat(Predicate) getAllElementsThat(Predicate)} is
+     *             null.
      */
     @Override
-    public Optional< Iterable< Airship >> call() throws Exception {
-        
+    public Optional< Iterable< Airship >> call() throws InvalidArgumentException {
+    
         return airshipDatabase.getAllElementsThat( new AirshipPredicates.HasPassagersNumberBelowAThreshold(
                                                                                                             max ) );
     }

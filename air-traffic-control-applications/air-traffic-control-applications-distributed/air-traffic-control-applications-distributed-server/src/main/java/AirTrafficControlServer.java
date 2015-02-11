@@ -1,10 +1,9 @@
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.concurrent.Callable;
-import outputformatters.Translatable;
-import outputformatters.totranslatableconverters.ToTranslatableConverter;
-import outputformatters.translators.Translator;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletHandler;
+import org.eclipse.jetty.servlet.ServletMapping;
 import parsingtools.CommandParser;
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.HelpCommandsFactory;
@@ -22,7 +21,6 @@ import parsingtools.commandfactories.userauthenticatingfactories.PatchAirshipCom
 import parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.PostAirshipCommandsFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.PostUserCommandsFactory;
-import utils.StringCommandsExecutor;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import databases.Database;
 import databases.InMemoryAirshipsDatabase;
@@ -33,8 +31,8 @@ import exceptions.InvalidArgumentException;
 
 
 /**
- * AirTrafficControl Application for command line. All available commands are registered first. Then
- * the user can use each command till it writes "EXIT" - end of the program
+ * An AirTrafficControl Server. All available commands are resisted first.
+ * 
  * <ul>
  * Command list:
  * 
@@ -84,37 +82,48 @@ import exceptions.InvalidArgumentException;
  * Adds a new user.
  * 
  * <ul>
- *
+ * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class App {
+public class AirTrafficControlServer {
     
+    // Public Static Fields
     
-    // STATIC FIELDS
+    /**
+     * {@code CMD_Parser} - This class command parser where all the commands will be registed.
+     */
+    public static final CommandParser CMD_PARSER = new CommandParser();
     
-    private static final CommandParser cmdParser = new CommandParser();
-    private static final Scanner SCANNER = new Scanner( System.in );
+    // Private Static Fields
     
+    /**
+     * {@code LISTEN_PORT} - The server port.
+     */
+    private static final int LISTEN_PORT = 8081;
+    
+    /**
+     * The databases where all the elements created by the commands will be stored.
+     */
     private static Database< User > usersDatabase;
     private static Database< Airship > airshipsDatabase;
     
+    /**
+     * {@code commandsDescription} - The {@link Map} that will contain the description of all the
+     * commands registed in the command parser. This {@link #commandsDescription Map} will have as
+     * key the method and path of each command and as values the corresponding command descriptions.
+     */
     private static final Map< String, String > commandsDescription =
             new HashMap< String, String >();
     
+    // Static Fields Constructor
+    
     /**
-     * Unused private constructor
+     * Static field constructor where the databases will be created and initialized.
      */
-    private App() {
-    
-    }
-    
-    
-    // STATIC CONSTRUCTOR
-    
     static {
         try {
-            usersDatabase = new InMemoryUsersDatabase( "users database" );
-            airshipsDatabase = new InMemoryAirshipsDatabase( "airships database" );
+            usersDatabase = new InMemoryUsersDatabase( "Users Database" );
+            airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
         }
         catch( InvalidArgumentException e ) {
             System.out.println( e.getMessage() );
@@ -122,99 +131,95 @@ public class App {
         }
     }
     
-    
-    
-    // METHODS
+    // Private Constructor
     
     /**
-     * Execute the inputed {@code args} or {@code input}, see {@link #execute(String[])}.
+     * Unused private constructor
+     */
+    private AirTrafficControlServer() {
+    
+    }
+    
+    // Main Methods
+    
+    /**
+     * Main method that will regist all the commands in the {@link #CMD_PARSER} and start the
+     * server.
      * 
      * @param args
      */
     public static void main( String[] args ) {
     
-        // Register commands phase
-        commandRegister();
+        registerCommands();
         
-        // App's behavior if arguments are given when app starts
-        if( args.length != 0 )
-            execute( args );
+        Server server = new Server( LISTEN_PORT );
         
-        
-        // App's behavior if app starts with no arguments
-        else {
-            System.out.print( "> " );
-            String input = SCANNER.nextLine();
-            
-            while( !input.equals( "EXIT" ) ) {
-                execute( input.split( " " ) );
-                System.out.print( "\n> " );
-                input = SCANNER.nextLine();
-            }
-        }
+        startServer( server );
     }
     
+    // Private Auxilar Methods
     
     /**
-     * Registration phase
+     * Auxiliar private method called by this class {@link #main(String[])} method as the
+     * registration phase of all the implemented {@link Callable Commads}.
      * 
-     * All the {@link Callable Commads} must be registered to be used by the user. Each
-     * {@code Commad} are registered with it {@link CommandParser.Node path}.
+     * Each {@code Commad} is registed with its {@link CommandParser.Node path} and
+     * {@link CommandFactory}.
      * 
-     * No {@code Exception} should be catch!
+     * No {@link Exception} should be catched.
      */
-    private static void commandRegister() {
+    private static void registerCommands() {
     
         try {
             
             // DELETE
             
-            commandRegist( "DELETE", "/airships/{flightId}",
+            registCommand( "DELETE", "/airships/{flightId}",
                            new DeleteAirshipCommandsFactory( usersDatabase, airshipsDatabase ) );
             
             // GET /airships
             
-            commandRegist( "GET", "/airships",
+            registCommand( "GET", "/airships",
                            new GetAllAirshipsInADatabaseCommandsFactory( airshipsDatabase ) );
-            commandRegist( "GET", "/airships/{flightId}",
+            registCommand( "GET", "/airships/{flightId}",
                            new GetAirshipByFlightIdCommandsFactory( airshipsDatabase ) );
-            commandRegist( "GET", "/airships/owner/{owner}",
+            registCommand( "GET", "/airships/owner/{owner}",
                            new GetAirshipsOfOwnerCommandsFactory( airshipsDatabase ) );
-            commandRegist( "GET", "/airships/nbPassengers/{nbP}/bellow",
+            registCommand( "GET", "/airships/nbPassengers/{nbP}/bellow",
                            new GetAirshipsWithLessPassengersThanCommandsFactory( airshipsDatabase ) );
-            commandRegist( "GET", "/airships/reports",
+            registCommand( "GET", "/airships/reports",
                            new GetAllTransgressingAirshipsCommandsFactory( airshipsDatabase ) );
-            commandRegist( "GET", "/airships/reports/{flightId}",
+            registCommand( "GET", "/airships/reports/{flightId}",
                            new CheckIfAirshipIsTransgressingCommandsFactory( airshipsDatabase ) );
-            commandRegist( "GET",
+            registCommand( "GET",
                            "/airships/find",
                            new GetTheNearestAirshipsToGeographicPositionCommandsFactory(
                                                                                          airshipsDatabase ) );
             // GET /users
             
-            commandRegist( "GET", "/users",
+            registCommand( "GET", "/users",
                            new GetAllUsersInADatabaseCommandsFactory( usersDatabase ) );
-            commandRegist( "GET", "/users/{username}",
+            registCommand( "GET", "/users/{username}",
                            new GetUserByUsernameCommandsFactory( usersDatabase ) );
             
             // OPTION
             
-            commandRegist( "OPTION", "/", new HelpCommandsFactory( commandsDescription ) );
+            registCommand( "OPTION", "/", new HelpCommandsFactory( commandsDescription ) );
             
             // PATCH
             
-            commandRegist( "PATCH", "/users/{username}",
+            registCommand( "PATCH", "/users/{username}",
                            new PatchUserPasswordCommandsFactory( usersDatabase ) );
             
-            commandRegist( "PATCH", "/airships/{flightId}",
+            registCommand( "PATCH", "/airships/{flightId}",
                            new PatchAirshipCommandsFactory( usersDatabase, airshipsDatabase ) );
             
             // POST
             
-            commandRegist( "POST", "/users", new PostUserCommandsFactory( usersDatabase,
+            registCommand( "POST", "/users", new PostUserCommandsFactory( usersDatabase,
                                                                           usersDatabase ) );
             
-            commandRegist( "POST", "/airships/{type}",
+            registCommand( "POST", "/airships/{type}",
                            new PostAirshipCommandsFactory( usersDatabase, airshipsDatabase ) );
             
         }
@@ -225,11 +230,24 @@ public class App {
         }
     }
     
-    private static void commandRegist( String method, String path,
+    /**
+     * Auxiliar method called by {@link #registerCommands()} to regist each of the commands
+     * individually and to add to the {@link #commandsDescription} {@link Map} the command
+     * description associated with each specific command.
+     * 
+     * @param method
+     *            - The String with the command method.
+     * @param path
+     *            - The String with the path to the command.
+     * @param commandFactory
+     *            - The {@link CommandFactory} to be used to create the specific command associated
+     *            with the given method and path.
+     */
+    private static void registCommand( String method, String path,
                                        CommandFactory< ? > commandFactory ) {
     
         try {
-            cmdParser.registerCommand( method, path, commandFactory );
+            CMD_PARSER.registerCommand( method, path, commandFactory );
             commandsDescription.put( new StringBuilder( method ).append( " " ).append( path )
                                                                 .toString(),
                                      commandFactory.getCommandsDescription() );
@@ -239,33 +257,26 @@ public class App {
         }
     }
     
-    
     /**
-     * Execute phase:
-     * <ul>
-     * <li>1 - {@link StringCommandsExecutor#getCommand()}: Get the {@link Callable command} by the
-     * given {@code args}, and execute it.
-     * <li>2 - The received information by the {@code command} is
-     * {@link ToTranslatableConverter#convert converted} to a {@link Translatable}.
-     * <li>3 - {@link StringCommandsExecutor#getTranslator()}: Get the {@link Translator} specified
-     * in the {@code args}.Then the {@code Translatable} is {@link Translator#encode() encoded} (to
-     * plain text, json or html).
-     * <li>4 - {@link StringCommandsExecutor#getStream()}: Get the path specified in the
-     * {@code args} where the received information by the command will be written. If no path is
-     * given then the info is written in the commandLine.
-     * </ul>
+     * Auxiliar private method called by this class {@link #main(String[])} method to start the
+     * server and associate to it a {@link ServletHandler} with a {@link ServletMapping} of
+     * {@link AirTrafficControlServelet}.
      * 
-     * @param args
+     * @param server
      */
-    private static void execute( String[] args ) {
+    private static void startServer( Server server ) {
     
+        ServletHandler handler = new ServletHandler();
+        server.setHandler( handler );
+        
+        handler.addServletWithMapping( AirTrafficControlServelet.class, "/*" );
+        
         try {
-            StringCommandsExecutor parser = new StringCommandsExecutor( cmdParser, args );
-            parser.writeOutputToStream();
+            server.start();
         }
         catch( Exception e ) {
-            System.out.println( e.getMessage() );
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
-    
 }

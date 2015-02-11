@@ -7,7 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import parsingtools.CommandParser;
 import parsingtools.commandfactories.getfactories.GetAllTransgressingAirshipsCommandsFactory;
-import utils.StringCommands_Executor;
+import utils.StringCommandsExecutor;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
@@ -61,7 +61,7 @@ public class GetAllTransgressingAirshipsFactory_Tests {
         InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
         
         Callable< ? > getAllTransgressinAirshipsCommand =
-                (new StringCommands_Executor( cmdparser, "GET", "/airships/reports" )).getCommand();
+                (new StringCommandsExecutor( cmdparser, "GET", "/airships/reports" )).getCommand();
         
         Assert.assertTrue( getAllTransgressinAirshipsCommand instanceof GetAllTransgressingAirshipsCommand );
     }

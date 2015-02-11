@@ -7,7 +7,7 @@ import org.omg.CORBA.CompletionStatus;
 import design.windows.airshipwindows.PostAirshipsWindow;
 import design.windows.popupwindows.SuccessWindow;
 import functionalcomponents.FunctionalWindow;
-import functionalcomponents.FunctionalWindowSwingWorker;
+import functionalcomponents.ExceptionHandlerSW;
 
 
 
@@ -59,18 +59,18 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< CompletionSta
     }
     
     /**
-     * Method that will return a {@link FunctionalWindowSwingWorker} with an {@code Override}
+     * Method that will return a {@link ExceptionHandlerSW} with an {@code Override}
      * implementation of its {@link SwingWorker#doInBackground() doInBackground()} and
-     * {@link FunctionalWindowSwingWorker#functionalDone(Object) functionalDone(Object)} methods to
+     * {@link ExceptionHandlerSW#finalizeDone(Object) functionalDone(Object)} methods to
      * add the correct functionality to a {@link PostUserWindow}.
      * 
-     * @return Returns a {@link FunctionalWindowSwingWorker} with an {@code Override} of its
+     * @return Returns a {@link ExceptionHandlerSW} with an {@code Override} of its
      *         methods.
      */
     @Override
-    protected FunctionalWindowSwingWorker< CompletionStatus > getSwingWorker() {
+    protected ExceptionHandlerSW< CompletionStatus > getSwingWorker() {
         
-        return new FunctionalWindowSwingWorker< CompletionStatus >(
+        return new ExceptionHandlerSW< CompletionStatus >(
                                                                     functionalWindow.getErrorJTextArea() ) {
             
             /**
@@ -194,7 +194,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< CompletionSta
             }
             
             /**
-             * Implementation of the {@link FunctionalWindowSwingWorker#functionalDone()
+             * Implementation of the {@link ExceptionHandlerSW#functionalDone()
              * functionalDone()}. This method will receive the result of the
              * {@link SwingWorker#doInBackground() doInBackground()} method and, if this result
              * positive, open new {@link SuccessWindow}, closing this one.
@@ -204,7 +204,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< CompletionSta
              *            method.
              */
             @Override
-            public void functionalDone( CompletionStatus resultOfDoInBackGround ) {
+            public void finalizeDone( CompletionStatus resultOfDoInBackGround ) {
                 
                 new SuccessWindow( resultOfDoInBackGround.getMessage() );
                 functionalWindow.dispose();

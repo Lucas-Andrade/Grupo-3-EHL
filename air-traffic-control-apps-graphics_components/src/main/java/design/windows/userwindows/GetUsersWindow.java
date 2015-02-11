@@ -10,37 +10,37 @@ import entities.SimpleUser;
 
 
 
-    /**
-     *   Class who's instances represents panel that extends {@link PopupWindow},  
-     *   so it inherits a {@link JPanel} with a {@link JButton}.
-     *   This instance also add a {@link ScrollPanelForUsers#produceAJScrollPaneWithAllElements} 
-     *   and has this configuration: 
-     *   
-     *  <pre>
-     *     ____________________________________
-     *    |                                    |
-     *    |                                    |
-     *    |                                    |
-     *    | produceAJScrollPaneWithAllElements |
-     *    |____________________________________|
-     *    |                                    |
-     *    |              JButton               |
-     *    |____________________________________|
-   
-     *    
-     * </pre>
-     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
-     */
-
+/**
+ * Class who's instances represents panel that extends {@link PopupWindow}, so it inherits a
+ * {@link JPanel} with a {@link JButton}. This instance also add a
+ * {@link JScrollPanelForUsers#produceAJScrollPaneWithAllElements} and has this configuration:
+ * 
+ * <pre>
+ *     ____________________________________
+ *    |                                    |
+ *    |                                    |
+ *    |                                    |
+ *    | produceAJScrollPaneWithAllElements |
+ *    |____________________________________|
+ *    |                                    |
+ *    |              JButton               |
+ *    |____________________________________|
+ * 
+ * 
+ * </pre>
+ * 
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
 @SuppressWarnings( "serial" )
 public class GetUsersWindow extends PopupWindow {
     
-    //////////////////////////////////////////////////// 
+    // //////////////////////////////////////////////////
     // Graphical Fields used only for design purposes //
-   ////////////////////////////////////////////////////
-
+    // //////////////////////////////////////////////////
+    
     /**
-     * {@code WINDOWWIDTH} int value that represents {@link GetAirshipsWithLessPassengerThanWindow} width. 
+     * {@code WINDOWWIDTH} int value that represents {@link GetAirshipsWithLessPassengerThanWindow}
+     * width.
      */
     private static final int WINDOWWIDTH = 500;
     /**
@@ -50,9 +50,9 @@ public class GetUsersWindow extends PopupWindow {
     private static final int WINDOWHEIGHT = 300;
     
     
-    //////////////////////
-    //// Constructors ////
-   //////////////////////
+    // ////////////////////
+    // // Constructors ////
+    // ////////////////////
     
     /**
      * Public constructor that creates a new {@link GetUsersWindow} 
@@ -61,7 +61,8 @@ public class GetUsersWindow extends PopupWindow {
     public GetUsersWindow( Iterable< SimpleUser > users ) {
         
         super( new ScrollPanelForUsers().produceAJScrollPaneWithAllEntities( users ) );
-        
+
         setPreferredSize( new Dimension( WINDOWWIDTH, WINDOWHEIGHT ) );
     }
 }
+

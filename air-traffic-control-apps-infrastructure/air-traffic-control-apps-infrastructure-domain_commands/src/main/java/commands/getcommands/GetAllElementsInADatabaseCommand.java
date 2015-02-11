@@ -63,12 +63,9 @@ public class GetAllElementsInADatabaseCommand< E extends Element > implements
      * </p>
      * 
      * @return The list of all the elements in the {@code database}.
-     * 
-     * @throws Exception
-     *             This method will not throw exceptions.
      */
     @Override
-    public Optional< Iterable< E >> call() throws Exception {
+    public Optional< Iterable< E >> call() {
         
         return database.getAllElements();
     }

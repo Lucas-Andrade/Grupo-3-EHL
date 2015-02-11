@@ -8,7 +8,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import parsingtools.CommandParser;
 import parsingtools.commandfactories.getfactories.GetAirshipsOfOwnerCommandsFactory;
-import utils.StringCommands_Executor;
+import utils.StringCommandsExecutor;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import commands.getcommands.GetAirshipsOfOwnerCommand;
 import databases.InMemoryAirshipsDatabase;
@@ -52,7 +52,7 @@ public class GetAirshipsOfOwnerCommandsFactory_Tests {
         
         
         Callable< ? > getAirshipsOfOwnerCommands =
-                (new StringCommands_Executor( cmdparser, "GET", "/airships/owner/Daniel" )).getCommand();
+                (new StringCommandsExecutor( cmdparser, "GET", "/airships/owner/Daniel" )).getCommand();
         
         assertTrue( getAirshipsOfOwnerCommands instanceof GetAirshipsOfOwnerCommand );
     }

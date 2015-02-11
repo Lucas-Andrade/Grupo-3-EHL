@@ -13,8 +13,8 @@ import entities.Entity;
  * Abstract class for {@code Button}s with a {@link ActionListener} to GET the info of a
  * {@link Entity} by its identification.
  * 
- * Each {@code Button} will be associated to a {@link Entity} {@code identification}, and write
- * its info on a given {@link JTextArea}.
+ * Each {@code Button} will be associated to a {@link Entity} {@code identification}, and write its
+ * info on a given {@link JTextArea}.
  *
  * @param <E>
  *            - The type of the {@link Entity} to GET
@@ -44,7 +44,7 @@ public abstract class EntitiesInfoButton< E extends Entity > extends JButton {
         addActionListener( action -> newSwingWorker( identification, textArea ).run() );
     }
     
-    //Abstract method
+    // Abstract method
     /**
      * Create a new {@link SwingWorker}.
      * 
@@ -57,9 +57,10 @@ public abstract class EntitiesInfoButton< E extends Entity > extends JButton {
      */
     protected abstract SwingWorker< E, Void > newSwingWorker( String identification,
                                                               JTextArea textArea );
+//        throws SwingWorkerFactoryMissingException;
     
     
-    //Inner class
+    // Inner class
     /**
      * Abstract class for {@link SwingWorker}s associated to {@link EntitiesInfoButton}, that will
      * write the the result of the {@link SwingWorker#get() get()} on the given {@link JTextArea}.

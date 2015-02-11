@@ -14,7 +14,7 @@ import parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUser
 import parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
 import utils.CommandStrings_Dictionary;
 import utils.CompletionStatus;
-import utils.StringCommands_Executor;
+import utils.StringCommandsExecutor;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.parserexceptions.DuplicateParametersException;
@@ -37,7 +37,7 @@ public class ParserTest {
         cmdparser.registerCommand( "GET", "/users",
                                    new GetAllUsersInADatabaseCommandsFactory( usersDatabase ) );
         
-        StringCommands_Executor parser = new StringCommands_Executor( cmdparser, "GET", "/users" );
+        StringCommandsExecutor parser = new StringCommandsExecutor( cmdparser, "GET", "/users" );
         
         Assert.assertEquals( "[username: MASTER,\r\npassword: master,\r\nemail: master@master\r\n]",
                              parser.getCommand().call().toString() );
@@ -59,8 +59,8 @@ public class ParserTest {
         
         usersDatabase.add( user1, user1 );
         
-        StringCommands_Executor parser =
-                new StringCommands_Executor( cmdparser, "PATCH", "/users/pantunes",
+        StringCommandsExecutor parser =
+                new StringCommandsExecutor( cmdparser, "PATCH", "/users/pantunes",
                             "oldPassword=pass&newPassword=pass2&loginName=pantunes&loginPassword=pass" );
         
         Assert.assertEquals( "User password successfully changed.",
@@ -86,7 +86,7 @@ public class ParserTest {
         
         usersDatabase.add( user1, user1 );
         
-        StringCommands_Executor parser = new StringCommands_Executor( cmdparser, "PATCH", "/users/pantunes", "accept=text/plain" );
+        StringCommandsExecutor parser = new StringCommandsExecutor( cmdparser, "PATCH", "/users/pantunes", "accept=text/plain" );
         
         Assert.assertEquals( "ToPlainTextTranslator", parser.getTranslator().getClass()
                                                             .getSimpleName() );
@@ -111,7 +111,7 @@ public class ParserTest {
         
         usersDatabase.add( user1, user1 );
         
-        StringCommands_Executor parser = new StringCommands_Executor( cmdparser, "GET", "/users/pantunes" );
+        StringCommandsExecutor parser = new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes" );
         
         Assert.assertEquals( "ToPlainTextTranslator", parser.getTranslator().getClass()
                                                             .getSimpleName() );
@@ -133,8 +133,8 @@ public class ParserTest {
         cmdparser.registerCommand( "GET", "/users/{username}",
                                    new GetUserByUsernameCommandsFactory( usersDatabase ) );
         
-        StringCommands_Executor parser =
-                new StringCommands_Executor( cmdparser, "GET", "/users/pantunes",
+        StringCommandsExecutor parser =
+                new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes",
                             CommandStrings_Dictionary.STREAM + "=src/test/resources/ParserTest_TestFile.txt" );
         
         OutputStream ps = parser.getStream();
@@ -170,7 +170,7 @@ public class ParserTest {
         
         usersDatabase.add( user1, user1 );
         
-        StringCommands_Executor parser = new StringCommands_Executor( cmdparser, "GET", "/users/pantunes" );
+        StringCommandsExecutor parser = new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes" );
         
         Assert.assertFalse( parser.getStream().checkError() );
         
@@ -216,9 +216,9 @@ public class ParserTest {
         
         usersDatabase.add( user1, user1 );
         
-        StringCommands_Executor.TRANSLATORS.put( "FakeFormat", null );
+        StringCommandsExecutor.TRANSLATORS.put( "FakeFormat", null );
         
-        StringCommands_Executor parser = new StringCommands_Executor( cmdparser, "GET", "/users/pantunes", "accept=FakeFormat" );
+        StringCommandsExecutor parser = new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes", "accept=FakeFormat" );
         
         parser.getTranslator();
     }
@@ -229,7 +229,7 @@ public class ParserTest {
         InvalidCommandSyntaxException, InvalidArgumentException {
         
         CommandParser cmdparser = new CommandParser();
-        new StringCommands_Executor( cmdparser, "GET" );
+        new StringCommandsExecutor( cmdparser, "GET" );
         
     }
     
@@ -240,7 +240,7 @@ public class ParserTest {
         
         CommandParser cmdparser = new CommandParser();
         String args = null;
-        new StringCommands_Executor( cmdparser, args );
+        new StringCommandsExecutor( cmdparser, args );
         
     }
     
@@ -250,7 +250,7 @@ public class ParserTest {
         InvalidCommandSyntaxException, InvalidArgumentException {
         
         CommandParser cmdparser = new CommandParser();
-        new StringCommands_Executor( cmdparser, "GET", "/users", "/users", "/users" );
+        new StringCommandsExecutor( cmdparser, "GET", "/users", "/users", "/users" );
         
     }
     
@@ -261,7 +261,7 @@ public class ParserTest {
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
         
-        new StringCommands_Executor( null, "", "" );
+        new StringCommandsExecutor( null, "", "" );
     }
     
     
@@ -270,7 +270,7 @@ public class ParserTest {
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
         
-        new StringCommands_Executor( new CommandParser() );
+        new StringCommandsExecutor( new CommandParser() );
     }
     
     
@@ -279,7 +279,7 @@ public class ParserTest {
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
         
-        new StringCommands_Executor( new CommandParser(), "arg[0]" );
+        new StringCommandsExecutor( new CommandParser(), "arg[0]" );
     }
     
     
@@ -289,7 +289,7 @@ public class ParserTest {
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
         
-        new StringCommands_Executor( new CommandParser(), "arg[0]", "arg[1]", "arg[2]", "arg[3]" );
+        new StringCommandsExecutor( new CommandParser(), "arg[0]", "arg[1]", "arg[2]", "arg[3]" );
     }
     
     
@@ -299,7 +299,7 @@ public class ParserTest {
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
         
-        new StringCommands_Executor( new CommandParser(), "", "", "a" );
+        new StringCommandsExecutor( new CommandParser(), "", "", "a" );
     }
     
     
@@ -309,7 +309,7 @@ public class ParserTest {
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
         
-        new StringCommands_Executor( new CommandParser(), "", "", "a&b=c" );
+        new StringCommandsExecutor( new CommandParser(), "", "", "a&b=c" );
     }
     
     
@@ -318,7 +318,7 @@ public class ParserTest {
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
         InvalidCommandSyntaxException, InvalidArgumentException {
         
-        new StringCommands_Executor( new CommandParser(), "", "", "a=b&a=c" );
+        new StringCommandsExecutor( new CommandParser(), "", "", "a=b&a=c" );
     }
     
 }

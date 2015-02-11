@@ -85,6 +85,8 @@ public class SimpleUserInfoButton extends EntitiesInfoButton< SimpleUser > {
     protected SwingWorker< SimpleUser, Void > newSwingWorker( String identification,
                                                               JTextArea textArea ) {
     
+//      if( swFactory == null )
+//      throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
         return swingWorkerFactory.newInstance( identification, textArea );
     }
 }

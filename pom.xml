@@ -39,11 +39,11 @@
 	</prerequisites>
 
 	<modules>
-		<module>atc-apps-infrastructure</module>
-		<module>atc-apps-utils</module>
 		<module>atc-applications</module>
 		<module>atc-apps-string_commands_handlers</module>
 		<module>atc-apps-graphics_components</module>
+		<module>atc-apps-infrastructure</module>
+		<module>atc-apps-utils</module>
 	</modules>
 
 
@@ -99,7 +99,7 @@
 	<build>
 		<defaultGoal>
 			<!-- WHILE CLIENT, GUI AND GRAPHICS ARE NOT COMPILING, WRITE THE LINE
-			 mvn -pl !atc-applications/atc-applications-distributed/atc-applications-distributed-client,!atc-applications/atc-applications-gui,!atc-apps-graphics_components clean package sonar:sonar
+			 mvn -pl !atc-apps-graphics_components clean package sonar:sonar
 			TO THE COMMAND LINE -->
 			clean package sonar:sonar
 		</defaultGoal>

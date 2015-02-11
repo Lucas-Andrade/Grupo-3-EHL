@@ -42,7 +42,7 @@ public abstract class FunctionalGetWindowSwingWorker extends
         super( errorTextArea );
 
         this.bodyPanel = bodyPanel;
-    }
+    } 
     
     /**
      * Implementation of the {@link ExceptionHandlerSW#finalizeDone(Object)

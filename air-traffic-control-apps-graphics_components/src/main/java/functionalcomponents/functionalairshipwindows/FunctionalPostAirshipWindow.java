@@ -68,7 +68,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< CompletionSta
      *         methods.
      */
     @Override
-    protected ExceptionHandlerSW< CompletionStatus > getSwingWorker() {
+    protected ExceptionHandlerSW< CompletionStatus > getNewSwingWorker() {
         
         return new ExceptionHandlerSW< CompletionStatus >(
                                                                     functionalWindow.getErrorJTextArea() ) {

@@ -68,7 +68,7 @@ public class FunctionalPostUserWindow extends FunctionalWindow< CompletionStatus
      *         methods.
      */
     @Override
-    protected ExceptionHandlerSW< CompletionStatus > getSwingWorker() {
+    protected ExceptionHandlerSW< CompletionStatus > getNewSwingWorker() {
         
         return new ExceptionHandlerSW< CompletionStatus >(
                                                                     functionalWindow.getErrorJTextArea() ) {

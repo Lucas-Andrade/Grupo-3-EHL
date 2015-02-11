@@ -58,7 +58,7 @@ public class GUISimpleAirshipInfoSW extends
     @Override
     protected SimpleAirship doInBackground() throws Exception {
     
-        return EntitiesConversor.toSimpleAirship( new GetElementFromADatabaseByIdCommand< Airship >(
+        return new EntitiesConversor().toSimpleAirship( new GetElementFromADatabaseByIdCommand< Airship >(
                                                                                                      database,
                                                                                                      identification ).call()
                                                                                                                      .get() );

@@ -84,7 +84,7 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
      * Since the functionality of this button will depend on the given window and will often be used
      * to execute actions that will take longer to process and that are not related to the window's
      * design, this method will make use of the {@link SwingWorker} class through the
-     * {@link #getSwingWorker()} method.
+     * {@link #getNewSwingWorker()} method.
      * 
      * <ul>
      * <li>Collects the respective window info;
@@ -101,7 +101,7 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
             theFunctionalWindow.setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
             
             try {
-                getSwingWorker().run();
+                getNewSwingWorker().run();
             }
             catch( SwingWorkerFactoryMissingException e ) {
                 new UnderConstrutionWindow();
@@ -123,7 +123,7 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
      * @throws SwingWorkerFactoryMissingException
      *             If there is no {@link SwingWorkerFactory} set in {@code this}'s class.
      */
-    protected abstract S getSwingWorker() throws SwingWorkerFactoryMissingException;
+    protected abstract S getNewSwingWorker() throws SwingWorkerFactoryMissingException;
     
     
 }

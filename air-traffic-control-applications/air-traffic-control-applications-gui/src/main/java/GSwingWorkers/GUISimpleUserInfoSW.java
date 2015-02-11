@@ -56,7 +56,7 @@ public class GUISimpleUserInfoSW extends
     @Override
     protected SimpleUser doInBackground() throws Exception {
     
-        return EntitiesConversor.toSimpleUser( new GetElementFromADatabaseByIdCommand< User >(
+        return new EntitiesConversor().toSimpleUser( new GetElementFromADatabaseByIdCommand< User >(
                                                                                                database,
                                                                                                identification ).call()
                                                                                                                .get() );

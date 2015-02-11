@@ -61,7 +61,7 @@ public class FunctionalLoginWindow extends
             setSwingWorkerFactory( SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > factory ) {
     
         synchronized (factoryLock) {
-            if( swFactory == null ) {
+            if( swFactory == null && factory != null) {
                 swFactory = factory;
                 return true;
             }
@@ -84,10 +84,10 @@ public class FunctionalLoginWindow extends
     
     // PUBLIC METHOD
     /**
-     * @see functionalcomponents.FunctionalWindow#getSwingWorker()
+     * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
      */
     @Override
-    protected SwingWorker getSwingWorker() throws SwingWorkerFactoryMissingException {
+    protected SwingWorker getNewSwingWorker() throws SwingWorkerFactoryMissingException {
     
         if( swFactory == null )
             throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );

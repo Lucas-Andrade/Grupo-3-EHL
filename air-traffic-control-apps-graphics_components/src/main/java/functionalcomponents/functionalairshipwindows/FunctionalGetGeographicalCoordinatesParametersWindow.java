@@ -74,7 +74,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
      *         methods.
      */
     @Override
-    protected ExceptionHandlerSW< Iterable< Airship >> getSwingWorker() {
+    protected ExceptionHandlerSW< Iterable< Airship >> getNewSwingWorker() {
         
         return new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel,
                                                    functionalWindow.getErrorJTextArea() ) {

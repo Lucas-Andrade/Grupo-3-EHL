@@ -60,7 +60,7 @@ public class FunctionalPatchUserWindow extends FunctionalWindow< CompletionStatu
      *         methods.
      */
     @Override
-    protected ExceptionHandlerSW< CompletionStatus > getSwingWorker() {
+    protected ExceptionHandlerSW< CompletionStatus > getNewSwingWorker() {
         
         return new ExceptionHandlerSW< CompletionStatus >(
                                                                     functionalWindow.getErrorJTextArea() ) {

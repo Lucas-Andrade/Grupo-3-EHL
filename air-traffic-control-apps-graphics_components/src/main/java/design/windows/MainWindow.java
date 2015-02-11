@@ -12,6 +12,7 @@ import design.GridBagUtils;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
 import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
+import entities.SimpleAirship;
 
 
     /**
@@ -113,7 +114,7 @@ public class MainWindow extends JFrame {
      *  and {@link JTextArea}.
      */    
     
-    public MainWindow( Database< Airship > airshipsDatabase, Iterable< Airship > airshipsFound ) {
+    public MainWindow( Iterable< SimpleAirship > airshipsFound ) {
         
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         this.setIconImage( Toolkit.getDefaultToolkit().getImage( "/images/radar.png" ) );
@@ -131,7 +132,7 @@ public class MainWindow extends JFrame {
         contentPane.add( headerPanel, constraints );
               
         
-        bodyPanel = new JBodyPanelForMainWindow( airshipsDatabase, airshipsFound );
+        bodyPanel = new JBodyPanelForMainWindow();
         contentPane.add( bodyPanel, GridBagUtils.updateGridBagConstraints( constraints, GRIDYFORBODYPANEL ) );
         
         footerPanel = new JFooterPanelForMainWindow();

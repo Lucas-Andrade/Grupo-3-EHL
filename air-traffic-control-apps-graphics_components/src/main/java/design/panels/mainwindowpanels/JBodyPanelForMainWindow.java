@@ -76,11 +76,11 @@ public class JBodyPanelForMainWindow extends JPanel {
      * the two panels that is part of it. 
      */
     
-    public JBodyPanelForMainWindow( Iterable< SimpleAirship > airshipsFound ) {
+    public JBodyPanelForMainWindow( ) {
         
         this.setLayout( new FlowLayout() );
         
-        createWorldMapAndScrollPanel( airshipsFound );
+        createWorldMapAndScrollPanel( );
         
         this.setBackground( new Color( REDCOMPONENT, GREENCOMPONENT, BLUECOMPONENT ) );
         this.setBorder( new TextRoundBorder( Color.WHITE, ROUNDBORDERTHICKNESS, ROUNDBORDERRAD, ROUNDBORDERPOINTERSIZE ) );
@@ -94,19 +94,22 @@ public class JBodyPanelForMainWindow extends JPanel {
      * @param airshipsFound - {@link Iterable} variable with only the elements that satisfy the request.
      */
     
-    public void updateBodyPanel( Iterable< SimpleAirship > airshipsFound ) {
+    public void updateBodyPanel( ) {
         
         this.remove( worldMapWithAirships );
         this.remove( airshipsScrollPane );
         
-        createWorldMapAndScrollPanel( airshipsFound );
+        createWorldMapAndScrollPanel( );
         
         this.revalidate();
         this.repaint();
     }
 
 
-    private void createWorldMapAndScrollPanel( Iterable< SimpleAirship > airshipsFound ) {
+    private void createWorldMapAndScrollPanel() {
+        
+        //TODO
+        Iterable< SimpleAirship > airshipsFound = null;
     
         worldMapWithAirships =
                 new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships( airshipsFound );

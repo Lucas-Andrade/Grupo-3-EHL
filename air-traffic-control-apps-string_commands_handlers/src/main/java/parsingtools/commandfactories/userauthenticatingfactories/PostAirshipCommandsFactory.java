@@ -6,7 +6,7 @@ import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.ParsingCommand;
-import utils.CommandStrings_Dictionary;
+import utils.StringCommandsDictionary;
 import utils.CompletionStatus;
 import commands.postcommands.PostCivilAirshipCommand;
 import commands.postcommands.PostMilitaryAirshipCommand;
@@ -60,10 +60,10 @@ public class PostAirshipCommandsFactory extends
         super( postingUsersDatabase, airshipsDatabase );
         
         this.requiredParametersNames =
-                new String[]{ CommandStrings_Dictionary.AIRSHIP_TYPE, CommandStrings_Dictionary.LATITUDE,
-                             CommandStrings_Dictionary.LONGITUDE, CommandStrings_Dictionary.ALTITUDE,
-                             CommandStrings_Dictionary.AIRCORRIDOR_MINALTITUDE,
-                             CommandStrings_Dictionary.AIRCORRIDOR_MAXALTITUDE };
+                new String[]{ StringCommandsDictionary.AIRSHIP_TYPE, StringCommandsDictionary.LATITUDE,
+                             StringCommandsDictionary.LONGITUDE, StringCommandsDictionary.ALTITUDE,
+                             StringCommandsDictionary.AIRCORRIDOR_MINALTITUDE,
+                             StringCommandsDictionary.AIRCORRIDOR_MAXALTITUDE };
     }
     
     
@@ -204,7 +204,7 @@ public class PostAirshipCommandsFactory extends
             catch( NoSuchMethodException | SecurityException | IllegalAccessException
                    | IllegalArgumentException e ) {
                 
-                throw new InvalidParameterValueException( CommandStrings_Dictionary.AIRSHIP_TYPE, type,
+                throw new InvalidParameterValueException( StringCommandsDictionary.AIRSHIP_TYPE, type,
                                                           e );
             }
         }
@@ -220,12 +220,12 @@ public class PostAirshipCommandsFactory extends
         private void setParametersFields()
             throws MissingRequiredParameterException, InvalidParameterValueException {
             
-            type = getParameterAsString( CommandStrings_Dictionary.AIRSHIP_TYPE );
-            latitude = getParameterAsDouble( CommandStrings_Dictionary.LATITUDE );
-            longitude = getParameterAsDouble( CommandStrings_Dictionary.LONGITUDE );
-            altitude = getParameterAsDouble( CommandStrings_Dictionary.ALTITUDE );
-            minAltitude = getParameterAsDouble( CommandStrings_Dictionary.AIRCORRIDOR_MINALTITUDE );
-            maxAltitude = getParameterAsDouble( CommandStrings_Dictionary.AIRCORRIDOR_MAXALTITUDE );
+            type = getParameterAsString( StringCommandsDictionary.AIRSHIP_TYPE );
+            latitude = getParameterAsDouble( StringCommandsDictionary.LATITUDE );
+            longitude = getParameterAsDouble( StringCommandsDictionary.LONGITUDE );
+            altitude = getParameterAsDouble( StringCommandsDictionary.ALTITUDE );
+            minAltitude = getParameterAsDouble( StringCommandsDictionary.AIRCORRIDOR_MINALTITUDE );
+            maxAltitude = getParameterAsDouble( StringCommandsDictionary.AIRCORRIDOR_MAXALTITUDE );
         }
         
         // PRIVATE METHODS INVOKED USING REFLECTION
@@ -251,11 +251,11 @@ public class PostAirshipCommandsFactory extends
         private Callable< CompletionStatus > postCivilAirship( User userWhoIsPosting )
             throws MissingRequiredParameterException, InvalidParameterValueException {
             
-            if( !parametersMap.containsKey( CommandStrings_Dictionary.NUMBEROFPASSENGERS ) )
+            if( !parametersMap.containsKey( StringCommandsDictionary.NUMBEROFPASSENGERS ) )
                 throw new MissingRequiredParameterException(
-                                                             CommandStrings_Dictionary.NUMBEROFPASSENGERS );
+                                                             StringCommandsDictionary.NUMBEROFPASSENGERS );
             
-            numberOfPassengers = getParameterAsInt( CommandStrings_Dictionary.NUMBEROFPASSENGERS );
+            numberOfPassengers = getParameterAsInt( StringCommandsDictionary.NUMBEROFPASSENGERS );
             
             try {
                 return new PostCivilAirshipCommand( latitude, longitude, altitude, maxAltitude,
@@ -291,10 +291,10 @@ public class PostAirshipCommandsFactory extends
         private Callable< CompletionStatus > postMilitaryAirship( User userWhoIsPosting )
             throws MissingRequiredParameterException, InvalidParameterValueException {
             
-            if( !parametersMap.containsKey( CommandStrings_Dictionary.HASARMOUR ) )
-                throw new MissingRequiredParameterException( CommandStrings_Dictionary.HASARMOUR );
+            if( !parametersMap.containsKey( StringCommandsDictionary.HASARMOUR ) )
+                throw new MissingRequiredParameterException( StringCommandsDictionary.HASARMOUR );
             
-            hasArmour = getParameterAsBoolean( CommandStrings_Dictionary.HASARMOUR );
+            hasArmour = getParameterAsBoolean( StringCommandsDictionary.HASARMOUR );
             
             try {
                 return new PostMilitaryAirshipCommand( latitude, longitude, altitude, maxAltitude,

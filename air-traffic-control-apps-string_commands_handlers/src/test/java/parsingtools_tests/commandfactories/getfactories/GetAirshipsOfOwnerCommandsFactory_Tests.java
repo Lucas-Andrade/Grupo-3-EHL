@@ -2,16 +2,22 @@ package parsingtools_tests.commandfactories.getfactories;
 
 
 
-import static org.junit.Assert.assertTrue;
-import java.util.concurrent.Callable;
-import org.junit.BeforeClass;
+import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.Before;
 import org.junit.Test;
-import parsingtools.CommandParser;
+import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.getfactories.GetAirshipsOfOwnerCommandsFactory;
-import utils.StringCommandsExecutor;
-import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
-import commands.getcommands.GetAirshipsOfOwnerCommand;
+import utils.StringCommandsDictionary;
+import utils.Optional;
 import databases.InMemoryAirshipsDatabase;
+import databases.InMemoryUsersDatabase;
+import elements.Airship;
+import elements.User;
+import elements.airships.CivilAirship;
 import exceptions.InvalidArgumentException;
 
 
@@ -28,40 +34,58 @@ import exceptions.InvalidArgumentException;
  */
 public class GetAirshipsOfOwnerCommandsFactory_Tests {
     
-    private static CommandParser cmdparser = new CommandParser();
-    private static InMemoryAirshipsDatabase airshipsDatabase;
+    InMemoryAirshipsDatabase airshipsDatabase;
+    InMemoryUsersDatabase userDatabase;
+    User user;
+    Airship airship;
+    CommandFactory< Optional< Iterable< Airship >> > getAirshipOfOwner;
+    Map< String, String > parametersMap;    
+    String owner;
+    
     
     // Before Class
     
-    @BeforeClass
-    public static void createTheCommandParserAndRegisterTheCommands()
-        throws InvalidRegisterException, InvalidArgumentException {
+    @Before
+    public void createUserAndAirshipAndTheirDatabases() throws InvalidArgumentException{
         
-        cmdparser = new CommandParser();
+        userDatabase = new InMemoryUsersDatabase( "first user database" );        
+        user = new User("pantunes","pantunespassword","pantunes@gmail.com");
+        userDatabase.add( user, user );
         
-        airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
+        airshipsDatabase = new InMemoryAirshipsDatabase( "first airship database" );
+        airship = new CivilAirship( 38, 171, 15000, 20000, 10000, 100 );  
+        airshipsDatabase.add(airship,user);
+        getAirshipOfOwner = new GetAirshipsOfOwnerCommandsFactory( airshipsDatabase );
+        parametersMap = new HashMap<>();        
+        owner = StringCommandsDictionary.OWNER;
         
-        cmdparser.registerCommand( "GET", "/airships/owner/{owner}",
-                                   new GetAirshipsOfOwnerCommandsFactory( airshipsDatabase ) );
+        parametersMap.put( owner, user.getIdentification() );
+               
     }
-    
+           
     // Test Normal Dinamic And Prerequisites
     
     @Test
-    public void shouldSuccessfullyCreateTheCorrectCommand() throws Exception {
+    public void shouldGetCorrectCommandsDescription() throws Exception {
         
+        assertEquals("Gets all airships added by a certain user.",getAirshipOfOwner.getCommandsDescription());
+
+    }
+    
+    @Test
+    public void shouldSuccessfullyGetAirshipsOfOwner() throws Exception {
+           
+            Collection<Airship> expectedAirshipContainer = new ArrayList<>(); 
+            expectedAirshipContainer.add(airship);
+            assertEquals(expectedAirshipContainer.toString(),getAirshipOfOwner.newCommand( parametersMap ).call().get().toString());
         
-        Callable< ? > getAirshipsOfOwnerCommands =
-                (new StringCommandsExecutor( cmdparser, "GET", "/airships/owner/Daniel" )).getCommand();
-        
-        assertTrue( getAirshipsOfOwnerCommands instanceof GetAirshipsOfOwnerCommand );
+
     }
     
     // Test Exceptions
     
     @Test( expected = InvalidArgumentException.class )
-    public
-            void
+    public void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAirshipsOfOwnerCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
         

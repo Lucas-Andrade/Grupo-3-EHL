@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.ParsingCommand;
-import utils.CommandStrings_Dictionary;
+import utils.StringCommandsDictionary;
 import utils.CompletionStatus;
 import commands.patchcommands.PatchUserPasswordCommand;
 import databases.Database;
@@ -86,8 +86,8 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< Completion
     @Override
     protected String[] getRequiredParametersNames() {
         
-        return new String[]{ CommandStrings_Dictionary.USERNAME, CommandStrings_Dictionary.OLDPASSWORD,
-                            CommandStrings_Dictionary.NEWPASSWORD };
+        return new String[]{ StringCommandsDictionary.USERNAME, StringCommandsDictionary.OLDPASSWORD,
+                            StringCommandsDictionary.NEWPASSWORD };
     }
     
     
@@ -170,9 +170,9 @@ public class PatchUserPasswordCommandsFactory extends CommandFactory< Completion
          */
         private void setParametersFields() throws MissingRequiredParameterException {
             
-            username = getParameterAsString( CommandStrings_Dictionary.USERNAME );
-            oldPassword = getParameterAsString( CommandStrings_Dictionary.OLDPASSWORD );
-            newPassword = getParameterAsString( CommandStrings_Dictionary.NEWPASSWORD );
+            username = getParameterAsString( StringCommandsDictionary.USERNAME );
+            oldPassword = getParameterAsString( StringCommandsDictionary.OLDPASSWORD );
+            newPassword = getParameterAsString( StringCommandsDictionary.NEWPASSWORD );
         }
     }
 }

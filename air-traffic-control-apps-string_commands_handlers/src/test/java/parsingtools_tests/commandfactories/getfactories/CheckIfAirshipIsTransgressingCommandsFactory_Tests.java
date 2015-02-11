@@ -1,24 +1,20 @@
 package parsingtools_tests.commandfactories.getfactories;
 
 
-import java.util.concurrent.Callable;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.Assert;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
-import parsingtools.CommandParser;
+import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.getfactories.CheckIfAirshipIsTransgressingCommandsFactory;
-import utils.StringCommandsExecutor;
-import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
-import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
-import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
-import commands.getcommands.CheckIfAirshipIsTransgressingCommand;
+import utils.StringCommandsDictionary;
 import databases.InMemoryAirshipsDatabase;
-import exceptions.InternalErrorException;
+import databases.InMemoryUsersDatabase;
+import elements.Airship;
+import elements.User;
+import elements.airships.CivilAirship;
 import exceptions.InvalidArgumentException;
-import exceptions.InvalidParameterValueException;
-import exceptions.MissingRequiredParameterException;
-import exceptions.NoSuchElementInDatabaseException;
-import exceptions.WrongLoginPasswordException;
 
 
 /**
@@ -34,46 +30,62 @@ import exceptions.WrongLoginPasswordException;
  */
 public class CheckIfAirshipIsTransgressingCommandsFactory_Tests {
     
-    private static CommandParser cmdparser = new CommandParser();
-    private static InMemoryAirshipsDatabase airshipsDatabase;
+    InMemoryAirshipsDatabase airshipsDatabase;
+    InMemoryUsersDatabase userDatabase;
+    User user;
+    Airship airship;
+    CommandFactory< String > checkTransgressorsAirships;
+    Map< String, String > parametersMap;    
+    String flightId_ParameterName;
+    
     
     // Before Class
     
-    @BeforeClass
-    public static void createTheCommandParserAndRegisterTheCommands()
-        throws InvalidRegisterException, InvalidArgumentException {
+    @Before
+    public void createUserAndAirshipAndTheirDatabases() throws InvalidArgumentException{
+       
+       
+        userDatabase = new InMemoryUsersDatabase( "first user database" );        
+        user = new User("pantunes","pantunespassword","pantunes@gmail.com");
+        userDatabase.add( user, user );
         
-        cmdparser = new CommandParser();
+        airshipsDatabase = new InMemoryAirshipsDatabase( "first airship database" );
+        airship = new CivilAirship( 38, 171, 15000, 20000, 10000, 100 );  
+        airshipsDatabase.add(airship,user);
         
-        airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
+        parametersMap = new HashMap<>();        
+        checkTransgressorsAirships = new CheckIfAirshipIsTransgressingCommandsFactory( airshipsDatabase );           
+        flightId_ParameterName = StringCommandsDictionary.FLIGHTID;
+ 
+        parametersMap.put( flightId_ParameterName, airship.getIdentification() );   
         
-        cmdparser.registerCommand( "GET",
-                                   "/airships/reports/{flightId}",
-                                   new CheckIfAirshipIsTransgressingCommandsFactory(
-                                                                                     airshipsDatabase ) );
     }
     
     // Test Normal Dinamic And Prerequisites
     
     @Test
-    public void shouldSuccessfullyCreateTheCorrectCommand()
-        throws WrongLoginPasswordException, MissingRequiredParameterException,
-        InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
-        InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
+    public void shouldGetCorrectCommandsDescription(){
         
-        Callable< ? > checkIfAirshipIsTransgressingCommand =
-                (new StringCommandsExecutor( cmdparser, "GET", "/airships/reports/id20" )).getCommand();
+                
+        Assert.assertEquals("Checks whether an airship is transgressing its air corridor.",
+                            checkTransgressorsAirships.getCommandsDescription());
+
+    }
+    
+    @Test
+    public void shouldCheckIfAirshipIsTransgressingCorridorLimits() throws Exception{
         
-        Assert.assertTrue( checkIfAirshipIsTransgressingCommand instanceof CheckIfAirshipIsTransgressingCommand );
+   
+    Assert.assertEquals("The Airship with the Flight ID "+airship.getIdentification()+" is not transgressing its air corridor.",
+                      checkTransgressorsAirships.newCommand( parametersMap ).call());
+
     }
     
     // Test Exceptions
     
     @Test( expected = InvalidArgumentException.class )
-    public
-            void
-            shouldThrowInvalidArgumentExceptionWhenTryingToCreateACheckIfAirshipIsTransgressingCommandsFactoryGivenANullDatabase()
-                throws InvalidArgumentException {
+    public  void
+            shouldThrowInvalidArgumentExceptionWhenTryingToCreateACheckIfAirshipIsTransgressingCommandsFactoryGivenANullDatabase()                throws InvalidArgumentException {
         
         new CheckIfAirshipIsTransgressingCommandsFactory( null );
     }

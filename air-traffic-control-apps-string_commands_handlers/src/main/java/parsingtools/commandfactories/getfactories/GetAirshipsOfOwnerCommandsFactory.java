@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.ParsingCommand;
-import utils.CommandStrings_Dictionary;
+import utils.StringCommandsDictionary;
 import utils.Optional;
 import commands.getcommands.GetAirshipsOfOwnerCommand;
 import databases.Database;
@@ -92,7 +92,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
     @Override
     protected String[] getRequiredParametersNames() {
         
-        return new String[]{ CommandStrings_Dictionary.OWNER };
+        return new String[]{ StringCommandsDictionary.OWNER };
     }
     
     // INNER CLASS
@@ -120,7 +120,7 @@ public class GetAirshipsOfOwnerCommandsFactory extends
             throws MissingRequiredParameterException {
             
             super( parametersMap );
-            ownerUsername = getParameterAsString( CommandStrings_Dictionary.OWNER );
+            ownerUsername = getParameterAsString( StringCommandsDictionary.OWNER );
         }
         
         /**

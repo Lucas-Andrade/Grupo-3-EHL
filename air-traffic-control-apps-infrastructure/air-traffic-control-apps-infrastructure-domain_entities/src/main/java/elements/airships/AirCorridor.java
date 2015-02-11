@@ -61,10 +61,10 @@ public class AirCorridor {
     @Override
     public String toString() {
         
-        return new StringBuilder( "\nMaximum Altitude Permited: " ).append( maxAltitude )
-                                                                   .append( "Minimum Altitude Permited: " )
+        return new StringBuilder( "\r\nMaximum Altitude Permited: " ).append( maxAltitude )
+                                                                   .append( " Minimum Altitude Permited: " )
                                                                    .append( minAltitude )
-                                                                   .append( "\n" ).toString();
+                                                                   .append( "\r\n" ).toString();
     }
     
     // Get Methods

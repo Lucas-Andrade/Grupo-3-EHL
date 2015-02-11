@@ -43,7 +43,7 @@ import exceptions.WrongLoginPasswordException;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  * @see CommandParser
- * @see CommandStrings_Dictionary
+ * @see StringCommandsDictionary
  * @see Translator
  */
 public class StringCommandsExecutor implements Executor {
@@ -63,14 +63,14 @@ public class StringCommandsExecutor implements Executor {
     
     /**
      * The mapping between strings that may be contained in the string-command and the
-     * {@link Translator} instance they correspond to (uses the {@link CommandStrings_Dictionary}).
+     * {@link Translator} instance they correspond to (uses the {@link StringCommandsDictionary}).
      */
     public static final Map< String, Translator > TRANSLATORS = new HashMap< String, Translator >();
     
     /**
      * The list of the methods ({@code args[0]}) of string-commands that support the output
      * customization settings coded in the parameters with names
-     * {@link CommandStrings_Dictionary#ACCEPT} and {@link CommandStrings_Dictionary#STREAM}.
+     * {@link StringCommandsDictionary#ACCEPT} and {@link StringCommandsDictionary#STREAM}.
      */
     public static final List< String > methodsThatSupportOutputCustomization = new ArrayList<>();
     
@@ -81,14 +81,14 @@ public class StringCommandsExecutor implements Executor {
         
         /*TRANSLATORS*/
         try {
-            TRANSLATORS.put( CommandStrings_Dictionary.HTML, new ToHtmlTranslator( 5 ) );
+            TRANSLATORS.put( StringCommandsDictionary.HTML, new ToHtmlTranslator( 5 ) );
         }
         catch( InvalidArgumentException e ) {
             throw new InternalErrorException( "UNEXPECTED ERROR IN Parser!" );
             // never happens because argument 5 is bigger than 1
         }
-        TRANSLATORS.put( CommandStrings_Dictionary.TEXT, new ToPlainTextTranslator() );
-        TRANSLATORS.put( CommandStrings_Dictionary.JSON, new ToJsonTranslator() );
+        TRANSLATORS.put( StringCommandsDictionary.TEXT, new ToPlainTextTranslator() );
+        TRANSLATORS.put( StringCommandsDictionary.JSON, new ToJsonTranslator() );
         
         /*methodsThatSupportOutputCustomization*/
         methodsThatSupportOutputCustomization.add( "GET" );
@@ -188,8 +188,8 @@ public class StringCommandsExecutor implements Executor {
     public String getOutput() throws Exception {
     
         Callable< ? > command = getCommand();
-        
-        if( findValueOf( CommandStrings_Dictionary.ACCEPT ).equals( CommandStrings_Dictionary.JSON ) )
+        String accept = findValueOf( StringCommandsDictionary.ACCEPT );
+        if( accept!= null&& accept.equals( StringCommandsDictionary.JSON ) )
             return convertToGson( command );
         
         return convertUsingTranslators( command );
@@ -197,19 +197,19 @@ public class StringCommandsExecutor implements Executor {
     
     /**
      * Returns the stream correspondent to the value of the parameter with name
-     * {@link CommandStrings_Dictionary#STREAM} received in the parameters-list of the
+     * {@link StringCommandsDictionary#STREAM} received in the parameters-list of the
      * string-command; if this parameter wasn't in the parameters-list returns the
      * {@link PrintStream} {@link System#out}.
      * 
      * @return The stream correspondent to the value of the parameter with name
-     *         {@link CommandStrings_Dictionary#STREAM} or<br />
+     *         {@link StringCommandsDictionary#STREAM} or<br />
      *         the stream {@link System#out} if no value was received.
      * @throws InvalidParameterValueException
      *             If the value of the parameter accept is unknown.
      */
     public OutputStream getStream() throws InvalidParameterValueException {
     
-        String filePath = findValueOf( CommandStrings_Dictionary.STREAM );
+        String filePath = findValueOf( StringCommandsDictionary.STREAM );
         if( filePath == null || !supportsOutputCustomization() )
             return System.out;
         
@@ -217,7 +217,7 @@ public class StringCommandsExecutor implements Executor {
             return new PrintStream( filePath );
         }
         catch( IOException e ) {
-            throw new InvalidParameterValueException( CommandStrings_Dictionary.STREAM, filePath,
+            throw new InvalidParameterValueException( StringCommandsDictionary.STREAM, filePath,
                                                       e.getMessage(), e );
         }
     }
@@ -368,25 +368,25 @@ public class StringCommandsExecutor implements Executor {
     // used in convertUsingTranslators
     /**
      * Returns the {@link Translator} correspondent to the value of the parameter with name
-     * {@link CommandStrings_Dictionary#ACCEPT} received in the parameters-list of the
+     * {@link StringCommandsDictionary#ACCEPT} received in the parameters-list of the
      * string-command; if this parameter wasn't in the parameters-list returns the translator
-     * correspondent to {@link CommandStrings_Dictionary#TEXT}.
+     * correspondent to {@link StringCommandsDictionary#TEXT}.
      * 
      * @return The translator correspondent to the value of the parameter with name
-     *         {@link CommandStrings_Dictionary#ACCEPT} or<br/>
-     *         the translator {@link CommandStrings_Dictionary#TEXT} if no value was received.
+     *         {@link StringCommandsDictionary#ACCEPT} or<br/>
+     *         the translator {@link StringCommandsDictionary#TEXT} if no value was received.
      * @throws InvalidParameterValueException
      *             If the value of the parameter accept is unknown.
      */
     private Translator getTranslator() throws InvalidParameterValueException {
     
-        String translator = findValueOf( CommandStrings_Dictionary.ACCEPT );
+        String translator = findValueOf( StringCommandsDictionary.ACCEPT );
         if( translator == null || !supportsOutputCustomization() )
-            translator = CommandStrings_Dictionary.TEXT;
+            translator = StringCommandsDictionary.TEXT;
         
         Translator t = TRANSLATORS.get( translator );
         if( t == null )
-            throw new InvalidParameterValueException( CommandStrings_Dictionary.ACCEPT, translator );
+            throw new InvalidParameterValueException( StringCommandsDictionary.ACCEPT, translator );
         return t;
     }
     
@@ -394,7 +394,7 @@ public class StringCommandsExecutor implements Executor {
     /**
      * Checks whether the string-command bound to this instance of {@link StringCommandsExecutor}
      * supports the functionalities coded in the parameters with names
-     * {@link CommandStrings_Dictionary#ACCEPT} and {@link CommandStrings_Dictionary#STREAM} (these
+     * {@link StringCommandsDictionary#ACCEPT} and {@link StringCommandsDictionary#STREAM} (these
      * are related with output formatting and printing).
      * 
      * @return {@code true} if the command supports custom output formatting and printing; <br/>

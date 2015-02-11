@@ -105,8 +105,8 @@ public class CivilAirship extends Airship {
     @Override
     public String toString() {
         
-        return new StringBuilder( super.toString() ).append( "\nNumber of Passengers: " )
-                                                    .append( passengers ).append( "\n" ).toString();
+        return new StringBuilder( super.toString() ).append( "\r\nNumber of Passengers: " )
+                                                    .append( passengers ).append( "\r\n" ).toString();
     }
     
     // Get Methods

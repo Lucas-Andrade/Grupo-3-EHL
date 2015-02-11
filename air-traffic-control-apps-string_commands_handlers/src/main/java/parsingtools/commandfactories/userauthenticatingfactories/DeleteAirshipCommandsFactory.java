@@ -4,7 +4,7 @@ package parsingtools.commandfactories.userauthenticatingfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.ParsingCommand;
-import utils.CommandStrings_Dictionary;
+import utils.StringCommandsDictionary;
 import utils.CompletionStatus;
 import commands.DeleteAirshipCommand;
 import databases.Database;
@@ -84,7 +84,7 @@ public class DeleteAirshipCommandsFactory extends
     @Override
     protected String[] getSpecificRequiredParametersNames() {
         
-        return new String[]{ CommandStrings_Dictionary.FLIGHTID };
+        return new String[]{ StringCommandsDictionary.FLIGHTID };
     }
     
     
@@ -112,18 +112,18 @@ public class DeleteAirshipCommandsFactory extends
         
         /**
          * Returns a command of type {@link DeleteAirshipCommand} after extracting the value of the
-         * parameter with name {@link CommandStrings_Dictionary#FLIGHTID} from the {@code parametersMap}.
+         * parameter with name {@link StringCommandsDictionary#FLIGHTID} from the {@code parametersMap}.
          * 
          * @return A command of type {@link DeleteAirshipCommand}.
          * @throws MissingRequiredParameterException
-         *             If the value of the parameter with name {@link CommandStrings_Dictionary#FLIGHTID}
+         *             If the value of the parameter with name {@link StringCommandsDictionary#FLIGHTID}
          *             is {@code null} or an empty-string.
          */
         @Override
         protected Callable< CompletionStatus > newCommand()
             throws MissingRequiredParameterException {
             
-            String flightId = getParameterAsString( CommandStrings_Dictionary.FLIGHTID );
+            String flightId = getParameterAsString( StringCommandsDictionary.FLIGHTID );
             try {
                 return new DeleteAirshipCommand( databaseToChange, flightId );
             }

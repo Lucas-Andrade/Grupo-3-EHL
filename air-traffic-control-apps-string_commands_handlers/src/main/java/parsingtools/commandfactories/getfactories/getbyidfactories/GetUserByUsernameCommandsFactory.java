@@ -3,7 +3,7 @@ package parsingtools.commandfactories.getfactories.getbyidfactories;
 
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.CommandFactory;
-import utils.CommandStrings_Dictionary;
+import utils.StringCommandsDictionary;
 import databases.Database;
 import elements.User;
 import exceptions.InvalidArgumentException;
@@ -25,7 +25,7 @@ public class GetUserByUsernameCommandsFactory extends
     /**
      * Creates a new {@link GetUserByUsernameCommandFactory} that produces commands to get a user
      * with a certain username from {@code usersDatabase}. That username is the value of the
-     * parameter with key {@link CommandStrings_Dictionary#USERNAME} received in the parameters map.
+     * parameter with key {@link StringCommandsDictionary#USERNAME} received in the parameters map.
      * 
      * @param usersDatabase
      *            - The database where to get the user from.
@@ -36,7 +36,7 @@ public class GetUserByUsernameCommandsFactory extends
     public GetUserByUsernameCommandsFactory( Database< User > usersDatabase )
         throws InvalidArgumentException {
         
-        super( CommandStrings_Dictionary.USERNAME, usersDatabase );
+        super( StringCommandsDictionary.USERNAME, usersDatabase );
     }
     
     

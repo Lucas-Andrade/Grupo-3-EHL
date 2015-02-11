@@ -4,7 +4,7 @@ package parsingtools.commandfactories.userauthenticatingfactories;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.ParsingCommand;
-import utils.CommandStrings_Dictionary;
+import utils.StringCommandsDictionary;
 import utils.CompletionStatus;
 import commands.patchcommands.PatchAirshipCommand;
 import databases.Database;
@@ -82,7 +82,7 @@ public class PatchAirshipCommandsFactory extends
     @Override
     protected String[] getSpecificRequiredParametersNames() {
         
-        return new String[]{ CommandStrings_Dictionary.FLIGHTID };
+        return new String[]{ StringCommandsDictionary.FLIGHTID };
     }
     
     
@@ -181,17 +181,17 @@ public class PatchAirshipCommandsFactory extends
         private void setFields() throws InvalidParameterValueException {
             
             try {
-                flightId = getParameterAsString( CommandStrings_Dictionary.FLIGHTID );
+                flightId = getParameterAsString( StringCommandsDictionary.FLIGHTID );
             }
             catch( MissingRequiredParameterException e ) {
                 flightId = null;
             }
             
-            latitude = getParameterValueOrNull( CommandStrings_Dictionary.LATITUDE );
-            longitude = getParameterValueOrNull( CommandStrings_Dictionary.LONGITUDE );
-            altitude = getParameterValueOrNull( CommandStrings_Dictionary.ALTITUDE );
-            maxAltitude = getParameterValueOrNull( CommandStrings_Dictionary.AIRCORRIDOR_MAXALTITUDE );
-            minAltitude = getParameterValueOrNull( CommandStrings_Dictionary.AIRCORRIDOR_MINALTITUDE );
+            latitude = getParameterValueOrNull( StringCommandsDictionary.LATITUDE );
+            longitude = getParameterValueOrNull( StringCommandsDictionary.LONGITUDE );
+            altitude = getParameterValueOrNull( StringCommandsDictionary.ALTITUDE );
+            maxAltitude = getParameterValueOrNull( StringCommandsDictionary.AIRCORRIDOR_MAXALTITUDE );
+            minAltitude = getParameterValueOrNull( StringCommandsDictionary.AIRCORRIDOR_MINALTITUDE );
             
         }
         

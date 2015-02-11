@@ -6,7 +6,7 @@ import java.util.concurrent.Callable;
 import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.ParsingCommand;
 import parsingtools.commandfactories.getfactories.getallfactories.GetAllElementsInADatabaseCommandsFactory;
-import utils.CommandStrings_Dictionary;
+import utils.StringCommandsDictionary;
 import commands.getcommands.CheckIfAirshipIsTransgressingCommand;
 import databases.Database;
 import elements.Airship;
@@ -56,7 +56,7 @@ public class CheckIfAirshipIsTransgressingCommandsFactory extends CommandFactory
         if( airshipsDatabase == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null database!" );
         
-        this.requiredParametersNames = new String[]{ CommandStrings_Dictionary.FLIGHTID };
+        this.requiredParametersNames = new String[]{ StringCommandsDictionary.FLIGHTID };
         this.airshipsDatabase = airshipsDatabase;
     }
     

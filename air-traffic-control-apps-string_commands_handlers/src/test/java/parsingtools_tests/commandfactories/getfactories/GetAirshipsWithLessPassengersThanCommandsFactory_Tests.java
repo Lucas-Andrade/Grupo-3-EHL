@@ -1,24 +1,23 @@
 package parsingtools_tests.commandfactories.getfactories;
 
 
-import java.util.concurrent.Callable;
-import org.junit.Assert;
-import org.junit.BeforeClass;
+import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.Before;
 import org.junit.Test;
-import parsingtools.CommandParser;
+import parsingtools.commandfactories.CommandFactory;
 import parsingtools.commandfactories.getfactories.GetAirshipsWithLessPassengersThanCommandsFactory;
-import utils.StringCommandsExecutor;
-import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
-import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
-import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
-import commands.getcommands.GetAirshipsWithLessPassengersThanCommand;
+import utils.StringCommandsDictionary;
+import utils.Optional;
 import databases.InMemoryAirshipsDatabase;
-import exceptions.InternalErrorException;
+import databases.InMemoryUsersDatabase;
+import elements.Airship;
+import elements.User;
+import elements.airships.CivilAirship;
 import exceptions.InvalidArgumentException;
-import exceptions.InvalidParameterValueException;
-import exceptions.MissingRequiredParameterException;
-import exceptions.NoSuchElementInDatabaseException;
-import exceptions.WrongLoginPasswordException;
 
 
 /**
@@ -34,44 +33,61 @@ import exceptions.WrongLoginPasswordException;
  */
 public class GetAirshipsWithLessPassengersThanCommandsFactory_Tests {
     
-    private static CommandParser cmdparser = new CommandParser();
-    private static InMemoryAirshipsDatabase airshipsDatabase;
-    
-    // Before Class
-    
-    @BeforeClass
-    public static void createTheCommandParserAndRegisterTheCommands()
-        throws InvalidRegisterException, InvalidArgumentException {
+   
+    InMemoryAirshipsDatabase airshipsDatabase;
+    InMemoryUsersDatabase userDatabase;
+    User user;
+    Airship airship;
+    CommandFactory< Optional< Iterable< Airship >> > getAirshipsLessPassengers;
+    Map<String,String> parametersMap;
+    String numberPassenger;
+    String numberPassengerRequered;
+   
+    @Before
+    public void createTheCommandParserAndRegisterTheCommands() throws InvalidArgumentException{
         
-        cmdparser = new CommandParser();
+        userDatabase = new InMemoryUsersDatabase( "first user database" );        
+        user = new User("pantunes","pantunespassword","pantunes@gmail.com");
+        userDatabase.add( user, user );
         
-        airshipsDatabase = new InMemoryAirshipsDatabase( "Airships Database" );
+        airshipsDatabase = new InMemoryAirshipsDatabase( "first airship database" );
+        airship = new CivilAirship( 38, 171, 15000, 20000, 10000, 100 );  
+        airshipsDatabase.add(airship,user);
         
-        cmdparser.registerCommand( "GET",
-                                   "/airships/nbPassengers/{nbP}/bellow",
-                                   new GetAirshipsWithLessPassengersThanCommandsFactory(
-                                                                                         airshipsDatabase ) );
+        getAirshipsLessPassengers = new GetAirshipsWithLessPassengersThanCommandsFactory( airshipsDatabase );
+        parametersMap = new HashMap<>();     
+        numberPassengerRequered="200";
+        numberPassenger = StringCommandsDictionary.NUMBEROFPASSENGERS_UPPERLIMIT;
+        parametersMap.put( numberPassenger, numberPassengerRequered );
     }
     
     // Test Normal Dinamic And Prerequisites
     
     @Test
-    public void shouldSuccessfullyCreateTheCorrectCommands()
-        throws WrongLoginPasswordException, MissingRequiredParameterException,
-        InvalidCommandSyntaxException, UnknownCommandException, NoSuchElementInDatabaseException,
-        InvalidParameterValueException, InvalidArgumentException, InternalErrorException, Exception {
+    public void shouldGetCorrectCommandsDescription(){
+     
         
-        Callable< ? > getAirshipsWithLessPassengersThanCommand =
-                (new StringCommandsExecutor( cmdparser, "GET", "/airships/nbPassengers/30/bellow" )).getCommand();
+
+        assertEquals( "Gets all airships that are transgressing their air corridors."
+                      ,getAirshipsLessPassengers.getCommandsDescription());        
+
         
-        Assert.assertTrue( getAirshipsWithLessPassengersThanCommand instanceof GetAirshipsWithLessPassengersThanCommand );
     }
+    
+    @Test
+    public void shouldGetAirshipsWitLessPassengerThan() throws Exception{
+        
+        Collection<Airship> expectedAirshipContainer = new ArrayList<>(); 
+        expectedAirshipContainer.add(airship);
+        assertEquals(expectedAirshipContainer.toString(),getAirshipsLessPassengers.newCommand( parametersMap ).call().get().toString());        
+        
+    }    
+    
     
     // Test Exceptions
     
     @Test( expected = InvalidArgumentException.class )
-    public
-            void
+    public void
             shouldThrowInvalidArgumentExceptionWhenTryingToCreateAGetAirshipsWithLessPassengersThanCommandsFactoryGivenANullDatabase()
                 throws InvalidArgumentException {
         

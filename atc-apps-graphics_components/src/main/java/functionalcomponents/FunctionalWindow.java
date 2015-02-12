@@ -4,6 +4,8 @@ package functionalcomponents;
 import java.awt.Cursor;
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
+import swingworkers.ExceptionHandlerSW;
+import swingworkers.SwingWorkerFactory;
 import design.windows.WindowBase;
 import design.windows.popupwindows.UnderConstrutionWindow;
 import exceptions.InternalErrorException;

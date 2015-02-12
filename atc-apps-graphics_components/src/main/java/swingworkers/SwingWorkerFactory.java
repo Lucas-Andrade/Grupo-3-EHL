@@ -1,7 +1,8 @@
-package functionalcomponents;
+package swingworkers;
 
 
 import javax.swing.SwingWorker;
+import functionalcomponents.FunctionalWindow;
 
 
 /**

@@ -1,11 +1,10 @@
-package functionalcomponents.functionalmainwindow;
+package swingworkers;
 
 
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import entities.SimpleAirship;
-import functionalcomponents.ExceptionHandlerSW;
 
 
 /**

@@ -8,7 +8,6 @@ import org.eclipse.jetty.server.Authentication.User;
 import com.google.gson.Gson;
 import design.windows.userwindows.LogInWindow;
 import entities.SimpleUser;
-import functionalcomponents.SwingWorkerFactory;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow.SwingWorker;
 import gson_entities.UserFromJson;

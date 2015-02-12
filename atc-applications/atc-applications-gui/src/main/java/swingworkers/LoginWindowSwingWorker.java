@@ -8,7 +8,6 @@ import databases.Database;
 import design.windows.userwindows.LogInWindow;
 import elements.User;
 import entities.SimpleUser;
-import functionalcomponents.SwingWorkerFactory;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow.SwingWorker;
 

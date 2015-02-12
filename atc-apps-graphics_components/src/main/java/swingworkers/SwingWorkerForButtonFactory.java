@@ -1,4 +1,4 @@
-package functionalcomponents;
+package swingworkers;
 
 
 import javax.swing.JTextArea;

@@ -3,6 +3,7 @@ package app;
 
 import java.awt.EventQueue;
 import swingworkers.LoginWindowSwingWorker;
+import swingworkers.SwingWorkerFactory;
 import databases.Database;
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
@@ -15,7 +16,6 @@ import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
-import functionalcomponents.SwingWorkerFactory;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 
 

@@ -4,11 +4,11 @@ package functionalcomponents.functionalairshipwindows;
 import Airship;
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
+import swingworkers.ExceptionHandlerSW;
+import swingworkers.FunctionalGetWindowSwingWorker;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
 import functionalcomponents.FunctionalWindow;
-import functionalcomponents.ExceptionHandlerSW;
-import functionalcomponents.functionalmainwindow.FunctionalGetWindowSwingWorker;
 
 
 

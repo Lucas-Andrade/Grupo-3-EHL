@@ -3,13 +3,13 @@ package functionalcomponents.functionaluserwindows;
 
 import java.awt.event.ActionListener;
 import org.eclipse.jetty.server.Authentication.User;
+import swingworkers.ExceptionHandlerSW;
+import swingworkers.SwingWorkerFactory;
 import design.windows.popupwindows.UnderConstrutionWindow;
 import design.windows.userwindows.LogInWindow;
 import entities.SimpleUser;
 import exceptions.SwingWorkerFactoryMissingException;
-import functionalcomponents.ExceptionHandlerSW;
 import functionalcomponents.FunctionalWindow;
-import functionalcomponents.SwingWorkerFactory;
 import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 
 

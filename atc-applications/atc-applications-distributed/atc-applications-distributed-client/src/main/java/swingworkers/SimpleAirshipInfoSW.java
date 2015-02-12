@@ -10,7 +10,6 @@ import javax.swing.SwingWorker;
 import com.google.gson.Gson;
 import entities.SimpleAirship;
 import exceptions.InvalidArgumentException;
-import functionalcomponents.SwingWorkerForButtonFactory;
 import functionalcomponents.infobuttons.EntitiesInfoButton;
 import functionalcomponents.infobuttons.SimpleAirshipInfoButton;
 import gson_entities.AirshipFromJson;
@@ -112,7 +111,7 @@ public class SimpleAirshipInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
         /**
          * Produces a new instance of {@link GUISimpleAirshipInfoSW}.
          * 
-         * @see functionalcomponents.SwingWorkerForButtonFactory#newInstance(String, JTextArea)
+         * @see swingworkers.SwingWorkerForButtonFactory#newInstance(String, JTextArea)
          */
         @Override
         public SwingWorker< SimpleAirship, Void > newInstance( String identification,

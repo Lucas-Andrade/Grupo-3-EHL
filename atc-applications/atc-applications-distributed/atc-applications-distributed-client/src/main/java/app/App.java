@@ -3,13 +3,13 @@ package app;
 
 import java.awt.EventQueue;
 import swingworkers.LoginWindowSwingWorker;
+import swingworkers.SwingWorkerFactory;
 import design.windows.popupwindows.FailWindow;
 import design.windows.popupwindows.UnderConstrutionWindow;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
-import functionalcomponents.SwingWorkerFactory;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 
 

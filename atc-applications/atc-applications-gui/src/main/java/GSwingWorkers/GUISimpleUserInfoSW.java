@@ -3,6 +3,7 @@ package GSwingWorkers;
 
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
+import swingworkers.SwingWorkerForButtonFactory;
 import GSwingWorkers.GUISimpleAirshipInfoSW.SwFactory;
 import app.EntitiesConversor;
 import commands.getcommands.GetElementFromADatabaseByIdCommand;
@@ -10,7 +11,6 @@ import databases.Database;
 import elements.User;
 import entities.SimpleUser;
 import exceptions.InvalidArgumentException;
-import functionalcomponents.SwingWorkerForButtonFactory;
 import functionalcomponents.infobuttons.EntitiesInfoButton;
 import functionalcomponents.infobuttons.SimpleUserInfoButton;
 
@@ -100,7 +100,7 @@ public class GUISimpleUserInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
         /**
          * Produces a new instance of {@link GUISimpleUserInfoSW}.
          * 
-         * @see functionalcomponents.SwingWorkerForButtonFactory#newInstance(String, JTextArea)
+         * @see swingworkers.SwingWorkerForButtonFactory#newInstance(String, JTextArea)
          */
         @Override
         public SwingWorker< SimpleUser, Void > newInstance( String identification,

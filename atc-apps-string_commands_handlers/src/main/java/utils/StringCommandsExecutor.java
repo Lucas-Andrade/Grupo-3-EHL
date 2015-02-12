@@ -375,6 +375,7 @@ public class StringCommandsExecutor implements Executor {
             return getTranslator().encode( intermediateRepr );
         }
         catch( UnknownTypeException | UnknownTranslatableException e ) {
+            //Not Supposed To Happen
             throw new InternalErrorException( e.getMessage() );
         }
     }

@@ -164,6 +164,9 @@ public class AirTrafficControlServelet extends HttpServlet {
             Executor executor = new ServerExecutor( AirTrafficControlServer.CMD_PARSER, args );
             
             String result = executor.getOutput();
+                        
+            resp.setContentType( acceptValuesList[index] );
+            resp.setCharacterEncoding( "HTF-8" );
             
             outputStream.println( result );
             

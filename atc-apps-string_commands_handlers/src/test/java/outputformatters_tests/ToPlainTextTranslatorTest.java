@@ -12,7 +12,7 @@ import outputformatters.translators.ToPlainTextTranslator;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-@SuppressWarnings( "unused" )
+//@SuppressWarnings( "unused" )
 public class ToPlainTextTranslatorTest {
 //    
 //	@Test

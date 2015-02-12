@@ -15,6 +15,7 @@ import parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUser
 import parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
 import utils.StringCommandsExecutor;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
+import utils.exceptions.parsingexceptions.UnsupportedAcceptValueException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.InvalidRegisterException;
 import utils.exceptions.parsingexceptions.parserexceptions.DuplicateParametersException;
 import utils.exceptions.parsingexceptions.parserexceptions.InvalidCommandParametersSyntaxException;
@@ -24,7 +25,18 @@ import exceptions.InvalidArgumentException;
 import exceptions.InvalidParameterValueException;
 
 
-public class ParserTest {
+/**
+ * This Test class tests the following classes:
+ * 
+ * <pre>
+ * {@link StringCommandsExecutor};
+ * </pre>
+ * 
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
+public class StringCommandsExecutor_Tests {
+    
+    // Test Normal Dinamic And Prerequisites
     
     @Test
     public void shouldGetAllUsersToTestParserWithTwoArgsAndGetCommandMethod() throws Exception {
@@ -36,9 +48,9 @@ public class ParserTest {
         cmdparser.registerCommand( "GET", "/users",
                                    new GetAllUsersInADatabaseCommandsFactory( usersDatabase ) );
         
-
+        
         StringCommandsExecutor parser =
-                new StringCommandsExecutor( cmdparser, "GET", "/users", "accept=application/json" );        
+                new StringCommandsExecutor( cmdparser, "GET", "/users", "accept=application/json" );
         
         Assert.assertEquals( "[{\"username\":\"MASTER\",\"password\":\"master\",\"email\":\"master@master\",\"fullName\":\"\"}]",
                              parser.getOutput() );
@@ -60,11 +72,11 @@ public class ParserTest {
         
         usersDatabase.add( user1, user1 );
         
-
+        
         StringCommandsExecutor parser =
                 new StringCommandsExecutor( cmdparser, "PATCH", "/users/pantunes",
-                                             "oldPassword=pass&newPassword=pass2&loginName=pantunes&loginPassword=pass&accept=application/json" );
-
+                                            "oldPassword=pass&newPassword=pass2&loginName=pantunes&loginPassword=pass&accept=application/json" );
+        
         
         Assert.assertEquals( "{\"completionStatus\":true,\"message\":\"User password successfully changed.\"}",
                              parser.getOutput() );
@@ -86,10 +98,10 @@ public class ParserTest {
         User user1 = new User( "pantunes", "pass", "Pantunes@gmail.com" );
         
         usersDatabase.add( user1, user1 );
-
+        
         StringCommandsExecutor parser =
                 new StringCommandsExecutor( cmdparser, "PATCH", "/users/pantunes",
-                                             "oldPassword=pass&newPassword=pantunes&accept=text/plain" );
+                                            "oldPassword=pass&newPassword=pantunes&accept=text/plain" );
         
         Assert.assertEquals( "User password successfully changed.", parser.getOutput() );
         
@@ -110,7 +122,7 @@ public class ParserTest {
         
         usersDatabase.add( user1, user1 );
         
-
+        
         StringCommandsExecutor parser =
                 new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes" );
         
@@ -132,7 +144,7 @@ public class ParserTest {
         
         StringCommandsExecutor parser =
                 new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes",
-                                             "output-file=src/test/resources/ParserTest_TestFile2.txt" );
+                                            "output-file=src/test/resources/ParserTest_TestFile2.txt" );
         parser.writeOutputToStream();
         
         BufferedReader br =
@@ -145,12 +157,12 @@ public class ParserTest {
         Assert.assertEquals( "username: pantunes,email: Pantunes@gmail.com", builder2.toString() );
         br.close();
     }
-
+    
     @Test
     public void shouldWriteTheStringWithResultToThePrintStream()
         throws InvalidArgumentException, InvalidCommandParametersSyntaxException,
         DuplicateParametersException, InvalidCommandSyntaxException, InvalidRegisterException,
-        InvalidParameterValueException, IOException {
+        InvalidParameterValueException, IOException, UnsupportedAcceptValueException {
     
         InMemoryUsersDatabase usersDatabase = new InMemoryUsersDatabase( "firstUsersDatabse" );
         User user1 = new User( "pantunes", "pass", "Pantunes@gmail.com" );
@@ -160,18 +172,18 @@ public class ParserTest {
         cmdparser.registerCommand( "GET", "/users/{username}",
                                    new GetUserByUsernameCommandsFactory( usersDatabase ) );
         
-         OutputStream ps =
-                new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes").getStream();      
-       
-        Assert.assertTrue( ps instanceof PrintStream); 
-    }  
-     
+        OutputStream ps =
+                new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes" ).getStream();
+        
+        Assert.assertTrue( ps instanceof PrintStream );
+    }
+    
     @Test
     public void shouldGetAPrintStreamObjectAfterExecuteGetStreamMethod()
-            throws InvalidArgumentException, InvalidCommandParametersSyntaxException,
-            DuplicateParametersException, InvalidCommandSyntaxException, InvalidRegisterException,
-            InvalidParameterValueException, IOException {
-        
+        throws InvalidArgumentException, InvalidCommandParametersSyntaxException,
+        DuplicateParametersException, InvalidCommandSyntaxException, InvalidRegisterException,
+        InvalidParameterValueException, IOException, UnsupportedAcceptValueException {
+    
         InMemoryUsersDatabase usersDatabase = new InMemoryUsersDatabase( "firstUsersDatabse" );
         User user1 = new User( "pantunes", "pass", "Pantunes@gmail.com" );
         usersDatabase.add( user1, user1 );
@@ -180,11 +192,11 @@ public class ParserTest {
         cmdparser.registerCommand( "GET", "/users/{username}",
                                    new GetUserByUsernameCommandsFactory( usersDatabase ) );
         
-
+        
         StringCommandsExecutor parser =
                 new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes",
-                        "output-file=src/test/resources/ParserTest_TestFile.txt" );
-                
+                                            "output-file=src/test/resources/ParserTest_TestFile.txt" );
+        
         OutputStream ps = parser.getStream();
         Assert.assertEquals( "PrintStream", ps.getClass().getSimpleName() );
         
@@ -201,41 +213,18 @@ public class ParserTest {
         Assert.assertTrue( f.delete() );
     }
     
+    // Test Exceptions
+    
     @Test( expected = InvalidCommandSyntaxException.class )
-    public void shouldThrowInvalidCommandSynthaxExceptionWhenGivingNullArgs() 
-            throws InvalidCommandParametersSyntaxException, DuplicateParametersException, 
-            InvalidCommandSyntaxException, InvalidArgumentException{
-       
+    public void shouldThrowInvalidCommandSynthaxExceptionWhenGivingNullArgs()
+        throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
+        InvalidCommandSyntaxException, InvalidArgumentException, UnsupportedAcceptValueException {
+    
         CommandParser cmdparser = new CommandParser();
-        String[] test =null;
+        String[] test = null;
         @SuppressWarnings( "unused" )
-        StringCommandsExecutor parser =
-                new StringCommandsExecutor( cmdparser, test );
+        StringCommandsExecutor parser = new StringCommandsExecutor( cmdparser, test );
         
-    }
-    
-    @Test( expected = InvalidParameterValueException.class )
-    public void shouldThrowInvalidParameterValueExceptionWhenGiveAnInvalidPathForOutputFile()
-        throws InvalidParameterValueException, InvalidArgumentException, InvalidRegisterException,
-        InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidCommandSyntaxException {
-    
-        CommandParser cmdparser = new CommandParser();
-        
-        InMemoryUsersDatabase usersDatabase = new InMemoryUsersDatabase( "firstUsersDatabse" );
-        
-        cmdparser.registerCommand( "GET", "/users/{username}",
-                                   new GetUserByUsernameCommandsFactory( usersDatabase ) );
-        
-        User user1 = new User( "pantunes", "pass", "Pantunes@gmail.com" );
-        
-        usersDatabase.add( user1, user1 );
-        
-
-        StringCommandsExecutor parser =
-                new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes",
-                                             "output-file=src|main|java|cli.txt" );
-        parser.getStream();
     }
     
     @Test( expected = InvalidParameterValueException.class )
@@ -260,7 +249,7 @@ public class ParserTest {
         
         StringCommandsExecutor parser =
                 new StringCommandsExecutor( cmdparser, "GET", "/users/pantunes",
-                                             "accept=FakeFormat" );
+                                            "accept=FakeFormat" );
         
         parser.getOutput();
     }
@@ -268,7 +257,7 @@ public class ParserTest {
     @Test( expected = InvalidCommandSyntaxException.class )
     public void shouldThrowInvalidCommandSyntaxExceptionWhenIsGivingOneArgs()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidCommandSyntaxException, InvalidArgumentException {
+        InvalidCommandSyntaxException, InvalidArgumentException, UnsupportedAcceptValueException {
     
         CommandParser cmdparser = new CommandParser();
         new StringCommandsExecutor( cmdparser, "GET" );
@@ -278,7 +267,7 @@ public class ParserTest {
     @Test( expected = InvalidCommandSyntaxException.class )
     public void shouldThrowInvalidCommandSyntaxExceptionWhenIsGivingNullArgs()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidCommandSyntaxException, InvalidArgumentException {
+        InvalidCommandSyntaxException, InvalidArgumentException, UnsupportedAcceptValueException {
     
         CommandParser cmdparser = new CommandParser();
         String args = null;
@@ -289,21 +278,21 @@ public class ParserTest {
     @Test( expected = InvalidCommandSyntaxException.class )
     public void shouldthrowInvalidCommandSyntaxExceptionWhenIsGivingFourArgs()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidCommandSyntaxException, InvalidArgumentException {
+        InvalidCommandSyntaxException, InvalidArgumentException, UnsupportedAcceptValueException {
     
         CommandParser cmdparser = new CommandParser();
         new StringCommandsExecutor( cmdparser, "GET", "/users", "/users", "/users" );
         
     }
     
-    
+    // Test Constructor Exceptions
     
     @Test( expected = InvalidArgumentException.class )
     public void constructorShouldThrowInvalidArgumentExceptionIfCmdParserIsNull()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidCommandSyntaxException, InvalidArgumentException {
-
+        InvalidCommandSyntaxException, InvalidArgumentException, UnsupportedAcceptValueException {
     
+        
         new StringCommandsExecutor( null, "", "" );
     }
     
@@ -311,9 +300,9 @@ public class ParserTest {
     @Test( expected = InvalidCommandSyntaxException.class )
     public void constructorShouldThrowInvalidCommandSyntaxExceptionIfNoArgsGiven()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidCommandSyntaxException, InvalidArgumentException {
-
+        InvalidCommandSyntaxException, InvalidArgumentException, UnsupportedAcceptValueException {
     
+        
         new StringCommandsExecutor( new CommandParser() );
     }
     
@@ -321,9 +310,9 @@ public class ParserTest {
     @Test( expected = InvalidCommandSyntaxException.class )
     public void constructorShouldThrowInvalidCommandSyntaxExceptionIfOnly1ArgGiven()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidCommandSyntaxException, InvalidArgumentException {
-
+        InvalidCommandSyntaxException, InvalidArgumentException, UnsupportedAcceptValueException {
     
+        
         new StringCommandsExecutor( new CommandParser(), "arg[0]" );
     }
     
@@ -332,9 +321,9 @@ public class ParserTest {
     public void constructorShouldThrowInvalidCommandSyntaxExceptionIfMoreThan3ArgsGiven()
         
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidCommandSyntaxException, InvalidArgumentException {
-
+        InvalidCommandSyntaxException, InvalidArgumentException, UnsupportedAcceptValueException {
     
+        
         new StringCommandsExecutor( new CommandParser(), "arg[0]", "arg[1]", "arg[2]", "arg[3]" );
     }
     
@@ -343,9 +332,9 @@ public class ParserTest {
     public void constructorShouldThrowInvalidCommandParametersSyntaxException()
         
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidCommandSyntaxException, InvalidArgumentException {
-
+        InvalidCommandSyntaxException, InvalidArgumentException, UnsupportedAcceptValueException {
     
+        
         new StringCommandsExecutor( new CommandParser(), "", "", "a" );
     }
     
@@ -354,21 +343,21 @@ public class ParserTest {
     public void constructorShouldThrowInvalidCommandParametersSyntaxException2()
         
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidCommandSyntaxException, InvalidArgumentException {
-        
+        InvalidCommandSyntaxException, InvalidArgumentException, UnsupportedAcceptValueException {
+    
         new StringCommandsExecutor( new CommandParser(), "", "", "a&b=c" );
-
+        
     }
     
     
     @Test( expected = DuplicateParametersException.class )
     public void constructorShouldThrowDuplicateParametersException()
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidCommandSyntaxException, InvalidArgumentException {
-
+        InvalidCommandSyntaxException, InvalidArgumentException, UnsupportedAcceptValueException {
+    
         
         new StringCommandsExecutor( new CommandParser(), "", "", "a=b&a=c" );
-
+        
     }
     
     

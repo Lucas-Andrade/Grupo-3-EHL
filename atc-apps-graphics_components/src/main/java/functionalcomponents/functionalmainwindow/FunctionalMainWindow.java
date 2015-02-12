@@ -3,7 +3,10 @@ package functionalcomponents.functionalmainwindow;
 
 
 import java.awt.event.ActionListener;
+import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
+import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
 import design.windows.MainWindow;
+import entities.SimpleUser;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 
 
@@ -24,40 +27,22 @@ public class FunctionalMainWindow {
     private MainWindow functionalMainWindow;
     
     /**
-     * {@code usersDatabase} - The users database.
+     * The user who is currently logged in.
      */
-    private Database< User > usersDatabase;
-    
-    /**
-     * {@code airshipsDatabase} - The airships database.
-     */
-    private Database< Airship > airshipsDatabase;
-    
-    /**
-     * {@code user} - The user who is currently logged in.
-     */
-    private User user;
+    private SimpleUser user;
     
     /**
      * Public constructor that will add functionality to a given non functional {@link MainWindow}.
      * 
      * @param nonFunctionalMainWindow
      *            - The {@code MainWindow} we want to add functionality to.
-     * @param usersDatabase
-     *            - The users database.
-     * @param airshipsDatabase
-     *            - The airships database.
      * @param user
      *            - The user who is currently logged in.
      */
-    public FunctionalMainWindow( MainWindow nonFunctionalMainWindow,
-                                 Database< User > usersDatabase,
-                                 Database< Airship > airshipsDatabase, User user ) {
-        
+    public FunctionalMainWindow( MainWindow nonFunctionalMainWindow, SimpleUser user ) {
+    
         this.functionalMainWindow = nonFunctionalMainWindow;
         
-        this.usersDatabase = usersDatabase;
-        this.airshipsDatabase = airshipsDatabase;
         this.user = user;
         
         functionalHeaderPanel();
@@ -74,10 +59,10 @@ public class FunctionalMainWindow {
      * setHeaderPanel(JHeaderPanelForMainWindow)}.
      */
     private void functionalHeaderPanel() {
-        
+    
         functionalMainWindow.setHeaderPanel( (new FunctionalHeaderPanel(
                                                                          functionalMainWindow.getHeaderPanel(),
-                                                                         usersDatabase, user )).getHeaderPanel() );
+                                                                         user )).getHeaderPanel() );
     }
     
     /**
@@ -86,11 +71,10 @@ public class FunctionalMainWindow {
      * setFooterPanel(JFooterPanelForMainWindow)}.
      */
     private void functionalFooterPanel() {
-        
+    
         functionalMainWindow.setFooterPanel( (new FunctionalFooterPanel(
                                                                          functionalMainWindow.getFooterPanel(),
                                                                          functionalMainWindow.getBodyPanel(),
-                                                                         airshipsDatabase,
                                                                          user,
                                                                          functionalMainWindow.getErrorJTextArea() )).getFooterPanel() );
     }
@@ -103,15 +87,13 @@ public class FunctionalMainWindow {
      * {@link FunctionalLoginWindow} with the objective of allowing another user to logIn.
      */
     private void functionalLogOutButton() {
-        
+    
         functionalMainWindow.getHeaderPanel()
                             .getUserPanel()
                             .getLogoutButton()
                             .addActionListener( action -> {
                                                     
-                                                    new FunctionalLoginWindow( new LogInWindow(),
-                                                                               usersDatabase,
-                                                                               airshipsDatabase );
+                                                    new FunctionalLoginWindow();
                                                     functionalMainWindow.dispose();
                                                 } );
     }
@@ -123,7 +105,7 @@ public class FunctionalMainWindow {
      * The given action will dispose of the current MainWindow, closing the program.
      */
     private void functionalTurnOffButton() {
-        
+    
         functionalMainWindow.getHeaderPanel().getUserPanel().getTurnOffButton()
                             .addActionListener( action -> functionalMainWindow.dispose() );
     }
@@ -134,7 +116,7 @@ public class FunctionalMainWindow {
      * @return the {@code functionalMainWindow}.
      */
     public MainWindow getFunctionalMainWindow() {
-        
+    
         return functionalMainWindow;
     }
 }

@@ -4,14 +4,8 @@ package app;
 import java.awt.EventQueue;
 import swingworkers.LoginWindowSwingWorker;
 import swingworkers.SwingWorkerFactory;
-import databases.Database;
-import databases.InMemoryAirshipsDatabase;
-import databases.InMemoryUsersDatabase;
 import design.windows.popupwindows.FailWindow;
-import design.windows.popupwindows.SuccessWindow;
 import design.windows.popupwindows.UnderConstrutionWindow;
-import elements.Airship;
-import elements.User;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
 import exceptions.SwingWorkerFactoryMissingException;
@@ -76,19 +70,6 @@ User}
 public class App {
     
     
-    static Database< User > usersDatabase;
-    static Database< Airship > airshipsDatabase;
-    static {
-        
-        try {
-            usersDatabase = new InMemoryUsersDatabase( "the system" );
-            airshipsDatabase = new InMemoryAirshipsDatabase( "the system" );
-        }
-        catch( Exception e ) {
-            throw new InternalErrorException( "ERROR IN gui APP", e );
-        }
-    }
-    
     
     public static void main( String[] args ) throws InvalidArgumentException {
     
@@ -125,8 +106,7 @@ public class App {
             private void setSwingWorkerFactoriesInTheFunctionalWindows() {
             
                 LoginWindowSwingWorker.Factory loginWindowFactory =
-                        new LoginWindowSwingWorker.Factory( FunctionalLoginWindow.baseWindow,
-                                                            usersDatabase );
+                        new LoginWindowSwingWorker.Factory( FunctionalLoginWindow.baseWindow );
                 FunctionalLoginWindow.setSwingWorkerFactory( loginWindowFactory );
             }
             

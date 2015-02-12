@@ -4,11 +4,11 @@ package functionalcomponents.functionaluserwindows;
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
 import org.omg.CORBA.CompletionStatus;
+import swingworkers.ExceptionHandlerSW;
 import design.windows.popupwindows.SuccessWindow;
 import design.windows.userwindows.PatchUserWindow;
 import exceptions.InvalidArgumentException;
 import functionalcomponents.FunctionalWindow;
-import functionalcomponents.ExceptionHandlerSW;
 
 
 

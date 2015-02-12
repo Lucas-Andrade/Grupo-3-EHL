@@ -5,9 +5,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
+import swingworkers.SwingWorkerForButtonFactory;
 import entities.Entity;
 import entities.SimpleAirship;
-import functionalcomponents.SwingWorkerForButtonFactory;
 
 
 /**

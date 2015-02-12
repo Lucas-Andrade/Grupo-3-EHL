@@ -66,15 +66,4 @@ public class UserFromJson {
                                       : result.append( ",\r\nfullName: " ).append( fullname );
         // .append( "\r\n" );
     }
-    
-//    TODO - maybe not used
-//    /**
-//     * Returns the {@code SimpleUser} info.
-//     * 
-//     * @see java.lang.Object#toString()
-//     */
-//    public String toString() {
-//    
-//        return toString;
-//    }
 }

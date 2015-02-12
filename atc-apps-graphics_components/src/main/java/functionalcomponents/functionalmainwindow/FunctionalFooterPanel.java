@@ -5,12 +5,15 @@ package functionalcomponents.functionalmainwindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextArea;
+import swingworkers.ExceptionHandlerSW;
+import swingworkers.FunctionalGetWindowSwingWorker;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
 import design.windows.airshipwindows.GetAirshipsWithLessPassengerThanWindow;
 import design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
 import design.windows.airshipwindows.PostAirshipsWindow;
-import functionalcomponents.ExceptionHandlerSW;
+import design.windows.popupwindows.UnderConstrutionWindow;
+import entities.SimpleUser;
 import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
@@ -40,14 +43,9 @@ public class FunctionalFooterPanel {
     private JBodyPanelForMainWindow bodyPanel;
     
     /**
-     * {@code airshipsDatabase} - The airships database.
-     */
-    private Database< Airship > airshipsDatabase;
-    
-    /**
      * {@code user} - The user who is currently logged in.
      */
-    private User user;
+    private SimpleUser user;
     
     /**
      * {@code errorTextArea} - The text area where the error messages will be displayed.
@@ -74,14 +72,12 @@ public class FunctionalFooterPanel {
      *            - The text area where the error messages will be displayed.
      */
     public FunctionalFooterPanel( JFooterPanelForMainWindow footerPanel,
-                                  JBodyPanelForMainWindow bodyPanel,
-                                  Database< Airship > airshipsDatabase, User user,
+                                  JBodyPanelForMainWindow bodyPanel, SimpleUser user,
                                   JTextArea errorTextArea ) {
         
         this.footerPanel = footerPanel;
         this.bodyPanel = bodyPanel;
         
-        this.airshipsDatabase = airshipsDatabase;
         this.user = user;
         this.errorTextArea = errorTextArea;
         

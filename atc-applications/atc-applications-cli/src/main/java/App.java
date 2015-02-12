@@ -17,6 +17,7 @@ import parsingtools.commandfactories.getfactories.getallfactories.GetAllAirships
 import parsingtools.commandfactories.getfactories.getallfactories.GetAllUsersInADatabaseCommandsFactory;
 import parsingtools.commandfactories.getfactories.getbyidfactories.GetAirshipByFlightIdCommandsFactory;
 import parsingtools.commandfactories.getfactories.getbyidfactories.GetUserByUsernameCommandsFactory;
+import parsingtools.commandfactories.userauthenticatingfactories.AuthenticateCommandFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.DeleteAirshipCommandsFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.PatchAirshipCommandsFactory;
 import parsingtools.commandfactories.userauthenticatingfactories.PatchUserPasswordCommandsFactory;
@@ -191,6 +192,9 @@ public class App {
                            new GetTheNearestAirshipsToGeographicPositionCommandsFactory(
                                                                                          airshipsDatabase ) );
             // GET /users
+            
+//            commandRegist( "GET", "/users/authenticate",
+//                           new AuthenticateCommandFactory( usersDatabase, usersDatabase ) );
             
             commandRegist( "GET", "/users",
                            new GetAllUsersInADatabaseCommandsFactory( usersDatabase ) );

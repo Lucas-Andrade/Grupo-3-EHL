@@ -1,31 +1,24 @@
 package swingworkers;
 
-
-import utils.StringUtils;
-import app.EntitiesConversor;
-import commands.AuthenticateUserCommand;
-import databases.Database;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import org.eclipse.jetty.server.Authentication.User;
+import com.google.gson.Gson;
 import design.windows.userwindows.LogInWindow;
-import elements.User;
 import entities.SimpleUser;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow.SwingWorker;
+import gson_entities.UserFromJson;
 
 
 public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
-    
-    
-    
-    // INSTANCE FIELD
-    private Database< User > usersDatabase;
-    
-    
-    
-    // CONSTRUCTOR
-    public LoginWindowSwingWorker( LogInWindow window, Database< User > usersDatabase ) {
+
+ // CONSTRUCTOR
+    public LoginWindowSwingWorker( LogInWindow window ) {
     
         super( window );
-        this.usersDatabase = usersDatabase;
     }
     
     
@@ -41,11 +34,25 @@ public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
     @Override
     protected SimpleUser doInBackground() throws Exception {
     
-        User loggedUser =
-                new AuthenticateUserCommand( StringUtils.parameterToString( usernameLabel, username ),
-                                             StringUtils.parameterToString( passwordLabel, password ),
-                                             usersDatabase ).call().get();
-        return new EntitiesConversor().toSimpleUser( loggedUser );
+        String url = "http://localhost:8081/users"; //TODO
+        HttpURLConnection connection = ( HttpURLConnection )new URL( url ).openConnection();
+
+        // 200 -> ok
+        connection.getResponseCode();
+
+        // message from the server
+        BufferedReader in = new BufferedReader( new InputStreamReader( connection.getInputStream() ) );
+        String inputLine;
+        String html = new String();
+
+        //TODO
+        while( ( inputLine = in.readLine() ) != null )
+        {
+            html += inputLine ;
+        }
+        in.close();
+        
+        return  new Gson().fromJson( html, UserFromJson.class ).convert();
     }
     
     
@@ -58,24 +65,20 @@ public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
         
         // INSTANCE FIELDS
         private LogInWindow window;
-        private Database< User > usersDatabase;
         
         
         
         // CONSTRUCTOR
-        public Factory( LogInWindow window, Database< User > usersDatabase ) {
+        public Factory( LogInWindow window ) {
         
             this.window = window;
-            this.usersDatabase = usersDatabase;
         }
         
         
         @Override
         public LoginWindowSwingWorker newInstance() {
         
-            return new LoginWindowSwingWorker( window, usersDatabase );
+            return new LoginWindowSwingWorker( window );
         }
-        
     }
-    
 }

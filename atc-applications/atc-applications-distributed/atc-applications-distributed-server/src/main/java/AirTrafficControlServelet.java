@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import utils.Executor;
 import utils.StringCommandsExecutor;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
+import utils.exceptions.parsingexceptions.UnsupportedAcceptValueException;
 import utils.exceptions.parsingexceptions.parserexceptions.DuplicateParametersException;
 import utils.exceptions.parsingexceptions.parserexceptions.InvalidCommandParametersSyntaxException;
 import exceptions.DatabaseException;
@@ -27,15 +28,6 @@ import exceptions.WrongLoginPasswordException;
 @SuppressWarnings( "serial" )
 public class AirTrafficControlServelet extends HttpServlet {
     
-    // Private Constructor
-    
-    /**
-     * Unused private constructor
-     */
-    private AirTrafficControlServelet() {
-    
-    }
-    
     // Public Methods
     
     /**
@@ -45,11 +37,7 @@ public class AirTrafficControlServelet extends HttpServlet {
     @Override
     public void doGet( HttpServletRequest req, HttpServletResponse resp ) throws IOException {
     
-        String[] args = getCommandArgumentsFromGetRequest( req );
-        
-        ServletOutputStream outStream = resp.getOutputStream();
-        
-        createExecutorAndSendResponse( args, resp, outStream );
+        Execute( req, getCommandArgumentsFromGetRequest( req ), resp );
     }
     
     /**
@@ -59,11 +47,7 @@ public class AirTrafficControlServelet extends HttpServlet {
     @Override
     public void doPost( HttpServletRequest req, HttpServletResponse resp ) throws IOException {
     
-        String[] args = getCommandArgumentsFromPostRequest( req, resp );
-        
-        ServletOutputStream outStream = resp.getOutputStream();
-        
-        createExecutorAndSendResponse( args, resp, outStream );
+        Execute( req, getCommandArgumentsFromPostRequest( req ), resp );
     }
     
     // Private Auxiliar Methods
@@ -74,14 +58,14 @@ public class AirTrafficControlServelet extends HttpServlet {
      * created based on {@link HttpServletRequest} data.
      * 
      * @param req
-     *            - The {@link HttpServletRequest} corresponding to the current HTTP request
+     *            - The {@link HttpServletRequest} corresponding to the current HTTP request.
      * @return The string to send to the {@link ServerExecutor}.
      */
     private String[] getCommandArgumentsFromGetRequest( HttpServletRequest req ) {
     
         String[] args =
                 { req.getMethod(), req.getRequestURI(),
-                 req.getQueryString() + "&accept=" + req.getHeader( "Accept" ) };
+                 (req.getQueryString() == null ? "" : req.getQueryString()) };
         
         return args;
     }
@@ -95,19 +79,45 @@ public class AirTrafficControlServelet extends HttpServlet {
      *            - The {@link HttpServletRequest} corresponding to the current HTTP request
      * @return The string to send to the {@link ServerExecutor}.
      */
-    private String[] getCommandArgumentsFromPostRequest( HttpServletRequest req,
-                                                         HttpServletResponse resp )
+    private String[] getCommandArgumentsFromPostRequest( HttpServletRequest req )
         throws IOException {
     
-        
         String parameters =
                 new BufferedReader( new InputStreamReader( req.getInputStream() ) ).readLine();
         
-        String[] args =
-                { req.getMethod(), req.getRequestURI(),
-                 parameters + "&accept=" + req.getHeader( "Accept" ) };
+        String[] args = { req.getMethod(), req.getRequestURI(), parameters };
         
         return args;
+    }
+    
+    /**
+     * Auxiliar method that will execute the {@link HttpServletRequest Request} sent.
+     * 
+     * @param req
+     *            - The {@link HttpServletRequest}.
+     * @param args
+     *            - The String array containing the method, the path and the parameters for the
+     *            requested command.
+     * @param resp
+     *            - The {@link HttpServletResponse}.
+     * 
+     * @throws IOException
+     *             - If the println() method made to the {@code outputStream} throws an IOException.
+     */
+    private void Execute( HttpServletRequest req, String[] args, HttpServletResponse resp )
+        throws IOException {
+    
+        ServletOutputStream outputStream = resp.getOutputStream();
+        
+        String args2 = args[2];
+        
+        String[] acceptValuesList = req.getHeader( "Accept" ).split( "," );
+        
+        int index = 0;
+        
+        updateParameters( resp, args, args2, acceptValuesList, index );
+        
+        createExecutorAndSendResponse( args, args2, resp, outputStream, acceptValuesList, index );
     }
     
     /**
@@ -120,9 +130,21 @@ public class AirTrafficControlServelet extends HttpServlet {
      * {@code ServerExecutor} and the call of the {@code getOutput()} method, sending the correct
      * error to the client.
      * 
+     * If the creation of the {@code ServerExecutor} throws an
+     * {@link UnsupportedAcceptValueException} this exception will be catched and call this method
+     * again with the parameters string, stored to the {@code args} array, updated with a new accept
+     * value existing in the {@code acceptValuesList}.
+     * 
      * @param args
      *            - The String array containing the method, the path and the parameters for the
      *            requested command.
+     * @param args3
+     *            - The inicial value of the String parameters withouth the accept header.
+     * @param acceptValuesList
+     *            - The list of all the accept values supported by the entity that made the request.
+     * @param index
+     *            - The index of the {@code acceptValuesList} array that has the accept value we
+     *            want to add to the parameters.
      * @param resp
      *            - The HttpServletResponse.
      * @param outputStream
@@ -131,18 +153,27 @@ public class AirTrafficControlServelet extends HttpServlet {
      * @throws IOException
      *             - If the println() method made to the {@code outputStream} throws an IOException.
      */
-    private void createExecutorAndSendResponse( String[] args, HttpServletResponse resp,
-                                                ServletOutputStream outputStream )
+    private void createExecutorAndSendResponse( String[] args, String args3,
+                                                HttpServletResponse resp,
+                                                ServletOutputStream outputStream,
+                                                String[] acceptValuesList, int index )
         throws IOException {
     
-        Executor executor = null;
-        
         try {
-            executor = new ServerExecutor( AirTrafficControlServer.CMD_PARSER, args );
+            
+            Executor executor = new ServerExecutor( AirTrafficControlServer.CMD_PARSER, args );
             
             String result = executor.getOutput();
             
             outputStream.println( result );
+            
+        }
+        catch( UnsupportedAcceptValueException e ) {
+            
+            updateParameters( resp, args, args3, acceptValuesList, index++ );
+            
+            createExecutorAndSendResponse( args, args3, resp, outputStream, acceptValuesList,
+                                           index++ );
             
         }
         catch( InvalidCommandParametersSyntaxException | DuplicateParametersException
@@ -163,6 +194,40 @@ public class AirTrafficControlServelet extends HttpServlet {
         }
         catch( Exception e ) {
             resp.sendError( HttpServletResponse.SC_INTERNAL_SERVER_ERROR, e.getMessage() );
+        }
+        
+    }
+    
+    /**
+     * Auxilar method to update the parameters String with ith value of the accept header in the
+     * form: <i>accept="value"</i>.
+     * 
+     * @param args
+     *            - The String array containing the method, path and parameters of the
+     *            {@code HttpServletRequest} to give to the {@link ServerExecutor}.
+     * @param args2
+     *            - The inicial value of the String parameters withouth the accept header.
+     * @param acceptValuesList
+     *            - The list of all the accept values supported by the entity that made the request.
+     * @param i
+     *            - The index of the {@code acceptValuesList} array that has the accept value we
+     *            want to add to the parameters.
+     * @throws IOException
+     */
+    private void updateParameters( HttpServletResponse resp, String[] args, String args2,
+                                   String[] acceptValuesList, int i ) throws IOException {
+    
+        if( i >= acceptValuesList.length )
+            resp.sendError( HttpServletResponse.SC_NOT_ACCEPTABLE, "Unsupported Accept Values" );
+        
+        if(acceptValuesList[i].contains( "=" ))
+            updateParameters( resp, args, args2, acceptValuesList, i++ );
+        
+        if( args2 == "" ) {
+            args[2] = "accept=" + acceptValuesList[i];
+        }
+        else {
+            args[2] = args2 + "&accept=" + acceptValuesList[i];
         }
     }
 }

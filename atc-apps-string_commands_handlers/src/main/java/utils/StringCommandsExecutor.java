@@ -19,6 +19,7 @@ import parsingtools.CommandParser;
 import utils.exceptions.formattersexceptions.UnknownTranslatableException;
 import utils.exceptions.formattersexceptions.UnknownTypeException;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
+import utils.exceptions.parsingexceptions.UnsupportedAcceptValueException;
 import utils.exceptions.parsingexceptions.commandparserexceptions.UnknownCommandException;
 import utils.exceptions.parsingexceptions.parserexceptions.DuplicateParametersException;
 import utils.exceptions.parsingexceptions.parserexceptions.InvalidCommandParametersSyntaxException;
@@ -155,11 +156,14 @@ public class StringCommandsExecutor implements Executor {
      * @throws DuplicateParametersException
      *             If several values for the same parameter have been received in the
      *             parameters-list.
+     * @throws UnsupportedAcceptValueException
+     *             If the {@code Accept} parameter value given is not suppoted by this application.
+     * 
      * @see CommandParser
      */
     public StringCommandsExecutor( CommandParser cmdParser, String... args )
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidArgumentException, InvalidCommandSyntaxException {
+        InvalidArgumentException, InvalidCommandSyntaxException, UnsupportedAcceptValueException {
     
         if( cmdParser == null )
             throw new InvalidArgumentException(
@@ -189,7 +193,7 @@ public class StringCommandsExecutor implements Executor {
     
         Callable< ? > command = getCommand();
         String accept = findValueOf( StringCommandsDictionary.ACCEPT );
-        if( accept!= null&& accept.equals( StringCommandsDictionary.JSON ) )
+        if( accept != null && accept.equals( StringCommandsDictionary.JSON ) )
             return convertToGson( command );
         
         return convertUsingTranslators( command );
@@ -261,9 +265,13 @@ public class StringCommandsExecutor implements Executor {
      * @throws DuplicateParametersException
      *             If several values for the same parameter have been received in the
      *             parameters-list.
+     * @throws UnsupportedAcceptValueException
+     *             If the {@code Accept} parameter value received is not supported by this
+     *             application.
      */
     private Map< String, String > getParametersFromParametersList()
-        throws InvalidCommandParametersSyntaxException, DuplicateParametersException {
+        throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
+        UnsupportedAcceptValueException {
     
         Map< String, String > parametersMap = new HashMap< String, String >();
         if( args.length == 2 )
@@ -274,7 +282,13 @@ public class StringCommandsExecutor implements Executor {
             String[] nameAndValue = parameter.split( "=" );
             if( nameAndValue.length != 2 )
                 throw new InvalidCommandParametersSyntaxException(
-                                                                   "Invalid syntax in parameters-list!" );
+                                                                   "Invalid syntax in parameters-list!"
+                                                                           + nameAndValue );
+            if( nameAndValue[0] == "accept"
+                && (!nameAndValue[1].equals( "text/html" )
+                    || !nameAndValue[1].equals( "application/json" ) || !nameAndValue[1].equals( "text/plain" )) )
+                throw new UnsupportedAcceptValueException( "Unsupported Accept" );
+            
             String parameterName = nameAndValue[0];
             String parameterValue = nameAndValue[1];
             

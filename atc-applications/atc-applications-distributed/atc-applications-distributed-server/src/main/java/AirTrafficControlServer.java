@@ -284,11 +284,9 @@ public class AirTrafficControlServer {
         
         try {
             server.start();
-            System.out.println("Server Started!!! YEY!!!");
+            System.out.println( "Server Started!!! YEY!!!" );
         }
         catch( Exception e ) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         }
     }
 }

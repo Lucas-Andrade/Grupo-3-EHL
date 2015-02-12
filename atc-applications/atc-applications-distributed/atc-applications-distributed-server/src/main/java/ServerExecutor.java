@@ -1,6 +1,7 @@
 import parsingtools.CommandParser;
 import utils.StringCommandsExecutor;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;
+import utils.exceptions.parsingexceptions.UnsupportedAcceptValueException;
 import utils.exceptions.parsingexceptions.parserexceptions.DuplicateParametersException;
 import utils.exceptions.parsingexceptions.parserexceptions.InvalidCommandParametersSyntaxException;
 import exceptions.InvalidArgumentException;
@@ -47,11 +48,15 @@ public class ServerExecutor extends StringCommandsExecutor {
      * @throws DuplicateParametersException
      *             If several values for the same parameter have been received in the
      *             parameters-list.
+     * @throws UnsupportedAcceptValueException
+     *             If the {@code Accept} parameter value received is not supported by this
+     *             application.
+     * 
      * @see CommandParser
      */
     public ServerExecutor( CommandParser cmdParser, String[] args )
         throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        InvalidCommandSyntaxException, InvalidArgumentException {
+        InvalidCommandSyntaxException, InvalidArgumentException, UnsupportedAcceptValueException {
     
         super( cmdParser, args );
     }

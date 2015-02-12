@@ -2,69 +2,204 @@ package functionalcomponents.functionalmainwindow;
 
 
 
-import java.awt.event.ActionListener;
+import java.util.Collection;
+import javax.swing.SwingWorker;
+import swingworkers.SwingWorkerFactory;
 import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
 import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
 import design.windows.MainWindow;
-import entities.SimpleUser;
+import entities.SimpleAirship;
+import entities.SimpleLoggedUser;
+import exceptions.InvalidArgumentException;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 
 
 
 /**
  * Class whose instances have the purpose of adding functionality to a {@link MainWindow}. Giving
- * functionality to a window means adding an {@link ActionListener} to all its buttons.
+ * functionality to a {@link MainWindow} means replacing its panels with functional panels.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class FunctionalMainWindow {
     
-    // Fields
+    
+    
+    // STATIC FIELDS
     
     /**
-     * {@code functionalMainWindow} - The {@code MainWindow} we want to add functionality to.
+     * The {@code MainWindow} we want to add functionality to.
      */
-    private MainWindow functionalMainWindow;
+    public static final MainWindow windowBase = new MainWindow();
     
     /**
      * The user who is currently logged in.
      */
-    private SimpleUser user;
+    private static volatile SimpleLoggedUser user;
     
     /**
-     * Public constructor that will add functionality to a given non functional {@link MainWindow}.
-     * 
-     * @param nonFunctionalMainWindow
-     *            - The {@code MainWindow} we want to add functionality to.
-     * @param user
-     *            - The user who is currently logged in.
+     * The factory responsible for producing {@link SwingWorker}s that return the set of airships to
+     * appear in this window's body panel.
      */
-    public FunctionalMainWindow( MainWindow nonFunctionalMainWindow, SimpleUser user ) {
+    private static SwingWorkerFactory< SwingWorker< Collection< SimpleAirship >, Void >, Collection< SimpleAirship > > swFactory;
     
-        this.functionalMainWindow = nonFunctionalMainWindow;
-        
-        this.user = user;
-        
-        functionalHeaderPanel();
-        functionalFooterPanel();
-        functionalLogOutButton();
-        functionalTurnOffButton();
+    /**
+     * Locks for the {@link #user} and the {@link #swFactory}.
+     */
+    private static Object userLock = new Object();
+    private static Object factoryLock = new Object();
+    
+    // STATIC METHODS
+    
+    /**
+     * Sets the {@link SimpleLoggedUser} that is logged in in this session of the app.
+     * 
+     * @param loggedUser
+     *            The {@link SimpleLoggedUser} that is logged in in this session of the app.
+     * @return {@code true} if {@code loggedUser} was set as the {@link SimpleLoggedUser} that is
+     *         logged in in this session of the app; <br/>
+     *         {@code false} if there is already a user logged in or {@code loggedUser} is
+     *         {@code null}.
+     */
+    private static boolean setLoggedUser( SimpleLoggedUser loggedUser ) {
+    
+        if( loggedUser != null )
+            synchronized (userLock) {
+                if( user == null ) {
+                    user = loggedUser;
+                    return true;
+                }
+            }
+        return false;
     }
     
-    // Private Methods
+    /**
+     * Gets the {@link SimpleLoggedUser} that is logged in in this session of the app.
+     * 
+     * @return the {@link SimpleLoggedUser} that is logged in in this session of the app; <br/>
+     *         {@code null} if there is none.
+     */
+    public static SimpleLoggedUser getLoggedUser() {
+    
+        synchronized (userLock) {
+            return user;
+        }
+    }
     
     /**
-     * Method that will replace the given non functional window's header panel with a new functional
-     * header panel using the method {@link MainWindow#setHeaderPanel(JHeaderPanelForMainWindow)
+     * Updates the {@link SimpleLoggedUser} that is logged in in this session of the app. The
+     * already logged in user and the new logged in user must share the same identification (known
+     * via method {@link SimpleLoggedUser#getIdentification()}.
+     * 
+     * @param newLoggedUser
+     *            The new {@link SimpleLoggedUser} that is to replace the already logged in user.
+     * @return {@code true} if {@code newLoggedUser} was set as the new user logged in in this
+     *         session of the app; <br/>
+     *         {@code false} if (1) {@code newLoggedUser} is {@code null} or (2) there was no user
+     *         previously logged in or (3) the previously logged in user and {@code newLoggedUser}
+     *         have different identifications - in neither case, {@code newLoggedUser} is set as the
+     *         new logged in user.
+     */
+    public static boolean updateLoggedUser( SimpleLoggedUser newLoggedUser ) {
+    
+        if( newLoggedUser != null )
+            synchronized (userLock) {
+                if( user == null
+                    || !newLoggedUser.getIdentification().equals( user.getIdentification() ) ) {
+                    return false;
+                }
+                user = newLoggedUser;
+                return true;
+            }
+        return false;
+    }
+    
+    /**
+     * Removes the {@link SimpleLoggedUser} that is logged in in this session of the app.
+     * 
+     * @return {@code true} if the {@link SimpleLoggedUser} that was logged in was removed; <br/>
+     *         {@code false} if no user was logged in.
+     */
+    public static boolean removeLoggedUser() {
+    
+        synchronized (userLock) {
+            if( user == null ) {
+                return false;
+            }
+            user = null;
+            return true;
+        }
+    }
+    
+    /**
+     * Sets the {@link SwingWorkerFactory} that produces {@link SwingWorker}s that return the set of
+     * airships to appear in this window's body panel.
+     * 
+     * @param factory
+     *            The {@link SwingWorkerFactory} that produces {@link SwingWorker}s that return the
+     *            set of airships to appear in this window's body panel.
+     * @return {@code true} if {@code factory} was set as the factory that produces
+     *         {@link SwingWorker}s that return the set of airships to appear in this window's body
+     *         panel; <br/>
+     *         {@code false} if there was a factory already set or {@code factory} is {@code null}.
+     */
+    public static
+            boolean
+            setSwingWorkerFactory( SwingWorkerFactory< SwingWorker< Collection< SimpleAirship >, Void >, Collection< SimpleAirship > > factory ) {
+    
+        if( factory != null )
+            synchronized (factoryLock) {
+                if( swFactory == null ) {
+                    swFactory = factory;
+                    return true;
+                }
+            }
+        return false;
+    }
+    
+    
+    
+    // CONSTRUCTOR
+    /**
+     * Adds functionality to the panels of a {@link MainWindow} and displays it.
+     * 
+     * @throws InvalidArgumentException
+     *             If {@code loggedUser} is {@code null} and there was no previously set logged-in
+     *             user.
+     */
+    public FunctionalMainWindow( SimpleLoggedUser loggedUser ) throws InvalidArgumentException {
+    
+        synchronized (windowBase) {
+            
+            if( !setLoggedUser( loggedUser ) && loggedUser == null )
+                throw new InvalidArgumentException( "Cannot create FunctionalMainWindow with null"
+                                                    + " logged-in user." );
+            
+            functionalHeaderPanel();
+            functionalFooterPanel();
+            
+            windowBase.setVisible( true );
+        }
+    }
+    
+    
+    
+    // PRIVATE METHODS
+    
+    // used in the constructor
+    /**
+     * Replaces the non-functional window's header panel with a new functional header panel using
+     * the method {@link MainWindow#setHeaderPanel(JHeaderPanelForMainWindow)
      * setHeaderPanel(JHeaderPanelForMainWindow)}.
      */
     private void functionalHeaderPanel() {
     
-        functionalMainWindow.setHeaderPanel( (new FunctionalHeaderPanel(
-                                                                         functionalMainWindow.getHeaderPanel(),
-                                                                         user )).getHeaderPanel() );
+        windowBase.setHeaderPanel( (new FunctionalHeaderPanel( windowBase.getHeaderPanel(), user )).getHeaderPanel() );
+        functionalLogOutButton();
+        functionalTurnOffButton();
     }
     
+    // used in the constructor
     /**
      * Method that will replace the given non functional window's footer panel with a new functional
      * footer panel using the method {@link MainWindow#setFooterPanel(JFooterPanelForMainWindow)
@@ -72,13 +207,12 @@ public class FunctionalMainWindow {
      */
     private void functionalFooterPanel() {
     
-        functionalMainWindow.setFooterPanel( (new FunctionalFooterPanel(
-                                                                         functionalMainWindow.getFooterPanel(),
-                                                                         functionalMainWindow.getBodyPanel(),
-                                                                         user,
-                                                                         functionalMainWindow.getErrorJTextArea() )).getFooterPanel() );
+        windowBase.setFooterPanel( (new FunctionalFooterPanel( windowBase.getFooterPanel(),
+                                                               windowBase.getBodyPanel(), user,
+                                                               windowBase.getErrorJTextArea() )).getFooterPanel() );
     }
     
+    // used in the constructor
     /**
      * Method that will add functionality to the {@link JHeaderPanelForMainWindow#logoutButton
      * logoutButton} button.
@@ -88,16 +222,14 @@ public class FunctionalMainWindow {
      */
     private void functionalLogOutButton() {
     
-        functionalMainWindow.getHeaderPanel()
-                            .getUserPanel()
-                            .getLogoutButton()
-                            .addActionListener( action -> {
-                                                    
-                                                    new FunctionalLoginWindow();
-                                                    functionalMainWindow.dispose();
-                                                } );
+        windowBase.getHeaderPanel().getUserPanel().getLogoutButton().addActionListener( action -> {
+            
+            new FunctionalLoginWindow();
+            windowBase.dispose();
+        } );
     }
     
+    // used in the constructor
     /**
      * Method that will add functionality to the {@link JHeaderPanelForMainWindow#turnOffButton
      * turnOffButton} button.
@@ -106,17 +238,22 @@ public class FunctionalMainWindow {
      */
     private void functionalTurnOffButton() {
     
-        functionalMainWindow.getHeaderPanel().getUserPanel().getTurnOffButton()
-                            .addActionListener( action -> functionalMainWindow.dispose() );
+        windowBase.getHeaderPanel().getUserPanel().getTurnOffButton()
+                  .addActionListener( action -> windowBase.dispose() );
     }
     
-    // Public Get Methods
+    
+    
+    // PUBLIC GET METHODS
     
     /**
-     * @return the {@code functionalMainWindow}.
+     * Returns the main window.
+     * 
+     * @return The main window.
      */
     public MainWindow getFunctionalMainWindow() {
     
-        return functionalMainWindow;
+        return windowBase;
     }
+    
 }

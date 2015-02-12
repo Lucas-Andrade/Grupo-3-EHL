@@ -27,12 +27,12 @@ public class SimpleAirship extends Entity {
      *            - the double value corresponding to airship's latitude.
      * @param longitude
      *            - the double value corresponding to airship's longitude.
-     * @param info
+     * @param toString
      *            - The string with the {@code SimpleAirship} info.
      */
-    public SimpleAirship( String flightId, double latitude, double longitude, String info ) {
+    public SimpleAirship( String flightId, double latitude, double longitude, String toString ) {
     
-        super( info, flightId );
+        super( flightId, toString );
         this.latitude = latitude;
         this.longitude = longitude;
     }

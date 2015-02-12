@@ -23,10 +23,10 @@ public abstract class Entity {
      * @param toString
      *            The string with the {@code Entity} info.
      */
-    public Entity( String toString, String identification ) {
+    public Entity( String identification,String toString ) {
     
-        this.toString = toString;
         this.identification = identification;
+        this.toString = toString;
     }
     
     

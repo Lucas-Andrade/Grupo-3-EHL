@@ -9,8 +9,8 @@ package entities;
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class SimpleUser extends Entity {
-
-
+    
+    
     /**
      * 
      * @param username
@@ -21,6 +21,6 @@ public class SimpleUser extends Entity {
      */
     public SimpleUser( String username, String toString ) {
     
-        super( toString,  username);
+        super( username, toString );
     }
 }

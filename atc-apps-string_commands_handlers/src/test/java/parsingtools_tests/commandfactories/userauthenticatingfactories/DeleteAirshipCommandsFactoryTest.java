@@ -83,7 +83,7 @@ public class DeleteAirshipCommandsFactoryTest {
         CompletionStatus status = deleteFactory.newCommand( parametersMap ).call();
         
         // Assert
-        Assert.assertTrue( status.operationCompletedSuccessfully() );
+        Assert.assertTrue( status.completedSuccessfully() );
         Assert.assertEquals( "Airship successfully removed", status.getMessage() );
     }
     
@@ -99,7 +99,7 @@ public class DeleteAirshipCommandsFactoryTest {
         CompletionStatus status = deleteFactory.newCommand( parametersMap ).call();
         
         // Assert
-        Assert.assertFalse( status.operationCompletedSuccessfully() );
+        Assert.assertFalse( status.completedSuccessfully() );
         Assert.assertEquals( "Airship doesn't exist in the database", status.getMessage() );
         
     }

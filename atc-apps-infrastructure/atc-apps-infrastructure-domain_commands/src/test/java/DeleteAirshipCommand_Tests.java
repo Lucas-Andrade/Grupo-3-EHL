@@ -42,7 +42,7 @@ public class DeleteAirshipCommand_Tests {
         CompletionStatus status = new DeleteAirshipCommand( airshipsDatabase, air1_id ).call();
         
         // Assert
-        Assert.assertTrue( status.operationCompletedSuccessfully() );
+        Assert.assertTrue( status.completedSuccessfully() );
         Assert.assertEquals( "Airship successfully removed", status.getMessage() );
     }
     
@@ -52,7 +52,7 @@ public class DeleteAirshipCommand_Tests {
         CompletionStatus status =
                 ((CompletionStatus)new DeleteAirshipCommand( airshipsDatabase, "inexistentID" ).call());
         
-        Assert.assertFalse( status.operationCompletedSuccessfully() );
+        Assert.assertFalse( status.completedSuccessfully() );
         Assert.assertEquals( "Airship doesn't exist in the database", status.getMessage() );
     }
     

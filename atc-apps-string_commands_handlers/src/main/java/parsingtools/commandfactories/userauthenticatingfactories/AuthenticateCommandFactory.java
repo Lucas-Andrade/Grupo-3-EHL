@@ -20,7 +20,7 @@ import exceptions.NoSuchElementInDatabaseException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class AuthenticateCommandFactory extends UserAuthenticatingFactory< User, Void > {
+public class AuthenticateCommandFactory extends UserAuthenticatingFactory< User, User > {
     
     // Constructor
     
@@ -43,16 +43,17 @@ public class AuthenticateCommandFactory extends UserAuthenticatingFactory< User,
         super( usersDatabase, databaseToChange );
     }
     
-    /**
+    /**TODO
      * The required command is already created by {@link UserAuthenticatingFactory}.
      */
     @Override
-    protected Callable< Void > internalInternalNewCommand( Map< String, String > parametersMap,
+    protected Callable< User > internalInternalNewCommand( Map< String, String > parametersMap,
                                                            User authenticatedUser )
         throws MissingRequiredParameterException, InvalidParameterValueException,
         NoSuchElementInDatabaseException, InvalidArgumentException {
     
-        return null;
+        
+        return () -> authenticatedUser;
     }
     
     /**

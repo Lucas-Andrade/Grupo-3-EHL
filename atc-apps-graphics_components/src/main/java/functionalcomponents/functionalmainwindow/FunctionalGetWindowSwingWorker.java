@@ -9,10 +9,15 @@ import functionalcomponents.ExceptionHandlerSW;
 
 
 /**
- * Abstract class that implements the {@link ExceptionHandlerSW#finalizeDone(Object)
- * functionalDone(Object)} method to be used in the implementation of GET airships commands.
+ * Abstract class whose subclass instances are {@link SwingWorker}s to GET {@link SimpleAirship}s.
+ * The {@link ExceptionHandlerSW#finalizeDone(Object) finalizeDone(Object)} method will update the
+ * {@link JBodyPanelForMainWindow} with the list of {@code SimpleAirship} returned by the
+ * {@link SwingWorker#doInBackground() doInBackground()} method.
  * 
- * Extends {@link ExceptionHandlerSW} of {@link Iterable} o {@link Airship}.
+ * Subclasses must implement the {@link SwingWorker#doInBackground() doInBackground()} method to GET
+ * a specific {@code SimpleAirship} list.
+ * 
+ * Extends {@link ExceptionHandlerSW} of {@link Iterable} of {@link Airship}.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -20,38 +25,37 @@ public abstract class FunctionalGetWindowSwingWorker extends
         ExceptionHandlerSW< Iterable< SimpleAirship >> {
     
     /**
-     * {@code bodyPanel} - The {@link MainWindow} body panel that will be updated as part of the
-     * actions performed by any of the buttons bellonging to the {@link #footerPanel}.
+     * The {@link MainWindow} body panel that will be updated.
      */
     private JBodyPanelForMainWindow bodyPanel;
     
+    // Constructor
     /**
-     * @param airshipsDatabase
-     *            - The airships database.
+     * Public constructor that will receive the {@code bodyPanel} to be updated and a window's error
+     * label as parameter where the error messages will be written.
+     * 
      * @param bodyPanel
-     *            - The {@link MainWindow} body panel that will be updated as part of the actions
-     *            performed by any of the buttons bellonging to the {@link MainWindow MainWindow's}
-     *            footer panel.
+     *            - The {@link MainWindow} body panel that will be updated.
      * @param errorTextArea
      *            - The error text area where the error messages from the thrown exceptions will be
      *            written.
      */
     public FunctionalGetWindowSwingWorker( JBodyPanelForMainWindow bodyPanel,
                                            JTextArea errorTextArea ) {
-        
-        super( errorTextArea );
-
-        this.bodyPanel = bodyPanel;
-    } 
     
+        super( errorTextArea );
+        
+        this.bodyPanel = bodyPanel;
+    }
+    
+    // IMPLEMENTATION OF THE METHOD finalizeDone( iterable )
     /**
-     * Implementation of the {@link ExceptionHandlerSW#finalizeDone(Object)
-     * functionalDone(Object)} method. This method will receive the result of the
-     * {@link SwingWorker#doInBackground() doInBackground()} method and use it to update the given
-     * {link #bodyPanel}
+     * Implementation of the {@link ExceptionHandlerSW#finalizeDone(Object) finalizeDone(Object)}
+     * method. This method will receive the result of the {@link SwingWorker#doInBackground()
+     * doInBackground()} method and use it to update the given {@code bodyPanel}
      * 
-     * Implementation decisions: The execeptions thrown by this method are caught and will be
-     * treated in the {@link ExceptionHandlerSW#done() done()} method.
+     * Implementation decisions: The exceptions thrown by this method are caught by the base class
+     * and will be treated in the {@link ExceptionHandlerSW#done() done()} method.
      * 
      * @param resultOfDoInBackGround
      *            - The result of the {@link SwingWorker#doInBackground() doInBackground()} method.
@@ -60,8 +64,9 @@ public abstract class FunctionalGetWindowSwingWorker extends
      *             Depending on the function the window its supposed to do.
      */
     @Override
-    protected void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround ) throws Exception {
-        
+    protected final void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround )
+        throws Exception {
+    
         bodyPanel.updateBodyPanel( resultOfDoInBackGround );
     }
 }

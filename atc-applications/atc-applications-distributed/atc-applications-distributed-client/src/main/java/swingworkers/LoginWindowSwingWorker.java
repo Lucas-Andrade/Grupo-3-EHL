@@ -35,7 +35,7 @@ public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
     @Override
     protected SimpleUser doInBackground() throws Exception {
     
-        String url = "http://localhost:9999/"; //TODO
+        String url = "http://localhost:8081/users"; //TODO
         HttpURLConnection connection = ( HttpURLConnection )new URL( url ).openConnection();
 
         // 200 -> ok

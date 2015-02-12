@@ -76,7 +76,6 @@ public class JBodyPanelForMainWindow extends JPanel {
      * Public constructor that creates a new {@link JBodyPanelForMainWindow} adding the two panels
      * that is part of it.
      */
-    
     public JBodyPanelForMainWindow() {
     
         this.setLayout( new FlowLayout() );
@@ -108,10 +107,36 @@ public class JBodyPanelForMainWindow extends JPanel {
         this.repaint();
     }
     
+    public void updateBodyPanel() {
+        
+        this.remove( worldMapWithAirships );
+        this.remove( airshipsScrollPane );
+        
+        createWorldMapAndScrollPanel();
+        
+        this.revalidate();
+        this.repaint();
+    }
+    
     
     
     private void createWorldMapAndScrollPanel( Iterable< SimpleAirship > airshipsFound ) {
     
+        worldMapWithAirships =
+                new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships( airshipsFound );
+        airshipsScrollPane =
+                new JWorldMapWithAirships().produceAJScrollPaneWithAllEntities( airshipsFound );
+        
+        add( worldMapWithAirships );
+        add( airshipsScrollPane );
+    }
+    
+    /**
+     * TODO
+     */
+    private void createWorldMapAndScrollPanel() {
+        
+        Iterable< SimpleAirship > airshipsFound = null;
         worldMapWithAirships =
                 new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships( airshipsFound );
         airshipsScrollPane =

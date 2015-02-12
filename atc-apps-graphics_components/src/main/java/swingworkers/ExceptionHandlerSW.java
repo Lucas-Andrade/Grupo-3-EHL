@@ -63,6 +63,8 @@ public abstract class ExceptionHandlerSW< R > extends SwingWorker< R, Void > {
         }
         catch( ExecutionException e ) {
             errorJtextArea.setText( StringUtils.errorStringParser( e.getCause().getMessage(), 50 ) );
+            // ExecutionException is thrown by get() and contains as cause the exception thrown by
+            // the code inside the method doInBackground()
         }
         catch( Exception e ) {
             errorJtextArea.setText( StringUtils.errorStringParser( e.getMessage(), 50 ) );

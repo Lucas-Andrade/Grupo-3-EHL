@@ -2,22 +2,21 @@ package functionalcomponents.functionaluserwindows;
 
 
 import java.awt.event.ActionListener;
-import org.eclipse.jetty.server.Authentication.User;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
 import design.windows.popupwindows.UnderConstrutionWindow;
 import design.windows.userwindows.LogInWindow;
+import entities.SimpleLoggedUser;
 import entities.SimpleUser;
+import exceptions.InvalidArgumentException;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 
 
 /**
- * Class whose instances have the purpose of add functionality to a {@link LogInWindow}. Giving
- * functionality to a window means adding an {@link ActionListener} to all its buttons.
- *
- * Extends {@link FunctionalWindow} of {@link User}.
+ * Class whose instances add functionality to a {@link LogInWindow}. Giving functionality to a
+ * window means adding an {@link ActionListener} to all its buttons.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -54,19 +53,20 @@ public class FunctionalLoginWindow extends
      *            {@link FunctionalLoginWindow.SwingWorker}s for the {@link FunctionalLoginWindow}s.
      * @return {@code true} if {@code factory} was set as the factory that produces swingworkers for
      *         the {@link FunctionalLoginWindow}s; <br/>
-     *         {@code false} if there was a factory already set.
+     *         {@code false} if there was a factory already set or {@code factory} is {@code null}.
      */
     public static
             boolean
             setSwingWorkerFactory( SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > factory ) {
     
-        synchronized (factoryLock) {
-            if( swFactory == null && factory != null) {
-                swFactory = factory;
-                return true;
+        if( factory != null )
+            synchronized (factoryLock) {
+                if( swFactory == null ) {
+                    swFactory = factory;
+                    return true;
+                }
             }
-            return false;
-        }
+        return false;
     }
     
     
@@ -82,12 +82,13 @@ public class FunctionalLoginWindow extends
     
     
     
-    // PUBLIC METHOD
+    // IMPLEMENTATION OF THE METHOD INHERITED FROM FunctionalWindow
     /**
      * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
      */
     @Override
-    protected SwingWorker getNewSwingWorker() throws SwingWorkerFactoryMissingException {
+    protected FunctionalLoginWindow.SwingWorker getNewSwingWorker()
+        throws SwingWorkerFactoryMissingException {
     
         if( swFactory == null )
             throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
@@ -98,8 +99,13 @@ public class FunctionalLoginWindow extends
     
     // INNER CLASS
     /**
-     * Class whose instances are {@link ExceptionHandlerSW} able to add funcitonality to a
+     * Class whose instances are {@link ExceptionHandlerSW} able to add functionality to a
      * {@link LogInWindow}.
+     * <p>
+     * The unimplemented method {@link #doInBackground()} is supposed to authenticate a user with
+     * username {@link #username} and password {@link #password} and return its representation as a
+     * {@link SimpleUser} if the password is correct or throw an exception otherwise.
+     * </p>
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
@@ -152,10 +158,9 @@ public class FunctionalLoginWindow extends
         @Override
         protected void finalizeDone( SimpleUser resultOfDoInBackGround ) throws Exception {
         
-//            new FunctionalMainWindow( new MainWindow( airshipsDatabase,
-//                                                      airshipsDatabase.getAllElements().get() ),
-//                                      usersDatabase, airshipsDatabase, resultOfDoInBackGround );
-            new UnderConstrutionWindow();
+            if( resultOfDoInBackGround == null )
+                throw InternalErrorException( "UNEXPECTED null AUTHENTICATED USER RECEIVED FROM doInBackground" );
+            new FunctionalMainWindow( new SimpleLoggedUser( resultOfDoInBackGround, password ) );
             baseWindow.dispose();
         }
         

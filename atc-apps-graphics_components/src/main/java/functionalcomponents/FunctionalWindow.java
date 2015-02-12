@@ -3,6 +3,7 @@ package functionalcomponents;
 
 import java.awt.Cursor;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 import javax.swing.SwingWorker;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
@@ -60,15 +61,30 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
                                               + " constructor with null nonFunctionalWindow!" );
         this.theFunctionalWindow = nonFunctionalWindow;
         
-        addRightButtonAction();
-        addLeftButtonAction();
-        
+        addActionToButtons();
         theFunctionalWindow.setVisible( true );
     }
     
     
     
     // PRIVATE METHODS
+    
+    /**
+     * Adds functionality to the buttons of this {@link FunctionalWindow} if they had no previous
+     * {@link ActionListener}s.
+     */
+    private void addActionToButtons() {
+    
+        JButton rightButton = theFunctionalWindow.getButtonsPanel().getRightButton();
+        if( rightButton.getActionListeners().length == 0 )
+            synchronized (theFunctionalWindow) {
+                
+                if( rightButton.getActionListeners().length == 0 ) {
+                    addRightButtonAction();
+                    addLeftButtonAction();
+                }
+            }
+    }
     
     /**
      * Adds the function of disposing the {@link WindowBase} received in the constructor to its

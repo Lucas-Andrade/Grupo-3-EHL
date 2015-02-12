@@ -1,21 +1,14 @@
 package app;
 
 
-import java.awt.EventQueue;
 import swingworkers.LoginWindowSwingWorker;
-import swingworkers.SwingWorkerFactory;
 import databases.Database;
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
-import design.windows.popupwindows.FailWindow;
-import design.windows.popupwindows.SuccessWindow;
-import design.windows.popupwindows.UnderConstrutionWindow;
 import elements.Airship;
 import elements.User;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
-import exceptions.SwingWorkerFactoryMissingException;
-import functionalcomponents.FunctionalWindow;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 
 
@@ -92,48 +85,20 @@ public class App {
     
     public static void main( String[] args ) throws InvalidArgumentException {
     
-        EventQueue.invokeLater( new Runnable() {
-            
-            /**
-             * Runs the app.
-             */
-            @Override
-            public void run() {
-            
-                try {
-                    
-                    
-                    setSwingWorkerFactoriesInTheFunctionalWindows();
-                    new FunctionalLoginWindow();
-                    
-                    
-                }
-                catch( InternalErrorException e ) {
-                    if( e.getCause() instanceof SwingWorkerFactoryMissingException )
-                        new UnderConstrutionWindow();
-                    else new FailWindow( "INTERNAL ERROR!" );
-                    System.out.println( e.getMessage() );
-                }
-                
-            }
-            
-            /**
-             * Sets the {@link SwingWorkerFactory}s that produce
-             * {@link FunctionalLoginWindow.SwingWorker}s for each subtype of
-             * {@link FunctionalWindow}.
-             */
-            private void setSwingWorkerFactoriesInTheFunctionalWindows() {
-            
-                LoginWindowSwingWorker.Factory loginWindowFactory =
-                        new LoginWindowSwingWorker.Factory( FunctionalLoginWindow.baseWindow,
-                                                            usersDatabase );
-                FunctionalLoginWindow.setSwingWorkerFactory( loginWindowFactory );
-            }
-            
-        } );
+
+        //Creating the factories
         
+        LoginWindowSwingWorker.Factory loginWindowSWFactory =
+                new LoginWindowSwingWorker.Factory( FunctionalLoginWindow.baseWindow, usersDatabase );
+        
+        
+        // Creating and running the app
+        
+        new GUIapp( loginWindowSWFactory ).run();
         
     }
+    
+    
     
     /**
      * Unused private constructor

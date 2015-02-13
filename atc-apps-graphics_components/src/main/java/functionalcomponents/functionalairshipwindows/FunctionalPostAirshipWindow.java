@@ -2,11 +2,11 @@ package functionalcomponents.functionalairshipwindows;
 
 
 import java.awt.event.ActionListener;
-import javax.swing.SwingWorker;
-import org.omg.CORBA.CompletionStatus;
 import swingworkers.ExceptionHandlerSW;
+import swingworkers.SwingWorkerFactory;
+import utils.CompletionStatus;
 import design.windows.airshipwindows.PostAirshipsWindow;
-import design.windows.popupwindows.SuccessWindow;
+import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
 
 
@@ -19,198 +19,170 @@ import functionalcomponents.FunctionalWindow;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class FunctionalPostAirshipWindow extends FunctionalWindow< CompletionStatus > {
+public class FunctionalPostAirshipWindow extends FunctionalWindow< FunctionalPostAirshipWindow.SwingWorker,CompletionStatus > {
     
-    /**
-     * {@code functionalWindow} - The {@code PatchUserWindow} we want to add functionality to.
-     */
-    private PostAirshipsWindow functionalWindow;
+    // STATIC FIELDS
+    private static PostAirshipsWindow baseWindow = new PostAirshipsWindow();
+    private static SwingWorkerFactory< FunctionalPostAirshipWindow.SwingWorker, CompletionStatus > swFactory;
+    private static Object factoryLock;
     
+    // CONSTRUCTOR
     /**
-     * {@code airshipsDatabase} - The airships database.
+     * Adds functionality to a {@link PostAirshipsWindow} and displays it.
      */
-    private Database< Airship > airshipsDatabase;
-    
-    /**
-     * {@code userWhoIsPosting} - The {@code User} who is posting the new airship.
-     */
-    private User userWhoIsPosting;
-    
-    /**
-     * Public constructor that will add functionality to a given non functional
-     * {@link PostAirshipsWindow} and will display it.
-     * 
-     * @param nonFunctionalWindow
-     *            - The {@code PostUserWindow} we want to add functionality to.
-     * @param airshipsDatabase
-     *            - The airships database.
-     * @param userWhoIsPosting
-     *            - The {@code User} who is posting the new user.
-     */
-    public FunctionalPostAirshipWindow( PostAirshipsWindow nonFunctionalWindow,
-                                        Database< Airship > airshipsDatabase, User userWhoIsPosting ) {
+    public FunctionalPostAirshipWindow( ) {
         
-        super( nonFunctionalWindow );
-        
-        this.functionalWindow = nonFunctionalWindow;
-        
-        this.userWhoIsPosting = userWhoIsPosting;
-        this.airshipsDatabase = airshipsDatabase;
-    }
+        super( baseWindow );
+              
+        }
     
     /**
      * Method that will return a {@link ExceptionHandlerSW} with an {@code Override}
-     * implementation of its {@link SwingWorker#doInBackground() doInBackground()} and
+     * implementation of its {@link SwingWorker#doInBackground()} and
      * {@link ExceptionHandlerSW#finalizeDone(Object) functionalDone(Object)} methods to
-     * add the correct functionality to a {@link PostUserWindow}.
+     * add the correct functionality to a {@link PostAirshipsWindow}.
      * 
      * @return Returns a {@link ExceptionHandlerSW} with an {@code Override} of its
      *         methods.
-     */
-    @Override
-    protected ExceptionHandlerSW< CompletionStatus > getNewSwingWorker() {
+     */         
+            
+        @Override
+        protected SwingWorker getNewSwingWorker() throws SwingWorkerFactoryMissingException {
+            
+            if( swFactory == null )
+                throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
+            return swFactory.newInstance();      
         
-        return new ExceptionHandlerSW< CompletionStatus >(
-                                                                    functionalWindow.getErrorJTextArea() ) {
+    }
+        
+     // STATIC METHOD
+        /**
+         * Sets the {@link SwingWorkerFactory} that produces
+         *  {@link FunctionalPostAirshipWindow.SwingWorker}s for the 
+         *  {@link FunctionalPostAirshipWindow}s.
+         *   
+         * @param factory
+         *            The {@link SwingWorkerFactory} that produces
+         *            {@link FunctionalPostAirshipWindow.SwingWorker}s 
+         *            for the {@link FunctionalPostAirshipWindow}s.
+         * @return {@code true} if {@code factory} was set as the factory that produces swingworkers for
+         *         the {@link FunctionalPostAirshipWindow}s; <br/>
+         *         {@code false} if there was a factory already set.
+         */
+        public static boolean
+                setSwingWorkerFactory( SwingWorkerFactory< FunctionalPostAirshipWindow.SwingWorker, 
+                                       CompletionStatus > factory ) {
             
-            /**
-             * String representation of the parameters to use in the commands and that are obtained
-             * from the window's text fields.
-             */
-            private String latitude;
-            private String longitude;
-            private String altitude;
-            
-            private String minAltitude;
-            private String maxAltitude;
-            
-            private String specificComponent;
-            
-            /**
-             * Implementation of the {@link SwingWorker#doInBackground() doInBackground()} method
-             * with the purpose of posting a new airship in the database and obtaining its result.
-             * 
-             * @return Returns a String with information regarding the result of the post operation
-             *         will be the same as the return of the command call method.
-             * 
-             * @throws NumberFormatException
-             *             If any of the String parameters cannot cannot be converted to Integer, to
-             *             Double or to Boolean.
-             * @throws InvalidArgumentException
-             *             If any of the values for the parameters given to the commands are
-             *             invalid.
-             */
-            @Override
-            protected CompletionStatus doInBackground() throws Exception {
-                
-                if( functionalWindow.getTypeAirshipTabbedPane().getSelectedIndex() == 0 ) {
-                    
-                    getCivilAirshipStringParameters();
-                    
-                    double latitude = Double.parseDouble( this.latitude );
-                    double longitude = Double.parseDouble( this.longitude );
-                    double altitude = Double.parseDouble( this.altitude );
-                    
-                    double minAltitude = Double.parseDouble( this.minAltitude );
-                    double maxAltitude = Double.parseDouble( this.maxAltitude );
-                    
-                    int specificComponent = (int)Double.parseDouble( this.specificComponent );
-                    
-                    return new PostCivilAirshipCommand( latitude, longitude, altitude, maxAltitude,
-                                                        minAltitude, specificComponent,
-                                                        airshipsDatabase, userWhoIsPosting ).call();
-                }
-                
-                getMilitaryAirshipStringParameters();
-                
-                double latitude = Double.parseDouble( this.latitude );
-                double longitude = Double.parseDouble( this.longitude );
-                double altitude = Double.parseDouble( this.altitude );
-                
-                double minAltitude = Double.parseDouble( this.minAltitude );
-                double maxAltitude = Double.parseDouble( this.maxAltitude );
-                
-                boolean specificComponent = Boolean.parseBoolean( this.specificComponent );
-                
-                return new PostMilitaryAirshipCommand( latitude, longitude, altitude, maxAltitude,
-                                                       minAltitude, specificComponent,
-                                                       airshipsDatabase, userWhoIsPosting ).call();
+            if( factory != null )                   
+            synchronized (factoryLock) {
+                if( swFactory == null && factory != null ) {
+                    swFactory = factory;
+                    return true;
+                }           
             }
+            return false;
             
-            /**
-             * Private auxilar method that will obtain the a String representation of the parameters
-             * to give to the {@link PostCivilAirshipCommand} from the window text fields.
-             */
-            private void getCivilAirshipStringParameters() {
+        }
+                
+    // INNER CLASS
+    /**
+     * Class whose instances are {@link ExceptionHandlerSW} able to add funcitonality to a
+     * {@link FunctionalPostAirshipWindow}.
+     *
+     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+     */    
+    public static abstract class SwingWorker extends ExceptionHandlerSW< CompletionStatus > {
+        
+        // INSTANCE FIELD
+        private PostAirshipsWindow window;
+        
+        // TextField Information
+        protected int typeTypeAirshipTabbedPane;
+        protected String latitude;
+        protected String longitude;
+        protected String altitude;
+        protected String minAltitude;
+        protected String maxAltitude;        
+        protected String specificComponent;
+        
+        // JLabel Information
+        
+        protected String latitudeLabel;
+        protected String longitudeLabel;
+        protected String altitudeLabel;
+        protected String minAltitudeLabel;
+        protected String maxAltitudeLabel;        
+        protected String specificComponentLabel;
+        
+     // CONSTRUCTOR
+        public SwingWorker( PostAirshipsWindow window ) {
+        
+            super( window.getErrorJTextArea() );
+            this.window = window;
+            
+            if( (typeTypeAirshipTabbedPane = window.getTypeAirshipTabbedPane().getSelectedIndex() ) == 0 )                 
+                getCivilAirshipStringParameters();             
+            
+                getMilitaryAirshipStringParameters();
+                                    
+        }
+        
+        /**
+         * Private auxilar method that will obtain the a String representation of the parameters
+         * to give to the {@link PostCivilAirshipCommand} from the window text fields.
+         */
+        private void getCivilAirshipStringParameters() {
                 
                 latitude =
-                        functionalWindow.getCivilAirshipCommonPainel().getGeoCoodinates()
+                        window.getCivilAirshipCommonPainel().getGeoCoodinates()
                                         .getLatitude().getJTextField().getText();
                 longitude =
-                        functionalWindow.getCivilAirshipCommonPainel().getGeoCoodinates()
+                        window.getCivilAirshipCommonPainel().getGeoCoodinates()
                                         .getLongitude().getJTextField().getText();
                 altitude =
-                        functionalWindow.getCivilAirshipCommonPainel().getGeoCoodinates()
+                        window.getCivilAirshipCommonPainel().getGeoCoodinates()
                                         .getAltitude().getJTextField().getText();
                 
                 minAltitude =
-                        functionalWindow.getCivilAirshipCommonPainel().getAirCorridor()
+                        window.getCivilAirshipCommonPainel().getAirCorridor()
                                         .getMinAltitude().getJTextField().getText();
                 maxAltitude =
-                        functionalWindow.getCivilAirshipCommonPainel().getAirCorridor()
+                        window.getCivilAirshipCommonPainel().getAirCorridor()
                                         .getMaxAltitude().getJTextField().getText();
                 
                 specificComponent =
-                        functionalWindow.getSpecificCivilPanel().getNumberPassengerJTextField()
+                        window.getSpecificCivilPanel().getNumberPassengerJTextField()
                                         .getText();
             }
-            
-            /**
-             * Private auxilar method that will obtain the a String representation of the parameters
-             * to give to the {@link PostMilitaryAirshipCommand} from the window text fields.
-             */
-            private void getMilitaryAirshipStringParameters() {
-                
-                latitude =
-                        functionalWindow.getMilitaryAirshipCommonPainel().getGeoCoodinates()
-                                        .getLatitude().getJTextField().getText();
-                longitude =
-                        functionalWindow.getMilitaryAirshipCommonPainel().getGeoCoodinates()
-                                        .getLongitude().getJTextField().getText();
-                altitude =
-                        functionalWindow.getMilitaryAirshipCommonPainel().getGeoCoodinates()
-                                        .getAltitude().getJTextField().getText();
-                
-                minAltitude =
-                        functionalWindow.getMilitaryAirshipCommonPainel().getAirCorridor()
-                                        .getMinAltitude().getJTextField().getText();
-                maxAltitude =
-                        functionalWindow.getMilitaryAirshipCommonPainel().getAirCorridor()
-                                        .getMaxAltitude().getJTextField().getText();
-                
-                specificComponent =
-                        functionalWindow.getSpecificMilitaryPanel().getGroupButtons()
-                                        .getSelection().getActionCommand();
-            }
-            
-            /**
-             * Implementation of the {@link ExceptionHandlerSW#functionalDone()
-             * functionalDone()}. This method will receive the result of the
-             * {@link SwingWorker#doInBackground() doInBackground()} method and, if this result
-             * positive, open new {@link SuccessWindow}, closing this one.
-             * 
-             * @param resultOfDoInBackGround
-             *            - The result of the {@link SwingWorker#doInBackground() doInBackground()}
-             *            method.
-             */
-            @Override
-            public void finalizeDone( CompletionStatus resultOfDoInBackGround ) {
-                
-                new SuccessWindow( resultOfDoInBackGround.getMessage() );
-                functionalWindow.dispose();
-            }
-            
-            
-        };
+        
+        /**
+         * Private auxilar method that will obtain the a String representation of the parameters
+         * to give to the {@link PostMilitaryAirshipCommand} from the window text fields.
+         */    
+        private void getMilitaryAirshipStringParameters() {
+      
+            latitude =
+                    window.getMilitaryAirshipCommonPainel().getGeoCoodinates()
+                              .getLatitude().getJTextField().getText();
+            longitude =
+                    window.getMilitaryAirshipCommonPainel().getGeoCoodinates()
+                              .getLongitude().getJTextField().getText();
+            altitude =
+                    window.getMilitaryAirshipCommonPainel().getGeoCoodinates()
+                              .getAltitude().getJTextField().getText();
+      
+            minAltitude =
+                    window.getMilitaryAirshipCommonPainel().getAirCorridor()
+                              .getMinAltitude().getJTextField().getText();
+            maxAltitude =
+                    window.getMilitaryAirshipCommonPainel().getAirCorridor()
+                              .getMaxAltitude().getJTextField().getText();
+      
+            specificComponent =
+                    window.getSpecificMilitaryPanel().getGroupButtons()
+                              .getSelection().getActionCommand();
+  }
+        
     }
+    
 }

@@ -11,6 +11,11 @@ import entities.SimpleUser;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 
 
+/**
+ * Concrete implementation of {@link FunctionalLoginWindow.SwingWorker}.
+ *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
 public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
     
     
@@ -29,14 +34,15 @@ public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
     
     
     
-    // IMPLEMENTATION OF METHODS INHERITED FROM FunctionalLoginWindow.SwingWorker    
+    // IMPLEMENTATION OF METHODS INHERITED FROM FunctionalLoginWindow.SwingWorker
     /**
      * Authenticates the user with username {@link #username} and password {@link #password} and
      * returns its representation as a {@link SimpleUser} if the password is correct or throws an
      * exception otherwise.
      * 
      * @return The representation as a {@link SimpleUser} of the authenticated user.
-     * @throws Exception If the password is incorrect.
+     * @throws Exception
+     *             If the password is incorrect.
      */
     @Override
     protected SimpleUser doInBackground() throws Exception {

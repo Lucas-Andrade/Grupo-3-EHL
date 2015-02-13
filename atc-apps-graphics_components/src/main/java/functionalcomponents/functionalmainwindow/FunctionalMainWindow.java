@@ -2,15 +2,10 @@ package functionalcomponents.functionalmainwindow;
 
 
 
-import java.util.Collection;
-import javax.swing.SwingWorker;
-import swingworkers.SwingWorkerFactory;
-import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
-import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
+import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.windows.MainWindow;
-import entities.SimpleAirship;
 import entities.SimpleLoggedUser;
-import exceptions.InvalidArgumentException;
+import exceptions.LoggedInUserMissingException;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 
 
@@ -23,6 +18,10 @@ import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
  */
 public class FunctionalMainWindow {
     
+    /* Implementation notes:
+     * - Getting the locks must follow the following order: never synchronize with the userLock
+     *   before synchronizing with the theFuncitonalMainWindow 
+     */
     
     
     // STATIC FIELDS
@@ -33,21 +32,21 @@ public class FunctionalMainWindow {
     public static final MainWindow windowBase = new MainWindow();
     
     /**
+     * The functionalizer of this {@link FunctionalMainWindow} uses to create and update its
+     * {@link JBodyPanelForMainWindow}.
+     */
+    public static final BodyPanelFunctionalizer bodyPanelFunctionalizer =
+            new BodyPanelFunctionalizer( windowBase.getBodyPanel() );
+    
+    /**
      * The user who is currently logged in.
      */
-    private static volatile SimpleLoggedUser user;
+    private static volatile SimpleLoggedUser loggedInUser;
     
     /**
-     * The factory responsible for producing {@link SwingWorker}s that return the set of airships to
-     * appear in this window's body panel.
-     */
-    private static SwingWorkerFactory< SwingWorker< Collection< SimpleAirship >, Void >, Collection< SimpleAirship > > swFactory;
-    
-    /**
-     * Locks for the {@link #user} and the {@link #swFactory}.
+     * A lock for the {@link #loggedInUser}.
      */
     private static Object userLock = new Object();
-    private static Object factoryLock = new Object();
     
     // STATIC METHODS
     
@@ -61,12 +60,15 @@ public class FunctionalMainWindow {
      *         {@code false} if there is already a user logged in or {@code loggedUser} is
      *         {@code null}.
      */
-    private static boolean setLoggedUser( SimpleLoggedUser loggedUser ) {
+    public static boolean setLoggedUser( SimpleLoggedUser loggedUser ) {
     
         if( loggedUser != null )
             synchronized (userLock) {
-                if( user == null ) {
-                    user = loggedUser;
+                
+                if( loggedInUser == null ) {
+                    loggedInUser = loggedUser;
+                    windowBase.getHeaderPanel().getUserPanel()
+                              .setUsernameLabel( loggedUser.getIdentification() );
                     return true;
                 }
             }
@@ -82,7 +84,7 @@ public class FunctionalMainWindow {
     public static SimpleLoggedUser getLoggedUser() {
     
         synchronized (userLock) {
-            return user;
+            return loggedInUser;
         }
     }
     
@@ -104,11 +106,14 @@ public class FunctionalMainWindow {
     
         if( newLoggedUser != null )
             synchronized (userLock) {
-                if( user == null
-                    || !newLoggedUser.getIdentification().equals( user.getIdentification() ) ) {
+                
+                if( loggedInUser == null
+                    || !newLoggedUser.getIdentification().equals( loggedInUser.getIdentification() ) ) {
                     return false;
                 }
-                user = newLoggedUser;
+                loggedInUser = newLoggedUser;
+                windowBase.getHeaderPanel().getUserPanel()
+                          .setUsernameLabel( newLoggedUser.getIdentification() );
                 return true;
             }
         return false;
@@ -120,65 +125,59 @@ public class FunctionalMainWindow {
      * @return {@code true} if the {@link SimpleLoggedUser} that was logged in was removed; <br/>
      *         {@code false} if no user was logged in.
      */
-    public static boolean removeLoggedUser() {
+    private static boolean removeLoggedUser() {
     
         synchronized (userLock) {
-            if( user == null ) {
+            if( loggedInUser == null ) {
                 return false;
             }
-            user = null;
+            loggedInUser = null;
             return true;
         }
     }
     
-    /**
-     * Sets the {@link SwingWorkerFactory} that produces {@link SwingWorker}s that return the set of
-     * airships to appear in this window's body panel.
-     * 
-     * @param factory
-     *            The {@link SwingWorkerFactory} that produces {@link SwingWorker}s that return the
-     *            set of airships to appear in this window's body panel.
-     * @return {@code true} if {@code factory} was set as the factory that produces
-     *         {@link SwingWorker}s that return the set of airships to appear in this window's body
-     *         panel; <br/>
-     *         {@code false} if there was a factory already set or {@code factory} is {@code null}.
-     */
-    public static
-            boolean
-            setSwingWorkerFactory( SwingWorkerFactory< SwingWorker< Collection< SimpleAirship >, Void >, Collection< SimpleAirship > > factory ) {
     
-        if( factory != null )
-            synchronized (factoryLock) {
-                if( swFactory == null ) {
-                    swFactory = factory;
-                    return true;
+    
+    // PRIVATE CONSTRUCTOR AND getInstance
+    
+    /**
+     * The only instance of {@link FunctionalMainWindow}.
+     */
+    private static volatile FunctionalMainWindow theFunctionalMainWindow;
+    
+    /**
+     * Returns the {@link FunctionalMainWindow}.
+     * 
+     * @return The {@link FunctionalMainWindow}.
+     * @throws LoggedInUserMissingException
+     *             If no user was previously set as logged-in (using
+     *             {@link #setLoggedUser(SimpleLoggedUser)}).
+     */
+    public static FunctionalMainWindow getInstance() throws LoggedInUserMissingException {
+    
+        if( loggedInUser == null )
+            throw new LoggedInUserMissingException();
+        
+        if( theFunctionalMainWindow == null )
+            synchronized (theFunctionalMainWindow) {
+                
+                if( theFunctionalMainWindow == null ) {
+                    theFunctionalMainWindow = new FunctionalMainWindow();
                 }
             }
-        return false;
+        
+        return theFunctionalMainWindow;
     }
     
-    
-    private BodyPanelFunctionalizer functionalBodyPanel;
-    
-    // CONSTRUCTOR
     /**
      * Adds functionality to the panels of a {@link MainWindow} and displays it.
-     * 
-     * @throws InvalidArgumentException
-     *             If {@code loggedUser} is {@code null} and there was no previously set logged-in
-     *             user.
      */
-    public FunctionalMainWindow( SimpleLoggedUser loggedUser ) throws InvalidArgumentException {
+    private FunctionalMainWindow() {
     
         synchronized (windowBase) {
             
-            if( !setLoggedUser( loggedUser ) && loggedUser == null )
-                throw new InvalidArgumentException( "Cannot create FunctionalMainWindow with null"
-                                                    + " logged-in user." );
-            
-            functionalHeaderPanel();
-            functionalFooterPanel();
-            functionalBodyPanel = new BodyPanelFunctionalizer( windowBase.getBodyPanel() );
+            putFunctionalHeaderPanel();
+            putFunctionalFooterPanel();
             
             windowBase.setVisible( true );
         }
@@ -190,75 +189,50 @@ public class FunctionalMainWindow {
     
     // used in the constructor
     /**
-     * Replaces the non-functional window's header panel with a new functional header panel using
-     * the method {@link MainWindow#setHeaderPanel(JHeaderPanelForMainWindow)
-     * setHeaderPanel(JHeaderPanelForMainWindow)}.
+     * Replaces the non-functional header panel of this window with a new functional header panel.
      */
-    private void functionalHeaderPanel() {
+    private void putFunctionalHeaderPanel() {
     
-        windowBase.setHeaderPanel( (new FunctionalHeaderPanel( windowBase.getHeaderPanel(), user )).getHeaderPanel() );
-        functionalLogOutButton();
-        functionalTurnOffButton();
+        windowBase.setHeaderPanel( (new FunctionalHeaderPanel( windowBase.getHeaderPanel() )).getHeaderPanel() );
+        functionalizeTheLogOutButton();
+        functionalizeTheTurnOffButton();
     }
     
     // used in the constructor
     /**
-     * Method that will replace the given non functional window's footer panel with a new functional
-     * footer panel using the method {@link MainWindow#setFooterPanel(JFooterPanelForMainWindow)
-     * setFooterPanel(JFooterPanelForMainWindow)}.
+     * Replace the non-functional footer panel of this window with a new functional footer panel.
      */
-    private void functionalFooterPanel() {
+    private void putFunctionalFooterPanel() {
     
         windowBase.setFooterPanel( (new FunctionalFooterPanel( windowBase.getFooterPanel(),
-                                                               windowBase.getBodyPanel() )).getFooterPanel() );
+                                                               bodyPanelFunctionalizer )).getFooterPanel() );
     }
     
-    // used in the constructor
+    // used in the putFunctionalHeaderPanel
     /**
-     * Method that will add functionality to the {@link JHeaderPanelForMainWindow#logoutButton
-     * logoutButton} button.
-     * 
-     * The given action will dispose of the current MainWindow and create a new
-     * {@link FunctionalLoginWindow} with the objective of allowing another user to logIn.
+     * Adds functionality to the log-out button so that it disposes the
+     * {@link #theFunctionalMainWindow} and shows a new {@link FunctionalLoginWindow}.
      */
-    private void functionalLogOutButton() {
+    private void functionalizeTheLogOutButton() {
     
         windowBase.getHeaderPanel().getUserPanel().getLogoutButton().addActionListener( action -> {
-            
             new FunctionalLoginWindow();
             windowBase.dispose();
+            removeLoggedUser();
         } );
     }
     
-    // used in the constructor
+    // used in the putFunctionalHeaderPanel
     /**
-     * Method that will add functionality to the {@link JHeaderPanelForMainWindow#turnOffButton
-     * turnOffButton} button.
+     * Adds functionality to the turn-off button.
      * 
      * The given action will dispose of the current MainWindow, closing the program.
      */
-    private void functionalTurnOffButton() {
+    private void functionalizeTheTurnOffButton() {
     
         windowBase.getHeaderPanel().getUserPanel().getTurnOffButton()
                   .addActionListener( action -> windowBase.dispose() );
+        // TODO check if this actually closes all windows
     }
     
-    
-    
-    // PUBLIC GET METHODS
-    
-    /**
-     * Returns the main window.
-     * 
-     * @return The main window.
-     */
-    public MainWindow getFunctionalMainWindow() {
-    
-        return windowBase;
-    }
-    
-    public BodyPanelFunctionalizer getFunctionalBodyPanel() {
-        
-        return functionalBodyPanel;
-    }
 }

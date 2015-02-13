@@ -8,6 +8,7 @@ import design.windows.userwindows.LogInWindow;
 import entities.SimpleLoggedUser;
 import entities.SimpleUser;
 import exceptions.InternalErrorException;
+import exceptions.LoggedInUserMissingException;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
@@ -145,23 +146,31 @@ public class FunctionalLoginWindow extends
         
         // IMPLEMENTATION OF METHODS INHERITED FROM SwingWorker and FunctionalWindowSwingWorker
         /**
-         * Implementation of the {@link FunctionalWindowSwingWorker#functionalDone()
-         * functionalDone()}. This method will receive the result of the
-         * {@link SwingWorker#doInBackground() doInBackground()} method and open a new
-         * {@link FunctionalMainWindow}, closing this window.
+         * Presents the {@link FunctionalMainWindow} with the user received from the
+         * {@link #doInBackground()} as the logged-in user.
          * 
          * @param resultOfDoInBackGround
-         *            - The result of the {@link SwingWorker#doInBackground() doInBackground()}
-         *            method.
+         *            The result of the method {@link SwingWorker#doInBackground()}.
          */
         @Override
-        protected void finalizeDone( SimpleUser resultOfDoInBackGround ) throws Exception {
+        protected void finalizeDone( SimpleUser resultOfDoInBackGround )
+            throws InternalErrorException {
         
             if( resultOfDoInBackGround == null )
-                throw new InternalErrorException(
-                                                  "UNEXPECTED null AUTHENTICATED USER RECEIVED"
+                throw new InternalErrorException( "UNEXPECTED null AUTHENTICATED USER RECEIVED"
                                                   + " FROM doInBackground" );
-            new FunctionalMainWindow( new SimpleLoggedUser( resultOfDoInBackGround, password ) );
+            FunctionalMainWindow.setLoggedUser( new SimpleLoggedUser( resultOfDoInBackGround,
+                                                                      password ) );
+            
+            try {
+                FunctionalMainWindow.getInstance();
+            }
+            catch( LoggedInUserMissingException e ) {
+                throw new InternalErrorException(
+                                                  "EXPECTED THE LOGGED-IN USER TO BE SET BY NOW! O_o",
+                                                  e );
+            }
+            
             baseWindow.dispose();
         }
         

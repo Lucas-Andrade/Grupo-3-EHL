@@ -3,6 +3,7 @@ package functionalcomponents.functionalairshipwindows;
 
 
 import swingworkers.ExceptionHandlerSW;
+import swingworkers.FunctionalGetWindowSwingWorker;
 import swingworkers.SwingWorkerFactory;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
@@ -79,14 +80,15 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
     public static
             boolean
             setSwingWorkerFactory( SwingWorkerFactory< FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker, Iterable< SimpleAirship > > factory ) {
-        //TODO
+        
+        if( factory != null )                   
         synchronized (factoryLock) {
             if( swFactory == null && factory != null ) {
                 swFactory = factory;
                 return true;
-            }
-            return false;
+            }           
         }
+        return false;
         
     }
         
@@ -97,13 +99,10 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */    
-    public static abstract class SwingWorker extends ExceptionHandlerSW< Iterable< SimpleAirship > > {
+    public static abstract class SwingWorker extends FunctionalGetWindowSwingWorker {
         
      // INSTANCE FIELDS
-        
-        //TODO
-        private JBodyPanelForMainWindow bodyPanel;
-        
+    
         /**
          * String representation of the parameters to use in the commands and that are obtained from
          * the window's text fields.
@@ -134,25 +133,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
             airshipsNumberLabel = window.getAirshipsNumber().getJLabel().getText();
         }
         
-        // IMPLEMENTATION OF METHODS INHERITED FROM SwingWorker and ExceptionHandlerSW
-        /**
-         * Implementation of the {@link ExceptionHandlerSW#finalizeDone }.
-         * This method will receive the result of the
-         * {@link SwingWorker#doInBackground()} method and update 
-         * {@link JBodyPanelForMainWindow}, closing this window.
-         * 
-         * @param resultOfDoInBackGround
-         *            - The result of the {@link SwingWorker#doInBackground()}
-         *            method.
-         */ 
-        
-        @Override
-        protected void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround )
-            throws Exception {
-        
-            bodyPanel.updateBodyPanel( resultOfDoInBackGround );
-            
-        }
+     
         
     }
     

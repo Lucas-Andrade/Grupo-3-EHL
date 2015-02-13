@@ -49,7 +49,7 @@ public class FunctionalHeaderPanel {
         
         this.headerPanel = headerPanel;
         this.user = user;
-        
+        headerPanel.getUserPanel().setUsernameLabel( "CHUCK NORRIS THE: "+user.getIdentification() );
         addAddUserButtonAction();
         addChangePasswordButtonAction();
         addInfoAllUsersButtonAction();

@@ -2,7 +2,6 @@ package functionalcomponents.functionalmainwindow;
 
 
 import javax.swing.JPanel;
-import javax.swing.SwingWorker;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;

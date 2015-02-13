@@ -2,6 +2,7 @@ package functionalcomponents.functionalairshipwindows;
 
 
 
+import app.Utils;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.FunctionalGetWindowSwingWorker;
 import swingworkers.SwingWorkerFactory;
@@ -56,11 +57,9 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
      * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
      */    
     @Override
-    protected SwingWorker getNewSwingWorker() throws SwingWorkerFactoryMissingException {
-    //TODO
-        if( swFactory == null )
-            throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
-        return swFactory.newInstance();
+    protected void runNewSwingWorker() throws SwingWorkerFactoryMissingException {
+    
+        Utils.runNewSwingWorker( swFactory, this.getClass().getSimpleName() );
     }
     
     // STATIC METHOD
@@ -81,14 +80,8 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
             boolean
             setSwingWorkerFactory( SwingWorkerFactory< FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker, Iterable< SimpleAirship > > factory ) {
         
-        if( factory != null )                   
-        synchronized (factoryLock) {
-            if( swFactory == null && factory != null ) {
-                swFactory = factory;
-                return true;
-            }           
-        }
-        return false;
+        return Utils.setSWFactory( FunctionalGetAirshipsWithLessPassengerThanWindow.class , "swFactory", factory, factoryLock );
+
         
     }
         

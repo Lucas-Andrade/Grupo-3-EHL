@@ -2,6 +2,7 @@ package functionalcomponents.functionalairshipwindows;
 
 
 import java.awt.event.ActionListener;
+import app.Utils;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
 import utils.CompletionStatus;
@@ -47,11 +48,10 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< FunctionalPos
      */         
             
         @Override
-        protected SwingWorker getNewSwingWorker() throws SwingWorkerFactoryMissingException {
+        protected void runNewSwingWorker() throws SwingWorkerFactoryMissingException {
             
-            if( swFactory == null )
-                throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
-            return swFactory.newInstance();      
+            
+            Utils.runNewSwingWorker( swFactory, this.getClass().getSimpleName() );
         
     }
         
@@ -73,14 +73,8 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< FunctionalPos
                 setSwingWorkerFactory( SwingWorkerFactory< FunctionalPostAirshipWindow.SwingWorker, 
                                        CompletionStatus > factory ) {
             
-            if( factory != null )                   
-            synchronized (factoryLock) {
-                if( swFactory == null && factory != null ) {
-                    swFactory = factory;
-                    return true;
-                }           
-            }
-            return false;
+            return Utils.setSWFactory( FunctionalGetAirshipsWithLessPassengerThanWindow.class , "swFactory", factory, factoryLock );
+
             
         }
                 

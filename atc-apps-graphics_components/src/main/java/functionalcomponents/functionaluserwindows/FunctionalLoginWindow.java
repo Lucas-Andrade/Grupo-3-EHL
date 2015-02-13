@@ -4,11 +4,10 @@ package functionalcomponents.functionaluserwindows;
 import java.awt.event.ActionListener;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
-import design.windows.popupwindows.UnderConstrutionWindow;
 import design.windows.userwindows.LogInWindow;
 import entities.SimpleLoggedUser;
 import entities.SimpleUser;
-import exceptions.InvalidArgumentException;
+import exceptions.InternalErrorException;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
@@ -159,7 +158,9 @@ public class FunctionalLoginWindow extends
         protected void finalizeDone( SimpleUser resultOfDoInBackGround ) throws Exception {
         
             if( resultOfDoInBackGround == null )
-                throw InternalErrorException( "UNEXPECTED null AUTHENTICATED USER RECEIVED FROM doInBackground" );
+                throw new InternalErrorException(
+                                                  "UNEXPECTED null AUTHENTICATED USER RECEIVED"
+                                                  + " FROM doInBackground" );
             new FunctionalMainWindow( new SimpleLoggedUser( resultOfDoInBackGround, password ) );
             baseWindow.dispose();
         }

@@ -2,6 +2,7 @@ package functionalcomponents.functionaluserwindows;
 
 
 import java.awt.event.ActionListener;
+import app.Utils;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
 import utils.CompletionStatus;
@@ -60,13 +61,8 @@ public class FunctionalPostUserWindow extends
             boolean
             setSwingWorkerFactory( SwingWorkerFactory< FunctionalPostUserWindow.SwingWorker, CompletionStatus > factory ) {
     
-        synchronized (factoryLock) {
-            if( swFactory == null && factory != null ) {
-                swFactory = factory;
-                return true;
-            }
-            return false;
-        }
+        return Utils.setSWFactory( FunctionalPostUserWindow.class, "swFactory", factory,
+                                   factoryLock );
     }
     
     
@@ -87,12 +83,9 @@ public class FunctionalPostUserWindow extends
      * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
      */
     @Override
-    protected FunctionalPostUserWindow.SwingWorker getNewSwingWorker()
-        throws SwingWorkerFactoryMissingException {
+    protected void runNewSwingWorker() throws SwingWorkerFactoryMissingException {
     
-        if( swFactory == null )
-            throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
-        return swFactory.newInstance();
+        Utils.runNewSwingWorker( swFactory, FunctionalPostUserWindow.class.getSimpleName() );
     }
     
     

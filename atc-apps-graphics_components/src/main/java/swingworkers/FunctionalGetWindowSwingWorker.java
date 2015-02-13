@@ -4,9 +4,8 @@ package swingworkers;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
+import design.windows.MainWindow;
 import entities.SimpleAirship;
-import functionalcomponents.FunctionalWindow;
-import functionalcomponents.functionalmainwindow.BodyPanelFunctionalizer;
 import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 
 
@@ -61,6 +60,7 @@ public abstract class FunctionalGetWindowSwingWorker extends
     @Override
     protected final void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround ) {
     
-        FunctionalMainWindow.bodyPanel.updateBodyPanel( resultOfDoInBackGround );
+        FunctionalMainWindow.bodyPanelFunctionalizer.updateBodyPanel( resultOfDoInBackGround );
     }
+
 }

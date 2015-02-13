@@ -2,6 +2,7 @@ package functionalcomponents.functionaluserwindows;
 
 
 import java.awt.event.ActionListener;
+import app.Utils;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
 import design.windows.userwindows.LogInWindow;
@@ -59,14 +60,7 @@ public class FunctionalLoginWindow extends
             boolean
             setSwingWorkerFactory( SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > factory ) {
     
-        if( factory != null )
-            synchronized (factoryLock) {
-                if( swFactory == null ) {
-                    swFactory = factory;
-                    return true;
-                }
-            }
-        return false;
+        return Utils.setSWFactory( FunctionalLoginWindow.class, "swFactory", factory, factoryLock );
     }
     
     
@@ -87,12 +81,10 @@ public class FunctionalLoginWindow extends
      * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
      */
     @Override
-    protected FunctionalLoginWindow.SwingWorker getNewSwingWorker()
+    protected void runNewSwingWorker()
         throws SwingWorkerFactoryMissingException {
     
-        if( swFactory == null )
-            throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
-        return swFactory.newInstance();
+        Utils.runNewSwingWorker( swFactory, FunctionalLoginWindow.class.getSimpleName() );
     }
     
     

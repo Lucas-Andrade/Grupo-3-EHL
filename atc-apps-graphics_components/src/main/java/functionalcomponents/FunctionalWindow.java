@@ -119,7 +119,7 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
             theFunctionalWindow.setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
             
             try {
-                getNewSwingWorker().run();
+                runNewSwingWorker();
             }
             catch( SwingWorkerFactoryMissingException e ) {
                 new UnderConstrutionWindow();
@@ -135,13 +135,13 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
     
     // UNIMPLEMENTED METHOD
     /**
-     * Returns a new {@link ExceptionHandlerSW}.
+     * Runs a new {@link SwingWorker}.
      * 
      * @return A new {@link ExceptionHandlerSW}.
      * @throws SwingWorkerFactoryMissingException
      *             If there is no {@link SwingWorkerFactory} set in {@code this}'s class.
      */
-    protected abstract S getNewSwingWorker() throws SwingWorkerFactoryMissingException;
+    protected abstract void runNewSwingWorker() throws SwingWorkerFactoryMissingException;
     
     
 }

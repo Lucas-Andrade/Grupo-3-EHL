@@ -14,7 +14,7 @@ import design.borders.TextRoundBorder;
 import entities.Entity;
 
 
-/**
+/**TODO
  * Class who's instances represents a ScroolPanel with {@link Entity} information. This panel
  * extends {@link JPanel}.
  * 
@@ -23,7 +23,6 @@ import entities.Entity;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-
 @SuppressWarnings( "serial" )
 public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel {
     
@@ -96,7 +95,7 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
     
     /**
      * {@code scrollPane} {@link JScrollPane} variable that represents panel that contains a list of
-     * entities.
+     * {@code entities}.
      */
     private JScrollPane scrollPane;
     
@@ -115,7 +114,6 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
      * Public constructor that creates a new {@link ScrollPanelForEntities}, specifying some panel
      * characteristics.
      */
-    
     public ScrollPanelForEntities() {
     
         this.setLayout( new FlowLayout() );
@@ -133,23 +131,21 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
     // //////////////////
     
     /**
-     * Public method responsible to add into panel, a {@link JButton} for each {@link Entity}.
+     * Add a {@link JButton} for each {@link Entity} in the {@code airshipsFound}.
      * 
-     * @param dataBase
-     *            - {@link Database} variable with all the entities.
-     * @param iterable
-     *            - {@link Iterable} variable with only the entities that satisfy the request.
+     * @param entities
+     *            - list of {@link Entity Entities} which the {@code ScrollPane} will be created. -
      * 
-     * @return a panel with a {@link JScrollPane} that contains a {@link JButton} for each
+     * @return a Panel with a {@link JScrollPane} that contains a list of {@link JButton}s for each
      *         {@link Entity}.
      */
-    public JPanel produceAJScrollPaneWithAllEntities( Iterable< E > iterable ) {
+    public JPanel produceAJScrollPaneWithAllEntities( Iterable< E > entities ) {
     
         JPanel listPanel = new JPanel();
         int counter = 0;
         
         
-        for( E entity : iterable ) {
+        for( E entity : entities ) {
             
             JButton button = newButton( entity.getIdentification(), textArea );
             
@@ -188,17 +184,15 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
         return this;
     }
     
+    /**
+     * Create a new {@link JButton} associated to an {@link Entity} {@code identification} and a
+     * {@code textArea}.
+     * 
+     * @param identification
+     *            - The {@link Entity} identification.
+     * @param textArea
+     *            - The {@link JTextArea} where the info can be written.
+     * @return A {@code Button}
+     */
     protected abstract JButton newButton( String identification, JTextArea textArea );
-    
-//     /////////////////   
-//    // Get Methods //
-//   /////////////////  
-//
-//    /**
-//     * @return the element information.
-//     */    
-//    protected String getString( E element ) {
-//        return element.toString();
-//    }
-//    
 }

@@ -9,7 +9,6 @@ import design.windows.userwindows.LogInWindow;
 import elements.User;
 import entities.SimpleUser;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
-import functionalcomponents.functionaluserwindows.FunctionalLoginWindow.SwingWorker;
 
 
 public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
@@ -30,19 +29,21 @@ public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
     
     
     
-    // IMPLEMENTATION OF METHODS INHERITED FROM FunctionalLoginWindow.SwingWorker
-    
+    // IMPLEMENTATION OF METHODS INHERITED FROM FunctionalLoginWindow.SwingWorker    
     /**
-     * Implementation of the {@link SwingWorker#doInBackground() doInBackground()} method with the
-     * purpose of executing a {@link AuthenticateUserCommand} and obtaining its result.
+     * Authenticates the user with username {@link #username} and password {@link #password} and
+     * returns its representation as a {@link SimpleUser} if the password is correct or throws an
+     * exception otherwise.
      * 
-     * @return Returns a {@link User}
+     * @return The representation as a {@link SimpleUser} of the authenticated user.
+     * @throws Exception If the password is incorrect.
      */
     @Override
     protected SimpleUser doInBackground() throws Exception {
     
         User loggedUser =
-                new AuthenticateUserCommand( StringUtils.parameterToString( usernameLabel, username ),
+                new AuthenticateUserCommand(
+                                             StringUtils.parameterToString( usernameLabel, username ),
                                              StringUtils.parameterToString( passwordLabel, password ),
                                              usersDatabase ).call().get();
         return new EntitiesConversor().toSimpleUser( loggedUser );
@@ -55,14 +56,10 @@ public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
             SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > {
         
         
-        
-        // INSTANCE FIELDS
         private LogInWindow window;
         private Database< User > usersDatabase;
         
         
-        
-        // CONSTRUCTOR
         public Factory( LogInWindow window, Database< User > usersDatabase ) {
         
             this.window = window;

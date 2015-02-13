@@ -5,6 +5,9 @@ import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import entities.SimpleAirship;
+import functionalcomponents.FunctionalWindow;
+import functionalcomponents.functionalmainwindow.BodyPanelFunctionalizer;
+import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 
 
 /**
@@ -23,11 +26,6 @@ import entities.SimpleAirship;
 public abstract class FunctionalGetWindowSwingWorker extends
         ExceptionHandlerSW< Iterable< SimpleAirship >> {
     
-    /**
-     * The {@link MainWindow} body panel that will be updated.
-     */
-    private JBodyPanelForMainWindow bodyPanel;
-    
     // Constructor
     /**
      * Public constructor that will receive the {@code bodyPanel} to be updated and a window's error
@@ -39,12 +37,10 @@ public abstract class FunctionalGetWindowSwingWorker extends
      *            - The error text area where the error messages from the thrown exceptions will be
      *            written.
      */
-    public FunctionalGetWindowSwingWorker( JBodyPanelForMainWindow bodyPanel,
-                                           JTextArea errorTextArea ) {
+    public FunctionalGetWindowSwingWorker( JTextArea errorTextArea ) {
     
         super( errorTextArea );
         
-        this.bodyPanel = bodyPanel;
     }
     
     // IMPLEMENTATION OF THE METHOD finalizeDone( iterable )
@@ -63,9 +59,8 @@ public abstract class FunctionalGetWindowSwingWorker extends
      *             Depending on the function the window its supposed to do.
      */
     @Override
-    protected final void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround )
-        throws Exception {
+    protected final void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround ) {
     
-        bodyPanel.updateBodyPanel( resultOfDoInBackGround );
+        FunctionalMainWindow.bodyPanel.updateBodyPanel( resultOfDoInBackGround );
     }
 }

@@ -110,6 +110,7 @@ public class JUserPanelForHeaderPanel extends JPanel {
      */
     private JButton turnOffButton;
     
+    private static JLabel username;
     
     /**
      * Public constructor that creates a {@link JPanel}, that contains {@link JComponent}'s.
@@ -132,7 +133,7 @@ public class JUserPanelForHeaderPanel extends JPanel {
         myOptions.setBackground( new Color( REDCOMPONENT, GREENCOMPONENT, BLUECOMPONENT ) );
         this.add( myOptions );
         
-        JLabel username = new JLabel( "CHUCK NORRIS" );
+        username = new JLabel("CHUCK NORRIS");
         username.setBackground( new Color( TRANSLUCENTCOMPONENT, TRANSLUCENTCOMPONENT,
                                            TRANSLUCENTCOMPONENT ) );
         username.setForeground( Color.WHITE );
@@ -177,6 +178,11 @@ public class JUserPanelForHeaderPanel extends JPanel {
             throw new InternalErrorException( "Image Not Found: " + path, e );
         }
         
+    }
+   
+    public void setUsernameLabel(String newTextName){
+        
+        username.setText( newTextName );  
     }
     
     /**

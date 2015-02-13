@@ -7,7 +7,6 @@ import javax.swing.JTextArea;
 import app.EntitiesConversor;
 import commands.getcommands.GetAllTransgressingAirshipsCommand;
 import databases.Database;
-import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import elements.Airship;
 import entities.SimpleAirship;
 import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
@@ -25,7 +24,6 @@ import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCo
 public class GetAllTransgressingAirshipsWindowSwingWorker  extends FunctionalGetWindowSwingWorker {
     
     // INSTANCE FIELD
-    private static JBodyPanelForMainWindow bodyPanel;
     private static JTextArea errorJtextArea;
     private Database <Airship> airshipDatabase;
     private Collection<SimpleAirship> simpleAirshipCollection = new ArrayList<>();
@@ -34,7 +32,7 @@ public class GetAllTransgressingAirshipsWindowSwingWorker  extends FunctionalGet
     // CONSTRUCTOR
     public GetAllTransgressingAirshipsWindowSwingWorker(Database<Airship> airshipDatabase){
         
-        super(bodyPanel, errorJtextArea);
+        super(errorJtextArea);
         this.airshipDatabase=airshipDatabase;
         
     }

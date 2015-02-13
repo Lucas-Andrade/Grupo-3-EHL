@@ -158,6 +158,7 @@ public class FunctionalMainWindow {
     }
     
     
+    private FunctionalBodyPanel functionalBodyPanel;
     
     // CONSTRUCTOR
     /**
@@ -177,6 +178,7 @@ public class FunctionalMainWindow {
             
             functionalHeaderPanel();
             functionalFooterPanel();
+            functionalBodyPanel = new FunctionalBodyPanel( windowBase.getBodyPanel() );
             
             windowBase.setVisible( true );
         }
@@ -255,4 +257,8 @@ public class FunctionalMainWindow {
         return windowBase;
     }
     
+    public FunctionalBodyPanel getFunctionalBodyPanel() {
+        
+        return functionalBodyPanel;
+    }
 }

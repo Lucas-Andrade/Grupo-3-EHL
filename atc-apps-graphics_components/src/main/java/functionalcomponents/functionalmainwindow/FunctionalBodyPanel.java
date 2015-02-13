@@ -1,7 +1,6 @@
 package functionalcomponents.functionalmainwindow;
 
 
-import java.lang.reflect.Method;
 import javax.swing.JPanel;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
@@ -31,7 +30,7 @@ public class FunctionalBodyPanel {
     /**
      * The {@link JBodyPanelForMainWindow} we want to add functionality to.
      */
-    public final JBodyPanelForMainWindow basePanel;
+    private final JBodyPanelForMainWindow basePanel;
     
     /**
      * The {@link SwingWorkerFactory} that produces {@link FunctionalLoginWindow.SwingWorker}s for
@@ -62,27 +61,10 @@ public class FunctionalBodyPanel {
      * 
      * @see {@link FunctionalBodyPanel#createWorldMapAndScrollPanel()}
      */
-    public FunctionalBodyPanel(JBodyPanelForMainWindow bodyPanel ) {
+    public FunctionalBodyPanel( JBodyPanelForMainWindow bodyPanel ) {
     
         basePanel = bodyPanel;
-        createWorldMapAndScrollPanel();
-        
-        Method update;
-        Method update2;
-
-        try {
-            
-            update = this.getClass().getMethod( "updateBodyPanel" );
-            basePanel.setUpdate( update );
-            
-            update2 = this.getClass().getMethod( "updateBodyPanel", Iterable.class );
-            basePanel.setUpdate2( update2 );
-        }
-        catch( Exception e ) {
-            //TODO
-            e.printStackTrace();
-        }
-        
+        createWorldMapAndScrollPanel();        
     }
     
     

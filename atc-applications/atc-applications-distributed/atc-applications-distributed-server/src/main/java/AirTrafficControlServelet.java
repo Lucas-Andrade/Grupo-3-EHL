@@ -166,7 +166,7 @@ public class AirTrafficControlServelet extends HttpServlet {
             String result = executor.getOutput();
                         
             resp.setContentType( acceptValuesList[index] );
-            resp.setCharacterEncoding( "HTF-8" );
+            resp.setCharacterEncoding( "UTF-8" );
             
             outputStream.println( result );
             

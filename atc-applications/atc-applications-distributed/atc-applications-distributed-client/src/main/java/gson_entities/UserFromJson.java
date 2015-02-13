@@ -6,10 +6,14 @@ import entities.SimpleUser;
 
 
 /**
- * Instances of this class should be created by the {@link Gson#fromJson(String, UserFromJson.Class)}
- * method, and used to be converted in a {@link SimpleUser}.
+ * * Instances of this class are the bridge between an {@code User} in {@code Json} format and a
+ * {@link SimpleUser}, that should be created by the
+ * {@link Gson#fromJson(String, UserFromJson.Class)} method, and after initialization converted to a
+ * {@link SimpleUser} using the {@link UserFromJson#convert()} method.
  * 
- *
+ * Because instances of this class should created with {@link Gson} {@code reflection}, this class
+ * does not need a constructor to initialize its fields.
+ * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class UserFromJson {
@@ -21,26 +25,13 @@ public class UserFromJson {
     private String email;
     
     /*
-     * Field not mandatory, can be null.
+     * Not mandatory field, it can be null.
      */
     private String fullname;
     
-    /*
-     * The SimpleUser info 
-     */
-    private String info;
     
-    /**
-     * Create a {@code GUser}, it should be used by the {@link Gson#fromJson(String, UserFromJson.Class)}
-     * method, that will initialize all the necessary fields. After initialized it should be called
-     * the {@link UserFromJson#convert()} to get the {@link SimpleUser} that ARE to be used in the
-     * Graphics_Componests module (Swing).
-     */
-    public UserFromJson() {
     
-        info = createInfo().toString();
-    }
-    
+    // Public method
     /**
      * Create a {@link SimpleUser} to be used in the Graphics_Componests module (Swing).
      * 
@@ -48,22 +39,26 @@ public class UserFromJson {
      */
     public SimpleUser convert() {
     
-        return new SimpleUser( username, info );
+        return new SimpleUser( username, createInfo() );
     }
     
+    
+    
+    
+    // Private method
     /**
-     * Create the {@code SimpleUser} info. If {@code fullname} is null its info will not be added.
+     * Returns the {@code SimpleUser} info. If {@code fullname} is null its info will not be added.
      * 
      * @return the {@code SimpleUser} info
      */
-    private StringBuilder createInfo() {
+    private String createInfo() {
     
         StringBuilder result = new StringBuilder( "username: " );
         
         result.append( username ).append( ",\r\nemail: " ).append( email );
         
-        return fullname.equals( null ) ? result// .append( "\r\n" )
-                                      : result.append( ",\r\nfullName: " ).append( fullname );
+        return fullname == null ? result.toString()// .append( "\r\n" )
+                               : result.append( ",\r\nfullName: " ).append( fullname ).toString();
         // .append( "\r\n" );
     }
 }

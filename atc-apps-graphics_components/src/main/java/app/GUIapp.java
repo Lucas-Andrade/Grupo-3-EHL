@@ -4,6 +4,7 @@ package app;
 import java.awt.EventQueue;
 import javax.swing.SwingWorker;
 import swingworkers.SwingWorkerFactory;
+import utils.CompletionStatus;
 import design.windows.popupwindows.FailWindow;
 import design.windows.popupwindows.UnderConstrutionWindow;
 import entities.SimpleUser;
@@ -12,6 +13,7 @@ import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
+import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
 
 /**
@@ -29,6 +31,7 @@ public class GUIapp {
      * The factories of {@link SwingWorker}s to be used by this {@link GUIapp}.
      */
     private SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > loginSWFactory;
+    private SwingWorkerFactory< functionalcomponents.functionaluserwindows.FunctionalPostUserWindow.SwingWorker, CompletionStatus > postUserSWFactory;
     
     
     
@@ -43,9 +46,11 @@ public class GUIapp {
      *            A {@link SwingWorkerFactory} that produces
      *            {@link FunctionalLoginWindow.SwingWorker}s.
      */
-    public GUIapp( SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > loginSWFactory ) {
+    public GUIapp( SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > loginSWFactory,
+                   SwingWorkerFactory< FunctionalPostUserWindow.SwingWorker, CompletionStatus > postUserSWFactory ) {
     
         this.loginSWFactory = loginSWFactory;
+        this.postUserSWFactory = postUserSWFactory;
         setSwingWorkerFactoriesInTheFunctionalWindows();
     }
     
@@ -76,7 +81,7 @@ public class GUIapp {
                     if( e.getCause() instanceof SwingWorkerFactoryMissingException )
                         new UnderConstrutionWindow();
                     else new FailWindow( "INTERNAL ERROR!" );
-                    System.out.println( e.getMessage() ); //TODO: remove when finish development
+                    System.out.println( e.getMessage() ); // TODO: remove when finish development
                 }
                 catch( Exception e ) {
                     FunctionalMainWindow.windowBase.getErrorJTextArea().setText( e.getMessage() );
@@ -98,6 +103,7 @@ public class GUIapp {
     private void setSwingWorkerFactoriesInTheFunctionalWindows() {
     
         FunctionalLoginWindow.setSwingWorkerFactory( loginSWFactory );
+        FunctionalPostUserWindow.setSwingWorkerFactory( postUserSWFactory );
     }
     
     

@@ -2,6 +2,7 @@ package app;
 
 
 import swingworkers.LoginWindowSwingWorker;
+import swingworkers.PostUserSwingWorker;
 import databases.Database;
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
@@ -10,6 +11,7 @@ import elements.User;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
+import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
 
 /**
@@ -85,16 +87,18 @@ public class App {
     
     public static void main( String[] args ) throws InvalidArgumentException {
     
-
-        //Creating the factories
+        
+        // Creating the factories
         
         LoginWindowSwingWorker.Factory loginWindowSWFactory =
                 new LoginWindowSwingWorker.Factory( FunctionalLoginWindow.baseWindow, usersDatabase );
+        PostUserSwingWorker.Factory postUserSWFactory =
+                new PostUserSwingWorker.Factory( FunctionalPostUserWindow.baseWindow, usersDatabase );
         
         
         // Creating and running the app
         
-        new GUIapp( loginWindowSWFactory ).run();
+        new GUIapp( loginWindowSWFactory, postUserSWFactory ).run();
         
     }
     

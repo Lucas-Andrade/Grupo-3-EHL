@@ -38,6 +38,7 @@ public class FunctionalMainWindow {
     public static final BodyPanelFunctionalizer bodyPanelFunctionalizer =
             new BodyPanelFunctionalizer( windowBase.getBodyPanel() );
     
+    
     /**
      * The user who is currently logged in.
      */
@@ -46,7 +47,7 @@ public class FunctionalMainWindow {
     /**
      * A lock for the {@link #loggedInUser}.
      */
-    private static Object userLock = new Object();
+    private static Object userLock = new Object();    
     
     // STATIC METHODS
     
@@ -119,6 +120,7 @@ public class FunctionalMainWindow {
         return false;
     }
     
+    
     /**
      * Removes the {@link SimpleLoggedUser} that is logged in in this session of the app.
      * 
@@ -168,6 +170,7 @@ public class FunctionalMainWindow {
         
         return theFunctionalMainWindow;
     }
+    
     
     /**
      * Adds functionality to the panels of a {@link MainWindow} and displays it.

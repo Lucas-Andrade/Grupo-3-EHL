@@ -2,12 +2,12 @@ package functionalcomponents.functionaluserwindows;
 
 
 import java.awt.event.ActionListener;
-import javax.swing.SwingWorker;
-import org.omg.CORBA.CompletionStatus;
 import swingworkers.ExceptionHandlerSW;
+import swingworkers.SwingWorkerFactory;
+import utils.CompletionStatus;
 import design.windows.popupwindows.SuccessWindow;
 import design.windows.userwindows.PostUserWindow;
-import exceptions.InvalidArgumentException;
+import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
 
 
@@ -20,117 +20,165 @@ import functionalcomponents.FunctionalWindow;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class FunctionalPostUserWindow extends FunctionalWindow< CompletionStatus > {
+public class FunctionalPostUserWindow extends
+        FunctionalWindow< FunctionalPostUserWindow.SwingWorker, CompletionStatus > {
+    
+    
+    
+    // STATIC FIELDS
     
     /**
-     * {@code functionalWindow} - The {@code PatchUserWindow} we want to add functionality to.
+     * The {@code PostUserWindow} we want to add functionality to.
      */
-    private PostUserWindow functionalWindow;
+    public static final PostUserWindow baseWindow = new PostUserWindow();
     
     /**
-     * {@code usersDatabase} - The users database.
+     * The {@link SwingWorkerFactory} that produces {@link FunctionalPostUserWindow.SwingWorker}s
+     * for the {@link FunctionalPostUserWindow}s.
      */
-    private Database< User > usersDatabase;
+    private static SwingWorkerFactory< FunctionalPostUserWindow.SwingWorker, CompletionStatus > swFactory;
     
     /**
-     * {@code userWhoIsPosting} - The {@code User} who is posting the new user.
+     * A lock for the {@link #swFactory}.
      */
-    private User userWhoIsPosting;
+    private static Object factoryLock = new Object();
     
+    // STATIC METHOD
     /**
-     * Public constructor that will add functionality to a given non functional
-     * {@link PatchUserWindow} and will display it.
+     * Sets the {@link SwingWorkerFactory} that produces
+     * {@link FunctionalPostUserWindow.SwingWorker}s for the {@link FunctionalPostUserWindow}s.
      * 
-     * @param nonFunctionalWindow
-     *            - The {@code PostUserWindow} we want to add functionality to.
-     * @param usersDatabase
-     *            - The users database.
-     * @param userWhoIsPosting
-     *            - The {@code User} who is posting the new user.
+     * @param factory
+     *            The {@link SwingWorkerFactory} that produces
+     *            {@link FunctionalPostUserWindow.SwingWorker}s for the
+     *            {@link FunctionalPostUserWindow}s.
+     * @return {@code true} if {@code factory} was set as the factory that produces swingworkers for
+     *         the {@link FunctionalPostUserWindow}s; <br/>
+     *         {@code false} if there was a factory already set or {@code factory} is {@code null}.
      */
-    public FunctionalPostUserWindow( PostUserWindow nonFunctionalWindow,
-                                     Database< User > usersDatabase, User userWhoIsPosting ) {
-        
-        super( nonFunctionalWindow );
-        
-        this.functionalWindow = nonFunctionalWindow;
-        this.usersDatabase = usersDatabase;
-        this.userWhoIsPosting = userWhoIsPosting;
+    public static
+            boolean
+            setSwingWorkerFactory( SwingWorkerFactory< FunctionalPostUserWindow.SwingWorker, CompletionStatus > factory ) {
+    
+        synchronized (factoryLock) {
+            if( swFactory == null && factory != null ) {
+                swFactory = factory;
+                return true;
+            }
+            return false;
+        }
     }
     
+    
+    
+    // CONSTRUCTOR
     /**
-     * Method that will return a {@link ExceptionHandlerSW} with an {@code Override}
-     * implementation of its {@link SwingWorker#doInBackground() doInBackground()} and
-     * {@link ExceptionHandlerSW#finalizeDone(Object) functionalDone(Object)} methods to
-     * add the correct functionality to a {@link PostUserWindow}.
-     * 
-     * @return Returns a {@link ExceptionHandlerSW} with an {@code Override} of its
-     *         methods.
+     * Adds functionality to a {@link PostUserWindow} and displays it.
+     */
+    public FunctionalPostUserWindow() {
+    
+        super( baseWindow );
+    }
+    
+    
+    
+    // IMPLEMENTATION OF THE METHOD INHERITED FROM FunctionalWindow
+    /**
+     * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
      */
     @Override
-    protected ExceptionHandlerSW< CompletionStatus > getNewSwingWorker() {
-        
-        return new ExceptionHandlerSW< CompletionStatus >(
-                                                                    functionalWindow.getErrorJTextArea() ) {
-            
-            /**
-             * String representation of the parameters to use in the commands and that are obtained
-             * from the window's text fields.
-             */
-            private String username = functionalWindow.getUsername().getJTextField().getText();
-            private String password = functionalWindow.getPassword().getJTextField().getText();
-            private String confirmPassword = functionalWindow.getConfirmPassword().getJTextField()
-                                                             .getText();
-            private String email = functionalWindow.getEmail().getJTextField().getText();
-            private String fullName = functionalWindow.getFullname().getJTextField().getText();
-            
-            /**
-             * Implementation of the {@link SwingWorker#doInBackground() doInBackground()} method
-             * with the purpose of verifying if the inserted {@code password} and
-             * {@code confirmPassword} match and executing a {@link PostUserCommand}, obtaining its
-             * result.
-             * 
-             * @return Returns a String with information regarding the result of the command which
-             *         will be the same as the return of it's call method.
-             * 
-             * @throws InvalidArgumentException
-             *             If the {@code password} and {@code confirmPassword} don't match or if the
-             *             value given for to the PostUserCommand are invalid.
-             */
-            @Override
-            protected CompletionStatus doInBackground() throws Exception {
-                
-                if( !password.equals( confirmPassword ) )
-                    throw new InvalidArgumentException( "The Passwords Don't Match" );
-                
-                return new PostUserCommand( username, password, email, fullName, usersDatabase,
-                                            userWhoIsPosting ).call();
-            }
-            
-            /**
-             * Implementation of the {@link ExceptionHandlerSW#functionalDone()
-             * functionalDone()}. This method will receive the result of the
-             * {@link SwingWorker#doInBackground() doInBackground()} method and, if this result
-             * positive, open new {@link SuccessWindow}, closing this one.
-             * 
-             * @param resultOfDoInBackGround
-             *            - The result of the {@link SwingWorker#doInBackground() doInBackground()}
-             *            method.
-             */
-            @Override
-            public void finalizeDone( CompletionStatus resultOfDoInBackGround ) throws Exception {
-                
-                
-                if( resultOfDoInBackGround.operationCompletedSuccessfully() ) {
-                    new SuccessWindow( resultOfDoInBackGround.getMessage() );
-                }
-                else {
-                    
-                    functionalWindow.getErrorJTextArea()
-                                    .setText( resultOfDoInBackGround.getMessage() );
-                    functionalWindow.dispose();
-                }
-            }
-        };
+    protected FunctionalPostUserWindow.SwingWorker getNewSwingWorker()
+        throws SwingWorkerFactoryMissingException {
+    
+        if( swFactory == null )
+            throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
+        return swFactory.newInstance();
     }
+    
+    
+    
+    // INNER CLASS
+    /**
+     * Class whose instances are {@link ExceptionHandlerSW} able to add functionality to a
+     * {@link FunctionalPostUserWindow}.
+     * <p>
+     * The unimplemented method {@link #doInBackground()} is supposed to create and store a new user
+     * with the username {@link #username}, the password {@link #password}, the email {@link #email}
+     * and, if given, the full name {@link #fullName}. It is expected to return a
+     * {@link CompletionStatus} representing the success/failure of the operation or an exception if
+     * (1) the {@link #password} and the {@link #confirmPassword} don't match or (2) the operation
+     * couldn't perform.
+     * </p>
+     *
+     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+     */
+    public static abstract class SwingWorker extends ExceptionHandlerSW< CompletionStatus > {
+        
+        
+        
+        // INSTANCE FIELDS
+        /**
+         * The {@link PostUserWindow} to be disposed in the {@link #finalizeDone(CompletionStatus)}.
+         */
+        protected PostUserWindow window;
+        
+        /**
+         * String representation of the parameters to use in the commands and that are obtained from
+         * the window's text fields.
+         */
+        protected String username;
+        protected String password;
+        protected String confirmPassword;
+        protected String email;
+        protected String fullName;
+        
+        protected String usernameLabel;
+        protected String passwordLabel;
+        protected String confirmPasswordLabel;
+        protected String emailLabel;
+        protected String fullNameLabel;
+        
+        
+        
+        // CONSTRUCTOR
+        public SwingWorker( PostUserWindow window ) {
+        
+            super( window.getErrorJTextArea() );
+            this.window = window;
+            
+            this.username = window.getUsername().getJTextField().getText();
+            this.password = window.getPassword().getJTextField().getText();
+            this.confirmPassword = window.getConfirmPassword().getJTextField().getText();
+            this.email = window.getEmail().getJTextField().getText();
+            this.fullName = window.getFullname().getJTextField().getText();
+            
+            this.usernameLabel = window.getUsername().getJLabel().getText();
+            this.passwordLabel = window.getPassword().getJLabel().getText();
+            this.confirmPasswordLabel = window.getConfirmPassword().getJLabel().getText();
+            this.emailLabel = window.getEmail().getJLabel().getText();
+            this.fullNameLabel = window.getFullname().getJLabel().getText();
+        }
+        
+        
+        // IMPLEMENTATION OF METHODS INHERITED FROM SwingWorker and FunctionalWindowSwingWorker
+        /**
+         * Presents a {@link SuccessWindow} and disposes the {@link #window} if the method
+         * {@link #doInBackground()} occurred successfully or writes the error message in the error
+         * label.
+         */
+        @Override
+        protected void finalizeDone( CompletionStatus resultOfDoInBackGround ) throws Exception {
+        
+            if( resultOfDoInBackGround.completedSuccessfully() ) {
+                new SuccessWindow( resultOfDoInBackGround.getMessage() );
+                window.dispose();
+            }
+            else {
+                window.getErrorJTextArea().setText( resultOfDoInBackGround.getMessage() );
+            }
+        }
+        
+        
+    }
+    
 }

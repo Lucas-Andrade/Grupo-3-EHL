@@ -6,7 +6,7 @@ import parsingtools.commandfactories.ParsingCommand;
 
 
 
-/**
+/**TODO
  * A list of correspondences between {@link String}s contained in string-commands and their internal
  * meaning in the app.
  * <p>

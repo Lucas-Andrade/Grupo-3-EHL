@@ -1,10 +1,6 @@
 package swingworkers;
 
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import com.google.gson.Gson;
@@ -60,25 +56,19 @@ public class SimpleAirshipInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
     @Override
     protected SimpleAirship doInBackground() throws Exception {
     
-        String url = "http://localhost:9999/airships/" + identification;
-        HttpURLConnection connection = ( HttpURLConnection )new URL( url ).openConnection();
-
-        // 200 -> ok
-        connection.getResponseCode();
-
-        // message from the server
-        BufferedReader in = new BufferedReader( new InputStreamReader( connection.getInputStream() ) );
-        String inputLine;
-        String html = new String();
-
-        //TODO
-        while( ( inputLine = in.readLine() ) != null )
-        {
-            html += inputLine ;
-        }
-        in.close();
-
-        return new Gson().fromJson( html, AirshipFromJson.class ).convert();
+        ClientRequest request = new ClientRequest( "GET", "users/" + identification ) {
+            
+            @Override
+            public void createParameters() {
+            
+                
+            }
+        };
+        
+        
+        if( request.createConnection() )
+            return new Gson().fromJson( request.getResponse(), AirshipFromJson.class ).convert();
+        throw new Exception( request.getResponse() );
     }
     
     
@@ -96,8 +86,8 @@ public class SimpleAirshipInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
             SwingWorkerForButtonFactory< SwingWorker< SimpleAirship, Void >, SimpleAirship > {
         
         
-        /**TODO
-         * Creates a {@link SwingWorker} {@code factories}, that creates instances of
+        /**
+         * TODO Creates a {@link SwingWorker} {@code factories}, that creates instances of
          * {@link GUISimpleAirshipInfoSW} using the {@link SwFactory#newInstance} that will be run
          * in {@link SimpleAirshipInfoButton}.
          * 

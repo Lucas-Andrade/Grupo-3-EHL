@@ -6,10 +6,12 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
 import org.eclipse.jetty.server.Authentication.User;
 import swingworkers.SwingWorkerFactory;
+import app.Utils;
 import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
 import design.windows.MainWindow;
 import design.windows.popupwindows.UnderConstrutionWindow;
 import design.windows.userwindows.GetUsersWindow;
+import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
@@ -24,18 +26,71 @@ import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
  */
 public class FunctionalHeaderPanel {
     
+    
     // Factories
-    private SwingWorkerFactory< ?, ? > addUserFactory;
-    private SwingWorkerFactory< ?, ? > changePasswordFactory;
-    private SwingWorkerFactory< ?, ? > infoAllUsersFactory;
-    private SwingWorkerFactory< ?, ? > removeUserFactory;
+    private static SwingWorkerFactory< ?, ? > addUserFactory;
+    private static SwingWorkerFactory< ?, ? > changePasswordFactory;
+    private static SwingWorkerFactory< ?, ? > infoAllUsersFactory;
+    private static SwingWorkerFactory< ?, ? > removeUserFactory;
+    
+    
+    // Factories Locks
+    private static Object addUserFactoryLock = new Object();
+    private static Object changePasswordFactoryLock = new Object();
+    private static Object infoAllUsersFactoryLock = new Object();
+    private static Object removeUserFactoryLock = new Object();
+    
+    // Set factories
+    /**
+     * @param addUserFactory
+     *            the addUserFactory to set
+     */
+    public static boolean setAddUserFactory( SwingWorkerFactory< ?, ? > addUserFactory ) {
+    
+        return Utils.setSWFactory( FunctionalHeaderPanel.class, "addUserFactory",
+                                   addUserFactory, addUserFactoryLock );
+    }
+    
+    /**
+     * @param changePasswordFactory
+     *            the changePasswordFactory to set
+     */
+    public static boolean setChangePasswordFactory( SwingWorkerFactory< ?, ? > changePasswordFactory ) {
+    
+        
+        return Utils.setSWFactory( FunctionalHeaderPanel.class, "changePasswordFactory",
+                                   changePasswordFactory, changePasswordFactoryLock );
+    }
+    
+    /**
+     * @param infoAllUsersFactory
+     *            the infoAllUsersFactory to set
+     */
+    public boolean setInfoAllUsersFactory( SwingWorkerFactory< ?, ? > infoAllUsersFactory ) {
+    
+        return Utils.setSWFactory( FunctionalHeaderPanel.class, "infoAllUsersFactory",
+                                   infoAllUsersFactory, infoAllUsersFactoryLock );
+    }
+    
+    /**
+     * @param removeUserFactory
+     *            the removeUserFactory to set
+     */
+    public boolean setRemoveUserFactory( SwingWorkerFactory< ?, ? > removeUserFactory ) {
+    
+        return Utils.setSWFactory( FunctionalHeaderPanel.class, "removeUserFactory",
+                                   removeUserFactory, removeUserFactoryLock );
+    }
+
+    
     
     // Field
-    
     /**
      * {@code headerPanel} - The {@link MainWindow} header panel to which we will had functionality.
      */
     private JHeaderPanelForMainWindow headerPanel;
+    
+    
     
     // Constructor
     /**
@@ -53,14 +108,24 @@ public class FunctionalHeaderPanel {
     
         this.headerPanel = headerPanel;
         
+        addFunctionality();
+    }
+
+    // Private Methods
+    /**
+     * All the methods that will give functionality to the {@code footerPanel}.
+     */
+    private void addFunctionality() {
+    
         addAddUserButtonAction();
         addChangePasswordButtonAction();
         addInfoAllUsersButtonAction();
         addRemoveUserButtonAction();
     }
+
+    //Add Action Listeners
     
-    // Private Method
-    
+    //POST
     /**
      * Method that will add functionality to the {@link JHeaderPanelForMainWindow#addUserButton
      * addUserButton} button.
@@ -71,9 +136,10 @@ public class FunctionalHeaderPanel {
     private void addAddUserButtonAction() {
     
         headerPanel.getUserPanel().getAddUserButton()
-                   .addActionListener( action -> action( addUserFactory ) );
+                   .addActionListener( action -> runSingWorker( addUserFactory ) );
     }
     
+    //PATCH
     /**
      * Method that will add functionality to the
      * {@link JHeaderPanelForMainWindow#changePasswordButton changePasswordButton} button.
@@ -84,18 +150,20 @@ public class FunctionalHeaderPanel {
     private void addChangePasswordButtonAction() {
     
         headerPanel.getUserPanel().getChangePasswordButton()
-                   .addActionListener( action -> action( changePasswordFactory ) );
+                   .addActionListener( action -> runSingWorker( changePasswordFactory ) );
     }
     
+    //DELET
     /**
      * DELETE USER - Not Implemented!
      */
     private void addRemoveUserButtonAction() {
     
         headerPanel.getUserPanel().getRemoveUserButton()
-                   .addActionListener( action -> action( removeUserFactory ) );
+                   .addActionListener( action -> runSingWorker( removeUserFactory ) );
     }
     
+    //GET
     /**
      * Method that will add functionality to the
      * {@link JHeaderPanelForMainWindow#infoAllUsersButton infoAllUsersButton} button.
@@ -106,9 +174,10 @@ public class FunctionalHeaderPanel {
     private void addInfoAllUsersButtonAction() {
     
         headerPanel.getUserPanel().getInfoAllUsersButton()
-                   .addActionListener( action -> action( infoAllUsersFactory ) );
+                   .addActionListener( action -> runSingWorker( infoAllUsersFactory ) );
     }
     
+    //New SwingWorkers
     /**
      * Create a new {@link SwingWorker} associated with the given {@code factory} and run it. If the
      * {@code factory} is null, then its open the {@link UnderConstrutionWindow}.
@@ -116,18 +185,17 @@ public class FunctionalHeaderPanel {
      * @param factory
      *            - The {@link SwingWorker} factory.
      */
-    private void action( SwingWorkerFactory< ?, ? > factory ) {
+    private void runSingWorker( SwingWorkerFactory< ?, ? > factory ) {
     
         try {
-            factory.newInstance().run();
+            Utils.runNewSwingWorker(factory, "FunctionalHeaderPanel");
         }
-        catch( NullPointerException e ) {
+        catch( SwingWorkerFactoryMissingException e ) {
             new UnderConstrutionWindow();
         }
     }
     
-    // Public Get Method
-    
+    // Public Method
     /**
      * @return the {@code headerPanel}.
      */
@@ -136,39 +204,5 @@ public class FunctionalHeaderPanel {
         return headerPanel;
     }
     
-    /**
-     * @param addUserFactory
-     *            the addUserFactory to set
-     */
-    public void setAddUserFactory( SwingWorkerFactory< ?, ? > addUserFactory ) {
-    
-        this.addUserFactory = addUserFactory;
-    }
-    
-    /**
-     * @param changePasswordFactory
-     *            the changePasswordFactory to set
-     */
-    public void setChangePasswordFactory( SwingWorkerFactory< ?, ? > changePasswordFactory ) {
-    
-        this.changePasswordFactory = changePasswordFactory;
-    }
-    
-    /**
-     * @param infoAllUsersFactory
-     *            the infoAllUsersFactory to set
-     */
-    public void setInfoAllUsersFactory( SwingWorkerFactory< ?, ? > infoAllUsersFactory ) {
-    
-        this.infoAllUsersFactory = infoAllUsersFactory;
-    }
-    
-    /**
-     * @param removeUserFactory
-     *            the removeUserFactory to set
-     */
-    public void setRemoveUserFactory( SwingWorkerFactory< ?, ? > removeUserFactory ) {
-    
-        this.removeUserFactory = removeUserFactory;
-    }
+
 }

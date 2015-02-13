@@ -12,94 +12,97 @@ import entities.SimpleAirship;
 import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker;
 
+
 /**
- *   Class whose instances have the purpose of add functionality to a
- * {@link GetAllTransgressingAirshipsWindowSwingWorker}. 
+ * Class whose instances have the purpose of add functionality to a
+ * {@link GetAllTransgressingAirshipsWindowSwingWorker}.
  *
  * Extends {@link FunctionalGetGeographicalCoordinatesParametersWindow}.
  *
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetAllTransgressingAirshipsWindowSwingWorker  extends FunctionalGetWindowSwingWorker {
+public class GetAllTransgressingAirshipsWindowSwingWorker extends FunctionalGetWindowSwingWorker {
     
     // INSTANCE FIELD
     private static JTextArea errorJtextArea;
-    private Database <Airship> airshipDatabase;
-    private Collection<SimpleAirship> simpleAirshipCollection = new ArrayList<>();
+    private Database< Airship > airshipDatabase;
+    private Collection< SimpleAirship > simpleAirshipCollection = new ArrayList<>();
     
-
+    
     // CONSTRUCTOR
-    public GetAllTransgressingAirshipsWindowSwingWorker(Database<Airship> airshipDatabase){
-        
-        super(errorJtextArea);
-        this.airshipDatabase=airshipDatabase;
-        
-    }
 
-    // IMPLEMENTATION OF METHODS INHERITED FROM FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker
+    public GetAllTransgressingAirshipsWindowSwingWorker( Database< Airship > airshipDatabase ) {
+    
+        super( errorJtextArea );
+        this.airshipDatabase = airshipDatabase;
+    }
+    
+    // IMPLEMENTATION OF METHODS INHERITED FROM
+    // FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker
     
     /**
      * Implementation of the {@link SwingWorker#doInBackground() doInBackground()} method with the
-     * purpose of executing a execute a {@link GetAllTransgressingAirshipsCommand}, obtaining its result
-     * and convert {@link Airship} to {@link SimpleAirship}.
+     * purpose of executing a execute a {@link GetAllTransgressingAirshipsCommand}, obtaining its
+     * result and convert {@link Airship} to {@link SimpleAirship}.
      * 
      * @return Returns a {@link Iterable} of {@link SimpleAirship}s.
      */
     @Override
     protected Iterable< SimpleAirship > doInBackground() throws Exception {
- 
+    
         
         
+        Iterable< Airship > airshipIterable =
+                new GetAllTransgressingAirshipsCommand( airshipDatabase ).call().get();
         
-        Iterable<Airship> airshipIterable = new GetAllTransgressingAirshipsCommand( airshipDatabase ).call().get();
-        
-        for( Airship airship : airshipIterable){
+        for( Airship airship : airshipIterable ) {
             
-            simpleAirshipCollection.add( new EntitiesConversor().toSimpleAirship( airship ));
+            simpleAirshipCollection.add( new EntitiesConversor().toSimpleAirship( airship ) );
             
         }
-            
+        
         return simpleAirshipCollection;
-
+        
     }
-
-
+    
+    
     // INNER CLASS
     /**
-     * Inner class responsible for produce a new 
-     * instance of {@link GetAllTransgressingAirshipsWindowSwingWorker}
+     * Inner class responsible for produce a new instance of
+     * {@link GetAllTransgressingAirshipsWindowSwingWorker}
      * 
      *
-     *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
     
     public static class Factory implements
-            SwingWorkerFactory< FunctionalGetWindowSwingWorker,Iterable<SimpleAirship> > {
-
+            SwingWorkerFactory< FunctionalGetWindowSwingWorker, Iterable< SimpleAirship > > {
+        
         // INSTANCE FIELDS
-        private Database <Airship> airshipDatabase;
+        private Database< Airship > airshipDatabase;
+        
         // CONSTRUCTOR
-
+        
         public Factory( Database< Airship > airshipDatabase ) {
-            
+        
             this.airshipDatabase = airshipDatabase;
-     
+            
         }
         
         /**
-         * Implementation of the {@link SwingWorkerFactory#newInstance()} method with the
-         * purpose of create a {@link GetAllTransgressingAirshipsWindowSwingWorker} 
+         * Implementation of the {@link SwingWorkerFactory#newInstance()} method with the purpose of
+         * create a {@link GetAllTransgressingAirshipsWindowSwingWorker}
          * 
          * @return Returns a {@link GetAllTransgressingAirshipsWindowSwingWorker}
          */
         @Override
         public FunctionalGetWindowSwingWorker newInstance() {
-   
-            return new GetAllTransgressingAirshipsWindowSwingWorker(airshipDatabase);
         
+            return new GetAllTransgressingAirshipsWindowSwingWorker( airshipDatabase );
+            
         }
-   
+        
     }
     
 }

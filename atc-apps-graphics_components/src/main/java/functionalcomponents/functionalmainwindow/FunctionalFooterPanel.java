@@ -4,11 +4,13 @@ package functionalcomponents.functionalmainwindow;
 
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
+import app.Utils;
 import swingworkers.SwingWorkerFactory;
 import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
 import design.windows.MainWindow;
 import design.windows.popupwindows.UnderConstrutionWindow;
 import entities.SimpleAirship;
+import exceptions.SwingWorkerFactoryMissingException;
 
 
 /**
@@ -21,14 +23,104 @@ import entities.SimpleAirship;
 public class FunctionalFooterPanel {
     
     // Factories
-    private SwingWorkerFactory< ?, ? > getNearestAirshipsFactory;
-    private SwingWorkerFactory< ?, ? > getTransgressingAirshipsFactory;
-    private SwingWorkerFactory< ?, ? > getAirshipsWithLessPassengerThanFactory;
-    private SwingWorkerFactory< ?, ? > patchAirshipFactory;
-    private SwingWorkerFactory< ?, ? > postAirshipFactory;
-    private SwingWorkerFactory< ?, ? > deleteAirshipFactory;
+    private static SwingWorkerFactory< ?, ? > getNearestAirshipsFactory;
+    private static SwingWorkerFactory< ?, ? > getTransgressingAirshipsFactory;
+    private static SwingWorkerFactory< ?, ? > getAirshipsWithLessPassengerThanFactory;
+    private static SwingWorkerFactory< ?, ? > postAirshipFactory;
+    private static SwingWorkerFactory< ?, ? > patchAirshipFactory;
+    private static SwingWorkerFactory< ?, ? > deleteAirshipFactory;
+
+
+    // Factories Locks
+    private static Object getNearestAirshipsFactoryLock = new Object();
+    private static Object getTransgressingAirshipsLock = new Object();
+    private static Object getAirshipsWithLessPassengerThanFactoryLock = new Object();
+    private static Object postAirshipFactoryLock = new Object();
+    private static Object patchAirshipFactoryLock = new Object();
+    private static Object deleteAirshipFactoryLock = new Object();
     
-    //Fields
+    
+    // Set factories
+    /**
+     * Set the {@code NearestAirshipsFactory}.
+     * 
+     * @param getNearestAirshipsFactory
+     *            - The getNearestAirshipsFactory to set
+     */
+    public static boolean
+            setGetNearestAirshipsFactory( SwingWorkerFactory< ?, ? > getNearestAirshipsFactory ) {
+    
+        return Utils.setSWFactory( FunctionalFooterPanel.class, "getNearestAirshipsFactory",
+                                   getNearestAirshipsFactory, getNearestAirshipsFactoryLock );
+    }
+    
+    /**
+     * Set the {@code TransgressingAirshipsFactory}.
+     * 
+     * @param getTransgressingAirshipsFactory
+     *            - The getTransgressingAirshipsFactory to set
+     */
+    public static
+            boolean
+            setGetTransgressingAirshipsFactory( SwingWorkerFactory< ?, ? > getTransgressingAirshipsFactory ) {
+    
+        return Utils.setSWFactory( FunctionalFooterPanel.class, "getTransgressingAirshipsFactory",
+                                   getTransgressingAirshipsFactory, getTransgressingAirshipsLock );
+    }
+    
+    /**
+     * Set the {@code AirshipsWithLessPassengerThanFactory}.
+     * 
+     * @param getAirshipsWithLessPassengerThanFactory
+     *            - The getAirshipsWithLessPassengerThanFactory to set
+     */
+    public static
+            boolean
+            setGetAirshipsWithLessPassengerThanFactory( SwingWorkerFactory< ?, ? > getAirshipsWithLessPassengerThanFactory ) {
+    
+        return Utils.setSWFactory( FunctionalFooterPanel.class, "getAirshipsWithLessPassengerThanFactory",
+                                   getAirshipsWithLessPassengerThanFactory, getAirshipsWithLessPassengerThanFactoryLock );
+    }
+    
+    /**
+     * Set the {@code postAirshipFactory}.
+     * 
+     * @param postAirshipFactory
+     *            - The postAirshipFactory to set
+     */
+    public static boolean setPostAirshipFactory( SwingWorkerFactory< ?, ? > postAirshipFactory ) {
+    
+        return Utils.setSWFactory( FunctionalFooterPanel.class, "postAirshipFactory",
+                                   postAirshipFactory, postAirshipFactoryLock );
+    }
+    
+    /**
+     * Set the {@code patchAirshipFactory}.
+     * 
+     * @param patchAirshipFactory
+     *            - The patchAirshipFactory to set
+     */
+    public static boolean setPatchAirshipFactory( SwingWorkerFactory< ?, ? > patchAirshipFactory ) {
+    
+        return Utils.setSWFactory( FunctionalFooterPanel.class, "patchAirshipFactory",
+                                   patchAirshipFactory, patchAirshipFactoryLock );
+    }
+    
+    /**
+     * Set the {@code deleteAirshipFactory}.
+     * 
+     * @param deleteAirshipFactory
+     *            - The deleteAirshipFactory to set
+     */
+    public static boolean setDeleteAirshipFactory( SwingWorkerFactory< ?, ? > deleteAirshipFactory ) {
+    
+        return Utils.setSWFactory( FunctionalFooterPanel.class, "deleteAirshipFactory",
+                                   deleteAirshipFactory, deleteAirshipFactoryLock );
+    }
+
+    
+    
+    // Fields
     /**
      * The {@link MainWindow} footer panel to which we will had functionality.
      */
@@ -39,6 +131,8 @@ public class FunctionalFooterPanel {
      * actions performed by any of the buttons belonging to the {@link #footerPanel}.
      */
     private BodyPanelFunctionalizer bodyPanel;
+    
+    
     
     // Constructor
     /**
@@ -60,8 +154,8 @@ public class FunctionalFooterPanel {
         
         addFunctionality();
     }
-    
-    // Private Methods
+
+   // Private Methods
     /**
      * All the methods that will give functionality to the {@code footerPanel}.
      */
@@ -75,6 +169,10 @@ public class FunctionalFooterPanel {
         addPostAirshipButtonAction();
         addDeleteAirshipButtonAction();
     }
+    
+    
+    
+    //Add Action Listeners
     
     // GETs
     /**
@@ -99,7 +197,7 @@ public class FunctionalFooterPanel {
     private void addGetNearestAirshipsButtonAction() {
     
         footerPanel.getNearestAirships()
-                   .addActionListener( action -> action( getNearestAirshipsFactory ) );
+                   .addActionListener( action -> runSingWorker( getNearestAirshipsFactory ) );
     }
     
     /**
@@ -112,7 +210,7 @@ public class FunctionalFooterPanel {
     private void addGetTransgressingAirshipsButtonAction() {
     
         footerPanel.getTransgressingAirships()
-                   .addActionListener( action -> action( getTransgressingAirshipsFactory ) );
+                   .addActionListener( action -> runSingWorker( getTransgressingAirshipsFactory ) );
     }
     
     /**
@@ -126,8 +224,9 @@ public class FunctionalFooterPanel {
     private void addGetAirshipsWithLessPassengerThanButtonAction() {
     
         footerPanel.getAirshipsWithLessPassengerThan()
-                   .addActionListener( action -> action( getAirshipsWithLessPassengerThanFactory ) );
+                   .addActionListener( action -> runSingWorker( getAirshipsWithLessPassengerThanFactory ) );
     }
+    
     
     // POST
     /**
@@ -138,8 +237,9 @@ public class FunctionalFooterPanel {
      */
     private void addPostAirshipButtonAction() {
     
-        footerPanel.getPostAirship().addActionListener( action -> action( postAirshipFactory ) );
+        footerPanel.getPostAirship().addActionListener( action -> runSingWorker( postAirshipFactory ) );
     }
+    
     
     // PATCH
     /**
@@ -151,10 +251,11 @@ public class FunctionalFooterPanel {
     private void addPatchAirshipButtonAction() {
     
         footerPanel.getPatchAirship().addActionListener( action -> {
-            action( patchAirshipFactory );
+            runSingWorker( patchAirshipFactory );
         } );
     }
-
+    
+    
     // DELETE
     /**
      * Method that will add functionality to the {@link JFooterPanelForMainWindow#deleteAirship
@@ -164,22 +265,23 @@ public class FunctionalFooterPanel {
      */
     private void addDeleteAirshipButtonAction() {
     
-        footerPanel.getDeleteAirship().addActionListener( action -> action( deleteAirshipFactory ) );
+        footerPanel.getDeleteAirship().addActionListener( action -> runSingWorker( deleteAirshipFactory ) );
     }
     
+    //New SwingWorkers
     /**
-     * Create a new {@link SwingWorker} associated with the given {@code factory} and run it.
-     * If the {@code factory} is null, then its open the {@link UnderConstrutionWindow}.
+     * Create a new {@link SwingWorker} associated with the given {@code factory} and run it. If the
+     * {@code factory} is null, then its open the {@link UnderConstrutionWindow}.
      * 
      * @param factory
      *            - The {@link SwingWorker} factory.
      */
-    private void action( SwingWorkerFactory< ?, ? > factory ) {
+    private void runSingWorker( SwingWorkerFactory< ?, ? > factory ) {
     
         try {
-            factory.newInstance().run();
+            Utils.runNewSwingWorker(factory, "FunctionalFooterPanel");
         }
-        catch( NullPointerException e ) {
+        catch( SwingWorkerFactoryMissingException e) {
             new UnderConstrutionWindow();
         }
     }
@@ -195,74 +297,5 @@ public class FunctionalFooterPanel {
         return footerPanel;
     }
     
-    // Set factories
-    /**
-     * Set the {@code NearestAirshipsFactory}.
-     * 
-     * @param getNearestAirshipsFactory
-     *            - The getNearestAirshipsFactory to set
-     */
-    public void setGetNearestAirshipsFactory( SwingWorkerFactory< ?, ? > getNearestAirshipsFactory ) {
     
-        this.getNearestAirshipsFactory = getNearestAirshipsFactory;
-    }
-    
-    /**
-     * Set the {@code TransgressingAirshipsFactory}.
-     * 
-     * @param getTransgressingAirshipsFactory
-     *            - The getTransgressingAirshipsFactory to set
-     */
-    public
-            void
-            setGetTransgressingAirshipsFactory( SwingWorkerFactory< ?, ? > getTransgressingAirshipsFactory ) {
-    
-        this.getTransgressingAirshipsFactory = getTransgressingAirshipsFactory;
-    }
-    
-    /**
-     * Set the {@code AirshipsWithLessPassengerThanFactory}.
-     * 
-     * @param getAirshipsWithLessPassengerThanFactory
-     *            - The getAirshipsWithLessPassengerThanFactory to set
-     */
-    public
-            void
-            setGetAirshipsWithLessPassengerThanFactory( SwingWorkerFactory< ?, ? > getAirshipsWithLessPassengerThanFactory ) {
-    
-        this.getAirshipsWithLessPassengerThanFactory = getAirshipsWithLessPassengerThanFactory;
-    }
-    
-    /**
-     * Set the {@code postAirshipFactory}.
-     * 
-     * @param postAirshipFactory
-     *            - The postAirshipFactory to set
-     */
-    public void setPostAirshipFactory( SwingWorkerFactory< ?, ? > postAirshipFactory ) {
-    
-        this.postAirshipFactory = postAirshipFactory;
-    }
-    
-    /**
-     * Set the {@code patchAirshipFactory}.
-     * 
-     * @param patchAirshipFactory
-     *            - The patchAirshipFactory to set
-     */
-    public void setPatchAirshipFactory( SwingWorkerFactory< ?, ? > patchAirshipFactory ) {
-    
-        this.patchAirshipFactory = patchAirshipFactory;
-    }
-    
-    /**
-     * Set the {@code deleteAirshipFactory}.
-     * 
-     * @param deleteAirshipFactory
-     *            - The deleteAirshipFactory to set
-     */
-    public void setDeleteAirshipFactory( SwingWorkerFactory< ?, ? > deleteAirshipFactory ) {
-    
-        this.deleteAirshipFactory = deleteAirshipFactory;
-    }
 }

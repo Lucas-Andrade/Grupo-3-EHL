@@ -2,6 +2,7 @@ package functionalcomponents.functionalmainwindow;
 
 
 import javax.swing.JPanel;
+import app.Utils;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
@@ -26,28 +27,55 @@ import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
  */
 public class BodyPanelFunctionalizer {
     
+    
     // Static fields
     /**
      * The {@link JBodyPanelForMainWindow} we want to add functionality to.
      */
     private final JBodyPanelForMainWindow basePanel;
     
-    
     /**
-     * The factory responsible for producing {@link SwingWorker}s that return the set of airships to
-     * appear in this window's body panel.
+     * A lock for the {@link #swFactory}.
      */
-    
+    private static Object factoryLock = new Object();
+
     /**
      * The {@link SwingWorkerFactory} that produces {@link FunctionalLoginWindow.SwingWorker}s for
      * the {@link FunctionalLoginWindow}s.
      */
     private static SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > swFactory;
+
+
+    
+    // STATIC METHOD
+    /**
+     * Sets the {@link SwingWorkerFactory} that produces {@link BodyPanelFunctionalizer.SwingWorker}
+     * for the {@link BodyPanelFunctionalizer}.
+     * 
+     * @param factory
+     *            The {@link SwingWorkerFactory} that produces
+     *            {@link BodyPanelFunctionalizer.SwingWorker}s for the
+     *            {@link BodyPanelFunctionalizer}.
+     * @return {@code true} if {@code factory} was set as the factory that produces
+     *         {@code SwingWorker}s for the {@link BodyPanelFunctionalizer}; <br/>
+     *         {@code false} if there was a factory already set.
+     */
+    public static
+            boolean
+            setSwingWorkerFactory( SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > factory ) {
+    
+       return Utils.setSWFactory( BodyPanelFunctionalizer.class, "swFactory", swFactory, factoryLock );
+    }
     
     /**
-     * A lock for the {@link #swFactory}.
+     * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
      */
-    private static Object factoryLock = new Object();
+    public static void getNewSwingWorker() throws SwingWorkerFactoryMissingException {
+    
+        Utils.runNewSwingWorker( swFactory, "BodyPanelFunctionalizer" );
+    }
+
+
     
     // Instance Fields
     /**
@@ -61,6 +89,9 @@ public class BodyPanelFunctionalizer {
      */
     private JPanel worldMapWithAirships;
     
+    
+    
+    
     // Constructor
     /**
      * Create a new {@code BodyPanel} with a list of {@link SimpleAirship}s in the {@code "System"}.
@@ -72,6 +103,7 @@ public class BodyPanelFunctionalizer {
         basePanel = bodyPanel;
         createWorldMapAndScrollPanel();
     }
+    
     
     
     // Public methods
@@ -101,45 +133,7 @@ public class BodyPanelFunctionalizer {
         paint();
     }
 
-    // STATIC METHOD
-    /**
-     * Sets the {@link SwingWorkerFactory} that produces {@link BodyPanelFunctionalizer.SwingWorker}
-     * for the {@link BodyPanelFunctionalizer}.
-     * 
-     * @param factory
-     *            The {@link SwingWorkerFactory} that produces
-     *            {@link BodyPanelFunctionalizer.SwingWorker}s for the
-     *            {@link BodyPanelFunctionalizer}.
-     * @return {@code true} if {@code factory} was set as the factory that produces
-     *         {@code SwingWorker}s for the {@link BodyPanelFunctionalizer}; <br/>
-     *         {@code false} if there was a factory already set.
-     */
-    public static
-            boolean
-            setSwingWorkerFactory( SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > factory ) {
     
-        if( factory != null )
-            synchronized (factoryLock) {
-                if( swFactory == null ) {
-                    swFactory = factory;
-                    return true;
-                }
-            }
-        return false;
-       
-    }
-    
-    
-    // Protected method
-    /**
-     * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
-     */
-    protected SwingWorker getNewSwingWorker() throws SwingWorkerFactoryMissingException {
-    
-        if( swFactory == null )
-            throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
-        return swFactory.newInstance();
-    }
     
     // Private methods
     /**
@@ -153,7 +147,7 @@ public class BodyPanelFunctionalizer {
     private void createWorldMapAndScrollPanel() {
     
         try {
-            getNewSwingWorker().run();
+            getNewSwingWorker();
         }
         catch( SwingWorkerFactoryMissingException e ) {
             
@@ -202,10 +196,9 @@ public class BodyPanelFunctionalizer {
         basePanel.repaint();
     }
     
+
     
     // Inner SwingWorker Class
-    
-    
     /**
      * Abstract class that extends {@link ExceptionHandlerSW}s and implements the
      * {@link SwingWorker#finalizeDone(Iterable) finalizeDone(Iterable)}, the {@code BodyPanel} is

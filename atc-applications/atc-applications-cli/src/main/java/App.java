@@ -69,6 +69,9 @@ import exceptions.InvalidArgumentException;
  * <li>GET /users/{username} <br>
  * Gets a user with a certain username.
  * 
+ * <li>GET /users/authenticate <br>
+ * Authenticates the user that is trying to log in.
+ * 
  * <li>OPTION / <br>
  * Returns the descriptions of known commands.
  * 
@@ -193,8 +196,8 @@ public class App {
                                                                                          airshipsDatabase ) );
             // GET /users
             
-//            commandRegist( "GET", "/users/authenticate",
-//                           new AuthenticateCommandFactory( usersDatabase, usersDatabase ) );
+            commandRegist( "GET", "/users/authenticate",
+                           new AuthenticateCommandFactory( usersDatabase, usersDatabase ) );
             
             commandRegist( "GET", "/users",
                            new GetAllUsersInADatabaseCommandsFactory( usersDatabase ) );

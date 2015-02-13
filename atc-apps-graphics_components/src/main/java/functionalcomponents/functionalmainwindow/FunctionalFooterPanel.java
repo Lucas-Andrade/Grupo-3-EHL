@@ -2,18 +2,15 @@ package functionalcomponents.functionalmainwindow;
 
 
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JTextArea;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.FunctionalGetWindowSwingWorker;
+import swingworkers.SwingWorkerFactory;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
-import design.windows.airshipwindows.GetAirshipsWithLessPassengerThanWindow;
-import design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
-import design.windows.airshipwindows.PostAirshipsWindow;
+import design.windows.MainWindow;
 import design.windows.popupwindows.UnderConstrutionWindow;
-import entities.SimpleUser;
 import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
@@ -31,6 +28,13 @@ public class FunctionalFooterPanel {
     
     // Fields
     
+    private SwingWorkerFactory< ?, ? > getNearestAirshipsFactory;
+    private SwingWorkerFactory< ?, ? > getTransgressingAirshipsFactory;
+    private SwingWorkerFactory< ?, ? > getAirshipsWithLessPassengerThanFactory;
+    private SwingWorkerFactory< ?, ? > patchAirshipFactory;
+    private SwingWorkerFactory< ?, ? > postAirshipFactory;
+    private SwingWorkerFactory< ?, ? > deleteAirshipFactory;
+    
     /**
      * {@code footerPanel} - The {@link MainWindow} footer panel to which we will had functionality.
      */
@@ -38,19 +42,9 @@ public class FunctionalFooterPanel {
     
     /**
      * {@code bodyPanel} - The {@link MainWindow} body panel that will be updated as part of the
-     * actions performed by any of the buttons bellonging to the {@link #footerPanel}.
+     * actions performed by any of the buttons belonging to the {@link #footerPanel}.
      */
     private JBodyPanelForMainWindow bodyPanel;
-    
-    /**
-     * {@code user} - The user who is currently logged in.
-     */
-    private SimpleUser user;
-    
-    /**
-     * {@code errorTextArea} - The text area where the error messages will be displayed.
-     */
-    private JTextArea errorTextArea;
     
     // Constructor
     
@@ -62,7 +56,7 @@ public class FunctionalFooterPanel {
      *            - The footer panel to which we will had functionality.
      * @param bodyPanel
      *            - The body panel that will be updated as part of the actions performed by any of
-     *            the buttons bellonging to the {@link #footerPanel}. This panel as to be from the
+     *            the buttons belonging to the {@link #footerPanel}. This panel as to be from the
      *            same {@code MainWindow} as the given {@code footerPanel}.
      * @param airshipsDatabase
      *            - The airships database.
@@ -72,14 +66,11 @@ public class FunctionalFooterPanel {
      *            - The text area where the error messages will be displayed.
      */
     public FunctionalFooterPanel( JFooterPanelForMainWindow footerPanel,
-                                  JBodyPanelForMainWindow bodyPanel, SimpleUser user,
+                                  JBodyPanelForMainWindow bodyPanel,
                                   JTextArea errorTextArea ) {
-        
+    
         this.footerPanel = footerPanel;
         this.bodyPanel = bodyPanel;
-        
-        this.user = user;
-        this.errorTextArea = errorTextArea;
         
         addGetAllAirshipsButtonAction();
         addGetNearestAirshipsButtonAction();
@@ -90,7 +81,7 @@ public class FunctionalFooterPanel {
         addDeleteAirshipButtonAction();
     }
     
-    // Private Auxiliar Methods
+    // Private Methods
     
     /**
      * Method that will add functionality to the {@link JFooterPanelForMainWindow#showAllAirships
@@ -101,30 +92,12 @@ public class FunctionalFooterPanel {
      * the information regarding the obtained airships.
      * 
      * This is done due to the {@code Override} of the
-     * {@link ExceptionHandlerSW#finalizeDone(Iterable) functionalDone(Iterable)} method
-     * existing in the {@link FunctionalGetWindowSwingWorker} class.
+     * {@link ExceptionHandlerSW#finalizeDone(Iterable) functionalDone(Iterable)} method existing in
+     * the {@link FunctionalGetWindowSwingWorker} class.
      */
     private void addGetAllAirshipsButtonAction() {
-        
-        footerPanel.getShowAllAirships().addActionListener( new ActionListener() {
-            
-            @Override
-            public void actionPerformed( ActionEvent e ) {
-                
-                bodyPanel.updateBodyPanel();
-                
-//                new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorTextArea ) {
-//                    
-//                    @Override
-//                    protected Iterable< Airship > doInBackground() throws Exception {
-//                        
-//                        return new GetAllElementsInADatabaseCommand< Airship >( airshipsDatabase ).call()
-//                                                                                                  .get();
-//                    }
-//                    
-//                }.run();
-            }
-        } );
+    
+        footerPanel.getShowAllAirships().addActionListener( action -> bodyPanel.updateBodyPanel() );
     }
     
     /**
@@ -138,12 +111,9 @@ public class FunctionalFooterPanel {
      * obtained airships.
      */
     private void addGetNearestAirshipsButtonAction() {
-        
+    
         footerPanel.getNearestAirships()
-                   .addActionListener( action -> new FunctionalGetGeographicalCoordinatesParametersWindow(
-                                                                                                           new GetGeographicalCoordinatesParametersWindow(),
-                                                                                                           airshipsDatabase,
-                                                                                                           bodyPanel ) );
+                   .addActionListener( action -> action( getNearestAirshipsFactory ));
     }
     
     /**
@@ -156,28 +126,15 @@ public class FunctionalFooterPanel {
      * airships.
      * 
      * This is done due to the {@code Override} of the
-     * {@link ExceptionHandlerSW#finalizeDone(Iterable) functionalDone(Iterable)} method
-     * existing in the {@link FunctionalGetWindowSwingWorker} class.
+     * {@link ExceptionHandlerSW#finalizeDone(Iterable) functionalDone(Iterable)} method existing in
+     * the {@link FunctionalGetWindowSwingWorker} class.
      */
     private void addGetTransgressingAirshipsButtonAction() {
-        
-        footerPanel.getTransgressingAirships().addActionListener( new ActionListener() {
-            
-            @Override
-            public void actionPerformed( ActionEvent e ) {
-                
-                new FunctionalGetWindowSwingWorker( airshipsDatabase, bodyPanel, errorTextArea ) {
-                    
-                    @Override
-                    protected Iterable< Airship > doInBackground() throws Exception {
-                        
-                        return new GetAllTransgressingAirshipsCommand( airshipsDatabase ).call()
-                                                                                         .get();
-                    }
-                }.run();
-            }
-        } );
+    
+        footerPanel.getTransgressingAirships()
+                   .addActionListener( action -> action( getTransgressingAirshipsFactory ) );
     }
+    
     
     /**
      * Method that will add functionality to the
@@ -191,21 +148,22 @@ public class FunctionalFooterPanel {
      * obtained airships.
      */
     private void addGetAirshipsWithLessPassengerThanButtonAction() {
-        
+    
         footerPanel.getAirshipsWithLessPassengerThan()
-                   .addActionListener( action -> new FunctionalGetAirshipsWithLessPassengerThanWindow(
-                                                                                                       new GetAirshipsWithLessPassengerThanWindow(),
-                                                                                                       airshipsDatabase,
-                                                                                                       bodyPanel ) );
+                   .addActionListener( action -> action( getAirshipsWithLessPassengerThanFactory ) );
     }
     
     /**
      * PATCH -> Not Implemented!
      */
     private void addPatchAirshipButtonAction() {
-        
-        footerPanel.getPatchAirship().addActionListener( action -> new UnderConstrutionWindow() );
+    
+        footerPanel.getPatchAirship().addActionListener( action -> {
+            action( patchAirshipFactory );
+        } );
     }
+    
+    
     
     /**
      * Method that will add functionality to the {@link JFooterPanelForMainWindow#postAirship
@@ -215,20 +173,30 @@ public class FunctionalFooterPanel {
      * objective of posting new {@link Airship} in the given database.
      */
     private void addPostAirshipButtonAction() {
-        
-        footerPanel.getPostAirship()
-                   .addActionListener( action -> new FunctionalPostAirshipWindow(
-                                                                                  new PostAirshipsWindow(),
-                                                                                  airshipsDatabase,
-                                                                                  user ) );
+    
+        footerPanel.getPostAirship().addActionListener( action -> action( postAirshipFactory ) );
     }
     
     /**
      * DELETE AIRSHIP -> Not Implemented!
      */
     private void addDeleteAirshipButtonAction() {
-        
-        footerPanel.getDeleteAirship().addActionListener( action -> new UnderConstrutionWindow() );
+    
+        footerPanel.getDeleteAirship().addActionListener( action -> action(deleteAirshipFactory) );
+    }
+    
+    /**
+     * 
+     * @param factory
+     */
+    private void action( SwingWorkerFactory< ?, ? > factory ) {
+    
+        try {
+            factory.newInstance().run();
+        }
+        catch( NullPointerException e ) {
+            new UnderConstrutionWindow();
+        }
     }
     
     // Public Get Method
@@ -237,7 +205,71 @@ public class FunctionalFooterPanel {
      * @return {@code footerPanel}.
      */
     public JFooterPanelForMainWindow getFooterPanel() {
-        
+    
         return footerPanel;
+    }
+    
+    
+    /**
+     * @param getNearestAirshipsFactory
+     *            the getNearestAirshipsFactory to set
+     */
+    public void setGetNearestAirshipsFactory( SwingWorkerFactory< ?, ? > getNearestAirshipsFactory ) {
+    
+        this.getNearestAirshipsFactory = getNearestAirshipsFactory;
+    }
+    
+    
+    /**
+     * @param getTransgressingAirshipsFactory
+     *            the getTransgressingAirshipsFactory to set
+     */
+    public
+            void
+            setGetTransgressingAirshipsFactory( SwingWorkerFactory< ?, ? > getTransgressingAirshipsFactory ) {
+    
+        this.getTransgressingAirshipsFactory = getTransgressingAirshipsFactory;
+    }
+    
+    
+    /**
+     * @param getAirshipsWithLessPassengerThanFactory
+     *            the getAirshipsWithLessPassengerThanFactory to set
+     */
+    public
+            void
+            setGetAirshipsWithLessPassengerThanFactory( SwingWorkerFactory< ?, ? > getAirshipsWithLessPassengerThanFactory ) {
+    
+        this.getAirshipsWithLessPassengerThanFactory = getAirshipsWithLessPassengerThanFactory;
+    }
+    
+    
+    /**
+     * @param patchAirshipFactory
+     *            the patchAirshipFactory to set
+     */
+    public void setPatchAirshipFactory( SwingWorkerFactory< ?, ? > patchAirshipFactory ) {
+    
+        this.patchAirshipFactory = patchAirshipFactory;
+    }
+    
+    
+    /**
+     * @param postAirshipFactory
+     *            the postAirshipFactory to set
+     */
+    public void setPostAirshipFactory( SwingWorkerFactory< ?, ? > postAirshipFactory ) {
+    
+        this.postAirshipFactory = postAirshipFactory;
+    }
+    
+    
+    /**
+     * @param deleteAirshipFactory
+     *            the deleteAirshipFactory to set
+     */
+    public void setDeleteAirshipFactory( SwingWorkerFactory< ?, ? > deleteAirshipFactory ) {
+    
+        this.deleteAirshipFactory = deleteAirshipFactory;
     }
 }

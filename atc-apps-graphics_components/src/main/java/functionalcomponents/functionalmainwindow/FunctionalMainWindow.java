@@ -208,8 +208,7 @@ public class FunctionalMainWindow {
     private void functionalFooterPanel() {
     
         windowBase.setFooterPanel( (new FunctionalFooterPanel( windowBase.getFooterPanel(),
-                                                               windowBase.getBodyPanel(), user,
-                                                               windowBase.getErrorJTextArea() )).getFooterPanel() );
+                                                               windowBase.getBodyPanel() )).getFooterPanel() );
     }
     
     // used in the constructor

@@ -16,13 +16,13 @@ import entities.SimpleAirship;
 import exceptions.InternalErrorException;
 import functionalcomponents.infobuttons.SimpleAirshipInfoButton;
 
-    /**
-     * 
-     * Class who's instances represents a panel that contains a {@link JPanelImage} with a world map 
-     * and {@link JLabel} images.
-     *
-     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
-     */
+
+/**
+ * Class who's instances represents a panel that contains a {@link JPanelImage} with a world map and
+ * {@link JLabel} images.
+ *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
 @SuppressWarnings( "serial" )
 public class JWorldMapWithAirships extends ScrollPanelForEntities< SimpleAirship > {
     
@@ -80,18 +80,17 @@ public class JWorldMapWithAirships extends ScrollPanelForEntities< SimpleAirship
     // //////////////////
     
     /**
-     * 
      * Public method responsible to add a {@link JLabel} image into {@link JPanelImage} with world
-     * map, in the correct place, giving latitude and longitude {@link Airship}.
+     * map, in the correct place, giving latitude and longitude {@link SimpleAirship}.
      * 
      * @param airshipsFound
-     *            - {@link Iterable} variable with only the elements that satisfy the request.
+     *            - list of {@link SimpleAirship}s which the {@code WorldMap} will be created.
+     * 
      * 
      * @return a Panel that contains a world map and {@link JLabel} image for each {@link Airship}.
      */
-    
     public JPanel createAJPanelWithWorldMapAndAirships( Iterable< SimpleAirship > airshipsFound ) {
-        
+    
         JPanelImage.CreateImage worldMap = new JPanelImage.CreateImage( "/images/planisphere.png" );
         worldMap.setLayout( null );
         
@@ -100,12 +99,8 @@ public class JWorldMapWithAirships extends ScrollPanelForEntities< SimpleAirship
         try {
             for( SimpleAirship airship : airshipsFound ) {
                 
-                Double latitude =
-                        ORIGINPOSITIONLATITUDE - IMAGESCALEFACTOR
-                                * (airship.latitude);
-                Double longitude =
-                        IMAGESCALEFACTOR * (airship.longitude)
-                                - ORIGINPOSITIONLONGITUDE;
+                Double latitude = ORIGINPOSITIONLATITUDE - IMAGESCALEFACTOR * (airship.latitude);
+                Double longitude = IMAGESCALEFACTOR * (airship.longitude) - ORIGINPOSITIONLONGITUDE;
                 
                 JLabel labelAirship;
                 
@@ -130,7 +125,12 @@ public class JWorldMapWithAirships extends ScrollPanelForEntities< SimpleAirship
         
         return this;
     }
-
+    
+    /**
+     * Create a new {@link SimpleAirshipInfoButton}.
+     * 
+     * @see ScrollPanelForEntities#newButton(String, JTextArea)
+     */
     @Override
     protected JButton newButton( String identification, JTextArea textArea ) {
     

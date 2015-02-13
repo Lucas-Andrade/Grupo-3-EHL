@@ -3,8 +3,13 @@ package functionalcomponents.functionalmainwindow;
 
 
 import java.awt.event.ActionListener;
+import javax.swing.SwingWorker;
+import org.eclipse.jetty.server.Authentication.User;
+import swingworkers.SwingWorkerFactory;
 import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
-import entities.SimpleUser;
+import design.windows.MainWindow;
+import design.windows.popupwindows.UnderConstrutionWindow;
+import design.windows.userwindows.GetUsersWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
@@ -19,6 +24,12 @@ import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
  */
 public class FunctionalHeaderPanel {
     
+    // Factories
+    private SwingWorkerFactory< ?, ? > addUserFactory;
+    private SwingWorkerFactory< ?, ? > changePasswordFactory;
+    private SwingWorkerFactory< ?, ? > infoAllUsersFactory;
+    private SwingWorkerFactory< ?, ? > removeUserFactory;
+    
     // Field
     
     /**
@@ -26,14 +37,7 @@ public class FunctionalHeaderPanel {
      */
     private JHeaderPanelForMainWindow headerPanel;
     
-    
-    /**
-     * {@code user} - The user who is currently logged in.
-     */
-    private SimpleUser user;
-    
     // Constructor
-    
     /**
      * Public constructor that will add functionality to a given non functional
      * {@link JHeaderPanelForMainWindow}.
@@ -45,11 +49,10 @@ public class FunctionalHeaderPanel {
      * @param user
      *            - The user who is currently logged in.
      */
-    public FunctionalHeaderPanel( JHeaderPanelForMainWindow headerPanel, SimpleUser user ) {
-        
+    public FunctionalHeaderPanel( JHeaderPanelForMainWindow headerPanel ) {
+    
         this.headerPanel = headerPanel;
-        this.user = user;
-        headerPanel.getUserPanel().setUsernameLabel( "CHUCK NORRIS THE: "+user.getIdentification() );
+        
         addAddUserButtonAction();
         addChangePasswordButtonAction();
         addInfoAllUsersButtonAction();
@@ -66,12 +69,9 @@ public class FunctionalHeaderPanel {
      * of posting new {@link User} in the given database.
      */
     private void addAddUserButtonAction() {
-        
-        headerPanel.getUserPanel()
-                   .getAddUserButton()
-                   .addActionListener( action -> new FunctionalPostUserWindow(
-                                                                               new PostUserWindow(),
-                                                                               usersDatabase, user ) );
+    
+        headerPanel.getUserPanel().getAddUserButton()
+                   .addActionListener( action -> action( addUserFactory ) );
     }
     
     /**
@@ -82,21 +82,18 @@ public class FunctionalHeaderPanel {
      * of patching a {@link User} existing in the given database.
      */
     private void addChangePasswordButtonAction() {
-        
-        headerPanel.getUserPanel()
-                   .getChangePasswordButton()
-                   .addActionListener( action -> new FunctionalPatchUserWindow(
-                                                                                new PatchUserWindow(),
-                                                                                usersDatabase ) );
+    
+        headerPanel.getUserPanel().getChangePasswordButton()
+                   .addActionListener( action -> action( changePasswordFactory ) );
     }
     
     /**
      * DELETE USER - Not Implemented!
      */
     private void addRemoveUserButtonAction() {
-        
+    
         headerPanel.getUserPanel().getRemoveUserButton()
-                   .addActionListener( action -> new UnderConstrutionWindow() );
+                   .addActionListener( action -> action( removeUserFactory ) );
     }
     
     /**
@@ -107,21 +104,26 @@ public class FunctionalHeaderPanel {
      * the {@link User users} existing in the given database.
      */
     private void addInfoAllUsersButtonAction() {
-        
-        headerPanel.getUserPanel()
-                   .getInfoAllUsersButton()
-                   .addActionListener( action -> {
-                                           try {
-                                               new GetUsersWindow(
-                                                                   usersDatabase,
-                                                                   new GetAllElementsInADatabaseCommand< User >(
-                                                                                                                 usersDatabase ).call()
-                                                                                                                                .get() );
-                                           }
-                                           catch( Exception e ) {
-                                               throw new InternalErrorException( e );
-                                           }
-                                       } );
+    
+        headerPanel.getUserPanel().getInfoAllUsersButton()
+                   .addActionListener( action -> action( infoAllUsersFactory ) );
+    }
+    
+    /**
+     * Create a new {@link SwingWorker} associated with the given {@code factory} and run it. If the
+     * {@code factory} is null, then its open the {@link UnderConstrutionWindow}.
+     * 
+     * @param factory
+     *            - The {@link SwingWorker} factory.
+     */
+    private void action( SwingWorkerFactory< ?, ? > factory ) {
+    
+        try {
+            factory.newInstance().run();
+        }
+        catch( NullPointerException e ) {
+            new UnderConstrutionWindow();
+        }
     }
     
     // Public Get Method
@@ -130,7 +132,43 @@ public class FunctionalHeaderPanel {
      * @return the {@code headerPanel}.
      */
     public JHeaderPanelForMainWindow getHeaderPanel() {
-        
+    
         return headerPanel;
+    }
+    
+    /**
+     * @param addUserFactory
+     *            the addUserFactory to set
+     */
+    public void setAddUserFactory( SwingWorkerFactory< ?, ? > addUserFactory ) {
+    
+        this.addUserFactory = addUserFactory;
+    }
+    
+    /**
+     * @param changePasswordFactory
+     *            the changePasswordFactory to set
+     */
+    public void setChangePasswordFactory( SwingWorkerFactory< ?, ? > changePasswordFactory ) {
+    
+        this.changePasswordFactory = changePasswordFactory;
+    }
+    
+    /**
+     * @param infoAllUsersFactory
+     *            the infoAllUsersFactory to set
+     */
+    public void setInfoAllUsersFactory( SwingWorkerFactory< ?, ? > infoAllUsersFactory ) {
+    
+        this.infoAllUsersFactory = infoAllUsersFactory;
+    }
+    
+    /**
+     * @param removeUserFactory
+     *            the removeUserFactory to set
+     */
+    public void setRemoveUserFactory( SwingWorkerFactory< ?, ? > removeUserFactory ) {
+    
+        this.removeUserFactory = removeUserFactory;
     }
 }

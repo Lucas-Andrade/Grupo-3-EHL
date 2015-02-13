@@ -2,6 +2,7 @@ package functionalcomponents.functionalmainwindow;
 
 
 import javax.swing.JPanel;
+import javax.swing.SwingWorker;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
@@ -31,6 +32,12 @@ public class BodyPanelFunctionalizer {
      * The {@link JBodyPanelForMainWindow} we want to add functionality to.
      */
     private final JBodyPanelForMainWindow basePanel;
+    
+    
+    /**
+     * The factory responsible for producing {@link SwingWorker}s that return the set of airships to
+     * appear in this window's body panel.
+     */
     
     /**
      * The {@link SwingWorkerFactory} that produces {@link FunctionalLoginWindow.SwingWorker}s for
@@ -94,9 +101,7 @@ public class BodyPanelFunctionalizer {
         createWorldMapAndScrollPanel( airshipsFound );
         paint();
     }
-    
-    
-    
+
     // STATIC METHOD
     /**
      * Sets the {@link SwingWorkerFactory} that produces {@link BodyPanelFunctionalizer.SwingWorker}
@@ -114,13 +119,15 @@ public class BodyPanelFunctionalizer {
             boolean
             setSwingWorkerFactory( SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > factory ) {
     
-        synchronized (factoryLock) {
-            if( swFactory == null && factory != null ) {
-                swFactory = factory;
-                return true;
+        if( factory != null )
+            synchronized (factoryLock) {
+                if( swFactory == null ) {
+                    swFactory = factory;
+                    return true;
+                }
             }
-            return false;
-        }
+        return false;
+       
     }
     
     

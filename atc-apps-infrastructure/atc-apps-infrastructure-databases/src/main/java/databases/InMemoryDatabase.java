@@ -1,7 +1,6 @@
 package databases;
 
 
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,7 +33,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
     /**
      * This database's name
      */
-    private String databaseName;
+    private final String databaseName;
     
     /**
      * The {@link Map} container of {@link #Element}s. Stores {@link Element}s as values and the

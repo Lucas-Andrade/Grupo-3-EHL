@@ -151,6 +151,7 @@ public class AirTrafficControlServer {
      */
     public static void main( String[] args ) {
     
+        System.out.println("Server starting");
         registerCommands();
         
         Server server = new Server( LISTEN_PORT );

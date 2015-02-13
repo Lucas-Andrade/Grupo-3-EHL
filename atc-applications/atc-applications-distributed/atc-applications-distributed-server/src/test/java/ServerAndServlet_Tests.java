@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -35,7 +33,10 @@ public class ServerAndServlet_Tests {
     public void testGetUsers() throws MalformedURLException, IOException {
     
         String url = "http://localhost:8081/users";
-        HttpURLConnection connection = (HttpURLConnection)new URL( url ).openConnection();
+        
+        HttpURLConnection connection = (HttpURLConnection) new URL( url ).openConnection();
+        
+        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
         
 //        BufferedReader in =
 //                new BufferedReader( new InputStreamReader( connection.getInputStream() ) );
@@ -47,8 +48,6 @@ public class ServerAndServlet_Tests {
 //            html += inputLine;
 //        }
 //        in.close();
-        
-        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
     }
     
     @AfterClass

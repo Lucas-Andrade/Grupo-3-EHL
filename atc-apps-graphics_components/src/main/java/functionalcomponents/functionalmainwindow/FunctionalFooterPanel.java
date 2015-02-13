@@ -5,7 +5,6 @@ package functionalcomponents.functionalmainwindow;
 import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
 import swingworkers.SwingWorkerFactory;
-import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
 import design.windows.MainWindow;
 import design.windows.popupwindows.UnderConstrutionWindow;
@@ -39,7 +38,7 @@ public class FunctionalFooterPanel {
      * The {@link MainWindow} {@code functional body panel} that will be updated as part of the
      * actions performed by any of the buttons belonging to the {@link #footerPanel}.
      */
-    private JBodyPanelForMainWindow bodyPanel;
+    private BodyPanelFunctionalizer bodyPanel;
     
     // Constructor
     /**
@@ -54,7 +53,7 @@ public class FunctionalFooterPanel {
      *            from the same {@code MainWindow} as the given {@code footerPanel}.
      */
     public FunctionalFooterPanel( JFooterPanelForMainWindow footerPanel,
-                                  JBodyPanelForMainWindow bodyPanel ) {
+                                  BodyPanelFunctionalizer bodyPanel ) {
     
         this.footerPanel = footerPanel;
         this.bodyPanel = bodyPanel;

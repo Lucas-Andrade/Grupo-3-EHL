@@ -5,6 +5,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import entities.SimpleAirship;
+import functionalcomponents.functionalmainwindow.BodyPanelFunctionalizer;
 
 
 /**
@@ -26,7 +27,7 @@ public abstract class FunctionalGetWindowSwingWorker extends
     /**
      * The {@link MainWindow} body panel that will be updated.
      */
-    private JBodyPanelForMainWindow bodyPanel;
+    private BodyPanelFunctionalizer bodyPanel;
     
     // Constructor
     /**
@@ -39,7 +40,7 @@ public abstract class FunctionalGetWindowSwingWorker extends
      *            - The error text area where the error messages from the thrown exceptions will be
      *            written.
      */
-    public FunctionalGetWindowSwingWorker( JBodyPanelForMainWindow bodyPanel,
+    public FunctionalGetWindowSwingWorker( BodyPanelFunctionalizer bodyPanel,
                                            JTextArea errorTextArea ) {
     
         super( errorTextArea );

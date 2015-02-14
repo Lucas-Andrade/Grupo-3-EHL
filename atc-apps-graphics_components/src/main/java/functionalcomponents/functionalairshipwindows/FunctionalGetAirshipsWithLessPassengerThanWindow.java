@@ -4,7 +4,7 @@ package functionalcomponents.functionalairshipwindows;
 
 import app.Utils;
 import swingworkers.ExceptionHandlerSW;
-import swingworkers.FunctionalGetWindowSwingWorker;
+import swingworkers.AirshipsGetterSW;
 import swingworkers.SwingWorkerFactory;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.windows.airshipwindows.GetAirshipsWithLessPassengerThanWindow;
@@ -95,7 +95,7 @@ public class FunctionalGetAirshipsWithLessPassengerThanWindow extends
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */    
-    public static abstract class SwingWorker extends FunctionalGetWindowSwingWorker {
+    public static abstract class SwingWorker extends AirshipsGetterSW {
         
      // INSTANCE FIELDS
       

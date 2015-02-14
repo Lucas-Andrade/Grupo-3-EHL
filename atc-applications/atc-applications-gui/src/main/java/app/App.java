@@ -1,6 +1,7 @@
 package app;
 
 
+import GSwingWorkers.GetAllAirshipsSwingWorker;
 import swingworkers.LoginWindowSwingWorker;
 import swingworkers.PatchUserSwingWorker;
 import swingworkers.PostUserSwingWorker;
@@ -98,12 +99,12 @@ public class App {
                 new PostUserSwingWorker.Factory( FunctionalPostUserWindow.baseWindow, usersDatabase );
         PatchUserSwingWorker.Factory patchUserSWFactory =
                 new PatchUserSwingWorker.Factory( FunctionalPatchUserWindow.baseWindow, usersDatabase );
+        GetAllAirshipsSwingWorker.Factory getAllAirshipsFactory = new GetAllAirshipsSwingWorker.Factory( airshipsDatabase, FunctionalPostUserWindow.baseWindow.getErrorJTextArea() ); 
         
         
         // Creating and running the app
         
-        new GUIapp( loginWindowSWFactory, postUserSWFactory, patchUserSWFactory ).run();
-        
+        new GUIapp( loginWindowSWFactory, postUserSWFactory, patchUserSWFactory, getAllAirshipsFactory ).run();
     }
     
     

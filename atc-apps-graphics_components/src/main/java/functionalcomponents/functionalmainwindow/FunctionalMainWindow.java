@@ -38,7 +38,7 @@ public class FunctionalMainWindow {
      * {@link JBodyPanelForMainWindow}.
      */
     public static final BodyPanelFunctionalizer bodyPanelFunctionalizer =
-            new BodyPanelFunctionalizer( windowBase.getBodyPanel() );
+            new BodyPanelFunctionalizer( windowBase.getErrorJTextArea() );
     
     
     

@@ -22,7 +22,7 @@ import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCo
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetAllTransgressingAirshipsWindowSwingWorker extends FunctionalGetWindowSwingWorker {
+public class GetAllTransgressingAirshipsWindowSwingWorker extends AirshipsGetterSW {
     
     // INSTANCE FIELD
     private static JTextArea errorJtextArea;
@@ -77,7 +77,7 @@ public class GetAllTransgressingAirshipsWindowSwingWorker extends FunctionalGetW
      */
     
     public static class Factory implements
-            SwingWorkerFactory< FunctionalGetWindowSwingWorker, Iterable< SimpleAirship > > {
+            SwingWorkerFactory< AirshipsGetterSW, Iterable< SimpleAirship > > {
         
         // INSTANCE FIELDS
         private Database< Airship > airshipDatabase;
@@ -97,7 +97,7 @@ public class GetAllTransgressingAirshipsWindowSwingWorker extends FunctionalGetW
          * @return Returns a {@link GetAllTransgressingAirshipsWindowSwingWorker}
          */
         @Override
-        public FunctionalGetWindowSwingWorker newInstance() {
+        public AirshipsGetterSW newInstance() {
         
             return new GetAllTransgressingAirshipsWindowSwingWorker( airshipDatabase );
             

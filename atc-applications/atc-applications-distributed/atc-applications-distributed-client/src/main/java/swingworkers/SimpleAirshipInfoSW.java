@@ -3,6 +3,7 @@ package swingworkers;
 
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
+import utils.ClientRequest;
 import com.google.gson.Gson;
 import entities.SimpleAirship;
 import exceptions.InvalidArgumentException;
@@ -59,10 +60,7 @@ public class SimpleAirshipInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
         ClientRequest request = new ClientRequest( "GET", "users/" + identification ) {
             
             @Override
-            public void createParameters() {
-            
-                
-            }
+            public void createParameters() {}
         };
         
         

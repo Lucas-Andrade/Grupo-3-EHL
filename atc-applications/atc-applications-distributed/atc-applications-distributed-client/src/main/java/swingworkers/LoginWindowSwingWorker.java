@@ -2,6 +2,7 @@ package swingworkers;
 
 
 import org.eclipse.jetty.server.Authentication.User;
+import utils.ClientRequest;
 import com.google.gson.Gson;
 import design.windows.userwindows.LogInWindow;
 import entities.SimpleUser;

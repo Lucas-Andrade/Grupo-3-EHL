@@ -1,4 +1,4 @@
-package swingworkers;
+package utils;
 
 
 import java.io.BufferedReader;
@@ -16,7 +16,7 @@ import utils.StringCommandsDictionary;
 /**
  * Abstract class to make a {@code connection} from the {@code Client App} and a {@code Server}.
  * Subclasses should implement the {@link ClientRequest#createParameters() createParameters()} with
- * the necessary {@code parameters}.
+ * the necessary {@code parameters} and it instances should be used to make a single request.
  * 
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes

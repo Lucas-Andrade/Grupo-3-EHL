@@ -5,14 +5,15 @@ import java.awt.EventQueue;
 import javax.swing.SwingWorker;
 import swingworkers.SwingWorkerFactory;
 import utils.CompletionStatus;
+import design.windows.MainWindow;
 import design.windows.popupwindows.FailWindow;
 import design.windows.popupwindows.UnderConstrutionWindow;
 import entities.SimpleUser;
 import exceptions.InternalErrorException;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
-import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
+import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
 
@@ -32,6 +33,7 @@ public class GUIapp {
      */
     private SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > loginSWFactory;
     private SwingWorkerFactory< functionalcomponents.functionaluserwindows.FunctionalPostUserWindow.SwingWorker, CompletionStatus > postUserSWFactory;
+    private SwingWorkerFactory< functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow.SwingWorker, CompletionStatus > patchUserSWFactory;
     
     
     
@@ -47,10 +49,12 @@ public class GUIapp {
      *            {@link FunctionalLoginWindow.SwingWorker}s.
      */
     public GUIapp( SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > loginSWFactory,
-                   SwingWorkerFactory< FunctionalPostUserWindow.SwingWorker, CompletionStatus > postUserSWFactory ) {
+                   SwingWorkerFactory< FunctionalPostUserWindow.SwingWorker, CompletionStatus > postUserSWFactory,
+                   SwingWorkerFactory< FunctionalPatchUserWindow.SwingWorker, CompletionStatus > patchUserSWFactory ) {
     
         this.loginSWFactory = loginSWFactory;
         this.postUserSWFactory = postUserSWFactory;
+        this.patchUserSWFactory = patchUserSWFactory;
         setSwingWorkerFactoriesInTheFunctionalWindows();
     }
     
@@ -84,7 +88,7 @@ public class GUIapp {
                     System.out.println( e.getMessage() ); // TODO: remove when finish development
                 }
                 catch( Exception e ) {
-                    FunctionalMainWindow.windowBase.getErrorJTextArea().setText( e.getMessage() );
+                    MainWindow.getInstance().getErrorJTextArea().setText( e.getMessage() );
                 }
             }
             
@@ -104,6 +108,7 @@ public class GUIapp {
     
         FunctionalLoginWindow.setSwingWorkerFactory( loginSWFactory );
         FunctionalPostUserWindow.setSwingWorkerFactory( postUserSWFactory );
+        FunctionalPatchUserWindow.setSwingWorkerFactory( patchUserSWFactory );
     }
     
     

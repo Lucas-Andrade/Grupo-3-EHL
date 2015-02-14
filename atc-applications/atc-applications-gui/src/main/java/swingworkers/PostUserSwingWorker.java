@@ -18,20 +18,13 @@ import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 public class PostUserSwingWorker extends FunctionalPostUserWindow.SwingWorker {
     
     
-    
-    // INSTANCE FIELD
     private Database< User > usersDatabase;
-    
-    
-    
-    // CONSTRUCTOR
+
     public PostUserSwingWorker( PostUserWindow window, Database< User > usersDatabase ) {
     
         super( window );
         this.usersDatabase = usersDatabase;
     }
-    
-    
     
     // IMPLEMENTATION OF METHODS INHERITED FROM FunctionalPostUserWindow.SwingWorker
     /**

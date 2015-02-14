@@ -18,21 +18,14 @@ import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
  */
 public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
     
-    
-    
-    // INSTANCE FIELD
+        
     private Database< User > usersDatabase;
     
-    
-    
-    // CONSTRUCTOR
     public LoginWindowSwingWorker( LogInWindow window, Database< User > usersDatabase ) {
     
         super( window );
         this.usersDatabase = usersDatabase;
     }
-    
-    
     
     // IMPLEMENTATION OF METHODS INHERITED FROM FunctionalLoginWindow.SwingWorker
     /**

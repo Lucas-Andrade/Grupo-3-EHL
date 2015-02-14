@@ -2,6 +2,7 @@ package app;
 
 
 import swingworkers.LoginWindowSwingWorker;
+import swingworkers.PatchUserSwingWorker;
 import swingworkers.PostUserSwingWorker;
 import databases.Database;
 import databases.InMemoryAirshipsDatabase;
@@ -11,6 +12,7 @@ import elements.User;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
+import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
 
@@ -94,11 +96,13 @@ public class App {
                 new LoginWindowSwingWorker.Factory( FunctionalLoginWindow.baseWindow, usersDatabase );
         PostUserSwingWorker.Factory postUserSWFactory =
                 new PostUserSwingWorker.Factory( FunctionalPostUserWindow.baseWindow, usersDatabase );
+        PatchUserSwingWorker.Factory patchUserSWFactory =
+                new PatchUserSwingWorker.Factory( FunctionalPatchUserWindow.baseWindow, usersDatabase );
         
         
         // Creating and running the app
         
-        new GUIapp( loginWindowSWFactory, postUserSWFactory ).run();
+        new GUIapp( loginWindowSWFactory, postUserSWFactory, patchUserSWFactory ).run();
         
     }
     

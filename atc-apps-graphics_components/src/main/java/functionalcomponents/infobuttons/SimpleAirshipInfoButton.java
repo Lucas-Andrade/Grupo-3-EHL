@@ -6,20 +6,21 @@ import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import swingworkers.SwingWorkerForButtonFactory;
-import entities.Entity;
 import entities.SimpleAirship;
+import exceptions.SwingWorkerFactoryMissingException;
 
 
 /**
  * Instance of this class are {@link JButton}s with a {@link ActionListener} to GET the info of a
  * {@link SimpleAirship} by its identification.
  * 
- * Each {@code Button} is associated to a {@link SimpleAirship} {@code identification}, and write its
- * info on a given {@link JTextArea}.
+ * Each {@code Button} is associated to a {@link SimpleAirship} {@code identification}, and write
+ * its info on a given {@link JTextArea}.
  * 
- * The {@code SimpleAirshipInfoButton} have a {@link SwingWorkerForButtonFactory} that have to be HAVE
- * be initialized one and only one time with the {@link SimpleAirshipInfoButton#setSwingWorkerFactory
- * setSwingWorkerFactory} static method.
+ * The {@code SimpleAirshipInfoButton} have a {@link SwingWorkerForButtonFactory} that has to be
+ * initialized in a static way with the
+ * {@link SimpleAirshipInfoButton#setSwingWorkerFactory(SwingWorkerForButtonFactory)
+ * setSwingWorkerFactory} method.
  * 
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -27,14 +28,44 @@ import entities.SimpleAirship;
 @SuppressWarnings( "serial" )
 public class SimpleAirshipInfoButton extends EntitiesInfoButton< SimpleAirship > {
     
+    
+    // Static fields
     /**
      * The {@link SwingWorker} factory, it HAVE be initialized one and only one time with the
      * {@link SimpleAirshipInfoButton#setSwingWorkerFactory setSwingWorkerFactory}.
      */
-    private static SwingWorkerForButtonFactory< SwingWorker< SimpleAirship, Void >, SimpleAirship > swFactory;
+    private static SwingWorkerForButtonFactory< SwingWorker< SimpleAirship, Void >, SimpleAirship > swingWorkerFactory;
     private static final Object lock = new Object();
-
-
+    
+    
+    
+    // Public static method
+    /**
+     * Sets the {@code SwingWorkerFactory} in a field of a class.
+     * 
+     * @param swFactory
+     *            - The {@link SwingWorkerForButtonFactory} to be set in {@code swingWorkerFactory}.
+     * @return {@code true} if {@code factoryToSetInTheField} was set; <br>
+     *         {@code false} if there was a factory already set in {@code staticField} or
+     *         {@code factoryToSetInTheField} is {@code null}.
+     */
+    public static
+            boolean
+            setSwingWorkerFactory( SwingWorkerForButtonFactory< SwingWorker< SimpleAirship, Void >, SimpleAirship > swFactory ) {
+    
+        if( swFactory != null )
+            synchronized (lock) {
+                if( swingWorkerFactory == null ) {
+                    swingWorkerFactory = swFactory;
+                    return true;
+                }
+            }
+        return false;
+    }
+    
+    
+    
+    // Constructor
     /**
      * Create a {@code SimpleUserInfoButton} associated to a {@link SimpleAirship}
      * {@code identification}, that will GET and write its info on a given {@code JTextArea}.
@@ -43,7 +74,7 @@ public class SimpleAirshipInfoButton extends EntitiesInfoButton< SimpleAirship >
      * 
      * 
      * @param identification
-     *            - The {@link Entity} identification.
+     *            - The {@link SimpleAirship} identification.
      * @param textArea
      *            - The {@link JTextArea} where to display the result.
      */
@@ -51,41 +82,26 @@ public class SimpleAirshipInfoButton extends EntitiesInfoButton< SimpleAirship >
     
         super( identification, textArea );
     }
-
-
-    // Public static method
-    /**
-     * Initialize the {@code SwingWorkerFactory}. This method HAVE be called one and only one time.
-     * 
-     * @param swFactory
-     *            - the SwingWorkerFactory
-     * @return TODO
-     */
-    public static
-            boolean
-            setSwingWorkerFactory( SwingWorkerForButtonFactory< SwingWorker< SimpleAirship, Void >, SimpleAirship > swFactory ) {
     
-        synchronized (lock) {
-            if( swFactory == null )
-                return false;
-            
-            SimpleAirshipInfoButton.swFactory = swFactory;
-            return true;
-        }
-    }
+    
     
     // Protected method
     /**
-     * Create a new {@link SwingWorker}.
+     * Creates and runs a {@link SwingWorker} created by the {@code swingWorkerFactory}.
      * 
-     * @see EntitiesInfoButton#newSwingWorker(String, JTextArea)
+     * @throws SwingWorkerFactoryMissingException
+     *             If {@code swingWorkerFactory} is {@code null}. This exception's message is
+     *             <i>«Missing SwingWorkerFactory in class {@code nameOfTheClass}.»</i>
+     * 
+     * @see EntitiesInfoButton#runNewSwingWorker(String, JTextArea)
      */
     @Override
-    protected SwingWorker< SimpleAirship, Void > newSwingWorker( String identification,
-                                                                 JTextArea textArea ) {
+    protected void runNewSwingWorker( String identification, JTextArea textArea )
+        throws SwingWorkerFactoryMissingException {
     
-//        if( swFactory == null )
-//            throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
-        return swFactory.newInstance( identification, textArea );
+        if( swingWorkerFactory == null )
+            throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
+        
+        swingWorkerFactory.newInstance( identification, textArea ).run();
     }
 }

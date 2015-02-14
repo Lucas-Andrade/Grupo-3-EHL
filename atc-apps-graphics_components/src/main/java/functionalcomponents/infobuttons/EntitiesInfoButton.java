@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
+import design.windows.popupwindows.UnderConstrutionWindow;
 import entities.Entity;
+import exceptions.SwingWorkerFactoryMissingException;
 
 
 /**
@@ -24,6 +26,8 @@ import entities.Entity;
 @SuppressWarnings( "serial" )
 public abstract class EntitiesInfoButton< E extends Entity > extends JButton {
     
+    
+    //Constructor
     /**
      * Create a {@link JButton} with an {@link ActionListener} that have the propose to create a new
      * {@link SwingWorker} and {@code run} it. {@code SwingWorker phases:}<br>
@@ -35,29 +39,38 @@ public abstract class EntitiesInfoButton< E extends Entity > extends JButton {
      * 
      * 
      * @param identification
-     *            - The entity identification.
+     *            - The {@link Entity} identification.
      * @param textArea
      *            - The {@link JTextArea} where to display the result.
      */
     public EntitiesInfoButton( String identification, JTextArea textArea ) {
     
-        addActionListener( action -> newSwingWorker( identification, textArea ).run() );
+        
+        addActionListener( action -> {
+            try {
+                runNewSwingWorker( identification, textArea );
+            }
+            catch( SwingWorkerFactoryMissingException e ) {
+                new UnderConstrutionWindow();
+            }
+            
+        } );
     }
+    
+    
     
     // Abstract method
     /**
-     * Create a new {@link SwingWorker}.
+     * Create and run a new {@link SwingWorker}.
      * 
      * @param identification
      *            - The {@link Entity} identification.
      * @param textArea
      *            - The {@link JTextArea} where to display the result.
-     * 
-     * @return A new {@link SwingWorker}.
      */
-    protected abstract SwingWorker< E, Void > newSwingWorker( String identification,
-                                                              JTextArea textArea );
-//        throws SwingWorkerFactoryMissingException;
+    protected abstract void runNewSwingWorker( String identification, JTextArea textArea )
+        throws SwingWorkerFactoryMissingException;
+
     
     
     // Inner class
@@ -76,6 +89,9 @@ public abstract class EntitiesInfoButton< E extends Entity > extends JButton {
          */
         private JTextArea textArea;
         
+        
+        
+        //Constructor
         /**
          * Create a new {@code SwingWorker}, given to it a {@code textArea}, to where the result of
          * the {@link SwingWorker#get() get()} method will be written.
@@ -89,6 +105,7 @@ public abstract class EntitiesInfoButton< E extends Entity > extends JButton {
         }
         
         
+        //Protected method
         /**
          * Implementation of the {@link SwingWorker#done() done()} method.
          * 

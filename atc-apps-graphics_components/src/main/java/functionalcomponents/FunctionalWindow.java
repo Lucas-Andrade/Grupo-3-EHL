@@ -102,7 +102,7 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
      * Since the functionality of this button will depend on the given window and will often be used
      * to execute actions that will take longer to process and that are not related to the window's
      * design, this method will make use of the {@link SwingWorker} class through the
-     * {@link #getNewSwingWorker()} method.
+     * {@link #runNewSwingWorker()} method.
      * 
      * <ul>
      * <li>Collects the respective window info;

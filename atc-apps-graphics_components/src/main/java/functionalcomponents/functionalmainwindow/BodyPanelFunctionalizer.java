@@ -67,10 +67,12 @@ public class BodyPanelFunctionalizer {
        return Utils.setSWFactory( BodyPanelFunctionalizer.class, "swFactory", swFactory, factoryLock );
     }
     
+
     /**
-     * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
+     * 
+     * @throws SwingWorkerFactoryMissingException
      */
-    public static void getNewSwingWorker() throws SwingWorkerFactoryMissingException {
+    public static void runNewSwingWorker() throws SwingWorkerFactoryMissingException {
     
         Utils.runNewSwingWorker( swFactory, "BodyPanelFunctionalizer" );
     }
@@ -147,7 +149,7 @@ public class BodyPanelFunctionalizer {
     private void createWorldMapAndScrollPanel() {
     
         try {
-            getNewSwingWorker();
+            runNewSwingWorker();
         }
         catch( SwingWorkerFactoryMissingException e ) {
             

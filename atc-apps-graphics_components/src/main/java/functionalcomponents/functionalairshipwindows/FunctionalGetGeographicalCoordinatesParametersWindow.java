@@ -54,7 +54,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow extends
     
     // PUBLIC METHOD
     /**
-     * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
+     * @see functionalcomponents.FunctionalWindow#runNewSwingWorker()
      */    
     @Override
     protected void runNewSwingWorker() throws SwingWorkerFactoryMissingException {

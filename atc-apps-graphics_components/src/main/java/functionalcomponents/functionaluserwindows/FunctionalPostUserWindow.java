@@ -80,7 +80,7 @@ public class FunctionalPostUserWindow extends
     
     // IMPLEMENTATION OF THE METHOD INHERITED FROM FunctionalWindow
     /**
-     * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
+     * @see functionalcomponents.FunctionalWindow#runNewSwingWorker()
      */
     @Override
     protected void runNewSwingWorker() throws SwingWorkerFactoryMissingException {

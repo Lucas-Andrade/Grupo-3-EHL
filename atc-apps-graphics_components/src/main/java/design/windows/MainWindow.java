@@ -32,7 +32,7 @@ import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
  *     |_______________________________________________________ |  
  *     |                                                        |  
  *     |                                                        |  
- *     |          {@link JBodyPanelForMainWindow}               |  
+ *     |          {@link JFooterPanelForMainWindow}             |  
  *     |________________________________________________________|      
  *     |                                                        |  
  *     |                {@link JTextArea}                       | 

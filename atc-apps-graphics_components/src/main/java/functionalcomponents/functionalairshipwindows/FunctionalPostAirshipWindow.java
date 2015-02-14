@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import app.Utils;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
+import swingworkers.AirshipsOperatorSW;
 import utils.CompletionStatus;
 import design.windows.airshipwindows.PostAirshipsWindow;
 import exceptions.SwingWorkerFactoryMissingException;
@@ -85,7 +86,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< FunctionalPos
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */    
-    public static abstract class SwingWorker extends ExceptionHandlerSW< CompletionStatus > {
+    public static abstract class SwingWorker extends AirshipsOperatorSW {
         
         // INSTANCE FIELD
         private PostAirshipsWindow window;
@@ -111,7 +112,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< FunctionalPos
      // CONSTRUCTOR
         public SwingWorker( PostAirshipsWindow window ) {
         
-            super( window.getErrorJTextArea() );
+            super( window, window.getErrorJTextArea() );
             this.window = window;
             
             if( (typeTypeAirshipTabbedPane = window.getTypeAirshipTabbedPane().getSelectedIndex() ) == 0 )                 

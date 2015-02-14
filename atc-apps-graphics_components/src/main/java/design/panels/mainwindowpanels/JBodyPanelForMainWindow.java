@@ -3,8 +3,10 @@ package design.panels.mainwindowpanels;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 import javax.swing.JPanel;
 import design.borders.TextRoundBorder;
+import entities.SimpleAirship;
 
 
 /**
@@ -51,6 +53,20 @@ public class JBodyPanelForMainWindow extends JPanel {
      * {@code ROUNDBORDERPOINTERSIZE} int value that represents pointer size value for round Border.
      */
     private static final int ROUNDBORDERPOINTERSIZE = 0;
+    
+    
+    
+    
+    /**
+     * {@code airshipsScrollPane} {@link JPanel} variable that represents a
+     * {@link JScrollPanelForElements#produceAJScrollPaneWithAllElements} panel.
+     */
+    private JPanel airshipsScrollPane;
+    /**
+     * {@code airshipsScrollPane} {@link JPanel} variable that represents a
+     * {@link JWorldMapWithAirships#createAJPanelWithWorldMapAndAirships} panel.
+     */
+    private JPanel worldMapWithAirships;
 
     // ////////////////////
     // // Constructors ////
@@ -66,6 +82,66 @@ public class JBodyPanelForMainWindow extends JPanel {
         setBackground( new Color( REDCOMPONENT, GREENCOMPONENT, BLUECOMPONENT ) );
         setBorder( new TextRoundBorder( Color.WHITE, ROUNDBORDERTHICKNESS, ROUNDBORDERRAD,
                                         ROUNDBORDERPOINTERSIZE ) );
+        
+        createWorldMapAndScrollPanel(new ArrayList< SimpleAirship >());
+    }
+    
+    
+    /**
+     * Update the {@link JBodyPanelForMainWindow} panel with the {@code airshipsFound}.
+     * 
+     * @param airshipsFound
+     *            - List of {@link SimpleAirship}s which the {@code WorldMap} and the
+     *            {@code ScrollPane} will be created.
+     * 
+     */
+    public void updateBodyPanel( Iterable< SimpleAirship > airshipsFound ) {
+    
+        remove();
+        createWorldMapAndScrollPanel( airshipsFound );
+        paint();
+    }
+
+    
+    /**
+     * Create the {@code worldMapWithAirships} and the {@code airshipsScrollPane}, with a new list
+     * of {@link SimpleAirship}.
+     * 
+     * @see JWorldMapWithAirships#createAJPanelWithWorldMapAndAirships(Iterable)
+     * @see JWorldMapWithAirships#produceAJScrollPaneWithAllEntities(Iterable)
+     * 
+     * @param airshipsFound
+     *            - List of {@link SimpleAirship}s which the {@code WorldMap} and the
+     *            {@code ScrollPane} will be created.
+     */
+    private void createWorldMapAndScrollPanel( Iterable< SimpleAirship > airshipsFound ) {
+    
+        worldMapWithAirships =
+                new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships( airshipsFound );
+        airshipsScrollPane =
+                new JWorldMapWithAirships().produceAJScrollPaneWithAllEntities( airshipsFound );
+        
+        add( worldMapWithAirships );
+        add( airshipsScrollPane );
+    }
+    
+    
+    /**
+     * Remove the {@code worldMapWithAirships} and the {@code airshipsScrollPane}.
+     */
+    private void remove() {
+    
+        remove( worldMapWithAirships );
+        remove( airshipsScrollPane );
+    }
+    
+    /**
+     * Paint the {@code worldMapWithAirships} and the {@code airshipsScrollPane}.
+     */
+    private void paint() {
+    
+        revalidate();
+        repaint();
     }
 }
 

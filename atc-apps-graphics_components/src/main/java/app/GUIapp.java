@@ -8,10 +8,12 @@ import utils.CompletionStatus;
 import design.windows.MainWindow;
 import design.windows.popupwindows.FailWindow;
 import design.windows.popupwindows.UnderConstrutionWindow;
+import entities.SimpleAirship;
 import entities.SimpleUser;
 import exceptions.InternalErrorException;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
+import functionalcomponents.functionalmainwindow.BodyPanelFunctionalizer;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
@@ -33,7 +35,8 @@ public class GUIapp {
      */
     private SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > loginSWFactory;
     private SwingWorkerFactory< functionalcomponents.functionaluserwindows.FunctionalPostUserWindow.SwingWorker, CompletionStatus > postUserSWFactory;
-    private SwingWorkerFactory< functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow.SwingWorker, CompletionStatus > patchUserSWFactory;
+    private SwingWorkerFactory< FunctionalPatchUserWindow.SwingWorker, CompletionStatus > patchUserSWFactory;
+    private SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship >> getAllAirshipsFactory;
     
     
     
@@ -47,14 +50,17 @@ public class GUIapp {
      * @param loginSWFactory
      *            A {@link SwingWorkerFactory} that produces
      *            {@link FunctionalLoginWindow.SwingWorker}s.
+     * @param getAllAirshipsFactory 
      */
     public GUIapp( SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > loginSWFactory,
                    SwingWorkerFactory< FunctionalPostUserWindow.SwingWorker, CompletionStatus > postUserSWFactory,
-                   SwingWorkerFactory< FunctionalPatchUserWindow.SwingWorker, CompletionStatus > patchUserSWFactory ) {
+                   SwingWorkerFactory< FunctionalPatchUserWindow.SwingWorker, CompletionStatus > patchUserSWFactory ,
+                   SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > getAllAirshipsFactory  ) {
     
         this.loginSWFactory = loginSWFactory;
         this.postUserSWFactory = postUserSWFactory;
         this.patchUserSWFactory = patchUserSWFactory;
+        this.getAllAirshipsFactory = getAllAirshipsFactory;
         setSwingWorkerFactoriesInTheFunctionalWindows();
     }
     
@@ -109,6 +115,7 @@ public class GUIapp {
         FunctionalLoginWindow.setSwingWorkerFactory( loginSWFactory );
         FunctionalPostUserWindow.setSwingWorkerFactory( postUserSWFactory );
         FunctionalPatchUserWindow.setSwingWorkerFactory( patchUserSWFactory );
+        BodyPanelFunctionalizer.setSwingWorkerFactory( getAllAirshipsFactory );
     }
     
     

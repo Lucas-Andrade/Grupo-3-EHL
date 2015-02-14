@@ -15,7 +15,7 @@ import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
 
 
 /**
- * Class whose instances represent a panel that contains other specific {@link JPanel},
+ * Class whose instance represents a panel that contains other specific {@link JPanel},
  * {@link JHeaderPanelForMainWindow} , {@link JBodyPanelForMainWindow},
  * {@link JFooterPanelForMainWindow} and {@link JTextArea}. This class extends {@link JFrame} and
  * has this configuration:
@@ -105,17 +105,25 @@ public class MainWindow extends JFrame {
      */
     private JTextArea errorJTextArea;
     
-    // ////////////////////
-    // // Constructors ////
-    // ////////////////////
+    
+    
+    // PRIVATE CONSTRUCTOR AND getInstance
     
     /**
-     * Public constructor that creates a new {@link MainWindow} adding the
-     * {@link JHeaderPanelForMainWindow}, {@link JBodyPanelForMainWindow},
-     * {@link JFooterPanelForMainWindow} and {@link JTextArea}.
+     * The only instance of {@link MainWindow}.
      */
+    private static volatile MainWindow theMainWindow;
     
-    public MainWindow() {
+    /**
+     * A lock for the {@link #theMainWindow}.
+     */
+    private static Object windowLock = new Object();
+    
+    /**
+     * Creates a new {@link MainWindow} adding the {@link JHeaderPanelForMainWindow},
+     * {@link JBodyPanelForMainWindow}, {@link JFooterPanelForMainWindow} and {@link JTextArea}.
+     */    
+    private MainWindow() {
     
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
         this.setIconImage( Toolkit.getDefaultToolkit().getImage( "/images/radar.png" ) );
@@ -154,6 +162,27 @@ public class MainWindow extends JFrame {
         setResizable( false );
     }
     
+    /**
+     * Returns the {@link MainWindow}.
+     * 
+     * @return The {@link MainWindow}.
+     */
+    public static MainWindow getInstance() {
+    
+        
+        if( theMainWindow == null )
+            synchronized (windowLock) {
+                
+                if( theMainWindow == null ) {
+                    theMainWindow = new MainWindow();
+                }
+            }
+        
+        return theMainWindow;
+    }
+    
+    
+        
     // ///////////////
     // Set Methods //
     // ///////////////
@@ -225,4 +254,5 @@ public class MainWindow extends JFrame {
     
         return errorJTextArea;
     }
+
 }

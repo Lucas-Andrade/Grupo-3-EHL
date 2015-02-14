@@ -20,16 +20,18 @@ public class FunctionalMainWindow {
     
     /* Implementation notes:
      * - Getting the locks must follow the following order: never synchronize with the userLock
-     *   before synchronizing with the theFuncitonalMainWindow 
+     *   before synchronizing with the windowLock and never synchronize with the windowBase
+     *   before synchronizing with the windowLock 
      */
     
     
-    // STATIC FIELDS
+    
+    // STATIC FINAL FIELDS
     
     /**
      * The {@code MainWindow} we want to add functionality to.
      */
-    public static final MainWindow windowBase = new MainWindow();
+    private static final MainWindow windowBase = MainWindow.getInstance();
     
     /**
      * The functionalizer of this {@link FunctionalMainWindow} uses to create and update its
@@ -39,6 +41,9 @@ public class FunctionalMainWindow {
             new BodyPanelFunctionalizer( windowBase.getBodyPanel() );
     
     
+    
+    // STATIC MEMBERS ABOUT THE loggedInUser
+    
     /**
      * The user who is currently logged in.
      */
@@ -47,9 +52,8 @@ public class FunctionalMainWindow {
     /**
      * A lock for the {@link #loggedInUser}.
      */
-    private static Object userLock = new Object();    
+    private static Object userLock = new Object();
     
-    // STATIC METHODS
     
     /**
      * Sets the {@link SimpleLoggedUser} that is logged in in this session of the app.
@@ -120,7 +124,6 @@ public class FunctionalMainWindow {
         return false;
     }
     
-    
     /**
      * Removes the {@link SimpleLoggedUser} that is logged in in this session of the app.
      * 
@@ -148,6 +151,25 @@ public class FunctionalMainWindow {
     private static volatile FunctionalMainWindow theFunctionalMainWindow;
     
     /**
+     * A lock for the {@link #theFunctionalMainWindow}.
+     */
+    private static Object windowLock = new Object();
+    
+    /**
+     * Adds functionality to the panels of the {@link #windowBasew} and displays it.
+     */
+    private FunctionalMainWindow() {
+    
+        synchronized (windowBase) {
+            
+            putFunctionalHeaderPanel();
+            putFunctionalFooterPanel();
+            
+            windowBase.setVisible( true );
+        }
+    }
+    
+    /**
      * Returns the {@link FunctionalMainWindow}.
      * 
      * @return The {@link FunctionalMainWindow}.
@@ -161,7 +183,7 @@ public class FunctionalMainWindow {
             throw new LoggedInUserMissingException();
         
         if( theFunctionalMainWindow == null )
-            synchronized (theFunctionalMainWindow) {
+            synchronized (windowLock) {
                 
                 if( theFunctionalMainWindow == null ) {
                     theFunctionalMainWindow = new FunctionalMainWindow();
@@ -169,21 +191,6 @@ public class FunctionalMainWindow {
             }
         
         return theFunctionalMainWindow;
-    }
-    
-    
-    /**
-     * Adds functionality to the panels of a {@link MainWindow} and displays it.
-     */
-    private FunctionalMainWindow() {
-    
-        synchronized (windowBase) {
-            
-            putFunctionalHeaderPanel();
-            putFunctionalFooterPanel();
-            
-            windowBase.setVisible( true );
-        }
     }
     
     

@@ -8,17 +8,31 @@ import exceptions.InternalErrorException;
 import exceptions.SwingWorkerFactoryMissingException;
 
 
+/**
+ * Class that provides utility methods. Several functional components implement similar methods, for
+ * instance,
+ * <ul>
+ * <li>static methods that set {@link SwingWorkerFactory}s in static fields. Their implementation
+ * cannot be inherited since the methods are static, so this class provides an implementation (that
+ * uses reflection) to be invoked by those static methods;</li>
+ * <li>similar methods to create and run {@link SwingWorker}s using different
+ * {@link SwingWorkerFactory}s. Their implementation cannot be inherited since the methods make use
+ * of static fields, so this class provides an implementation to be invoked by those methods.</li>
+ * </ul>
+ *
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ */
 public class Utils {
     
     
     /**
-     * Sets a {@link SwingWorkerFactory} in a field of a class.
+     * Sets a {@link SwingWorkerFactory} in a static field of a class.
      * 
      * @param theClass
      *            The class where to set the {@code factoryToSetInTheField} in the field with name
      *            {@code publicStaticFieldName}.
      * @param staticFieldName
-     *            The name of the public static field where to set {@code factoryToSetInTheField}.
+     *            The name of the static field where to set {@code factoryToSetInTheField}.
      * @param factoryToSetInTheField
      *            The {@link SwingWorkerFactory} to be set in {@code staticField}.
      * @param factoryLock
@@ -76,11 +90,11 @@ public class Utils {
     }
     
     /**
-     * Creates and runs a {@link SwingWorker} created by the {@link SwingWorkerFactory}
-     * {@code swFactory} (via the method {@link SwingWorkerFactory#newInstance()}).
+     * Creates and runs a {@link SwingWorker} created by {@code swFactory} (via the method
+     * {@link SwingWorkerFactory#newInstance()}).
      * 
      * @param swFactory
-     *            The {@link SwingWorkerFactory} that will create the {@link SwingWorker} to run.
+     *            The {@link SwingWorkerFactory} that will create the {@link SwingWorker}.
      * @param nameOfTheClass
      *            The name of the class where {@code swFactory} is supposed to be set.
      * @throws SwingWorkerFactoryMissingException
@@ -93,8 +107,16 @@ public class Utils {
     
         if( swFactory == null )
             throw new SwingWorkerFactoryMissingException( nameOfTheClass );
-        swFactory.newInstance().run();        
+        swFactory.newInstance().run();
     }
     
+    
+    
+    /**
+     * Unused private constructor.
+     */
+    private Utils() {
+    
+    }
     
 }

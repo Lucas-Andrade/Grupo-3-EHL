@@ -55,7 +55,10 @@ public class JHeaderPanelForMainWindow extends JPanel {
      * {@code userPanel} {@link JPanel} variable that represent an animation operation.
      */
     private SpecialPanel middlePanel;
-    
+    /**
+     * {@code timer} {@link Timer} variable that represent timer object for animated panel.
+     */    
+    private Timer timer;
     
     // ////////////////////
     // // Constructors ////
@@ -77,7 +80,7 @@ public class JHeaderPanelForMainWindow extends JPanel {
         middlePanel.setPreferredSize( new Dimension( PANELWIDTH, PANELHEIGHT ) );
         middlePanel.setBackground( new Color( REDCOMPONENT, GREENCOMPONENT, BLUECOMPONENT ) );
         
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule( new TimerTask() {
             
             @Override
@@ -86,7 +89,8 @@ public class JHeaderPanelForMainWindow extends JPanel {
                 middlePanel.doStuff();
             }
         }, 0, middlePanel.myLong );
-                
+        
+        
         this.add( middlePanel );
         
         
@@ -118,4 +122,15 @@ public class JHeaderPanelForMainWindow extends JPanel {
     
         return middlePanel;
     }
+    
+    /**
+     * 
+     * @return the {@code timer}.
+     */
+    public Timer getTimer(){
+         
+        return timer;
+        
+    }
+    
 }

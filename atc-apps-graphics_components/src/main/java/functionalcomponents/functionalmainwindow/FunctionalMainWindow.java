@@ -241,8 +241,9 @@ public class FunctionalMainWindow {
     private void functionalizeTheTurnOffButton() {
     
         windowBase.getHeaderPanel().getUserPanel().getTurnOffButton()
-                  .addActionListener( action -> windowBase.dispose() );
-        // TODO check if this actually closes all windows
+                  .addActionListener( action -> {windowBase.dispose(); 
+                                                  windowBase.getHeaderPanel().getTimer().cancel(); });
+        
     }
     
 }

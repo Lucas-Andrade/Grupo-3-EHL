@@ -87,6 +87,10 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
      * {@code COLUMNSNUMBERFORGRIDLAYOUT} int value that represents GridLayout columns number.
      */
     private static final int COLUMNSNUMBERFORGRIDLAYOUT = 1;
+    /**
+     * {@code BUTTONSHEIGHT} int value that represents the buttons height.
+     */
+    private static final int BUTTONSHEIGHT = 35;
     
     
     // //////////////////////////
@@ -144,7 +148,7 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
         JPanel listPanel = new JPanel();
         int counter = 0;
         
-        
+        listPanel.setLayout( new GridLayout( counter, COLUMNSNUMBERFORGRIDLAYOUT ) );
         for( E entity : entities ) {
             
             JButton button = newButton( entity.getIdentification(), textArea );
@@ -153,15 +157,15 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
             button.setOpaque( true );
             button.setContentAreaFilled( false );
             button.setBackground( new Color( REDCOMPONENT, GREENCOMPONENT, BLUECOMPONENT ) );
-            
+                       
             listPanel.add( button );
             ++counter;
         }
         
         
-        LISTPANELHEIGHT=counter*20;
+        LISTPANELHEIGHT=counter*BUTTONSHEIGHT;
         
-        listPanel.setLayout( new GridLayout( counter, COLUMNSNUMBERFORGRIDLAYOUT ) );
+       
         listPanel.setPreferredSize( new Dimension( LISTPANELWIDTH, LISTPANELHEIGHT ) );
         
         

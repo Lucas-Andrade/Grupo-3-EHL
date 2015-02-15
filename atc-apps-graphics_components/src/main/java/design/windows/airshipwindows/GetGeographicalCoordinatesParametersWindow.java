@@ -141,7 +141,7 @@ public class GetGeographicalCoordinatesParametersWindow extends WindowBase {
                   GridBagUtils.updateGridBagConstraints( constraints, GRIDXFORGRIDBAGLAYOUT, GRIDYFORLONGITUDE,
                                                          new Insets( TOPINSETS, LEFTINSETS, RIGHTINSETS, BOTTOMINSETS ) ) );
         
-        airshipsNumber = new JLablePlusJTextField( "Airships Number", JTEXTFIELDSIZE, Color.WHITE );
+        airshipsNumber = new JLablePlusJTextField( "Number of Airships", JTEXTFIELDSIZE, Color.WHITE );
         this.getContentPane()
             .add( airshipsNumber,
                   GridBagUtils.updateGridBagConstraints( constraints, GRIDXFORGRIDBAGLAYOUT, GRIDYFORAIRSHIPSNUMBER,

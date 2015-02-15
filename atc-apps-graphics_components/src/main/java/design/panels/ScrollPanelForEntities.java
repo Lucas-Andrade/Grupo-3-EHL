@@ -63,10 +63,7 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
      * {@code LISTPANELWIDTH} int value that represents {@code listPanel} width.
      */
     private static final int LISTPANELWIDTH = 200;
-    /**
-     * {@code LISTPANELHEIGHT} int value that represents {@code listPanel} height.
-     */
-    private static int LISTPANELHEIGHT; 
+    
     /**
      * {@code SCROLLPANELWIDTH} int value that represents {@code scrollPane} width.
      */
@@ -74,7 +71,7 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
     /**
      * {@code SCROLLPANELHEIGHT} int value that represents {@code scrollPane} height.
      */
-    private static final int SCROLLPANELHEIGHT = 200;
+    private static final int SCROLLPANELHEIGHT = 300;
     /**
      * {@code TEXTAREAPANELWIDTH} int value that represents {@code textArea} width.
      */
@@ -82,7 +79,7 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
     /**
      * {@code TEXTAREAPANELHEIGHT} int value that represents {@code textArea} height.
      */
-    private static final int TEXTAREAPANELHEIGHT = 200;
+    private static final int TEXTAREAPANELHEIGHT = 300;
     /**
      * {@code COLUMNSNUMBERFORGRIDLAYOUT} int value that represents GridLayout columns number.
      */
@@ -108,6 +105,8 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
      * information about an entity.
      */
     private JTextArea textArea;
+
+    
     
     
     // ////////////////////
@@ -163,7 +162,7 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
         }
         
         
-        LISTPANELHEIGHT=counter*BUTTONSHEIGHT;
+       final int LISTPANELHEIGHT=counter*BUTTONSHEIGHT;
         
        
         listPanel.setPreferredSize( new Dimension( LISTPANELWIDTH, LISTPANELHEIGHT ) );

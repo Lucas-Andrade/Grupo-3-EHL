@@ -62,8 +62,9 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
                                               + " constructor with null nonFunctionalWindow!" );
         this.theFunctionalWindow = nonFunctionalWindow;
         
+
         addActionToButtons();
-        
+
         theFunctionalWindow.setModalityType( ModalityType.TOOLKIT_MODAL );
         theFunctionalWindow.setVisible( true );
     }
@@ -85,7 +86,9 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
                 if( rightButton.getActionListeners().length == 0 ) {
                     addRightButtonAction();
                     addLeftButtonAction();
-                    
+
+                    theFunctionalWindow.getRootPane().setDefaultButton( theFunctionalWindow.getButtonsPanel()
+                                                                                           .getLeftButton() );
                 }
             }
     }
@@ -134,8 +137,6 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
         
         );
         
-        theFunctionalWindow.getRootPane().setDefaultButton( theFunctionalWindow.getButtonsPanel()
-                                                                               .getLeftButton() );
     }
     
     

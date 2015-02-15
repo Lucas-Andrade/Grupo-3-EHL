@@ -1,6 +1,7 @@
-package swingworkers;
+package swingworkers.users;
 
 
+import swingworkers.SwingWorkerFactory;
 import utils.CompletionStatus;
 import utils.StringUtils;
 import commands.postcommands.PostUserCommand;
@@ -15,12 +16,12 @@ import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
  *
  *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PostUserSwingWorker extends FunctionalPostUserWindow.SwingWorker {
+public class PostUserSW extends FunctionalPostUserWindow.SwingWorker {
     
     
     private Database< User > usersDatabase;
 
-    public PostUserSwingWorker( PostUserWindow window, Database< User > usersDatabase ) {
+    public PostUserSW( PostUserWindow window, Database< User > usersDatabase ) {
     
         super( window );
         this.usersDatabase = usersDatabase;
@@ -58,7 +59,7 @@ public class PostUserSwingWorker extends FunctionalPostUserWindow.SwingWorker {
     
     // INNER CLASS
     /**
-     * Class whose instances are responsible for producing {@link PostUserSwingWorker}s.
+     * Class whose instances are responsible for producing {@link PostUserSW}s.
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
@@ -78,9 +79,9 @@ public class PostUserSwingWorker extends FunctionalPostUserWindow.SwingWorker {
         
         
         @Override
-        public PostUserSwingWorker newInstance() {
+        public PostUserSW newInstance() {
         
-            return new PostUserSwingWorker( window, usersDatabase );
+            return new PostUserSW( window, usersDatabase );
         }
         
     }

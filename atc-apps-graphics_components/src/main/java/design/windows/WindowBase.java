@@ -131,7 +131,7 @@ public abstract class WindowBase extends JDialog {
         
         setIconImage( Toolkit.getDefaultToolkit().getImage( "src/main/resources/images/radar.png" ) );
         
-        setTitle( "Air Traffic Controll" );
+        setTitle( "Air Traffic Control" );
         setLocationRelativeTo( null );
         setResizable( false );
         setDefaultCloseOperation( JDialog.DISPOSE_ON_CLOSE );

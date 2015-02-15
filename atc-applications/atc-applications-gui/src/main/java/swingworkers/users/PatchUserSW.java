@@ -1,6 +1,7 @@
-package swingworkers;
+package swingworkers.users;
 
 
+import swingworkers.SwingWorkerFactory;
 import utils.CompletionStatus;
 import utils.StringUtils;
 import commands.patchcommands.PatchUserPasswordCommand;
@@ -16,12 +17,12 @@ import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class PatchUserSwingWorker extends FunctionalPatchUserWindow.SwingWorker {
+public class PatchUserSW extends FunctionalPatchUserWindow.SwingWorker {
     
     
     private Database< User > usersDatabase;
     
-    public PatchUserSwingWorker( PatchUserWindow window, Database< User > usersDatabase ) {
+    public PatchUserSW( PatchUserWindow window, Database< User > usersDatabase ) {
     
         super( window );
         this.usersDatabase = usersDatabase;
@@ -58,7 +59,7 @@ public class PatchUserSwingWorker extends FunctionalPatchUserWindow.SwingWorker 
     
     // INNER CLASS
     /**
-     * Class whose instances are responsible for producing {@link PatchUserSwingWorker}s.
+     * Class whose instances are responsible for producing {@link PatchUserSW}s.
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
@@ -78,9 +79,9 @@ public class PatchUserSwingWorker extends FunctionalPatchUserWindow.SwingWorker 
         
         
         @Override
-        public PatchUserSwingWorker newInstance() {
+        public PatchUserSW newInstance() {
         
-            return new PatchUserSwingWorker( window, usersDatabase );
+            return new PatchUserSW( window, usersDatabase );
         }
         
     }

@@ -163,7 +163,16 @@ public class FunctionalPostUserWindow extends
         protected void finalizeDone( CompletionStatus resultOfDoInBackGround ) throws Exception {
         
             if( resultOfDoInBackGround.completedSuccessfully() ) {
+                
+                //open success window:
                 new SuccessWindow( resultOfDoInBackGround.getMessage() );
+                //clean text fields:
+                window.getUsername().getJTextField().setText("");
+                window.getPassword().getJTextField().setText("");
+                window.getConfirmPassword().getJTextField().setText("");
+                window.getEmail().getJTextField().setText("");
+                window.getFullname().getJTextField().setText("");
+                //close post window:
                 window.dispose();
             }
             else {

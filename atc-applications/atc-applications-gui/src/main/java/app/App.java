@@ -1,10 +1,12 @@
 package app;
 
 
-import GSwingWorkers.GetAllAirshipsSwingWorker;
-import swingworkers.LoginWindowSwingWorker;
-import swingworkers.PatchUserSwingWorker;
-import swingworkers.PostUserSwingWorker;
+import swingworkers.LoginWindowSW;
+import swingworkers.airships.GetAllAirshipsSwingWorker;
+import swingworkers.users.GetAllUsersSW;
+import swingworkers.users.GetUserByIdSW;
+import swingworkers.users.PatchUserSW;
+import swingworkers.users.PostUserSW;
 import databases.Database;
 import databases.InMemoryAirshipsDatabase;
 import databases.InMemoryUsersDatabase;
@@ -93,18 +95,25 @@ public class App {
         
         // Creating the factories
         
-        LoginWindowSwingWorker.Factory loginWindowSWFactory =
-                new LoginWindowSwingWorker.Factory( FunctionalLoginWindow.baseWindow, usersDatabase );
-        PostUserSwingWorker.Factory postUserSWFactory =
-                new PostUserSwingWorker.Factory( FunctionalPostUserWindow.baseWindow, usersDatabase );
-        PatchUserSwingWorker.Factory patchUserSWFactory =
-                new PatchUserSwingWorker.Factory( FunctionalPatchUserWindow.baseWindow, usersDatabase );
-        GetAllAirshipsSwingWorker.Factory getAllAirshipsFactory = new GetAllAirshipsSwingWorker.Factory( airshipsDatabase, FunctionalPostUserWindow.baseWindow.getErrorJTextArea() ); 
+        LoginWindowSW.Factory loginWindowSWFactory =
+                new LoginWindowSW.Factory( FunctionalLoginWindow.baseWindow, usersDatabase );
+        PostUserSW.Factory postUserSWFactory =
+                new PostUserSW.Factory( FunctionalPostUserWindow.baseWindow, usersDatabase );
+        PatchUserSW.Factory patchUserSWFactory =
+                new PatchUserSW.Factory( FunctionalPatchUserWindow.baseWindow, usersDatabase );
+        GetAllUsersSW.Factory getUsersSWFactory = new GetAllUsersSW.Factory( usersDatabase );
+        GetUserByIdSW.Factory getUserByIdSWFactory = new GetUserByIdSW.Factory( usersDatabase );
+        
+        GetAllAirshipsSwingWorker.Factory getAllAirshipsFactory =
+                new GetAllAirshipsSwingWorker.Factory(
+                                                       airshipsDatabase,
+                                                       FunctionalPostUserWindow.baseWindow.getErrorJTextArea() );
         
         
         // Creating and running the app
         
-        new GUIapp( loginWindowSWFactory, postUserSWFactory, patchUserSWFactory, getAllAirshipsFactory ).run();
+        new GUIapp( loginWindowSWFactory, postUserSWFactory, patchUserSWFactory, getUsersSWFactory,
+                    getUserByIdSWFactory, getAllAirshipsFactory ).run();
     }
     
     

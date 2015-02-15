@@ -1,4 +1,4 @@
-package GSwingWorkers;
+package swingworkers.airships;
 
 
 import javax.swing.JTextArea;

@@ -1,7 +1,8 @@
-package swingworkers;
+package swingworkers.airships;
 
 
 import javax.swing.JTabbedPane;
+import swingworkers.SwingWorkerFactory;
 import utils.CompletionStatus;
 import utils.StringUtils;
 import commands.postcommands.PostCivilAirshipCommand;

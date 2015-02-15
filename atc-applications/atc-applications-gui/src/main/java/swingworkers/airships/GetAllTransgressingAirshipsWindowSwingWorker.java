@@ -1,9 +1,11 @@
-package swingworkers;
+package swingworkers.airships;
 
 
 import java.util.ArrayList;
 import java.util.Collection;
 import javax.swing.JTextArea;
+import swingworkers.AirshipsGetterSW;
+import swingworkers.SwingWorkerFactory;
 import app.EntitiesConversor;
 import commands.getcommands.GetAllTransgressingAirshipsCommand;
 import databases.Database;

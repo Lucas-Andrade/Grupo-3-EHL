@@ -81,8 +81,7 @@ public class FunctionalLoginWindow extends
      * @see functionalcomponents.FunctionalWindow#runNewSwingWorker()
      */
     @Override
-    protected void runNewSwingWorker()
-        throws SwingWorkerFactoryMissingException {
+    protected void runNewSwingWorker() throws SwingWorkerFactoryMissingException {
     
         Utils.runNewSwingWorker( swFactory, FunctionalLoginWindow.class.getSimpleName() );
     }
@@ -91,7 +90,7 @@ public class FunctionalLoginWindow extends
     
     // INNER CLASS
     /**
-     * Class whose instances are {@link ExceptionHandlerSW} able to add functionality to a
+     * Class whose instances are {@link ExceptionHandlerSW}s able to add functionality to a
      * {@link LogInWindow}.
      * <p>
      * The unimplemented method {@link #doInBackground()} is supposed to authenticate a user with
@@ -155,15 +154,19 @@ public class FunctionalLoginWindow extends
                                                                       password ) );
             
             try {
+                // show main window:
                 FunctionalMainWindow.getInstance();
+                // clean up the text fields of login window:
+                window.getUserPanel().getJTextField().setText( "" );
+                window.getPasswordPanel().getJTextField().setText( "" );
+                // dispose login window:
+                window.dispose();
             }
             catch( LoggedInUserMissingException e ) {
                 throw new InternalErrorException(
                                                   "EXPECTED THE LOGGED-IN USER TO BE SET BY NOW! O_o",
                                                   e );
             }
-            
-            baseWindow.dispose();
         }
         
         

@@ -1,8 +1,9 @@
-package swingworkers;
+package swingworkers.airships;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import commands.getcommands.GetAirshipsWithLessPassengersThanCommand;
+import swingworkers.SwingWorkerFactory;
 import utils.StringUtils;
 import app.EntitiesConversor;
 import databases.Database;

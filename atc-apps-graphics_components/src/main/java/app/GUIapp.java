@@ -4,6 +4,7 @@ package app;
 import java.awt.EventQueue;
 import javax.swing.SwingWorker;
 import swingworkers.SwingWorkerFactory;
+import swingworkers.SwingWorkerForButtonFactory;
 import utils.CompletionStatus;
 import design.windows.MainWindow;
 import design.windows.popupwindows.FailWindow;
@@ -14,9 +15,12 @@ import exceptions.InternalErrorException;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.functionalmainwindow.BodyPanelFunctionalizer;
+import functionalcomponents.functionalmainwindow.FunctionalHeaderPanel;
+import functionalcomponents.functionalmainwindow.FunctionalHeaderPanel.GetAllUsersSW;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
+import functionalcomponents.infobuttons.SimpleUserInfoButton;
 
 
 /**
@@ -33,9 +37,13 @@ public class GUIapp {
     /**
      * The factories of {@link SwingWorker}s to be used by this {@link GUIapp}.
      */
+    
     private SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > loginSWFactory;
     private SwingWorkerFactory< functionalcomponents.functionaluserwindows.FunctionalPostUserWindow.SwingWorker, CompletionStatus > postUserSWFactory;
     private SwingWorkerFactory< FunctionalPatchUserWindow.SwingWorker, CompletionStatus > patchUserSWFactory;
+    private SwingWorkerFactory< GetAllUsersSW, Iterable< SimpleUser >> getUsersSWFactory;
+    private SwingWorkerForButtonFactory< SwingWorker< SimpleUser, Void >, SimpleUser > getUserByIdSWFactory;
+    
     private SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship >> getAllAirshipsFactory;
     
     
@@ -54,13 +62,19 @@ public class GUIapp {
      */
     public GUIapp( SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > loginSWFactory,
                    SwingWorkerFactory< FunctionalPostUserWindow.SwingWorker, CompletionStatus > postUserSWFactory,
-                   SwingWorkerFactory< FunctionalPatchUserWindow.SwingWorker, CompletionStatus > patchUserSWFactory ,
+                   SwingWorkerFactory< FunctionalPatchUserWindow.SwingWorker, CompletionStatus > patchUserSWFactory,
+                   SwingWorkerFactory< FunctionalHeaderPanel.GetAllUsersSW, Iterable<SimpleUser> > getUsersSWFactory,
+                   SwingWorkerForButtonFactory< SwingWorker< SimpleUser, Void >, SimpleUser > getUserByIdSWFactory,
                    SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > getAllAirshipsFactory  ) {
     
         this.loginSWFactory = loginSWFactory;
         this.postUserSWFactory = postUserSWFactory;
         this.patchUserSWFactory = patchUserSWFactory;
+        this.getUsersSWFactory = getUsersSWFactory;
+        this.getUserByIdSWFactory = getUserByIdSWFactory;
+        
         this.getAllAirshipsFactory = getAllAirshipsFactory;
+        
         setSwingWorkerFactoriesInTheFunctionalWindows();
     }
     
@@ -115,6 +129,9 @@ public class GUIapp {
         FunctionalLoginWindow.setSwingWorkerFactory( loginSWFactory );
         FunctionalPostUserWindow.setSwingWorkerFactory( postUserSWFactory );
         FunctionalPatchUserWindow.setSwingWorkerFactory( patchUserSWFactory );
+        FunctionalHeaderPanel.setInfoAllUsersFactory( getUsersSWFactory );
+        SimpleUserInfoButton.setSwingWorkerFactory( getUserByIdSWFactory );
+        
         BodyPanelFunctionalizer.setSwingWorkerFactory( getAllAirshipsFactory );
     }
     

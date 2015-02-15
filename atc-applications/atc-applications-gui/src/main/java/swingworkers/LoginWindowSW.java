@@ -16,12 +16,12 @@ import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
+public class LoginWindowSW extends FunctionalLoginWindow.SwingWorker {
     
         
     private Database< User > usersDatabase;
     
-    public LoginWindowSwingWorker( LogInWindow window, Database< User > usersDatabase ) {
+    public LoginWindowSW( LogInWindow window, Database< User > usersDatabase ) {
     
         super( window );
         this.usersDatabase = usersDatabase;
@@ -67,9 +67,9 @@ public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
         
         
         @Override
-        public LoginWindowSwingWorker newInstance() {
+        public LoginWindowSW newInstance() {
         
-            return new LoginWindowSwingWorker( window, usersDatabase );
+            return new LoginWindowSW( window, usersDatabase );
         }
         
     }

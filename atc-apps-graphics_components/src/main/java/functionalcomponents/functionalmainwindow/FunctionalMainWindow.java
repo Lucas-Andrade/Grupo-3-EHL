@@ -189,7 +189,7 @@ public class FunctionalMainWindow {
                     theFunctionalMainWindow = new FunctionalMainWindow();
                 }
             }
-        
+        windowBase.setVisible( true );
         return theFunctionalMainWindow;
     }
     

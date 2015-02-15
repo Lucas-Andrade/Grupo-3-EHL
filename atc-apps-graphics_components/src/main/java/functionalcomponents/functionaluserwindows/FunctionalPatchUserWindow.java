@@ -159,7 +159,15 @@ public class FunctionalPatchUserWindow extends
         protected void finalizeDone( CompletionStatus resultOfDoInBackGround ) throws Exception {
         
             if( resultOfDoInBackGround.completedSuccessfully() ) {
+                
+                //open success window:
                 new SuccessWindow( resultOfDoInBackGround.getMessage() );
+                //clean text fields:
+                window.getUserPanel().getJTextField().setText("");
+                window.getOldPasswordPanel().getJTextField().setText("");
+                window.getNewPasswordPanel().getJTextField().setText("");
+                window.getNewPasswordConfirmationPanel().getJTextField().setText("");
+                //close post window:
                 window.dispose();
             }
             else {

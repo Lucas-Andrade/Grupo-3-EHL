@@ -10,6 +10,7 @@ import design.windows.MainWindow;
 import design.windows.WindowBase;
 import entities.SimpleAirship;
 import exceptions.SwingWorkerFactoryMissingException;
+import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
 
 /**
@@ -31,8 +32,9 @@ public class BodyPanelFunctionalizer {
     /**
      * The {@link JBodyPanelForMainWindow} we want to add functionality to.
      */
-    private static final JBodyPanelForMainWindow bodyPanel = MainWindow.getInstance().getBodyPanel();
-
+    private static final JBodyPanelForMainWindow bodyPanel = MainWindow.getInstance()
+                                                                       .getBodyPanel();
+    
     
     /**
      * A lock for the {@link #swFactory}.
@@ -100,8 +102,8 @@ public class BodyPanelFunctionalizer {
     
         this.errorTextArea = erroTextArea;
     }
-
-
+    
+    
     // Private methods
     /**
      * Create a new {@link SwingWorker} and run it. The {@link SwingWorker#doInBackground()} method
@@ -139,9 +141,9 @@ public class BodyPanelFunctionalizer {
          * 
          * @see ExceptionHandlerSW
          */
-        public SwingWorker( JTextArea erroTextArea ) {
+        public SwingWorker() {
         
-            super( erroTextArea );
+            super( FunctionalPostUserWindow.baseWindow.getErrorJTextArea() );
         }
         
         /**
@@ -152,8 +154,9 @@ public class BodyPanelFunctionalizer {
         @Override
         protected void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround )
             throws Exception {
-
+        
             bodyPanel.updateBodyPanel( resultOfDoInBackGround );
         }
     }
+    
 }

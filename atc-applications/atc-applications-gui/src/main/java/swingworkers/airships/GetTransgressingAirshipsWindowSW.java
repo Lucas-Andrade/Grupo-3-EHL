@@ -3,8 +3,6 @@ package swingworkers.airships;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.swing.JTextArea;
-import swingworkers.AirshipsGetterSW;
 import swingworkers.SwingWorkerFactory;
 import app.EntitiesConversor;
 import commands.getcommands.GetAllTransgressingAirshipsCommand;
@@ -13,30 +11,29 @@ import elements.Airship;
 import entities.SimpleAirship;
 import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker;
+import functionalcomponents.functionalmainwindow.FunctionalFooterPanel;
 
 
 /**
  * Class whose instances have the purpose of add functionality to a
- * {@link GetAllTransgressingAirshipsWindowSwingWorker}.
+ * {@link GetTransgressingAirshipsWindowSW}.
  *
  * Extends {@link FunctionalGetGeographicalCoordinatesParametersWindow}.
  *
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetAllTransgressingAirshipsWindowSwingWorker extends AirshipsGetterSW {
+public class GetTransgressingAirshipsWindowSW extends
+        FunctionalFooterPanel.GetTrangressingAirshipsSW {
     
     // INSTANCE FIELD
-    private static JTextArea errorJtextArea;
     private Database< Airship > airshipDatabase;
-    private Collection< SimpleAirship > simpleAirshipCollection = new ArrayList<>();
     
     
     // CONSTRUCTOR
-
-    public GetAllTransgressingAirshipsWindowSwingWorker( Database< Airship > airshipDatabase ) {
     
-        super( errorJtextArea );
+    public GetTransgressingAirshipsWindowSW( Database< Airship > airshipDatabase ) {
+    
         this.airshipDatabase = airshipDatabase;
     }
     
@@ -58,11 +55,9 @@ public class GetAllTransgressingAirshipsWindowSwingWorker extends AirshipsGetter
         Iterable< Airship > airshipIterable =
                 new GetAllTransgressingAirshipsCommand( airshipDatabase ).call().get();
         
-        for( Airship airship : airshipIterable ) {
-            
+        Collection< SimpleAirship > simpleAirshipCollection = new ArrayList<>();
+        for( Airship airship : airshipIterable )
             simpleAirshipCollection.add( new EntitiesConversor().toSimpleAirship( airship ) );
-            
-        }
         
         return simpleAirshipCollection;
         
@@ -72,14 +67,15 @@ public class GetAllTransgressingAirshipsWindowSwingWorker extends AirshipsGetter
     // INNER CLASS
     /**
      * Inner class responsible for produce a new instance of
-     * {@link GetAllTransgressingAirshipsWindowSwingWorker}
+     * {@link GetTransgressingAirshipsWindowSW}
      * 
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
     
-    public static class Factory implements
-            SwingWorkerFactory< AirshipsGetterSW, Iterable< SimpleAirship > > {
+    public static class Factory
+            implements
+            SwingWorkerFactory< FunctionalFooterPanel.GetTrangressingAirshipsSW, Iterable< SimpleAirship > > {
         
         // INSTANCE FIELDS
         private Database< Airship > airshipDatabase;
@@ -94,15 +90,14 @@ public class GetAllTransgressingAirshipsWindowSwingWorker extends AirshipsGetter
         
         /**
          * Implementation of the {@link SwingWorkerFactory#newInstance()} method with the purpose of
-         * create a {@link GetAllTransgressingAirshipsWindowSwingWorker}
+         * create a {@link GetTransgressingAirshipsWindowSW}
          * 
-         * @return Returns a {@link GetAllTransgressingAirshipsWindowSwingWorker}
+         * @return Returns a {@link GetTransgressingAirshipsWindowSW}
          */
         @Override
-        public AirshipsGetterSW newInstance() {
+        public FunctionalFooterPanel.GetTrangressingAirshipsSW newInstance() {
         
-            return new GetAllTransgressingAirshipsWindowSwingWorker( airshipDatabase );
-            
+            return new GetTransgressingAirshipsWindowSW( airshipDatabase );
         }
         
     }

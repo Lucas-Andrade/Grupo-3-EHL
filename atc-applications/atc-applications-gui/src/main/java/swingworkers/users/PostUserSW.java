@@ -4,23 +4,27 @@ package swingworkers.users;
 import swingworkers.SwingWorkerFactory;
 import utils.CompletionStatus;
 import utils.StringUtils;
+import commands.getcommands.GetElementFromADatabaseByIdCommand;
 import commands.postcommands.PostUserCommand;
 import databases.Database;
 import design.windows.userwindows.PostUserWindow;
 import elements.User;
+import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
+import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
+
 
 /**
  * Concrete implementation of {@link FunctionalPostUserWindow.SwingWorker}.
  *
- *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class PostUserSW extends FunctionalPostUserWindow.SwingWorker {
     
     
     private Database< User > usersDatabase;
-
+    
     public PostUserSW( PostUserWindow window, Database< User > usersDatabase ) {
     
         super( window );
@@ -46,16 +50,28 @@ public class PostUserSW extends FunctionalPostUserWindow.SwingWorker {
         if( !password.equals( confirmPassword ) )
             throw new InvalidArgumentException( "Passwords don't match!" );
         
-        User tempUserJustForPosting = new User( "name", "pass", "em@il" );
+        String loggedInUserUsername = FunctionalMainWindow.getLoggedUser().getIdentification();
+        User loggedInUser;
+        try {
+            loggedInUser =
+                    new GetElementFromADatabaseByIdCommand< User >( usersDatabase,
+                                                                    loggedInUserUsername ).call()
+                                                                                          .get();
+        }
+        catch( Exception e ) {
+            throw new InternalErrorException(
+                                              "UNEXPECTED ERROR WITH LOGGED-IN USER IN PostUserSW!",
+                                              e );
+        }
+        
+        
         return new PostUserCommand( StringUtils.parameterToString( usernameLabel, username ),
                                     StringUtils.parameterToString( passwordLabel, password ),
                                     StringUtils.parameterToString( emailLabel, email ), fullName,
-                                    usersDatabase, tempUserJustForPosting ).call();
+                                    usersDatabase, loggedInUser ).call();
         // the fullname is optional, it might be null or empty
         
     }
-    
-    
     
     // INNER CLASS
     /**

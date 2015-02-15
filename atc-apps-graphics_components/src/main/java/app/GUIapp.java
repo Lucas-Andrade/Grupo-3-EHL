@@ -14,12 +14,17 @@ import entities.SimpleUser;
 import exceptions.InternalErrorException;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
 import functionalcomponents.functionalmainwindow.BodyPanelFunctionalizer;
+import functionalcomponents.functionalmainwindow.FunctionalFooterPanel;
 import functionalcomponents.functionalmainwindow.FunctionalHeaderPanel;
 import functionalcomponents.functionalmainwindow.FunctionalHeaderPanel.GetAllUsersSW;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
+import functionalcomponents.infobuttons.SimpleAirshipInfoButton;
 import functionalcomponents.infobuttons.SimpleUserInfoButton;
 
 
@@ -45,6 +50,11 @@ public class GUIapp {
     private SwingWorkerForButtonFactory< SwingWorker< SimpleUser, Void >, SimpleUser > getUserByIdSWFactory;
     
     private SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship >> getAllAirshipsFactory;
+    private SwingWorkerForButtonFactory< SwingWorker< SimpleAirship, Void >, SimpleAirship > getAirshipByIdSWFactory;
+    private SwingWorkerFactory< functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker, Iterable< SimpleAirship >> getAirshipsCloserToFactory;
+    private SwingWorkerFactory< FunctionalFooterPanel.GetTrangressingAirshipsSW, Iterable< SimpleAirship >> getTransgressingAirshipsFactory;
+    private SwingWorkerFactory< FunctionalGetAirshipsWithLessPassengerThanWindow.SwingWorker, Iterable< SimpleAirship >> getAirshipsWithLessPassengersFact;
+    private SwingWorkerFactory< FunctionalPostAirshipWindow.SwingWorker, CompletionStatus > postAirshipFactory;
     
     
     
@@ -58,14 +68,19 @@ public class GUIapp {
      * @param loginSWFactory
      *            A {@link SwingWorkerFactory} that produces
      *            {@link FunctionalLoginWindow.SwingWorker}s.
-     * @param getAllAirshipsFactory 
+     * @param getAllAirshipsFactory
      */
     public GUIapp( SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > loginSWFactory,
                    SwingWorkerFactory< FunctionalPostUserWindow.SwingWorker, CompletionStatus > postUserSWFactory,
                    SwingWorkerFactory< FunctionalPatchUserWindow.SwingWorker, CompletionStatus > patchUserSWFactory,
-                   SwingWorkerFactory< FunctionalHeaderPanel.GetAllUsersSW, Iterable<SimpleUser> > getUsersSWFactory,
+                   SwingWorkerFactory< FunctionalHeaderPanel.GetAllUsersSW, Iterable< SimpleUser > > getUsersSWFactory,
                    SwingWorkerForButtonFactory< SwingWorker< SimpleUser, Void >, SimpleUser > getUserByIdSWFactory,
-                   SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > getAllAirshipsFactory  ) {
+                   SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > getAllAirshipsFactory,
+                   SwingWorkerForButtonFactory< SwingWorker< SimpleAirship, Void >, SimpleAirship > getAirshipByIdSWFactory,
+                   SwingWorkerFactory< FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker, Iterable< SimpleAirship >> getAirshipsCloserToFactory,
+                   SwingWorkerFactory< FunctionalFooterPanel.GetTrangressingAirshipsSW, Iterable< SimpleAirship >> getTransgressingAirshipsFactory,
+                   SwingWorkerFactory< FunctionalGetAirshipsWithLessPassengerThanWindow.SwingWorker, Iterable< SimpleAirship >> getAirshipsWithLessPassengersFact,
+                   SwingWorkerFactory< FunctionalPostAirshipWindow.SwingWorker, CompletionStatus > postAirshipFactory ) {
     
         this.loginSWFactory = loginSWFactory;
         this.postUserSWFactory = postUserSWFactory;
@@ -74,6 +89,11 @@ public class GUIapp {
         this.getUserByIdSWFactory = getUserByIdSWFactory;
         
         this.getAllAirshipsFactory = getAllAirshipsFactory;
+        this.getAirshipByIdSWFactory = getAirshipByIdSWFactory;
+        this.getAirshipsCloserToFactory = getAirshipsCloserToFactory;
+        this.getTransgressingAirshipsFactory = getTransgressingAirshipsFactory;
+        this.getAirshipsWithLessPassengersFact = getAirshipsWithLessPassengersFact;
+        this.postAirshipFactory = postAirshipFactory;
         
         setSwingWorkerFactoriesInTheFunctionalWindows();
     }
@@ -129,10 +149,15 @@ public class GUIapp {
         FunctionalLoginWindow.setSwingWorkerFactory( loginSWFactory );
         FunctionalPostUserWindow.setSwingWorkerFactory( postUserSWFactory );
         FunctionalPatchUserWindow.setSwingWorkerFactory( patchUserSWFactory );
-        FunctionalHeaderPanel.setInfoAllUsersFactory( getUsersSWFactory );
+        FunctionalHeaderPanel.setAllUsersFactory( getUsersSWFactory );
         SimpleUserInfoButton.setSwingWorkerFactory( getUserByIdSWFactory );
         
         BodyPanelFunctionalizer.setSwingWorkerFactory( getAllAirshipsFactory );
+        SimpleAirshipInfoButton.setSwingWorkerFactory( getAirshipByIdSWFactory );
+        FunctionalGetGeographicalCoordinatesParametersWindow.setSwingWorkerFactory( getAirshipsCloserToFactory );
+        FunctionalFooterPanel.setAllUsersFactory( getTransgressingAirshipsFactory );
+        FunctionalGetAirshipsWithLessPassengerThanWindow.setSwingWorkerFactory( getAirshipsWithLessPassengersFact );
+        FunctionalPostAirshipWindow.setSwingWorkerFactory( postAirshipFactory );
     }
     
     

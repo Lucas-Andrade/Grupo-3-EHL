@@ -22,7 +22,7 @@ import functionalcomponents.infobuttons.SimpleAirshipInfoButton;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GUISimpleAirshipInfoSW extends
+public class GetAirshipByIdSW extends
         EntitiesInfoButton.EntitiesInfoSwingWorker< SimpleAirship > {
     
     private Database< Airship > database;
@@ -39,7 +39,7 @@ public class GUISimpleAirshipInfoSW extends
      * @param database
      *            - The {@link Airship} {@link Database}.
      */
-    public GUISimpleAirshipInfoSW( String identification, JTextArea textArea,
+    public GetAirshipByIdSW( String identification, JTextArea textArea,
                                    Database< Airship > database ) {
     
         super( textArea );
@@ -71,7 +71,7 @@ public class GUISimpleAirshipInfoSW extends
     
     /**
      * Instances of the class are {@link SwingWorker} {@code factories}, that creates instances of
-     * {@link GUISimpleAirshipInfoSW} that will be run in {@link SimpleAirshipInfoButton}.
+     * {@link GetAirshipByIdSW} that will be run in {@link SimpleAirshipInfoButton}.
      *
      * @param <SwingWorker>
      *            The type of the {@link SwingWorker} returned in the method {@link #newInstance()}.
@@ -79,26 +79,26 @@ public class GUISimpleAirshipInfoSW extends
      *            The type of the results returned by the methods
      *            {@link SwingWorker#doInBackground()} and {@link SwingWorker#get()}.
      */
-    public class SwFactory implements
+    public static class Factory implements
             SwingWorkerForButtonFactory< SwingWorker< SimpleAirship, Void >, SimpleAirship > {
         
         private Database< Airship > database;
         
         /**
          * Creates a {@link SwingWorker} {@code factories}, that creates instances of
-         * {@link GUISimpleAirshipInfoSW} using the {@link SwFactory#newInstance} that will be run
+         * {@link GetAirshipByIdSW} using the {@link Factory#newInstance} that will be run
          * in {@link SimpleAirshipInfoButton}.
          * 
          * @param database
          *            - The {@code User} {@link Database}.
          */
-        public SwFactory( Database< Airship > database ) {
+        public Factory( Database< Airship > database ) {
         
             this.database = database;
         }
         
         /**
-         * Produces a new instance of {@link GUISimpleAirshipInfoSW}.
+         * Produces a new instance of {@link GetAirshipByIdSW}.
          * 
          * @see swingworkers.SwingWorkerForButtonFactory#newInstance(String, JTextArea)
          */
@@ -106,7 +106,7 @@ public class GUISimpleAirshipInfoSW extends
         public SwingWorker< SimpleAirship, Void > newInstance( String identification,
                                                                JTextArea textArea ) {
         
-            return new GUISimpleAirshipInfoSW( identification, textArea, database );
+            return new GetAirshipByIdSW( identification, textArea, database );
         }
     }
 }

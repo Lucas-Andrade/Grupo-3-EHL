@@ -2,7 +2,6 @@ package swingworkers.airships;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.swing.JTextArea;
 import swingworkers.SwingWorkerFactory;
 import app.EntitiesConversor;
 import commands.getcommands.GetAllElementsInADatabaseCommand;
@@ -17,14 +16,13 @@ import functionalcomponents.functionalmainwindow.BodyPanelFunctionalizer;
  *
  *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetAllAirshipsSwingWorker extends BodyPanelFunctionalizer.SwingWorker {
+public class GetAllAirshipsSW extends BodyPanelFunctionalizer.SwingWorker {
 
     private Database< Airship > airshipDatabase;
 
     
-    public GetAllAirshipsSwingWorker(Database< Airship > airshipDatabase, JTextArea erroTextArea ) {
+    public GetAllAirshipsSW(Database< Airship > airshipDatabase ) {
         
-        super(erroTextArea);
         this.airshipDatabase = airshipDatabase;
     }
 
@@ -50,7 +48,7 @@ public class GetAllAirshipsSwingWorker extends BodyPanelFunctionalizer.SwingWork
     // INNER CLASS
     /**
      * Inner class responsible for produce a new instance of
-     * {@link GetAllTransgressingAirshipsWindowSwingWorker}
+     * {@link GetTransgressingAirshipsWindowSW}
      * 
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -61,27 +59,25 @@ public class GetAllAirshipsSwingWorker extends BodyPanelFunctionalizer.SwingWork
         
         // INSTANCE FIELDS
         private Database< Airship > airshipDatabase;
-        private JTextArea erroTextArea;
         
         // CONSTRUCTOR
         
-        public Factory( Database< Airship > airshipDatabase, JTextArea erroTextArea  ) {
+        public Factory( Database< Airship > airshipDatabase  ) {
 
             this.airshipDatabase = airshipDatabase;
-            this.erroTextArea = erroTextArea;
             
         }
         
         /**
          * Implementation of the {@link SwingWorkerFactory#newInstance()} method with the purpose of
-         * create a {@link GetAllTransgressingAirshipsWindowSwingWorker}
+         * create a {@link GetTransgressingAirshipsWindowSW}
          * 
-         * @return Returns a {@link GetAllTransgressingAirshipsWindowSwingWorker}
+         * @return Returns a {@link GetTransgressingAirshipsWindowSW}
          */
         @Override
-        public GetAllAirshipsSwingWorker newInstance() {
+        public GetAllAirshipsSW newInstance() {
         
-            return new GetAllAirshipsSwingWorker( airshipDatabase, erroTextArea );
+            return new GetAllAirshipsSW( airshipDatabase );
             
         }
         

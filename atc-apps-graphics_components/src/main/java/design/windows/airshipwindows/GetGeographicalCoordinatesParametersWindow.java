@@ -148,7 +148,6 @@ public class GetGeographicalCoordinatesParametersWindow extends WindowBase {
                                                          new Insets( TOPINSETS, LEFTINSETS, RIGHTINSETS, BOTTOMINSETS ) ) );
         
         
-        this.setVisible( true );
     }
     
      /////////////////   

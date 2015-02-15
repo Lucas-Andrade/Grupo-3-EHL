@@ -34,7 +34,7 @@ public class FunctionalHeaderPanel {
      * The {@link SwingWorkerFactory} that produces {@link SwingWorker}s for the button that gets
      * all the users registered in the app.
      */
-    private static SwingWorkerFactory< ?, ? > getAllUsers_SwingWorkerFactory;
+    private static SwingWorkerFactory< GetAllUsersSW, Iterable< SimpleUser > > getAllUsers_SwingWorkerFactory;
     
     /**
      * A lock for the {@link #getAllUsers_SwingWorkerFactory}.
@@ -42,22 +42,26 @@ public class FunctionalHeaderPanel {
     private static Object getAllUsers_SwFactoryLock = new Object();
     
     /**
-     * Sets the {@link SwingWorkerFactory} that produces {@link }s TODO for the button that gets all
-     * the users registered in the app.
+     * Sets the {@link SwingWorkerFactory} that produces {@link GetAllUsersSW}s for the button that
+     * gets all the users registered in the app.
      * 
      * @param swFactory
-     *            The {@link SwingWorkerFactory} that produces {@link }s TODO for the button that
-     *            gets all the users registered in the app.
+     *            The {@link SwingWorkerFactory} that produces {@link GetAllUsersSW}s for the button
+     *            that gets all the users registered in the app.
      * @return {@code true} if {@code swFactory} was set as the factory that produces swingworkers
      *         for the button; <br/>
      *         {@code false} if there was a factory already set or {@code swFactory} is {@code null}
      *         .
      */
-    public static boolean setInfoAllUsersFactory( SwingWorkerFactory< ?, ? > swFactory ) {
+    public static
+            boolean
+            setAllUsersFactory( SwingWorkerFactory< GetAllUsersSW, Iterable< SimpleUser > > swFactory ) {
     
         return Utils.setSWFactory( FunctionalHeaderPanel.class, "getAllUsers_SwingWorkerFactory",
                                    swFactory, getAllUsers_SwFactoryLock );
     }
+    
+    
     
     // INNER CLASS
     /**
@@ -91,7 +95,7 @@ public class FunctionalHeaderPanel {
         }
         
     }
-
+    
     
     
     // INSTANCE FIELD
@@ -172,13 +176,14 @@ public class FunctionalHeaderPanel {
     
     /**
      * Runs a new {@link SwingWorker} created by {@link #getAllUsers_SwingWorkerFactory}. If the
-     * {@link #getAllUsers_SwingWorkerFactory} is {@code null}, it is openned a new
+     * {@link #getAllUsers_SwingWorkerFactory} is {@code null}, it is opened a new
      * {@link UnderConstrutionWindow}.
      */
     private void runNew_GetAllUsers_SwingWorker() {
     
         try {
-            Utils.runNewSwingWorker( getAllUsers_SwingWorkerFactory, "FunctionalHeaderPanel" );
+            Utils.runNewSwingWorker( getAllUsers_SwingWorkerFactory,
+                                     FunctionalHeaderPanel.class.getSimpleName() );
         }
         catch( SwingWorkerFactoryMissingException e ) {
             new UnderConstrutionWindow();
@@ -192,7 +197,8 @@ public class FunctionalHeaderPanel {
      * Returns the base {@link JHeaderPanelForMainWindow} that this {@link FunctionalHeaderPanel} is
      * giving functionality to.
      * 
-     * @return the {@code headerPanel}.
+     * @return The base {@link JHeaderPanelForMainWindow} that this {@link FunctionalHeaderPanel} is
+     *         giving functionality to.
      */
     public JHeaderPanelForMainWindow getHeaderPanel() {
     

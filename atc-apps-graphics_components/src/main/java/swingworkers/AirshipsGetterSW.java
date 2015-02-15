@@ -23,6 +23,7 @@ import entities.SimpleAirship;
  */
 public abstract class AirshipsGetterSW extends
         ExceptionHandlerSW< Iterable< SimpleAirship >> {
+    
     /**
      * The {@code MainWindow} we want to add functionality to.
      */

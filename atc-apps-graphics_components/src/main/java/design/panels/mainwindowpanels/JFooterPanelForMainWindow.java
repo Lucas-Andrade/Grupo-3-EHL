@@ -138,4 +138,5 @@ public class JFooterPanelForMainWindow extends JPanel {
     public JButton getShowAllAirships() {
         return showAllAirships;
     }
+
 }

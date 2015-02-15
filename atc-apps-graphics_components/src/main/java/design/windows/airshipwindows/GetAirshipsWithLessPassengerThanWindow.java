@@ -117,7 +117,6 @@ public class GetAirshipsWithLessPassengerThanWindow extends WindowBase {
             .add( numberOfPassengers,
                   GridBagUtils.updateGridBagConstraints( constraints, GRIDXFORGRIDBAGLAYOUT, GRIDYFORGRIDBAGLAYOUT, 
                                                          new Insets( TOPINSETS, LEFTINSETS, BOTTOMINSETS, RIGHTINSETS) ) );
-        this.setVisible( true );
         
     }
  

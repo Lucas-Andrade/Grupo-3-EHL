@@ -25,7 +25,7 @@ import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCo
      */
 
 
-public class GetGeographicalCoordinatesParametersSwingWorker extends
+public class GetAirshipsCloserToSW extends
         FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker {
     
     // INSTANCE FIELD
@@ -33,7 +33,7 @@ public class GetGeographicalCoordinatesParametersSwingWorker extends
     private Collection< SimpleAirship > simpleAirshipsNearest = new ArrayList<>();
     
     // CONSTRUCTOR
-    public GetGeographicalCoordinatesParametersSwingWorker( GetGeographicalCoordinatesParametersWindow window,
+    public GetAirshipsCloserToSW( GetGeographicalCoordinatesParametersWindow window,
                                                             Database< Airship > airshipDatabase ) {
     
         super( window );
@@ -77,7 +77,7 @@ public class GetGeographicalCoordinatesParametersSwingWorker extends
     // INNER CLASS
     /**
      * Inner class responsible for produce a new 
-     * instance of {@link GetGeographicalCoordinatesParametersSwingWorker}
+     * instance of {@link GetAirshipsCloserToSW}
      * 
      *
      *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -101,15 +101,15 @@ public class GetGeographicalCoordinatesParametersSwingWorker extends
         }
         /**
          * Implementation of the {@link SwingWorkerFactory#newInstance()} method with the
-         * purpose of create a {@link GetGeographicalCoordinatesParametersSwingWorker} 
+         * purpose of create a {@link GetAirshipsCloserToSW} 
          * 
-         * @return Returns a {@link GetGeographicalCoordinatesParametersSwingWorker}
+         * @return Returns a {@link GetAirshipsCloserToSW}
          */
         
         @Override
         public SwingWorker newInstance() {
                     
-            return new GetGeographicalCoordinatesParametersSwingWorker( window, airshipDatabase );
+            return new GetAirshipsCloserToSW( window, airshipDatabase );
         }
             
     }

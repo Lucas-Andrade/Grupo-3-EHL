@@ -42,7 +42,7 @@ public class PostAirshipSwingWorker extends FunctionalPostAirshipWindow.SwingWor
     protected CompletionStatus doInBackground() throws Exception {
     
         
-         String AirshipType = (typeTypeAirshipTabbedPane==0) ? "Civil":"Military";
+         String AirshipType = (typeAirshipTabbedPane==0) ? "Civil":"Military";
          
         ClientRequest request = new ClientRequest( "POST", "/airships/"+AirshipType ) {
             

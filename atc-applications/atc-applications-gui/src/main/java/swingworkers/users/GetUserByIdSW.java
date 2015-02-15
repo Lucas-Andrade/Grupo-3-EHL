@@ -4,7 +4,7 @@ package swingworkers.users;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import swingworkers.SwingWorkerForButtonFactory;
-import swingworkers.airships.GUISimpleAirshipInfoSW.SwFactory;
+import swingworkers.airships.GetAirshipByIdSW.Factory;
 import app.EntitiesConversor;
 import commands.getcommands.GetElementFromADatabaseByIdCommand;
 import databases.Database;
@@ -86,7 +86,7 @@ public class GetUserByIdSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< S
         
         /**
          * Creates a {@link SwingWorker} {@code factories}, that creates instances of
-         * {@link GetUserByIdSW} using the {@link SwFactory#newInstance} that will be run in
+         * {@link GetUserByIdSW} using the {@link Factory#newInstance} that will be run in
          * {@link SimpleUserInfoButton}.
          * 
          * @param database

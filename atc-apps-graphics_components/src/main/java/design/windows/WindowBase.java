@@ -111,8 +111,6 @@ public abstract class WindowBase extends JDialog {
         addComponent( new JPanelImage( imagePath ), IMAGESGRIDBAGLAYOUTPOSITION );
         
         createButtonsAndErrorJTextArea();
-        
-        getRootPane().setDefaultButton( buttonsPanel.getLeftButton() );
     }
     
     
@@ -144,10 +142,10 @@ public abstract class WindowBase extends JDialog {
         buttonsPanel = new JTwoButtonsPanel();
         buttonsPanel.setBackground( new Color( TRANSLUCENTCOMPONENT, TRANSLUCENTCOMPONENT, TRANSLUCENTCOMPONENT, TRANSLUCENTCOMPONENT ) );
         addComponent( buttonsPanel, GridBagConstraints.BASELINE_TRAILING );
-        
-        
+
         errorJTextArea = new JTextArea();
         errorJTextArea.setText( " " );
+
         errorJTextArea.setForeground( Color.RED );
         errorJTextArea.setPreferredSize( new Dimension( ERRORJTEXTAREAWIDTH, ERRORJTEXTAREAHEIGHT ) );
         errorJTextArea.setBackground( new Color( REDCOMPONENT, GREENCOMPONENT, BLUECOMPONENT ) );

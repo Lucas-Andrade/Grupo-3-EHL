@@ -2,6 +2,7 @@ package functionalcomponents;
 
 
 import java.awt.Cursor;
+import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.SwingWorker;
@@ -62,6 +63,8 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
         this.theFunctionalWindow = nonFunctionalWindow;
         
         addActionToButtons();
+        
+        theFunctionalWindow.setModalityType( ModalityType.TOOLKIT_MODAL );
         theFunctionalWindow.setVisible( true );
     }
     
@@ -82,6 +85,7 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
                 if( rightButton.getActionListeners().length == 0 ) {
                     addRightButtonAction();
                     addLeftButtonAction();
+                    
                 }
             }
     }
@@ -129,6 +133,9 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
         }
         
         );
+        
+        theFunctionalWindow.getRootPane().setDefaultButton( theFunctionalWindow.getButtonsPanel()
+                                                                               .getLeftButton() );
     }
     
     

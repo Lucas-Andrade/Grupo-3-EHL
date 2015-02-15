@@ -154,13 +154,13 @@ public class FunctionalLoginWindow extends
                                                                       password ) );
             
             try {
-                // show main window:
-                FunctionalMainWindow.getInstance();
                 // clean up the text fields of login window:
                 window.getUserPanel().getJTextField().setText( "" );
                 window.getPasswordPanel().getJTextField().setText( "" );
                 // dispose login window:
                 window.dispose();
+                // show main window:
+                FunctionalMainWindow.getInstance();
             }
             catch( LoggedInUserMissingException e ) {
                 throw new InternalErrorException(

@@ -226,9 +226,9 @@ public class FunctionalMainWindow {
     private void functionalizeTheLogOutButton() {
     
         windowBase.getHeaderPanel().getUserPanel().getLogoutButton().addActionListener( action -> {
-            new FunctionalLoginWindow();
             windowBase.dispose();
             removeLoggedUser();
+            new FunctionalLoginWindow();
         } );
     }
     

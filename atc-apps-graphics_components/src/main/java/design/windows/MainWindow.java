@@ -4,7 +4,8 @@ package design.windows;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Toolkit;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -12,6 +13,7 @@ import design.GridBagUtils;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
 import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
+import exceptions.InternalErrorException;
 
 
 /**
@@ -124,9 +126,15 @@ public class MainWindow extends JFrame {
      * {@link JBodyPanelForMainWindow}, {@link JFooterPanelForMainWindow} and {@link JTextArea}.
      */    
     private MainWindow() {
-    
+
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        this.setIconImage( Toolkit.getDefaultToolkit().getImage( "/images/radar.png" ) );
+        try {
+            this.setIconImage(  ImageIO.read( getClass().getResourceAsStream( "/images/radar.png" ) ));
+        }
+        catch( IOException e ) {
+            throw new InternalErrorException( "Image Not Found : /images/radar.png", e );
+        }
+        
         this.setTitle( "Air Traffic Control" );
         
         JPanel contentPane = new JPanel();

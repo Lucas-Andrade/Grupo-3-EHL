@@ -2,14 +2,15 @@ package functionalcomponents.functionalairshipwindows;
 
 
 import java.awt.event.ActionListener;
-import app.Utils;
+import swingworkers.AirshipsOperatorSW;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
-import swingworkers.AirshipsOperatorSW;
 import utils.CompletionStatus;
+import app.Utils;
 import design.windows.airshipwindows.PostAirshipsWindow;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
+import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 
 
 
@@ -27,15 +28,14 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< FunctionalPos
     private static PostAirshipsWindow baseWindow = new PostAirshipsWindow();
     private static SwingWorkerFactory< FunctionalPostAirshipWindow.SwingWorker, CompletionStatus > swFactory;
     private static Object factoryLock;
-    
     // CONSTRUCTOR
     /**
      * Adds functionality to a {@link PostAirshipsWindow} and displays it.
      */
-    public FunctionalPostAirshipWindow( ) {
+    public FunctionalPostAirshipWindow() {
         
         super( baseWindow );
-              
+        
         }
     
     /**
@@ -99,6 +99,8 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< FunctionalPos
         protected String minAltitude;
         protected String maxAltitude;        
         protected String specificComponent;
+        protected String loginName = FunctionalMainWindow.getLoggedUser().getIdentification();
+        protected String loginPassword = FunctionalMainWindow.getLoggedUser().getPassword();
         
         // JLabel Information
         
@@ -109,7 +111,7 @@ public class FunctionalPostAirshipWindow extends FunctionalWindow< FunctionalPos
         protected String maxAltitudeLabel;        
         protected String specificComponentLabel;
         
-     // CONSTRUCTOR
+        // CONSTRUCTOR
         public SwingWorker( PostAirshipsWindow window ) {
         
             super( window, window.getErrorJTextArea() );

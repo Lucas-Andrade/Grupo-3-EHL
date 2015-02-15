@@ -66,7 +66,7 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
     /**
      * {@code LISTPANELHEIGHT} int value that represents {@code listPanel} height.
      */
-    private static final int LISTPANELHEIGHT = 350;
+    private static int LISTPANELHEIGHT; 
     /**
      * {@code SCROLLPANELWIDTH} int value that represents {@code scrollPane} width.
      */
@@ -159,6 +159,7 @@ public abstract class ScrollPanelForEntities< E extends Entity > extends JPanel 
         }
         
         
+        LISTPANELHEIGHT=counter*20;
         
         listPanel.setLayout( new GridLayout( counter, COLUMNSNUMBERFORGRIDLAYOUT ) );
         listPanel.setPreferredSize( new Dimension( LISTPANELWIDTH, LISTPANELHEIGHT ) );

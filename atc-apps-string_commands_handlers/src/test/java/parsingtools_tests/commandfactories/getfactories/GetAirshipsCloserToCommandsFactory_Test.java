@@ -9,7 +9,7 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import parsingtools.commandfactories.CommandFactory;
-import parsingtools.commandfactories.getfactories.GetTheNearestAirshipsToGeographicPositionCommandsFactory;
+import parsingtools.commandfactories.getfactories.GetAirshipsCloserToCommandsFactory;
 import utils.StringCommandsDictionary;
 import utils.Optional;
 import databases.InMemoryAirshipsDatabase;
@@ -20,7 +20,7 @@ import elements.airships.MilitaryAirship;
 import exceptions.InvalidArgumentException;
 
 
-public class GetTheNearestAirshipsToGeographicPositionCommandsFactory_Test {
+public class GetAirshipsCloserToCommandsFactory_Test {
     
     InMemoryAirshipsDatabase airshipsDatabase;
     User user;
@@ -47,7 +47,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory_Test {
         airshipsDatabase.add(airship,user);
         airshipsDatabase.add(airship2,user);
         airshipsDatabase.add(airship3,user);
-        getTheNearestAirship = new GetTheNearestAirshipsToGeographicPositionCommandsFactory( airshipsDatabase );  
+        getTheNearestAirship = new GetAirshipsCloserToCommandsFactory( airshipsDatabase );  
         airshipsNumberKey = StringCommandsDictionary.NUMBEROFAIRSHIPSTOFIND;
         latitudeKey = StringCommandsDictionary.LATITUDE;
         longitudeKey = StringCommandsDictionary.LONGITUDE;
@@ -85,6 +85,6 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory_Test {
             shouldThrowInvalidArgumentExceptionWhenTryingToGiveANullAirShipDatabaseInTheFactory()
                 throws Exception {
         
-        new GetTheNearestAirshipsToGeographicPositionCommandsFactory( null );
+        new GetAirshipsCloserToCommandsFactory( null );
     }
 }

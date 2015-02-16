@@ -1,18 +1,28 @@
 package elements.airships;
 
 
-import elements.Airship;
 import exceptions.InvalidArgumentException;
 
 
 
 /**
- * Class whose instances will represent a specific position in space where an {@link Airship} is.
+ * Class whose instances will represent a specific position in space using a geographic coordinate
+ * system. Each point is characterized using a latitude, a longitude and an altitude value.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class GeographicPosition {
     
+    /**
+     * The extreme values for each geographic coordinate.
+     */
+    static final int MIN_ALTITUDE = 0;
+    static final int MAX_ALTITUDE = 20000;
+    private static final int MIN_LATITUDE = -90;
+    private static final int MAX_LATITUDE = 90;
+    private static final int MIN_LONGITUDE = 0;
+    private static final int MAX_LONGITUDE = 360;
+
     // Instance Fields
     
     /**
@@ -48,26 +58,23 @@ public class GeographicPosition {
      */
     public GeographicPosition( double latitude, double longitude, double altitude )
         throws InvalidArgumentException {
-        
+    
         try {
-            this.latitude = new GeographicCoordinate( latitude, 90, -90 );
-            
+            this.latitude = new GeographicCoordinate( latitude, MAX_LATITUDE, MIN_LATITUDE );            
         }
         catch( InvalidArgumentException e ) {
             throw new InvalidArgumentException( e.getMessage() + " for latitude.", e );
         }
         
         try {
-            this.longitude = new GeographicCoordinate( longitude, 360, 0 );
-            
+            this.longitude = new GeographicCoordinate( longitude, MAX_LONGITUDE, MIN_LONGITUDE );            
         }
         catch( InvalidArgumentException e ) {
             throw new InvalidArgumentException( e.getMessage() + " for longitude.", e );
         }
         
         try {
-            this.altitude = new GeographicCoordinate( altitude, 20000, 0 );
-            
+            this.altitude = new GeographicCoordinate( altitude, MAX_ALTITUDE, MIN_ALTITUDE );            
         }
         catch( InvalidArgumentException e ) {
             throw new InvalidArgumentException( e.getMessage() + " for altitude.", e );
@@ -81,12 +88,12 @@ public class GeographicPosition {
      */
     @Override
     public String toString() {
-        
+    
         return new StringBuilder( "\r\nLatitude: " ).append( latitude.getValue() )
-                                                  .append( " Longitude: " )
-                                                  .append( longitude.getValue() )
-                                                  .append( " Altitude: " )
-                                                  .append( altitude.getValue() ).toString();
+                                                    .append( " Longitude: " )
+                                                    .append( longitude.getValue() )
+                                                    .append( " Altitude: " )
+                                                    .append( altitude.getValue() ).toString();
     }
     
     // Get Methods
@@ -95,7 +102,7 @@ public class GeographicPosition {
      * @return the {@code latitude} of the {@code GeographicPosition}.
      */
     public GeographicCoordinate getLatitude() {
-        
+    
         return latitude;
     }
     
@@ -103,7 +110,7 @@ public class GeographicPosition {
      * @return the {@code longitude} of the {@code GeographicPosition}.
      */
     public GeographicCoordinate getLongitude() {
-        
+    
         return longitude;
     }
     
@@ -111,7 +118,7 @@ public class GeographicPosition {
      * @return the {@code altitude} of the {@code GeographicPosition}.
      */
     public GeographicCoordinate getAltitude() {
-        
+    
         return altitude;
     }
 }

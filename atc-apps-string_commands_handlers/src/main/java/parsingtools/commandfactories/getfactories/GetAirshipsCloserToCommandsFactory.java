@@ -26,7 +26,7 @@ import exceptions.MissingRequiredParameterException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
+public class GetAirshipsCloserToCommandsFactory extends
         CommandFactory< Optional< Iterable< Airship >>> {
     
     // INSTANCE FIELDS
@@ -49,12 +49,12 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
      * @throws InvalidArgumentException
      *             If the {@code airshipsDatabase} is null.
      */
-    public GetTheNearestAirshipsToGeographicPositionCommandsFactory( Database< Airship > airshipsDatabase )
+    public GetAirshipsCloserToCommandsFactory( Database< Airship > airshipsDatabase )
         throws InvalidArgumentException {
-        
+    
         if( airshipsDatabase == null )
             throw new InvalidArgumentException(
-                                                "It's not allow instantiate a factory with null airships database" );
+                                                "CANNOT CREATE GetAirshipsCloserToCommandsFactory WITH null DATABASE" );
         
         this.airshipsDatabase = airshipsDatabase;
     }
@@ -82,7 +82,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
     protected Callable< Optional< Iterable< Airship >>>
             internalNewCommand( Map< String, String > parametersMap )
                 throws InvalidParameterValueException, MissingRequiredParameterException {
-        
+    
         return new GetTNATGP_ParsingCommand( parametersMap ).newCommand();
     }
     
@@ -94,7 +94,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
      */
     @Override
     protected String[] getRequiredParametersNames() {
-        
+    
         return new String[]{ StringCommandsDictionary.LATITUDE, StringCommandsDictionary.LONGITUDE,
                             StringCommandsDictionary.NUMBEROFAIRSHIPSTOFIND };
     }
@@ -106,7 +106,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
      */
     @Override
     public String getCommandsDescription() {
-        
+    
         return "Get the nearest aircrafts of Geographic coordinates";
     }
     
@@ -114,8 +114,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
     // INNER CLASS
     /**
      * Class that extends {@link ParsingCommand}, whose instances will parse the
-     * {@code required parameters} and will create a
-     * {@link GetAirshipsCloserToCommand}
+     * {@code required parameters} and will create a {@link GetAirshipsCloserToCommand}
      */
     private class GetTNATGP_ParsingCommand extends ParsingCommand< Optional< Iterable< Airship >> > {
         
@@ -148,7 +147,7 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
          */
         public GetTNATGP_ParsingCommand( Map< String, String > parametersMap )
             throws InvalidParameterValueException, MissingRequiredParameterException {
-            
+        
             super( parametersMap );
             setParametersFields();
         }
@@ -158,23 +157,21 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
          */
         @Override
         public Callable< Optional< Iterable< Airship >>> newCommand() {
-            
+        
             try {
-                return new GetAirshipsCloserToCommand( airshipsDatabase,
-                                                                             numberOfAirshipsToGet,
-                                                                             latitude, longitude );
+                return new GetAirshipsCloserToCommand( airshipsDatabase, numberOfAirshipsToGet,
+                                                       latitude, longitude );
             }
             catch( InvalidArgumentException e ) {
                 throw new InternalErrorException(
-                                                  "UNEXPECTED EXCEPTION IN GetAirshipsOfOwnerCommandsFactory!",
+                                                  "UNEXPECTED ERROR IN GetAirshipsOfOwnerCommandsFactory!",
                                                   e );
                 // never happens because database is not null
             }
         }
         
         /**
-         * Set the required parameters to create an
-         * {@link GetAirshipsCloserToCommand}.
+         * Set the required parameters to create an {@link GetAirshipsCloserToCommand}.
          * 
          * @throws MissingRequiredParameterException
          *             If one parameter is null or the empty string.
@@ -183,10 +180,11 @@ public class GetTheNearestAirshipsToGeographicPositionCommandsFactory extends
          */
         private void setParametersFields()
             throws InvalidParameterValueException, MissingRequiredParameterException {
-            
+        
             latitude = getParameterAsDouble( StringCommandsDictionary.LATITUDE );
             longitude = getParameterAsDouble( StringCommandsDictionary.LONGITUDE );
-            numberOfAirshipsToGet = getParameterAsInt( StringCommandsDictionary.NUMBEROFAIRSHIPSTOFIND );
+            numberOfAirshipsToGet =
+                    getParameterAsInt( StringCommandsDictionary.NUMBEROFAIRSHIPSTOFIND );
         }
     }
 }

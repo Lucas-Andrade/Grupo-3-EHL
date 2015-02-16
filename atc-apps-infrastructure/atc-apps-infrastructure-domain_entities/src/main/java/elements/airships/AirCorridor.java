@@ -6,8 +6,8 @@ import exceptions.InvalidArgumentException;
 
 
 /**
- * Class whose instances will represent the correct flight path an {@code Airship} is allowed to
- * use.
+ * Class whose instances will represent an altitude air corridor delimited by a minimum and a
+ * maximum altitude.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -40,14 +40,16 @@ public class AirCorridor {
      *             than the {@code minAltitude}.
      */
     public AirCorridor( double maxAltitude, double minAltitude ) throws InvalidArgumentException {
-        
+    
         if( minAltitude < 0 )
             throw new InvalidArgumentException(
-                                                "Minimum altitude of an air corridor must be greater than 0." );
+                                                "Minimum altitude of air corridors must be greater than "
+                                                        + GeographicPosition.MIN_ALTITUDE );
         
         if( maxAltitude < minAltitude )
             throw new InvalidArgumentException(
-                                                "Maximum altitude of an air corridor must be greater than the minimum altitude." );
+                                                "Maximum altitude of air corridors must be greater "
+                                                        + "than the minimum altitude." );
         
         this.maxAltitude = maxAltitude;
         this.minAltitude = minAltitude;
@@ -60,11 +62,11 @@ public class AirCorridor {
      */
     @Override
     public String toString() {
-        
+    
         return new StringBuilder( "\r\nMaximum Altitude Permited: " ).append( maxAltitude )
-                                                                   .append( " Minimum Altitude Permited: " )
-                                                                   .append( minAltitude )
-                                                                   .append( "\r\n" ).toString();
+                                                                     .append( " Minimum Altitude Permited: " )
+                                                                     .append( minAltitude )
+                                                                     .append( "\r\n" ).toString();
     }
     
     // Get Methods
@@ -73,7 +75,7 @@ public class AirCorridor {
      * @return returns the {@code maxAltitude}.
      */
     public double getMaxAltitude() {
-        
+    
         return maxAltitude;
     }
     
@@ -81,7 +83,7 @@ public class AirCorridor {
      * @return returns the {@code minAltitude}.
      */
     public double getMinAltitude() {
-        
+    
         return minAltitude;
     }
 }

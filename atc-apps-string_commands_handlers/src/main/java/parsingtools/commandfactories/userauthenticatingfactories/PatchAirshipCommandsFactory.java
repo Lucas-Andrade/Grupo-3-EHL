@@ -184,7 +184,7 @@ public class PatchAirshipCommandsFactory extends
                 flightId = getParameterAsString( StringCommandsDictionary.FLIGHTID );
             }
             catch( MissingRequiredParameterException e ) {
-                flightId = null;
+                throw new InternalErrorException( e.getMessage(), e );
             }
             
             latitude = getParameterValueOrNull( StringCommandsDictionary.LATITUDE );

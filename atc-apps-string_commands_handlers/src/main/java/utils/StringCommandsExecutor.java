@@ -223,6 +223,7 @@ public class StringCommandsExecutor implements Executor {
     
         String filePath = findValueOf( StringCommandsDictionary.STREAM );
         if( filePath == null || !supportsOutputCustomization() )
+            // NOSONAR
             return System.out;
         
         try {

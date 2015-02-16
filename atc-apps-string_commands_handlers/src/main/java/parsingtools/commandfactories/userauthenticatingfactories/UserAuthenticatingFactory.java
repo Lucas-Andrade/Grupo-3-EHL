@@ -1,11 +1,12 @@
 package parsingtools.commandfactories.userauthenticatingfactories;
 
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.concurrent.Callable;
 import parsingtools.commandfactories.CommandFactory;
-import utils.StringCommandsDictionary;
 import utils.Optional;
+import utils.StringCommandsDictionary;
 import utils.StringUtils;
 import commands.AuthenticateUserCommand;
 import databases.Database;
@@ -67,7 +68,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
      */
     public UserAuthenticatingFactory( Database< User > usersDatabase, Database< E > databaseToChange )
         throws InvalidArgumentException {
-        
+    
         if( usersDatabase == null || databaseToChange == null )
             throw new InvalidArgumentException( "Cannot instantiate factory with null databases." );
         
@@ -107,10 +108,11 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
      * @throws WrongLoginPasswordException
      *             If the login password received does not match the login username's password.
      */
+    @Override
     protected final Callable< R > internalNewCommand( Map< String, String > parametersMap )
         throws MissingRequiredParameterException, InvalidParameterValueException,
         NoSuchElementInDatabaseException, WrongLoginPasswordException, InvalidArgumentException {
-        
+    
         /* Uses the TEMPLATE METHOD design pattern */
         
         User authenticatedUser = authenticateAndGetAuthenticatedUser( parametersMap );
@@ -150,10 +152,11 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
     // used in the method internalNewCommand(Map)
     /**
      * Checks whether the value of the parameter with name
-     * {@link StringCommandsDictionary#LOGINPASSWORD} contained in {@code parametersMap} is the correct
-     * password of the {@link User} stored in {@link #usersDatabase} whose username is the value of
-     * the parameter {@link StringCommandsDictionary#LOGINNAME} contained in the {@code parametersMap}.
-     * Returns the {@link User} stored in {@link #usersDatabase} if the password is correct.
+     * {@link StringCommandsDictionary#LOGINPASSWORD} contained in {@code parametersMap} is the
+     * correct password of the {@link User} stored in {@link #usersDatabase} whose username is the
+     * value of the parameter {@link StringCommandsDictionary#LOGINNAME} contained in the
+     * {@code parametersMap}. Returns the {@link User} stored in {@link #usersDatabase} if the
+     * password is correct.
      * 
      * @param parametersMap
      *            The container of parameters that shall contain the keys
@@ -163,7 +166,8 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
      * @throws MissingRequiredParameterException
      *             If either of the values of the parameters with names
      *             {@link StringCommandsDictionary#LOGINNAME} and
-     *             {@link StringCommandsDictionary#LOGINPASSWORD} are {@code null} or the empty-string.
+     *             {@link StringCommandsDictionary#LOGINPASSWORD} are {@code null} or the
+     *             empty-string.
      * 
      * @throws NoSuchElementInDatabaseException
      *             If {@link #usersDatabase} contains no {@link User} with a username that matches
@@ -171,13 +175,13 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
      *             received in {@code parametersMap}.
      * @throws WrongLoginPasswordException
      *             If the given password does not match with user password. This exception's message
-     *             is <i>«Wrong password: {@link StringCommandsDictionary#LOGINNAME}'s password is not
-     *             {@link StringCommandsDictionary#LOGINPASSWORD}.»</i>
+     *             is <i>«Wrong password: {@link StringCommandsDictionary#LOGINNAME}'s password is
+     *             not {@link StringCommandsDictionary#LOGINPASSWORD}.»</i>
      */
     private User authenticateAndGetAuthenticatedUser( Map< String, String > parametersMap )
         throws NoSuchElementInDatabaseException, WrongLoginPasswordException,
         MissingRequiredParameterException {
-        
+    
         Callable< Optional< User > > authenticateUserCommand;
         try {
             
@@ -227,8 +231,9 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
      * @return An array of {@link String strings} that has the names of the parameters without whom
      *         the command cannot execute.
      */
+    @Override
     protected final String[] getRequiredParametersNames() {
-        
+    
         String[] requiredParams =
                 copyToNewArrayWith2MorePositions( getSpecificRequiredParametersNames() );
         requiredParams[requiredParams.length - 2] = StringCommandsDictionary.LOGINNAME;
@@ -261,16 +266,18 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
      *         {@code arrayToBeCopied}.
      */
     private String[] copyToNewArrayWith2MorePositions( String[] arrayToBeCopied ) {
-        
+    
         if( arrayToBeCopied == null )
             return new String[2];
         
-        String[] result = new String[arrayToBeCopied.length + 2];
+        // TODO
+//        String[] result = new String[arrayToBeCopied.length + 2];
+//        for( int index = 0; index < arrayToBeCopied.length; ++index )
+//            result[index] = arrayToBeCopied[index];
+//        
+//        return result;
         
-        for( int index = 0; index < arrayToBeCopied.length; ++index )
-            result[index] = arrayToBeCopied[index];
-        
-        return result;
+        return Arrays.copyOf( arrayToBeCopied, arrayToBeCopied.length + 2 );
     }
     
 }

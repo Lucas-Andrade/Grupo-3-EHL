@@ -70,7 +70,7 @@ public final class StringCommandsDictionary {
     public static final String ACCEPT = "accept";
     public static final String STREAM = "output-file";
     
-    // TRANSLATOR RELATED. ACCEPT PARAMETER VALUES
+    // OUTPUT RELATED. ACCEPT PARAMETER VALUES
     
     public static final String HTML = "text/html";
     public static final String JSON = "application/json";

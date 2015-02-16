@@ -24,127 +24,106 @@ import org.junit.Test;
 public class ServerAndServlet_Tests {
     
     private static Process process;
+    private HttpURLConnection connection;
     
     // Before Class
     
     @BeforeClass
     public static void starRequestProcess() throws IOException {
     
-        process =
-                Runtime.getRuntime()
-                       .exec( "cd .. .. .. target classes AirTrafficControlServer.class" );
+//        process =
+//                Runtime.getRuntime()
+//                       .exec( "cd .. .. .. target classes AirTrafficControlServer.class" );
     }
     
     // Test Gets
     
     @Test
     public void testGetUsers() throws MalformedURLException, IOException {
-    
-        String url = "http://localhost:8081/users";
         
-        HttpURLConnection connection = (HttpURLConnection)new URL( url ).openConnection();
+        createNewConnection( "http://localhost:8081/users" );
         
-        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
+        assertOkResponse();
     }
     
     @Test
     public void testGetUserByUsername() throws MalformedURLException, IOException {
-    
-        String url = "http://localhost:8081/users/MASTER";
         
-        HttpURLConnection connection = (HttpURLConnection)new URL( url ).openConnection();
+        createNewConnection( "http://localhost:8081/users/MASTER" );
         
-        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
+        assertOkResponse();
     }
     
     @Test
     public void testAuthenticateUser() throws MalformedURLException, IOException {
-    
-        String url = "http://localhost:8081/users/authenticate";
         
-        HttpURLConnection connection = (HttpURLConnection)new URL( url ).openConnection();
+        createNewConnection( "http://localhost:8081/users/authenticate" );
         
-        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
+        assertOkResponse();
     }
     
     @Test
     public void testGetAirships() throws MalformedURLException, IOException {
-    
-        String url = "http://localhost:8081/airships";
         
-        HttpURLConnection connection = (HttpURLConnection)new URL( url ).openConnection();
+        createNewConnection( "http://localhost:8081/airships" );
         
-        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
+        assertOkResponse();
     }
     
     @Test
     public void testGetAirshipByID() throws MalformedURLException, IOException {
-    
-        String url = "http://localhost:8081/airships/id1";
         
-        HttpURLConnection connection = (HttpURLConnection)new URL( url ).openConnection();
+        createNewConnection( "http://localhost:8081/airships/id1" );
         
-        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
+        assertOkResponse();
     }
     
     @Test
     public void testGetAirshipOfUser() throws MalformedURLException, IOException {
-    
-        String url = "http://localhost:8081/airships/owner/MASTER";
         
-        HttpURLConnection connection = (HttpURLConnection)new URL( url ).openConnection();
+        createNewConnection( "http://localhost:8081/airships/owner/MASTER" );
         
-        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
+        assertOkResponse();
     }
     
     @Test
     public void testGetAirshipWithLessThan() throws MalformedURLException, IOException {
-    
-        String url = "http://localhost:8081/airships/nbPassengers/10/bellow";
         
-        HttpURLConnection connection = (HttpURLConnection)new URL( url ).openConnection();
+        createNewConnection( "http://localhost:8081/airships/nbPassengers/10/bellow" );
         
-        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
+        assertOkResponse();
     }
     
     @Test
     public void testGetTransgressingAirships() throws MalformedURLException, IOException {
-    
-        String url = "http://localhost:8081/airships/reports";
         
-        HttpURLConnection connection = (HttpURLConnection)new URL( url ).openConnection();
+        createNewConnection( "http://localhost:8081/airships/reports" );
         
-        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
+        assertOkResponse();
     }
     
     @Test
     public void testCheckIfAirshipIsTransgressing() throws MalformedURLException, IOException {
-    
-        String url = "http://localhost:8081/airships/reports/id1";
         
-        HttpURLConnection connection = (HttpURLConnection)new URL( url ).openConnection();
+        createNewConnection( "http://localhost:8081/airships/reports/id1" );
         
-        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
+        assertOkResponse();
     }
     
     @Test
     public void testGetAirshipsCloserTo() throws MalformedURLException, IOException {
-    
-        String url = "http://localhost:8081/airships/find";
         
-        HttpURLConnection connection = (HttpURLConnection)new URL( url ).openConnection();
+        createNewConnection( "http://localhost:8081/airships/find" );
         
-        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
+        assertOkResponse();
     }
     
     // Test Posts
     
     @Test
     public void testPostUsers() throws MalformedURLException, IOException {
-    
-        String url = "http://localhost:8081/users";
         
-        HttpURLConnection connection = (HttpURLConnection)new URL( url ).openConnection();
+        createNewConnection( "http://localhost:8081/users" );
         
         connection.setRequestMethod( "POST" );
         connection.setDoOutput( true );
@@ -156,12 +135,10 @@ public class ServerAndServlet_Tests {
         br.write( "loginName=MASTER&loginPassword=master&username=Daniel&password=daniel&email=d@d&fullname=danielacgomes" );
         br.close();
         
-        
-        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
+        assertOkResponse();
     }
     
     // Test Errors
-    
     
     
     // After Class
@@ -170,5 +147,18 @@ public class ServerAndServlet_Tests {
     public static void destroyProcess() {
     
         process.destroy();
+    }
+    
+    // Private Auxiliar Methods
+    
+    private void createNewConnection( String url )
+        throws MalformedURLException, IOException {
+    
+        connection = (HttpURLConnection)new URL( url ).openConnection();
+    }
+
+    private void assertOkResponse() throws IOException {
+        
+        Assert.assertEquals( HttpServletResponse.SC_OK, connection.getResponseCode() );
     }
 }

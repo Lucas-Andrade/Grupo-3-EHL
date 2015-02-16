@@ -1,13 +1,19 @@
 package swingworkers.airships;
 
 
-import javax.swing.JTextArea;
+import java.util.ArrayList;
+import java.util.Collection;
 import swingworkers.AirshipsGetterSW;
 import swingworkers.SwingWorkerFactory;
 import utils.ClientRequest;
+import utils.GetClientRequest;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import entities.SimpleAirship;
+import exceptions.MissingRequiredParameterException;
 import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker;
+import functionalcomponents.functionalmainwindow.FunctionalFooterPanel;
+import gson_entities.AirshipFromJson;
 
 
 /**
@@ -19,16 +25,13 @@ import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCo
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetAllTransgressingAirshipsSwingWorker extends AirshipsGetterSW {
+public class GetTransgressingAirshipsSW extends
+        FunctionalFooterPanel.GetTrangressingAirshipsSW {
     
-    
-    // INSTANCE FIELD
-    private static JTextArea errorTextArea;
     
     // CONSTRUCTOR
-    public GetAllTransgressingAirshipsSwingWorker() {
+    public GetTransgressingAirshipsSW() {
     
-        super( errorTextArea );
     }
     
     // IMPLEMENTATION OF METHODS INHERITED FROM
@@ -36,51 +39,57 @@ public class GetAllTransgressingAirshipsSwingWorker extends AirshipsGetterSW {
     
     /**
      * Implementation of the {@link SwingWorker#doInBackground() doInBackground()} method with the
-     * purpose purpose of create a request with the info needed to be executed.  
+     * purpose purpose of create a request with the info needed to be executed.
      * 
      * @return Returns a {@link Iterable} of {@link SimpleAirship}s.
      */
     @Override
     protected Iterable< SimpleAirship > doInBackground() throws Exception {
     
-        ClientRequest request = new ClientRequest( "GET", "/airships/reports" ) {
+        ClientRequest request = new GetClientRequest("airships/reports") {
             
             @Override
-            public void createParameters() {
-            
+            public void createParameters() throws MissingRequiredParameterException {
+
             }
-            
         };
         
-        if( request.createConnection() )
-            
-            new Gson().fromJson( request.getResponse(), Iterable.class );
+        Iterable< AirshipFromJson > airshipsFromJson =
+                new Gson().fromJson( request.getResponse(),
+                                     new TypeToken< ArrayList< AirshipFromJson >>() {}.getType() );
         
-        throw new Exception( request.getResponse() );
+        
+        
+        Collection< SimpleAirship > simpleAirships = new ArrayList<>();
+        
+        for( AirshipFromJson airship : airshipsFromJson )
+            simpleAirships.add( airship.convert() );
+        
+        return simpleAirships;
     }
     
     // INNER CLASS
     /**
      * Inner class responsible for produce a new instance of
-     * {@link GetAllTransgressingAirshipsSwingWorker}
+     * {@link GetTransgressingAirshipsSW}
      * 
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
     
     public static class Factory implements
-            SwingWorkerFactory< AirshipsGetterSW, Iterable< SimpleAirship > > {
+            SwingWorkerFactory< FunctionalFooterPanel.GetTrangressingAirshipsSW, Iterable< SimpleAirship > > {
         
         /**
          * Implementation of the {@link SwingWorkerFactory#newInstance()} method with the purpose of
-         * create a {@link GetAllTransgressingAirshipsSwingWorker}
+         * create a {@link GetTransgressingAirshipsSW}
          * 
-         * @return Returns a {@link GetAllTransgressingAirshipsSwingWorker}
+         * @return Returns a {@link GetTransgressingAirshipsSW}
          */
         @Override
-        public AirshipsGetterSW newInstance() {
+        public FunctionalFooterPanel.GetTrangressingAirshipsSW newInstance() {
         
-            return new GetAllTransgressingAirshipsSwingWorker();
+            return new GetTransgressingAirshipsSW();
             
         }
         

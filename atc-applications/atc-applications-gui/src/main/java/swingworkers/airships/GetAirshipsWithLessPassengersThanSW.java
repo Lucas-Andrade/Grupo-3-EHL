@@ -18,7 +18,7 @@ import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLe
 
 /**
  * Class whose instances have the purpose of add functionality to a
- * {@link GetAirshipsWithLessPassengersThanWindowSW}.
+ * {@link GetAirshipsWithLessPassengersThanSW}.
  *
  * Extends {@link FunctionalGetAirshipsWithLessPassengersThanWindow}.
  *
@@ -26,13 +26,13 @@ import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLe
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 
-public class GetAirshipsWithLessPassengersThanWindowSW extends
+public class GetAirshipsWithLessPassengersThanSW extends
         FunctionalGetAirshipsWithLessPassengerThanWindow.SwingWorker {
     
     private Database< Airship > airshipsDatabase;
     private Collection< SimpleAirship > simpleAirshipsWithLessPassengers = new ArrayList<>();
     
-    public GetAirshipsWithLessPassengersThanWindowSW( GetAirshipsWithLessPassengerThanWindow window,
+    public GetAirshipsWithLessPassengersThanSW( GetAirshipsWithLessPassengerThanWindow window,
                                                       Database< Airship > airshipsDatabase ) {
     
         super( window );
@@ -71,7 +71,7 @@ public class GetAirshipsWithLessPassengersThanWindowSW extends
     // INNER CLASS
     /**
      * Inner class responsible for produce a new instance of
-     * {@link GetAirshipsWithLessPassengersThanWindowSW}
+     * {@link GetAirshipsWithLessPassengersThanSW}
      * 
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -96,15 +96,15 @@ public class GetAirshipsWithLessPassengersThanWindowSW extends
         
         /**
          * Implementation of the {@link SwingWorkerFactory#newInstance()} method with the purpose of
-         * create a {@link GetAirshipsWithLessPassengersThanWindowSW}
+         * create a {@link GetAirshipsWithLessPassengersThanSW}
          * 
-         * @return Returns a {@link GetAirshipsWithLessPassengersThanWindowSW}
+         * @return Returns a {@link GetAirshipsWithLessPassengersThanSW}
          */
         
         @Override
         public SwingWorker newInstance() {
         
-            return new GetAirshipsWithLessPassengersThanWindowSW( window, airshipDatabase );
+            return new GetAirshipsWithLessPassengersThanSW( window, airshipDatabase );
         }
         
     }

@@ -48,7 +48,7 @@ public class GetAllAirshipsSW extends BodyPanelFunctionalizer.SwingWorker {
     // INNER CLASS
     /**
      * Inner class responsible for produce a new instance of
-     * {@link GetTransgressingAirshipsWindowSW}
+     * {@link GetTransgressingAirshipsSW}
      * 
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -70,9 +70,9 @@ public class GetAllAirshipsSW extends BodyPanelFunctionalizer.SwingWorker {
         
         /**
          * Implementation of the {@link SwingWorkerFactory#newInstance()} method with the purpose of
-         * create a {@link GetTransgressingAirshipsWindowSW}
+         * create a {@link GetTransgressingAirshipsSW}
          * 
-         * @return Returns a {@link GetTransgressingAirshipsWindowSW}
+         * @return Returns a {@link GetTransgressingAirshipsSW}
          */
         @Override
         public GetAllAirshipsSW newInstance() {

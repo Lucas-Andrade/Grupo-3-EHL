@@ -273,9 +273,10 @@ public class StringCommandsExecutor implements Executor {
      * @throws DuplicateParametersException
      *             If several values for the same parameter have been received in the
      *             parameters-list.
+     * @throws UnsupportedAcceptValueException 
      */
     private Map< String, String > getParametersFromParametersList()
-        throws InvalidCommandParametersSyntaxException, DuplicateParametersException {
+        throws InvalidCommandParametersSyntaxException, DuplicateParametersException, UnsupportedAcceptValueException {
     
         Map< String, String > parametersMap = new HashMap< String, String >();
         if( args.length == 2 )
@@ -287,7 +288,13 @@ public class StringCommandsExecutor implements Executor {
             String[] nameAndValue = parameter.split( "=" );
             if( nameAndValue.length != 2 )
                 throw new InvalidCommandParametersSyntaxException(
-                                                                   "Invalid syntax in parameters-list!");
+
+                                                                   "Invalid syntax in parameters-list! Parameter with name: "
+                                                                           + nameAndValue[0] );
+            if( nameAndValue[0] == "accept"
+                && (!nameAndValue[1].equals( "text/html" )
+                    || !nameAndValue[1].equals( "application/json" ) || !nameAndValue[1].equals( "text/plain" )) )
+                throw new UnsupportedAcceptValueException( "Unsupported Accept" );
             
             String parameterName = nameAndValue[0];
             String parameterValue = nameAndValue[1];
@@ -377,7 +384,8 @@ public class StringCommandsExecutor implements Executor {
         }
         catch( UnknownTypeException | UnknownTranslatableException e ) {
             // Not Supposed To Happen
-            throw new InternalErrorException( e.getMessage(), e );
+
+            throw new InternalErrorException( e.getMessage() );
         }
     }
     

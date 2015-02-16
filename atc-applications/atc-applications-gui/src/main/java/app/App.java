@@ -3,10 +3,10 @@ package app;
 
 import swingworkers.LoginWindowSW;
 import swingworkers.airships.GetAirshipByIdSW;
-import swingworkers.airships.GetAirshipsWithLessPassengersThanWindowSW;
+import swingworkers.airships.GetAirshipsWithLessPassengersThanSW;
 import swingworkers.airships.GetAllAirshipsSW;
 import swingworkers.airships.GetAirshipsCloserToSW;
-import swingworkers.airships.GetTransgressingAirshipsWindowSW;
+import swingworkers.airships.GetTransgressingAirshipsSW;
 import swingworkers.airships.PostAirshipSW;
 import swingworkers.users.GetAllUsersSW;
 import swingworkers.users.GetUserByIdSW;
@@ -120,10 +120,10 @@ public class App {
                 new GetAirshipsCloserToSW.Factory(
                                                                     FunctionalGetGeographicalCoordinatesParametersWindow.baseWindow,
                                                                     airshipsDatabase );
-        GetTransgressingAirshipsWindowSW.Factory getTransgressingAirshipsFactory =
-                new GetTransgressingAirshipsWindowSW.Factory( airshipsDatabase );
-        GetAirshipsWithLessPassengersThanWindowSW.Factory getAirshipsWithLessPassengersFact =
-                new GetAirshipsWithLessPassengersThanWindowSW.Factory(
+        GetTransgressingAirshipsSW.Factory getTransgressingAirshipsFactory =
+                new GetTransgressingAirshipsSW.Factory( airshipsDatabase );
+        GetAirshipsWithLessPassengersThanSW.Factory getAirshipsWithLessPassengersFact =
+                new GetAirshipsWithLessPassengersThanSW.Factory(
                                                                        FunctionalGetAirshipsWithLessPassengerThanWindow.baseWindow,
                                                                        airshipsDatabase );
         PostAirshipSW.Factory postAirshipFactory =

@@ -4,7 +4,6 @@ package swingworkers.users;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import swingworkers.SwingWorkerForButtonFactory;
-import swingworkers.airships.GetAirshipByIdSW.Factory;
 import app.EntitiesConversor;
 import commands.getcommands.GetElementFromADatabaseByIdCommand;
 import databases.Database;

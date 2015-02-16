@@ -2,14 +2,11 @@ package utils;
 
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
-import utils.StringCommandsDictionary;
+import exceptions.MissingRequiredParameterException;
 
 
 
@@ -25,15 +22,17 @@ public abstract class ClientRequest {
     
     
     private final String HTTP_LOCALHOST = "http://localhost:8081/";
-    private final String method;
-    private final StringBuilder url;
-    private final StringBuilder parameters;
     
-    private HttpURLConnection connection;
+    protected HttpURLConnection connection;
+
+    protected final String method;
+    protected final StringBuilder url;
+    protected final StringBuilder parameters;
+    
     
     /**
      * Create a {@code ClientRequest} with the given {@code method} and {@code path}. This
-     * {@code ClientRequest} will {@link ClientRequest#createConnection() create a connection} to
+     * {@code ClientRequest} will {@link ClientRequest#setConnection() create a connection} to
      * the {@code HTTP_LOCALHOST}. Before calling this method it should be added all necessary
      * {@code parameters} within the {@link ClientRequest#createParameters() createParameters()}
      * method.
@@ -45,29 +44,64 @@ public abstract class ClientRequest {
      *            - The HTTP method.
      * @param path
      *            - The URL path.
+     * @throws MissingRequiredParameterException
+     * @throws IOException 
+     * @throws MalformedURLException 
      */
-    public ClientRequest( String method, String path ) {
+    public ClientRequest( String method, String path ) throws MissingRequiredParameterException, MalformedURLException, IOException {
     
         this.method = method;
         url = new StringBuilder( HTTP_LOCALHOST ).append( path );
-        parameters = new StringBuilder( "?" );
+        parameters = new StringBuilder();
         createParameters();
+        setConnection();
     }
     
-    // Abstract Class
+    // Abstract method
     /**
      * Abstract method that should be used to create a "list of parameters", e.g., creating the
      * {@code QueryString} for a GET {@code method}. If its not a GET {@code method} this
      * {@code parameters} will be added to the {@code HTTP message body}.
      * 
-     * To create a new parameters use the {@link ClientRequest#newParameter(String, String)} or
+     * To create a new parameters use the {@link ClientRequest#addNewParameter(String, String)} or
      * {@link ClientRequest#addAuthenticateParameters} methods.
+     * 
+     * @throws MissingRequiredParameterException
      */
-    public abstract void createParameters();
+    public abstract void createParameters() throws MissingRequiredParameterException;
+    
+    /**
+     * Get the response from the {@code Server}.
+     * 
+     * @return A String-response
+     * 
+     * @throws IOException
+     *             If an I/O error occurs; or if the protocol does not support input.
+     */
+    public String getResponse() throws IOException, Exception {
+    
+        if( createConnection() ) {
+            
+            BufferedReader reader =
+                    new BufferedReader( new InputStreamReader( connection.getInputStream() ) );
+            
+            
+            String inputLine;
+            StringBuilder response = new StringBuilder();
+            
+            while( (inputLine = reader.readLine()) != null ) {
+                response.append( inputLine );
+            }
+            
+            reader.close();
+            return response.toString();
+        }
+        throw new Exception( connection.getResponseMessage() );
+        
+    }
     
     
-    
-    // Public Class
+    // Public method
     /**
      * Create a connection to the {@code Sever}, adding first the {@code parameters} to the
      * {@code QueryString} or {@code HTTP message body}. Returns the status code from an HTTP
@@ -86,40 +120,22 @@ public abstract class ClientRequest {
      * @throws IOException
      *             If an I/O error occurs or an error occurred connecting to the server.
      */
-    public boolean createConnection() throws MalformedURLException, IOException {
+    protected void setConnection() throws MalformedURLException, IOException {
     
-        writeParameters();
-        connection = (HttpURLConnection)new URL( url.toString() ).openConnection();
         connection.setRequestProperty( "Accept", "application/json" );
+        connection.setRequestProperty( "Content-Type", "application/x-www-form-urlencoded" );
+        connection.setRequestProperty( "charset", "utf-8" );
         connection.setRequestMethod( method );
         
+        
+    }
+    
+    public boolean createConnection() throws IOException
+    {
         return connection.getResponseCode() == 200;
     }
     
-    /**
-     * Get the response from the {@code Server}.
-     * 
-     * @return A String-response
-     * 
-     * @throws IOException
-     *             If an I/O error occurs; or if the protocol does not support input.
-     */
-    public String getResponse() throws IOException {
-    
-        BufferedReader reader =
-                new BufferedReader( new InputStreamReader( connection.getInputStream() ) );
-        
-        String inputLine;
-        StringBuilder response = new StringBuilder();
-        
-        while( (inputLine = reader.readLine()) != null ) {
-            response.append( inputLine );
-        }
-        
-        reader.close();
-        
-        return response.toString();
-    }
+   
     
     
     
@@ -136,9 +152,10 @@ public abstract class ClientRequest {
     protected void addAuthenticateParameters( String loginName, String loginPassword ) {
     
         
-        parameters.append( StringCommandsDictionary.LOGINNAME ).append( "=" ).append( loginName )
-                  .append( "&" ).append( StringCommandsDictionary.LOGINPASSWORD ).append( "=" )
-                  .append( loginPassword ).append( "&" );
+        parameters.append( "&" ).append( StringCommandsDictionary.LOGINNAME ).append( "=" )
+                  .append( loginName ).append( "&" )
+                  .append( StringCommandsDictionary.LOGINPASSWORD ).append( "=" )
+                  .append( loginPassword );
     }
     
     /**
@@ -149,29 +166,13 @@ public abstract class ClientRequest {
      * @param parameterValue
      *            - The parameter value
      */
-    protected void newParameter( String parameterName, String parameterValue ) {
+    protected void addNewParameter( String parameterName, String parameterValue ) {
     
-        parameters.append( parameterName ).append( "=" ).append( parameterValue ).append( "&" );
+        parameters.append( "&" ).append( parameterName ).append( "=" ).append( parameterValue );
     }
     
     
-    /**
-     * Write the {@code parameters} to the {@code QueryString} if {@code method} equals to GET,
-     * otherwise write them to the {@code HTTP message body}.
-     * 
-     * @throws IOException
-     *             If an I/O error occurs while creating the output stream.
-     */
-    private void writeParameters() throws IOException {
+
     
-        if( method.equals( "GET" ) )
-            url.append( parameters );
-        else {
-            connection.setDoOutput( true );
-            BufferedWriter reader =
-                    new BufferedWriter( new OutputStreamWriter( connection.getOutputStream() ) );
-            
-            reader.write( parameters.toString() );
-        }
-    }
+   
 }

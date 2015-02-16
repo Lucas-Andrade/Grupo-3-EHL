@@ -225,7 +225,7 @@ public class AirTrafficControlServelet extends HttpServlet {
                                    String[] acceptValuesList, int i ) throws IOException {
     
         if( i >= acceptValuesList.length )
-            resp.sendError( HttpServletResponse.SC_NOT_ACCEPTABLE, "Unsupported Accept Values" );
+            resp.sendError( HttpServletResponse.SC_NOT_ACCEPTABLE, "Unsupported Accept Values!" );
         
         if( acceptValuesList[i].contains( "=" ) )
             updateParameters( resp, args, args2, acceptValuesList, i++ );

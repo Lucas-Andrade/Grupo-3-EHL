@@ -31,7 +31,7 @@ public class ServerAndServlet_Tests {
     // Before Class - Not Implemented!
     
     @BeforeClass
-    public static void starRequestProcess() throws IOException {
+    public static void startRequestProcess() throws IOException {
     
 //        process =
 //                Runtime.getRuntime()
@@ -137,7 +137,7 @@ public class ServerAndServlet_Tests {
         createNewConnection( "http://localhost:8081/users" );
         
         br = setPostMethod();
-        br.write( "loginName=MASTER&loginPassword=master&username=Daniel&password=daniel&email=d@d&fullname=danielacgomes" );
+        br.write( "loginName=MASTER&loginPassword=master&username=Manuel&password=manuel&email=d@d&fullname=danielacgomes" );
         br.close();
         
         assertOkResponse();
@@ -154,7 +154,7 @@ public class ServerAndServlet_Tests {
         
         assertOkResponse();
     }
-
+    
     // Test Errors
     
     @Test
@@ -164,8 +164,7 @@ public class ServerAndServlet_Tests {
         // Test InvalidCommandParametersSyntaxException
         createNewConnection( "http://localhost:8081/airships/find?nbAirships=2&latitude==0&longitude=0" );
         Assert.assertEquals( HttpServletResponse.SC_BAD_REQUEST, connection.getResponseCode() );
-        Assert.assertEquals( "Invalid syntax in parameters-list!",
-                             connection.getResponseMessage() );
+        Assert.assertEquals( "Invalid syntax in parameters-list!", connection.getResponseMessage() );
         
         // Test InvalidParameterException
         createNewConnection( "http://localhost:8081/airships/find?nbAirships=2&latitude=300&longitude=0" );
@@ -195,6 +194,12 @@ public class ServerAndServlet_Tests {
         Assert.assertEquals( HttpServletResponse.SC_UNAUTHORIZED, connection.getResponseCode() );
         Assert.assertEquals( "Wrong password: MASTER's password is not erro.",
                              connection.getResponseMessage() );
+        
+        // Test UnsupportedAcceptValueException
+        createNewConnection( "http://localhost:8081/users/authenticate?loginName=MASTER&loginPassword=master" );
+        connection.setRequestProperty( "Accept", "text/erro" );
+        Assert.assertEquals( HttpServletResponse.SC_NOT_ACCEPTABLE, connection.getResponseCode() );
+        Assert.assertEquals( "Unsupported Accept Values!", connection.getResponseMessage() );
     }
     
     // After Class - Not Implemented!

@@ -138,11 +138,17 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
      * 
      * @return A list of {@link #Airship airships} stored in this database that were added by the
      *         {@link User} with the given {@code username}.
+     * @throws InvalidArgumentException
+     *             If {@code username} is {@code null}.
      * 
      * @see Optional
      */
-    public Optional< Iterable< Airship >> getElementsByUser( String username ) {
+    @Override
+    public Optional< Iterable< Airship >> getElementsByUser( String username )
+        throws InvalidArgumentException {
     
+        if( username == null )
+            throw new InvalidArgumentException( "username CANNOT BE NULL!" );
         List< Airship > list = flightsByUserRegister.get( username );
         
         if( list == null )
@@ -204,4 +210,5 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
                 }
         }
     }
+
 }

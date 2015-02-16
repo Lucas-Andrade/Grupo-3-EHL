@@ -4,10 +4,10 @@ package utils;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.Callable;
 import outputformatters.Translatable;
 import outputformatters.totranslatableconverters.ToTranslatableConverter;
@@ -66,14 +66,14 @@ public class StringCommandsExecutor implements Executor {
      * The mapping between strings that may be contained in the string-command and the
      * {@link Translator} instance they correspond to (uses the {@link StringCommandsDictionary}).
      */
-    public static final Map< String, Translator > TRANSLATORS = new HashMap< String, Translator >();
+    public static final Map< String, Translator > TRANSLATORS;
     
     /**
      * The list of the methods ({@code args[0]}) of string-commands that support the output
      * customization settings coded in the parameters with names
      * {@link StringCommandsDictionary#ACCEPT} and {@link StringCommandsDictionary#STREAM}.
      */
-    public static final List< String > methodsThatSupportOutputCustomization = new ArrayList<>();
+    public static final Set< String > METHODS_THAT_SUPPORT_OUTPUT_CUSTOMIZATION;
     
     /**
      * Initializes the fields {@link #TRANSLATORS} and {@link #methodsThatSupportAcceptAndStream} .
@@ -81,19 +81,23 @@ public class StringCommandsExecutor implements Executor {
     static {
         
         /*TRANSLATORS*/
+        TRANSLATORS = new HashMap< String, Translator >();
         try {
-            TRANSLATORS.put( StringCommandsDictionary.HTML, new ToHtmlTranslator( 5 ) );
+            int indentationNumberOfSpacesOnHtmlFormat = 5;
+            TRANSLATORS.put( StringCommandsDictionary.HTML,
+                             new ToHtmlTranslator( indentationNumberOfSpacesOnHtmlFormat ) );
         }
         catch( InvalidArgumentException e ) {
-            throw new InternalErrorException( "UNEXPECTED ERROR IN Parser!" );
+            throw new InternalErrorException( "UNEXPECTED ERROR IN Parser!", e );
             // never happens because argument 5 is bigger than 1
         }
         TRANSLATORS.put( StringCommandsDictionary.TEXT, new ToPlainTextTranslator() );
         TRANSLATORS.put( StringCommandsDictionary.JSON, new ToJsonTranslator() );
         
         /*methodsThatSupportOutputCustomization*/
-        methodsThatSupportOutputCustomization.add( "GET" );
-        methodsThatSupportOutputCustomization.add( "OPTION" );
+        METHODS_THAT_SUPPORT_OUTPUT_CUSTOMIZATION = new HashSet<>();
+        METHODS_THAT_SUPPORT_OUTPUT_CUSTOMIZATION.add( "GET" );
+        METHODS_THAT_SUPPORT_OUTPUT_CUSTOMIZATION.add( "OPTION" );
     }
     
     
@@ -188,8 +192,11 @@ public class StringCommandsExecutor implements Executor {
      * @throws Exception
      *             If there was a problem with the data given for producing the command or in the
      *             execution of the command.
+     * @throws UnsupportedAcceptValueException
+     *             If the value of the parameter accept is unknown.
      */
-    public String getOutput() throws Exception {
+    @Override
+    public String getOutput() throws Exception, UnsupportedAcceptValueException {
     
         Callable< ? > command = getCommand();
         String accept = findValueOf( StringCommandsDictionary.ACCEPT );
@@ -211,6 +218,7 @@ public class StringCommandsExecutor implements Executor {
      * @throws InvalidParameterValueException
      *             If the value of the parameter accept is unknown.
      */
+    @Override
     public OutputStream getStream() throws InvalidParameterValueException {
     
         String filePath = findValueOf( StringCommandsDictionary.STREAM );
@@ -265,13 +273,9 @@ public class StringCommandsExecutor implements Executor {
      * @throws DuplicateParametersException
      *             If several values for the same parameter have been received in the
      *             parameters-list.
-     * @throws UnsupportedAcceptValueException
-     *             If the {@code Accept} parameter value received is not supported by this
-     *             application.
      */
     private Map< String, String > getParametersFromParametersList()
-        throws InvalidCommandParametersSyntaxException, DuplicateParametersException,
-        UnsupportedAcceptValueException {
+        throws InvalidCommandParametersSyntaxException, DuplicateParametersException {
     
         Map< String, String > parametersMap = new HashMap< String, String >();
         if( args.length == 2 )
@@ -284,10 +288,6 @@ public class StringCommandsExecutor implements Executor {
                 throw new InvalidCommandParametersSyntaxException(
                                                                    "Invalid syntax in parameters-list!"
                                                                            + nameAndValue );
-            if( nameAndValue[0].equals("accept")
-                && (!nameAndValue[1].equals( "text/html" )
-                    || !nameAndValue[1].equals( "application/json" ) || !nameAndValue[1].equals( "text/plain" )) )
-                throw new UnsupportedAcceptValueException( "Unsupported Accept" );
             
             String parameterName = nameAndValue[0];
             String parameterValue = nameAndValue[1];
@@ -365,19 +365,19 @@ public class StringCommandsExecutor implements Executor {
      * @throws Exception
      *             If there was a problem in the execution of the command or there was received an
      *             exception result.
-     * @throws InvalidParameterValueException
+     * @throws UnsupportedAcceptValueException
      *             If the value of the parameter accept is unknown.
      */
     private String convertUsingTranslators( Callable< ? > command )
-        throws Exception, InvalidParameterValueException {
+        throws Exception, UnsupportedAcceptValueException {
     
         try {
             Translatable intermediateRepr = ToTranslatableConverter.convert( command.call() );
             return getTranslator().encode( intermediateRepr );
         }
         catch( UnknownTypeException | UnknownTranslatableException e ) {
-            //Not Supposed To Happen
-            throw new InternalErrorException( e.getMessage() );
+            // Not Supposed To Happen
+            throw new InternalErrorException( e.getMessage(), e );
         }
     }
     
@@ -391,10 +391,10 @@ public class StringCommandsExecutor implements Executor {
      * @return The translator correspondent to the value of the parameter with name
      *         {@link StringCommandsDictionary#ACCEPT} or<br/>
      *         the translator {@link StringCommandsDictionary#TEXT} if no value was received.
-     * @throws InvalidParameterValueException
+     * @throws UnsupportedAcceptValueException
      *             If the value of the parameter accept is unknown.
      */
-    private Translator getTranslator() throws InvalidParameterValueException {
+    private Translator getTranslator() throws UnsupportedAcceptValueException {
     
         String translator = findValueOf( StringCommandsDictionary.ACCEPT );
         if( translator == null || !supportsOutputCustomization() )
@@ -402,7 +402,7 @@ public class StringCommandsExecutor implements Executor {
         
         Translator t = TRANSLATORS.get( translator );
         if( t == null )
-            throw new InvalidParameterValueException( StringCommandsDictionary.ACCEPT, translator );
+            throw new UnsupportedAcceptValueException( "Unsupported Accept" );
         return t;
     }
     
@@ -419,7 +419,7 @@ public class StringCommandsExecutor implements Executor {
      */
     private boolean supportsOutputCustomization() {
     
-        return methodsThatSupportOutputCustomization.contains( args[0] );
+        return METHODS_THAT_SUPPORT_OUTPUT_CUSTOMIZATION.contains( args[0] );
     }
     
     // used in the methods getOutput, getTranslator and getStream

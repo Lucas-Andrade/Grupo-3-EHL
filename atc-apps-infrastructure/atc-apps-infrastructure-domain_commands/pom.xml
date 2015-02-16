@@ -14,24 +14,15 @@
 	<dependencies>
 		<dependency>
 			<groupId>degp.airtrafficcontrol</groupId>
-			<artifactId>
-				atc-apps-infrastructure-domain_entities
-			</artifactId>
+			<artifactId>atc-apps-infrastructure-databases</artifactId>
 			<version>${project-version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>degp.airtrafficcontrol</groupId>
-			<artifactId>
-				atc-apps-infrastructure-databases
-			</artifactId>
-			<version>${project-version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>degp.airtrafficcontrol</groupId>
-			<artifactId>atc-apps-utils</artifactId>
+			<artifactId>atc-apps-infrastructure-domain_entities</artifactId>
 			<version>${project-version}</version>
 		</dependency>
 	</dependencies>
+	
 </project>

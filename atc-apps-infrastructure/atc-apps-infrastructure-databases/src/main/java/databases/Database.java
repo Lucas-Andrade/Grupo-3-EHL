@@ -110,8 +110,9 @@ public interface Database< T extends Element > {
      * 
      * @return An {@link Optional} {@link Iterable} of all the elements added by the {@code user}
      *         with the given {@code username}.
+     * @throws InvalidArgumentException If the {@link username} is {@code null}.
      */
-    public Optional< Iterable< T >> getElementsByUser( String username );
+    public Optional< Iterable< T >> getElementsByUser( String username ) throws InvalidArgumentException;
     
     /**
      * Returns this database's name.

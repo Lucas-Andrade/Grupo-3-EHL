@@ -37,19 +37,41 @@ public class JWorldMapWithAirships extends ScrollPanelForEntities< SimpleAirship
      */
     private static final double IMAGESCALEFACTOR = 1.86;
     /**
-     * {@code ORIGINPOSITIONLONGITUDE} double value that represents adjustment to be done for a
-     * correct insertation of {@code labelAirship}.
-     */
-    private static final double ORIGINPOSITIONLONGITUDE = 25;
-    /**
      * {@code ORIGINPOSITIONLATITUDE} double value that represents adjustment to be done for a
      * correct insertation of {@code labelAirship}.
      */
     private static final double ORIGINPOSITIONLATITUDE = 167;
     /**
+     * {@code ORIGINPOSITIONLATITUDEFORLOCATIONICON} double value that represents adjustment to be done for a
+     * correct insertation of {@code locationIconLabel}.
+     */
+    private static final double ORIGINPOSITIONLATITUDEFORLOCATIONICON = 155;
+    /**
      * {@code JLABELWIDTH} int value that represents {@code labelAirship} width.
      */
     private static final int JLABELWIDTH = 50;
+    /**
+     * {@code JLABELWIDTHFORLOCATIONMAP} int value that represents {@code locationIconLabel} width.
+     */
+    private static final int JLABELWIDTHFORLOCATIONMAP = 150;    
+    /**
+     * {@code SPACEFORLABEL} int value that represents space between label image and text.
+     */
+    private static final int SPACEFORLABEL = 10;   
+    /**
+     * {@code SPACEFORLOCATIONICONLABEL} int value that represents space between label image and text.
+     */
+    private static final int SPACEFORLOCATIONICONLABEL = 28;
+    /*
+     * {@code ORIGINPOSITIONLONGITUDE} double value that represents adjustment to be done for a
+     * correct insertation of {@code labelAirship}.
+     */
+    private static final double ORIGINPOSITIONLONGITUDE = JLABELWIDTH/2- SPACEFORLABEL;
+    /*
+     * {@code ORIGINPOSITIONLONGITUDEFORLOCATIONICON} double value that represents adjustment to be done for a
+     * correct insertation of {@code locationIconLabel}.
+     */
+    private static final double ORIGINPOSITIONLONGITUDEFORLOCATIONICON = JLABELWIDTHFORLOCATIONMAP/2- SPACEFORLOCATIONICONLABEL;
     /**
      * {@code JLABELHEIGHT} int value that represents {@code labelAirship} height.
      */
@@ -74,7 +96,10 @@ public class JWorldMapWithAirships extends ScrollPanelForEntities< SimpleAirship
      * {@code REDCOMPONENT} int value that represents Blue Component for panel color.
      */
     private static final int BLUECOMPONENT = 78;
-    
+    /**
+     * {@code worldMap} Jpanel  that represents world map.
+     */
+    JPanelImage.CreateImage worldMap;
     // //////////////////
     // Public Methods //
     // //////////////////
@@ -91,7 +116,9 @@ public class JWorldMapWithAirships extends ScrollPanelForEntities< SimpleAirship
      */
     public JPanel createAJPanelWithWorldMapAndAirships( Iterable< SimpleAirship > airshipsFound ) {
     
-        JPanelImage.CreateImage worldMap = new JPanelImage.CreateImage( "/images/planisphere.png" );
+       
+        
+        worldMap = new JPanelImage.CreateImage( "/images/planisphere.png" );
         worldMap.setLayout( null );
         
         this.add( worldMap );
@@ -111,6 +138,7 @@ public class JWorldMapWithAirships extends ScrollPanelForEntities< SimpleAirship
                 
                 labelAirship.setBounds( longitude.intValue(), latitude.intValue(), JLABELWIDTH,
                                         JLABELHEIGHT );
+                labelAirship.setText( airship.getIdentification() );
                 worldMap.add( labelAirship );
                 
             }
@@ -136,4 +164,36 @@ public class JWorldMapWithAirships extends ScrollPanelForEntities< SimpleAirship
     
         return new SimpleAirshipInfoButton( identification, textArea );
     }
+    
+    
+    
+    
+    public JPanel createAJPanelWithWorldMapAndAirshipsAndLocationIcon( Iterable< SimpleAirship > airshipsFound, String latitude, String longitude){
+        
+       
+        createAJPanelWithWorldMapAndAirships( airshipsFound );
+        
+        Double latitudeLocationIcon = ORIGINPOSITIONLATITUDEFORLOCATIONICON - IMAGESCALEFACTOR * (Double.parseDouble( latitude));            
+        Double longitudeLocationIcon = IMAGESCALEFACTOR * (Double.parseDouble(longitude)) - ORIGINPOSITIONLONGITUDEFORLOCATIONICON;
+         JLabel locationIconLabel;
+        try {
+            locationIconLabel =
+                    new JLabel(
+                                new ImageIcon(
+                                               ImageIO.read( getClass().getResourceAsStream( "/images/location-icon.png" ) ) ) );
+            
+         
+            
+          
+        locationIconLabel.setBounds(  longitudeLocationIcon.intValue(),latitudeLocationIcon.intValue(), 
+                                                                          JLABELWIDTHFORLOCATIONMAP,JLABELHEIGHT );
+        locationIconLabel.setText( "("+latitude+";"+longitude+")");
+        worldMap.add( locationIconLabel );
+        }
+        catch( IOException e ) {
+            throw new InternalErrorException( "Image Not Found : /images/location-icon.png", e );
+        }
+        return this;
+    }
+       
 }

@@ -141,22 +141,44 @@ public class FunctionalPostAirshipWindow extends
             latitude =
                     window.getCivilAirshipCommonPainel().getGeoCoodinates().getLatitude()
                           .getJTextField().getText();
+            latitudeLabel=
+                    window.getCivilAirshipCommonPainel().getGeoCoodinates().getLatitude()
+                          .getJLabel().getText();
+            
             longitude =
                     window.getCivilAirshipCommonPainel().getGeoCoodinates().getLongitude()
                           .getJTextField().getText();
+            longitudeLabel = 
+                    window.getCivilAirshipCommonPainel().getGeoCoodinates().getLongitude()
+                          .getJLabel().getText();
             altitude =
                     window.getCivilAirshipCommonPainel().getGeoCoodinates().getAltitude()
                           .getJTextField().getText();
+            altitudeLabel = 
+                    window.getCivilAirshipCommonPainel().getGeoCoodinates().getAltitude()
+                          .getJLabel().getText();
             
             minAltitude =
                     window.getCivilAirshipCommonPainel().getAirCorridor().getMinAltitude()
                           .getJTextField().getText();
+            minAltitudeLabel =
+                    window.getCivilAirshipCommonPainel().getAirCorridor().getMinAltitude()
+                          .getJLabel().getText();
+                           
             maxAltitude =
                     window.getCivilAirshipCommonPainel().getAirCorridor().getMaxAltitude()
                           .getJTextField().getText();
             
+            maxAltitudeLabel =
+                    window.getCivilAirshipCommonPainel().getAirCorridor().getMaxAltitude()
+                          .getJLabel().getText();
+            
             specificComponent =
                     window.getSpecificCivilPanel().getNumberPassengerJTextField().getText();
+            
+            specificComponentLabel =
+                    window.getSpecificCivilPanel().getNumberPassengerJLabel().getText();
+            
         }
         
         /**
@@ -168,23 +190,49 @@ public class FunctionalPostAirshipWindow extends
             latitude =
                     window.getMilitaryAirshipCommonPainel().getGeoCoodinates().getLatitude()
                           .getJTextField().getText();
+            
+            latitudeLabel=
+                    window.getMilitaryAirshipCommonPainel().getGeoCoodinates().getLatitude()
+                          .getJLabel().getText();
+            
             longitude =
                     window.getMilitaryAirshipCommonPainel().getGeoCoodinates().getLongitude()
                           .getJTextField().getText();
+            
+            longitudeLabel = 
+                    window.getMilitaryAirshipCommonPainel().getGeoCoodinates().getLongitude()
+                          .getJLabel().getText();
+            
             altitude =
                     window.getMilitaryAirshipCommonPainel().getGeoCoodinates().getAltitude()
                           .getJTextField().getText();
             
+            altitudeLabel = 
+                    window.getMilitaryAirshipCommonPainel().getGeoCoodinates().getAltitude()
+                          .getJLabel().getText();
+            
             minAltitude =
                     window.getMilitaryAirshipCommonPainel().getAirCorridor().getMinAltitude()
                           .getJTextField().getText();
+            
+            minAltitudeLabel =
+                    window.getMilitaryAirshipCommonPainel().getAirCorridor().getMinAltitude()
+                          .getJLabel().getText();
+                           
             maxAltitude =
                     window.getMilitaryAirshipCommonPainel().getAirCorridor().getMaxAltitude()
                           .getJTextField().getText();
+            maxAltitudeLabel =
+                    window.getMilitaryAirshipCommonPainel().getAirCorridor().getMaxAltitude()
+                          .getJLabel().getText();
             
             specificComponent =
                     window.getSpecificMilitaryPanel().getGroupButtons().getSelection()
                           .getActionCommand();
+            
+            specificComponentLabel =
+                    window.getSpecificMilitaryPanel().getArmorInfo().getText();
+            
         }
         
     }

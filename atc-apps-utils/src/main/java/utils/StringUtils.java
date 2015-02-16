@@ -16,6 +16,7 @@ import exceptions.MissingRequiredParameterException;
  */
 public class StringUtils {
     
+    
     /**
      * Unused private constructor
      */
@@ -174,12 +175,26 @@ public class StringUtils {
      * @return the parsed {@code string}
      */
     public static String errorStringParser( String string, int maxSize ) {
-    
+  
+        
+       StringBuilder result = new StringBuilder(); 
+       String[] split = string.split( "\n" );
+       for(String element:split){         
+            
+           result.append( spliter(element,maxSize)).append("\r\n");
+       }
+    return result.toString();
+               
+    }  
+      
+    private static String spliter(String string,int maxSize){
+        
         StringBuilder copy = new StringBuilder( string );
         
         int length = string.length();
         int index;
         int splitBeforeIndex = maxSize;
+      
         
         while( splitBeforeIndex <= length ) {
             index = copy.lastIndexOf( " ", splitBeforeIndex );

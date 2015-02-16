@@ -16,4 +16,12 @@
 		<module>atc-applications-distributed-server</module>
 	</modules>
 
+	<dependencies>
+		<dependency>
+			<groupId>org.eclipse.jetty</groupId>
+			<artifactId>jetty-servlet</artifactId>
+			<version>9.3.0.M1</version>
+		</dependency>
+	</dependencies>
+
 </project>

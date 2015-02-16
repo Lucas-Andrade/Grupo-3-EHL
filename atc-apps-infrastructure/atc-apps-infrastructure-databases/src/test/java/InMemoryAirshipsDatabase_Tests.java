@@ -1,5 +1,4 @@
 
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
@@ -39,7 +38,7 @@ public class InMemoryAirshipsDatabase_Tests {
     
     @Before
     public void createUserAndAirshipAndTheirDatabases() {
-        
+    
         try {
             
             // Arrange
@@ -61,7 +60,7 @@ public class InMemoryAirshipsDatabase_Tests {
     
     @Test
     public void shouldAddAnAirshipToTheInMemoryAirshipsDatabase() {
-        
+    
         try {
             // Assert
             assertTrue( airshipDatabase.add( airship, user ) );
@@ -74,7 +73,7 @@ public class InMemoryAirshipsDatabase_Tests {
     
     @Test
     public void shouldNotAddTheSameaAirshipToTheInMemoryAirshipsDatabase() {
-        
+    
         try {
             // Act
             assertTrue( airshipDatabase.add( airship, user ) );
@@ -90,7 +89,7 @@ public class InMemoryAirshipsDatabase_Tests {
     
     @Test
     public void shouldRemoveAnAirship() throws DatabaseException {
-        
+    
         try {
             // Act
             
@@ -107,7 +106,7 @@ public class InMemoryAirshipsDatabase_Tests {
     
     @Test
     public void shouldGetAllAirshipsRegistedByTheSameUser() throws NoSuchElementInDatabaseException {
-        
+    
         try {
             // Arrange
             user2 = new User( "daniel", "d", "@d" );
@@ -133,10 +132,10 @@ public class InMemoryAirshipsDatabase_Tests {
         
     }
     
-    @Test
+    @Test( expected = InvalidArgumentException.class )
     public void shouldReceiveAMessageConfirmingThatAnyAirshipWasAddedByANullUser()
         throws InvalidArgumentException {
-        
+    
         Assert.assertEquals( "No airship added by null", airshipDatabase.getElementsByUser( null )
                                                                         .toString() );
     }
@@ -144,7 +143,7 @@ public class InMemoryAirshipsDatabase_Tests {
     @Test
     public void shouldRemoveAnAirshipButInMemoryAirshipsDatabaseKeepsNotEmpty()
         throws InvalidArgumentException, DatabaseException {
-        
+    
         Airship airship2 = new CivilAirship( 0, 0, 0, 10, 0, 100 );
         
         airshipDatabase.add( airship, user );
@@ -153,11 +152,10 @@ public class InMemoryAirshipsDatabase_Tests {
         assertTrue( airshipDatabase.removeByIdentification( airship.getIdentification() ) );
     }
     
-    
     @Test
     public void shouldReturnFalseWhenTryingToRemoveAnAirshipThatDoesNotExistInTheDatabase()
         throws DatabaseException, InvalidArgumentException {
-        
+    
         Assert.assertFalse( airshipDatabase.removeByIdentification( airship.getIdentification() ) );
     }
     
@@ -166,7 +164,7 @@ public class InMemoryAirshipsDatabase_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryToAddNullElementsToADatabase()
         throws InvalidArgumentException {
-        
+    
         // Assert
         
         airshipDatabase.add( null, user );
@@ -176,7 +174,7 @@ public class InMemoryAirshipsDatabase_Tests {
     public void shouldThrowInvalidArgumentExceptionWhenTryToAddElementsToADatabaseGivenNullUser()
     
     throws InvalidArgumentException {
-        
+    
         // Assert
         airshipDatabase.add( airship, null );
     }
@@ -184,7 +182,7 @@ public class InMemoryAirshipsDatabase_Tests {
     @Test( expected = InvalidArgumentException.class )
     public void shouldThrowInvalidArgumentExceptionWhenTryToRemoveNullElementsFromADatabase()
         throws InvalidArgumentException, DatabaseException {
-        
+    
         airshipDatabase.removeByIdentification( null );
     }
 }

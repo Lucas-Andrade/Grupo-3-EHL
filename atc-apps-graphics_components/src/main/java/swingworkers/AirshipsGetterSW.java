@@ -62,7 +62,7 @@ public abstract class AirshipsGetterSW extends
      *             Depending on the function the window its supposed to do.
      */
     @Override
-    protected final void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround ) {
+    protected void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround ) {
     
         windowBase.getBodyPanel().updateBodyPanel( resultOfDoInBackGround );
     } 

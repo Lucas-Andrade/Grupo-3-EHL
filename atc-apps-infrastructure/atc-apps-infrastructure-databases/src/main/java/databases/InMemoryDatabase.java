@@ -4,9 +4,9 @@ package databases;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Predicate;
 import utils.Optional;
 import elements.Element;
@@ -40,7 +40,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
      * corresponding keys are their identifications (obtained via
      * {@link Element#getIdentification()}).
      */
-    private Map< String, T > database;
+    private final Map< String, T > database;
     
     protected Object databaseLock = new Object();
     
@@ -48,6 +48,9 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
     
     /**
      * Creates a new {@link InMemoryDatabase} with name {@code databaseName}.
+     * 
+     * @param databaseName
+     *            - The database's name.
      * 
      * @throws InvalidArgumentException
      *             If the {@code databaseName} is null.
@@ -58,7 +61,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
             throw new InvalidArgumentException( "Cannot instantiate database with null name." );
         
         this.databaseName = databaseName;
-        this.database = Collections.synchronizedMap( new HashMap< String, T >() );
+        this.database = new ConcurrentHashMap< String, T >();
     }
     
     // IMPLEMENTATION OF METHODS INHERITED FROM THE Database INTERFACE
@@ -228,9 +231,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
         
         try {
             
-            Iterable< T > elementsList = getAllElements().get();
-            
-            for( T element : elementsList )
+            for( T element : getAllElements().get() )
                 if( criteria.test( element ) )
                     selectedElements.add( element );
             
@@ -287,9 +288,7 @@ public abstract class InMemoryDatabase< T extends Element > implements Database<
         
         try {
             
-            Iterable< T > elements = getAllElements().get();
-            
-            for( T element : elements )
+            for( T element : getAllElements().get() )
                 elementsList.add( element );
             
         }

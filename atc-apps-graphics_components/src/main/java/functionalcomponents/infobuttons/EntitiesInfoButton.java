@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
+import utils.StringUtils;
 import design.windows.popupwindows.UnderConstrutionWindow;
 import entities.Entity;
 import exceptions.SwingWorkerFactoryMissingException;
@@ -117,7 +118,8 @@ public abstract class EntitiesInfoButton< E extends Entity > extends JButton {
         protected final void done() {
         
             try {
-                textArea.setText( get().toString() );
+                textArea.setText( StringUtils.errorStringParser(get().toString(),23) );
+            //    textArea.setText(get().toString());
                 textArea.setForeground( Color.WHITE );
             }
             catch( Exception e ) {

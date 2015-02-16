@@ -14,6 +14,7 @@ import utils.exceptions.parsingexceptions.parserexceptions.InvalidCommandParamet
 import exceptions.DatabaseException;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
+import exceptions.MissingRequiredParameterException;
 import exceptions.NoSuchElementInDatabaseException;
 import exceptions.WrongLoginPasswordException;
 
@@ -76,7 +77,8 @@ public class AirTrafficControlServelet extends HttpServlet {
      * created based on {@link HttpServletRequest} data.
      * 
      * @param req
-     *            - The {@link HttpServletRequest} corresponding to the current HTTP request
+     *            - The {@link HttpServletRequest} corresponding to the current HTTP request.
+     * 
      * @return The string to send to the {@link ServerExecutor}.
      */
     private String[] getCommandArgumentsFromPostRequest( HttpServletRequest req )
@@ -164,12 +166,11 @@ public class AirTrafficControlServelet extends HttpServlet {
             Executor executor = new ServerExecutor( AirTrafficControlServer.CMD_PARSER, args );
             
             String result = executor.getOutput();
-                        
+            
             resp.setContentType( acceptValuesList[index] );
             resp.setCharacterEncoding( "UTF-8" );
             
             outputStream.println( result );
-            
         }
         catch( UnsupportedAcceptValueException e ) {
             
@@ -181,6 +182,9 @@ public class AirTrafficControlServelet extends HttpServlet {
         }
         catch( InvalidCommandParametersSyntaxException | DuplicateParametersException
                | InvalidCommandSyntaxException | InvalidArgumentException e ) {
+            resp.sendError( HttpServletResponse.SC_BAD_REQUEST, e.getMessage() );
+        }
+        catch( MissingRequiredParameterException e ) {
             resp.sendError( HttpServletResponse.SC_BAD_REQUEST, e.getMessage() );
         }
         catch( NoSuchElementInDatabaseException e ) {
@@ -221,12 +225,12 @@ public class AirTrafficControlServelet extends HttpServlet {
                                    String[] acceptValuesList, int i ) throws IOException {
     
         if( i >= acceptValuesList.length )
-            resp.sendError( HttpServletResponse.SC_NOT_ACCEPTABLE, "Unsupported Accept Values" );
+            resp.sendError( HttpServletResponse.SC_NOT_ACCEPTABLE, "Unsupported Accept Values!" );
         
-        if(acceptValuesList[i].contains( "=" ))
+        if( acceptValuesList[i].contains( "=" ) )
             updateParameters( resp, args, args2, acceptValuesList, i++ );
         
-        if( args2 == "" ) {
+        if( args2.equals( "" ) ) {
             args[2] = "accept=" + acceptValuesList[i];
         }
         else {

@@ -1,10 +1,10 @@
-package GSwingWorkers;
+package swingworkers.users;
 
 
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import swingworkers.SwingWorkerForButtonFactory;
-import GSwingWorkers.GUISimpleAirshipInfoSW.SwFactory;
+import swingworkers.airships.GetAirshipByIdSW.Factory;
 import app.EntitiesConversor;
 import commands.getcommands.GetElementFromADatabaseByIdCommand;
 import databases.Database;
@@ -23,7 +23,7 @@ import functionalcomponents.infobuttons.SimpleUserInfoButton;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GUISimpleUserInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< SimpleUser > {
+public class GetUserByIdSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< SimpleUser > {
     
     private final Database< User > database;
     private final String identification;
@@ -40,7 +40,7 @@ public class GUISimpleUserInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
      * @param database
      *            - The {@link User} {@link Database}.
      */
-    public GUISimpleUserInfoSW( String identification, JTextArea textArea, Database< User > database ) {
+    public GetUserByIdSW( String identification, JTextArea textArea, Database< User > database ) {
     
         super( textArea );
         
@@ -71,7 +71,7 @@ public class GUISimpleUserInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
     
     /**
      * Instances of the class are {@link SwingWorker} {@code factories}, that creates instances of
-     * {@link GUISimpleUserInfoSW} that will be run in {@link SimpleUserInfoButton}.
+     * {@link GetUserByIdSW} that will be run in {@link SimpleUserInfoButton}.
      *
      * @param <SwingWorker>
      *            The type of the {@link SwingWorker} returned in the method {@link #newInstance()}.
@@ -79,26 +79,26 @@ public class GUISimpleUserInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
      *            The type of the results returned by the methods
      *            {@link SwingWorker#doInBackground()} and {@link SwingWorker#get()}.
      */
-    public class factory implements
+    public static class Factory implements
             SwingWorkerForButtonFactory< SwingWorker< SimpleUser, Void >, SimpleUser > {
         
         private Database< User > database;
         
         /**
          * Creates a {@link SwingWorker} {@code factories}, that creates instances of
-         * {@link GUISimpleUserInfoSW} using the {@link SwFactory#newInstance} that will be run in
+         * {@link GetUserByIdSW} using the {@link Factory#newInstance} that will be run in
          * {@link SimpleUserInfoButton}.
          * 
          * @param database
          *            - The {@code User} {@link Database}.
          */
-        public factory( Database< User > database ) {
+        public Factory( Database< User > database ) {
         
             this.database = database;
         }
         
         /**
-         * Produces a new instance of {@link GUISimpleUserInfoSW}.
+         * Produces a new instance of {@link GetUserByIdSW}.
          * 
          * @see swingworkers.SwingWorkerForButtonFactory#newInstance(String, JTextArea)
          */
@@ -106,7 +106,7 @@ public class GUISimpleUserInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
         public SwingWorker< SimpleUser, Void > newInstance( String identification,
                                                             JTextArea textArea ) {
         
-            return new GUISimpleUserInfoSW( identification, textArea, database );
+            return new GetUserByIdSW( identification, textArea, database );
         }
     }
 }

@@ -133,8 +133,6 @@ public class PostAirshipsWindow extends WindowBase {
     public PostAirshipsWindow() {
         
         super( WINDOWWIDTH, WINDOWHEIGHT );
-      
-        this.setVisible( true );
        
         typeAirshipTabbedPane = new JTabbedPane();
         typeAirshipTabbedPane.setTabLayoutPolicy( JTabbedPane.SCROLL_TAB_LAYOUT );

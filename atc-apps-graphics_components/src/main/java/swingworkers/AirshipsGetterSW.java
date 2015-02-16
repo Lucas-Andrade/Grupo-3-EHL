@@ -4,10 +4,8 @@ package swingworkers;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
+import design.windows.MainWindow;
 import entities.SimpleAirship;
-import functionalcomponents.FunctionalWindow;
-import functionalcomponents.functionalmainwindow.BodyPanelFunctionalizer;
-import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 
 
 /**
@@ -23,8 +21,13 @@ import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public abstract class FunctionalGetWindowSwingWorker extends
+public abstract class AirshipsGetterSW extends
         ExceptionHandlerSW< Iterable< SimpleAirship >> {
+    
+    /**
+     * The {@code MainWindow} we want to add functionality to.
+     */
+    private static final MainWindow windowBase = MainWindow.getInstance();
     
     // Constructor
     /**
@@ -37,7 +40,7 @@ public abstract class FunctionalGetWindowSwingWorker extends
      *            - The error text area where the error messages from the thrown exceptions will be
      *            written.
      */
-    public FunctionalGetWindowSwingWorker( JTextArea errorTextArea ) {
+    public AirshipsGetterSW( JTextArea errorTextArea ) {
     
         super( errorTextArea );
         
@@ -61,6 +64,9 @@ public abstract class FunctionalGetWindowSwingWorker extends
     @Override
     protected final void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround ) {
     
-        FunctionalMainWindow.bodyPanel.updateBodyPanel( resultOfDoInBackGround );
-    }
+        windowBase.getBodyPanel().updateBodyPanel( resultOfDoInBackGround );
+    } 
+
+
+
 }

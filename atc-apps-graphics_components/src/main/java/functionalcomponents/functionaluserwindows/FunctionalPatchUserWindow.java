@@ -2,12 +2,14 @@ package functionalcomponents.functionaluserwindows;
 
 
 import java.awt.event.ActionListener;
-import javax.swing.SwingWorker;
-import org.omg.CORBA.CompletionStatus;
 import swingworkers.ExceptionHandlerSW;
+import swingworkers.SwingWorkerFactory;
+import utils.CompletionStatus;
+import app.Utils;
 import design.windows.popupwindows.SuccessWindow;
 import design.windows.userwindows.PatchUserWindow;
-import exceptions.InvalidArgumentException;
+import design.windows.userwindows.PostUserWindow;
+import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
 
 
@@ -16,119 +18,164 @@ import functionalcomponents.FunctionalWindow;
  * Class whose instances have the purpose of add functionality to a {@link PatchUserWindow}. Giving
  * functionality to a window means adding an {@link ActionListener} to all its buttons.
  *
- * Extends {@link FunctionalWindow} of {@link String}.
- *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class FunctionalPatchUserWindow extends FunctionalWindow< CompletionStatus > {
+public class FunctionalPatchUserWindow extends
+        FunctionalWindow< FunctionalPatchUserWindow.SwingWorker, CompletionStatus > {
+    
+    
+    
+    // STATIC FIELDS
     
     /**
-     * {@code functionalWindow} - The {@code PatchUserWindow} we want to add functionality to.
+     * The {@code FunctionalPatchUserWindow} we want to add functionality to.
      */
-    private PatchUserWindow functionalWindow;
+    public static final PatchUserWindow baseWindow = new PatchUserWindow();
     
     /**
-     * {@code usersDatabase} - The users database.
+     * The {@link SwingWorkerFactory} that produces {@link FunctionalPatchUserWindow.SwingWorker}s
+     * for the {@link FunctionalPatchUserWindow}s.
      */
-    private Database< User > usersDatabase;
+    private static SwingWorkerFactory< FunctionalPatchUserWindow.SwingWorker, CompletionStatus > swFactory;
     
     /**
-     * Public constructor that will add functionality to a given non functional
-     * {@link PatchUserWindow} and will display it.
+     * A lock for the {@link #swFactory}.
+     */
+    private static Object factoryLock = new Object();
+    
+    // STATIC METHOD
+    /**
+     * Sets the {@link SwingWorkerFactory} that produces
+     * {@link FunctionalPatchUserWindow.SwingWorker}s for the {@link FunctionalPatchUserWindow}s.
      * 
-     * @param nonFunctionalWindow
-     *            - The {@code PatchUserWindow} we want to add functionality to.
-     * @param usersDatabase
-     *            - The users database.
+     * @param factory
+     *            The {@link SwingWorkerFactory} that produces
+     *            {@link FunctionalPatchUserWindow.SwingWorker}s for the
+     *            {@link FunctionalPatchUserWindow}s.
+     * @return {@code true} if {@code factory} was set as the factory that produces swingworkers for
+     *         the {@link FunctionalPatchUserWindow}s; <br/>
+     *         {@code false} if there was a factory already set or {@code factory} is {@code null}.
      */
-    public FunctionalPatchUserWindow( PatchUserWindow nonFunctionalWindow,
-                                      Database< User > usersDatabase ) {
-        
-        super( nonFunctionalWindow );
-        
-        this.functionalWindow = nonFunctionalWindow;
-        this.usersDatabase = usersDatabase;
+    public static
+            boolean
+            setSwingWorkerFactory( SwingWorkerFactory< FunctionalPatchUserWindow.SwingWorker, CompletionStatus > factory ) {
+    
+        return Utils.setSWFactory( FunctionalPatchUserWindow.class, "swFactory", factory,
+                                   factoryLock );
     }
     
+    
+    
+    // CONSTRUCTOR
     /**
-     * Method that will return a {@link ExceptionHandlerSW} with an {@code Override}
-     * implementation of its {@link SwingWorker#doInBackground() doInBackground()} and
-     * {@link ExceptionHandlerSW#finalizeDone(Object) functionalDone(Object)} methods to
-     * add the correct functionality to a {@link PatchUserWindow}.
-     * 
-     * @return Returns a {@link ExceptionHandlerSW} with an {@code Override} of its
-     *         methods.
+     * Adds functionality to a {@link PatchUserWindow} and displays it.
+     */
+    public FunctionalPatchUserWindow() {
+    
+        super( baseWindow );
+    }
+    
+    
+    
+    // IMPLEMENTATION OF THE METHOD INHERITED FROM FunctionalWindow
+    /**
+     * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
      */
     @Override
-    protected ExceptionHandlerSW< CompletionStatus > getNewSwingWorker() {
-        
-        return new ExceptionHandlerSW< CompletionStatus >(
-                                                                    functionalWindow.getErrorJTextArea() ) {
-            
-            /**
-             * String representation of the parameters to use in the commands and that are obtained
-             * from the window's text fields.
-             */
-            private String username = functionalWindow.getUserPanel().getJTextField().getText();
-            private String oldPassword = functionalWindow.getOldPasswordPanel().getJTextField()
-                                                         .getText();
-            private String newPassword = functionalWindow.getNewPasswordPanel().getJTextField()
-                                                         .getText();
-            private String newPasswordToConfirm =
-                    functionalWindow.getNewPasswordConfirmationPanel().getJTextField().getText();
-            
-            /**
-             * Implementation of the {@link SwingWorker#doInBackground() doInBackground()} method
-             * with the purpose of verifying if the inserted {@code newPassord} and
-             * {@code newPasswordToConfirm} match and executing a {@link PatchUserPasswordCommand},
-             * obtaining its result.
-             * 
-             * @return Returns a String.
-             * 
-             * @throws InvalidArgumentException
-             *             If the result of the passwords don't match or no password was written in
-             *             the text appropriate text field.
-             */
-            @Override
-            protected CompletionStatus doInBackground() throws Exception {
-                
-                if( newPassword.equals( "" ) )
-                    throw new InvalidArgumentException( "Please Insert a New Password" );
-                
-                if( !newPasswordToConfirm.equals( newPassword ) ) {
-                    throw new InvalidArgumentException( "The Passwords Don't Match" );
-                }
-                
-                return new PatchUserPasswordCommand( usersDatabase, username, oldPassword,
-                                                     newPassword ).call();
-            }
-            
-            /**
-             * Implementation of the {@link ExceptionHandlerSW#functionalDone()
-             * functionalDone()}. This method will receive the result of the
-             * {@link SwingWorker#doInBackground() doInBackground()} method and, if this result
-             * positive, open new {@link SuccessWindow}, closing this one.
-             * 
-             * @param resultOfDoInBackGround
-             *            - The result of the {@link SwingWorker#doInBackground() doInBackground()}
-             *            method.
-             * 
-             * @throws InvalidArgumentException
-             *             If the result of the {@code doInBackground} method is not positive.
-             */
-            @Override
-            public void finalizeDone( CompletionStatus resultOfDoInBackGround ) throws Exception {
-                
-                if( resultOfDoInBackGround.operationCompletedSuccessfully() ) {
-                    
-                    new SuccessWindow( resultOfDoInBackGround.getMessage() );
-                    functionalWindow.dispose();
-                }
-                else {
-                    functionalWindow.getErrorJTextArea()
-                                    .setText( resultOfDoInBackGround.getMessage() );
-                }
-            }
-        };
+    protected void runNewSwingWorker() throws SwingWorkerFactoryMissingException {
+    
+        Utils.runNewSwingWorker( swFactory, FunctionalPatchUserWindow.class.getSimpleName() );
     }
+    
+    
+    
+    // INNER CLASS
+    /**
+     * Class whose instances are {@link ExceptionHandlerSW} able to add functionality to a
+     * {@link FunctionalPostUserWindow}.
+     * <p>
+     * The unimplemented method {@link #doInBackground()} is supposed to replace the password of the
+     * user with the username {@link #username}, {@code oldPassword}, with {@code newPassword}. It
+     * is expected to return a {@link CompletionStatus} representing the success/failure of the
+     * operation or an exception if (1) the {@link #password} and the {@link #confirmPassword} don't
+     * match or (2) the operation couldn't perform.
+     * </p>
+     *
+     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+     */
+    public static abstract class SwingWorker extends ExceptionHandlerSW< CompletionStatus > {
+        
+        
+        
+        // INSTANCE FIELDS
+        /**
+         * The {@link PostUserWindow} to be disposed in the {@link #finalizeDone(CompletionStatus)}.
+         */
+        protected PatchUserWindow window;
+        
+        /**
+         * String representation of the parameters to use in the commands and that are obtained from
+         * the window's text fields.
+         */
+        protected String username;
+        protected String oldPassword;
+        protected String newPassword;
+        protected String newConfirmationPassword;
+        
+        protected String usernameLabel;
+        protected String oldPasswordLabel;
+        protected String newPasswordLabel;
+        protected String newConfirmationPasswordLabel;
+        
+        
+        
+        // CONSTRUCTOR
+        public SwingWorker( PatchUserWindow window ) {
+        
+            super( window.getErrorJTextArea() );
+            this.window = window;
+            
+            this.username = window.getUserPanel().getJTextField().getText();
+            this.oldPassword = window.getOldPasswordPanel().getJTextField().getText();
+            this.newPassword = window.getNewPasswordPanel().getJTextField().getText();
+            this.newConfirmationPassword =
+                    window.getNewPasswordConfirmationPanel().getJTextField().getText();
+            
+            this.usernameLabel = window.getUserPanel().getJLabel().getText();
+            this.oldPasswordLabel = window.getOldPasswordPanel().getJLabel().getText();
+            this.newPasswordLabel = window.getNewPasswordPanel().getJLabel().getText();
+            this.newConfirmationPasswordLabel =
+                    window.getNewPasswordConfirmationPanel().getJLabel().getText();
+        }
+        
+        
+        // IMPLEMENTATION OF METHODS INHERITED FROM SwingWorker and FunctionalWindowSwingWorker
+        /**
+         * Presents a {@link SuccessWindow} and disposes the {@link #window} if the method
+         * {@link #doInBackground()} occurred successfully or writes the error message in the error
+         * label.
+         */
+        @Override
+        protected void finalizeDone( CompletionStatus resultOfDoInBackGround ) throws Exception {
+        
+            if( resultOfDoInBackGround.completedSuccessfully() ) {
+                
+                //open success window:
+                new SuccessWindow( resultOfDoInBackGround.getMessage() );
+                //clean text fields:
+                window.getUserPanel().getJTextField().setText("");
+                window.getOldPasswordPanel().getJTextField().setText("");
+                window.getNewPasswordPanel().getJTextField().setText("");
+                window.getNewPasswordConfirmationPanel().getJTextField().setText("");
+                //close post window:
+                window.dispose();
+            }
+            else {
+                window.getErrorJTextArea().setText( resultOfDoInBackGround.getMessage() );
+            }
+        }
+        
+        
+    }
+    
 }

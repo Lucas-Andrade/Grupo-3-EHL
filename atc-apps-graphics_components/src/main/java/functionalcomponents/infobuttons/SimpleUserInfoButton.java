@@ -5,21 +5,23 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
+import swingworkers.SwingWorkerFactory;
 import swingworkers.SwingWorkerForButtonFactory;
-import entities.Entity;
 import entities.SimpleUser;
+import exceptions.SwingWorkerFactoryMissingException;
 
 
 /**
- * Instance of this class are {@link JButton}s with a {@link ActionListener} to GET the info of a
- * {@link SimpleUser} by its identification.
+ * Class whose instances are {@link JButton}s with {@link ActionListener}s that print the
+ * information about a {@link SimpleUser} by its identification.
  * 
  * Each {@code Button} is associated to a {@link SimpleUser} {@code identification}, and write its
  * info on a given {@link JTextArea}.
  * 
- * The {@code SimpleUserInfoButton} have a {@link SwingWorkerForButtonFactory} that have to be HAVE
- * be initialized one and only one time with the {@link SimpleUserInfoButton#setSwingWorkerFactory
- * setSwingWorkerFactory} static method.
+ * The {@code SimpleAirshipInfoButton} have a {@link SwingWorkerForButtonFactory} that has to be
+ * initialized in a static way with the
+ * {@link SimpleUserInfoButton#setSwingWorkerFactory(SwingWorkerForButtonFactory)
+ * setSwingWorkerFactory} method.
  * 
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -27,14 +29,48 @@ import entities.SimpleUser;
 @SuppressWarnings( "serial" )
 public class SimpleUserInfoButton extends EntitiesInfoButton< SimpleUser > {
     
+    
+    // STATIC MEMBERS
+    
     /**
-     * The {@link SwingWorker} factory, it HAVE be initialized one and only one time with the
-     * {@link SimpleUserInfoButton#setSwingWorkerFactory setSwingWorkerFactory}.
+     * The {@link SwingWorkerFactory} that produces swingworkers that returns the user with a given
+     * username.
      */
-    private static SwingWorkerForButtonFactory< SwingWorker< SimpleUser, Void >, SimpleUser > swingWorkerFactory;
-    private static final Object lock = new Object();
+    private static SwingWorkerForButtonFactory< SwingWorker< SimpleUser, Void >, SimpleUser > swFactory;
+    
+    /**
+     * A lock for {@link #swFactory}.
+     */
+    private static final Object factoryLock = new Object();
+    
+    /**
+     * Sets the {@link SwingWorkerForButtonFactory} that produces swingworkers that returns the user
+     * with a given username.
+     * 
+     * @param factory
+     *            The {@link SwingWorkerForButtonFactory} that produces swingworkers that returns
+     *            the user with a given username.
+     * @return {@code true} if {@code factory} was set as the factory that produces swingworkers
+     *         that returns the user with a given username; <br/>
+     *         {@code false} if there was a factory already set or {@code factory} is {@code null}.
+     */
+    public static
+            boolean
+            setSwingWorkerFactory( SwingWorkerForButtonFactory< SwingWorker< SimpleUser, Void >, SimpleUser > factory ) {
+    
+        if( factory != null )
+            synchronized (factoryLock) {
+                if( swFactory == null ) {
+                    swFactory = factory;
+                    return true;
+                }
+            }
+        return false;
+    }
     
     
+    
+    // Constructor
     /**
      * Create a {@code SimpleUserInfoButton} associated to a {@link SimpleUser}
      * {@code identification}, that will GET and write its info on a given {@code JTextArea}.
@@ -43,7 +79,7 @@ public class SimpleUserInfoButton extends EntitiesInfoButton< SimpleUser > {
      * 
      * 
      * @param identification
-     *            - The {@link Entity} identification.
+     *            - The {@link SimpleUser} identification.
      * @param textArea
      *            - The {@link JTextArea} where to display the result.
      */
@@ -53,40 +89,25 @@ public class SimpleUserInfoButton extends EntitiesInfoButton< SimpleUser > {
     }
     
     
-    // Public static method
-    /**
-     * Initialize the {@code SwingWorkerFactory}. This method HAVE be called one and only one time.
-     * 
-     * @param swFactory
-     *            - the SwingWorkerFactory
-     * @return TODO
-     */
-    public static
-            boolean
-            setSwingWorkerFactory( SwingWorkerForButtonFactory< SwingWorker< SimpleUser, Void >, SimpleUser > swFactory ) {
-    
-        synchronized (lock) {
-            if( swingWorkerFactory == null && swFactory != null ) {
-                
-                swingWorkerFactory = swFactory;
-                return true;
-            }
-            return false;
-        }
-    }
     
     // Protected method
     /**
-     * Create a new {@link SwingWorker}.
+     * Creates and runs a {@link SwingWorker} created by the {@link #swFactory}.
      * 
-     * @see EntitiesInfoButton#newSwingWorker(String, JTextArea)
+     * @throws SwingWorkerFactoryMissingException
+     *             If {@code swingWorkerFactory} is {@code null}. This exception's message is
+     *             <i>«Missing SwingWorkerFactory in class SimpleUserInfoButton.»</i>
+     * 
+     * @see EntitiesInfoButton#runNewSwingWorker(String, JTextArea)
      */
     @Override
-    protected SwingWorker< SimpleUser, Void > newSwingWorker( String identification,
-                                                              JTextArea textArea ) {
+    protected void runNewSwingWorker( String identification, JTextArea textArea )
+        throws SwingWorkerFactoryMissingException {
     
-//      if( swFactory == null )
-//      throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
-        return swingWorkerFactory.newInstance( identification, textArea );
+        if( swFactory == null )
+            throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
+        
+        swFactory.newInstance( identification, textArea ).run();
     }
+    
 }

@@ -1,16 +1,16 @@
 package functionalcomponents.functionalmainwindow;
 
 
-import javax.swing.JPanel;
-import javax.swing.SwingWorker;
+import javax.swing.JTextArea;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
+import app.Utils;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
-import design.panels.mainwindowpanels.JWorldMapWithAirships;
+import design.windows.MainWindow;
 import design.windows.WindowBase;
 import entities.SimpleAirship;
 import exceptions.SwingWorkerFactoryMissingException;
-import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
+import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
 
 /**
@@ -27,81 +27,28 @@ import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
  */
 public class BodyPanelFunctionalizer {
     
+    
     // Static fields
     /**
      * The {@link JBodyPanelForMainWindow} we want to add functionality to.
      */
-    private final JBodyPanelForMainWindow basePanel;
+    private static final JBodyPanelForMainWindow bodyPanel = MainWindow.getInstance()
+                                                                       .getBodyPanel();
     
-    
-    /**
-     * The factory responsible for producing {@link SwingWorker}s that return the set of airships to
-     * appear in this window's body panel.
-     */
-    
-    /**
-     * The {@link SwingWorkerFactory} that produces {@link FunctionalLoginWindow.SwingWorker}s for
-     * the {@link FunctionalLoginWindow}s.
-     */
-    private static SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > swFactory;
     
     /**
      * A lock for the {@link #swFactory}.
      */
     private static Object factoryLock = new Object();
     
-    // Instance Fields
     /**
-     * {@code airshipsScrollPane} {@link JPanel} variable that represents a
-     * {@link JScrollPanelForElements#produceAJScrollPaneWithAllElements} panel.
+     * The {@link SwingWorkerFactory} that produces {@link BodyPanelFunctionalizer.SwingWorker}s for
+     * the {@link BodyPanelFunctionalizer}s.
      */
-    private JPanel airshipsScrollPane;
-    /**
-     * {@code airshipsScrollPane} {@link JPanel} variable that represents a
-     * {@link JWorldMapWithAirships#createAJPanelWithWorldMapAndAirships} panel.
-     */
-    private JPanel worldMapWithAirships;
-    
-    // Constructor
-    /**
-     * Create a new {@code BodyPanel} with a list of {@link SimpleAirship}s in the {@code "System"}.
-     * 
-     * @see {@link BodyPanelFunctionalizer#createWorldMapAndScrollPanel()}
-     */
-    public BodyPanelFunctionalizer( JBodyPanelForMainWindow bodyPanel ) {
-    
-        basePanel = bodyPanel;
-        createWorldMapAndScrollPanel();
-    }
+    private static SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > swFactory;
     
     
-    // Public methods
-    /**
-     * Update the {@link JBodyPanelForMainWindow} panel, after GETting a new list of
-     * {@link SimpleAirship}s.
-     */
-    public void updateBodyPanel() {
     
-        remove();
-        createWorldMapAndScrollPanel();
-        paint();
-    }
-    
-    /**
-     * Update the {@link JBodyPanelForMainWindow} panel with the {@code airshipsFound}.
-     * 
-     * @param airshipsFound
-     *            - List of {@link SimpleAirship}s which the {@code WorldMap} and the
-     *            {@code ScrollPane} will be created.
-     * 
-     */
-    public void updateBodyPanel( Iterable< SimpleAirship > airshipsFound ) {
-    
-        remove();
-        createWorldMapAndScrollPanel( airshipsFound );
-        paint();
-    }
-
     // STATIC METHOD
     /**
      * Sets the {@link SwingWorkerFactory} that produces {@link BodyPanelFunctionalizer.SwingWorker}
@@ -119,28 +66,43 @@ public class BodyPanelFunctionalizer {
             boolean
             setSwingWorkerFactory( SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > factory ) {
     
-        if( factory != null )
-            synchronized (factoryLock) {
-                if( swFactory == null ) {
-                    swFactory = factory;
-                    return true;
-                }
-            }
-        return false;
-       
+        return Utils.setSWFactory( BodyPanelFunctionalizer.class, "swFactory", factory, factoryLock );
     }
     
     
-    // Protected method
     /**
-     * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
+     * 
+     * @throws SwingWorkerFactoryMissingException
      */
-    protected SwingWorker getNewSwingWorker() throws SwingWorkerFactoryMissingException {
+    public static void runNewSwingWorker() throws SwingWorkerFactoryMissingException {
     
-        if( swFactory == null )
-            throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
-        return swFactory.newInstance();
+        Utils.runNewSwingWorker( swFactory, "BodyPanelFunctionalizer" );
     }
+    
+    
+    
+    // Instance Fields
+    /**
+     * The {@code text area} where the errors will be written
+     */
+    private JTextArea errorTextArea;
+    
+    
+    
+    // Constructor
+    /**
+     * Create a new {@code BodyPanel} with a list of {@link SimpleAirship}s in the {@code "System"}.
+     * 
+     * 
+     * @see {@link BodyPanelFunctionalizer#updateBodyPanel()}
+     * 
+     * @param erroTextArea
+     */
+    public BodyPanelFunctionalizer( JTextArea erroTextArea ) {
+    
+        this.errorTextArea = erroTextArea;
+    }
+    
     
     // Private methods
     /**
@@ -151,79 +113,37 @@ public class BodyPanelFunctionalizer {
      * 
      * @throws SwingWorkerFactoryMissingException
      */
-    private void createWorldMapAndScrollPanel() {
+    public void updateBodyPanel() {
     
         try {
-            getNewSwingWorker().run();
+            runNewSwingWorker();
         }
         catch( SwingWorkerFactoryMissingException e ) {
             
-            FunctionalMainWindow.windowBase.getErrorJTextArea()
-                                           .setText( "Can not create World Map and Airship List!!" );
+            errorTextArea.setText( "Can not create World Map and Airship List!!" );
         }
     }
     
-    /**
-     * Create the {@code worldMapWithAirships} and the {@code airshipsScrollPane}, with a new list
-     * of {@link SimpleAirship}.
-     * 
-     * @see JWorldMapWithAirships#createAJPanelWithWorldMapAndAirships(Iterable)
-     * @see JWorldMapWithAirships#produceAJScrollPaneWithAllEntities(Iterable)
-     * 
-     * @param airshipsFound
-     *            - List of {@link SimpleAirship}s which the {@code WorldMap} and the
-     *            {@code ScrollPane} will be created.
-     */
-    private void createWorldMapAndScrollPanel( Iterable< SimpleAirship > airshipsFound ) {
-    
-        worldMapWithAirships =
-                new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirships( airshipsFound );
-        airshipsScrollPane =
-                new JWorldMapWithAirships().produceAJScrollPaneWithAllEntities( airshipsFound );
-        
-        basePanel.add( worldMapWithAirships );
-        basePanel.add( airshipsScrollPane );
-    }
-    
-    /**
-     * Remove the {@code worldMapWithAirships} and the {@code airshipsScrollPane}.
-     */
-    private void remove() {
-    
-        basePanel.remove( worldMapWithAirships );
-        basePanel.remove( airshipsScrollPane );
-    }
-    
-    /**
-     * Paint the {@code worldMapWithAirships} and the {@code airshipsScrollPane}.
-     */
-    private void paint() {
-    
-        basePanel.revalidate();
-        basePanel.repaint();
-    }
-    
-    
     // Inner SwingWorker Class
-    
-    
     /**
      * Abstract class that extends {@link ExceptionHandlerSW}s and implements the
      * {@link SwingWorker#finalizeDone(Iterable) finalizeDone(Iterable)}, the {@code BodyPanel} is
      * updated with the result of the {@link SwingWorker#doInBackground() doInBackground()} method.
      * 
      */
-    public abstract class SwingWorker extends ExceptionHandlerSW< Iterable< SimpleAirship > > {
+    public static abstract class SwingWorker extends ExceptionHandlerSW< Iterable< SimpleAirship > > {
         
         /**
          * Create a new {@link SwingWorker}, where the {@code error label} is the {@link WindowBase}
          * {@code error area}.
          * 
+         * @param erroTextArea
+         * 
          * @see ExceptionHandlerSW
          */
         public SwingWorker() {
         
-            super( FunctionalMainWindow.windowBase.getErrorJTextArea() );
+            super( FunctionalPostUserWindow.baseWindow.getErrorJTextArea() );
         }
         
         /**
@@ -235,7 +155,8 @@ public class BodyPanelFunctionalizer {
         protected void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround )
             throws Exception {
         
-            updateBodyPanel( resultOfDoInBackGround );
+            bodyPanel.updateBodyPanel( resultOfDoInBackGround );
         }
     }
+    
 }

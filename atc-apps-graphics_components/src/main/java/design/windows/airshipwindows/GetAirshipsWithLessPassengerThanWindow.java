@@ -46,11 +46,11 @@ public class GetAirshipsWithLessPassengerThanWindow extends WindowBase {
     /**
      * {@code WINDOWWIDTH} int value that represents {@link GetAirshipsWithLessPassengerThanWindow} width. 
      */
-    private static final int WINDOWWIDTH = 550;
+    private static final int WINDOWWIDTH = 340;
     /**
      * {@code WINDOWHEIGHT} int value that represents {@link GetAirshipsWithLessPassengerThanWindow} height. 
      */
-    private static final int WINDOWHEIGHT = 550;
+    private static final int WINDOWHEIGHT = 380;
     /**
      * {@code TOPINSETS} int value that represents the size of top borders used in
      * {@code GridBagConstraints}.
@@ -117,7 +117,6 @@ public class GetAirshipsWithLessPassengerThanWindow extends WindowBase {
             .add( numberOfPassengers,
                   GridBagUtils.updateGridBagConstraints( constraints, GRIDXFORGRIDBAGLAYOUT, GRIDYFORGRIDBAGLAYOUT, 
                                                          new Insets( TOPINSETS, LEFTINSETS, BOTTOMINSETS, RIGHTINSETS) ) );
-        this.setVisible( true );
         
     }
  

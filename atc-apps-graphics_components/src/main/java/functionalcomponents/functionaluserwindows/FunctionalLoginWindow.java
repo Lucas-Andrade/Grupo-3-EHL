@@ -2,12 +2,14 @@ package functionalcomponents.functionaluserwindows;
 
 
 import java.awt.event.ActionListener;
+import app.Utils;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
 import design.windows.userwindows.LogInWindow;
 import entities.SimpleLoggedUser;
 import entities.SimpleUser;
 import exceptions.InternalErrorException;
+import exceptions.LoggedInUserMissingException;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
@@ -58,14 +60,7 @@ public class FunctionalLoginWindow extends
             boolean
             setSwingWorkerFactory( SwingWorkerFactory< FunctionalLoginWindow.SwingWorker, SimpleUser > factory ) {
     
-        if( factory != null )
-            synchronized (factoryLock) {
-                if( swFactory == null ) {
-                    swFactory = factory;
-                    return true;
-                }
-            }
-        return false;
+        return Utils.setSWFactory( FunctionalLoginWindow.class, "swFactory", factory, factoryLock );
     }
     
     
@@ -83,22 +78,19 @@ public class FunctionalLoginWindow extends
     
     // IMPLEMENTATION OF THE METHOD INHERITED FROM FunctionalWindow
     /**
-     * @see functionalcomponents.FunctionalWindow#getNewSwingWorker()
+     * @see functionalcomponents.FunctionalWindow#runNewSwingWorker()
      */
     @Override
-    protected FunctionalLoginWindow.SwingWorker getNewSwingWorker()
-        throws SwingWorkerFactoryMissingException {
+    protected void runNewSwingWorker() throws SwingWorkerFactoryMissingException {
     
-        if( swFactory == null )
-            throw new SwingWorkerFactoryMissingException( this.getClass().getSimpleName() );
-        return swFactory.newInstance();
+        Utils.runNewSwingWorker( swFactory, FunctionalLoginWindow.class.getSimpleName() );
     }
     
     
     
     // INNER CLASS
     /**
-     * Class whose instances are {@link ExceptionHandlerSW} able to add functionality to a
+     * Class whose instances are {@link ExceptionHandlerSW}s able to add functionality to a
      * {@link LogInWindow}.
      * <p>
      * The unimplemented method {@link #doInBackground()} is supposed to authenticate a user with
@@ -145,24 +137,36 @@ public class FunctionalLoginWindow extends
         
         // IMPLEMENTATION OF METHODS INHERITED FROM SwingWorker and FunctionalWindowSwingWorker
         /**
-         * Implementation of the {@link FunctionalWindowSwingWorker#functionalDone()
-         * functionalDone()}. This method will receive the result of the
-         * {@link SwingWorker#doInBackground() doInBackground()} method and open a new
-         * {@link FunctionalMainWindow}, closing this window.
+         * Presents the {@link FunctionalMainWindow} with the user received from the
+         * {@link #doInBackground()} as the logged-in user.
          * 
          * @param resultOfDoInBackGround
-         *            - The result of the {@link SwingWorker#doInBackground() doInBackground()}
-         *            method.
+         *            The result of the method {@link SwingWorker#doInBackground()}.
          */
         @Override
-        protected void finalizeDone( SimpleUser resultOfDoInBackGround ) throws Exception {
+        protected void finalizeDone( SimpleUser resultOfDoInBackGround )
+            throws InternalErrorException {
         
             if( resultOfDoInBackGround == null )
-                throw new InternalErrorException(
-                                                  "UNEXPECTED null AUTHENTICATED USER RECEIVED"
+                throw new InternalErrorException( "UNEXPECTED null AUTHENTICATED USER RECEIVED"
                                                   + " FROM doInBackground" );
-            new FunctionalMainWindow( new SimpleLoggedUser( resultOfDoInBackGround, password ) );
-            baseWindow.dispose();
+            FunctionalMainWindow.setLoggedUser( new SimpleLoggedUser( resultOfDoInBackGround,
+                                                                      password ) );
+            
+            try {
+                // clean up the text fields of login window:
+                window.getUserPanel().getJTextField().setText( "" );
+                window.getPasswordPanel().getJTextField().setText( "" );
+                // dispose login window:
+                window.dispose();
+                // show main window:
+                FunctionalMainWindow.getInstance();
+            }
+            catch( LoggedInUserMissingException e ) {
+                throw new InternalErrorException(
+                                                  "EXPECTED THE LOGGED-IN USER TO BE SET BY NOW! O_o",
+                                                  e );
+            }
         }
         
         

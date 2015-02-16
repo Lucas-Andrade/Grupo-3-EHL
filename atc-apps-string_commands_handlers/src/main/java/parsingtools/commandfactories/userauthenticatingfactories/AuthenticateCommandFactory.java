@@ -7,14 +7,11 @@ import parsingtools.commandfactories.ParsingCommand;
 import databases.Database;
 import elements.User;
 import exceptions.InvalidArgumentException;
-import exceptions.InvalidParameterValueException;
-import exceptions.MissingRequiredParameterException;
-import exceptions.NoSuchElementInDatabaseException;
 
 
 /**
  * Class whose instances are {@link ParsingCommand factories} that produce a command that allow the
- * authentication o an user. Commands are {@link Callable} instances.
+ * authentication of an user. Commands are {@link Callable} instances.
  * 
  * Extends {@link UserAuthenticatingFactory} of {@link User Users} and {@link Void}.
  * 
@@ -43,17 +40,17 @@ public class AuthenticateCommandFactory extends UserAuthenticatingFactory< User,
         super( usersDatabase, databaseToChange );
     }
     
-    /**TODO
-     * The required command is already created by {@link UserAuthenticatingFactory}.
+    
+    
+    // IMPLEMENTATION OF METHODS INHERITED FROM CommandFactory AND UserAuthenticatingFactory
+    /**
+     * @see UserAuthenticatingFactory#internalInternalNewCommand(Map, User)
      */
     @Override
     protected Callable< User > internalInternalNewCommand( Map< String, String > parametersMap,
-                                                           User authenticatedUser )
-        throws MissingRequiredParameterException, InvalidParameterValueException,
-        NoSuchElementInDatabaseException, InvalidArgumentException {
+                                                           User authenticatedUser ) {
     
-        
-        return () -> authenticatedUser;
+        return ( ) -> authenticatedUser;
     }
     
     /**

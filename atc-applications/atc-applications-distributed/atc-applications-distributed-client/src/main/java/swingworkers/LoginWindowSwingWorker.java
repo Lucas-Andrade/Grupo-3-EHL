@@ -1,10 +1,8 @@
 package swingworkers;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
 import org.eclipse.jetty.server.Authentication.User;
+import utils.ClientRequest;
 import com.google.gson.Gson;
 import design.windows.userwindows.LogInWindow;
 import entities.SimpleUser;
@@ -14,8 +12,8 @@ import gson_entities.UserFromJson;
 
 
 public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
-
- // CONSTRUCTOR
+    
+    // CONSTRUCTOR
     public LoginWindowSwingWorker( LogInWindow window ) {
     
         super( window );
@@ -34,27 +32,19 @@ public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
     @Override
     protected SimpleUser doInBackground() throws Exception {
     
-        String url = "http://localhost:8081/users"; //TODO
-        HttpURLConnection connection = ( HttpURLConnection )new URL( url ).openConnection();
+        ClientRequest request = new ClientRequest( "GET", "users/authenticate" ) {
+            
+            @Override
+            public void createParameters() {
+            
+                addAuthenticateParameters( username, password );
+            }
+        };
 
-        // 200 -> ok
-        connection.getResponseCode();
-
-        // message from the server
-        BufferedReader in = new BufferedReader( new InputStreamReader( connection.getInputStream() ) );
-        String inputLine;
-        String html = new String();
-
-        //TODO
-        while( ( inputLine = in.readLine() ) != null )
-        {
-            html += inputLine ;
-        }
-        in.close();
-        
-        return  new Gson().fromJson( html, UserFromJson.class ).convert();
+        if( request.createConnection() )
+            return new Gson().fromJson( request.getResponse(), UserFromJson.class ).convert();
+        throw new Exception( request.getResponse() );
     }
-    
     
     
     // INNER CLASS

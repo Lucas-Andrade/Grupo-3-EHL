@@ -9,8 +9,7 @@ import functionalcomponents.infobuttons.SimpleUserInfoButton;
 
 
 /**
- * Class who's instances represents a ScroolPanel with User information. This class extends
- * {@link ScrollPanelForEntities}.
+ * Class whose instances represent a ScrollPanel with a list of users.
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
@@ -23,4 +22,5 @@ public class ScrollPanelForUsers extends ScrollPanelForEntities< SimpleUser > {
     
         return new SimpleUserInfoButton( identification, textArea );
     }
+
 }

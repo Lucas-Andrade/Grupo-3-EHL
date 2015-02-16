@@ -1,8 +1,10 @@
-package swingworkers;
+package swingworkers.airships;
+
 
 import java.util.ArrayList;
 import java.util.Collection;
 import commands.getcommands.GetAirshipsWithLessPassengersThanCommand;
+import swingworkers.SwingWorkerFactory;
 import utils.StringUtils;
 import app.EntitiesConversor;
 import databases.Database;
@@ -14,10 +16,9 @@ import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLe
 
 
 
-
 /**
- *   Class whose instances have the purpose of add functionality to a
- * {@link GetAirshipsWithLessPassengersThanWindowSwingWorker}. 
+ * Class whose instances have the purpose of add functionality to a
+ * {@link GetAirshipsWithLessPassengersThanWindowSW}.
  *
  * Extends {@link FunctionalGetAirshipsWithLessPassengersThanWindow}.
  *
@@ -25,24 +26,27 @@ import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLe
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 
-public class GetAirshipsWithLessPassengersThanWindowSwingWorker extends FunctionalGetAirshipsWithLessPassengerThanWindow.SwingWorker{
-
+public class GetAirshipsWithLessPassengersThanWindowSW extends
+        FunctionalGetAirshipsWithLessPassengerThanWindow.SwingWorker {
+    
     private Database< Airship > airshipsDatabase;
     private Collection< SimpleAirship > simpleAirshipsWithLessPassengers = new ArrayList<>();
     
-    public GetAirshipsWithLessPassengersThanWindowSwingWorker( GetAirshipsWithLessPassengerThanWindow window, 
-                                                               Database<Airship> airshipsDatabase ) {
+    public GetAirshipsWithLessPassengersThanWindowSW( GetAirshipsWithLessPassengerThanWindow window,
+                                                      Database< Airship > airshipsDatabase ) {
     
         super( window );
         this.airshipsDatabase = airshipsDatabase;
         
     }
-// IMPLEMENTATION OF METHODS INHERITED FROM FunctionalGetAirshipsWithLessPassengersThanCommand.SwingWorker
     
+    
+    // IMPLEMENTATION OF METHODS INHERITED FROM
+    // FunctionalGetAirshipsWithLessPassengersThanCommand.SwingWorker
     /**
-     * Implementation of the {@link SwingWorker#doInBackground()} method with the
-     * purpose of executing a {@link GetAirshipsWithLessPassengersThanCommand} obtaining its result 
-     * and convert it to {@linkplain SimpleAirship}.
+     * Implementation of the {@link SwingWorker#doInBackground()} method with the purpose of
+     * executing a {@link GetAirshipsWithLessPassengersThanCommand} obtaining its result and convert
+     * it to {@linkplain SimpleAirship}.
      * 
      * @return Returns a {@link Iterable} of {@link SimpleAirship}s.
      */
@@ -50,9 +54,11 @@ public class GetAirshipsWithLessPassengersThanWindowSwingWorker extends Function
     protected Iterable< SimpleAirship > doInBackground() throws Exception {
     
         Iterable< Airship > airshipsNearest =
-                new GetAirshipsWithLessPassengersThanCommand( airshipsDatabase,
-                                                StringUtils.parameterToInteger( passengersNumberLabel,
-                                                                                passengersNumber )).call().get();
+                new GetAirshipsWithLessPassengersThanCommand(
+                                                              airshipsDatabase,
+                                                              StringUtils.parameterToInteger( passengersNumberLabel,
+                                                                                              passengersNumber ) ).call()
+                                                                                                                  .get();
         
         for( Airship airship : airshipsNearest )
             
@@ -60,24 +66,24 @@ public class GetAirshipsWithLessPassengersThanWindowSwingWorker extends Function
         
         return simpleAirshipsWithLessPassengers;
     }
-
+    
     
     // INNER CLASS
     /**
-     * Inner class responsible for produce a new 
-     * instance of {@link GetAirshipsWithLessPassengersThanWindowSwingWorker}
+     * Inner class responsible for produce a new instance of
+     * {@link GetAirshipsWithLessPassengersThanWindowSW}
      * 
      *
-     *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
     public static class Factory
             implements
             SwingWorkerFactory< FunctionalGetAirshipsWithLessPassengerThanWindow.SwingWorker, Iterable< SimpleAirship > > {
-    
+        
         // INSTANCE FIELDS
         private Database< Airship > airshipDatabase;
         private GetAirshipsWithLessPassengerThanWindow window;
-     
+        
         
         // CONSTRUCTOR
         public Factory( GetAirshipsWithLessPassengerThanWindow window,
@@ -87,20 +93,20 @@ public class GetAirshipsWithLessPassengersThanWindowSwingWorker extends Function
             this.airshipDatabase = airshipDatabase;
             
         }
+        
         /**
-         * Implementation of the {@link SwingWorkerFactory#newInstance()} method with the
-         * purpose of create a {@link GetAirshipsWithLessPassengersThanWindowSwingWorker} 
+         * Implementation of the {@link SwingWorkerFactory#newInstance()} method with the purpose of
+         * create a {@link GetAirshipsWithLessPassengersThanWindowSW}
          * 
-         * @return Returns a {@link GetAirshipsWithLessPassengersThanWindowSwingWorker}
+         * @return Returns a {@link GetAirshipsWithLessPassengersThanWindowSW}
          */
         
         @Override
         public SwingWorker newInstance() {
-                    
-            return new GetAirshipsWithLessPassengersThanWindowSwingWorker( window, airshipDatabase );
+        
+            return new GetAirshipsWithLessPassengersThanWindowSW( window, airshipDatabase );
         }
-            
+        
     }
+    
 }
-
-

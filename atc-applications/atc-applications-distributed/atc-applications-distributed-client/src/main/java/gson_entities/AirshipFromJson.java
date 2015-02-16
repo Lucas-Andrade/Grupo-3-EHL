@@ -6,10 +6,16 @@ import entities.SimpleAirship;
 
 
 /**
- * Instances of this class should be created by the {@link Gson#fromJson(String, AirshipFromJson.Class)}
- * method, and used to be converted to a {@link SimpleAirship}.
  * 
- *
+ * Instances of this class are the bridge between an {@code Airship} in {@code Json} format and a
+ * {@link SimpleAirship}, that should be created by the
+ * {@link Gson#fromJson(String, AirshipFromJson.Class)} method, and after initialization converted
+ * to a {@link SimpleAirship} using the {@link AirshipFromJson#convert()} method.
+ * 
+ * Because instances of this class should created with {@link Gson} {@code reflection}, this class
+ * does not need a constructor to initialize its fields.
+ * 
+ * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class AirshipFromJson {
@@ -25,31 +31,18 @@ public class AirshipFromJson {
     private double minAltitude;
     
     /*
-     * Field used for a "Civil" SimpleAirship, can be null.
+     * Field used for a "Civil" SimpleAirship, it can be null.
      */
     private Integer passengers;
     
     /*
-     * Field used for a "Military" SimpleAirship, can be null.
+     * Field used for a "Military" SimpleAirship, it can be null.
      */
     private Boolean hasWeapons;
     
-    /*
-     * The SimpleAirship info 
-     */
-    private String info;
     
-    /**
-     * Create a GAirship, it should be used by the {@link Gson#fromJson(String, AirshipFromJson.Class)}
-     * method, that will initialize all the necessary fields. After initialized it should be called
-     * the {@link AirshipFromJson#convert()} to get the {@link SimpleAirship} that ARE to be used in the
-     * Graphics_Componests module (Swing).
-     */
-    public AirshipFromJson() {
     
-        info = createInfo().toString();
-    }
-    
+    // Public method
     /**
      * Create a {@link SimpleAirship} to be used in the Graphics_Componests module (Swing).
      * 
@@ -57,18 +50,19 @@ public class AirshipFromJson {
      */
     public SimpleAirship convert() {
     
-        return new SimpleAirship( flightId, latitude, longitude, info );
+        return new SimpleAirship( flightId, latitude, longitude, createInfo() );
     }
     
     
     
+    // Private method
     /**
-     * Create the {@code SimpleAirship} info. If {@code passengers} or {@code hasWeapons} are null
+     * Returns the {@code SimpleAirship} info. If {@code passengers} or {@code hasWeapons} are null
      * its info will not be added.
      * 
      * @return the {@code SimpleAirship} info
      */
-    private StringBuilder createInfo() {
+    private String createInfo() {
     
         StringBuilder strBuiler =
                 new StringBuilder( "Flight ID: " ).append( flightId ).append( "\r\nLatitude: " )
@@ -85,6 +79,6 @@ public class AirshipFromJson {
             strBuiler.append( "\nNumber of Passengers: " ).append( passengers );
         if( hasWeapons != null )
             strBuiler.append( "\nCarries Weapons: " ).append( hasWeapons );
-        return strBuiler;
+        return strBuiler.toString();
     }
 }

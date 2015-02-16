@@ -16,6 +16,12 @@
 			<artifactId> atc-apps-graphics_components </artifactId>
 			<version>${project-version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>degp.airtrafficcontrol</groupId>
+			<artifactId>atc-apps-utils</artifactId>
+			<version>${project-version}</version>
+		</dependency>
 	</dependencies>
 
 </project>

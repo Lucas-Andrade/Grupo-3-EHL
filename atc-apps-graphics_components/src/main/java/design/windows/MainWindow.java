@@ -4,7 +4,8 @@ package design.windows;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Toolkit;
+import java.io.IOException;
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -12,10 +13,11 @@ import design.GridBagUtils;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
 import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
+import exceptions.InternalErrorException;
 
 
 /**
- * Class whose instances represent a panel that contains other specific {@link JPanel},
+ * Class whose instance represents a panel that contains other specific {@link JPanel},
  * {@link JHeaderPanelForMainWindow} , {@link JBodyPanelForMainWindow},
  * {@link JFooterPanelForMainWindow} and {@link JTextArea}. This class extends {@link JFrame} and
  * has this configuration:
@@ -32,7 +34,7 @@ import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
  *     |_______________________________________________________ |  
  *     |                                                        |  
  *     |                                                        |  
- *     |          {@link JBodyPanelForMainWindow}               |  
+ *     |          {@link JFooterPanelForMainWindow}             |  
  *     |________________________________________________________|      
  *     |                                                        |  
  *     |                {@link JTextArea}                       | 
@@ -105,20 +107,34 @@ public class MainWindow extends JFrame {
      */
     private JTextArea errorJTextArea;
     
-    // ////////////////////
-    // // Constructors ////
-    // ////////////////////
+    
+    
+    // PRIVATE CONSTRUCTOR AND getInstance
     
     /**
-     * Public constructor that creates a new {@link MainWindow} adding the
-     * {@link JHeaderPanelForMainWindow}, {@link JBodyPanelForMainWindow},
-     * {@link JFooterPanelForMainWindow} and {@link JTextArea}.
+     * The only instance of {@link MainWindow}.
      */
+    private static volatile MainWindow theMainWindow;
     
-    public MainWindow() {
+    /**
+     * A lock for the {@link #theMainWindow}.
+     */
+    private static Object windowLock = new Object();
     
+    /**
+     * Creates a new {@link MainWindow} adding the {@link JHeaderPanelForMainWindow},
+     * {@link JBodyPanelForMainWindow}, {@link JFooterPanelForMainWindow} and {@link JTextArea}.
+     */    
+    private MainWindow() {
+
         this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-        this.setIconImage( Toolkit.getDefaultToolkit().getImage( "/images/radar.png" ) );
+        try {
+            this.setIconImage(  ImageIO.read( getClass().getResourceAsStream( "/images/radar.png" ) ));
+        }
+        catch( IOException e ) {
+            throw new InternalErrorException( "Image Not Found : /images/radar.png", e );
+        }
+        
         this.setTitle( "Air Traffic Control" );
         
         JPanel contentPane = new JPanel();
@@ -154,6 +170,27 @@ public class MainWindow extends JFrame {
         setResizable( false );
     }
     
+    /**
+     * Returns the {@link MainWindow}.
+     * 
+     * @return The {@link MainWindow}.
+     */
+    public static MainWindow getInstance() {
+    
+        
+        if( theMainWindow == null )
+            synchronized (windowLock) {
+                
+                if( theMainWindow == null ) {
+                    theMainWindow = new MainWindow();
+                }
+            }
+        
+        return theMainWindow;
+    }
+    
+    
+        
     // ///////////////
     // Set Methods //
     // ///////////////
@@ -225,4 +262,5 @@ public class MainWindow extends JFrame {
     
         return errorJTextArea;
     }
+
 }

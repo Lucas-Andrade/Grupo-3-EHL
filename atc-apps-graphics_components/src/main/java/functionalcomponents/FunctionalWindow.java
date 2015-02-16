@@ -2,6 +2,7 @@ package functionalcomponents;
 
 
 import java.awt.Cursor;
+import java.awt.Dialog.ModalityType;
 import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.SwingWorker;
@@ -61,7 +62,10 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
                                               + " constructor with null nonFunctionalWindow!" );
         this.theFunctionalWindow = nonFunctionalWindow;
         
+
         addActionToButtons();
+
+        theFunctionalWindow.setModalityType( ModalityType.TOOLKIT_MODAL );
         theFunctionalWindow.setVisible( true );
     }
     
@@ -82,6 +86,9 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
                 if( rightButton.getActionListeners().length == 0 ) {
                     addRightButtonAction();
                     addLeftButtonAction();
+
+                    theFunctionalWindow.getRootPane().setDefaultButton( theFunctionalWindow.getButtonsPanel()
+                                                                                           .getLeftButton() );
                 }
             }
     }
@@ -102,7 +109,7 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
      * Since the functionality of this button will depend on the given window and will often be used
      * to execute actions that will take longer to process and that are not related to the window's
      * design, this method will make use of the {@link SwingWorker} class through the
-     * {@link #getNewSwingWorker()} method.
+     * {@link #runNewSwingWorker()} method.
      * 
      * <ul>
      * <li>Collects the respective window info;
@@ -119,7 +126,7 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
             theFunctionalWindow.setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
             
             try {
-                getNewSwingWorker().run();
+                runNewSwingWorker();
             }
             catch( SwingWorkerFactoryMissingException e ) {
                 new UnderConstrutionWindow();
@@ -129,19 +136,20 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
         }
         
         );
+        
     }
     
     
     
     // UNIMPLEMENTED METHOD
     /**
-     * Returns a new {@link ExceptionHandlerSW}.
+     * Runs a new {@link SwingWorker}.
      * 
      * @return A new {@link ExceptionHandlerSW}.
      * @throws SwingWorkerFactoryMissingException
      *             If there is no {@link SwingWorkerFactory} set in {@code this}'s class.
      */
-    protected abstract S getNewSwingWorker() throws SwingWorkerFactoryMissingException;
+    protected abstract void runNewSwingWorker() throws SwingWorkerFactoryMissingException;
     
     
 }

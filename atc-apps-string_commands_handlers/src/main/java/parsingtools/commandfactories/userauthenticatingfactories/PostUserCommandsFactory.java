@@ -172,7 +172,7 @@ public class PostUserCommandsFactory extends UserAuthenticatingFactory< User, Co
             username = getParameterAsString( StringCommandsDictionary.USERNAME );
             password = getParameterAsString( StringCommandsDictionary.PASSWORD );
             email = getParameterAsString( StringCommandsDictionary.EMAIL );
-            fullName = getParameterAsString( StringCommandsDictionary.FULLNAME );
+            fullName = parametersMap.get( StringCommandsDictionary.FULLNAME );
         }
         
     }

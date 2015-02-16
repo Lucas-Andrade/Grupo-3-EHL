@@ -51,11 +51,11 @@ public class GetGeographicalCoordinatesParametersWindow extends WindowBase {
     /**
      * {@code WINDOWWIDTH} int value that represents {@link GetGeographicalCoordinatesParametersWindow} width. 
      */
-    private static final int WINDOWWIDTH = 370;
+    private static final int WINDOWWIDTH = 330;
     /**
      * {@code WINDOWHEIGHT} int value that represents {@link GetGeographicalCoordinatesParametersWindow} height. 
      */
-    private static final int WINDOWHEIGHT = 550;
+    private static final int WINDOWHEIGHT = 470;
     /**
      * {@code JTEXTFIELDSIZE} int value that represents the {@link JTextField} size.
      */
@@ -74,12 +74,12 @@ public class GetGeographicalCoordinatesParametersWindow extends WindowBase {
      * {@code RIGHTINSETS} int value that represents the size of right borders used in
      * {@code GridBagConstraints}.
      */
-    private static final int RIGHTINSETS = 20;
+    private static final int RIGHTINSETS = 0;
     /**
      * {@code BOTTOMINSETS} int value that represents the size of bottom borders used in
      * {@code GridBagConstraints}.
      */
-    private static final int BOTTOMINSETS = 0;
+    private static final int BOTTOMINSETS = 15;
     /**
      * {@code GRIDXFORGRIDBAGLAYOUT} int value that represents the column where is insert the components
      * into {@code GridBagConstraints}.
@@ -133,22 +133,22 @@ public class GetGeographicalCoordinatesParametersWindow extends WindowBase {
                
         latitude = new JLablePlusJTextField( "Latitude", JTEXTFIELDSIZE, Color.WHITE );
         this.getContentPane()
-            .add( latitude, GridBagUtils.updateGridBagConstraints( constraints, GRIDYFORLATITUDE ) );
-        
+            .add( latitude, GridBagUtils.updateGridBagConstraints( constraints, GRIDXFORGRIDBAGLAYOUT, GRIDYFORLATITUDE,
+                                                                   new Insets( TOPINSETS, LEFTINSETS, BOTTOMINSETS, RIGHTINSETS ) ) );
+            
         longitude = new JLablePlusJTextField( "Longitude", JTEXTFIELDSIZE, Color.WHITE );
         this.getContentPane()
             .add( longitude,
                   GridBagUtils.updateGridBagConstraints( constraints, GRIDXFORGRIDBAGLAYOUT, GRIDYFORLONGITUDE,
-                                                         new Insets( TOPINSETS, LEFTINSETS, RIGHTINSETS, BOTTOMINSETS ) ) );
+                                                         new Insets( TOPINSETS, LEFTINSETS, BOTTOMINSETS, RIGHTINSETS ) ) );
         
-        airshipsNumber = new JLablePlusJTextField( "Airships Number", JTEXTFIELDSIZE, Color.WHITE );
+        airshipsNumber = new JLablePlusJTextField( "Number of Airships", JTEXTFIELDSIZE, Color.WHITE );
         this.getContentPane()
             .add( airshipsNumber,
                   GridBagUtils.updateGridBagConstraints( constraints, GRIDXFORGRIDBAGLAYOUT, GRIDYFORAIRSHIPSNUMBER,
-                                                         new Insets( TOPINSETS, LEFTINSETS, RIGHTINSETS, BOTTOMINSETS ) ) );
+                                                         new Insets( TOPINSETS, LEFTINSETS, BOTTOMINSETS, RIGHTINSETS ) ) );
         
         
-        this.setVisible( true );
     }
     
      /////////////////   

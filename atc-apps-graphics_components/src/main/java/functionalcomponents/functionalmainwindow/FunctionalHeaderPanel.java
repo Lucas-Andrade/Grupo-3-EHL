@@ -3,172 +3,207 @@ package functionalcomponents.functionalmainwindow;
 
 
 import java.awt.event.ActionListener;
+import java.util.concurrent.ExecutionException;
 import javax.swing.SwingWorker;
-import org.eclipse.jetty.server.Authentication.User;
 import swingworkers.SwingWorkerFactory;
+import app.Utils;
 import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
-import design.windows.MainWindow;
 import design.windows.popupwindows.UnderConstrutionWindow;
 import design.windows.userwindows.GetUsersWindow;
+import entities.SimpleUser;
+import exceptions.InternalErrorException;
+import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
 
 /**
- * Class whose instances have the purpose of adding functionality to a
- * {@link JHeaderPanelForMainWindow}. Giving functionality to a panel means adding an
- * {@link ActionListener} to all its buttons (i.e. {@link User Users} commands: POST, GET, PATCH,
- * DELETE
+ * Class whose instances add functionality to {@link JHeaderPanelForMainWindow}s. Giving
+ * functionality to this type of panels means adding an {@link ActionListener} to most of its
+ * buttons, but <b>windows who incorporate these panels still need to add functionality to the
+ * log-out button and the turn-off button</b>.
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class FunctionalHeaderPanel {
     
-    // Factories
-    private SwingWorkerFactory< ?, ? > addUserFactory;
-    private SwingWorkerFactory< ?, ? > changePasswordFactory;
-    private SwingWorkerFactory< ?, ? > infoAllUsersFactory;
-    private SwingWorkerFactory< ?, ? > removeUserFactory;
     
-    // Field
+    // STATIC MEMBERS
     
     /**
-     * {@code headerPanel} - The {@link MainWindow} header panel to which we will had functionality.
+     * The {@link SwingWorkerFactory} that produces {@link SwingWorker}s for the button that gets
+     * all the users registered in the app.
+     */
+    private static SwingWorkerFactory< GetAllUsersSW, Iterable< SimpleUser > > getAllUsers_SwingWorkerFactory;
+    
+    /**
+     * A lock for the {@link #getAllUsers_SwingWorkerFactory}.
+     */
+    private static Object getAllUsers_SwFactoryLock = new Object();
+    
+    /**
+     * Sets the {@link SwingWorkerFactory} that produces {@link GetAllUsersSW}s for the button that
+     * gets all the users registered in the app.
+     * 
+     * @param swFactory
+     *            The {@link SwingWorkerFactory} that produces {@link GetAllUsersSW}s for the button
+     *            that gets all the users registered in the app.
+     * @return {@code true} if {@code swFactory} was set as the factory that produces swingworkers
+     *         for the button; <br/>
+     *         {@code false} if there was a factory already set or {@code swFactory} is {@code null}
+     *         .
+     */
+    public static
+            boolean
+            setAllUsersFactory( SwingWorkerFactory< GetAllUsersSW, Iterable< SimpleUser > > swFactory ) {
+    
+        return Utils.setSWFactory( FunctionalHeaderPanel.class, "getAllUsers_SwingWorkerFactory",
+                                   swFactory, getAllUsers_SwFactoryLock );
+    }
+    
+    
+    
+    // INNER CLASS
+    /**
+     * Class whose instances are {@link SwingWorker}s able to add functionality to a button that
+     * gets all the users registered in the app.
+     * <p>
+     * The unimplemented method {@link #doInBackground()} is supposed to return an {@link Iterable}
+     * with the representations as {@link SimpleUser}s of all the users registered in the app; it is
+     * not supposed to throw exceptions.
+     * </p>
+     *
+     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+     */
+    public abstract static class GetAllUsersSW extends SwingWorker< Iterable< SimpleUser >, Void > {
+        
+        /**
+         * Opens a new {@link GetUsersWindow} that presents all the users returned by the method
+         * {@link #doInBackground()}.
+         */
+        @Override
+        protected void done() {
+        
+            try {
+                new GetUsersWindow( get() );
+            }
+            catch( InterruptedException | ExecutionException e ) {
+                throw new InternalErrorException(
+                                                  "UNEXPECTED ERROR IN FunctionalHeaderPanel.GetAllUsersSW",
+                                                  e );
+            }
+        }
+        
+    }
+    
+    
+    
+    // INSTANCE FIELD
+    /**
+     * The {@link JHeaderPanelForMainWindow} receiving functionality.
      */
     private JHeaderPanelForMainWindow headerPanel;
     
-    // Constructor
+    
+    
+    // CONSTRUCTOR & PRIVATE METHODS
+    
     /**
-     * Public constructor that will add functionality to a given non functional
-     * {@link JHeaderPanelForMainWindow}.
+     * Adds functionality to the non-functional {@link JHeaderPanelForMainWindow}
+     * {@code headerPanel}.
      * 
      * @param headerPanel
-     *            - The {@link MainWindow} header panel to which we will had functionality.
-     * @param usersDatabase
-     *            - The users database.
-     * @param user
-     *            - The user who is currently logged in.
+     *            The {@link JHeaderPanelForMainWindow} to which we will had functionality.
      */
     public FunctionalHeaderPanel( JHeaderPanelForMainWindow headerPanel ) {
     
         this.headerPanel = headerPanel;
+        addFunctionality();
+    }
+    
+    /**
+     * Adds functionality to the add-user button, the change-password button, the get-all-users
+     * button and the remove-user button.
+     */
+    private void addFunctionality() {
+    
+        addChangePasswordButtonAction();
         
         addAddUserButtonAction();
-        addChangePasswordButtonAction();
-        addInfoAllUsersButtonAction();
         addRemoveUserButtonAction();
-    }
-    
-    // Private Method
-    
-    /**
-     * Method that will add functionality to the {@link JHeaderPanelForMainWindow#addUserButton
-     * addUserButton} button.
-     * 
-     * The given action will be to create a new {@link FunctionalPostUserWindow} with the objective
-     * of posting new {@link User} in the given database.
-     */
-    private void addAddUserButtonAction() {
-    
-        headerPanel.getUserPanel().getAddUserButton()
-                   .addActionListener( action -> action( addUserFactory ) );
+        addInfoAllUsersButtonAction();
     }
     
     /**
-     * Method that will add functionality to the
-     * {@link JHeaderPanelForMainWindow#changePasswordButton changePasswordButton} button.
-     * 
-     * The given action will be to create a new {@link FunctionalPatchUserWindow} with the objective
-     * of patching a {@link User} existing in the given database.
+     * Adds functionality to the {@link JHeaderPanelForMainWindow#changePasswordButton}; this button
+     * opens a new {@link FunctionalPatchUserWindow}.
      */
     private void addChangePasswordButtonAction() {
     
         headerPanel.getUserPanel().getChangePasswordButton()
-                   .addActionListener( action -> action( changePasswordFactory ) );
+                   .addActionListener( action -> new FunctionalPatchUserWindow() );
     }
     
     /**
-     * DELETE USER - Not Implemented!
+     * Adds functionality to the {@link JHeaderPanelForMainWindow#addUserButton}; this button opens
+     * a new {@link FunctionalPostUserWindow}.
+     */
+    private void addAddUserButtonAction() {
+    
+        headerPanel.getUserPanel().getAddUserButton()
+                   .addActionListener( action -> new FunctionalPostUserWindow() );
+    }
+    
+    /**
+     * This functionality is not yet supported; this button opens a new
+     * {@link UnderConstrutionWindow}.
      */
     private void addRemoveUserButtonAction() {
     
         headerPanel.getUserPanel().getRemoveUserButton()
-                   .addActionListener( action -> action( removeUserFactory ) );
+                   .addActionListener( action -> new UnderConstrutionWindow() );
     }
     
     /**
-     * Method that will add functionality to the
-     * {@link JHeaderPanelForMainWindow#infoAllUsersButton infoAllUsersButton} button.
-     * 
-     * The given action will be to create a new {@link GetUsersWindow} that will show a list of all
-     * the {@link User users} existing in the given database.
+     * Adds functionality to the {@link JHeaderPanelForMainWindow#infoAllUsersButton}; this button
+     * opens a new {@link GetUsersWindow}.
      */
     private void addInfoAllUsersButtonAction() {
     
         headerPanel.getUserPanel().getInfoAllUsersButton()
-                   .addActionListener( action -> action( infoAllUsersFactory ) );
+                   .addActionListener( action -> runNew_GetAllUsers_SwingWorker() );
     }
     
     /**
-     * Create a new {@link SwingWorker} associated with the given {@code factory} and run it. If the
-     * {@code factory} is null, then its open the {@link UnderConstrutionWindow}.
-     * 
-     * @param factory
-     *            - The {@link SwingWorker} factory.
+     * Runs a new {@link SwingWorker} created by {@link #getAllUsers_SwingWorkerFactory}. If the
+     * {@link #getAllUsers_SwingWorkerFactory} is {@code null}, it is opened a new
+     * {@link UnderConstrutionWindow}.
      */
-    private void action( SwingWorkerFactory< ?, ? > factory ) {
+    private void runNew_GetAllUsers_SwingWorker() {
     
         try {
-            factory.newInstance().run();
+            Utils.runNewSwingWorker( getAllUsers_SwingWorkerFactory,
+                                     FunctionalHeaderPanel.class.getSimpleName() );
         }
-        catch( NullPointerException e ) {
+        catch( SwingWorkerFactoryMissingException e ) {
             new UnderConstrutionWindow();
         }
     }
     
-    // Public Get Method
     
+    
+    // PUBLIC METHOD
     /**
-     * @return the {@code headerPanel}.
+     * Returns the base {@link JHeaderPanelForMainWindow} that this {@link FunctionalHeaderPanel} is
+     * giving functionality to.
+     * 
+     * @return The base {@link JHeaderPanelForMainWindow} that this {@link FunctionalHeaderPanel} is
+     *         giving functionality to.
      */
     public JHeaderPanelForMainWindow getHeaderPanel() {
     
         return headerPanel;
     }
     
-    /**
-     * @param addUserFactory
-     *            the addUserFactory to set
-     */
-    public void setAddUserFactory( SwingWorkerFactory< ?, ? > addUserFactory ) {
     
-        this.addUserFactory = addUserFactory;
-    }
-    
-    /**
-     * @param changePasswordFactory
-     *            the changePasswordFactory to set
-     */
-    public void setChangePasswordFactory( SwingWorkerFactory< ?, ? > changePasswordFactory ) {
-    
-        this.changePasswordFactory = changePasswordFactory;
-    }
-    
-    /**
-     * @param infoAllUsersFactory
-     *            the infoAllUsersFactory to set
-     */
-    public void setInfoAllUsersFactory( SwingWorkerFactory< ?, ? > infoAllUsersFactory ) {
-    
-        this.infoAllUsersFactory = infoAllUsersFactory;
-    }
-    
-    /**
-     * @param removeUserFactory
-     *            the removeUserFactory to set
-     */
-    public void setRemoveUserFactory( SwingWorkerFactory< ?, ? > removeUserFactory ) {
-    
-        this.removeUserFactory = removeUserFactory;
-    }
 }

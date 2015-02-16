@@ -282,8 +282,8 @@ public class StringCommandsExecutor implements Executor {
             String[] nameAndValue = parameter.split( "=" );
             if( nameAndValue.length != 2 )
                 throw new InvalidCommandParametersSyntaxException(
-                                                                   "Invalid syntax in parameters-list!"
-                                                                           + nameAndValue );
+                                                                   "Invalid syntax in parameters-list! Parameter with name: "
+                                                                           + nameAndValue[0] );
             if( nameAndValue[0] == "accept"
                 && (!nameAndValue[1].equals( "text/html" )
                     || !nameAndValue[1].equals( "application/json" ) || !nameAndValue[1].equals( "text/plain" )) )
@@ -375,7 +375,7 @@ public class StringCommandsExecutor implements Executor {
             return getTranslator().encode( intermediateRepr );
         }
         catch( UnknownTypeException | UnknownTranslatableException e ) {
-            //Not Supposed To Happen
+            // Not Supposed To Happen
             throw new InternalErrorException( e.getMessage() );
         }
     }

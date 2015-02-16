@@ -8,6 +8,7 @@ import swingworkers.SwingWorkerFactory;
 import utils.CompletionStatus;
 import app.Utils;
 import design.windows.airshipwindows.PostAirshipsWindow;
+import entities.SimpleLoggedUser;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
 import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
@@ -116,6 +117,8 @@ public class FunctionalPostAirshipWindow extends
         protected String minAltitudeLabel;
         protected String maxAltitudeLabel;
         protected String specificComponentLabel;
+        
+        protected SimpleLoggedUser simpleLoggedUser = FunctionalMainWindow.getLoggedUser();
         
         // CONSTRUCTOR
         public SwingWorker( PostAirshipsWindow window ) {

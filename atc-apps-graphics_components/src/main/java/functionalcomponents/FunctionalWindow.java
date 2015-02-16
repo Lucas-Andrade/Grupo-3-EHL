@@ -64,6 +64,8 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
         
 
         addActionToButtons();
+        theFunctionalWindow.getRootPane().setDefaultButton( theFunctionalWindow.getButtonsPanel()
+                                                            .getLeftButton() );
 
         theFunctionalWindow.setModalityType( ModalityType.TOOLKIT_MODAL );
         theFunctionalWindow.setVisible( true );
@@ -87,8 +89,7 @@ public abstract class FunctionalWindow< S extends ExceptionHandlerSW< R >, R > {
                     addRightButtonAction();
                     addLeftButtonAction();
 
-                    theFunctionalWindow.getRootPane().setDefaultButton( theFunctionalWindow.getButtonsPanel()
-                                                                                           .getLeftButton() );
+                    
                 }
             }
     }

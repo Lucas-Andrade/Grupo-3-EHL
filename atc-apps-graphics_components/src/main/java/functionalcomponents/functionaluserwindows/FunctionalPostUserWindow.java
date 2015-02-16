@@ -8,8 +8,10 @@ import swingworkers.SwingWorkerFactory;
 import utils.CompletionStatus;
 import design.windows.popupwindows.SuccessWindow;
 import design.windows.userwindows.PostUserWindow;
+import entities.SimpleLoggedUser;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.FunctionalWindow;
+import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 
 
 
@@ -130,6 +132,8 @@ public class FunctionalPostUserWindow extends
         protected String confirmPasswordLabel;
         protected String emailLabel;
         protected String fullNameLabel;
+        
+        protected SimpleLoggedUser simpleLoggedUser = FunctionalMainWindow.getLoggedUser();
         
         
         

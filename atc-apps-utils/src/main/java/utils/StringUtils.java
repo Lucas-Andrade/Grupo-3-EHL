@@ -20,7 +20,7 @@ public class StringUtils {
      * Unused private constructor
      */
     private StringUtils() {
-        
+    
     };
     
     
@@ -51,7 +51,7 @@ public class StringUtils {
      */
     public static boolean parameterToBoolean( String parameterName, String parameterValue )
         throws InvalidParameterValueException, MissingRequiredParameterException {
-        
+    
         if( parameterValue == null || parameterValue.equals( "" ) )
             throw new MissingRequiredParameterException( parameterName );
         
@@ -88,7 +88,7 @@ public class StringUtils {
      */
     public static Double parameterToDouble( String parameterName, String parameterValue )
         throws InvalidParameterValueException, MissingRequiredParameterException {
-        
+    
         try {
             if( parameterValue.equals( "" ) )
                 throw new MissingRequiredParameterException( parameterName );
@@ -125,7 +125,7 @@ public class StringUtils {
      */
     public static Integer parameterToInteger( String parameterName, String parameterValue )
         throws InvalidParameterValueException, MissingRequiredParameterException {
-        
+    
         if( parameterValue == null || parameterValue.equals( "" ) )
             throw new MissingRequiredParameterException( parameterName );
         
@@ -155,7 +155,7 @@ public class StringUtils {
      */
     public static String parameterToString( String parameterName, String parameterValue )
         throws MissingRequiredParameterException {
-        
+    
         if( parameterValue == null || parameterValue.equals( "" ) )
             throw new MissingRequiredParameterException( parameterName );
         
@@ -163,14 +163,39 @@ public class StringUtils {
     }
     
     
-    
+    /**
+     * Insert line breaks to the given {@code string} such that each line have at maximum
+     * {@code maxLineSize} characters.
+     * 
+     * @param string
+     *            - The String to parser.
+     * @param maxLineSize
+     *            - The Maximum number of characters by line.
+     * @return the parsed {@code string}
+     */
     public static String errorStringParser( String string, int maxSize ) {
+    
+        StringBuilder copy = new StringBuilder( string );
         
-        StringBuilder copy = new StringBuilder();
-        int i;
-        for( i = 0; i < string.length() - maxSize; i += maxSize )
-            copy.append( string.substring( i, i + maxSize ) ).append( "\n\r" );
-        copy.append( string.substring( i ) );
+        int length = string.length();
+        int index;
+        int splitBeforeIndex = maxSize;
+        
+        while( splitBeforeIndex <= length ) {
+            index = copy.lastIndexOf( " ", splitBeforeIndex );
+            if( index + maxSize < splitBeforeIndex ) {
+                index = splitBeforeIndex - 1;
+                copy.replace( index, index, "-\r\n" );
+                index += 3;
+                length += 3;
+            }
+            else {
+                copy.replace( index, index + 1, "\r\n" );
+                index += 2;
+                length += 2;
+            }
+            splitBeforeIndex = index + maxSize;
+        }
         return copy.toString();
     }
 }

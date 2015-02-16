@@ -101,7 +101,14 @@ public class JBodyPanelForMainWindow extends JPanel {
         createWorldMapAndScrollPanel( airshipsFound );
         paint();
     }
-
+    
+    public void updateBodyPanelForGetAirshipsCloserTo( Iterable< SimpleAirship > airshipsFound,
+                                    String latitude, String longitude ) {
+               
+        remove();
+        createWorldMapAndScrollPanelForGetAirshipsCloserTo( airshipsFound, latitude, longitude );
+        paint();
+    }
     
     /**
      * Create the {@code worldMapWithAirships} and the {@code airshipsScrollPane}, with a new list
@@ -125,7 +132,16 @@ public class JBodyPanelForMainWindow extends JPanel {
         add( airshipsScrollPane );
     }
     
-    
+    private void createWorldMapAndScrollPanelForGetAirshipsCloserTo( Iterable< SimpleAirship > airshipsFound, String latitude, String longitude ) {
+        
+        worldMapWithAirships =
+                new JWorldMapWithAirships().createAJPanelWithWorldMapAndAirshipsAndLocationIcon( airshipsFound,latitude, longitude );
+        airshipsScrollPane =
+                new JWorldMapWithAirships().produceAJScrollPaneWithAllEntities( airshipsFound );
+        
+        add( worldMapWithAirships );
+        add( airshipsScrollPane );
+    }
     /**
      * Remove the {@code worldMapWithAirships} and the {@code airshipsScrollPane}.
      */
@@ -143,6 +159,8 @@ public class JBodyPanelForMainWindow extends JPanel {
         revalidate();
         repaint();
     }
+
+
 }
 
 

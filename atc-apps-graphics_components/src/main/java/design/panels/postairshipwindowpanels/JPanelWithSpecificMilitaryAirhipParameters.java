@@ -80,6 +80,10 @@ public class JPanelWithSpecificMilitaryAirhipParameters extends JPanel {
      */   
     private ButtonGroup groupButtons;
     
+    /**
+     * {@code militaryArmorLabel} variable that represents the {@link JLabel} for specific Military airship panel. 
+     */
+    private JLabel militaryArmorLabel;
     
     /**
      * Public constructor that creates a new {@link JPanelWithSpecificMilitaryAirhipParameters} 
@@ -90,7 +94,7 @@ public class JPanelWithSpecificMilitaryAirhipParameters extends JPanel {
         
         this.setOpaque( false );
         
-        JLabel militaryArmorLabel = new JLabel( "Has Armor?" );
+        militaryArmorLabel = new JLabel( "Has Armor?" );
         militaryArmorLabel.setForeground( Color.WHITE );
         this.add( militaryArmorLabel );
         
@@ -146,6 +150,9 @@ public class JPanelWithSpecificMilitaryAirhipParameters extends JPanel {
         return groupButtons;
     }
     
-    
+    public JLabel getArmorInfo(){
+        
+        return militaryArmorLabel;
+    }
     
 }

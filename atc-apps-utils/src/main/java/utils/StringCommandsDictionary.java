@@ -24,12 +24,6 @@ package utils;
  */
 public final class StringCommandsDictionary {
     
-    /**
-     * Unused private constructor
-     */
-    private StringCommandsDictionary() {
-    
-    }
     
     // AIRSHIP RELATED. PLACEHOLDERS NAMES
     
@@ -83,5 +77,12 @@ public final class StringCommandsDictionary {
     public static final String TEXT = "text/plain";
     
     
+
+    /**
+     * Unused private constructor
+     */
+    private StringCommandsDictionary() {
+    
+    }
     
 }

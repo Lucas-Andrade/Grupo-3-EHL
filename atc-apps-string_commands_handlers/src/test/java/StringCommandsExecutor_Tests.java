@@ -1,4 +1,3 @@
-package parsingtools_tests;
 
 
 import java.io.BufferedReader;
@@ -227,10 +226,10 @@ public class StringCommandsExecutor_Tests {
         
     }
     
-    @Test( expected = InvalidParameterValueException.class )
+    @Test( expected = UnsupportedAcceptValueException.class )
     public
             void
-            shouldThrowInvalidParameterValueExceptionWhenTryToGetAnInvalidTranslatorFormatParameter()
+            shouldThrowUnsupportedAcceptValueExceptionWhenTryToGetAnUnknownAcceptParameterValue()
                 throws Exception {
     
         

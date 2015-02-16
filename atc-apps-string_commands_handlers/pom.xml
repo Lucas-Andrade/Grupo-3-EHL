@@ -10,35 +10,36 @@
 
 	<artifactId>atc-apps-string_commands_handlers</artifactId>
 
-	<dependencies>
+	<dependencies>	
+		<dependency>
+			<groupId>degp.airtrafficcontrol</groupId>
+			<artifactId>atc-apps-infrastructure-domain_commands</artifactId>
+			<version>${project-version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>degp.airtrafficcontrol</groupId>
+			<artifactId>atc-apps-infrastructure-databases</artifactId>
+			<version>${project-version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>degp.airtrafficcontrol</groupId>
+			<artifactId>atc-apps-infrastructure-domain_entities</artifactId>
+			<version>${project-version}</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>degp.airtrafficcontrol</groupId>
 			<artifactId>atc-apps-utils</artifactId>
 			<version>${project-version}</version>
 		</dependency>
-		
+
 		<dependency>
-			<groupId>degp.airtrafficcontrol</groupId>
-			<artifactId>
-				atc-apps-infrastructure-databases
-			</artifactId>
-			<version>${project-version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>degp.airtrafficcontrol</groupId>
-			<artifactId>
-				atc-apps-infrastructure-domain_commands
-			</artifactId>
-			<version>${project-version}</version>
-		</dependency>
-		
-		<dependency>
-			<groupId>degp.airtrafficcontrol</groupId>
-			<artifactId>
-				atc-apps-infrastructure-domain_entities
-			</artifactId>
-			<version>${project-version}</version>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.3.1</version>
 		</dependency>
 	</dependencies>
+	
 </project>

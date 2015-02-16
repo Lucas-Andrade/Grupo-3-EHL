@@ -244,7 +244,8 @@ public class ToHtmlTranslator implements Translator {
         }
         catch( ClassCastException e ) {
             throw new UnknownTranslatableException(
-                                                    "Translatable representing iterable has non-translatable values in the properties bag.",
+                                                    "Translatable representing iterable has"
+                                                    + " non-translatable values in the properties bag.",
                                                     e );
         }
         
@@ -266,7 +267,7 @@ public class ToHtmlTranslator implements Translator {
         List< String > internalLines = new ArrayList< String >();
         
         for( Entry< String, Object > entry : t.getPropertiesBag().entrySet() ) {
-            ArrayList< String > codedEntry = new ArrayList< String >();
+            List< String > codedEntry = new ArrayList< String >();
             codedEntry.add( createRawTextElement( t.getKeyTag(), entry.getKey() ) );
             codedEntry.add( createRawTextElement( t.getValueTag(), entry.getValue().toString() ) );
             

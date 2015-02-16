@@ -1,19 +1,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	
+
 	<parent>
 		<groupId>degp.airtrafficcontrol</groupId>
 		<artifactId>atc-apps</artifactId>
 		<version>${project-version}</version>
 	</parent>
-	
+
 	<artifactId>atc-applications</artifactId>
 	<packaging>pom</packaging>
 	<description>CLI, GUI, distributed app</description>
+
 	<modules>
 		<module>atc-applications-gui</module>
 		<module>atc-applications-cli</module>
 		<module>atc-applications-distributed</module>
 	</modules>
+
+	<dependencies>
+		<dependency>
+			<groupId>degp.airtrafficcontrol</groupId>
+			<artifactId>atc-apps-utils</artifactId>
+			<version>${project-version}</version>
+		</dependency>
+	</dependencies>
+
 </project>

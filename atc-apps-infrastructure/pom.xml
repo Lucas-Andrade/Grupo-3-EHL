@@ -14,14 +14,17 @@
 	<description>commands, databases and entities.</description>
 
 	<modules>
-		<module>
-			atc-apps-infrastructure-databases
-		</module>
-		<module>
-			atc-apps-infrastructure-domain_entities
-		</module>
-		<module>
-			atc-apps-infrastructure-domain_commands
-		</module>
+		<module>atc-apps-infrastructure-databases</module>
+		<module>atc-apps-infrastructure-domain_entities</module>
+		<module>atc-apps-infrastructure-domain_commands</module>
 	</modules>
+
+	<dependencies>
+		<dependency>
+			<groupId>degp.airtrafficcontrol</groupId>
+			<artifactId>atc-apps-utils</artifactId>
+			<version>${project-version}</version>
+		</dependency>
+	</dependencies>
+	
 </project>

@@ -284,7 +284,7 @@ public class StringCommandsExecutor implements Executor {
                 throw new InvalidCommandParametersSyntaxException(
                                                                    "Invalid syntax in parameters-list!"
                                                                            + nameAndValue );
-            if( nameAndValue[0] == "accept"
+            if( nameAndValue[0].equals("accept")
                 && (!nameAndValue[1].equals( "text/html" )
                     || !nameAndValue[1].equals( "application/json" ) || !nameAndValue[1].equals( "text/plain" )) )
                 throw new UnsupportedAcceptValueException( "Unsupported Accept" );
@@ -294,6 +294,7 @@ public class StringCommandsExecutor implements Executor {
             
             if( parametersMap.containsKey( parameterName ) )
                 throw new DuplicateParametersException( parameterName );
+            
             parametersMap.put( parameterName, parameterValue );
         }
         return parametersMap;

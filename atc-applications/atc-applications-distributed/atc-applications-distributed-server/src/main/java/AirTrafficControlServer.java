@@ -148,10 +148,13 @@ public class AirTrafficControlServer {
      * server.
      * 
      * @param args
+     * 
+     * @throws Exception
+     *             If an error occurs when trying to start the server.
      */
-    public static void main( String[] args ) {
+    public static void main( String[] args ) throws Exception {
     
-        System.out.println("Server starting");
+        System.out.println( "Server starting" );
         registerCommands();
         
         Server server = new Server( LISTEN_PORT );
@@ -275,19 +278,19 @@ public class AirTrafficControlServer {
      * {@link AirTrafficControlServelet}.
      * 
      * @param server
+     *            - The created server.
+     * 
+     * @throws Exception
+     *             If an error occurs when trying to start the server.
      */
-    private static void startServer( Server server ) {
+    private static void startServer( Server server ) throws Exception {
     
         ServletHandler handler = new ServletHandler();
         server.setHandler( handler );
         
         handler.addServletWithMapping( AirTrafficControlServelet.class, "/*" );
         
-        try {
-            server.start();
-            System.out.println( "Server Started!!! YEY!!!" );
-        }
-        catch( Exception e ) {
-        }
+        server.start();
+        System.out.println( "Server Started!!! YEY!!!" );
     }
 }

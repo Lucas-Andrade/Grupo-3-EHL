@@ -1,13 +1,11 @@
 package databases;
 
 
-
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.ConcurrentHashMap;
 import utils.Optional;
 import elements.Airship;
 import elements.User;
@@ -34,7 +32,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
      * identification is stored in the corresponding key.</li>
      * </ul>
      */
-    private Map< String, List< Airship >> flightsByUserRegister;
+    private final Map< String, List< Airship >> flightsByUserRegister;
     
     // CONSTRUCTOR
     
@@ -51,8 +49,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
     
         super( databaseName );
         
-        flightsByUserRegister =
-                Collections.synchronizedMap( new HashMap< String, List< Airship >>() );
+        flightsByUserRegister = new ConcurrentHashMap< String, List< Airship >>();
     }
     
     // OVERRIDE OF METHODS InMemoryDatabase

@@ -149,6 +149,7 @@ public class InMemoryAirshipsDatabase extends InMemoryDatabase< Airship > {
     
         if( username == null )
             throw new InvalidArgumentException( "username CANNOT BE NULL!" );
+        
         List< Airship > list = flightsByUserRegister.get( username );
         
         if( list == null )

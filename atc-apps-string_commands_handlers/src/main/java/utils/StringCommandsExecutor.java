@@ -282,12 +282,12 @@ public class StringCommandsExecutor implements Executor {
             return parametersMap;
         
         String[] parameters = args[2].split( "&" );
+        
         for( String parameter : parameters ) {
             String[] nameAndValue = parameter.split( "=" );
             if( nameAndValue.length != 2 )
                 throw new InvalidCommandParametersSyntaxException(
-                                                                   "Invalid syntax in parameters-list!"
-                                                                           + nameAndValue );
+                                                                   "Invalid syntax in parameters-list!");
             
             String parameterName = nameAndValue[0];
             String parameterValue = nameAndValue[1];
@@ -397,10 +397,12 @@ public class StringCommandsExecutor implements Executor {
     private Translator getTranslator() throws UnsupportedAcceptValueException {
     
         String translator = findValueOf( StringCommandsDictionary.ACCEPT );
+        
         if( translator == null || !supportsOutputCustomization() )
             translator = StringCommandsDictionary.TEXT;
         
         Translator t = TRANSLATORS.get( translator );
+        
         if( t == null )
             throw new UnsupportedAcceptValueException( "Unsupported Accept" );
         return t;

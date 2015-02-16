@@ -3,15 +3,16 @@ package swingworkers.users;
 
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
+import org.eclipse.jetty.server.Authentication.User;
 import swingworkers.SwingWorkerForButtonFactory;
-import app.EntitiesConversor;
-import commands.getcommands.GetElementFromADatabaseByIdCommand;
-import databases.Database;
-import elements.User;
+import utils.ClientRequest;
+import utils.GetClientRequest;
+import com.google.gson.Gson;
 import entities.SimpleUser;
 import exceptions.InvalidArgumentException;
 import functionalcomponents.infobuttons.EntitiesInfoButton;
 import functionalcomponents.infobuttons.SimpleUserInfoButton;
+import gson_entities.UserFromJson;
 
 
 /**
@@ -24,7 +25,6 @@ import functionalcomponents.infobuttons.SimpleUserInfoButton;
  */
 public class GetUserByIdSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< SimpleUser > {
     
-    private final Database< User > database;
     private final String identification;
     
     
@@ -39,12 +39,11 @@ public class GetUserByIdSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< S
      * @param database
      *            - The {@link User} {@link Database}.
      */
-    public GetUserByIdSW( String identification, JTextArea textArea, Database< User > database ) {
+    public GetUserByIdSW( String identification, JTextArea textArea ) {
     
         super( textArea );
         
         this.identification = identification;
-        this.database = database;
     }
     
     /**
@@ -61,10 +60,12 @@ public class GetUserByIdSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< S
     @Override
     protected SimpleUser doInBackground() throws Exception {
     
-        return new EntitiesConversor().toSimpleUser( new GetElementFromADatabaseByIdCommand< User >(
-                                                                                                     database,
-                                                                                                     identification ).call()
-                                                                                                                     .get() );
+        ClientRequest request = new GetClientRequest( "users/" + identification ) {
+            
+            @Override
+            public void createParameters() {} };
+        
+        return new Gson().fromJson( request.getResponse(), UserFromJson.class ).convert();
     }
     
     
@@ -81,7 +82,6 @@ public class GetUserByIdSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< S
     public static class Factory implements
             SwingWorkerForButtonFactory< SwingWorker< SimpleUser, Void >, SimpleUser > {
         
-        private Database< User > database;
         
         /**
          * Creates a {@link SwingWorker} {@code factories}, that creates instances of
@@ -91,9 +91,8 @@ public class GetUserByIdSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< S
          * @param database
          *            - The {@code User} {@link Database}.
          */
-        public Factory( Database< User > database ) {
+        public Factory(  ) {
         
-            this.database = database;
         }
         
         /**
@@ -105,7 +104,7 @@ public class GetUserByIdSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< S
         public SwingWorker< SimpleUser, Void > newInstance( String identification,
                                                             JTextArea textArea ) {
         
-            return new GetUserByIdSW( identification, textArea, database );
+            return new GetUserByIdSW( identification, textArea );
         }
     }
 }

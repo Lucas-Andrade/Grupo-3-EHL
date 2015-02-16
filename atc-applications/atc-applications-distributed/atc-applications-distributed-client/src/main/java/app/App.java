@@ -1,16 +1,24 @@
 package app;
 
-
-import java.awt.EventQueue;
-import swingworkers.LoginWindowSwingWorker;
-import swingworkers.SwingWorkerFactory;
-import design.windows.popupwindows.FailWindow;
-import design.windows.popupwindows.UnderConstrutionWindow;
-import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
-import exceptions.SwingWorkerFactoryMissingException;
-import functionalcomponents.FunctionalWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
+import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
+import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
+import swingworkers.LoginWindowSW;
+import swingworkers.airships.GetAirshipByIdSW;
+import swingworkers.airships.GetAirshipsCloserToSW;
+import swingworkers.airships.GetAirshipsWithLessPassengersThanSW;
+import swingworkers.airships.GetAllAirshipsSW;
+import swingworkers.airships.GetTransgressingAirshipsSW;
+import swingworkers.airships.PostAirshipSW;
+import swingworkers.users.GetAllUsersSW;
+import swingworkers.users.GetUserByIdSW;
+import swingworkers.users.PatchUserSW;
+import swingworkers.users.PostUserSW;
+
 
 
 /**
@@ -70,49 +78,40 @@ User}
 public class App {
     
     
-    
     public static void main( String[] args ) throws InvalidArgumentException {
     
-        EventQueue.invokeLater( new Runnable() {
-            
-            /**
-             * Runs the app.
-             */
-            @Override
-            public void run() {
-            
-                try {
-                    
-                    
-                    setSwingWorkerFactoriesInTheFunctionalWindows();
-                    new FunctionalLoginWindow();
-                    
-                    
-                }
-                catch( InternalErrorException e ) {
-                    if( e.getCause() instanceof SwingWorkerFactoryMissingException )
-                        new UnderConstrutionWindow();
-                    else new FailWindow( "INTERNAL ERROR!" );
-                    System.out.println( e.getMessage() );
-                }
-                
-            }
-            
-            /**
-             * Sets the {@link SwingWorkerFactory}s that produce
-             * {@link FunctionalLoginWindow.SwingWorker}s for each subtype of
-             * {@link FunctionalWindow}.
-             */
-            private void setSwingWorkerFactoriesInTheFunctionalWindows() {
-            
-                LoginWindowSwingWorker.Factory loginWindowFactory =
-                        new LoginWindowSwingWorker.Factory( FunctionalLoginWindow.baseWindow );
-                FunctionalLoginWindow.setSwingWorkerFactory( loginWindowFactory );
-            }
-            
-        } );
+        
+        // Creating the factories
+        
+        LoginWindowSW.Factory loginWindowSWFactory =
+                new LoginWindowSW.Factory( FunctionalLoginWindow.baseWindow );
+        PostUserSW.Factory postUserSWFactory =
+                new PostUserSW.Factory( FunctionalPostUserWindow.baseWindow );
+        PatchUserSW.Factory patchUserSWFactory =
+                new PatchUserSW.Factory( FunctionalPatchUserWindow.baseWindow );
+        GetAllUsersSW.Factory getUsersSWFactory = new GetAllUsersSW.Factory();
+        GetUserByIdSW.Factory getUserByIdSWFactory = new GetUserByIdSW.Factory();
+        
+        GetAllAirshipsSW.Factory getAllAirshipsFactory = new GetAllAirshipsSW.Factory();
+        GetAirshipByIdSW.Factory getAirshipByIdFactory = new GetAirshipByIdSW.Factory();
+        GetAirshipsCloserToSW.Factory getAirshipsCloserToFactory =
+                new GetAirshipsCloserToSW.Factory(
+                                                   FunctionalGetGeographicalCoordinatesParametersWindow.baseWindow );
+        GetTransgressingAirshipsSW.Factory getTransgressingAirshipsFactory =
+                new GetTransgressingAirshipsSW.Factory();
+        GetAirshipsWithLessPassengersThanSW.Factory getAirshipsWithLessPassengersFact =
+                new GetAirshipsWithLessPassengersThanSW.Factory(
+                                                                       FunctionalGetAirshipsWithLessPassengerThanWindow.baseWindow );
+        PostAirshipSW.Factory postAirshipFactory =
+                new PostAirshipSW.Factory( FunctionalPostAirshipWindow.baseWindow );
         
         
+        // Creating and running the app
+        
+        new GUIapp( loginWindowSWFactory, postUserSWFactory, patchUserSWFactory, getUsersSWFactory,
+                    getUserByIdSWFactory, getAllAirshipsFactory, getAirshipByIdFactory,
+                    getAirshipsCloserToFactory, getTransgressingAirshipsFactory,
+                    getAirshipsWithLessPassengersFact, postAirshipFactory ).run();
     }
     
     /**

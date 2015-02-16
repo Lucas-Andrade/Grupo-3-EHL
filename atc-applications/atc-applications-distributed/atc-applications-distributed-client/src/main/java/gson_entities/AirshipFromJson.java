@@ -24,11 +24,10 @@ public class AirshipFromJson {
      * Fields needed to create a {@link SimpleAirship}
      */
     private String flightId;
-    private double latitude;
-    private double longitude;
-    private double altitude;
-    private double maxAltitude;
-    private double minAltitude;
+    private CoordinatesFromJson coordinates;
+    private AirCorridorFromJson airCorridor;
+    private boolean isTransgressing;
+    
     
     /*
      * Field used for a "Civil" SimpleAirship, it can be null.
@@ -50,7 +49,8 @@ public class AirshipFromJson {
      */
     public SimpleAirship convert() {
     
-        return new SimpleAirship( flightId, latitude, longitude, createInfo() );
+        return new SimpleAirship( flightId, coordinates.latitude.value,
+                                  coordinates.longitude.value, createInfo() );
     }
     
     
@@ -65,20 +65,18 @@ public class AirshipFromJson {
     private String createInfo() {
     
         StringBuilder strBuiler =
-                new StringBuilder( "Flight ID: " ).append( flightId ).append( "\r\nLatitude: " )
-                                                  .append( latitude ).append( " Longitude: " )
-                                                  .append( longitude ).append( " Altitude: " )
-                                                  .append( altitude )
-                                                  .append( "\r\nIs Outside The Given Corridor: " );
-        
-        if( altitude < minAltitude || altitude > maxAltitude )
-            strBuiler.append( true );
-        else strBuiler.append( false );
-        
+                new StringBuilder( "Flight ID: " ).append( flightId ).append( "\r\n" )
+                                                  .append( coordinates.createInfo() )
+                                                  .append( "\r\n" )
+                                                  .append( "Is Outside The Given Corridor: " )
+                                                  .append( isTransgressing ? true : false );
+
+
         if( passengers != null )
             strBuiler.append( "\nNumber of Passengers: " ).append( passengers );
         if( hasWeapons != null )
             strBuiler.append( "\nCarries Weapons: " ).append( hasWeapons );
         return strBuiler.toString();
     }
+    
 }

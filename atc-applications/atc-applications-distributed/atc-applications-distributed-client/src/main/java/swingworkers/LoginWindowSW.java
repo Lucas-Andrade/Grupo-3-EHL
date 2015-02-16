@@ -3,18 +3,21 @@ package swingworkers;
 
 import org.eclipse.jetty.server.Authentication.User;
 import utils.ClientRequest;
+import utils.GetClientRequest;
+import utils.StringUtils;
 import com.google.gson.Gson;
 import design.windows.userwindows.LogInWindow;
 import entities.SimpleUser;
+import exceptions.MissingRequiredParameterException;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow.SwingWorker;
 import gson_entities.UserFromJson;
 
 
-public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
+public class LoginWindowSW extends FunctionalLoginWindow.SwingWorker {
     
     // CONSTRUCTOR
-    public LoginWindowSwingWorker( LogInWindow window ) {
+    public LoginWindowSW( LogInWindow window ) {
     
         super( window );
     }
@@ -32,18 +35,17 @@ public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
     @Override
     protected SimpleUser doInBackground() throws Exception {
     
-        ClientRequest request = new ClientRequest( "GET", "users/authenticate" ) {
+        ClientRequest request = new GetClientRequest( "users/authenticate" ) {
             
             @Override
-            public void createParameters() {
+            public void createParameters() throws MissingRequiredParameterException {
             
-                addAuthenticateParameters( username, password );
+                addAuthenticateParameters( StringUtils.parameterToString( usernameLabel, username ),
+                                           StringUtils.parameterToString( passwordLabel, password ) );
             }
         };
-
-        if( request.createConnection() )
-            return new Gson().fromJson( request.getResponse(), UserFromJson.class ).convert();
-        throw new Exception( request.getResponse() );
+        
+        return new Gson().fromJson( request.getResponse(), UserFromJson.class ).convert();
     }
     
     
@@ -66,9 +68,9 @@ public class LoginWindowSwingWorker extends FunctionalLoginWindow.SwingWorker {
         
         
         @Override
-        public LoginWindowSwingWorker newInstance() {
+        public LoginWindowSW newInstance() {
         
-            return new LoginWindowSwingWorker( window );
+            return new LoginWindowSW( window );
         }
     }
 }

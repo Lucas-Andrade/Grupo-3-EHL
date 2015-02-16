@@ -2,15 +2,16 @@ package swingworkers.users;
 
 
 import swingworkers.SwingWorkerFactory;
+import utils.ClientRequest;
 import utils.CompletionStatus;
+import utils.NonGetClientRequest;
+import utils.NonGetClientRequest.NonGetMethods;
+import utils.StringCommandsDictionary;
 import utils.StringUtils;
-import commands.getcommands.GetElementFromADatabaseByIdCommand;
-import commands.postcommands.PostUserCommand;
-import databases.Database;
+import com.google.gson.Gson;
 import design.windows.userwindows.PostUserWindow;
-import elements.User;
-import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
+import exceptions.MissingRequiredParameterException;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
 
@@ -22,12 +23,10 @@ import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 public class PostUserSW extends FunctionalPostUserWindow.SwingWorker {
     
     
-    private Database< User > usersDatabase;
     
-    public PostUserSW( PostUserWindow window, Database< User > usersDatabase ) {
+    public PostUserSW( PostUserWindow window ) {
     
         super( window );
-        this.usersDatabase = usersDatabase;
     }
     
     // IMPLEMENTATION OF METHODS INHERITED FROM FunctionalPostUserWindow.SwingWorker
@@ -49,28 +48,32 @@ public class PostUserSW extends FunctionalPostUserWindow.SwingWorker {
         if( !password.equals( confirmPassword ) )
             throw new InvalidArgumentException( "Passwords don't match!" );
         
-        User loggedInUser;
-        try {
-            loggedInUser =
-                    new GetElementFromADatabaseByIdCommand< User >(
-                                                                    usersDatabase,
-                                                                    simpleLoggedUser.getIdentification() ).call()
-                                                                                                          .get();
-        }
-        catch( Exception e ) {
-            throw new InternalErrorException(
-                                              "UNEXPECTED ERROR WITH LOGGED-IN USER IN PostUserSW!",
-                                              e );
-        }
+        ClientRequest request = new NonGetClientRequest( NonGetMethods.POST, "users/" ) {
+            
+            @Override
+            public void createParameters() throws MissingRequiredParameterException {
+            
+                addNewParameter( StringCommandsDictionary.USERNAME,
+                                 StringUtils.parameterToString( usernameLabel, username ) );
+                addNewParameter( StringCommandsDictionary.PASSWORD,
+                                 StringUtils.parameterToString( passwordLabel, password ) );
+                
+                addNewParameter( StringCommandsDictionary.EMAIL,
+                                 StringUtils.parameterToString( emailLabel, email ) );
+                System.out.println(fullName);
+                if( !fullName.equals( "" ) ){
+                    addNewParameter( StringCommandsDictionary.FULLNAME, fullName );
+                }
+                
+                addAuthenticateParameters( simpleLoggedUser.getIdentification(), simpleLoggedUser.getPassword() );
+                
+            }
+        };
         
-        
-        return new PostUserCommand( StringUtils.parameterToString( usernameLabel, username ),
-                                    StringUtils.parameterToString( passwordLabel, password ),
-                                    StringUtils.parameterToString( emailLabel, email ), fullName,
-                                    usersDatabase, loggedInUser ).call();
-        // the fullname is optional, it might be null or empty
-        
+        return new Gson().fromJson( request.getResponse(), CompletionStatus.class );
     }
+    
+    
     
     // INNER CLASS
     /**
@@ -83,20 +86,18 @@ public class PostUserSW extends FunctionalPostUserWindow.SwingWorker {
         
         
         private PostUserWindow window;
-        private Database< User > usersDatabase;
         
         
-        public Factory( PostUserWindow window, Database< User > usersDatabase ) {
+        public Factory( PostUserWindow window ) {
         
             this.window = window;
-            this.usersDatabase = usersDatabase;
         }
         
         
         @Override
         public PostUserSW newInstance() {
         
-            return new PostUserSW( window, usersDatabase );
+            return new PostUserSW( window );
         }
         
     }

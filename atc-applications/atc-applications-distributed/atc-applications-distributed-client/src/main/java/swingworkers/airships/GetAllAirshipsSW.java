@@ -1,54 +1,59 @@
 package swingworkers.airships;
 
+
 import java.util.ArrayList;
 import java.util.Collection;
 import swingworkers.SwingWorkerFactory;
-import app.EntitiesConversor;
-import commands.getcommands.GetAllElementsInADatabaseCommand;
-import databases.Database;
-import elements.Airship;
+import utils.ClientRequest;
+import utils.GetClientRequest;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import entities.SimpleAirship;
+import exceptions.MissingRequiredParameterException;
 import functionalcomponents.functionalmainwindow.BodyPanelFunctionalizer;
+import gson_entities.AirshipFromJson;
 
-/**TODO -documentation
+
+/**
+ * TODO -documentation
  * 
  * 
  *
- *@author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
+ * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 public class GetAllAirshipsSW extends BodyPanelFunctionalizer.SwingWorker {
-
-    private Database< Airship > airshipDatabase;
-
     
-    public GetAllAirshipsSW(Database< Airship > airshipDatabase ) {
-        
-        this.airshipDatabase = airshipDatabase;
-    }
-
+    
+    
     @Override
     protected Iterable< SimpleAirship > doInBackground() throws Exception {
     
-        Collection< SimpleAirship > simpleAirshipCollection = new ArrayList<>();
-
-        
-        Iterable< Airship > airshipIterable =
-                new GetAllElementsInADatabaseCommand<Airship>( airshipDatabase ).call().get();
-        
-        for( Airship airship : airshipIterable ) {
+        ClientRequest request = new GetClientRequest( "airships/" ) {
             
-            simpleAirshipCollection.add( new EntitiesConversor().toSimpleAirship( airship ) );
+            @Override
+            public void createParameters() throws MissingRequiredParameterException {
             
-        }
+            }
+        };
         
-        return simpleAirshipCollection;
+        
+        Iterable< AirshipFromJson > airshipsFromJson =
+                new Gson().fromJson( request.getResponse(),
+                                     new TypeToken< ArrayList< AirshipFromJson >>() {}.getType() );
+        
+        
+        
+        Collection< SimpleAirship > simpleAirships = new ArrayList<>();
+        
+        for( AirshipFromJson airship : airshipsFromJson )
+            simpleAirships.add( airship.convert() );
+        
+        return simpleAirships;
     }
-    
     
     // INNER CLASS
     /**
-     * Inner class responsible for produce a new instance of
-     * {@link GetTransgressingAirshipsSW}
+     * Inner class responsible for produce a new instance of {@link GetTransgressingAirshipsSW}
      * 
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -58,13 +63,11 @@ public class GetAllAirshipsSW extends BodyPanelFunctionalizer.SwingWorker {
             SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > {
         
         // INSTANCE FIELDS
-        private Database< Airship > airshipDatabase;
         
         // CONSTRUCTOR
         
-        public Factory( Database< Airship > airshipDatabase  ) {
-
-            this.airshipDatabase = airshipDatabase;
+        public Factory() {
+        
             
         }
         
@@ -77,7 +80,7 @@ public class GetAllAirshipsSW extends BodyPanelFunctionalizer.SwingWorker {
         @Override
         public GetAllAirshipsSW newInstance() {
         
-            return new GetAllAirshipsSW( airshipDatabase );
+            return new GetAllAirshipsSW();
             
         }
         

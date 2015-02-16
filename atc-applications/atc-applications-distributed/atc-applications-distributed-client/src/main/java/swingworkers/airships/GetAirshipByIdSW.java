@@ -1,9 +1,11 @@
-package swingworkers;
+package swingworkers.airships;
 
 
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
+import swingworkers.SwingWorkerForButtonFactory;
 import utils.ClientRequest;
+import utils.GetClientRequest;
 import com.google.gson.Gson;
 import entities.SimpleAirship;
 import exceptions.InvalidArgumentException;
@@ -21,7 +23,7 @@ import gson_entities.AirshipFromJson;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class SimpleAirshipInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< SimpleAirship > {
+public class GetAirshipByIdSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< SimpleAirship > {
     
     private String identification;
     
@@ -36,7 +38,7 @@ public class SimpleAirshipInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
      * @param database
      *            - The {@link Airship} {@link Database}.
      */
-    public SimpleAirshipInfoSW( String identification, JTextArea textArea ) {
+    public GetAirshipByIdSW( String identification, JTextArea textArea ) {
     
         super( textArea );
         
@@ -57,16 +59,16 @@ public class SimpleAirshipInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
     @Override
     protected SimpleAirship doInBackground() throws Exception {
     
-        ClientRequest request = new ClientRequest( "GET", "users/" + identification ) {
+        ClientRequest request = new GetClientRequest( "airships/" + identification ) {
             
             @Override
-            public void createParameters() {}
+            public void createParameters() {
+            
+            }
         };
         
         
-        if( request.createConnection() )
-            return new Gson().fromJson( request.getResponse(), AirshipFromJson.class ).convert();
-        throw new Exception( request.getResponse() );
+        return new Gson().fromJson( request.getResponse(), AirshipFromJson.class ).convert();
     }
     
     
@@ -80,21 +82,19 @@ public class SimpleAirshipInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
      *            The type of the results returned by the methods
      *            {@link SwingWorker#doInBackground()} and {@link SwingWorker#get()}.
      */
-    public class SwFactory implements
+    public static class Factory implements
             SwingWorkerForButtonFactory< SwingWorker< SimpleAirship, Void >, SimpleAirship > {
         
         
         /**
          * TODO Creates a {@link SwingWorker} {@code factories}, that creates instances of
-         * {@link GUISimpleAirshipInfoSW} using the {@link SwFactory#newInstance} that will be run
-         * in {@link SimpleAirshipInfoButton}.
+         * {@link GUISimpleAirshipInfoSW} using the {@link Factory#newInstance} that will be run in
+         * {@link SimpleAirshipInfoButton}.
          * 
          * @param database
          *            - The {@code User} {@link Database}.
          */
-        public SwFactory() {
         
-        }
         
         /**
          * Produces a new instance of {@link GUISimpleAirshipInfoSW}.
@@ -105,7 +105,7 @@ public class SimpleAirshipInfoSW extends EntitiesInfoButton.EntitiesInfoSwingWor
         public SwingWorker< SimpleAirship, Void > newInstance( String identification,
                                                                JTextArea textArea ) {
         
-            return new SimpleAirshipInfoSW( identification, textArea );
+            return new GetAirshipByIdSW( identification, textArea );
         }
     }
 }

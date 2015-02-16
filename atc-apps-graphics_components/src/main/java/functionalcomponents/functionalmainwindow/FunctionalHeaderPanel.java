@@ -8,10 +8,10 @@ import javax.swing.SwingWorker;
 import swingworkers.SwingWorkerFactory;
 import app.Utils;
 import design.panels.mainwindowpanels.JHeaderPanelForMainWindow;
+import design.windows.popupwindows.FailWindow;
 import design.windows.popupwindows.UnderConstrutionWindow;
 import design.windows.userwindows.GetUsersWindow;
 import entities.SimpleUser;
-import exceptions.InternalErrorException;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
@@ -88,9 +88,10 @@ public class FunctionalHeaderPanel {
                 new GetUsersWindow( get() );
             }
             catch( InterruptedException | ExecutionException e ) {
-                throw new InternalErrorException(
-                                                  "UNEXPECTED ERROR IN FunctionalHeaderPanel.GetAllUsersSW",
-                                                  e );
+                new FailWindow( e.getMessage() );
+//                throw new InternalErrorException(
+//                                                  "UNEXPECTED ERROR IN FunctionalHeaderPanel.GetAllUsersSW",
+//                                                  e ); TODO
             }
         }
         

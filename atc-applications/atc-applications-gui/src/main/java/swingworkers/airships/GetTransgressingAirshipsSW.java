@@ -16,14 +16,14 @@ import functionalcomponents.functionalmainwindow.FunctionalFooterPanel;
 
 /**
  * Class whose instances have the purpose of add functionality to a
- * {@link GetTransgressingAirshipsWindowSW}.
+ * {@link GetTransgressingAirshipsSW}.
  *
  * Extends {@link FunctionalGetGeographicalCoordinatesParametersWindow}.
  *
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetTransgressingAirshipsWindowSW extends
+public class GetTransgressingAirshipsSW extends
         FunctionalFooterPanel.GetTrangressingAirshipsSW {
     
     // INSTANCE FIELD
@@ -32,7 +32,7 @@ public class GetTransgressingAirshipsWindowSW extends
     
     // CONSTRUCTOR
     
-    public GetTransgressingAirshipsWindowSW( Database< Airship > airshipDatabase ) {
+    public GetTransgressingAirshipsSW( Database< Airship > airshipDatabase ) {
     
         this.airshipDatabase = airshipDatabase;
     }
@@ -67,7 +67,7 @@ public class GetTransgressingAirshipsWindowSW extends
     // INNER CLASS
     /**
      * Inner class responsible for produce a new instance of
-     * {@link GetTransgressingAirshipsWindowSW}
+     * {@link GetTransgressingAirshipsSW}
      * 
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -90,14 +90,14 @@ public class GetTransgressingAirshipsWindowSW extends
         
         /**
          * Implementation of the {@link SwingWorkerFactory#newInstance()} method with the purpose of
-         * create a {@link GetTransgressingAirshipsWindowSW}
+         * create a {@link GetTransgressingAirshipsSW}
          * 
-         * @return Returns a {@link GetTransgressingAirshipsWindowSW}
+         * @return Returns a {@link GetTransgressingAirshipsSW}
          */
         @Override
         public FunctionalFooterPanel.GetTrangressingAirshipsSW newInstance() {
         
-            return new GetTransgressingAirshipsWindowSW( airshipDatabase );
+            return new GetTransgressingAirshipsSW( airshipDatabase );
         }
         
     }

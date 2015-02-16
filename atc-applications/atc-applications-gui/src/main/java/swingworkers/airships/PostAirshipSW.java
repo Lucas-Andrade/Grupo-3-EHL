@@ -15,7 +15,6 @@ import elements.User;
 import exceptions.InternalErrorException;
 import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow.SwingWorker;
-import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 
 
 /**
@@ -66,11 +65,9 @@ public class PostAirshipSW extends FunctionalPostAirshipWindow.SwingWorker {
         User loggedInUser;
         try {
             loggedInUser =
-                    new GetElementFromADatabaseByIdCommand<>(
-                                                              usersDatabase,
-                                                              FunctionalMainWindow.getLoggedUser()
-                                                                                  .getIdentification() ).call()
-                                                                                                        .get();
+                    new GetElementFromADatabaseByIdCommand<>( usersDatabase,
+                                                              simpleLoggedUser.getIdentification() ).call()
+                                                                                                    .get();
         }
         catch( Exception e ) {
             throw new InternalErrorException( "ERROR WITH THE LOGGED-IN USER IN PostAirshipSW!", e );

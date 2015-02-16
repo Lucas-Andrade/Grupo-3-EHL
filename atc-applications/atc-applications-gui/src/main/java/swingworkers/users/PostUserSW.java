@@ -11,7 +11,6 @@ import design.windows.userwindows.PostUserWindow;
 import elements.User;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
-import functionalcomponents.functionalmainwindow.FunctionalMainWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
 
@@ -50,13 +49,13 @@ public class PostUserSW extends FunctionalPostUserWindow.SwingWorker {
         if( !password.equals( confirmPassword ) )
             throw new InvalidArgumentException( "Passwords don't match!" );
         
-        String loggedInUserUsername = FunctionalMainWindow.getLoggedUser().getIdentification();
         User loggedInUser;
         try {
             loggedInUser =
-                    new GetElementFromADatabaseByIdCommand< User >( usersDatabase,
-                                                                    loggedInUserUsername ).call()
-                                                                                          .get();
+                    new GetElementFromADatabaseByIdCommand< User >(
+                                                                    usersDatabase,
+                                                                    simpleLoggedUser.getIdentification() ).call()
+                                                                                                          .get();
         }
         catch( Exception e ) {
             throw new InternalErrorException(

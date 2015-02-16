@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.SwingWorker;
 import swingworkers.AirshipsGetterSW;
 import swingworkers.SwingWorkerFactory;
-import app.Utils;
+import swingworkers.Utils;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.panels.mainwindowpanels.JFooterPanelForMainWindow;
 import design.windows.MainWindow;
@@ -14,7 +14,7 @@ import design.windows.popupwindows.UnderConstrutionWindow;
 import entities.SimpleAirship;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsCloserToWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
 
 
@@ -159,12 +159,12 @@ public class FunctionalFooterPanel {
     
     /**
      * Adds functionality to the get-airships-closer-to-a-point button; this button opens a new
-     * {@link FunctionalGetGeographicalCoordinatesParametersWindow}.
+     * {@link FunctionalGetAirshipsCloserToWindow}.
      */
     private void addGetNearestAirshipsButtonAction() {
     
         footerPanel.getNearestAirships()
-                   .addActionListener( action -> new FunctionalGetGeographicalCoordinatesParametersWindow() );
+                   .addActionListener( action -> new FunctionalGetAirshipsCloserToWindow() );
     }
     
     /**

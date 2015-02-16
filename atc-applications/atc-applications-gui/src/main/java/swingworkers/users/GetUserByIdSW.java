@@ -4,7 +4,7 @@ package swingworkers.users;
 import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import swingworkers.SwingWorkerForButtonFactory;
-import app.EntitiesConversor;
+import utils.EntitiesConversor;
 import commands.getcommands.GetElementFromADatabaseByIdCommand;
 import databases.Database;
 import elements.User;
@@ -61,10 +61,10 @@ public class GetUserByIdSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< S
     @Override
     protected SimpleUser doInBackground() throws Exception {
     
-        return new EntitiesConversor().toSimpleUser( new GetElementFromADatabaseByIdCommand< User >(
-                                                                                                     database,
-                                                                                                     identification ).call()
-                                                                                                                     .get() );
+        User user =
+                new GetElementFromADatabaseByIdCommand< User >( database, identification ).call()
+                                                                                          .get();
+        return new EntitiesConversor().toSimpleUser( user );
     }
     
     

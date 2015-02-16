@@ -20,7 +20,7 @@ import elements.User;
 import exceptions.InternalErrorException;
 import exceptions.InvalidArgumentException;
 import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsCloserToWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
@@ -118,7 +118,7 @@ public class App {
                 new GetAirshipByIdSW.Factory( airshipsDatabase );
         GetAirshipsCloserToSW.Factory getAirshipsCloserToFactory =
                 new GetAirshipsCloserToSW.Factory(
-                                                                    FunctionalGetGeographicalCoordinatesParametersWindow.baseWindow,
+                                                                    FunctionalGetAirshipsCloserToWindow.baseWindow,
                                                                     airshipsDatabase );
         GetTransgressingAirshipsSW.Factory getTransgressingAirshipsFactory =
                 new GetTransgressingAirshipsSW.Factory( airshipsDatabase );
@@ -133,7 +133,7 @@ public class App {
         
         // Creating and running the app
         
-        new GUIapp( loginWindowSWFactory, postUserSWFactory, patchUserSWFactory, getUsersSWFactory,
+        new ApplicationWithAGraphicalUserInterface( loginWindowSWFactory, postUserSWFactory, patchUserSWFactory, getUsersSWFactory,
                     getUserByIdSWFactory, getAllAirshipsFactory, getAirshipByIdFactory,
                     getAirshipsCloserToFactory, getTransgressingAirshipsFactory,
                     getAirshipsWithLessPassengersFact, postAirshipFactory ).run();

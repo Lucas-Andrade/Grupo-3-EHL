@@ -2,9 +2,9 @@ package functionalcomponents.functionaluserwindows;
 
 
 import java.awt.event.ActionListener;
-import app.Utils;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
+import swingworkers.Utils;
 import utils.CompletionStatus;
 import design.windows.popupwindows.SuccessWindow;
 import design.windows.userwindows.PostUserWindow;

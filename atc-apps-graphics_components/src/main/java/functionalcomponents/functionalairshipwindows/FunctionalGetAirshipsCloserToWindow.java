@@ -7,7 +7,6 @@ import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
 import swingworkers.Utils;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
-import design.windows.MainWindow;
 import design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
 import entities.SimpleAirship;
 import exceptions.SwingWorkerFactoryMissingException;
@@ -22,9 +21,9 @@ import functionalcomponents.FunctionalWindow;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class FunctionalGetGeographicalCoordinatesParametersWindow
+public class FunctionalGetAirshipsCloserToWindow
         extends
-        FunctionalWindow< FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker, Iterable< SimpleAirship > > {
+        FunctionalWindow< FunctionalGetAirshipsCloserToWindow.SwingWorker, Iterable< SimpleAirship > > {
     
     // STATIC FIELDS
     
@@ -36,10 +35,10 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow
     
     /**
      * The {@link SwingWorkerFactory} that produces
-     * {@link FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker}s for the
+     * {@link FunctionalGetAirshipsCloserToWindow.SwingWorker}s for the
      * {@link GetGeographicalCoordinatesParametersWindow}s.
      */
-    private static SwingWorkerFactory< FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker, Iterable< SimpleAirship > > swFactory;
+    private static SwingWorkerFactory< FunctionalGetAirshipsCloserToWindow.SwingWorker, Iterable< SimpleAirship > > swFactory;
     /**
      * A lock for the {@link #swFactory}.
      */
@@ -48,22 +47,22 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow
     // STATIC METHOD
     /**
      * Sets the {@link SwingWorkerFactory} that produces
-     * {@link FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker}s for the
-     * {@link FunctionalGetGeographicalCoordinatesParametersWindow}s.
+     * {@link FunctionalGetAirshipsCloserToWindow.SwingWorker}s for the
+     * {@link FunctionalGetAirshipsCloserToWindow}s.
      * 
      * @param factory
      *            The {@link SwingWorkerFactory} that produces
-     *            {@link FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker}s for the
-     *            {@link FunctionalGetGeographicalCoordinatesParametersWindow}s.
+     *            {@link FunctionalGetAirshipsCloserToWindow.SwingWorker}s for the
+     *            {@link FunctionalGetAirshipsCloserToWindow}s.
      * @return {@code true} if {@code factory} was set as the factory that produces swingworkers for
-     *         the {@link FunctionalGetGeographicalCoordinatesParametersWindow}s; <br/>
+     *         the {@link FunctionalGetAirshipsCloserToWindow}s; <br/>
      *         {@code false} if there was a factory already set.
      */
     public static
             boolean
-            setSwingWorkerFactory( SwingWorkerFactory< FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker, Iterable< SimpleAirship > > factory ) {
+            setSwingWorkerFactory( SwingWorkerFactory< FunctionalGetAirshipsCloserToWindow.SwingWorker, Iterable< SimpleAirship > > factory ) {
     
-        return Utils.setSWFactory( FunctionalGetGeographicalCoordinatesParametersWindow.class,
+        return Utils.setSWFactory( FunctionalGetAirshipsCloserToWindow.class,
                                    "swFactory", factory, factoryLock );
         
         
@@ -75,7 +74,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow
     /**
      * Adds functionality to a {@link GetGeographicalCoordinatesParametersWindow} and displays it.
      */
-    public FunctionalGetGeographicalCoordinatesParametersWindow() {
+    public FunctionalGetAirshipsCloserToWindow() {
     
         super( baseWindow );
     }
@@ -94,7 +93,7 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow
     // INNER CLASS
     /**
      * Class whose instances are {@link ExceptionHandlerSW} able to add funcitonality to a
-     * {@link FunctionalGetGeographicalCoordinatesParametersWindow}.
+     * {@link FunctionalGetAirshipsCloserToWindow}.
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
@@ -132,12 +131,8 @@ public class FunctionalGetGeographicalCoordinatesParametersWindow
             airshipsNumberLabel = window.getAirshipsNumber().getJLabel().getText();
         }
         
-        @Override
-        protected final void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround ) {
         
-                       MainWindow.getInstance().getBodyPanel().updateBodyPanelForGetAirshipsCloserTo( resultOfDoInBackGround, latitude, longitude );         
-        } 
-                       
+        
     }
     
     

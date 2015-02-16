@@ -4,21 +4,21 @@ package swingworkers.airships;
 import java.util.ArrayList;
 import java.util.Collection;
 import swingworkers.SwingWorkerFactory;
+import utils.EntitiesConversor;
 import utils.StringUtils;
-import app.EntitiesConversor;
 import commands.getcommands.GetAirshipsCloserToCommand;
 import databases.Database;
 import design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
 import elements.Airship;
 import entities.SimpleAirship;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker;
+import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsCloserToWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsCloserToWindow.SwingWorker;
 
     /**
      *   Class whose instances have the purpose of add functionality to a
      * {@link GetGeographicalCoordinatesParametersWindow}. 
      *
-     * Extends {@link FunctionalGetGeographicalCoordinatesParametersWindow}.
+     * Extends {@link FunctionalGetAirshipsCloserToWindow}.
      *
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
@@ -26,7 +26,7 @@ import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCo
 
 
 public class GetAirshipsCloserToSW extends
-        FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker {
+        FunctionalGetAirshipsCloserToWindow.SwingWorker {
     
     // INSTANCE FIELD
     private Database< Airship > airshipsDatabase;
@@ -84,7 +84,7 @@ public class GetAirshipsCloserToSW extends
      */
     public static class Factory
             implements
-            SwingWorkerFactory< FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker, Iterable< SimpleAirship > > {
+            SwingWorkerFactory< FunctionalGetAirshipsCloserToWindow.SwingWorker, Iterable< SimpleAirship > > {
     
         // INSTANCE FIELDS
         private Database< Airship > airshipDatabase;

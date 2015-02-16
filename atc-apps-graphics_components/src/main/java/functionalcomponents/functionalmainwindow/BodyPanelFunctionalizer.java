@@ -4,7 +4,7 @@ package functionalcomponents.functionalmainwindow;
 import javax.swing.JTextArea;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
-import app.Utils;
+import swingworkers.Utils;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.windows.MainWindow;
 import design.windows.WindowBase;

@@ -25,8 +25,7 @@ import gson_entities.AirshipFromJson;
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class GetTransgressingAirshipsSW extends
-        FunctionalFooterPanel.GetTrangressingAirshipsSW {
+public class GetTransgressingAirshipsSW extends FunctionalFooterPanel.GetTrangressingAirshipsSW {
     
     
     // CONSTRUCTOR
@@ -46,11 +45,11 @@ public class GetTransgressingAirshipsSW extends
     @Override
     protected Iterable< SimpleAirship > doInBackground() throws Exception {
     
-        ClientRequest request = new GetClientRequest("airships/reports") {
+        ClientRequest request = new GetClientRequest( "airships/reports" ) {
             
             @Override
             public void createParameters() throws MissingRequiredParameterException {
-
+            
             }
         };
         
@@ -70,14 +69,14 @@ public class GetTransgressingAirshipsSW extends
     
     // INNER CLASS
     /**
-     * Inner class responsible for produce a new instance of
-     * {@link GetTransgressingAirshipsSW}
+     * Inner class responsible for produce a new instance of {@link GetTransgressingAirshipsSW}
      * 
      *
      * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
     
-    public static class Factory implements
+    public static class Factory
+            implements
             SwingWorkerFactory< FunctionalFooterPanel.GetTrangressingAirshipsSW, Iterable< SimpleAirship > > {
         
         /**

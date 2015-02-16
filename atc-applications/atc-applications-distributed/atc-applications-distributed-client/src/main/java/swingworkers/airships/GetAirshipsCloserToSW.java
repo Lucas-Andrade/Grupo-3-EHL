@@ -13,7 +13,7 @@ import com.google.gson.reflect.TypeToken;
 import design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
 import entities.SimpleAirship;
 import exceptions.MissingRequiredParameterException;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsCloserToWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker;
 import gson_entities.AirshipFromJson;
 
@@ -21,14 +21,14 @@ import gson_entities.AirshipFromJson;
 /**
  * Class whose instances have the purpose of add functionality to a {@link GetAirshipsCloserToSW}.
  *
- * Extends {@link FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker}.
+ * Extends {@link FunctionalGetAirshipsCloserToWindow.SwingWorker}.
  *
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
 
-public class GetAirshipsCloserToSW extends
-        FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker {
+public class GetAirshipsCloserToSW extends FunctionalGetAirshipsCloserToWindow.SwingWorker {
+    
     
     
     // CONSTRUCTOR
@@ -92,7 +92,7 @@ public class GetAirshipsCloserToSW extends
      */
     public static class Factory
             implements
-            SwingWorkerFactory< FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker, Iterable< SimpleAirship > > {
+            SwingWorkerFactory< FunctionalGetAirshipsCloserToWindow.SwingWorker, Iterable< SimpleAirship >> {
         
         // INSTANCE FIELDS
         
@@ -113,9 +113,8 @@ public class GetAirshipsCloserToSW extends
          * 
          * @return Returns a {@link GetAirshipsCloserToSW}
          */
-        
         @Override
-        public SwingWorker newInstance() {
+        public GetAirshipsCloserToSW newInstance() {
         
             return new GetAirshipsCloserToSW( window );
         }

@@ -2,10 +2,10 @@ package functionalcomponents.functionalairshipwindows;
 
 
 
-import app.Utils;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.AirshipsGetterSW;
 import swingworkers.SwingWorkerFactory;
+import swingworkers.Utils;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
 import design.windows.airshipwindows.GetAirshipsWithLessPassengerThanWindow;
 import entities.SimpleAirship;

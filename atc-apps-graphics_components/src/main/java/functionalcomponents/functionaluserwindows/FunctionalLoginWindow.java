@@ -2,9 +2,9 @@ package functionalcomponents.functionaluserwindows;
 
 
 import java.awt.event.ActionListener;
-import app.Utils;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
+import swingworkers.Utils;
 import design.windows.userwindows.LogInWindow;
 import entities.SimpleLoggedUser;
 import entities.SimpleUser;

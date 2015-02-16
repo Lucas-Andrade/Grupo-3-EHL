@@ -4,7 +4,7 @@ package swingworkers.users;
 import java.util.ArrayList;
 import java.util.List;
 import swingworkers.SwingWorkerFactory;
-import app.EntitiesConversor;
+import utils.EntitiesConversor;
 import commands.getcommands.GetAllElementsInADatabaseCommand;
 import databases.Database;
 import elements.User;

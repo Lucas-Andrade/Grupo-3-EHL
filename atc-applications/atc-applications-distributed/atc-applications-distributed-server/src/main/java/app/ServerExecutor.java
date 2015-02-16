@@ -1,3 +1,4 @@
+package app;
 import parsingtools.CommandParser;
 import utils.StringCommandsExecutor;
 import utils.exceptions.parsingexceptions.InvalidCommandSyntaxException;

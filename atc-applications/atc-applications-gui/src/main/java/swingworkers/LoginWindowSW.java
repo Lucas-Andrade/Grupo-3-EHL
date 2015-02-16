@@ -1,8 +1,8 @@
 package swingworkers;
 
 
+import utils.EntitiesConversor;
 import utils.StringUtils;
-import app.EntitiesConversor;
 import commands.AuthenticateUserCommand;
 import databases.Database;
 import design.windows.userwindows.LogInWindow;

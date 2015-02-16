@@ -4,13 +4,13 @@ package swingworkers.airships;
 import java.util.ArrayList;
 import java.util.Collection;
 import swingworkers.SwingWorkerFactory;
-import app.EntitiesConversor;
+import utils.EntitiesConversor;
 import commands.getcommands.GetAllTransgressingAirshipsCommand;
 import databases.Database;
 import elements.Airship;
 import entities.SimpleAirship;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker;
+import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsCloserToWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsCloserToWindow.SwingWorker;
 import functionalcomponents.functionalmainwindow.FunctionalFooterPanel;
 
 
@@ -18,7 +18,7 @@ import functionalcomponents.functionalmainwindow.FunctionalFooterPanel;
  * Class whose instances have the purpose of add functionality to a
  * {@link GetTransgressingAirshipsSW}.
  *
- * Extends {@link FunctionalGetGeographicalCoordinatesParametersWindow}.
+ * Extends {@link FunctionalGetAirshipsCloserToWindow}.
  *
  *
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes

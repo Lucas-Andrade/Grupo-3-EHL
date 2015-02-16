@@ -92,7 +92,9 @@ public class PostUserSW extends FunctionalPostUserWindow.SwingWorker {
             this.usersDatabase = usersDatabase;
         }
         
-        
+        /**
+         * @see swingworkers.SwingWorkerFactory#newInstance()
+         */
         @Override
         public PostUserSW newInstance() {
         

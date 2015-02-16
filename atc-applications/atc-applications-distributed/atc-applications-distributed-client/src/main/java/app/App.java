@@ -1,12 +1,6 @@
 package app;
 
-import exceptions.InvalidArgumentException;
-import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
-import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
-import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
-import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
-import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
+
 import swingworkers.LoginWindowSW;
 import swingworkers.airships.GetAirshipByIdSW;
 import swingworkers.airships.GetAirshipsCloserToSW;
@@ -18,6 +12,13 @@ import swingworkers.users.GetAllUsersSW;
 import swingworkers.users.GetUserByIdSW;
 import swingworkers.users.PatchUserSW;
 import swingworkers.users.PostUserSW;
+import exceptions.InvalidArgumentException;
+import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
+import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
+import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
+import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
+import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
 
 
@@ -101,17 +102,21 @@ public class App {
                 new GetTransgressingAirshipsSW.Factory();
         GetAirshipsWithLessPassengersThanSW.Factory getAirshipsWithLessPassengersFact =
                 new GetAirshipsWithLessPassengersThanSW.Factory(
-                                                                       FunctionalGetAirshipsWithLessPassengerThanWindow.baseWindow );
+                                                                 FunctionalGetAirshipsWithLessPassengerThanWindow.baseWindow );
         PostAirshipSW.Factory postAirshipFactory =
                 new PostAirshipSW.Factory( FunctionalPostAirshipWindow.baseWindow );
         
         
         // Creating and running the app
         
-        new GUIapp( loginWindowSWFactory, postUserSWFactory, patchUserSWFactory, getUsersSWFactory,
-                    getUserByIdSWFactory, getAllAirshipsFactory, getAirshipByIdFactory,
-                    getAirshipsCloserToFactory, getTransgressingAirshipsFactory,
-                    getAirshipsWithLessPassengersFact, postAirshipFactory ).run();
+        new ApplicationWithAGraphicalUserInterface( loginWindowSWFactory, postUserSWFactory,
+                                                    patchUserSWFactory, getUsersSWFactory,
+                                                    getUserByIdSWFactory, getAllAirshipsFactory,
+                                                    getAirshipByIdFactory,
+                                                    getAirshipsCloserToFactory,
+                                                    getTransgressingAirshipsFactory,
+                                                    getAirshipsWithLessPassengersFact,
+                                                    postAirshipFactory ).run();
     }
     
     /**

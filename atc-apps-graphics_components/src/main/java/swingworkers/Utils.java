@@ -1,9 +1,8 @@
-package app;
+package swingworkers;
 
 
 import java.lang.reflect.Field;
 import javax.swing.SwingWorker;
-import swingworkers.SwingWorkerFactory;
 import exceptions.InternalErrorException;
 import exceptions.SwingWorkerFactoryMissingException;
 

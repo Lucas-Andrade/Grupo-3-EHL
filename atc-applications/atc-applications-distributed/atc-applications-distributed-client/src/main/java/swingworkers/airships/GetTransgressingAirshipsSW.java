@@ -6,7 +6,6 @@ import swingworkers.SwingWorkerFactory;
 import utils.ClientGETRequest;
 import entities.SimpleAirship;
 import exceptions.MissingRequiredParameterException;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker;
 import functionalcomponents.functionalmainwindow.FunctionalFooterPanel;
 
 

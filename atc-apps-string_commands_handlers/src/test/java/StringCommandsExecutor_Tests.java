@@ -77,7 +77,7 @@ public class StringCommandsExecutor_Tests {
                                             "oldPassword=pass&newPassword=pass2&loginName=pantunes&loginPassword=pass&accept=application/json" );
         
         
-        Assert.assertEquals( "{\"completionStatus\":true,\"message\":\"User password successfully changed.\"}",
+        Assert.assertEquals( "{\"theStatus\":true,\"message\":\"User password successfully changed.\"}",
                              parser.getOutput() );
         
     }

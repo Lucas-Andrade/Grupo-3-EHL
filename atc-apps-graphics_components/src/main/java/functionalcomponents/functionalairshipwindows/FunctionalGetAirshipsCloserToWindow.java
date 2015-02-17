@@ -7,6 +7,7 @@ import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
 import swingworkers.Utils;
 import design.panels.mainwindowpanels.JBodyPanelForMainWindow;
+import design.windows.MainWindow;
 import design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
 import entities.SimpleAirship;
 import exceptions.SwingWorkerFactoryMissingException;
@@ -132,7 +133,12 @@ public class FunctionalGetAirshipsCloserToWindow
         }
         
         
+        @Override
+        protected final void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround ) {
         
+       MainWindow.getInstance().getBodyPanel().updateBodyPanelForGetAirshipsCloserTo( resultOfDoInBackGround,
+                                                                                      latitude, longitude );         
+        } 
     }
     
     

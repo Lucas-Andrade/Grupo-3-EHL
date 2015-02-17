@@ -33,7 +33,6 @@ import exceptions.WrongLoginPasswordException;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-
 public abstract class UserAuthenticatingFactory< E extends Element, R > extends CommandFactory< R > {
     
     
@@ -255,7 +254,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
     /**
      * Copies (by the same order) the {@link String Strings} stored in the {@code array} to the
      * first positions of a new array of {@link String Strings} that has 2 more entries than the
-     * inicial {@code array}. If {@code array} is {@code null}, it is returned a new empty array
+     * initial {@code array}. If {@code array} is {@code null}, it is returned a new empty array
      * with 2 entries.
      * 
      * @param arrayToBeCopied
@@ -269,14 +268,7 @@ public abstract class UserAuthenticatingFactory< E extends Element, R > extends 
     
         if( arrayToBeCopied == null )
             return new String[2];
-        
-        // TODO
-//        String[] result = new String[arrayToBeCopied.length + 2];
-//        for( int index = 0; index < arrayToBeCopied.length; ++index )
-//            result[index] = arrayToBeCopied[index];
-//        
-//        return result;
-        
+
         return Arrays.copyOf( arrayToBeCopied, arrayToBeCopied.length + 2 );
     }
     

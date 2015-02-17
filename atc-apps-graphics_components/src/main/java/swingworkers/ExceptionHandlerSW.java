@@ -62,15 +62,27 @@ public abstract class ExceptionHandlerSW< R > extends SwingWorker< R, Void > {
             finalizeDone( get() );
         }
         catch( ExecutionException e ) {
-            errorJtextArea.setText( StringUtils.errorStringParser( e.getCause().getMessage(), 50 ) );
+            
+            errorJtextArea.setText( StringUtils.errorStringParser( e.getCause().getMessage(), getErrorTextLength() ) );
             // ExecutionException is thrown by get() and contains as cause the exception thrown by
             // the code inside the method doInBackground()
         }
         catch( Exception e ) {
-            errorJtextArea.setText( StringUtils.errorStringParser( e.getMessage(), 50 ) );
+            errorJtextArea.setText( StringUtils.errorStringParser( e.getMessage(),
+                                                                   getErrorTextLength() ) );
         }
     }
     
+    
+    /**
+     * Get the maximum error message length. By default is 50.
+     * 
+     * @return the {@code errorTextLength}.
+     */
+    protected int getErrorTextLength() {
+    
+        return 50;
+    }
     
     
     // UNIMPLEMENTED METHODS
@@ -79,8 +91,8 @@ public abstract class ExceptionHandlerSW< R > extends SwingWorker< R, Void > {
      * the result of the {@link SwingWorker#doInBackground() doInBackground()} method and treat it
      * differently according to the pretended function.
      * 
-     * Implementation decisions: The execeptions thrown by this method are caught and will be
-     * treated in the {@link ExceptionHandlerSW#done() done()} method.
+     * Implementation decisions: The exceptions thrown by this method are caught and will be treated
+     * in the {@link ExceptionHandlerSW#done() done()} method.
      * 
      * @param resultOfDoInBackGround
      *            - The result of the {@link SwingWorker#doInBackground() doInBackground()} method.

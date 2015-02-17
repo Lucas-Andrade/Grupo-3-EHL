@@ -170,6 +170,14 @@ public class FunctionalLoginWindow extends
         }
         
         
+        
+        
+    }
+    
+    
+    protected int getErrorTextLength() {
+        
+        return 40;
     }
     
     

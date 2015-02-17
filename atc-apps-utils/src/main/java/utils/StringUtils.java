@@ -181,8 +181,9 @@ public class StringUtils {
        String[] split = string.split( "\n" );
        for(String element:split){         
             
-           result.append( spliter(element,maxSize)).append("\r\n");
+           result.append("\n").append( spliter(element,maxSize));
        }
+       result.deleteCharAt( 0 );
     return result.toString();
                
     }  

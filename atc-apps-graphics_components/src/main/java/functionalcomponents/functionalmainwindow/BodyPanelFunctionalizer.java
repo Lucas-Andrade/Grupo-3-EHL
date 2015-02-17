@@ -2,6 +2,7 @@ package functionalcomponents.functionalmainwindow;
 
 
 import javax.swing.JTextArea;
+import swingworkers.AirshipsGetterSW;
 import swingworkers.ExceptionHandlerSW;
 import swingworkers.SwingWorkerFactory;
 import swingworkers.Utils;
@@ -10,7 +11,6 @@ import design.windows.MainWindow;
 import design.windows.WindowBase;
 import entities.SimpleAirship;
 import exceptions.SwingWorkerFactoryMissingException;
-import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
 
 
 /**
@@ -29,13 +29,6 @@ public class BodyPanelFunctionalizer {
     
     
     // Static fields
-    /**
-     * The {@link JBodyPanelForMainWindow} we want to add functionality to.
-     */
-    private static final JBodyPanelForMainWindow bodyPanel = MainWindow.getInstance()
-                                                                       .getBodyPanel();
-    
-    
     /**
      * A lock for the {@link #swFactory}.
      */
@@ -131,7 +124,7 @@ public class BodyPanelFunctionalizer {
      * updated with the result of the {@link SwingWorker#doInBackground() doInBackground()} method.
      * 
      */
-    public static abstract class SwingWorker extends ExceptionHandlerSW< Iterable< SimpleAirship > > {
+    public static abstract class SwingWorker extends AirshipsGetterSW {
         
         /**
          * Create a new {@link SwingWorker}, where the {@code error label} is the {@link WindowBase}
@@ -143,20 +136,17 @@ public class BodyPanelFunctionalizer {
          */
         public SwingWorker() {
         
-            super( FunctionalPostUserWindow.baseWindow.getErrorJTextArea() );
+            super( MainWindow.getInstance().getErrorJTextArea() );
         }
         
-        /**
-         * Update the {@code BodyPanel}.
-         * 
-         * @see swingworkers.ExceptionHandlerSW#finalizeDone(Object)
-         */
+
         @Override
-        protected void finalizeDone( Iterable< SimpleAirship > resultOfDoInBackGround )
-            throws Exception {
-        
-            bodyPanel.updateBodyPanel( resultOfDoInBackGround );
+        protected int getErrorTextLength() {
+            
+            return 200;
         }
+       
+       
     }
     
 }

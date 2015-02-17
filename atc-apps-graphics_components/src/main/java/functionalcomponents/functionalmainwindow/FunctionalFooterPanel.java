@@ -86,6 +86,12 @@ public class FunctionalFooterPanel {
             //bodyFunct = bodyPanelFunctionalizer;
         }
         
+        @Override
+        protected int getErrorTextLength()
+        {
+            return 400;
+        }
+        
         
         
     }

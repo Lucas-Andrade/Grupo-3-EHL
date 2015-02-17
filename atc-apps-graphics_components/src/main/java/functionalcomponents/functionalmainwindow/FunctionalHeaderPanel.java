@@ -12,6 +12,7 @@ import design.windows.popupwindows.FailWindow;
 import design.windows.popupwindows.UnderConstrutionWindow;
 import design.windows.userwindows.GetUsersWindow;
 import entities.SimpleUser;
+import exceptions.InternalErrorException;
 import exceptions.SwingWorkerFactoryMissingException;
 import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPostUserWindow;
@@ -71,9 +72,6 @@ public class FunctionalHeaderPanel {
      * The unimplemented method {@link #doInBackground()} is supposed to return an {@link Iterable}
      * with the representations as {@link SimpleUser}s of all the users registered in the app; it is
      * not supposed to throw exceptions.
-     * </p>
-     *
-     * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
      */
     public abstract static class GetAllUsersSW extends SwingWorker< Iterable< SimpleUser >, Void > {
         
@@ -87,14 +85,15 @@ public class FunctionalHeaderPanel {
             try {
                 new GetUsersWindow( get() );
             }
-            catch( InterruptedException | ExecutionException e ) {
+            catch( InterruptedException e ) {
+                throw new InternalErrorException(
+                                                  "UNEXPECTED ERROR IN FunctionalHeaderPanel.GetAllUsersSW",
+                                                  e );
+            }
+            catch( ExecutionException e ) {
                 new FailWindow( e.getMessage() );
-//                throw new InternalErrorException(
-//                                                  "UNEXPECTED ERROR IN FunctionalHeaderPanel.GetAllUsersSW",
-//                                                  e ); TODO
             }
         }
-        
     }
     
     

@@ -8,7 +8,6 @@ import design.panels.postairshipwindowpanels.JAirCorridorPanel;
 import design.panels.postairshipwindowpanels.JGeographicalCoordinatesPanel;
 import design.windows.WindowBase;
 
-//TODO
 /**
  *   Class who's instances represents panel that extends {@link WindowBase},  
  *   so it inherits a {@link JPanelImage}, {@link JTwoButtonsPanel} and {@link JTextArea} with error information.
@@ -92,7 +91,7 @@ public class PatchAirshipsWindow extends WindowBase {
     
     public PatchAirshipsWindow() {
         
-        super( WINDOWWIDTH, WINDOWHEIGHT, "/images/edit.png", "src/main/resources/images/civil.png" );
+        super( WINDOWWIDTH, WINDOWHEIGHT, "/images/edit.png", "/images/civil.png" );
                 
         geoPanel = new JGeographicalCoordinatesPanel();
         this.getContentPane()

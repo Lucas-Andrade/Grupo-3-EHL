@@ -5,10 +5,10 @@ import javax.swing.JTabbedPane;
 import swingworkers.SwingWorkerFactory;
 import utils.ClientRequest;
 import utils.CompletionStatus;
-import utils.NonGetClientRequest;
+import utils.ClientNonGETRequest;
 import utils.StringCommandsDictionary;
 import utils.StringUtils;
-import utils.NonGetClientRequest.NonGetMethods;
+import utils.ClientNonGETRequest.NonGetMethods;
 import com.google.gson.Gson;
 import design.windows.airshipwindows.PostAirshipsWindow;
 import exceptions.MissingRequiredParameterException;
@@ -53,7 +53,7 @@ public class PostAirshipSW extends FunctionalPostAirshipWindow.SwingWorker {
                 (isCivil) ? StringCommandsDictionary.CIVIL
                                             : StringCommandsDictionary.MILITARY;
         
-        ClientRequest request = new NonGetClientRequest( NonGetMethods.POST, "airships/" + AirshipType ) {
+        ClientRequest request = new ClientNonGETRequest( NonGetMethods.POST, "airships/" + AirshipType ) {
             
             @Override
             public void createParameters() throws MissingRequiredParameterException {

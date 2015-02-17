@@ -1,17 +1,11 @@
 package swingworkers.airships;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
 import swingworkers.SwingWorkerFactory;
-import utils.ClientRequest;
-import utils.GetClientRequest;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import utils.ClientGETRequest;
 import entities.SimpleAirship;
 import exceptions.MissingRequiredParameterException;
 import functionalcomponents.functionalmainwindow.BodyPanelFunctionalizer;
-import gson_entities.AirshipFromJson;
 
 
 /**
@@ -28,7 +22,7 @@ public class GetAllAirshipsSW extends BodyPanelFunctionalizer.SwingWorker {
     @Override
     protected Iterable< SimpleAirship > doInBackground() throws Exception {
     
-        ClientRequest request = new GetClientRequest( "airships/" ) {
+        ClientGETRequest request = new ClientGETRequest( "airships/" ) {
             
             @Override
             public void createParameters() throws MissingRequiredParameterException {
@@ -36,20 +30,10 @@ public class GetAllAirshipsSW extends BodyPanelFunctionalizer.SwingWorker {
             }
         };
         
-        
-        Iterable< AirshipFromJson > airshipsFromJson =
-                new Gson().fromJson( request.getResponse(),
-                                     new TypeToken< ArrayList< AirshipFromJson >>() {}.getType() );
-        
-        
-        
-        Collection< SimpleAirship > simpleAirships = new ArrayList<>();
-        
-        for( AirshipFromJson airship : airshipsFromJson )
-            simpleAirships.add( airship.convert() );
-        
-        return simpleAirships;
+        return request.getSimpleAirshipListFromJson();
     }
+    
+    
     
     // INNER CLASS
     /**
@@ -63,13 +47,7 @@ public class GetAllAirshipsSW extends BodyPanelFunctionalizer.SwingWorker {
             SwingWorkerFactory< BodyPanelFunctionalizer.SwingWorker, Iterable< SimpleAirship > > {
         
         // INSTANCE FIELDS
-        
-        // CONSTRUCTOR
-        
-        public Factory() {
-        
-            
-        }
+       
         
         /**
          * Implementation of the {@link SwingWorkerFactory#newInstance()} method with the purpose of

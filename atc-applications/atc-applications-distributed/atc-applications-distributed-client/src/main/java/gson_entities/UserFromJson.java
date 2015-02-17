@@ -16,7 +16,7 @@ import entities.SimpleUser;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class UserFromJson {
+public class UserFromJson{
     
     /*
      * Fields needed to create a {@link SimpleUser}

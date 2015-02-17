@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import swingworkers.SwingWorkerFactory;
 import utils.ClientRequest;
-import utils.GetClientRequest;
+import utils.ClientGETRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import entities.SimpleUser;
@@ -29,7 +29,7 @@ public class GetAllUsersSW extends FunctionalHeaderPanel.GetAllUsersSW {
     @Override
     protected Iterable< SimpleUser > doInBackground() throws Exception {
     
-        ClientRequest request = new GetClientRequest( "users/" ) {
+        ClientRequest request = new ClientGETRequest( "users/" ) {
             
             @Override
             public void createParameters() {

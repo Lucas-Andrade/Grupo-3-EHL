@@ -4,8 +4,8 @@ package swingworkers.users;
 import swingworkers.SwingWorkerFactory;
 import utils.ClientRequest;
 import utils.CompletionStatus;
-import utils.NonGetClientRequest;
-import utils.NonGetClientRequest.NonGetMethods;
+import utils.ClientNonGETRequest;
+import utils.ClientNonGETRequest.NonGetMethods;
 import utils.StringCommandsDictionary;
 import utils.StringUtils;
 import com.google.gson.Gson;
@@ -48,7 +48,7 @@ public class PostUserSW extends FunctionalPostUserWindow.SwingWorker {
         if( !password.equals( confirmPassword ) )
             throw new InvalidArgumentException( "Passwords don't match!" );
         
-        ClientRequest request = new NonGetClientRequest( NonGetMethods.POST, "users/" ) {
+        ClientRequest request = new ClientNonGETRequest( NonGetMethods.POST, "users/" ) {
             
             @Override
             public void createParameters() throws MissingRequiredParameterException {

@@ -5,7 +5,7 @@ import javax.swing.JTextArea;
 import javax.swing.SwingWorker;
 import swingworkers.SwingWorkerForButtonFactory;
 import utils.ClientRequest;
-import utils.GetClientRequest;
+import utils.ClientGETRequest;
 import com.google.gson.Gson;
 import entities.SimpleAirship;
 import exceptions.InvalidArgumentException;
@@ -59,7 +59,7 @@ public class GetAirshipByIdSW extends EntitiesInfoButton.EntitiesInfoSwingWorker
     @Override
     protected SimpleAirship doInBackground() throws Exception {
     
-        ClientRequest request = new GetClientRequest( "airships/" + identification ) {
+        ClientRequest request = new ClientGETRequest( "airships/" + identification ) {
             
             @Override
             public void createParameters() {

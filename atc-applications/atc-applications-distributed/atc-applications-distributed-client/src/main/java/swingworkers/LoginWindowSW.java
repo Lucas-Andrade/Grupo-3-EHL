@@ -3,7 +3,7 @@ package swingworkers;
 
 import org.eclipse.jetty.server.Authentication.User;
 import utils.ClientRequest;
-import utils.GetClientRequest;
+import utils.ClientGETRequest;
 import utils.StringUtils;
 import com.google.gson.Gson;
 import design.windows.userwindows.LogInWindow;
@@ -35,7 +35,7 @@ public class LoginWindowSW extends FunctionalLoginWindow.SwingWorker {
     @Override
     protected SimpleUser doInBackground() throws Exception {
     
-        ClientRequest request = new GetClientRequest( "users/authenticate" ) {
+        ClientRequest request = new ClientGETRequest( "users/authenticate" ) {
             
             @Override
             public void createParameters() throws MissingRequiredParameterException {

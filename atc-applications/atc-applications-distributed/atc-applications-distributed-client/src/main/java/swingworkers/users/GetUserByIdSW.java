@@ -6,7 +6,7 @@ import javax.swing.SwingWorker;
 import org.eclipse.jetty.server.Authentication.User;
 import swingworkers.SwingWorkerForButtonFactory;
 import utils.ClientRequest;
-import utils.GetClientRequest;
+import utils.ClientGETRequest;
 import com.google.gson.Gson;
 import entities.SimpleUser;
 import exceptions.InvalidArgumentException;
@@ -60,7 +60,7 @@ public class GetUserByIdSW extends EntitiesInfoButton.EntitiesInfoSwingWorker< S
     @Override
     protected SimpleUser doInBackground() throws Exception {
     
-        ClientRequest request = new GetClientRequest( "users/" + identification ) {
+        ClientRequest request = new ClientGETRequest( "users/" + identification ) {
             
             @Override
             public void createParameters() {} };

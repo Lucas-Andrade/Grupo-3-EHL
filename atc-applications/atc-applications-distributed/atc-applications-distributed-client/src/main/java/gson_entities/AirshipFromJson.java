@@ -71,10 +71,10 @@ public class AirshipFromJson{
                                                   .append( "Is Outside The Corridor " )
                                                   .append( "[ " )
                                                   .append( airCorridor.maxAltitude )
-                                                  .append( " ] : " )
+                                                  .append( ", " ).append( airCorridor.minAltitude ).append( " ] : " )
                                                   .append( isTransgressing ? true : false );
-
-
+        
+        
         if( passengers != null )
             strBuiler.append( "\nNumber of Passengers: " ).append( passengers );
         if( hasWeapons != null )

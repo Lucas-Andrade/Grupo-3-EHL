@@ -13,8 +13,8 @@ import swingworkers.users.GetUserByIdSW;
 import swingworkers.users.PatchUserSW;
 import swingworkers.users.PostUserSW;
 import exceptions.InvalidArgumentException;
+import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsCloserToWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalPostAirshipWindow;
 import functionalcomponents.functionaluserwindows.FunctionalLoginWindow;
 import functionalcomponents.functionaluserwindows.FunctionalPatchUserWindow;
@@ -97,7 +97,7 @@ public class App {
         GetAirshipByIdSW.Factory getAirshipByIdFactory = new GetAirshipByIdSW.Factory();
         GetAirshipsCloserToSW.Factory getAirshipsCloserToFactory =
                 new GetAirshipsCloserToSW.Factory(
-                                                   FunctionalGetGeographicalCoordinatesParametersWindow.baseWindow );
+                                                   FunctionalGetAirshipsCloserToWindow.baseWindow );
         GetTransgressingAirshipsSW.Factory getTransgressingAirshipsFactory =
                 new GetTransgressingAirshipsSW.Factory();
         GetAirshipsWithLessPassengersThanSW.Factory getAirshipsWithLessPassengersFact =

@@ -11,7 +11,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import entities.SimpleAirship;
 import exceptions.MissingRequiredParameterException;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker;
 import functionalcomponents.functionalmainwindow.FunctionalFooterPanel;
 import gson_entities.AirshipFromJson;
 

@@ -3,6 +3,7 @@ package swingworkers.airships;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.swing.SwingWorker;
 import swingworkers.SwingWorkerFactory;
 import utils.ClientRequest;
 import utils.GetClientRequest;
@@ -14,7 +15,6 @@ import design.windows.airshipwindows.GetGeographicalCoordinatesParametersWindow;
 import entities.SimpleAirship;
 import exceptions.MissingRequiredParameterException;
 import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsCloserToWindow;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker;
 import gson_entities.AirshipFromJson;
 
 

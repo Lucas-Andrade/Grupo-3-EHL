@@ -10,7 +10,7 @@ import java.net.URL;
 import exceptions.MissingRequiredParameterException;
 
 
-public abstract class NonGetClientRequest extends ClientRequest {
+public abstract class ClientNonGETRequest extends ClientRequest {
     
     public enum NonGetMethods {
         POST( "POST" ), DELETE( "DELETE" ), PATCH( "PATCH" );
@@ -28,7 +28,7 @@ public abstract class NonGetClientRequest extends ClientRequest {
         }
     }
     
-    public NonGetClientRequest( NonGetMethods method, String path )
+    public ClientNonGETRequest( NonGetMethods method, String path )
         throws MissingRequiredParameterException, MalformedURLException, IOException {
     
         super( method.toString(), path );

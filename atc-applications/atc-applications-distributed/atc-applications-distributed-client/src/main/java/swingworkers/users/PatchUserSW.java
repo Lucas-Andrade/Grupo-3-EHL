@@ -4,10 +4,10 @@ package swingworkers.users;
 import swingworkers.SwingWorkerFactory;
 import utils.ClientRequest;
 import utils.CompletionStatus;
-import utils.NonGetClientRequest;
+import utils.ClientNonGETRequest;
 import utils.StringCommandsDictionary;
 import utils.StringUtils;
-import utils.NonGetClientRequest.NonGetMethods;
+import utils.ClientNonGETRequest.NonGetMethods;
 import com.google.gson.Gson;
 import design.windows.userwindows.PatchUserWindow;
 import exceptions.InvalidArgumentException;
@@ -47,7 +47,7 @@ public class PatchUserSW extends FunctionalPatchUserWindow.SwingWorker {
         if( !newPassword.equals( newConfirmationPassword ) )
             throw new InvalidArgumentException( "New passwords don't match!" );
         
-        ClientRequest request = new NonGetClientRequest( NonGetMethods.PATCH, "users/" + username ) {
+        ClientRequest request = new ClientNonGETRequest( NonGetMethods.PATCH, "users/" + username ) {
             
             @Override
             public void createParameters() throws MissingRequiredParameterException {

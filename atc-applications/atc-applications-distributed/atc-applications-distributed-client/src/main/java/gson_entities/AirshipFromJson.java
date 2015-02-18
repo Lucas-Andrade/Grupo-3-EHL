@@ -18,7 +18,7 @@ import entities.SimpleAirship;
  * 
  * @author Daniel Gomes, Eva Gomes, Gonçalo Carvalho, Pedro Antunes
  */
-public class AirshipFromJson {
+public class AirshipFromJson{
     
     /*
      * Fields needed to create a {@link SimpleAirship}
@@ -68,10 +68,13 @@ public class AirshipFromJson {
                 new StringBuilder( "Flight ID: " ).append( flightId ).append( "\r\n" )
                                                   .append( coordinates.createInfo() )
                                                   .append( "\r\n" )
-                                                  .append( "Is Outside The Given Corridor: " )
+                                                  .append( "Is Outside The Corridor " )
+                                                  .append( "[ " )
+                                                  .append( airCorridor.maxAltitude )
+                                                  .append( ", " ).append( airCorridor.minAltitude ).append( " ] : " )
                                                   .append( isTransgressing ? true : false );
-
-
+        
+        
         if( passengers != null )
             strBuiler.append( "\nNumber of Passengers: " ).append( passengers );
         if( hasWeapons != null )

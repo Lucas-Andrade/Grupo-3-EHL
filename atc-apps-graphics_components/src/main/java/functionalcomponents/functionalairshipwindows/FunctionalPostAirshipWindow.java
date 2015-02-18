@@ -123,7 +123,7 @@ public class FunctionalPostAirshipWindow extends
         // CONSTRUCTOR
         public SwingWorker( PostAirshipsWindow window ) {
         
-            super( window, window.getErrorJTextArea() );
+            super( window.getErrorJTextArea() );
             this.window = window;
             
             if( (typeAirshipTabbedPane = window.getTypeAirshipTabbedPane().getSelectedIndex()) == 0 )

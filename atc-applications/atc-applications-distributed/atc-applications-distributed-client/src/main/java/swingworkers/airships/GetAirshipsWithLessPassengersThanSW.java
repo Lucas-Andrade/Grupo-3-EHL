@@ -2,21 +2,15 @@ package swingworkers.airships;
 
 
 
-import java.util.ArrayList;
-import java.util.Collection;
 import swingworkers.SwingWorkerFactory;
-import utils.ClientRequest;
-import utils.GetClientRequest;
+import utils.ClientGETRequest;
 import utils.StringCommandsDictionary;
 import utils.StringUtils;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import design.windows.airshipwindows.GetAirshipsWithLessPassengerThanWindow;
 import entities.SimpleAirship;
 import exceptions.MissingRequiredParameterException;
 import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow;
 import functionalcomponents.functionalairshipwindows.FunctionalGetAirshipsWithLessPassengerThanWindow.SwingWorker;
-import gson_entities.AirshipFromJson;
 
 
 /**
@@ -51,8 +45,8 @@ public class GetAirshipsWithLessPassengersThanSW extends
     @Override
     protected Iterable< SimpleAirship > doInBackground() throws Exception {
     
-        ClientRequest request =
-                new GetClientRequest( "airships/nbPassengers/" + passengersNumber + "/bellow" ) {
+        ClientGETRequest request =
+                new ClientGETRequest( "airships/nbPassengers/" + passengersNumber + "/bellow" ) {
                     
                     @Override
                     public void createParameters() throws MissingRequiredParameterException {
@@ -64,20 +58,7 @@ public class GetAirshipsWithLessPassengersThanSW extends
                     }
                 };
         
-        
-        
-        Iterable< AirshipFromJson > airshipsFromJson =
-                new Gson().fromJson( request.getResponse(),
-                                     new TypeToken< ArrayList< AirshipFromJson >>() {}.getType() );
-        
-        
-        
-        Collection< SimpleAirship > simpleAirships = new ArrayList<>();
-        
-        for( AirshipFromJson airship : airshipsFromJson )
-            simpleAirships.add( airship.convert() );
-        
-        return simpleAirships;
+        return request.getSimpleAirshipListFromJson();
     }
     
     

@@ -1,22 +1,31 @@
 package utils;
 
+
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Collection;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.reflect.TypeToken;
+import entities.SimpleAirship;
 import exceptions.MissingRequiredParameterException;
+import gson_entities.AirshipFromJson;
 
 
-public abstract class GetClientRequest extends ClientRequest{
-
-    public GetClientRequest( String path ) throws MissingRequiredParameterException, MalformedURLException, IOException {
+public abstract class ClientGETRequest extends ClientRequest {
+    
+    public ClientGETRequest( String path )
+        throws MissingRequiredParameterException, MalformedURLException, IOException {
     
         super( "GET", path );
         
     }
     
     
- // Public method
+    // Public method
     /**
      * Create a connection to the {@code Sever}, adding first the {@code parameters} to the
      * {@code QueryString} or {@code HTTP message body}. Returns the status code from an HTTP
@@ -63,4 +72,30 @@ public abstract class GetClientRequest extends ClientRequest{
         }
     }
     
+    
+    /**
+     * Returns a list of {@link SimpleAirship}s, received from the {@code response} in Json.
+     *  
+     * @return a {@code SimpleAirship} list
+     * 
+     * 
+     * @throws JsonSyntaxException
+     * @throws IOException
+     * @throws Exception
+     */
+    public Iterable< SimpleAirship > getSimpleAirshipListFromJson() throws JsonSyntaxException, IOException, Exception {
+    
+        Iterable< AirshipFromJson > airshipsFromJson =
+                new Gson().fromJson( getResponse(),
+                                     new TypeToken< ArrayList< AirshipFromJson >>() {}.getType() );
+        
+        
+        
+        Collection< SimpleAirship > simpleAirships = new ArrayList<>();
+        
+        for( AirshipFromJson airship : airshipsFromJson )
+            simpleAirships.add( airship.convert() );
+        
+        return simpleAirships;
+    }
 }

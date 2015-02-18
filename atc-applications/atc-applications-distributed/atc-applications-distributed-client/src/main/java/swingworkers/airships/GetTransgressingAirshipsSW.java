@@ -1,19 +1,12 @@
 package swingworkers.airships;
 
 
-import java.util.ArrayList;
-import java.util.Collection;
 import swingworkers.AirshipsGetterSW;
 import swingworkers.SwingWorkerFactory;
-import utils.ClientRequest;
-import utils.GetClientRequest;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import utils.ClientGETRequest;
 import entities.SimpleAirship;
 import exceptions.MissingRequiredParameterException;
-import functionalcomponents.functionalairshipwindows.FunctionalGetGeographicalCoordinatesParametersWindow.SwingWorker;
 import functionalcomponents.functionalmainwindow.FunctionalFooterPanel;
-import gson_entities.AirshipFromJson;
 
 
 /**
@@ -45,7 +38,7 @@ public class GetTransgressingAirshipsSW extends FunctionalFooterPanel.GetTrangre
     @Override
     protected Iterable< SimpleAirship > doInBackground() throws Exception {
     
-        ClientRequest request = new GetClientRequest( "airships/reports" ) {
+        ClientGETRequest request = new ClientGETRequest( "airships/reports" ) {
             
             @Override
             public void createParameters() throws MissingRequiredParameterException {
@@ -53,18 +46,8 @@ public class GetTransgressingAirshipsSW extends FunctionalFooterPanel.GetTrangre
             }
         };
         
-        Iterable< AirshipFromJson > airshipsFromJson =
-                new Gson().fromJson( request.getResponse(),
-                                     new TypeToken< ArrayList< AirshipFromJson >>() {}.getType() );
         
-        
-        
-        Collection< SimpleAirship > simpleAirships = new ArrayList<>();
-        
-        for( AirshipFromJson airship : airshipsFromJson )
-            simpleAirships.add( airship.convert() );
-        
-        return simpleAirships;
+        return request.getSimpleAirshipListFromJson();
     }
     
     // INNER CLASS

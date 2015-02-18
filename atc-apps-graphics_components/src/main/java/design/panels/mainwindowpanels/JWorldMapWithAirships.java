@@ -57,11 +57,11 @@ public class JWorldMapWithAirships extends ScrollPanelForEntities< SimpleAirship
     /**
      * {@code SPACEFORLABEL} int value that represents space between label image and text.
      */
-    private static final int SPACEFORLABEL = 10;   
+    private static final int SPACEFORLABEL = 35;   
     /**
      * {@code SPACEFORLOCATIONICONLABEL} int value that represents space between label image and text.
      */
-    private static final int SPACEFORLOCATIONICONLABEL = 28;
+    private static final int SPACEFORLOCATIONICONLABEL = 50;
     /*
      * {@code ORIGINPOSITIONLONGITUDE} double value that represents adjustment to be done for a
      * correct insertation of {@code labelAirship}.
